@@ -52,6 +52,10 @@
 # Current session runner and Native implementation source.
 /work/**
 !/work/**/
+/work/*
+!/work/local_original_session/
+/work/local_original_session/*
+!/work/local_original_session/implementation-1/
 !/work/local_original_session/*.py
 !/work/local_original_session/implementation-1/**/*.py
 !/work/local_original_session/implementation-1/**/*.c
