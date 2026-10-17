@@ -1,0 +1,7 @@
+@echo off
+call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat" >nul
+if errorlevel 1 exit /b 2
+cl /nologo /Iwork\local_original_session\implementation-1\source-use-ui-owned-callback /std:c++17 /utf-8 /W4 /WX /EHsc /O2 /MD /Iwork\local_original_session\implementation-1\manual-source-reselect /Iwork\local_original_session\implementation-1\manual-source-reselect\snapshot /Iwork\local_original_session\implementation-1\manual-source-restart /Iwork\local_original_session\implementation-1\manual-source-reselect /Iwork\local_original_session\implementation-1\manual-source-reselect\snapshot\tools\local_native_login_state5_ack_bridge /sourceDependencies work\local_original_session\implementation-1\source-use-ui-registered-selector\fixture-includes.json /Fe:work\local_original_session\implementation-1\source-use-ui-registered-selector\registered_selector_check.exe /Fo:work\local_original_session\implementation-1\source-use-ui-registered-selector\registered_selector_check.obj work\local_original_session\implementation-1\source-use-ui-registered-selector\registered_selector_check.cpp work\local_original_session\implementation-1\source-use-ui-registered-selector\guard.obj user32.lib
+if errorlevel 1 exit /b 3
+work\local_original_session\implementation-1\source-use-ui-registered-selector\registered_selector_check.exe %1
+exit /b %errorlevel%

@@ -1,0 +1,29 @@
+LIBRARY own-login-bridge-dg49
+EXPORTS
+ OwnLoginBeginActualSelection @1
+ OwnLoginCaptureSelectedCallable @2
+ OwnLoginCloseBridge @3
+ OwnLoginConfigureCandidate @4
+ OwnLoginConfigureOriginalH @5
+ OwnLoginConnectBridge @6
+ OwnLoginConstructorBridge @7
+ OwnLoginEnterSelectedTask @8
+ OwnLoginFinishAfterCallbacksJoined @9
+ OwnLoginInitBridge @10
+ OwnLoginLeaveSelectedTask @11
+ OwnLoginOwnInitOnce @12
+ OwnLoginSelectedBridge @13
+ OwnLoginSelectedTaskBridge @14
+ OwnLoginSenderBridge @15
+ OwnLoginSetReviewedOwnInputs @16
+ OwnForwardConnectShim @17
+ OwnForwardSenderShim @18
+ OwnForwardSelectedShim @19
+ OwnForwardInitShim @20
+ OwnForwardConstructor0Shim @21
+ OwnForwardConstructor1Shim @22
+ OwnForwardConstructor2Shim @23
+ OwnForwardTaskShim @24
+ OwnForwardCloseShim @25
+ OwnForwardKeyTaskShim @26
+ OwnForwardKeyVersionShim @27
