@@ -198,6 +198,10 @@ class AttackTargets:
              and service._connection is writer, 'ATTACK_SAME_SELECTED_SERVICE_REQUIRED')
         realm._npc_authority(writer, game, service, selected)
         need(request.target_uid != selected.uid, 'ATTACK_LOCAL_SELF_TARGET_REFUSED')
+        attack_session = getattr(broker, '_attack_session', None)
+        notifications = None if attack_session is None else attack_session._notifications
+        if notifications is not None:
+            notifications.require_not_removed_target(writer, request.target_uid)
         bound = realm._npc_frames.get(id(writer))
         need(bound is not None and bound[0] is writer and bound[1] is game and bound[2] is service,
              'ATTACK_CURRENT_BOUND_NPC_REQUIRED')
@@ -233,6 +237,8 @@ class AttackTargets:
             realm.registry, realm.store, realm.positions, game, game.selection,
             service, selected, realm._npc_spawns, bound, spawn, mover, state,
             reader, reader.owner, reader.member, native)
+        life = getattr(broker,'_player_life',None)
+        if life is not None: identities += (life.token(writer),)
         # PROCESS.process is a ctypes HANDLE field: every access can produce a
         # fresh Python int. Bind its exact typed value, together with all other
         # handles and process/peer metadata, while retaining real objects above.
@@ -274,7 +280,8 @@ class AttackTargets:
         need(type(previous) is tuple and len(previous) == 7, 'ATTACK_APPROACH_BINDING_CHANGED')
         old = previous[1]
         need(type(old) is movement.Position and type(position) is movement.Position
-             and position is not old and len(previous[-1]) == len(current[-1]) == 27
+             and position is not old and len(previous[-1]) == len(current[-1]) ==
+                 (27 + int(getattr(self.broker,'_player_life',None) is not None))
              and previous[-1][17] is old and current[-1][17] is position
              and current[0] is previous[0] and current[2:5] == previous[2:5]
              and _same_binding(current[-1][:17] + current[-1][18:], current[-2],

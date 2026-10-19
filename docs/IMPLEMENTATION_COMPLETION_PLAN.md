@@ -1,4 +1,26 @@
+2026-10-19 현재: actual239의실NPC거리2→1/원한걸음4E2C/서버·client도착idle·HP PRE20은성공했고JITContact1758B region_not_readable로공격/HP/HUD未發行이다. Nativecurrentbindingrecord6 PAGE_NOACCESS거부로Quit未Attempt·force1normalfalse,812핀/원2175/derived5/run5·정리보존을확인했다. 지정6-sol/xhighDaybreak에finiteContactcode+현재binding수정한묶음을배정/실model전후확인·3분석턴후제품돌파구/guard·원본·포커스보존이다. 기존176/236/237·238정상Quit등성공은재사용하며동일실패기동0/240미준비다. ITEM7backend최종packet a97709b5(실Store/Broker동일gen원2wire왕복·부분실패3scope/main위험1)를root수용중이며UI원popup/GETreceiver/DROPgestureproducer는같은REQ95와C구현으로계속한다. 19typedlocalprofile·동일BUIDu32·그래픽14는명시local선택이고원서버mapping/공식수치/전체완료는미확정이다. 정확담당·소유·부모·근거는ACTIVE맨앞을따른다.
+
+2026-10-19 당시 일시 중단 이력: 사용자 지시대로 진행 중인 묶음·검사·인계 기록만 마감했고 NPC/ITEM/지정Daybreak/REA2 main은 모두 completed·idle/active writer0이다. 통합213닫힘·게임/리스너0·slot1d1f 복구, 추가실게임·공용후속병합0. NPC212출력3diff와 ITEM두무기16파일은 private미적용, 후반교체·재선택tail/현재HUD·PNG·gen2퇴역의미확인은그대로보존한다. 사용자명시재개전새작업·조사·자동재개0이며정확완료범위·checkpoint·재개순서는ACTIVE_TASK맨앞을따른다.
+
+아래는 당시 중단 직전 기록이다. 현재 진행 여부는 ACTIVE 맨앞과 최신 사용자 지시를 따른다.
+
+2026-10-19 현재: actual211은원full4E38 once뒤clientHP20→19 passive값반영·CLI0/자연종료를확인했다. HUDcallback/픽셀은UNKNOWN이다. 212는gen1재생성/freshregistry·pose까지성공했으나후속공격의host PRE분류UNKNOWN으로Native2·gen2퇴역미도달/강제정리이며필수실패출력을최소보존중이다. 지정Daybreak촬영dcd후보를원경계그대로수용해213에서tokenfalse/신규poolopen·순간queue1을관측했으나PNG는deadline/UNKNOWN이며자연종료·정리를확인했다. 지정세션은worker소비/저장의첫미연결을계속대조한다. ITEM은같은기능/소유에서두무기생성·교체/해제·저장·재선택의완결후보를private로연결한다. REA77~79DONE/새HP4EC8등록anchor없어동일질문재발행0이며성공재사용·단위후전체중지금지를유지한다. 현재담당/핀/실행소유와한계는ACTIVE_TASK맨앞을따른다.
+
+아래는 당시 이력이다.
+
+2026-10-18 현재: actual178의 canonical 수량갱신 사이 fresh UI/current-life 수집·정리 코어, actual179의 원Use→서버 장비UID0→65537→sameUID D4true 대응을 확인했다. raw map UNKNOWN/effect PARTIAL·픽셀미확인은 유지한다. NPC 재생성7diff를 exact병합/직접24성공 재사용했고 fresh180은 준비 서버HP0·Death DRAINED 뒤 postAttack TYPED_READ_CHANGED/field3 UNKNOWN으로 Remove/respawn0에서 중단했다. force1/normalFalse·Job/brokerclean/gameports0/slot복구와55source/기존23·복사5store불변을 확인했고 같은후보재기동 없이 lethal 준비 계약을 대조한다. ITEM 정상InventoryOpen private연결과 REA66 원screenshot 호출문맥/파일binding→67 Mark_On 계약은 병행한다. 현재 담당·근거·경계는 ACTIVE 맨앞을 따른다.
+
+아래는 당시 기록이다. 177의 실패는 입력 게시가 아니라 응답 수집이며, 원Native seq2는 OBSERVED였지만 host 최종검사 미완료로 전체UNKNOWN을 보존한다.
+
+2026-10-18 현재: actual176 NPC 명시goal→실client목표좌표/직접정지 코어를완료했다. actual177은첫UI UID65537/D4false와수량1→2 canonical update·client반영까지성공, 새UI 입력게시가실패해강제정리/normalFalse다. ITEM은입력파일/seq수명보정, NPC는명시재생성 lifecycle을계속하며전체AI/픽셀/공식규칙완료로확대하지않는다. 현재담당·근거는ACTIVE맨앞을따른다.
+
+2026-10-18 actual174: run77 직접NPC관측계약을병합했고 PRE정지/15399B·goal1→SC4E2Cdrain1/commit1→서버한칸/AT_GOAL을확인했다. POST는공유count재검사변동으로UNKNOWN이며클라좌표/정지는미확정이다. 자연exit0/force0·51source/원8store/복사5보존·gameports0/slot복구다. 같은후보재실행/genericretry없이retainedcount계약과후속관측분류만수정한다. [174근거](../work/local_original_session/integration-1/manual-background-link/ACTUAL174.md).
+
+2026-10-18 actual173: NPC-MOTION-GOAL 최종6diff 병합 뒤 명시한칸 축소시험은 pre_pose `NPC_MOTION_UNIQUE_COMPONENT_REQUIRED`/6346B에서 UNKNOWN, goal/SC4E2C 제출0이다. 기존 Quit로 자연exit0/force0·gameports0/slot복구·46source/원8store/복사5store보존을 확인했다. 기존172성공은재사용하고 NPC담당이원 exactcomponent 계약을대조하며동일후보 재기동0이다. [173근거](../work/local_original_session/integration-1/manual-background-link/ACTUAL173.md).
+
 actual138 성공: 같은프로세스의Restart→원Slot2/OK3→실4E28/newLand뒤저장0964를다시전달·drain하고현재client row5scalar일치를확인해public6 CLIENT_CONFIRMED/CLIENT_SAVED_ITEM_ROW_SCALARS_AFTER_RESELECT COMMITTED다. firstAdd는준비로만사용했고Attack/Move/hold/재기동반복0·기존Quit는정리로만재사용했다. scenario/wrapper/shell0·primary30.371253초exit0force0·Job/brokerclean/tasks0registry0/gameports0/slot1d1f복구·27핀/원1374store보존,끝138은characters/positions/inventory불변·opaque settings정상1commit a552→e4e814이다. [실행근거](../work/local_original_session/integration-1/manual-background-link/ACTUAL138.md). 코드9f22/Observer9b92/Store379b/launcher5083·runner986f/Nativebd24/configb1c6동결·직접플레이17핀정렬/실행0. 화면/장착/전체17필드·전체게임완료는UNKNOWN. 성공결과는재사용하고다음원ItemUI/model UID producer 계약(REA큐42)을이어간다.
+
+2026-10-18 현재 기능 분담: COMBAT-NPC-HP-DEATH는현재NPC구현채팅01a14d14(이전구현2), ITEM-EQUIPMENT는구현3/01a14908, 통합은양쪽의공용병합·실게임검증을전담한다.172에서정상공격→localHP0→currentDeathAction→명시Remove→3lookupvector UID부재와자연exit0/force0를확인했고그성공을재사용한다.장비기존163/164/165/167성공은보존하며171은UI미요청·LOGIN전C0000005라기존dump로별도REA2분류중이다. HP4EC8표시·실D4/픽셀·공식stats는미확인이고추정하지않는다. 기능ID/소유권·PAGE_NOACCESS의정확Daybreak배정·보존/포커스경계를유지하며현재근거와다음행동은ACTIVE_TASK맨앞을따른다.
 
 2026-10-17 현재 진행: 재선택 후 저장 인벤토리 복원은 위 actual138로 확인했고 해당 성공 결과를 재사용한다. 사용자의 계속 작업 지시에 따라 원 Item UI 연결을 진행 중이다. 구현 3(구 구현 1 단위)은 같은 public UseItem 계약을 쓰는 현재 PC 슬롯·model·callback 결속 후보를 작성하고, REA는 등록 슬롯의 owner/lease를 확인할 직접 원문을 맡으며 최신 경계와 수용 상태는 ACTIVE_TASK를 따른다. 통합은 기존 실행기에 인벤토리 준비→UseItem→기존 Quit 정리만 하는 명시 축소 mode를 연결한다. 공격·왕복·hold·재기동 반복0이며 현재 슬롯 수명 미확인 후보를 실게임에 실행하지 않는다. 아래 목표·변경·시험·종료 항목은 완료한 134→138 단위의 기록이다.
 - 목표/막힘: actual134의 새Land 뒤 saved-only 복원이 Map current guard532791/7B 물리읽기에서거부됨. 49guard/권한/once/원10초는보존한다.

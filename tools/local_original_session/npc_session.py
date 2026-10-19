@@ -22,6 +22,7 @@ class NpcSessionConfig:
     interval_ns: int | None = None
     policy: str | None = None
     goal_policy: str | None = None
+    respawn_policy: str | None = None
 
     def __post_init__(self):
         need(type(self.spawns) is tuple and len(self.spawns) <= npc.MAX_SPAWNS
@@ -36,6 +37,11 @@ class NpcSessionConfig:
             need(self.policy == npc_motion.LOCAL_PRE_STEP,
                  'NPC_SESSION_EXPLICIT_PRE_STEP_POLICY_REQUIRED')
             need(self.goal_policy == AXIS_SIGN_GOAL, 'NPC_SESSION_EXPLICIT_GOAL_POLICY_REQUIRED')
+        if self.respawn_policy is not None:
+            from tools.local_original_session import npc_respawn
+            need(bool(self.spawns) and type(self.respawn_policy) is str
+                 and self.respawn_policy == npc_respawn.POLICY,
+                 'NPC_SESSION_EXPLICIT_RESPAWN_POLICY_REQUIRED')
 
 
 @dataclass(frozen=True, slots=True)
@@ -66,14 +72,17 @@ class NpcSessionFactory:
     def broker_options(self):
         if not self.config.spawns:
             return {}
-        return dict(npc_spawns=self.config.spawns,
+        options = dict(npc_spawns=self.config.spawns,
                     npc_motion_interval_ns=self.config.interval_ns,
                     npc_motion_policy=self.config.policy, npc_edge_passability=self.adapter)
+        if self.config.respawn_policy is not None:
+            options['npc_respawn_policy'] = self.config.respawn_policy
+        return options
 
-    def bind(self, broker):
+    def bind(self, broker, *, generation=None):
         need(not self._closed, 'NPC_SESSION_FACTORY_CLOSED')
         need(self._session is None, 'NPC_SESSION_FACTORY_ALREADY_BOUND')
-        session = NpcSession(broker, factory=self)
+        session = NpcSession(broker, factory=self, generation=generation)
         self._session = session
         return session
 
@@ -84,7 +93,7 @@ class NpcSessionFactory:
 
 
 class NpcSession:
-    def __init__(self, broker, *, factory):
+    def __init__(self, broker, *, factory, generation=None):
         need(type(broker) is b.PersistentBroker and type(factory) is NpcSessionFactory,
              'NPC_SESSION_REAL_BROKER_AND_FACTORY_REQUIRED')
         self.broker, self.factory = broker, factory
@@ -92,6 +101,14 @@ class NpcSession:
         self._lock = asyncio.Lock()  # Never acquire the broker row lock here.
         self._last_now_ns = None
         self._goal = None
+        self._generation = generation
+        self._owned_mover = None
+        if generation is not None:
+            from tools.local_original_session import npc_respawn
+            need(factory.config.respawn_policy == npc_respawn.POLICY
+                 and type(generation) is npc_respawn.Generation,
+                 'NPC_SESSION_EXPLICIT_GENERATION_REQUIRED')
+            self._owned_mover = generation.mover
         self._configuration()
 
     def _configuration(self):
@@ -106,7 +123,7 @@ class NpcSession:
              and realm.npc_edge_passability is self.factory.adapter,
              'NPC_SESSION_SAME_MOTION_CONFIGURATION_REQUIRED')
 
-    def current_binding(self):
+    def current_binding(self, *, _new_goal=False):
         """Resolve unique live selected writer from current claims on each call.
 
         No writer, Position or State survives this call. The edge adapter then
@@ -135,6 +152,12 @@ class NpcSession:
                     try:
                         service = broker.realm.service(writer)
                         selected = service.snapshot()
+                        life = getattr(broker, '_player_life', None)
+                        if life is not None:
+                            life.check_normal_locked(writer)
+                            if not _new_goal and self._goal is not None:
+                                need(getattr(self,'_goal_player_life',None) is life.token(writer),
+                                     'NPC_SESSION_OLD_PLAYER_LIFE_GOAL')
                         mover = broker.realm.npc_mover(writer)
                     except (ValueError, KeyError):
                         continue  # Unselected/retired writers do not authorize movement.
@@ -156,6 +179,22 @@ class NpcSession:
                          'NPC_SESSION_CURRENT_MATCHING_DRAINED_MOVER_REQUIRED')
                     candidates.append(writer)
             need(len(candidates) == 1, 'NPC_SESSION_UNAMBIGUOUS_SELECTED_WRITER_REQUIRED')
+            if self.factory.config.respawn_policy is not None:
+                from tools.local_original_session import npc_respawn
+                writer = candidates[0]
+                mover = broker.realm.npc_mover(writer)
+                lifecycle = broker._npc_respawn
+                need(type(lifecycle) is npc_respawn.Service
+                     and lifecycle.policy == self.factory.config.respawn_policy,
+                     'NPC_SESSION_SAME_RESPAWN_SERVICE_REQUIRED')
+                generation = lifecycle.current_generation(writer)
+                need(type(generation) is npc_respawn.Generation and generation.mover is mover,
+                     'NPC_SESSION_CURRENT_GENERATION_REQUIRED')
+                if self._generation is None:
+                    need(generation.ordinal == 0, 'NPC_SESSION_INITIAL_GENERATION_REQUIRED')
+                    self._generation, self._owned_mover = generation, mover
+                need(generation is self._generation and mover is self._owned_mover,
+                     'NPC_SESSION_OWNED_GENERATION_CHANGED')
             return npc_edge.NpcEdgeBinding(candidates[0], broker)
         except Exception:
             return None
@@ -169,9 +208,30 @@ class NpcSession:
         need(not self._closed and not self.factory._closed, 'NPC_SESSION_CLOSED')
         need(type(goal) is tuple and len(goal) == 2, 'NPC_SESSION_EXPLICIT_GOAL_REQUIRED')
         movement.authority.pack_grid(*goal)
+        life = getattr(self.broker, '_player_life', None)
+        binding = self.current_binding(_new_goal=True) if life is not None else None
+        need(life is None or binding is not None, 'NPC_SESSION_PLAYER_LIFE_BINDING_REQUIRED')
+        self._goal_player_life = None if life is None else life.token(binding.owner)
         self._goal = goal
 
-    async def tick(self, *, now_ns):
+    def edge_query_pending(self, *, now_ns):
+        """Read-free scheduling hint; never permission to query or send.
+
+        Call tick(allow_edge_query=False) without a reserved memory slot: the
+        hint can become stale across the controller lock's await boundary.
+        """
+        need(type(now_ns) is int and 0 <= now_ns < (1 << 63), 'NPC_SESSION_CLOCK_REQUIRED')
+        if self._closed or self.factory._closed or not self.factory.config.spawns or self._goal is None:
+            return False
+        binding = self.current_binding()
+        if binding is None:
+            return False
+        state = self.broker.realm.npc_mover(binding.owner).state
+        return (movement.authority.unpack_grid(state.packed) != self._goal
+                and (state.last_step_ns is None
+                     or now_ns >= state.last_step_ns + self.factory.config.interval_ns))
+
+    async def tick(self, *, now_ns, allow_edge_query=True):
         """One caller-driven poll of the captured goal; never starts a task."""
         if self._closed or self.factory._closed:
             return Outcome('CLOSED')
@@ -180,9 +240,9 @@ class NpcSession:
         goal = self._goal
         if goal is None:
             return Outcome('IDLE')
-        return await self.approach(goal=goal, now_ns=now_ns)
+        return await self.approach(goal=goal, now_ns=now_ns, allow_edge_query=allow_edge_query)
 
-    async def approach(self, *, goal, now_ns):
+    async def approach(self, *, goal, now_ns, allow_edge_query=True):
         """Try one local axis-sign step using caller's explicit monotonic clock.
 
         Only known no-send cadence/edge refusals become outcomes. Broker send
@@ -192,6 +252,7 @@ class NpcSession:
         need(type(goal) is tuple and len(goal) == 2, 'NPC_SESSION_EXPLICIT_GOAL_REQUIRED')
         movement.authority.pack_grid(*goal)
         need(type(now_ns) is int and 0 <= now_ns < (1 << 63), 'NPC_SESSION_CLOCK_REQUIRED')
+        need(type(allow_edge_query) is bool, 'NPC_SESSION_TYPED_QUERY_PERMISSION_REQUIRED')
         async with self._lock:
             if self._closed or self.factory._closed:
                 return Outcome('CLOSED')
@@ -204,19 +265,31 @@ class NpcSession:
             if binding is None:
                 return Outcome('UNKNOWN', reason='NPC_SESSION_CURRENT_BINDING_UNAVAILABLE')
             mover = self.broker.realm.npc_mover(binding.owner)
+            if self.factory.config.respawn_policy is not None:
+                need(mover is self._owned_mover, 'NPC_SESSION_OWNED_MOVER_CHANGED')
             state = mover.state
             grid = movement.authority.unpack_grid(state.packed)
             if grid == goal:
                 return Outcome('AT_GOAL', state)
             if state.last_step_ns is not None and now_ns < state.last_step_ns + mover.interval_ns:
                 return Outcome('CADENCE', state)
+            if not allow_edge_query:
+                return Outcome('OBSERVATION_CADENCE', state)
             delta = tuple((target > current) - (target < current)
                           for current, target in zip(grid, goal))
             direction = movement.authority.DELTAS.index(delta)
             try:
+                options = (dict(expected_mover=self._owned_mover)
+                           if self.factory.config.respawn_policy is not None else {})
                 state = await self.broker.step_npc(binding.owner, goal=goal,
-                                                  direction=direction, now_ns=now_ns)
+                                                  direction=direction, now_ns=now_ns, **options)
             except ValueError as error:
+                if type(error) is ValueError and str(error) == 'NPC_HP_DEAD_MOTION_REFUSED':
+                    # A dead actor is a normal gameplay stop. Keep source/owner/
+                    # lifetime errors exceptional and never clear a newer goal.
+                    if self._goal is goal:
+                        self._goal = None
+                    return Outcome('DEAD', state, reason='NPC_HP_DEAD_MOTION_REFUSED')
                 if str(error) == 'NPC_MOVE_LOCAL_CADENCE':
                     return Outcome('CADENCE')
                 if str(error) == 'NPC_MOVE_EDGE_BLOCKED_OR_UNKNOWN':

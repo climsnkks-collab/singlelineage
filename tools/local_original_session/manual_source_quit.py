@@ -116,6 +116,23 @@ class SourceQuitRequests:
         self._state = dict(status='PENDING', reason=None, cleanup_required=False, phase=phase,
                            native_attempted=self._pending['native_attempted'])
 
+    def _native_settled(self):
+        if self.consumer.pending is not None:
+            return False
+        if self.consumer.state['status'] in ('READY', 'COMMITTED'):
+            return True
+        if self.consumer.state['status'] != 'PREPARED':
+            return False
+        settled = self.requests.lethal_preparation_settled
+        need(type(settled) is MethodType and settled.__self__ is self.requests
+             and settled.__func__ is type(self.requests).__dict__.get('lethal_preparation_settled')
+             and settled.__func__.__globals__.get('ManualMoveRequests') is type(self.requests)
+             and Path(settled.__func__.__code__.co_filename).resolve() == _LAUNCHER,
+             'SOURCE_QUIT_REAL_PREPARATION_REQUIRED')
+        proof = settled()
+        return (proof is not None and proof is self.requests._lethal_preparation_proof
+                and proof is self.consumer._lethal_preparation_completed)
+
     def start(self, windows_requested):
         if type(self._completion) is _Completion:
             return self.report()
@@ -132,7 +149,7 @@ class SourceQuitRequests:
             self._started = True
             need(type(windows_requested) is int and windows_requested > 0, 'SOURCE_QUIT_OWNED_CLOSE_REQUIRED')
             self._wrapper(quiesced=False)
-            need(self.consumer.pending is None and self.consumer.state['status'] in ('READY', 'COMMITTED'),
+            need(self._native_settled(),
                  'SOURCE_QUIT_NATIVE_OUTCOME_UNRESOLVED')
             # Obtain real binding before invoking the launcher's quiesce policy.
             current = self.consumer._current()
@@ -146,7 +163,7 @@ class SourceQuitRequests:
                  'SOURCE_QUIT_REAL_QUIESCE_REQUIRED')
             need(quiesce() is True, 'SOURCE_QUIT_QUIESCE_REFUSED')
             self._wrapper(quiesced=True)
-            need(self.consumer.pending is None and self.consumer.state['status'] in ('READY', 'COMMITTED'),
+            need(self._native_settled(),
                  'SOURCE_QUIT_NATIVE_OUTCOME_UNRESOLVED')
             now = self.consumer._clock()
             current = self.consumer._current()

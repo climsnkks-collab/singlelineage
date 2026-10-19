@@ -108,7 +108,7 @@ class NpcEdgeAdapter:
             native, sampler = proof._binding()
             reader = proof.reader
             retained = (reader.owner, reader.member, native, sampler)
-            budget = edge._Budget(native, sampler)
+            budget = edge._Budget(native, sampler, diagnostic=details)
             exact, targets, authority_before, monster_checks = None, None, None, None
             with budget.installed():
                 details['phase'] = 'SOURCE_BEFORE'

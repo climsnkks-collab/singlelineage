@@ -5,7 +5,9 @@ scheduled reader.sample(). collect() belongs inside that sample, after
 MoveState.sample, using the same proof and its explicit 24-KiB attack total.
 The preceding world/input/movement aggregate remains 16 KiB. There is
 no sample(), thread, native invocation, packet, clock or memory write here.
-Snapshots cannot witness Start, rendering, damage, HP or absence of prediction.
+Only the typed Monster target branch also classifies DeathAction. Current
+means adopted now; queue head means queued only. Snapshots cannot witness
+Start, rendering, damage, HP, registry removal or absence of prediction.
 """
 from __future__ import annotations
 
@@ -21,8 +23,20 @@ need = observe.need
 # its original 8192-B leaf allowance. This is not a gameplay/admission rule.
 BYTE_LIMIT = observe.RETAINED_SAMPLE_LIMIT + 8192
 MIN_INTERVAL_NS = 500_000_000
+# Read-only diagnostic enum. Every origin below is the final physical
+# readback; no field name grants stability, admission or permission to wait.
+READBACK_FIELDS = {'UNCLASSIFIED': 0, 'SHARED_OWNER_COUNT': 1,
+    'ACTION_COMPONENT_CURRENT': 2, 'ACTION_QUEUE_HEADER': 3,
+    'ACTION_DIRECTION': 4, 'ACTION_TOKEN': 5, 'ACTION_FINISHED': 6,
+    'ACTION_ATTACK_PAIR_EFFECT': 7}
+# Exact pinned current image bound; diagnostic only, never a table/type proof.
+READBACK_TYPE_RVA_LIMIT = 0x3e95000
+DEATH_FACTORY = 'D:/CodexArtifacts/single-lineage/01a120a3-0ca6-7a11-a30b-45f330d3a1a3/source-death-hit/window-9aa20-9af27.json'
+DEATH_START = 'D:/CodexArtifacts/single-lineage/01a120a3-0ca6-7a11-a30b-45f330d3a1a3/source-death-hit/window-923a0-923bc.json'
 METADATA = 'D:/CodexArtifacts/single-lineage/01a120a3-0ca6-7a11-a30b-45f330d3a1a3/source-death-hit/final-metadata.json'
 PINS = {
+    DEATH_FACTORY: '507830a4be5f134dd99888157e2f9517f1946b7f1e100bb37483df6bee9f87cf',
+    DEATH_START: '420c84ac1598867b8fc9b2370fcbeee7a726d5ca0ff2e95f76adc5e1d0079673',
     **attack.SOURCE_PINS,
     'work/online_public_session-v4/source-contract.json':
         '5150ac7b24a0497210615876fb6d1560b21ed5e809809434999bbf26f6a2d222',
@@ -70,7 +84,28 @@ def _source():
         targets=[int(v, 16) for v in damaged['slots8']], COL_rva=int(damaged['COL_rva'], 16),
         COL_sha256=damaged['COL_sha256'], descriptor_rva=int(damaged['descriptor_rva'], 16),
         literal=damaged['name'])
-    return action, damage, documents['work/online_public_session-v4/source-contract.json']
+    dead, = [r for r in documents[METADATA]['RTTI'] if r['name'] == '.?AVDeathAction@lineage@@']
+    need(dead['vptr_rva'] == '0x1180ae8'
+         and [r['name'] for r in dead['bases']] == [dead['name'], '.?AVActionBase@lineage@@']
+         and dead['slots8'] == ['0x92350', '0x923a0', '0x923c0', '0x8f8f0',
+                                '0x923d0', '0x90560', '0x907f0', '0x8f900'],
+         'ATTACK_OBSERVE_DEATH_SOURCE_CHANGED')
+    # Existing pinned raw8 constructor and Start prove the same ActionBase
+    # owner/storage/index/finished layout; do not infer it from vptr alone.
+    factory = {r['rva']: r['instruction'] for r in documents[DEATH_FACTORY]['instructions']}
+    start = {r['rva']: r['instruction'] for r in documents[DEATH_START]['instructions']}
+    need(all(factory.get(at) == instruction for at, instruction in (
+        ('0x9ac77', 'mov qword ptr [rax + 8], rbp'),
+        ('0x9ac82', 'mov qword ptr [rax + 0x18], <immediate>'),
+        ('0x9ac8a', 'mov dword ptr [rax + 0x20], r12d'),
+        ('0x9ac8e', 'mov byte ptr [rax + 0x24], <immediate>')))
+        and start.get('0x923ae') == 'mov rax, qword ptr [rbx + 8]',
+        'ATTACK_OBSERVE_DEATH_LAYOUT_CHANGED')
+    death = dict(kind='DeathAction', rva=int(dead['vptr_rva'], 16),
+        targets=[int(v, 16) for v in dead['slots8']], COL_rva=int(dead['COL_rva'], 16),
+        COL_sha256=dead['COL_sha256'], descriptor_rva=int(dead['descriptor_rva'], 16),
+        literal=dead['name'])
+    return action, damage, death, documents['work/online_public_session-v4/source-contract.json']
 
 
 def empty(reason='NOT_SAMPLED'):
@@ -80,7 +115,24 @@ def empty(reason='NOT_SAMPLED'):
         map_id=None, attacker=None, target=None, typed_bytes_requested=0,
         combined_typed_bytes_requested=0, typed_byte_limit=BYTE_LIMIT,
         refused_read_bytes=None, shortfall_at_refused_read=None,
+        read_consistency='NOT_CLASSIFIED', source_owner_revalidated=False,
+        typed_read_changed_field=None, typed_read_changed_origin=None,
         observation_scope='READONLY_SNAPSHOT', queue_scope='HEAD_ONLY')
+
+
+def _count_action_classified(slot, attacker_actions, breath_current_proved, result, index, unclassified_rvas):
+    # Preserve the original predicate and its short circuit; diagnostics only.
+    observed = slot.get('status') == 'OBSERVED'
+    qualified = (observed and (slot.get('kind') != 'AttackAction'
+                 or slot.get('selected_pair_matches') is True)) or (
+                 slot is attacker_actions['current'] and breath_current_proved)
+    if not qualified:
+        # Slot order: attacker current/head, target current/head. Odd: not
+        # OBSERVED (and not privately proved Breath); even: Attack pair false.
+        result['count_action_refusal'] = index * 2 + (2 if observed else 1)
+        if not observed and id(slot) in unclassified_rvas:
+            result['count_action_type_rva'] = unclassified_rvas[id(slot)]
+    return qualified
 
 
 class SameQueryCache:
@@ -131,6 +183,9 @@ class _Reads:
         self.cache = cache or {}
         self.records = {}
         self.refused = self.shortfall = None
+        self._count_keys, self._other_keys, self._fields = set(), set(), {}
+        self.count_drift = False
+        self.changed_field = self.changed_origin = None
 
     def physical(self, at, size, image=False):
         need(type(at) is int and type(size) is int and 0 < size <= 4096
@@ -142,8 +197,10 @@ class _Reads:
         need(type(raw) is bytes and len(raw) == size, 'ATTACK_OBSERVE_PARTIAL_READ')
         return raw
 
-    def read(self, at, size, image=False):
+    def read(self, at, size, image=False, *, role=None):
         key = at, size, image
+        (self._count_keys if role == 'SHARED_OWNER_COUNT' else self._other_keys).add(key)
+        self._fields.setdefault(key, set()).add(role or 'UNCLASSIFIED')
         if key not in self.records:
             raw = self.cache.get(key)
             if raw is None:
@@ -152,8 +209,8 @@ class _Reads:
             self.records[key] = raw
         return self.records[key]
 
-    def number(self, at, fmt):
-        return struct.unpack(fmt, self.read(at, struct.calcsize(fmt)))[0]
+    def number(self, at, fmt, *, role=None):
+        return struct.unpack(fmt, self.read(at, struct.calcsize(fmt), role=role))[0]
 
     @staticmethod
     def pointer_value(value, nullable=False):
@@ -161,13 +218,14 @@ class _Reads:
              'ATTACK_OBSERVE_POINTER_BOUND')
         return value
 
-    def pointer(self, at, nullable=False):
-        return self.pointer_value(self.number(at, '<Q'), nullable)
+    def pointer(self, at, nullable=False, *, role=None):
+        return self.pointer_value(self.number(at, '<Q', role=role), nullable)
 
     def pair(self, raw):
         obj, control = struct.unpack('<QQ', raw)
         self.pointer_value(obj); self.pointer_value(control)
-        need(self.number(control + 8, '<i') > 0, 'ATTACK_OBSERVE_PAIR_NOT_POSITIVE')
+        need(self.number(control + 8, '<i', role='SHARED_OWNER_COUNT') > 0,
+             'ATTACK_OBSERVE_PAIR_NOT_POSITIVE')
         return obj
 
     def vector(self, obj, offset, maximum):
@@ -209,7 +267,24 @@ class _Reads:
 
     def verify(self):
         for (at, size, image), expected in self.records.items():
-            need(self.physical(at, size, image) == expected, 'ATTACK_OBSERVE_TYPED_READ_CHANGED')
+            actual = self.physical(at, size, image)
+            if actual == expected:
+                continue
+            key = at, size, image
+            fields = self._fields[key]
+            self.changed_field = next(iter(fields)) if len(fields) == 1 else 'UNCLASSIFIED'
+            self.changed_origin = 'FINAL_PHYSICAL_READBACK'
+            # Same narrow provenance as NpcObserver: only the original
+            # strong-pair predicate, with no other semantic role at this key.
+            # All remaining physical/source/current-owner checks must finish
+            # before collect may name an incomplete count-only snapshot.
+            if (key in self._count_keys and key not in self._other_keys
+                    and size == 4 and not image and len(actual) == len(expected) == 4
+                    and struct.unpack('<i', expected)[0] > 0
+                    and struct.unpack('<i', actual)[0] > 0):
+                self.count_drift = True
+                continue
+            raise ValueError('ATTACK_OBSERVE_TYPED_READ_CHANGED')
 
 
 class AttackActionObserver:
@@ -266,7 +341,7 @@ class AttackActionObserver:
                                         'sample_byte_budget', 'total_byte_budget') for reason in reasons),
                      'ATTACK_OBSERVE_MOVE_PROOF_REQUIRED')
             self.targets.revalidate(bound)
-            action_type, damage_type, public = _source()
+            action_type, damage_type, death_type, public = _source()
             move_state.attack_sources_ready()
             monster, common, source_checks = npc_observe._source()
             need(scene_row.get('status') == 'OBSERVED' and scene_row.get('current') == 'Land'
@@ -335,45 +410,85 @@ class AttackActionObserver:
                 need(hashlib.sha256(reads.read(base + anchor['rva'], anchor['length'], True)).hexdigest() == anchor['sha256'],
                      'ATTACK_OBSERVE_TARGET_HIERARCHY_CHANGED')
 
-            def action_info(ptr, component):
+            breath_current_proved = False
+            unclassified_rvas = {}  # Local four-slot identity hints; never a lease/type proof.
+            def action_info(ptr, component, *, target_branch, current_slot=False):
+                nonlocal breath_current_proved
                 if not ptr:
                     return dict(status='OBSERVED', present=False, kind='none')
                 vp = reads.pointer(ptr)
-                row = next((r for r in (action_type, damage_type) if vp == base + r['rva']), None)
+                types = (action_type, damage_type, death_type) if target_branch else (action_type, damage_type)
+                row = next((r for r in types if vp == base + r['rva']), None)
                 if row is None:
-                    return dict(status='UNKNOWN', present=True, kind='unknown', reason='ACTION_TYPE_NOT_PINNED')
+                    # Keep Attack's public type classification unchanged.
+                    # A private same-query Move proof may only qualify the
+                    # incomplete count marker below, never an OBSERVED action.
+                    move = scene_row.get('move_state', {})
+                    current_move = move.get('action', {}).get('current', {})
+                    qualified = self.layout.action_tables.get(0x1180a10)
+                    if (not target_branch and current_slot and vp == base + 0x1180a10
+                            and type(cache) is SameQueryCache and 'MOVE' in cache.roles
+                            and move.get('status') == 'OBSERVED' and move.get('source_contract_valid') is True
+                            and move.get('stable_double_read') is True and move.get('actor_uid') == bound.attacker.uid
+                            and current_move.get('status') == 'OBSERVED' and current_move.get('present') is True
+                            and current_move.get('kind') == 'BreathAction'
+                            and type(current_move.get('type_table_rva')) is int
+                            and current_move['type_table_rva'] == 0x1180a10
+                            and qualified is not None and qualified['kind'] == 'BreathAction'
+                            and len(qualified['targets']) == 8):
+                        expected = struct.pack('<8Q', *(base + value for value in qualified['targets']))
+                        # Existing component owner + current topology supplies
+                        # lifetime here; original Move consumes no Breath+8.
+                        required = {(component + 8, 8, False): struct.pack('<Q', actor),
+                                    (component + 0xc0, 8, False): struct.pack('<Q', ptr),
+                                    (ptr, 8, False): struct.pack('<Q', vp),
+                                    (vp, 64, True): expected}
+                        need(all(cache.roles['MOVE'].get(key) == value for key, value in required.items()),
+                             'ATTACK_OBSERVE_BREATH_SAME_QUERY_PROOF_REQUIRED')
+                        # Usually a cached first value; the independent final
+                        # physical readback includes all 64 bytes, same cap.
+                        need(reads.read(vp, 64, True) == expected, 'ATTACK_OBSERVE_BREATH_TABLE_CHANGED')
+                        breath_current_proved = True
+                    out = dict(status='UNKNOWN', present=True, kind='unknown', reason='ACTION_TYPE_NOT_PINNED')
+                    if base <= vp < base + sampler.g['size'] and vp - base < READBACK_TYPE_RVA_LIMIT:
+                        unclassified_rvas[id(out)] = vp - base
+                    return out
                 reads.table(ptr, row); reads.rtti(row)
                 need(reads.pointer(ptr + 8) == component, 'ATTACK_OBSERVE_ACTION_OWNER_CHANGED')
                 out = dict(status='OBSERVED', present=True, kind=row['kind'],
-                    direction_i32=reads.number(ptr + 0x18, '<i'), token_u32=reads.number(ptr + 0x20, '<I'),
-                    finished=reads.number(ptr + 0x24, '<B') != 0)
+                    direction_i32=reads.number(ptr + 0x18, '<i', role='ACTION_DIRECTION'),
+                    token_u32=reads.number(ptr + 0x20, '<I', role='ACTION_TOKEN'),
+                    finished=reads.number(ptr + 0x24, '<B', role='ACTION_FINISHED') != 0)
                 if row['kind'] == 'AttackAction':
-                    stored_attacker, stored_target, raw_effect = struct.unpack('<QQi', reads.read(ptr + 0x80, 20))
+                    stored_attacker, stored_target, raw_effect = struct.unpack('<QQi',
+                        reads.read(ptr + 0x80, 20, role='ACTION_ATTACK_PAIR_EFFECT'))
                     out.update(stored_attacker_uid=stored_attacker, target_uid=stored_target,
                         raw_effect_i32=raw_effect,
                         selected_pair_matches=stored_attacker == bound.attacker.uid and stored_target == bound.target_uid)
                 return out
 
-            def component_actions(owner):
+            def component_actions(owner, *, target_branch=False):
                 components = reads.vector(owner, 0x20, 128)
                 candidates = [obj for obj in components if reads.pointer(obj) == base + tables['ActionComponent']['rva']]
                 need(len(candidates) == 1, 'ATTACK_OBSERVE_UNIQUE_ACTION_COMPONENT_REQUIRED')
                 obj, = candidates
                 reads.table(obj, tables['ActionComponent'])
                 need(reads.pointer(obj + 8) == owner, 'ATTACK_OBSERVE_COMPONENT_OWNER_CHANGED')
-                current = action_info(reads.pointer(obj + 0xc0, True), obj)
-                map_ptr, size, offset, count = struct.unpack('<QQQQ', reads.read(obj + 0xa0, 32))
+                current = action_info(reads.pointer(obj + 0xc0, True, role='ACTION_COMPONENT_CURRENT'),
+                                      obj, target_branch=target_branch, current_slot=True)
+                map_ptr, size, offset, count = struct.unpack('<QQQQ',
+                    reads.read(obj + 0xa0, 32, role='ACTION_QUEUE_HEADER'))
                 if count:
                     need(0 < size <= 4096 and size & (size - 1) == 0 and count <= size * 2,
                          'ATTACK_OBSERVE_QUEUE_BOUND')
                     reads.pointer_value(map_ptr)
                     block = reads.pointer(map_ptr + ((offset >> 1) & (size - 1)) * 8)
-                    head = action_info(reads.pointer(block + (offset & 1) * 8, True), obj)
+                    head = action_info(reads.pointer(block + (offset & 1) * 8, True), obj, target_branch=target_branch)
                 else:
                     head = dict(status='OBSERVED', present=False, kind='none')
                 return dict(current=current, queue_count=count, queue_head=head)
 
-            attacker_actions, target_actions = component_actions(actor), component_actions(target)
+            attacker_actions, target_actions = component_actions(actor), component_actions(target, target_branch=True)
             reads.verify()
             need(reads.physical(state + 0x360, 36) == raw, 'ATTACK_OBSERVE_SCENE_CHANGED')
             # route() may perform several reads; keep every byte inside this
@@ -394,6 +509,19 @@ class AttackActionObserver:
             _source(); npc_observe._source(); move_state.attack_sources_ready()
             self.targets.revalidate(bound)
             need(reader.sampler is sampler, 'ATTACK_OBSERVE_SAMPLER_CHANGED')
+            if reads.count_drift:
+                need(all(_count_action_classified(slot, attacker_actions,
+                         breath_current_proved, result, index, unclassified_rvas)
+                         for index, slot in enumerate(slot for group in (attacker_actions, target_actions)
+                         for slot in (group['current'], group['queue_head']))),
+                     'ATTACK_OBSERVE_COUNT_ACTION_UNCLASSIFIED')
+                # No action/idle/coordinates are exposed and no strict success
+                # is granted. The caller must separately bind live admission.
+                result.update(reason='ATTACK_OBSERVE_TYPED_READ_CHANGED',
+                    read_consistency='RECHECKED_SHARED_COUNT_FINAL_READBACK',
+                    source_owner_revalidated=True, actor_uid=bound.attacker.uid,
+                    target_uid=bound.target_uid, map_id=bound.map_id)
+                return result
             result.update(status='OBSERVED', reason=None, source_contract_valid=True,
                 stable_double_read=True, actor_uid=bound.attacker.uid, target_uid=bound.target_uid,
                 map_id=bound.map_id, attacker=attacker_actions, target=target_actions)
@@ -403,7 +531,8 @@ class AttackActionObserver:
             result['typed_bytes_requested'] = max(0, sampler.total - started)
             result['combined_typed_bytes_requested'] = sampler.total
             if reads is not None:
-                result.update(refused_read_bytes=reads.refused, shortfall_at_refused_read=reads.shortfall)
+                result.update(refused_read_bytes=reads.refused, shortfall_at_refused_read=reads.shortfall,
+                    typed_read_changed_field=reads.changed_field, typed_read_changed_origin=reads.changed_origin)
             sampler.bytes, sampler.read_limit = previous_bytes, previous_limit
         return result
 

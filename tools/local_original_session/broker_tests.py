@@ -2359,8 +2359,7 @@ class InventoryUpdateBrokerTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(self.service.store.restore(position.uid), op['new'])
             self.assertIs(wire, op['wire'])
             fields = dict(inventory_update.validate_frame(wire).raw_fields)
-            self.assertEqual(fields, {1: inventory.validate_frame(self.old).identifier, 4: 2,
-                18: dict(inventory.validate_frame(self.old).raw_fields)[18]})
+            self.assertEqual(fields, {1: inventory.validate_frame(self.old).identifier, 4: 2})
         self.writer.write.side_effect = write
         result = await self.update()
         self.assertEqual(result['proof_scope'], 'TRANSPORT_DRAIN_ONLY')

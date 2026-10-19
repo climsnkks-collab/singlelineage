@@ -10,10 +10,11 @@ changes focus. A boundary belongs to one adapter instance for its entire life.
 """
 from __future__ import annotations
 
+import copy
 import ctypes as C
 import asyncio
 from ctypes import wintypes as W
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import json
 import os
 from pathlib import Path
@@ -23,11 +24,15 @@ import time
 from types import MethodType
 
 from tools.local_original_session import commands, edge, movement, observe, move_state
-from tools.local_original_session import attack, attack_session, npc_observe, attack_action_observe
+from tools.local_original_session import attack, attack_session, npc_observe, attack_action_observe, npc_respawn
 
 MESSAGE = 'LC-Owned-Manual-Move-v1'
 ATTACK_MESSAGE = 'LC-Owned-Manual-AttackTarget-v1'
+USE_ITEM_ALREADY_OPEN_MESSAGE = 'LC-Owned-Manual-UseItemAlreadyOpen-v1'
 USE_ITEM_MESSAGE = 'LC-Owned-Manual-UseItem-v1'
+FIRST_ALREADY_OPEN_THEN_NORMAL = 'FIRST_ALREADY_OPEN_THEN_NORMAL'
+CURRENT_ENTRY_ONCE = 'CURRENT_ENTRY_ONCE'
+USE_ITEM_CURRENT_ENTRY_MESSAGE = 'LC-Owned-Manual-UseItemCurrentEntry-v1'
 USE_ITEM_IMAGE_SHA = '8b9e2628286c295adf71bf3c0cb0882164aeaa7d63b97f50c46114b53650b684'
 SOURCE_QUIT_MESSAGE = 'LC-Owned-Manual-SourceQuit-v1'
 SOURCE_RESTART_MESSAGE = 'LC-Owned-Manual-SourceRestart-v1'
@@ -43,6 +48,8 @@ _ACTION_OBSERVER_PREPARE = _ACTION_OBSERVER_TYPE.prepare
 _ACTION_OBSERVER_COLLECT = _ACTION_OBSERVER_TYPE.collect
 _NPC_INCOMPLETE_READS = frozenset(('RECHECKED_SHARED_COUNT_INITIAL_DUPLICATE',
     'RECHECKED_SHARED_COUNT_FINAL_READBACK', 'RECHECKED_SHARED_COUNT_BOTH'))
+_RESPAWN_REQUIRE_CURRENT = npc_respawn.Service.require_current
+_RESPAWN_CURRENT_GENERATION = npc_respawn.Service.current_generation
 WAIT_NS = commands.TOOL_RESULT_WAIT_NS
 SAMPLE_NS = 500_000_000
 MAX_SEQUENCE = commands.MAX_SEQUENCE
@@ -95,6 +102,90 @@ def _source_quit_cancel_check():
         raise asyncio.CancelledError()
 
 
+def _rechecked_action_count_incomplete(row, actor_uid, target_uid, map_id):
+    """Exact discarded producer shape; no action/idle or wait authority alone."""
+    if type(row) is not dict:
+        return False
+    expected = attack_action_observe.empty('ATTACK_OBSERVE_TYPED_READ_CHANGED')
+    expected.update(actor_uid=actor_uid, target_uid=target_uid, map_id=map_id,
+        read_consistency='RECHECKED_SHARED_COUNT_FINAL_READBACK', source_owner_revalidated=True,
+        typed_read_changed_field='SHARED_OWNER_COUNT', typed_read_changed_origin='FINAL_PHYSICAL_READBACK')
+    for key in ('typed_bytes_requested', 'combined_typed_bytes_requested'):
+        value = row.get(key)
+        if type(value) is not int or not 0 <= value <= attack_action_observe.BYTE_LIMIT:
+            return False
+        expected[key] = value
+    return (row['typed_bytes_requested'] <= row['combined_typed_bytes_requested']
+        and set(row) == set(expected) and all(type(row[key]) is type(value) and row[key] == value
+                                            for key, value in expected.items()))
+
+
+@dataclass(frozen=True, slots=True)
+class _LethalPreparation:
+    _consumer: object = field(repr=False)
+    writer: object = field(repr=False)
+    row: object = field(repr=False)
+    session: object = field(repr=False)
+    intent: object = field(repr=False)
+    hp_result: object = field(repr=False)
+    hp_entry: object = field(repr=False)
+    notification_record: object = field(repr=False)
+    lifetime: tuple = field(repr=False)
+    sequence: int
+    target_uid: int
+    accepted_ordinal: int
+    originalstarted_ns: int
+    _pending: object = field(repr=False)
+    _state: object = field(repr=False)
+    _state_data: object = field(repr=False)
+    _native: object = field(repr=False)
+    _request: object = field(repr=False)
+    _result_identity: object = field(repr=False)
+    _death: object = field(repr=False)
+    _death_wire: object = field(repr=False)
+    _feedback_wire: object = field(repr=False)
+
+
+@dataclass(frozen=True, slots=True)
+class _RespawnAttackClaim:
+    receipt: object = field(repr=False)
+    service: object = field(repr=False)
+    generation: object = field(repr=False)
+    old_generation: object = field(repr=False)
+    old_proof: object = field(repr=False)
+    root_proof: object = field(repr=False)
+    writer: object = field(repr=False)
+    row: object = field(repr=False)
+    broker: object = field(repr=False)
+    session: object = field(repr=False)
+    source_guard: object = field(repr=False)
+    provider: object = field(repr=False)
+    player_uid: object = field(repr=False)
+    accepted_before: object = field(repr=False)
+    feedback_before: object = field(repr=False)
+    native_before: object = field(repr=False)
+
+
+@dataclass(frozen=True, slots=True)
+class _RespawnAttackCompleted:
+    _consumer: object = field(repr=False)
+    claim: object = field(repr=False)
+    receipt: object = field(repr=False)
+    generation: object = field(repr=False)
+    writer: object = field(repr=False)
+    row: object = field(repr=False)
+    session: object = field(repr=False)
+    intent: object = field(repr=False)
+    hp_result: object = field(repr=False)
+    hp_entry: object = field(repr=False)
+    lifetime: object = field(repr=False)
+    sequence: object = field(repr=False)
+    accepted_ordinal: object = field(repr=False)
+    _pending: object = field(repr=False)
+    _state: object = field(repr=False)
+    _state_data: object = field(repr=False)
+
+
 class ManualMoveCommands:
     """Sync MoveGoal and awaited optional intents in the existing loop.
 
@@ -108,13 +199,47 @@ class ManualMoveCommands:
     """
     def __init__(self, reader, *, current, clock_ns=time.monotonic_ns, allow_attack=False,
                  allow_attack_replacement=False, observe_attack_feedback=False, allow_use_item=False,
-                 allow_source_restart=False, allow_source_reselect=False):
+                 allow_source_restart=False, allow_source_reselect=False, lethal_attack_preparation=False,
+                 allow_respawn_attack=False, use_item_already_open=False, use_item_entry_policy=None,
+                 use_item_current_entry=False):
         need(type(reader) is observe.RetainedSceneReader and callable(current)
              and callable(clock_ns), 'MANUAL_MOVE_RETAINED_READER_RESOLVER_REQUIRED')
         need(type(allow_attack) is bool, 'MANUAL_ATTACK_EXPLICIT_BOOL_REQUIRED')
+        need(type(lethal_attack_preparation) is bool and (not lethal_attack_preparation
+             or allow_attack is True and observe_attack_feedback is True and allow_attack_replacement is False),
+             'MANUAL_LETHAL_PREPARATION_EXPLICIT_MODE_REQUIRED')
+        self.lethal_attack_preparation = self._lethal_mode = lethal_attack_preparation
+        self._attack_purpose = (lethal_attack_preparation, reader, current, clock_ns)
+        self._lethal_preparation_completed = None
+        need(type(allow_respawn_attack) is bool and (not allow_respawn_attack or lethal_attack_preparation is True),
+             'MANUAL_RESPAWN_ATTACK_EXPLICIT_MODE_REQUIRED')
+        self.allow_respawn_attack = allow_respawn_attack
+        self._respawn_attack_options = (allow_respawn_attack, self._attack_purpose)
+        self._respawn_attack_claimed = False
+        self._respawn_attack_claim = self._respawn_attack_completed = None
+        self._respawn_attack_claims = self._respawn_attack_completions = ()
+        self._respawn_post_discarded = None  # Output-only last discarded post summary.
+        self._respawn_post_discarded_claim = None  # Diagnostic origin, never authority.
         need(type(allow_attack_replacement) is bool, 'MANUAL_MOVE_REPLACEMENT_EXPLICIT_BOOL_REQUIRED')
         need(type(observe_attack_feedback) is bool, 'MANUAL_ATTACK_OBSERVATION_EXPLICIT_BOOL_REQUIRED')
         need(type(allow_use_item) is bool, 'MANUAL_USE_ITEM_EXPLICIT_BOOL_REQUIRED')
+        need(type(use_item_already_open) is bool and (not use_item_already_open or allow_use_item is True),
+             'MANUAL_USE_ITEM_ALREADY_OPEN_EXPLICIT_CAP_REQUIRED')
+        self.use_item_already_open = use_item_already_open
+        need(use_item_entry_policy is None or type(use_item_entry_policy) is str
+             and use_item_entry_policy == FIRST_ALREADY_OPEN_THEN_NORMAL
+             and allow_use_item is True and use_item_already_open is True,
+             'MANUAL_USE_ITEM_ENTRY_POLICY_REQUIRED')
+        need(type(use_item_current_entry) is bool and (not use_item_current_entry
+             or allow_use_item is True and use_item_already_open is False and use_item_entry_policy is None),
+             'MANUAL_USE_ITEM_CURRENT_ENTRY_CAP_REQUIRED')
+        self.use_item_current_entry = self._use_item_current_entry_bound = use_item_current_entry
+        self.use_item_entry_policy = self._item_use_entry_policy_bound = use_item_entry_policy
+        self._item_use_entry_generation_type = self._item_use_entry_generation_current = None
+        if use_item_entry_policy is not None or use_item_current_entry:
+            from tools.local_original_session.broker import _InventoryGeneration, PersistentBroker
+            self._item_use_entry_generation_type = _InventoryGeneration
+            self._item_use_entry_generation_current = PersistentBroker.inventory_selection_current
         need(type(allow_source_restart) is bool, 'MANUAL_SOURCE_RESTART_EXPLICIT_BOOL_REQUIRED')
         need(type(allow_source_reselect) is bool and (not allow_source_reselect or allow_source_restart),
              'MANUAL_SOURCE_RESELECT_EXPLICIT_RESTART_BOOL_REQUIRED')
@@ -152,6 +277,9 @@ class ManualMoveCommands:
         self._busy = False
         self.pending = None
         self.sequence = 0
+        self._action_sequence = None  # Cache of _publish assignment, never a second counter.
+        self._action_bound = None
+        self._readonly_pending = None
         self.last_sample_ns = None
         self._now = None
         self._bound = None
@@ -164,11 +292,29 @@ class ManualMoveCommands:
                           cleanup_required=False, phase='IDLE', native_attempted=False)
 
     def _terminal(self, reason):
+        if not self._respawn_attack_claimed:
+            self._lethal_preparation_completed = None
+        if not self._respawn_attack_completions:
+            self._respawn_attack_completed = None
+        self._action_sequence = self._action_bound = None
         self.state = dict(status='UNKNOWN', reason=reason, sequence=self.sequence,
                           automatic_retry=False, cleanup_required=True,
                           phase=self.pending['phase'] if self.pending is not None else self.state['phase'],
                           native_attempted=(self.pending['native_attempted'] if self.pending is not None
                                             else self.state['native_attempted']))
+        if self.pending is not None:
+            refusal = self.pending.pop('_native_refusal', None)
+            request = self.pending.get('request')
+            if (reason == 'MANUAL_ATTACK_NATIVE_NOT_RETURNED'
+                    and self.pending.get('kind') == 'AttackTarget'
+                    and type(refusal) is tuple and len(refusal) == 3
+                    and type(request) is dict and refusal[0] is request
+                    and type(refusal[1]) is int and refusal[1] == self.sequence == request.get('seq')
+                    and type(refusal[2]) is dict and set(refusal[2]) == {'status', 'reason', 'invoked'}
+                    and refusal[2]['status'] == 'CODE_ANCHOR_BLOCKED'
+                    and type(refusal[2]['reason']) is int and refusal[2]['reason'] == 12
+                    and refusal[2]['invoked'] is False):
+                self.state['native_refusal'] = dict(refusal[2])  # Output only; never completion authority.
         if self._observation is not None and self._attack_observations is None:
             self.state['observation'] = dict(self._observation)
         elif (self._observation is not None and self.pending is not None
@@ -541,6 +687,7 @@ class ManualMoveCommands:
 
     def _enter(self):
         need(threading.get_ident() == self._thread and not self._busy, 'MANUAL_MOVE_REENTRANT_OR_THREAD')
+        need(self._readonly_pending is None, 'MANUAL_MOVE_READONLY_PENDING')
         self._busy = True
 
     def _pending_state(self, reason=None):
@@ -554,11 +701,12 @@ class ManualMoveCommands:
         if self._attack_observations is not None:
             self.state['attack_observations'] = dict(self._attack_observations)
 
-    def _attack_current(self, *, admission=False):
+    def _attack_current(self, *, admission=False, _pending=None):
         """Read real session/target authority; no caller capability or verdict."""
-        pending, current = self.pending, self._current()
+        pending, current = self.pending if _pending is None else _pending, self._current()
         need(self.allow_attack is True and pending is not None and pending.get('kind') == 'AttackTarget',
              'MANUAL_ATTACK_DISABLED_OR_PENDING_CHANGED')
+        self._attack_purpose_current(pending)
         approach_allowed = (self.observe_attack_feedback and not admission
             and pending['phase'] == 'NATIVE_WAIT' and pending['native_attempted'] is True)
         if not approach_allowed:
@@ -621,6 +769,12 @@ class ManualMoveCommands:
         return current
 
     def submit_attack(self, player_uid, target_uid, map_id):
+        return self._submit_attack(player_uid, target_uid, map_id)
+
+    def submit_respawn_attack(self, player_uid, target_uid, map_id, *, receipt):
+        return self._submit_attack(player_uid, target_uid, map_id, _respawn_receipt=receipt)
+
+    def _submit_attack(self, player_uid, target_uid, map_id, *, _respawn_receipt=None):
         """Accept one explicit intent only; native publication is async-polled."""
         if self.state['status'] == 'UNKNOWN':
             return dict(self.state)
@@ -632,10 +786,19 @@ class ManualMoveCommands:
         try:
             self._enter()
             entered = True
-            self.state.update(phase='ADMISSION', native_attempted=False)
+            claim = (None if _respawn_receipt is None else
+                     self._claim_respawn_attack(_respawn_receipt, player_uid, target_uid, map_id))
+            if claim is None:
+                self.state.update(phase='ADMISSION', native_attempted=False)
+            else:
+                self.state = dict(status='PENDING', reason=None, sequence=self.sequence,
+                    automatic_retry=False, cleanup_required=False, phase='ADMISSION',
+                    native_attempted=False, command='AttackTarget')
             self._observation = None
             self._attack_observations = {} if self.observe_attack_feedback else None
             need(self.allow_attack is True, 'MANUAL_ATTACK_DISABLED')
+            need(not self._lethal_mode or self._lethal_preparation_completed is None or claim is not None,
+                 'MANUAL_LETHAL_PREPARATION_ALREADY_COMPLETED')
             need(all(type(n) is int for n in (player_uid, target_uid, map_id))
                  and 0 < player_uid <= 0xffffffff and 0 < target_uid <= 0xffffffff
                  and target_uid != player_uid and 0 <= map_id <= 0x7fffffff,
@@ -668,7 +831,14 @@ class ManualMoveCommands:
                 request=None, initial=current[3], before=current[7], started=now,
                 target_uid=target_uid, attack_request=request, attack_session=session,
                 attack_targets=targets, attack_projection=projection, observer=self._attack_observer,
-                attack_before=session.accepted_count, npc_ready=False, native=None, result_identity=None)
+                attack_before=session.accepted_count, npc_ready=False, native=None, result_identity=None,
+                lethal_preparation=self._lethal_mode if claim is None else False,
+                attack_purpose=self._attack_purpose if claim is None else claim)
+            if claim is not None:
+                self.pending['respawn_attack'] = claim
+            if self._lethal_mode and claim is None:
+                self.pending.update(lethal_preparation=True,
+                    lethal_source=(self.reader, self.current, self.clock_ns, current[0].broker, current[0].broker.source_guard))
             if self.observe_attack_feedback:
                 self.pending.update(action_observer=self._attack_action_observer,
                     feedback_before=session.feedback_drained, feedback_action_next=False,
@@ -682,8 +852,8 @@ class ManualMoveCommands:
                 self._busy = False
         return dict(self.state)
 
-    def _attack_result(self, current):
-        pending = self.pending
+    def _attack_result(self, current, *, _pending=None):
+        pending = self.pending if _pending is None else _pending
         path = current[5] / ('attack-target-result-' + str(self.sequence) + '.json')
         try:
             row = commands._closed_health_json(path)
@@ -697,6 +867,9 @@ class ManualMoveCommands:
              and all(type(row.get(k)) is type(v) and row[k] == v for k, v in expected.items())
              and type(row['reason']) is int and type(row['invoked']) is bool,
              'MANUAL_ATTACK_RESULT_IDENTITY_OR_SCHEMA')
+        if row['status'] == 'CODE_ANCHOR_BLOCKED' and row['reason'] == 12 and row['invoked'] is False:
+            pending['_native_refusal'] = (pending['request'], self.sequence,
+                dict(status=row['status'], reason=row['reason'], invoked=row['invoked']))
         need(row['status'] == 'RETURNED' and row['invoked'] is True and row['reason'] == 0,
              'MANUAL_ATTACK_NATIVE_NOT_RETURNED')
         info = commands._ordinary(path).stat()
@@ -763,15 +936,17 @@ class ManualMoveCommands:
         actual = self._restart_current_method(broker, writer, row, state=state, cleared=cleared)
         original = pending['restart_binding']
         need(original is not None, 'MANUAL_SOURCE_RESTART_BINDING_REQUIRED')
-        # The original native callback sends one settings frame before 4E33.
+        # Any new settings request must precede 4E33; an existing valid
+        # opaque value need not be saved again for this Restart.
         # Keep every object and immutable peer/handle value fixed; settings
         # changes require that real receive and the original Store validation.
         prefix = 2 + 2 * len(row['peer']) + 3
         need(len(actual[0]) == len(original[0]) and all(a is b for a, b in zip(actual[0], original[0]))
              and actual[1][:prefix] == original[1][:prefix], 'MANUAL_SOURCE_RESTART_AUTHORITY_CHANGED')
         store, before = pending['settings_store'], pending['settings_before']
-        need(broker.realm.settings is store and type(store.committed) is int
-             and store.committed in (before, before + 1), 'MANUAL_SOURCE_RESTART_SETTINGS_UNKNOWN')
+        need(broker.realm.settings is store and type(before) is int and before >= 0
+             and type(store.committed) is int and store.committed in (before, before + 1),
+             'MANUAL_SOURCE_RESTART_SETTINGS_UNKNOWN')
         if pending['native_attempted'] is False:
             self._restart_same_method(original, actual)
             need(state is None, 'MANUAL_SOURCE_RESTART_PREPOST_CHANGED')
@@ -784,15 +959,19 @@ class ManualMoveCommands:
             restart_rx = [index for index, event in enumerate(events[offset:]) if event[0] == 'rx'
                           and event[1] == row['peer']['endpoint_port'] and event[2] == 0x4e33]
             need(len(settings_rx) <= 1 and len(restart_rx) <= 1
-                 and (store.committed == before and not settings_rx or store.committed == before + 1 and len(settings_rx) == 1)
-                 and (not restart_rx or len(settings_rx) == 1 and settings_rx[0] < restart_rx[0]),
+                 and store.committed == before + len(settings_rx)
+                 and (not settings_rx or not restart_rx or settings_rx[0] < restart_rx[0]),
                  'MANUAL_SOURCE_RESTART_SETTINGS_UNKNOWN')
             if store.committed == before:
                 self._restart_same_method(original, actual)
             if state is not None:
+                # _restart_current just validated this same Store's account,
+                # failure latch and actual _load metadata == last. A valid
+                # existing opaque value does not require another 4ED6/save.
+                need(type(store.last) is dict, 'MANUAL_SOURCE_RESTART_SETTINGS_UNKNOWN')
                 need(type(state) is dict and (pending['restart_state'] is None or pending['restart_state'] is state)
-                     and state['lock'] is row['operation_lock'] and len(restart_rx) == 1
-                     and store.committed == before + 1, 'MANUAL_SOURCE_RESTART_FRAME_CHANGED')
+                     and state['lock'] is row['operation_lock'] and len(restart_rx) == 1,
+                     'MANUAL_SOURCE_RESTART_FRAME_CHANGED')
                 self._restart_same_method(state['binding'], actual)
                 pending['restart_state'] = state
         need(self.state['status'] != 'UNKNOWN', 'MANUAL_MOVE_TERMINAL')
@@ -1215,7 +1394,10 @@ class ManualMoveCommands:
     def _use_item_result(self, current):
         """Callee return/lease cleanup only; never received intent or use effect."""
         pending = self.pending
-        path = current[5] / ('use-item-result-' + str(self.sequence) + '.json')
+        already_open = pending.get('already_open_entry', False)
+        current_entry = pending.get('current_entry_capability') is CURRENT_ENTRY_ONCE
+        path = current[5] / (('use-item-current-entry-result-' if current_entry else 'use-item-already-open-result-' if already_open else 'use-item-result-')
+                             + str(self.sequence) + '.json')
         try:
             row = commands._closed_health_json(path)
         except (FileNotFoundError, json.JSONDecodeError, UnicodeError):
@@ -1223,7 +1405,8 @@ class ManualMoveCommands:
         if row is None:
             need(pending['native'] is None, 'MANUAL_USE_ITEM_IMMUTABLE_RESULT_DISAPPEARED')
             return
-        expected = dict(pending['request'], schema='own-use-item-result-v1')
+        expected = dict(pending['request'], schema=('own-use-item-current-entry-result-v1' if current_entry
+                                                   else 'own-use-item-already-open-result-v1' if already_open else 'own-use-item-result-v1'))
         need(set(row) == set(expected) | {'status', 'reason', 'invoked'}
              and all(type(row.get(k)) is type(v) and row[k] == v for k, v in expected.items())
              and type(row['status']) is str and row['status'] in
@@ -1246,6 +1429,17 @@ class ManualMoveCommands:
         pending, current = self.pending, self._current()
         need(self.allow_use_item is True and pending is not None and pending.get('kind') == 'UseItem',
              'MANUAL_USE_ITEM_DISABLED_OR_PENDING_CHANGED')
+        need(type(self.use_item_current_entry) is bool
+             and self.use_item_current_entry is self._use_item_current_entry_bound
+             and pending.get('current_entry_capability') is (CURRENT_ENTRY_ONCE if self._use_item_current_entry_bound else None),
+             'MANUAL_USE_ITEM_CURRENT_ENTRY_CHANGED')
+        need(self.use_item_entry_policy is self._item_use_entry_policy_bound,
+             'MANUAL_USE_ITEM_ENTRY_POLICY_CHANGED')
+        need(type(self.use_item_already_open) is bool
+             and (pending.get('already_open_entry', False) is self.use_item_already_open
+                  if self._item_use_entry_policy_bound is None else self.use_item_already_open is True
+                  and type(pending.get('already_open_entry')) is bool),
+             'MANUAL_USE_ITEM_ENTRY_SELECTION_CHANGED')
         need(current[6]['candidate_sha256'] == USE_ITEM_IMAGE_SHA,
              'MANUAL_USE_ITEM_PROGRAM_IMAGE_REQUIRED')
         need(current[3] is pending['initial'] and current[7] == pending['before'],
@@ -1281,6 +1475,36 @@ class ManualMoveCommands:
         need(type(count) is int and before <= count <= before + (0 if admission else 1),
              'MANUAL_USE_ITEM_INTENT_COUNTER_AMBIGUOUS')
         need(self.state['status'] != 'UNKNOWN', 'MANUAL_MOVE_TERMINAL')
+        if self._item_use_entry_policy_bound is not None:
+            entry = pending.get('entry_binding')
+            need(type(entry) is tuple and len(entry) == 7
+                 and entry[0] is self._item_use_entry_policy_bound
+                 and entry[2] is session and type(entry[3]) is int and entry[3] == before
+                 and entry[4] is refs[3] and entry[5] is refs[5]
+                 and type(entry[6]) is bool and entry[6] is (before == 0)
+                 and pending['already_open_entry'] is entry[6],
+                 'MANUAL_USE_ITEM_PENDING_ENTRY_CHANGED')
+            generation = entry[1]
+            need(type(generation) is self._item_use_entry_generation_type
+                 and PersistentBroker.inventory_selection_current is self._item_use_entry_generation_current
+                 and self._item_use_entry_generation_current(broker, current[0].writer) is generation
+                 and generation is broker._inventory_generation and generation.phase == 'ACTIVE'
+                 and generation.item_use_session is session and generation.selection_binding is entry[4]
+                 and generation.current_frame is entry[5],
+                 'MANUAL_USE_ITEM_ENTRY_GENERATION_CHANGED')
+        if self._use_item_current_entry_bound:
+            entry = pending.get('current_entry_binding')
+            need(type(entry) is tuple and len(entry) == 5 and entry[0] is CURRENT_ENTRY_ONCE
+                 and entry[2] is session and entry[3] is refs[3] and entry[4] is refs[5],
+                 'MANUAL_USE_ITEM_CURRENT_ENTRY_BINDING_CHANGED')
+            generation = entry[1]
+            need(type(generation) is self._item_use_entry_generation_type
+                 and PersistentBroker.inventory_selection_current is self._item_use_entry_generation_current
+                 and self._item_use_entry_generation_current(broker, current[0].writer) is generation
+                 and generation is broker._inventory_generation and generation.phase == 'ACTIVE'
+                 and generation.item_use_session is session and generation.selection_binding is entry[3]
+                 and generation.current_frame is entry[4],
+                 'MANUAL_USE_ITEM_CURRENT_ENTRY_GENERATION_CHANGED')
         return current
 
     def submit_use_item(self, player_uid, item_identifier, map_id):
@@ -1328,6 +1552,22 @@ class ManualMoveCommands:
                 request=None, initial=current[3], before=current[7], started=now,
                 item_identifier=item_identifier, item_session=session, inventory_refs=refs,
                 item_before=session.accepted_count, checked_ns=None, native=None, result_identity=None)
+            if self.use_item_already_open:
+                self.pending['already_open_entry'] = True
+            if self._item_use_entry_policy_bound is not None:
+                # Selection is made once from this real session's ORIGINAL
+                # admission counter, never its later in-flight counter.
+                before = self.pending['item_before']
+                already_open = before == 0
+                self.pending['entry_binding'] = (self._item_use_entry_policy_bound,
+                    broker._inventory_generation, session, before, refs[3], refs[5], already_open)
+                self.pending['already_open_entry'] = already_open
+            if self._use_item_current_entry_bound:
+                # The host binds only capability and current authority. The
+                # original received counter never chooses a Native entry.
+                self.pending['current_entry_capability'] = CURRENT_ENTRY_ONCE
+                self.pending['current_entry_binding'] = (CURRENT_ENTRY_ONCE,
+                    broker._inventory_generation, session, refs[3], refs[5])
             self._use_item_current(admission=True)
             self._pending_state()
         except BaseException as error:
@@ -1467,18 +1707,39 @@ class ManualMoveCommands:
             queued_attack=kind('attacker', 'queue_head', 'AttackAction'),
             current_pair=pair('current'), queued_pair=pair('queue_head'),
             damaged_current=kind('target', 'current', 'DamagedAction'),
-            damaged_queued=kind('target', 'queue_head', 'DamagedAction'))
+            damaged_queued=kind('target', 'queue_head', 'DamagedAction'),
+            death_current=kind('target', 'current', 'DeathAction'),
+            death_queued=kind('target', 'queue_head', 'DeathAction'))
         for source, target, minimum, maximum in (
                 ('combined_typed_bytes_requested', 'combined_bytes', 0, 24576),
                 ('refused_read_bytes', 'refused_bytes', 1, 4096),
                 ('shortfall_at_refused_read', 'shortfall_bytes', 1, 4096)):
             value = row.get(source)
             projected[target] = value if type(value) is int and minimum <= value <= maximum else None
+        field = row.get('typed_read_changed_field')
+        if (row.get('status') == 'UNKNOWN' and row.get('reason') == 'ATTACK_OBSERVE_TYPED_READ_CHANGED'
+                and row.get('typed_read_changed_origin') == 'FINAL_PHYSICAL_READBACK'
+                and type(field) is str and field in attack_action_observe.READBACK_FIELDS):
+            # One small enum combines this known readback origin and field.
+            # It carries no raw address/value, admission or retry permission.
+            projected['read_field'] = attack_action_observe.READBACK_FIELDS[field]
+        if (row.get('status') == 'UNKNOWN'
+                and row.get('reason') == 'ATTACK_OBSERVE_COUNT_ACTION_UNCLASSIFIED'):
+            if field == 'SHARED_OWNER_COUNT' and row.get('typed_read_changed_origin') == 'FINAL_PHYSICAL_READBACK':
+                projected['read_field'] = attack_action_observe.READBACK_FIELDS[field]
+            refusal = row.get('count_action_refusal')
+            if type(refusal) is int and 1 <= refusal <= 8:
+                projected['count_refusal'] = refusal  # Output only; never admission/wait authority.
+                rva = row.get('count_action_type_rva')
+                if refusal in (1, 3, 5, 7) and type(rva) is int and 0 <= rva < attack_action_observe.READBACK_TYPE_RVA_LIMIT:
+                    projected['count_type_rva'] = rva
         return projected
 
     async def _action_sample(self, current, stage, *, strict_idle=False, feedback_intent=None):
         """One prepared retained read inside the existing row lock and slot."""
         pending, observer = self.pending, self._attack_action_observer
+        need(not pending.get('lethal_preparation') or stage == 'pre_command',
+             'MANUAL_LETHAL_PREPARATION_POST_SNAPSHOT_FORBIDDEN')
         async with current[1]['operation_lock']:
             current = self._attack_current(admission=pending['phase'] == 'ADMISSION')
             need(attack_action_observe.AttackActionObserver is _ACTION_OBSERVER_TYPE
@@ -1493,6 +1754,7 @@ class ManualMoveCommands:
                  and observer.targets.broker is current[0].broker,
                  'MANUAL_ATTACK_ACTION_SAME_OBSERVER_REQUIRED')
             session = pending['attack_session']
+            feedback_frame = session._feedback_frame if feedback_intent is not None else None
             if feedback_intent is not None:
                 need(session.feedback_drained == pending['feedback_before'] + 1
                      and session.validate_feedback(current[0].writer, session._feedback_frame, state='DRAINED')
@@ -1514,6 +1776,10 @@ class ManualMoveCommands:
             cache_changed = (stage == 'pre_command' and pending['phase'] == 'ADMISSION'
                 and pending['native_attempted'] is False and type(raw) is dict
                 and raw.get('reason') == 'ATTACK_OBSERVE_CACHE_TYPED_READ_CHANGED')
+            rechecked_count = (stage == 'pre_command' and pending['phase'] == 'ADMISSION'
+                and pending['native_attempted'] is False
+                and _rechecked_action_count_incomplete(raw, pending['initial'].uid,
+                                                      pending['target_uid'], pending['initial'].map_id))
             idle_discarded = (stage == 'next_strict_idle' and strict_idle is True
                 and self.observe_attack_feedback is True and pending['phase'] == 'NATIVE_WAIT'
                 and pending['native_attempted'] is True and feedback_intent is not None
@@ -1522,8 +1788,47 @@ class ManualMoveCommands:
                 and self._attack_observations.get('post_feedback', {}).get('status') == 'OBSERVED'
                 and type(raw) is dict and raw.get('reason') in
                     ('ATTACK_OBSERVE_TYPED_READ_CHANGED', 'ATTACK_OBSERVE_CACHE_TYPED_READ_CHANGED'))
+            respawn_post_discarded = (stage == 'post_feedback' and strict_idle is False
+                and type(pending.get('respawn_attack')) is _RespawnAttackClaim
+                and pending['respawn_attack'] is self._respawn_attack_claim
+                and self.observe_attack_feedback is True and pending['phase'] == 'NATIVE_WAIT'
+                and pending['native_attempted'] is True and pending['native'] is not None
+                and feedback_intent is not None and pending['feedback_intent'] is None
+                and pending['feedback_frame'] is None and type(raw) is dict
+                and raw.get('status') == 'UNKNOWN'
+                and raw.get('reason') == 'ATTACK_OBSERVE_TYPED_READ_CHANGED'
+                and raw.get('typed_read_changed_field') == 'ACTION_QUEUE_HEADER'
+                and raw.get('typed_read_changed_origin') == 'FINAL_PHYSICAL_READBACK')
+            if respawn_post_discarded:
+                self._respawn_attack_current(pending['respawn_attack'])
+                expected = attack_action_observe.empty('ATTACK_OBSERVE_TYPED_READ_CHANGED')
+                typed, combined = (raw.get(key) for key in ('typed_bytes_requested', 'combined_typed_bytes_requested'))
+                need(type(typed) is type(combined) is int
+                     and 0 <= typed <= combined <= attack_action_observe.BYTE_LIMIT,
+                     'MANUAL_RESPAWN_POST_READ_SHAPE_REQUIRED')
+                expected.update(typed_bytes_requested=typed, combined_typed_bytes_requested=combined,
+                    typed_read_changed_field='ACTION_QUEUE_HEADER',
+                    typed_read_changed_origin='FINAL_PHYSICAL_READBACK')
+                need(set(raw) == set(expected)
+                     and all(type(raw[key]) is type(value) and raw[key] == value
+                             for key, value in expected.items()),
+                     'MANUAL_RESPAWN_POST_READ_SHAPE_REQUIRED')
             if idle_discarded:
                 expected = attack_action_observe.empty(raw['reason'])
+                if _rechecked_action_count_incomplete(raw, pending['initial'].uid,
+                                                     pending['target_uid'], pending['initial'].map_id):
+                    # Preserve the original feedback-bound next-idle discard
+                    # only. This never returns to admission or grants a Post.
+                    expected.update(actor_uid=pending['initial'].uid, target_uid=pending['target_uid'],
+                        map_id=pending['initial'].map_id,
+                        read_consistency='RECHECKED_SHARED_COUNT_FINAL_READBACK',
+                        source_owner_revalidated=True)
+                field, origin = (raw.get(key) for key in ('typed_read_changed_field', 'typed_read_changed_origin'))
+                need((field is origin is None) or type(field) is str
+                     and field in attack_action_observe.READBACK_FIELDS
+                     and type(origin) is str and origin == 'FINAL_PHYSICAL_READBACK',
+                     'MANUAL_ATTACK_IDLE_READ_SHAPE_REQUIRED')
+                expected.update(typed_read_changed_field=field, typed_read_changed_origin=origin)
                 typed, combined = (raw.get(key) for key in ('typed_bytes_requested', 'combined_typed_bytes_requested'))
                 need(type(typed) is type(combined) is int and 0 <= typed <= combined <= attack_action_observe.BYTE_LIMIT,
                      'MANUAL_ATTACK_IDLE_READ_SHAPE_REQUIRED')
@@ -1538,17 +1843,29 @@ class ManualMoveCommands:
                     expected[key] = raw[key]
                 need(set(raw) == set(expected) and all(type(raw[key]) is type(value) and raw[key] == value
                      for key, value in expected.items()), 'MANUAL_ATTACK_ADMISSION_READ_SHAPE_REQUIRED')
-            need(cache_changed or idle_discarded or type(raw) is dict and raw.get('status') == 'OBSERVED'
+            need(cache_changed or idle_discarded or rechecked_count or respawn_post_discarded
+                 or type(raw) is dict and raw.get('status') == 'OBSERVED'
                  and raw.get('source_contract_valid') is True and raw.get('stable_double_read') is True
                  and (raw.get('actor_uid'), raw.get('target_uid'), raw.get('map_id')) ==
                     (pending['initial'].uid, pending['target_uid'], pending['initial'].map_id),
                  'MANUAL_ATTACK_ACTION_SNAPSHOT_UNKNOWN')
             idle = None
-            if idle_discarded:
+            if respawn_post_discarded:
+                # Discarded action bytes grant no post/latch/idle evidence.
+                # Only this query's independent current world/motion permits
+                # waiting for the next original NPC and full action slots.
+                need(self._observe(current, now, _sampled=row)[0] is True,
+                     'MANUAL_RESPAWN_POST_READ_AUTHORITY_UNKNOWN')
+                idle = False
+            elif idle_discarded:
                 # Validate the same query's original scene/world/motion gates,
                 # but consume no idle verdict or discarded action bytes.
                 need(self._observe(current, now, _sampled=row)[0] is True,
                      'MANUAL_ATTACK_IDLE_READ_AUTHORITY_UNKNOWN')
+                idle = False
+            elif rechecked_count:
+                need(self._observe(current, now, _sampled=row, admitting=True) == (True, True),
+                     'MANUAL_ATTACK_ADMISSION_READ_AUTHORITY_UNKNOWN')
                 idle = False
             elif strict_idle:
                 # MoveState intentionally does not qualify AttackAction. A
@@ -1589,18 +1906,38 @@ class ManualMoveCommands:
                      and pending['feedback_frame'] is session._feedback_frame
                      and session.validate_feedback(current[0].writer, pending['feedback_frame'], state='DRAINED')
                          is feedback_intent, 'MANUAL_ATTACK_CURRENT_FEEDBACK_REQUIRED')
+            if respawn_post_discarded:
+                current = self._attack_current()
+                self._respawn_attack_current(pending['respawn_attack'])
+                self._attack_result(current)
+                need(self.pending is pending and pending['feedback_intent'] is None
+                     and pending['feedback_frame'] is None
+                     and session._feedback_frame is feedback_frame
+                     and session.feedback_drained == pending['feedback_before'] + 1
+                     and session.validate_feedback(current[0].writer, session._feedback_frame, state='DRAINED')
+                         is feedback_intent,
+                     'MANUAL_ATTACK_CURRENT_FEEDBACK_REQUIRED')
             task = asyncio.current_task()
             if task is not None and task.cancelling():
                 raise asyncio.CancelledError()
             if cache_changed and idle:
                 self.state['reason'] = 'MANUAL_ATTACK_CACHE_READ_CHANGED_ADMISSION'
                 idle = False  # No action proof or admission; next slot must refresh NPC first.
-            self._attack_observations[stage] = self._action_projection(raw, now, None if cache_changed or idle_discarded else idle)
+            if rechecked_count:
+                self.state['reason'] = 'MANUAL_ATTACK_RECHECKED_COUNT_ADMISSION'
+            self._attack_observations[stage] = self._action_projection(raw, now,
+                None if cache_changed or idle_discarded or rechecked_count or respawn_post_discarded else idle)
             self.state['attack_observations'] = dict(self._attack_observations)
+            if respawn_post_discarded:
+                # Never read by admission, waiting or completion decisions.
+                self._respawn_post_discarded_claim = pending['respawn_attack']
+                self._respawn_post_discarded = dict(at_ns=now, read_field=3,
+                    combined_bytes=raw['combined_typed_bytes_requested'])
             return idle
 
-    def _feedback_intent(self, current):
-        pending, session = self.pending, self.pending['attack_session']
+    def _feedback_intent(self, current, *, _pending=None):
+        pending = self.pending if _pending is None else _pending
+        session = pending['attack_session']
         if session.accepted_count != pending['attack_before'] + 1 or pending['native'] is None:
             return None
         intent = session.current_intent()
@@ -1635,7 +1972,10 @@ class ManualMoveCommands:
             self._pending_state('MANUAL_ATTACK_FEEDBACK_DRAIN_PENDING')
             return
         if pending['feedback_intent'] is None:
-            await self._action_sample(current, 'post_feedback', feedback_intent=intent)
+            post = await self._action_sample(current, 'post_feedback', feedback_intent=intent)
+            if post is False:
+                self._pending_state('MANUAL_RESPAWN_ATTACK_POST_SNAPSHOT_PENDING')
+                return  # No latch: next original NPC slot must precede a new Post.
             pending['feedback_intent'], pending['feedback_frame'] = intent, pending['attack_session']._feedback_frame
             self._pending_state('MANUAL_ATTACK_STRICT_IDLE_PENDING')
             return
@@ -1670,6 +2010,378 @@ class ManualMoveCommands:
                 command='AttackTarget', proof_scope='VALIDATED_ATTACK_INTENT_ONLY', combat_effect='UNKNOWN',
                 observation_scope='READONLY_ACTION_SNAPSHOTS',
                 attack_observations={key: value for key, value in self._attack_observations.items() if key != 'post_command'})
+            if pending.get('respawn_attack') is not None:
+                self._complete_respawn_attack(pending['respawn_attack'], pending, current)
+
+    def _respawn_attack_current(self, claim):
+        from tools.local_original_session import npc_respawn
+        need(type(claim) is _RespawnAttackClaim and self._respawn_attack_claim is claim
+             and self._respawn_attack_claimed is True and self.allow_respawn_attack is True
+             and self._respawn_attack_options[0] is True
+             and self._respawn_attack_options[1] is self._attack_purpose
+             and self.lethal_attack_preparation is self._lethal_mode is True
+             and self._attack_purpose[0] is True and self.allow_attack is True
+             and self.observe_attack_feedback is True and self.allow_attack_replacement is False
+             and self._lethal_preparation_completed is claim.root_proof
+             and type(self._respawn_attack_claims) is tuple
+             and self._respawn_attack_claims[-1] is claim
+             and len(self._respawn_attack_claims) == claim.generation.ordinal
+             and (claim.generation.ordinal == 1 and claim.old_proof is claim.root_proof
+                  or claim.generation.ordinal == 2 and type(self._respawn_attack_completions) is tuple
+                  and self._respawn_attack_completions[0] is claim.old_proof
+                  and claim.old_proof.claim is self._respawn_attack_claims[0]
+                  and claim.old_proof.generation is claim.old_generation)
+             and self._reservation is True and type(self.sequence) is int
+             and claim.native_before <= self.sequence <= claim.native_before + 1
+             and self._action_sequence == self.sequence and self._action_bound is self._bound,
+             'MANUAL_RESPAWN_ATTACK_ONCE_PURPOSE_REQUIRED')
+        current = self._current()
+        broker, writer, row = current[0].broker, current[0].writer, current[1]
+        service, receipt = claim.service, claim.receipt
+        need(type(service) is npc_respawn.Service and type(receipt) is npc_respawn.Receipt
+             and service is broker._npc_respawn is broker.realm._npc_respawn
+             and service.require_current.__func__ is _RESPAWN_REQUIRE_CURRENT
+             and service.current_generation.__func__ is _RESPAWN_CURRENT_GENERATION
+             and service._phases.get(id(writer)) == 'COMMITTED'
+             and service.require_current(receipt) is claim.generation
+             and receipt.generation is claim.generation and receipt.old_generation is claim.old_generation
+             and receipt.writer is writer is claim.writer and receipt.row is row is claim.row
+             and broker is claim.broker and broker.source_guard is claim.source_guard
+             and current[3].map_id == receipt.spawn.map_id and current[3].uid == claim.player_uid
+             and type(receipt.generation.ordinal) is type(receipt.old_generation.ordinal) is int
+             and receipt.generation.ordinal in (1, 2)
+             and receipt.generation.ordinal == receipt.old_generation.ordinal + 1
+             and claim.accepted_before == claim.native_before == receipt.generation.ordinal
+             and receipt.old_generation.frames is claim.old_proof.lifetime[5]
+             and receipt.generation.frames is broker.realm._npc_frames[id(writer)]
+             and receipt.mover is receipt.generation.mover is broker.realm.npc_mover(writer)
+             and receipt.old_generation.mover.closed is True,
+             'MANUAL_RESPAWN_ATTACK_CURRENT_GENERATION_REQUIRED')
+        old_source = claim.root_proof._pending['lethal_source']
+        need(self.reader is old_source[0] and self.current is old_source[1]
+             and self.clock_ns is old_source[2] and broker is old_source[3]
+             and broker.source_guard is old_source[4] and claim.session is broker._attack_session
+             and claim.session is broker.realm._attack_session and not claim.session.closed and not claim.session.fatal
+             and claim.session._hp.provider is claim.provider is claim.session._hp_provider
+             and claim.session.accepted_count in (claim.accepted_before, claim.accepted_before + 1)
+             and claim.session.feedback_drained in (claim.feedback_before, claim.feedback_before + 1),
+             'MANUAL_RESPAWN_ATTACK_SOURCE_OR_COUNTER_CHANGED')
+        key = id(writer), receipt.spawn.uid
+        if claim.session.accepted_count == claim.accepted_before:
+            need(claim.session._current is None and claim.session._hp._entries.get(key) is None
+                 and claim.session._notifications._records.get(key) is None,
+                 'MANUAL_RESPAWN_ATTACK_FRESH_ENTRY_REQUIRED')
+        return current
+
+    def _claim_respawn_attack(self, receipt, player_uid, target_uid, map_id):
+        from tools.local_original_session import npc_respawn, npc_hp
+        need(self.allow_respawn_attack is self._respawn_attack_options[0] is True
+             and type(self._respawn_attack_claims) is type(self._respawn_attack_completions) is tuple
+             and len(self._respawn_attack_claims) == len(self._respawn_attack_completions) < 2,
+             'MANUAL_RESPAWN_ATTACK_DISABLED_OR_CLAIMED')
+        self._respawn_attack_claimed = True  # Historical once; never reset for a new generation.
+        if not self._respawn_attack_claims:
+            old = root = self.lethal_preparation_settled()
+        else:
+            old = self._respawn_attack_completed
+            need(type(old) is _RespawnAttackCompleted
+                 and self._respawn_attack_completions[-1] is old
+                 and old._consumer is self and old.claim is self._respawn_attack_claims[-1]
+                 and self._respawn_attack_claim is old.claim and self.pending is None
+                 and self.state is old._state and self.state == old._state_data
+                 and self.state['status'] == self.state['phase'] == 'COMMITTED',
+                 'MANUAL_RESPAWN_ATTACK_PREVIOUS_COMPLETION_REQUIRED')
+            root = old.claim.root_proof
+            need(type(root) is _LethalPreparation and self._lethal_preparation_completed is root,
+                 'MANUAL_RESPAWN_ATTACK_ROOT_PREPARATION_REQUIRED')
+        current = self._current()
+        need(all(type(v) is int for v in (player_uid, target_uid, map_id))
+             and type(receipt) is npc_respawn.Receipt and receipt.writer is current[0].writer
+             and receipt.row is current[1] and receipt.spawn.uid == target_uid == old.hp_result.target.uid
+             and current[3].uid == player_uid and current[3].map_id == map_id == receipt.spawn.map_id
+             and old.accepted_ordinal == len(self._respawn_attack_claims) + 1
+             and self.sequence == old.sequence
+             and self._reservation is True and self._action_sequence == old.sequence
+             and self._action_bound is self._bound,
+             'MANUAL_RESPAWN_ATTACK_EXPLICIT_RECEIPT_REQUIRED')
+        broker, session = current[0].broker, current[0].broker._attack_session
+        need(session is old.session and session.accepted_count == old.accepted_ordinal
+             and session.feedback_drained == old._pending['feedback_before'] + 1
+             and session.last_hp_result is old.hp_result and session._current is None,
+             'MANUAL_RESPAWN_ATTACK_RETIRED_OLD_LIFE_REQUIRED')
+        need(type(session._hp.provider) is npc_hp.ExplicitInputs and session._hp.provider is session._hp_provider,
+             'MANUAL_RESPAWN_ATTACK_EXPLICIT_PROVIDER_REQUIRED')
+        claim = _RespawnAttackClaim(receipt, receipt._service, receipt.generation, receipt.old_generation,
+            old, root, current[0].writer, current[1], broker, session, broker.source_guard,
+            session._hp.provider, player_uid, session.accepted_count, session.feedback_drained, self.sequence)
+        self._respawn_attack_claims += (claim,)
+        self._respawn_attack_claim = claim
+        self._respawn_attack_current(claim)
+        claim.source_guard()
+        self._respawn_attack_current(claim)
+        _source_quit_cancel_check()
+        return claim
+
+    def _respawn_attack_result(self, claim, pending, current):
+        from tools.local_original_session import npc_hp
+        session, writer, row = claim.session, claim.writer, claim.row
+        need(row['operation_lock'].locked(), 'MANUAL_RESPAWN_ATTACK_ROW_LOCK_REQUIRED')
+        self._respawn_attack_current(claim)
+        self._attack_result(current, _pending=pending)
+        intent = self._feedback_intent(current, _pending=pending)
+        result = session.last_hp_result
+        entry = session._hp._entries.get((id(writer), claim.receipt.spawn.uid))
+        lifetime, target = session._hp_binding(writer, row, claim.receipt.spawn.uid)
+        need(type(intent) is attack_session.AttackIntent and session.current_intent() is intent
+             and intent is not claim.old_proof.intent
+             and intent.accepted_ordinal == session.accepted_count == claim.accepted_before + 1
+             and session.feedback_drained == claim.feedback_before + 1
+             and session.validate_feedback(writer, session._feedback_frame, state='DRAINED') is intent
+             and type(result) is npc_hp.Result and result is not claim.old_proof.hp_result
+             and result.accepted_ordinal == intent.accepted_ordinal and result.hit.landed is True
+             and result.before.alive is True and entry is not None and entry is not claim.old_proof.hp_entry
+             and entry.writer is writer and entry.row is row and entry.intent is intent
+             and entry.hp is result.after and entry.target == result.target == target
+             and entry.lifetime[5] is claim.generation.frames and len(entry.lifetime) == len(lifetime)
+             and all(a is b for a, b in zip(entry.lifetime, lifetime)),
+             'MANUAL_RESPAWN_ATTACK_NEW_LAZY_HP_REQUIRED')
+        # This subset consumes the existing immutable explicit provider rows.
+        # No initialization call, HP value write or fake attack occurs here.
+        provider = session._hp.provider
+        need(type(provider) is npc_hp.ExplicitInputs, 'MANUAL_RESPAWN_ATTACK_EXPLICIT_PROVIDER_REQUIRED')
+        provider_row, = [r for r in provider.rows if r.target == result.target]
+        need(result.before is provider_row.hp and result.hit is provider_row.hit,
+             'MANUAL_RESPAWN_ATTACK_LAZY_PROVIDER_INPUT_CHANGED')
+        return intent, result, entry
+
+    def _complete_respawn_attack(self, claim, pending, current):
+        before = self._respawn_attack_result(claim, pending, current)
+        claim.source_guard()
+        current = self._attack_current(_pending=pending)
+        actual = self._respawn_attack_result(claim, pending, current)
+        need(all(a is b for a, b in zip(before, actual))
+             and self.state['status'] == self.state['phase'] == 'COMMITTED'
+             and self.state['proof_scope'] == 'VALIDATED_ATTACK_INTENT_ONLY'
+             and self._attack_observations['post_feedback']['status'] == 'OBSERVED'
+             and self._attack_observations['next_strict_idle']['status'] == 'OBSERVED'
+             and self._attack_observations['next_strict_idle']['strict_idle'] is True,
+             'MANUAL_RESPAWN_ATTACK_ORIGINAL_COMPLETION_REQUIRED')
+        need(self._clock() - pending['started'] < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
+        current = self._attack_current(_pending=pending)
+        final = self._respawn_attack_result(claim, pending, current)
+        need(all(a is b for a, b in zip(actual, final)), 'MANUAL_RESPAWN_ATTACK_COMPLETED_LIFE_CHANGED')
+        self._attack_result(current, _pending=pending)
+        _source_quit_cancel_check()
+        intent, result, entry = actual
+        self._respawn_attack_completed = _RespawnAttackCompleted(self, claim, claim.receipt,
+            claim.generation, claim.writer, claim.row, claim.session, intent, result, entry,
+            entry.lifetime, self.sequence, intent.accepted_ordinal, pending, self.state, copy.deepcopy(self.state))
+        self._respawn_attack_completions += (self._respawn_attack_completed,)
+
+    def validate_respawn_attack(self, receipt):
+        proof = self._respawn_attack_completed
+        need(type(self) is ManualMoveCommands and type(proof) is _RespawnAttackCompleted
+             and proof._consumer is self and proof.receipt is receipt
+             and type(self._respawn_attack_completions) is tuple
+             and self._respawn_attack_completions[-1] is proof
+             and proof.claim is self._respawn_attack_claims[-1]
+             and self.pending is None and self.state is proof._state and self.state == proof._state_data
+             and self.sequence == proof.sequence and proof.row['operation_lock'].locked()
+             and type(self.validate_respawn_attack) is MethodType
+             and self.validate_respawn_attack.__func__ is RESPAWN_ATTACK_VALIDATE,
+             'MANUAL_RESPAWN_ATTACK_COMPLETED_PROOF_REQUIRED')
+        claim, pending = proof.claim, proof._pending
+        current = self._respawn_attack_current(claim)
+        actual = self._respawn_attack_result(claim, pending, current)
+        expected = proof.intent, proof.hp_result, proof.hp_entry
+        claim.source_guard()
+        need(self._clock() - pending['started'] < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
+        current = self._attack_current(_pending=pending)
+        after = self._respawn_attack_result(claim, pending, current)
+        self._attack_result(current, _pending=pending)
+        _source_quit_cancel_check()
+        need(all(a is b is c for a, b, c in zip(actual, after, expected))
+             and self._respawn_attack_completed is proof and self.state is proof._state
+             and self.state == proof._state_data, 'MANUAL_RESPAWN_ATTACK_COMPLETED_LIFE_CHANGED')
+        return proof
+
+    def _attack_purpose_current(self, pending):
+        claim = pending.get('respawn_attack')
+        if claim is not None:
+            need(pending.get('attack_purpose') is claim and pending.get('lethal_preparation') is False,
+                 'MANUAL_RESPAWN_ATTACK_ONCE_PURPOSE_REQUIRED')
+            self._respawn_attack_current(claim)
+            return
+        need(pending.get('attack_purpose') is self._attack_purpose
+             and pending.get('lethal_preparation') is self._attack_purpose[0]
+             and self.lethal_attack_preparation is self._lethal_mode is self._attack_purpose[0],
+             'MANUAL_LETHAL_PREPARATION_PURPOSE_CHANGED')
+
+    def _lethal_mode_current(self, pending):
+        self._attack_purpose_current(pending)
+        need(self.lethal_attack_preparation is self._lethal_mode is True
+             and self.allow_attack is self.observe_attack_feedback is True
+             and self.allow_attack_replacement is False
+             and pending.get('lethal_preparation') is True,
+             'MANUAL_LETHAL_PREPARATION_PURPOSE_CHANGED')
+        source = pending['lethal_source']
+        need(all(a is b for a, b in zip(source,
+             (self.reader, self.current, self.clock_ns, source[3], source[3].source_guard)))
+             and source[3] is pending['attack_targets'].broker,
+             'MANUAL_LETHAL_PREPARATION_SOURCE_CHANGED')
+
+    def _lethal_live(self, pending, current):
+        """Original current lethal record, only under the existing row lock."""
+        from tools.local_original_session import npc_death, npc_hp
+        self._lethal_mode_current(pending)
+        writer, row = current[0].writer, current[1]
+        need(row['operation_lock'].locked(), 'MANUAL_LETHAL_PREPARATION_ROW_LOCK_REQUIRED')
+        need(set(self._attack_observations) == {'pre_command'}
+             and self._attack_observations['pre_command'] is pending['lethal_pre_snapshot']
+             and self._attack_observations['pre_command'] == pending['lethal_pre_snapshot_data']
+             and pending['lethal_pre_snapshot'].get('status') == 'OBSERVED'
+             and pending['lethal_pre_snapshot'].get('strict_idle') is True,
+             'MANUAL_LETHAL_PREPARATION_PRE_ONLY_REQUIRED')
+        self._attack_result(current, _pending=pending)
+        intent = self._feedback_intent(current, _pending=pending)
+        session = pending['attack_session']
+        need(pending['native'] is not None and type(intent) is attack_session.AttackIntent
+             and session.feedback_drained == pending['feedback_before'] + 1
+             and session.validate_feedback(writer, session._feedback_frame, state='DRAINED') is intent,
+             'MANUAL_LETHAL_PREPARATION_DRAINED_FEEDBACK_REQUIRED')
+        result = session.last_hp_result
+        need(type(result) is npc_hp.Result and result.hit.landed is True and result.died is True
+             and result.after.current == 0 and result.after.alive is False
+             and result.accepted_ordinal == intent.accepted_ordinal == pending['attack_before'] + 1
+             and result.target.uid == pending['target_uid'],
+             'MANUAL_LETHAL_PREPARATION_CURRENT_HP_REQUIRED')
+        hp, notifications = session._hp, session._notifications
+        need(type(hp) is npc_hp.Authority and type(notifications) is npc_death.Notifications
+             and notifications.service is session and notifications.death_policy == npc_death.DEATH_POLICY,
+             'MANUAL_LETHAL_PREPARATION_REAL_NOTIFICATIONS_REQUIRED')
+        key = id(writer), pending['target_uid']
+        entry, record = hp._entries.get(key), notifications._records.get(key)
+        need(record is not None and record.entry is entry and record.result is result
+             and entry.intent is intent and entry.hp is result.after
+             and notifications._record_current(writer, pending['target_uid'], record) is row
+             and record.death.phase == 'DRAINED' and record.death.write_attempted is True
+             and record.death.drained is True and record.remove is None and record.removed is False
+             and type(record.death.wire) is bytes
+             and npc_death.validate_frame(record.death.wire) == (npc_death.DEATH_OPCODE, pending['target_uid'])
+             and record.death.wire == npc_death.frame(npc_death.DEATH_OPCODE, pending['target_uid']),
+             'MANUAL_LETHAL_PREPARATION_CURRENT_DEATH_DRAIN_REQUIRED')
+        return intent, result, entry, record, entry.lifetime, record.death, record.death.wire, session._feedback_frame
+
+    async def _poll_lethal_preparation(self, current):
+        pending = self.pending
+        async with current[1]['operation_lock']:
+            self._lethal_mode_current(pending)
+            current = self._attack_current()
+            session = pending['attack_session']
+            if pending['native'] is None or session.accepted_count == pending['attack_before']:
+                self._pending_state('MANUAL_LETHAL_PREPARATION_RECEIVE_PENDING')
+                return
+            if session._feedback_state != 'DRAINED':
+                need(session._feedback_state in ('PREPARED', 'RESERVED', 'WRITE_ATTEMPTED'),
+                     'MANUAL_LETHAL_PREPARATION_FEEDBACK_UNKNOWN')
+                self._pending_state('MANUAL_LETHAL_PREPARATION_DRAIN_PENDING')
+                return
+            before = self._lethal_live(pending, current)
+            need(self._clock() - pending['started'] < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
+            source_guard = pending['lethal_source'][3].source_guard
+            source_guard()
+            current = self._attack_current()
+            after = self._lethal_live(pending, current)
+            need(len(before) == len(after) and all(a is b for a, b in zip(before, after))
+                 and self.pending is pending and self._lethal_preparation_completed is None,
+                 'MANUAL_LETHAL_PREPARATION_LIFETIME_CHANGED')
+            need(self._clock() - pending['started'] < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
+            _source_quit_cancel_check()
+            self._lethal_mode_current(pending)
+            current = self._attack_current()
+            final = self._lethal_live(pending, current)
+            self._attack_result(current, _pending=pending)
+            _source_quit_cancel_check()
+            need(all(a is b for a, b in zip(after, final)), 'MANUAL_LETHAL_PREPARATION_LIFETIME_CHANGED')
+            # No callback/await between the final current identity check and
+            # publishing this distinct, completed native preparation purpose.
+            intent, result, entry, record, lifetime, death, wire, feedback = after
+            state = dict(status='PREPARED', reason=None, sequence=self.sequence,
+                automatic_retry=False, cleanup_required=False, phase='LETHAL_PREPARATION_READY',
+                native_attempted=True, command='AttackTarget',
+                proof_scope='CURRENT_LETHAL_NPC_DEATH_DRAIN_ONLY', client_death='UNKNOWN',
+                attack_observations=dict(self._attack_observations))
+            proof = _LethalPreparation(self, current[0].writer, current[1], session, intent, result,
+                entry, record, lifetime, self.sequence, pending['target_uid'], intent.accepted_ordinal,
+                pending['started'], pending, state, copy.deepcopy(state), dict(pending['native']),
+                dict(pending['request']), pending['result_identity'], death, wire, feedback)
+            self._lethal_preparation_completed = proof
+            self.pending, self.state = None, state
+
+    def lethal_preparation_settled(self):
+        """Completed native-purpose evidence, never a current NPC-life grant.
+
+        SourceQuit may call this after its original _enter owns _busy. Removal
+        and generation retirement do not invalidate the old native RETURNED.
+        """
+        proof = self._lethal_preparation_completed
+        need(type(self) is ManualMoveCommands and type(proof) is _LethalPreparation
+             and proof._consumer is self and threading.get_ident() == self._thread
+             and self.pending is None and self._readonly_pending is None
+             and self.state is proof._state and self.state == proof._state_data
+             and self.sequence == proof.sequence and self.state['status'] == 'PREPARED'
+             and self.state['cleanup_required'] is False,
+             'MANUAL_LETHAL_PREPARATION_SETTLED_PROOF_REQUIRED')
+        need(type(self.lethal_preparation_settled) is MethodType
+             and self.lethal_preparation_settled.__func__ is LETHAL_PREPARATION_SETTLED
+             and type(self.validate_lethal_preparation) is MethodType
+             and self.validate_lethal_preparation.__func__ is LETHAL_PREPARATION_VALIDATE,
+             'MANUAL_LETHAL_PREPARATION_ORIGINAL_PRODUCER_REQUIRED')
+        pending = proof._pending
+        self._lethal_mode_current(pending)
+        current = self._current()
+        need(current[0].writer is proof.writer and current[1] is proof.row
+             and pending['native'] == proof._native and pending['request'] == proof._request
+             and pending['result_identity'] == proof._result_identity,
+             'MANUAL_LETHAL_PREPARATION_NATIVE_IDENTITY_CHANGED')
+        self._attack_result(current, _pending=pending)
+        pending['lethal_source'][3].source_guard()
+        current = self._current()
+        self._attack_result(current, _pending=pending)
+        _source_quit_cancel_check()
+        self._lethal_mode_current(pending)
+        need(self._lethal_preparation_completed is proof and self.state is proof._state
+             and self.state == proof._state_data and self.pending is None
+             and current[0].writer is proof.writer and current[1] is proof.row
+             and pending['native'] == proof._native and pending['request'] == proof._request
+             and pending['result_identity'] == proof._result_identity,
+             'MANUAL_LETHAL_PREPARATION_SETTLED_CHANGED')
+        return proof
+
+    def validate_lethal_preparation(self, writer, *, accepted_ordinal):
+        """Current lethal authority before Remove, under the caller row lock."""
+        proof = self.lethal_preparation_settled()
+        need(writer is proof.writer and type(accepted_ordinal) is int
+             and accepted_ordinal == proof.accepted_ordinal
+             and proof.row['operation_lock'].locked(), 'MANUAL_LETHAL_PREPARATION_ROW_LOCK_REQUIRED')
+        need(self._clock() - proof.originalstarted_ns < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
+        pending = proof._pending
+        current = self._attack_current(_pending=pending)
+        actual = self._lethal_live(pending, current)
+        expected = (proof.intent, proof.hp_result, proof.hp_entry, proof.notification_record,
+                    proof.lifetime, proof._death, proof._death_wire, proof._feedback_wire)
+        need(all(a is b for a, b in zip(actual, expected)), 'MANUAL_LETHAL_PREPARATION_LIFETIME_CHANGED')
+        pending['lethal_source'][3].source_guard()
+        need(self._clock() - proof.originalstarted_ns < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
+        self.lethal_preparation_settled()
+        current = self._attack_current(_pending=pending)
+        actual = self._lethal_live(pending, current)
+        self._attack_result(current, _pending=pending)
+        _source_quit_cancel_check()
+        need(all(a is b for a, b in zip(actual, expected)) and self._lethal_preparation_completed is proof
+             and self.state is proof._state and self.state == proof._state_data,
+             'MANUAL_LETHAL_PREPARATION_LIFETIME_CHANGED')
+        return proof
 
     async def poll_async(self):
         """Move uses poll unchanged; optional intents await their original owner."""
@@ -1714,7 +2426,8 @@ class ManualMoveCommands:
                             if self.observe_attack_feedback else self._observe(current, now) == (True, True))
                     if (self.observe_attack_feedback and not idle
                             and self.state.get('reason') in ('MANUAL_MOVE_TYPED_READ_CHANGED_ADMISSION',
-                                                            'MANUAL_ATTACK_CACHE_READ_CHANGED_ADMISSION')):
+                                                            'MANUAL_ATTACK_CACHE_READ_CHANGED_ADMISSION',
+                                                            'MANUAL_ATTACK_RECHECKED_COUNT_ADMISSION')):
                         pending['npc_ready'] = False
                         pending['npc_completed_ns'] = None
                         self._pending_state('MANUAL_ATTACK_PLAYER_ADMISSION_PENDING')
@@ -1725,6 +2438,9 @@ class ManualMoveCommands:
                     hwnd = self._window(current)
                     self._publish(current, hwnd)
             else:
+                if pending.get('lethal_preparation'):
+                    await self._poll_lethal_preparation(current)
+                    return dict(self.state)
                 if self.observe_attack_feedback:
                     await self._poll_feedback_observation(current)
                     return dict(self.state)
@@ -1798,8 +2514,18 @@ class ManualMoveCommands:
         need(self._clock() - pending['started'] < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
         current = self._admission_current()  # Recheck after the clock callback.
         is_attack = pending.get('kind') == 'AttackTarget'
+        if is_attack and pending.get('respawn_attack') is None and (self._lethal_mode or pending.get('lethal_preparation')):
+            self._lethal_mode_current(pending)
+            need(set(self._attack_observations) == {'pre_command'}
+                 and self._attack_observations['pre_command'].get('status') == 'OBSERVED'
+                 and self._attack_observations['pre_command'].get('strict_idle') is True,
+                 'MANUAL_LETHAL_PREPARATION_STRICT_PRE_REQUIRED')
+            pending['lethal_pre_snapshot'] = self._attack_observations['pre_command']
+            pending['lethal_pre_snapshot_data'] = copy.deepcopy(self._attack_observations['pre_command'])
         is_quit = pending.get('kind') == 'SourceQuit'
         is_use_item = pending.get('kind') == 'UseItem'
+        is_already_open = is_use_item and pending.get('already_open_entry', False)
+        is_current_entry = is_use_item and pending.get('current_entry_capability') is CURRENT_ENTRY_ONCE
         is_restart = pending.get('kind') == 'SourceRestart'
         is_reselect = pending.get('kind') == 'SourceReselect'
         if not self._reservation:
@@ -1814,6 +2540,14 @@ class ManualMoveCommands:
                 need(not os.path.lexists(boundary / 'use-item-request.json')
                      and not any(boundary.glob('use-item-result-*.json')),
                      'MANUAL_MOVE_BOUNDARY_PREVIOUSLY_USED')
+            if self.use_item_already_open:
+                need(not any(boundary.glob('use-item-already-open-request-*.json'))
+                     and not any(boundary.glob('use-item-already-open-result-*.json')),
+                     'MANUAL_MOVE_BOUNDARY_PREVIOUSLY_USED')
+            if self.use_item_current_entry:
+                need(not any(boundary.glob('use-item-current-entry-request-*.json'))
+                     and not any(boundary.glob('use-item-current-entry-result-*.json')),
+                     'MANUAL_MOVE_BOUNDARY_PREVIOUSLY_USED')
             if self.allow_source_restart:
                 need(not os.path.lexists(boundary / 'source-restart-request.json')
                      and not any(boundary.glob('source-restart-result-*.json')),
@@ -1826,6 +2560,7 @@ class ManualMoveCommands:
         current = self._admission_current()
         need(self.sequence < MAX_SEQUENCE, 'MANUAL_MOVE_SEQUENCE_EXHAUSTED')
         self.sequence += 1
+        self._action_sequence, self._action_bound = self.sequence, self._bound
         pending['phase'] = 'NATIVE_WAIT'
         if is_reselect:
             phase = pending['source_phase']
@@ -1848,8 +2583,9 @@ class ManualMoveCommands:
         elif is_use_item:
             need(self.allow_use_item is True and identity['candidate_sha256'] == USE_ITEM_IMAGE_SHA,
                  'MANUAL_USE_ITEM_PROGRAM_IMAGE_REQUIRED')
-            request = dict(schema='own-use-item-request-v1', **identity, seq=self.sequence,
-                command='UseItem', player_uid=position.uid,
+            request = dict(schema=('own-use-item-current-entry-request-v1' if is_current_entry else
+                                   'own-use-item-already-open-request-v1' if is_already_open else 'own-use-item-request-v1'), **identity, seq=self.sequence,
+                command='UseItemCurrentEntry' if is_current_entry else 'UseItemAlreadyOpen' if is_already_open else 'UseItem', player_uid=position.uid,
                 item_identifier=pending['item_identifier'], map_id=position.map_id)
         else:
             x, y = pending['target']
@@ -1865,16 +2601,23 @@ class ManualMoveCommands:
                           seq=self.sequence, queued_monotonic_ns=pending['started']))
         result_path = boundary / (('source-reselect-result-' if is_reselect else 'source-restart-result-' if is_restart else 'source-quit-result-' if is_quit else
                                   'attack-target-result-' if is_attack else
+                                  'use-item-current-entry-result-' if is_current_entry else
+                                  'use-item-already-open-result-' if is_already_open else
                                   'use-item-result-' if is_use_item else 'manual-move-result-')
                                   + str(self.sequence) + '.json')
         need(not os.path.lexists(result_path), 'MANUAL_MOVE_PREEXISTING_RESULT')
-        commands._atomic(boundary / ('source-reselect-request.json' if is_reselect else 'source-restart-request.json' if is_restart else 'source-quit-request.json' if is_quit else
-                                     'attack-target-request.json' if is_attack else
-                                     'use-item-request.json' if is_use_item else 'manual-move-request.json'),
-                         request, 512)
+        if is_current_entry:
+            _create_once(boundary / ('use-item-current-entry-request-' + str(self.sequence) + '.json'), request)
+        elif is_already_open:
+            _create_once(boundary / ('use-item-already-open-request-' + str(self.sequence) + '.json'), request)
+        else:
+            commands._atomic(boundary / ('source-reselect-request.json' if is_reselect else 'source-restart-request.json' if is_restart else 'source-quit-request.json' if is_quit else
+                                         'attack-target-request.json' if is_attack else
+                                         'use-item-request.json' if is_use_item else 'manual-move-request.json'),
+                             request, 512)
         user = self.reader.owner.native.u
         message = int(user.RegisterWindowMessageW(SOURCE_RESELECT_MESSAGE if is_reselect else SOURCE_RESTART_MESSAGE if is_restart else SOURCE_QUIT_MESSAGE if is_quit else
-            ATTACK_MESSAGE if is_attack else USE_ITEM_MESSAGE if is_use_item else MESSAGE))
+            ATTACK_MESSAGE if is_attack else USE_ITEM_CURRENT_ENTRY_MESSAGE if is_current_entry else USE_ITEM_ALREADY_OPEN_MESSAGE if is_already_open else USE_ITEM_MESSAGE if is_use_item else MESSAGE))
         need(0xc000 <= message <= 0xffff, 'MANUAL_MOVE_MESSAGE_REGISTRATION_FAILED')
         final = self._admission_current()
         need(self._window(final) == hwnd, 'MANUAL_MOVE_PREPOST_CHANGED')
@@ -1886,7 +2629,7 @@ class ManualMoveCommands:
             # the existing row lock at the final Post boundary, not a copy of
             # its authority rules or a cached async admission verdict.
             session = pending['item_session']
-            need(self._item_use_project(session, current[0].writer)[6].identifier
+            need(self._item_use_project(session, current[0].writer, item_identifier=pending['item_identifier'])[6].identifier
                  == pending['item_identifier'], 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
             need(self._clock() - pending['started'] < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
             self._use_item_current(admission=True)
@@ -1896,6 +2639,10 @@ class ManualMoveCommands:
                 raise asyncio.CancelledError()
         if is_quit:
             _source_quit_cancel_check()
+        if is_attack:
+            self._attack_purpose_current(pending)
+            if pending.get('lethal_preparation'):
+                self._lethal_mode_current(pending)
         pending['native_attempted'] = True  # Post attempt, not engine invocation.
         if is_reselect: pending['phase_posted'] = True
         owner = self.reader.owner
@@ -2137,3 +2884,11 @@ class ManualMoveCommands:
         return self.last_sample_ns
 
     close = cancel
+
+# Exact producer entries for private preparation consumers.
+LETHAL_PREPARATION_TYPE = _LethalPreparation
+LETHAL_PREPARATION_VALIDATE = ManualMoveCommands.validate_lethal_preparation
+LETHAL_PREPARATION_SETTLED = ManualMoveCommands.lethal_preparation_settled
+
+RESPAWN_ATTACK_PROOF_TYPE = _RespawnAttackCompleted
+RESPAWN_ATTACK_VALIDATE = ManualMoveCommands.validate_respawn_attack

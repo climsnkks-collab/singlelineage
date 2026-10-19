@@ -90,10 +90,23 @@ class _Budget:
     Duplicate initial values must agree. This is not an atomic/lifetime proof.
     Observer counters/methods are restored by installed().
     """
-    def __init__(self, native, sampler):
+    def __init__(self, native, sampler, *, diagnostic=None):
         self.native, self.sampler = native, sampler
         self.spent, self.records, self.retain = 0, [], True
         self._retained = {}
+        self._diagnostic, self._capture_phases = diagnostic, {}
+        self.changed_read1 = None
+
+    def _changed(self, at, before, after, image, comparison):
+        if self.changed_read1 is not None:
+            return
+        key = (at, len(before), image)
+        self.changed_read1 = dict(address=hex(at), size=len(before), field_role='UNKNOWN',
+            before_sha256=hashlib.sha256(before).hexdigest(),
+            after_sha256=hashlib.sha256(after).hexdigest(),
+            capture_phase=self._capture_phases.get(key, 'UNKNOWN'), comparison=comparison)
+        if self._diagnostic is not None:
+            self._diagnostic['changed_read1'] = dict(self.changed_read1)
 
     def read(self, at, size, image=False):
         need(type(at) is int and type(size) is int and 0 < size <= 4096 and
@@ -108,7 +121,11 @@ class _Budget:
             if expected is None:
                 self._retained[key] = raw
                 self.records.append((at, raw, image))
+                self._capture_phases[key] = ('UNKNOWN' if self._diagnostic is None
+                                             else self._diagnostic.get('phase', 'UNKNOWN'))
             else:
+                if raw != expected:
+                    self._changed(at, expected, raw, image, 'INITIAL_DUPLICATE')
                 need(raw == expected, 'EDGE_TYPED_READ_CHANGED')
         return raw
 
@@ -131,7 +148,10 @@ class _Budget:
         self.retain = False
         try:
             for at, raw, image in self.records:
-                need(self.read(at, len(raw), image) == raw, 'EDGE_TYPED_READ_CHANGED')
+                actual = self.read(at, len(raw), image)
+                if actual != raw:
+                    self._changed(at, raw, actual, image, 'VERIFY_REREAD')
+                need(actual == raw, 'EDGE_TYPED_READ_CHANGED')
         finally:
             self.retain = True
 

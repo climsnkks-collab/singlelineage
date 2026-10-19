@@ -15,6 +15,7 @@ from types import MethodType
 
 from tools.local_original_session import inventory, item_use, movement, observe
 from tools.local_original_session.inventory_store import InventoryStore
+from tools.local_original_session import inventory_store
 
 POLICY = 'EXPLICIT_LOCAL_VALIDATED_ITEM_USE_INTENT'
 U64_MAX = item_use.U64_MAX
@@ -117,6 +118,10 @@ class ItemUseSession:
         reader = service.reader
         need(type(reader) is observe.RetainedSceneReader,
              'ITEM_USE_REAL_RETAINED_READER_REQUIRED')
+        self._collection_policy = getattr(broker, '_inventory_collection_policy', None)
+        need(self._collection_policy is None or (type(self._collection_policy) is str
+             and self._collection_policy == inventory.COLLECTION_POLICY),
+             'ITEM_USE_EXPLICIT_COLLECTION_POLICY_REQUIRED')
         self.broker, self.policy = broker, policy
         self._service, self._reader, self._backend = service, reader, reader.backend
         self._store = service._persistence_store()
@@ -153,9 +158,12 @@ class ItemUseSession:
             return OutcomeKind.REJECTED, 'ITEM_USE_COUNTER_CAPACITY'
         return None
 
-    def _current_authority(self, writer):
+    def _current_authority(self, writer, *, equipment_operation=None, item_identifier=None):
         from tools.local_original_session.broker import PersistentBroker
         broker, service, reader = self.broker, self._service, self._reader
+        mode = getattr(broker, '_inventory_collection_policy', None)
+        need(type(mode) is type(self._collection_policy) and mode == self._collection_policy,
+             'ITEM_USE_COLLECTION_POLICY_CHANGED')
         need(type(broker) is PersistentBroker and broker.realm is self._realm
              and broker._item_use_session is self and broker.realm._item_use_session is self,
              'ITEM_USE_SAME_REGISTERED_SESSION_REQUIRED')
@@ -189,6 +197,11 @@ class ItemUseSession:
              and restart.get('selection_cleared') is True,
              'ITEM_USE_NO_PENDING_RESTART_REQUIRED')
         authority = service._current(writer, row)  # Current position, saved selection, lock/owner.
+        transfer = getattr(broker._inventory_generation, 'transfer_session', None)
+        if getattr(broker, '_item_transfer_policy_bound', None) is not None:
+            from tools.local_original_session.item_transfer_session import ItemTransferSession
+            need(type(transfer) is ItemTransferSession, 'ITEM_USE_REAL_CUSTODY_SESSION_REQUIRED')
+            transfer.validate_use_locked(writer, read_only_initialization=item_identifier is None)
         initial_frame = broker._inventory_frame
         need(type(initial_frame) is bytes and broker._inventory_operation_frame is initial_frame,
              'ITEM_USE_CURRENT_CANONICAL_FRAME_REQUIRED')
@@ -216,8 +229,17 @@ class ItemUseSession:
                      if index != 14)
              and delivered[2] == authority[2], 'ITEM_USE_SAME_DELIVERED_SELECTION_REQUIRED')
         admitted = row['policy_row']
-        need(admitted.drain_started_ns is None and admitted.pending_opcode is None
-             and admitted.pending_size == 0, 'ITEM_USE_NO_PENDING_INVENTORY_DELIVERY_REQUIRED')
+        if equipment_operation is None:
+            need(admitted.drain_started_ns is None and admitted.pending_opcode is None
+                 and admitted.pending_size == 0, 'ITEM_USE_NO_PENDING_INVENTORY_DELIVERY_REQUIRED')
+        else:
+            from tools.local_original_session.item_equipment_effect import ItemEquipmentEffect
+            effect = getattr(broker, '_item_equipment_effect', None)
+            need(type(effect) is ItemEquipmentEffect and effect.broker is broker and
+                 effect is getattr(broker.realm, '_item_equipment_effect', None) and
+                 effect.validate_pending.__func__ is ItemEquipmentEffect.validate_pending,
+                 'ITEM_USE_EXACT_EQUIPMENT_CONSUMER_REQUIRED')
+            effect.validate_pending(writer, row, equipment_operation, admitted)
         # The initial ADD literal/once proof never becomes an UPDATE or current
         # value. Only the broker's post-drain canonical current frame is used.
         frame = broker._inventory_current_frame
@@ -257,22 +279,41 @@ class ItemUseSession:
                  and type(admitted.sent) is int
                  and 0 <= sent_before < sent_after <= U64_MAX and sent_after == sent_before + 1
                  and admitted.sent >= sent_after, 'ITEM_USE_DRAINED_UPDATE_COUNTER_REQUIRED')
-        item = inventory.validate_frame(frame)
-        initial = inventory.validate_frame(initial_frame)
-        initial_fields, current_fields = dict(initial.raw_fields), dict(item.raw_fields)
-        need(item.identifier == initial.identifier
-             and {n for n in initial_fields if initial_fields[n] != current_fields[n]} <= {4, 5, 7, 18},
-             'ITEM_USE_SAME_CURRENT_ITEM_FIELDS_REQUIRED')
+        if self._collection_policy is None:
+            item = inventory.validate_frame(frame)
+            initial = inventory.validate_frame(initial_frame)
+            initial_fields, current_fields = dict(initial.raw_fields), dict(item.raw_fields)
+            need(item.identifier == initial.identifier
+                 and {n for n in initial_fields if initial_fields[n] != current_fields[n]} <= {4, 5, 7, 18},
+                 'ITEM_USE_SAME_CURRENT_ITEM_FIELDS_REQUIRED')
+        else:
+            need(store._collection_policy == inventory_store.COLLECTION_STORE_POLICY,
+                 'ITEM_USE_COLLECTION_STORE_POLICY_REQUIRED')
+            current_items = inventory.validate_collection_frame(frame, policy=self._collection_policy)
+            initial_items = inventory.validate_collection_frame(initial_frame, policy=self._collection_policy)
+            need(len(current_items) == len(initial_items) and all(
+                 current.identifier == initial.identifier and
+                 {n for n, value in initial.raw_fields if dict(current.raw_fields)[n] != value} <= {4, 5, 7, 18}
+                 for current, initial in zip(current_items, initial_items)),
+                 'ITEM_USE_SAME_CURRENT_COLLECTION_FIELDS_REQUIRED')
+            if item_identifier is None:
+                item = current_items[0] # Initial/preparation anchor, not a selected-use UID.
+            else:
+                need(type(item_identifier) is int and 0 < item_identifier < 1 << 32,
+                     'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
+                members = tuple(item for item in current_items if item.identifier == item_identifier)
+                need(len(members) == 1, 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
+                item, = members
         restored = restore(authority[0].uid)  # Original bounded read, never grant/write.
         need(type(restored) is bytes and restored == frame,
              'ITEM_USE_CURRENT_STORED_FRAME_REQUIRED')
         return row, authority, frame, delivered, broker._inventory_selection_binding, store, item
 
-    def _project(self, writer):
+    def _project(self, writer, *, equipment_operation=None, item_identifier=None):
         operation = self.broker._inventory_update_operation
-        before = self._current_authority(writer)
+        before = self._current_authority(writer, equipment_operation=equipment_operation, item_identifier=item_identifier)
         self._reader.validate()  # Retained identity/Job, not an item-memory query.
-        after = self._current_authority(writer)
+        after = self._current_authority(writer, equipment_operation=equipment_operation, item_identifier=item_identifier)
         self._same(before, after)
         need(self.broker._inventory_update_operation is operation,
              'ITEM_USE_CURRENT_UPDATE_OPERATION_CHANGED')
@@ -306,7 +347,12 @@ class ItemUseSession:
                     return self._outcome(*unavailable)
                 request = item_use.parse_payload(payload)
                 operation = self.broker._inventory_update_operation
-                before = self._project(writer)
+                try:
+                    before = self._project(writer, item_identifier=request.identifier)
+                except ValueError as error:
+                    if str(error) != 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM':raise
+                    self._clear('ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
+                    return self._outcome(OutcomeKind.REJECTED, 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
                 if request.identifier != before[6].identifier:
                     self._clear('ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
                     return self._outcome(OutcomeKind.REJECTED, 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
@@ -316,7 +362,7 @@ class ItemUseSession:
                     self._clear(unavailable[1])
                     return self._outcome(*unavailable)
                 self._source(request)
-                after = self._project(writer)
+                after = self._project(writer, item_identifier=request.identifier)
                 self._same(before, after)
                 need(self.broker._inventory_update_operation is operation,
                      'ITEM_USE_CURRENT_UPDATE_OPERATION_CHANGED')
@@ -361,12 +407,12 @@ class ItemUseSession:
                      'ITEM_USE_UINT64_IDENTIFIER_REQUIRED')
                 item_use.source_ready()
                 operation = self.broker._inventory_update_operation
-                before = self._project(writer)
+                before = self._project(writer, item_identifier=item_identifier)
                 need(item_identifier == before[6].identifier, 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
                 await self.broker._checkpoint(writer, before[0])
                 need(self._unavailable() is None, 'ITEM_USE_NATIVE_VALIDATION_UNAVAILABLE')
                 item_use.source_ready()
-                after = self._project(writer)
+                after = self._project(writer, item_identifier=item_identifier)
                 self._same(before, after)
                 need(self.broker._inventory_update_operation is operation,
                      'ITEM_USE_CURRENT_UPDATE_OPERATION_CHANGED')
@@ -403,7 +449,7 @@ class ItemUseSession:
             return False
         _raw0_source_ready()
         try:
-            current_authority = self._project(writer)
+            current_authority = self._project(writer, item_identifier=item_identifier)
         except item_use.ItemUseSourceError:
             raise
         except ValueError as error:

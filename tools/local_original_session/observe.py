@@ -238,7 +238,12 @@ class RetainedSceneReader:
         need(self.owner.native.k.IsProcessInJob(self.backend.handle, self.owner.owner_job,
              C.byref(inside)) and inside.value, 'READONLY_DUPLICATE_JOB_CHANGED')
 
-    def sample(self, *, include_input_state=True, attack_action_observer=None):
+    def request_hp4ec8_subscribers_once(self):
+        need(getattr(self,'_hp4ec8_subscribers',None) is None,'HP4EC8_ONCE_REQUEST_REQUIRED')
+        from tools.local_original_session.hp4ec8_subscribers import Observation
+        self._hp4ec8_subscribers = Observation(self)
+
+    def sample(self, *, include_input_state=True, attack_action_observer=None, player_life_observer=None):
         need(type(include_input_state) is bool, 'RETAINED_INPUT_SELECTION_BOOL_REQUIRED')
         if attack_action_observer is not None:
             from tools.local_original_session.attack_action_observe import AttackActionObserver, COLLECT_METHOD, PREPARE_METHOD
@@ -252,6 +257,22 @@ class RetainedSceneReader:
                  and attack_action_observer.prepare.__self__ is attack_action_observer
                  and attack_action_observer.prepare.__func__ is PREPARE_METHOD,
                  'RETAINED_ATTACK_SAME_OBSERVER_REQUIRED')
+        need(attack_action_observer is None or player_life_observer is None,
+             'RETAINED_SINGLE_ACTION_LEAF_REQUIRED')
+        if player_life_observer is not None:
+            from tools.local_original_session.player_life_observe import PlayerLifeObserver, COLLECT_METHOD, PREPARE_METHOD
+            need(type(player_life_observer) is PlayerLifeObserver
+                 and player_life_observer.reader is self
+                 and type(player_life_observer).collect is COLLECT_METHOD
+                 and type(player_life_observer).prepare is PREPARE_METHOD
+                 and type(player_life_observer.collect) is MethodType
+                 and player_life_observer.collect.__self__ is player_life_observer
+                 and player_life_observer.collect.__func__ is COLLECT_METHOD
+                 and type(player_life_observer.prepare) is MethodType
+                 and player_life_observer.prepare.__self__ is player_life_observer
+                 and player_life_observer.prepare.__func__ is PREPARE_METHOD,
+                 'RETAINED_PLAYER_LIFE_SAME_OBSERVER_REQUIRED')
+        action_leaf = attack_action_observer if attack_action_observer is not None else player_life_observer
         self.validate()
         if self.sampler is None:
             game = self.backend.modules()['LC']
@@ -292,6 +313,7 @@ class RetainedSceneReader:
         collecting_move = False
         collecting_attack = False
         attack_cache = None
+        hp4ec8_query = object()
         def bounded_read(at, size, image=False):
             # Only the explicit attack leaf may use its additional original
             # 8192-B allowance. Legacy leaves and MoveState retain 16 KiB.
@@ -327,7 +349,7 @@ class RetainedSceneReader:
                 row['input_state'] = (probe.sample(self, row, proof) if probe is not None
                                       else input_state.empty('INPUT_READER_UNAVAILABLE'))
             movement_probe = getattr(self, 'move_state', None)
-            if attack_action_observer is not None:
+            if action_leaf is not None:
                 from tools.local_original_session.attack_action_observe import SameQueryCache
                 attack_cache = SameQueryCache(self, self.sampler, proof, world_cache)
             collecting_move = True
@@ -336,17 +358,32 @@ class RetainedSceneReader:
                                      if movement_probe is not None else move_state.empty('MOVE_READER_UNAVAILABLE'))
             finally:
                 collecting_move = False
-            if attack_action_observer is not None:
+            if action_leaf is not None:
                 attack_cache.finish_move(row['move_state'])
                 collecting_attack = True
                 try:
-                    row['attack_action'] = attack_action_observer.collect(row, world, proof, attack_cache)
+                    key = 'attack_action' if attack_action_observer is not None else 'player_life'
+                    row[key] = action_leaf.collect(row, world, proof, attack_cache)
                 finally:
                     collecting_attack = False
+            hp4ec8 = getattr(self,'_hp4ec8_subscribers',None)
+            if (hp4ec8 is not None and hp4ec8.result is None
+                    and row.get('status') == 'OBSERVED' and row.get('current') == 'Land'
+                    and world.get('status') == 'OBSERVED'):
+                hp4ec8.collect(self.sampler,total_limit=self.sample_byte_limit,query=hp4ec8_query)
         finally:
             self.sampler.read = read
             self.sampler.bytes = self.sampler.total
-        self.validate()
+        try:
+            self.validate()
+        except Exception:
+            hp4ec8 = getattr(self,'_hp4ec8_subscribers',None)
+            if hp4ec8 is not None: hp4ec8.failed_final_check(hp4ec8_query)
+            raise
+        hp4ec8 = getattr(self,'_hp4ec8_subscribers',None)
+        if hp4ec8 is not None:
+            hp4ec8.finish(hp4ec8_query)
+            row['hp4ec8_subscribers'] = hp4ec8.result if hp4ec8.result is not None else dict(hp4ec8.waiting)
         row['world'] = public_world(world)
         return row, self.sampler.bytes
 
@@ -595,7 +632,11 @@ class SessionMonitor:
             elif now >= self.next_memory:
                 self.next_memory = now + .5
                 try:
-                    scene, count = self.reader.sample()
+                    hp4ec8 = getattr(self.reader,'_hp4ec8_subscribers',None)
+                    # Host/cursor diagnostics are public status only. Existing
+                    # feature ingress already proves its own world/move/owner.
+                    scene, count = (self.reader.sample(include_input_state=False)
+                        if hp4ec8 is not None and hp4ec8.result is None else self.reader.sample())
                     self.last_memory = {key: scene.get(key) for key in
                         ('status', 'reason', 'current', 'pending', 'root_ready', 'root_phase') if key in scene}
                     self.last_world = public_world(scene.get('world') or
@@ -632,6 +673,10 @@ class SessionMonitor:
         return self.publish(public)
 
     def publish(self, public):
+        hp4ec8 = getattr(self.reader,'_hp4ec8_subscribers',None)
+        if hp4ec8 is not None:
+            public.setdefault('memory',{})['hp4ec8_subscribers'] = (
+                hp4ec8.result if hp4ec8.result is not None else dict(hp4ec8.waiting))
         now = self.clock()
         encoded = json.dumps(public, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
         if encoded != self.last_state:

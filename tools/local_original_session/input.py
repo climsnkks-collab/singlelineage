@@ -338,7 +338,11 @@ def _read(path, limit):
         kernel.CloseHandle.argtypes = (W.HANDLE,)
         kernel.CloseHandle.restype = W.BOOL
         handle = create(str(path), 0x80000000, 1, None, 3, 0x00200000, None)
-        need(handle and handle != C.c_void_p(-1).value, 'INPUT_REQUEST_OPEN_FAILED')
+        if not (handle and handle != C.c_void_p(-1).value):
+            winerror = C.get_last_error()  # First ctypes operation after failed CreateFileW.
+            error = ValueError('INPUT_REQUEST_OPEN_FAILED')
+            error.input_read_metadata = dict(stage='OPEN', winerror=winerror, same_file=False)
+            raise error
         try:
             info = C.create_string_buffer(52)
             need(kernel.GetFileInformationByHandle(handle, info), 'INPUT_REQUEST_INFO_UNKNOWN')
@@ -358,9 +362,14 @@ def _read(path, limit):
         need(0 <= opened.st_size <= limit, 'INPUT_REQUEST_BYTE_BOUND')
         raw = os.read(descriptor, limit + 1)
         after = _ordinary(path).lstat()
-        need((after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
-             == (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns),
-             'INPUT_REQUEST_CHANGED')
+        if ((after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
+                != (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)):
+            error = ValueError('INPUT_REQUEST_CHANGED')
+            # Both ordinary checks and the opened identity/reparse check passed.
+            # Identity changes remain unclassified; no permission/read is added.
+            if (after.st_dev, after.st_ino) == (before.st_dev, before.st_ino):
+                error.input_read_metadata = dict(stage='FINAL_SIZE_OR_MTIME', winerror=None, same_file=True)
+            raise error
         need(len(raw) == opened.st_size and len(raw) <= limit, 'INPUT_REQUEST_BYTE_BOUND')
         return raw
     finally:

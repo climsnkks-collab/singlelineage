@@ -283,6 +283,10 @@ def build_add(fields):
 def validate_frame(wire):
     """Strict local one-row/explicit-false subset, not all ItemInfo schemas."""
     _, keys, _ = _source()
+    return _validate_single_frame(wire, keys)
+
+
+def _validate_single_frame(wire, keys):
     try:
         need(type(wire) is bytes and 6 <= len(wire) <= MAX_FRAME
              and int.from_bytes(wire[:2], 'little') == len(wire)
@@ -450,7 +454,7 @@ class InventoryService:
     Caller already holds the real row operation_lock and completed its native
     checkpoint. No await may intervene between this leaf and writer.write.
     """
-    def __init__(self, broker, reader, *, policy, store=None):
+    def __init__(self, broker, reader, *, policy, store=None, collection_policy=None):
         from tools.local_original_session.broker import PersistentBroker
         need(type(broker) is PersistentBroker and type(reader) is observe.RetainedSceneReader,
              'INVENTORY_REAL_BROKER_READER_REQUIRED')
@@ -464,6 +468,13 @@ class InventoryService:
             from tools.local_original_session.inventory_store import InventoryStore
             need(type(store) is InventoryStore, 'INVENTORY_EXACT_STORE_REQUIRED')
         self.store = store
+        need(collection_policy is None or type(collection_policy) is str and
+             collection_policy == COLLECTION_POLICY and store is not None and
+             getattr(broker, '_inventory_collection_policy', None) == collection_policy,
+             'INVENTORY_SERVICE_EXPLICIT_COLLECTION_POLICY_REQUIRED')
+        self._collection_policy = collection_policy
+        self._collection_grant = (getattr(broker, '_inventory_collection_grant', None)
+                                  if collection_policy is not None else None)
         self._store_bound = (store, store.profile, str(store.profile), store.path, str(store.path)) if store is not None else None
         self._persistence_store()
         self.proof = edge.EdgeAdapter(reader)
@@ -471,6 +482,16 @@ class InventoryService:
         self._readonly_refusal = None
         self.last_pre_write_stage = 'SOURCE_BEFORE'
         self.last_result = dict(status='UNKNOWN', reason='NOT_SAMPLED', typed_bytes_requested=0)
+
+    def _items_frame(self, frame):
+        need(getattr(self.broker, '_inventory_collection_policy', None) == self._collection_policy
+             and getattr(self.broker, '_inventory_collection_grant', None) is self._collection_grant,
+             'INVENTORY_COLLECTION_CONFIGURATION_CHANGED')
+        if self._collection_policy is None:
+            return (validate_frame(frame),)
+        need(type(self._collection_policy) is str and self._collection_policy == COLLECTION_POLICY,
+             'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+        return validate_collection_frame(frame, policy=self._collection_policy)
 
     def _persistence_store(self):
         bound = self._store_bound
@@ -489,6 +510,15 @@ class InventoryService:
         need(getattr(grant, '__self__', None) is store
              and getattr(grant, '__func__', None) is InventoryStore.grant,
              'INVENTORY_ORIGINAL_STORE_GRANT_REQUIRED')
+        need(getattr(self.broker, '_inventory_collection_policy', None) == self._collection_policy
+             and getattr(self.broker, '_inventory_collection_grant', None) is self._collection_grant,
+             'INVENTORY_COLLECTION_CONFIGURATION_CHANGED')
+        if self._collection_policy is not None:
+            from tools.local_original_session.inventory_store import COLLECTION_STORE_POLICY
+            method = store.verify_existing_collection
+            need(self._collection_policy == COLLECTION_POLICY and store._collection_policy == COLLECTION_STORE_POLICY
+                 and method.__self__ is store and method.__func__ is InventoryStore.verify_existing_collection,
+                 'INVENTORY_COLLECTION_ORIGINAL_READONLY_STORE_REQUIRED')
         return store
 
     def _persistence_operation(self, writer, row, actualframe, bound):
@@ -661,6 +691,7 @@ class InventoryService:
         budget = None
         persist_started = False
         readonly_grant_completed = False
+        collection_granted = False
         store_bound = self._store_bound
         self.last_result = dict(status='UNKNOWN', reason='NOT_SAMPLED', typed_bytes_requested=0,
             typed_byte_limit=BYTE_LIMIT, visible_screen_claimed=False, snapshot_atomic=False,
@@ -677,8 +708,15 @@ class InventoryService:
             restore_only = self.broker._inventory_restore_only
             self._restore_mode(writer, row, actualframe, restore_only)
             self._cancelled()
-            item = validate_frame(actualframe)
-            contract, _, core_checks = _source()
+            if self._collection_policy is None:
+                items = self._items_frame(actualframe)
+                contract, _, core_checks = _source()
+            else:
+                need(getattr(self.broker, '_inventory_collection_policy', None) == self._collection_policy
+                     and getattr(self.broker, '_inventory_collection_grant', None) is self._collection_grant,
+                     'INVENTORY_COLLECTION_CONFIGURATION_CHANGED')
+                contract, collection_keys, core_checks = _source()
+                items = _validate_collection_frame(actualframe, self._collection_policy, collection_keys)
             self.last_pre_write_stage = 'AUTHORITY_BEFORE'
             before = self._current(writer, row)
             proof, reader = self.proof, self.reader
@@ -721,7 +759,25 @@ class InventoryService:
                     store = self._persistence_operation(writer, row, actualframe, store_bound)
                     self._restore_mode(writer, row, actualframe, restore_only)
                     persist_started = True
-                    if restore_only:
+                    if self._collection_policy is not None:
+                        from tools.local_original_session.broker import PersistentBroker
+                        method = self.broker._inventory_collection_before_write_locked
+                        need(method.__self__ is self.broker and
+                             method.__func__ is PersistentBroker._inventory_collection_before_write_locked,
+                             'INVENTORY_COLLECTION_ORIGINAL_ADOPTION_REQUIRED')
+                        original = actualframe
+                        actualframe = method(writer, row, self, actualframe, items)
+                        collection_granted = actualframe is not original
+                        need(getattr(self.broker, '_inventory_collection_policy', None) == self._collection_policy
+                             and getattr(self.broker, '_inventory_collection_grant', None) is self._collection_grant,
+                             'INVENTORY_COLLECTION_CONFIGURATION_CHANGED')
+                        items = _validate_collection_frame(actualframe, self._collection_policy, collection_keys)
+                        self._restore_mode(writer, row, actualframe, restore_only)
+                        need(restore_only is True and store.verify_existing_collection(before[0].uid,
+                             actualframe, policy=COLLECTION_POLICY) is False,
+                             'INVENTORY_COLLECTION_READONLY_RESULT_REQUIRED')
+                        readonly_grant_completed = True
+                    elif restore_only:
                         need(store.grant(before[0].uid, actualframe, existing_only=True) is False,
                              'INVENTORY_READONLY_GRANT_RESULT_REQUIRED')
                         readonly_grant_completed = True
@@ -759,14 +815,17 @@ class InventoryService:
             self.last_result.update(status='OBSERVED', reason=None,
                 selected_uid=before[0].uid, map_id=before[0].map_id,
                 inventory_empty=True, source_contract_valid=True, stable_double_read=True,
-                identifier=item.identifier, catalog_static_key_verified=True)
+                identifier=items[0].identifier if len(items) == 1 else None, catalog_static_key_verified=True)
+            if self._collection_policy is not None:
+                self.last_result['identifiers'] = tuple(item.identifier for item in items)
+                return actualframe
         except asyncio.CancelledError:
             self._closed = True
             self.last_result['reason'] = 'INVENTORY_CALLER_CANCELLED'
             raise
         except _PhysicalBufferChanged as origin:
             self.last_result['reason'] = 'EDGE_TYPED_READ_CHANGED'
-            if restore_only is not True or budget._physical_change[2] is not False:
+            if collection_granted or restore_only is not True or budget._physical_change[2] is not False:
                 if persist_started or restore_only is True:
                     self._closed = True
                 raise ValueError('EDGE_TYPED_READ_CHANGED') from None
@@ -813,3 +872,81 @@ class InventoryService:
         task = asyncio.current_task()
         if task is not None and task.cancelling():
             raise asyncio.CancelledError()
+
+
+# Explicit collection-only addition; original singleton codec is unchanged.
+COLLECTION_POLICY = 'EXPLICIT_ONE_OR_TWO_ITEM_ADD_COLLECTION'
+
+
+def _collection_items(items, policy, keys):
+    need(type(policy) is str and policy == COLLECTION_POLICY,
+         'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+    need(type(items) is tuple and 1 <= len(items) <= 2,
+         'INVENTORY_COLLECTION_ONE_OR_TWO_REQUIRED')
+    validated = []
+    for item in items:
+        need(type(item) is ItemInfo, 'INVENTORY_COLLECTION_REAL_ITEM_REQUIRED')
+        need(type(item.raw_fields) is tuple, 'INVENTORY_COLLECTION_CANONICAL_ITEM_REQUIRED')
+        checked = _values(dict(item.raw_fields), keys)
+        need(_same_static(checked.raw_fields, item.raw_fields),
+             'INVENTORY_COLLECTION_CANONICAL_ITEM_REQUIRED')
+        # Reuse the unchanged complete singleton validator/catalog/17 fields.
+        canonical = _validate_single_frame(_encode(checked), keys)
+        need(_same_static(canonical.raw_fields, item.raw_fields),
+             'INVENTORY_COLLECTION_CANONICAL_ITEM_REQUIRED')
+        validated.append(canonical)
+    need(len({item.identifier for item in validated}) == len(validated),
+         'INVENTORY_COLLECTION_DUPLICATE_ITEM_UID')
+    return tuple(validated)
+
+
+def _encode_collection(items):
+    children = []
+    for item in items:
+        single = _encode(item)
+        with pb.parse_message(single[4:-2], schema={1: 2, 2: 0}) as message:
+            children.append(pb.encode_bytes(1, bytes(message.occurrences(1)[0].value)))
+    body = b''.join(children) + pb.encode_bool(2, False)
+    wire = struct.pack('<HH', len(body) + 6, OPCODE) + body + b'\0\0'
+    need(len(wire) <= MAX_FRAME, 'INVENTORY_COLLECTION_FRAME_SIZE')
+    return wire
+
+
+def build_collection_add(items, *, policy):
+    """One source-confirmed repeated0964 frame; no UID allocation or authority."""
+    _, keys, _ = _source()
+    return _encode_collection(_collection_items(items, policy, keys))
+
+
+def validate_collection_frame(wire, *, policy):
+    """Explicit 1..2-item subset. Does not relax validate_frame's singleton API."""
+    need(type(policy) is str and policy == COLLECTION_POLICY,
+         'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+    _, keys, _ = _source()
+    return _validate_collection_frame(wire, policy, keys)
+
+
+def _validate_collection_frame(wire, policy, keys):
+    need(type(policy) is str and policy == COLLECTION_POLICY,
+         'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+    try:
+        need(type(wire) is bytes and 6 <= len(wire) <= MAX_FRAME
+             and int.from_bytes(wire[:2], 'little') == len(wire)
+             and int.from_bytes(wire[2:4], 'little') == OPCODE and wire[-2:] == b'\0\0',
+             'INVENTORY_COLLECTION_FRAME_REQUIRED')
+        limits = pb.WireLimits(max_body=MAX_FRAME, max_fields=3, max_field_bytes=512)
+        with pb.parse_message(wire[4:-2], schema={1: 2, 2: 0}, limits=limits) as outer:
+            children, flags = outer.occurrences(1), outer.occurrences(2)
+            need(1 <= len(children) <= 2 and len(flags) == 1 and flags[0].value == 0
+                 and len(outer.fields) == len(children) + 1,
+                 'INVENTORY_COLLECTION_EXPLICIT_FALSE_REQUIRED')
+            items = []
+            for child in children:
+                body = pb.encode_bytes(1, bytes(child.value)) + pb.encode_bool(2, False)
+                single = struct.pack('<HH', len(body) + 6, OPCODE) + body + b'\0\0'
+                items.append(_validate_single_frame(single, keys))
+        result = _collection_items(tuple(items), policy, keys)
+        need(_encode_collection(result) == wire, 'INVENTORY_COLLECTION_CANONICAL_FRAME_REQUIRED')
+        return result
+    except (KeyError, TypeError, ValueError, OverflowError):
+        raise ValueError('MALFORMED_INVENTORY_COLLECTION_SUBSET') from None

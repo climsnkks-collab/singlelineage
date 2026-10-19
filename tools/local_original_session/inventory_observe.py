@@ -1,4 +1,4 @@
-"""Current empty/one-item Inventory observation, never a sender or receipt.
+"""Current Inventory observation, explicit ordered collection opt-in only.
 
 Caller schedules this instead of another retained memory sample, <=2 Hz.
 The observer acquires the actual broker row lock. Call it outside that lock.
@@ -12,15 +12,15 @@ from time import monotonic_ns
 
 from tools.local_original_session import edge, inventory, npc_observe, observe
 
-INVENTORY_SOURCE_SHA = '9f22fecc27912ad32c015d894c9fec636b2286c3826ab83487a06969e81b981d'
-COUNT_BUDGET_SOURCE_SHA = '078b84ca87f41c9d5e82fc09265165852ca50ee97cdf19607c70660d01e38515'
+INVENTORY_SOURCE_SHA = '92a80df4fc9fe83f173bd15171500245844b52ca29e544dc08a5877f277ecead'
+COUNT_BUDGET_SOURCE_SHA = 'd436d4c9a12d09d83115f9add1ee256aecf17c04541e8a66449f94b4f01741d3'
 BYTE_LIMIT = observe.RETAINED_SAMPLE_LIMIT
 MIN_INTERVAL_NS = inventory.MIN_INTERVAL_NS
 need = inventory.need
 
 
 def _source():
-    need(observe.digest(observe.ordinary(observe.ROOT / 'tools/local_original_session/inventory.py'))
+    need(observe.digest(observe.ordinary(observe.Path(inventory.__file__)))
          == INVENTORY_SOURCE_SHA, 'INVENTORY_OBSERVE_PARENT_SOURCE_CHANGED')
     need(observe.digest(observe.ordinary(observe.ROOT / 'tools/local_original_session/npc_observe.py'))
          == COUNT_BUDGET_SOURCE_SHA, 'INVENTORY_OBSERVE_COUNT_BUDGET_SOURCE_CHANGED')
@@ -53,12 +53,32 @@ class InventoryObserver:
     write gate is never called and its one-ADD admission is never consumed.
     Expected frames/values are deliberately absent from this read API.
     """
-    def __init__(self, broker, reader):
+    def __init__(self, broker, reader, *, collection_policy=None):
         _source()
+        need(collection_policy is None or type(collection_policy) is str
+             and collection_policy == inventory.COLLECTION_POLICY,
+             'INVENTORY_OBSERVE_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+        self.collection_policy = collection_policy
+        self._collection_current(broker)
         self._authority = inventory.InventoryService(broker, reader, policy=inventory.POLICY)
         self._last_ns, self._inflight, self._closed = None, False, False
         self.last_sample_monotonic_ns = None
         self.last_result = _empty('NOT_SAMPLED')
+
+    def _collection_current(self, broker):
+        actual = getattr(broker, '_inventory_collection_policy', None)
+        need((self.collection_policy is None and actual is None)
+             or (type(self.collection_policy) is str and type(actual) is str
+                 and self.collection_policy == actual == inventory.COLLECTION_POLICY),
+             'INVENTORY_OBSERVE_COLLECTION_POLICY_CHANGED')
+
+    @staticmethod
+    def _row(item):
+        fields = dict(item.raw_fields)
+        return dict(id_u64=fields[1], template_id_u32=fields[2] & 0xffffffff,
+            field18_u64=fields[3],
+            field28_i64=fields[4] - (1 << 64) if fields[4] >= 1 << 63 else fields[4],
+            field30_bool=fields[24])
 
     def close(self):
         self._closed = True
@@ -85,7 +105,36 @@ class InventoryObserver:
             current_frame = getattr(broker, '_inventory_current_frame', None)
             update_operation = getattr(broker, '_inventory_update_operation', None)
             restore_mode = getattr(broker, '_inventory_restore_only', None)
+            collection = self.collection_policy is not None
+            self._collection_current(broker)
+            generation = getattr(broker, '_inventory_generation', None)
+            expected_rows = None
+            if collection:
+                need(delivery_service is not None and delivery is not None and type(current_frame) is bytes,
+                     'INVENTORY_OBSERVE_COLLECTION_DELIVERY_REQUIRED')
+                need(update_operation is None, 'INVENTORY_OBSERVE_COLLECTION_UPDATE_UNSUPPORTED')
+                expected_rows = [self._row(item) for item in inventory.validate_collection_frame(
+                    current_frame, policy=self.collection_policy)]
             def same_delivery(current):
+                self._collection_current(broker)
+                if collection:
+                    from types import MethodType
+                    from tools.local_original_session.broker import PersistentBroker
+                    method = broker.inventory_selection_current
+                    need(type(method) is MethodType and method.__self__ is broker
+                         and method.__func__ is PersistentBroker.inventory_selection_current,
+                         'INVENTORY_OBSERVE_COLLECTION_ORIGINAL_GENERATION_REQUIRED')
+                    need(generation is not None and broker._inventory_generation is generation
+                         and method(writer) is generation
+                         and generation.phase == 'ACTIVE' and generation.writer is writer
+                         and generation.selected is generation.game.selection
+                         and generation.service is delivery_service
+                         and generation.current_frame is current_frame
+                         and generation.frame is delivery_frame
+                         and generation.operation_frame is operation_frame
+                         and generation.delivery_authority is delivery
+                         and generation.selection_binding is selection_binding,
+                         'INVENTORY_OBSERVE_COLLECTION_GENERATION_CHANGED')
                 if delivery_service is not None:
                     need(broker._inventory_service is delivery_service and not delivery_service._closed
                          and delivery_service._claimed is True
@@ -207,13 +256,14 @@ class InventoryObserver:
                           and (capacity - begin) % layout['stride'] == 0),
                          'INVENTORY_OBSERVE_CANONICAL_VECTOR_REQUIRED')
                     count = (end - begin) // layout['stride']
-                    need(count in (0, 1), 'INVENTORY_OBSERVE_EMPTY_OR_ONE_SUBSET')
-                    if count:
+                    need(count in ((0, 1, 2) if collection else (0, 1)),
+                         'INVENTORY_OBSERVE_EMPTY_OR_TWO_SUBSET' if collection else 'INVENTORY_OBSERVE_EMPTY_OR_ONE_SUBSET')
+                    for index in range(count):
                         # A drained ADD does not prove that a row exists. Empty
                         # CLIENT_WAIT reads no cold ItemEntity storage guards.
                         # Full pinned source/layout checks run on both sides;
                         # this query never invokes a native row constructor.
-                        item, control = reads.pair(reads.read(begin, layout['stride']))
+                        item, control = reads.pair(reads.read(begin + index * layout['stride'], layout['stride']))
                         need(item == control + layout['row_equals_control_plus'],
                              'INVENTORY_OBSERVE_ITEM_SHARED_LAYOUT')
                         control_table = contract['inventory_control']
@@ -235,6 +285,11 @@ class InventoryObserver:
                         # All names retain host storage meaning. In particular
                         # field18_u64 is Row+18 / wire f3, not wire f18 bytes.
                         rows.append(values)
+                    if collection:
+                        need(len({row['id_u64'] for row in rows}) == count,
+                             'INVENTORY_OBSERVE_COLLECTION_DUPLICATE_UID')
+                        need(count == len(expected_rows), 'INVENTORY_OBSERVE_COLLECTION_INCOMPLETE')
+                        need(rows == expected_rows, 'INVENTORY_OBSERVE_COLLECTION_ITEM_MISMATCH')
                     reads.verify()
                     budget.verify()
                     budget.retain = False
@@ -257,12 +312,15 @@ class InventoryObserver:
                     need(delivery_service is not None and delivery is not None
                          and type(current_frame) is bytes,
                          'EDGE_TYPED_READ_CHANGED')
-                    fields = dict(inventory.validate_frame(current_frame).raw_fields)
-                    expected = dict(id_u64=fields[1], template_id_u32=fields[2] & 0xffffffff,
-                        field18_u64=fields[3],
-                        field28_i64=fields[4] - (1 << 64) if fields[4] >= 1 << 63 else fields[4],
-                        field30_bool=fields[24])
-                    need(count == 0 or rows == [expected], 'FEATURE_INVENTORY_CLIENT_ITEM_MISMATCH')
+                    if collection:
+                        need(rows == expected_rows, 'FEATURE_INVENTORY_CLIENT_ITEM_MISMATCH')
+                    else:
+                        fields = dict(inventory.validate_frame(current_frame).raw_fields)
+                        expected = dict(id_u64=fields[1], template_id_u32=fields[2] & 0xffffffff,
+                            field18_u64=fields[3],
+                            field28_i64=fields[4] - (1 << 64) if fields[4] >= 1 << 63 else fields[4],
+                            field30_bool=fields[24])
+                        need(count == 0 or rows == [expected], 'FEATURE_INVENTORY_CLIENT_ITEM_MISMATCH')
                 contract, _, core_checks = _source()
                 authority._checks(sampler, contract, core_checks)
                 authority._cancelled()

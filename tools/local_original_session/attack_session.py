@@ -21,6 +21,8 @@ LOCAL_REJECTIONS = frozenset({
     'ATTACK_LOCAL_SELF_TARGET_REFUSED',
     'ATTACK_CURRENT_TYPED_NPC_REQUIRED',
     'ATTACK_LOCAL_CURRENT_TARGET_COORDINATES_REQUIRED',
+    'ATTACK_LOCAL_TARGET_DEAD',
+    'ATTACK_LOCAL_TARGET_REMOVED',
 })
 
 
@@ -91,7 +93,8 @@ class AttackSession:
     Accepted counts are exact and bounded: capacity refuses before acceptance,
     rather than saturating and claiming another once-only event occurred.
     """
-    def __init__(self, targets, *, policy=None, counter_limit=attack.U64_MAX, feedback=None):
+    def __init__(self, targets, *, policy=None, counter_limit=attack.U64_MAX, feedback=None, hp_provider=None,
+                 death_policy=None, remove_policy=None):
         attack.need(type(targets) is attack.AttackTargets, 'ATTACK_SESSION_REAL_TARGETS_REQUIRED')
         attack.need(policy is None or (type(policy) is str
                     and policy == EXPLICIT_LOCAL_VALIDATED_ATTACK_INTENT),
@@ -101,6 +104,24 @@ class AttackSession:
         attack.need(feedback is None or type(feedback) is FeedbackConfig
                     and policy == EXPLICIT_LOCAL_VALIDATED_ATTACK_INTENT,
                     'ATTACK_FEEDBACK_REQUIRES_INTENT_POLICY')
+        attack.need(hp_provider is None or policy == EXPLICIT_LOCAL_VALIDATED_ATTACK_INTENT,
+                    'NPC_HP_REQUIRES_INTENT_POLICY')
+        self._hp_provider = hp_provider
+        self._hp = None
+        self.last_hp_result = None
+        if hp_provider is not None:
+            from tools.local_original_session import npc_hp
+            self._hp = npc_hp.Authority(hp_provider)
+        self._notifications = None
+        if death_policy is not None or remove_policy is not None:
+            from tools.local_original_session import npc_death
+            attack.need(type(death_policy) is str and death_policy == npc_death.DEATH_POLICY
+                        and (remove_policy is None or type(remove_policy) is str
+                             and remove_policy == npc_death.REMOVE_POLICY)
+                        and self._hp is not None and feedback is not None,
+                        'NPC_DEATH_REQUIRES_EXPLICIT_HP_AND_FEEDBACK')
+            self._notifications = npc_death.Notifications(self, death_policy=death_policy,
+                                                        remove_policy=remove_policy)
         self.feedback = feedback
         self._feedback_frame = self._feedback_intent = self._feedback_row = self._feedback_lock = None
         self._feedback_state = 'DISABLED' if feedback is None else 'NOT_REQUESTED'
@@ -115,6 +136,56 @@ class AttackSession:
         self.last_invalidation = None
         self._current = None
         self._lock = asyncio.Lock()  # Distinct from the caller-owned row lock.
+
+    def _hp_binding(self, writer, row, uid):
+        from tools.local_original_session import npc_hp
+        broker = self.targets.broker
+        realm = broker.realm
+        attack.need(broker._attack_session is self and realm._attack_session is self
+                    and self._hp.provider is self._hp_provider
+                    and self._hp_provider.policy == npc_hp.POLICY,
+                    'NPC_HP_SAME_REAL_ATTACK_SESSION_REQUIRED')
+        game, service = realm.registry.resolve(writer), realm.service(writer)
+        frames = realm._npc_frames[id(writer)]
+        spawn, = [spawn for spawn, wire in realm._npc_spawns if spawn.uid == uid]
+        lock = row['operation_lock']
+        attack.need(lock.locked(), 'NPC_HP_EXISTING_ROW_LOCK_REQUIRED')
+        # The Position and motion.State in BoundTarget must be fresh for each
+        # attack, but neither is the HP lifetime: normal motion preserves HP.
+        lifetime = (realm, realm.registry, game, game.selection, service, frames,
+                    realm._npc_spawns, spawn, lock, row['policy_row'])
+        target = npc_hp.Target(spawn.uid, spawn.map_id, spawn.fields[3], spawn.fields[39])
+        return lifetime, target
+
+    def _hp_prepare(self, intent):
+        bound = intent._bound
+        row = self.targets.revalidate(bound)
+        lifetime, target = self._hp_binding(bound._writer, row, bound.target_uid)
+        return self._hp._prepare(bound._writer, row, lifetime, target, intent)
+
+    def _hp_validate(self, intent, prepared):
+        bound = intent._bound
+        row = self.targets.revalidate(bound)
+        lifetime, target = self._hp_binding(bound._writer, row, bound.target_uid)
+        replacement = prepared[2]
+        attack.need(replacement.intent is intent and replacement.row is row
+                    and replacement.target == target
+                    and len(replacement.lifetime) == len(lifetime)
+                    and all(a is b for a, b in zip(replacement.lifetime, lifetime)),
+                    'NPC_HP_SAME_INTENT_LIFETIME_REQUIRED')
+
+    def require_live_npc_motion(self, writer, row, uid):
+        """New motion admission only; an accepted lethal feedback stays valid."""
+        if self._hp is None:
+            return
+        attack.need(not self.closed and not self.fatal, 'NPC_HP_SESSION_UNAVAILABLE')
+        if self._notifications is not None and self._notifications.is_removed(writer, uid):
+            raise ValueError('NPC_HP_DEAD_MOTION_REFUSED')
+        attack.source_ready()
+        actual = self.targets._project(writer, attack.AttackRequest(uid))
+        attack.need(actual[0] is row, 'NPC_HP_SAME_MOTION_ROW_REQUIRED')
+        lifetime, target = self._hp_binding(writer, row, uid)
+        self._hp._require_alive(writer, row, lifetime, target)
 
     def _clear(self, reason):
         self._current = None
@@ -171,7 +242,23 @@ class AttackSession:
                     # without yielding. Do not commit before its next delivery.
                     raise asyncio.CancelledError()
                 ordinal = self.accepted_count + 1
-                self._current = AttackIntent(ordinal, bound)
+                intent = AttackIntent(ordinal, bound)
+                prepared_hp = None if self._hp is None else self._hp_prepare(intent)
+                if prepared_hp is not None:
+                    # Synchronous provider code may fail, cancel, close or
+                    # mutate source authority. Nothing was stored by prepare.
+                    attack.source_ready()
+                    self._hp_validate(intent, prepared_hp)
+                    unavailable = self._unavailable()
+                    if unavailable is not None:
+                        self._clear(unavailable[1])
+                        return self._outcome(*unavailable)
+                    if task is not None and task.cancelling():
+                        raise asyncio.CancelledError()
+                    self.last_hp_result = self._hp._commit(prepared_hp)
+                # No await/callback between HP commit and this exact accepted
+                # event. Later feedback errors never roll it back or replay it.
+                self._current = intent
                 self.accepted_count = ordinal
                 self.last_invalidation = None
                 self._outcome(OutcomeKind.ACCEPTED, 'LOCAL_VALIDATED_ATTACK_INTENT', ordinal)
@@ -283,7 +370,7 @@ class AttackSession:
     def metadata(self):
         current = self.current_intent()
         outcome = self.last_outcome
-        return dict(policy=self.policy, enabled=self.policy is not None,
+        result = dict(policy=self.policy, enabled=self.policy is not None,
                     closed=self.closed, fatal=self.fatal,
                     accepted_count=self.accepted_count, counter_limit=self.counter_limit,
                     current_ordinal=None if current is None else current.accepted_ordinal,
@@ -300,6 +387,13 @@ class AttackSession:
                         drained=self.feedback_drained, proof_scope='TRANSPORT_DRAIN_ONLY',
                         client_action='UNKNOWN', hp='UNKNOWN', combat_effect='UNKNOWN'),
                     duplicate_policy='EACH_FRAME_INDEPENDENTLY_VALIDATED')
+        if self._notifications is not None:
+            result['npc_notifications'] = self._notifications.metadata()
+        if self._hp is not None:
+            result['npc_hp'] = self._hp.metadata()
+            result['npc_hp']['last_commit'] = (None if self.last_hp_result is None
+                                               else self.last_hp_result.metadata())
+        return result
 
     def release(self, writer):
         """Drop only this writer's current intent; preserve accepted history.
@@ -307,16 +401,28 @@ class AttackSession:
         The caller uses this at realm writer teardown. Literal writer identity
         is sufficient to revoke, and grants no new request authority.
         """
+        if self._notifications is not None:
+            self._notifications.release(writer)
+        if self._hp is not None:
+            self._hp.release(writer)
         current = self._current
         if current is not None and current._bound._writer is writer:
             self._clear('ATTACK_SESSION_WRITER_RELEASED')
 
     def close(self):
+        if self._notifications is not None:
+            self._notifications.close()
+        if self._hp is not None:
+            self._hp.close()
         self.closed = True
         self._clear('ATTACK_SESSION_CLOSED')
         self._outcome(OutcomeKind.CLOSED, 'ATTACK_SESSION_CLOSED')
 
     def fail(self):
+        if self._notifications is not None:
+            self._notifications.fail()
+        if self._hp is not None:
+            self._hp.close()
         self.fatal = True
         self._clear('ATTACK_SESSION_FATAL')
         self._outcome(OutcomeKind.FATAL, 'ATTACK_SESSION_FATAL')
