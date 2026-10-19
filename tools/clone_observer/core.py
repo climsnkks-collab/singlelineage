@@ -40,6 +40,30 @@ def require(value, reason):
         raise ValueError(reason)
 
 
+def _public_child_class_counts(children):
+    """Count bounded public class labels in first-seen order."""
+    class_counts={}
+    for child in children[:64]:
+        label=public_class(child.get('class',''))
+        key=label.get('public_class','unknown:'+label['class_sha256'])
+        class_counts[key]=class_counts.get(key,0)+1
+    return class_counts
+
+
+def _public_static_texts(children):
+    """Keep allowed Static text verbatim; expose only hashes for other text."""
+    texts, unknown = [], []
+    for child in children[:64]:
+        if child.get('class') != 'Static':
+            continue
+        text = child.get('text', '')[:480]
+        if text.strip() in PUBLIC_LAUNCHER_MESSAGES:
+            texts.append(text)
+        elif text:
+            unknown.append({'chars': len(text), 'sha256': hashlib.sha256(text.encode()).hexdigest()})
+    return texts, unknown
+
+
 def public_window(row):
     """Never collect Edit/ComboBox text, credentials, or unknown UI plaintext."""
     title = row.get('title', '')[:240]
@@ -50,26 +74,13 @@ def public_window(row):
     for key in ('visible','geometry','owner_relation','parent_relation','same_process_child_count',
                 'foreign_child_count','child_enumeration_truncated','public_metadata_errors'):
         if key in row:result[key]=row[key]
-    class_counts={}
-    for child in row.get('children',[])[:64]:
-        label=public_class(child.get('class',''))
-        key=label.get('public_class','unknown:'+label['class_sha256'])
-        class_counts[key]=class_counts.get(key,0)+1
-    result['child_class_counts']=class_counts
+    result['child_class_counts'] = _public_child_class_counts(row.get('children', []))
     # A matching old digest alone is not a stage identity. Actual class and
     # visibility must have been read for this newly owned HWND observation.
     if title=='Default IME' and row.get('class')=='IME' and type(row.get('visible'))is bool:
         result.update({'public_caption':'Default IME','window_role':'Windows_default_IME_infrastructure',
             'game_UI_evidence':False})
-    texts, unknown = [], []
-    for child in row.get('children', [])[:64]:
-        if child.get('class') != 'Static':
-            continue
-        text = child.get('text', '')[:480]
-        if text.strip() in PUBLIC_LAUNCHER_MESSAGES:
-            texts.append(text)
-        elif text:
-            unknown.append({'chars': len(text), 'sha256': hashlib.sha256(text.encode()).hexdigest()})
+    texts, unknown = _public_static_texts(row.get('children', []))
     result['public_launcher_text'] = texts
     result['exact_source_launcher_message_detected']=bool(texts)
     result['unknown_static_text'] = unknown
