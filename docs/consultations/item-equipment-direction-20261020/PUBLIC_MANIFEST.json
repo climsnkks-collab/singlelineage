@@ -6,6 +6,7 @@
     "REVIEW.md",
     "PRO_REVIEW.md",
     "FOCUSED_BRIEF.md",
+    "FOCUSED_REVIEW.md",
     "PUBLIC_MANIFEST.json"
   ],
   "brief": {
@@ -33,9 +34,13 @@
     "sha256": "8df317243af8dccae58eb0e678ff6c3eb2b6741d3352e68f3145bef4a0a53b05"
   },
   "prior_pro_review_scope": "authenticated Pro response was broader than latest user request; historical background, not current Drop-blocker consultation completion",
-  "focused_consultation_status": "PENDING_SAME_AUTHENTICATED_PRO_CURRENT_DROP_POPUP_GET_BLOCKER",
+  "focused_consultation_status": "COMPLETED_CURRENT_DROP_BLOCKER_AUTHENTICATED_PRO_UI_VERIFIED",
   "focused_brief": {
     "bytes": 6034,
     "sha256": "758a575460f43ac544ac9262c06c77279308ecb5650bcc88299970bdeed6272d"
+  },
+  "focused_review": {
+    "bytes": 4179,
+    "sha256": "a893f46115e4a12d0c0dc48591576173fc7e9ddc1423ed31eb2c7cf32df3850a"
   }
 }
