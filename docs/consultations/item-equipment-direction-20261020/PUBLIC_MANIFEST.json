@@ -1,0 +1,21 @@
+{
+  "schema": "item-equipment-direction-consultation-public-v1",
+  "purpose": "feature-level implementation direction, assumptions, alternatives and next validation strategy",
+  "allowlist": [
+    "BRIEF.md",
+    "PUBLIC_MANIFEST.json"
+  ],
+  "brief": {
+    "bytes": 8743,
+    "sha256": "f96a03ff27a0f714b9efc9b078d8a809201fb61d222ec6320dc890f0677dbf3b"
+  },
+  "exclusions": [
+    "original binaries/resources/saves",
+    "raw runtime logs and REA originals",
+    "addresses/layouts/accounts/process identities/secrets",
+    "LOCAL_ONLY provenance"
+  ],
+  "prior_consultation": "previous low-level consultation is historical, not completed direction review",
+  "reply_status": "NOT_YET_RECEIVED",
+  "advisory_only": true
+}
