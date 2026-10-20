@@ -1,0 +1,19 @@
+# ITEM-EQUIPMENT 방향 상담 결과
+
+2026-10-20. 기능 메인이 공개 가능한 기능 brief를 직접 제출하고 웹 GPT의 답변 세 건을 실제로 확인했다. 첫 답변의 출처 카드는 제출한 고정 commit의 BRIEF.md를 가리켰다. 이는 해당 brief 접근의 근거이며 전체 저장소·원본 계약·실행의 독립 검증을 뜻하지 않는다.
+
+## 유지할 방향
+
+원본 기반 클라이언트와 로컬 서버 노선을 유지한다. 사용자 동작 전체의 입력, 원 호출, 서버 요청과 상태, 실제 응답 소비, 저장 및 수명 정리를 완료 기준으로 삼는다. 현재 원 진입 경로를 기본으로 쓰고, 더 높은 원 UI 진입점으로 바꾸는 선택은 누락된 producer/caller 계약의 근거가 있을 때 검토한다. 새 근거 없이 같은 읽기나 호출을 반복하는 진단 순환은 확대하지 않는다.
+
+## 다음 기능 연결
+
+- 원본이 수량 하나에서 직접 요청하는 정상 분기는 Drop→서버 소비→Ground→원 Get→복원 및 정리까지 먼저 연결할 수 있다. 수량 하나라는 조건이나 원 호출 반환만으로 성공을 선언하지 않는다. 다중 수량 Popup은 별도 미완료 상태를 유지하고 우회 성공으로 표시하지 않는다.
+- 장비 Use의 제품 완료는 실제 backend end-consumer가 같은 발급 intent, 수신 ordinal, 현재 선택과 row/task, 실제 장비 operation 및 저장 readback을 확인하는 경계에서 처리한다. 정상 게임 입력에는 Manual pending이나 Native-result 파일이 없으므로 제품 lease 종료를 시험 관측 어댑터의 수명에 묶지 않는다.
+- backend가 발급한 immutable completion receipt와 후행 Manual의 실제 Native 반환 및 수신 증거는 각각 검증한다. Receipt는 서버 소비의 근거이며 client ACK, Native 반환 또는 화면 반영을 대신하지 않는다. stale, partial, UNKNOWN, BLOCKED 상태를 성공으로 승격하지 않는다.
+
+## 검증 전략과 한계
+
+다음 직접 경계를 확인한다: (1) Manual 및 Native-result 파일 없이 정상 입력→실제 Use/장비 소비·저장→응답 DRAINED→제품 lease 종료→다음 NPC consumer 진입, (2) 이미 종료된 제품 작업의 receipt와 후행 Manual 관측 증거의 일치 및 실패 처리. Popup은 setter/readback→whole Submit→backend/Ground/Get와 필요한 정리가 실제로 성립할 때 해결로 판단한다.
+
+이 답변은 설계 참고 의견이다. 기능 메인은 채택 전 기존 원본 계약과 실제 변경분을 대조하고 직접 영향 경로를 검증한다. 웹 답변 수신, backend DRAINED, 함수 반환 또는 일부 기능 경로 성공을 전체 게임·공식 규칙·화면 동등성으로 확대하지 않는다. 실제 문제 해결과 필요한 소스·기록의 본 작업 반영 전까지 상담 브랜치를 유지한다.

@@ -3,6 +3,7 @@
   "purpose": "feature-level implementation direction, assumptions, alternatives and next validation strategy",
   "allowlist": [
     "BRIEF.md",
+    "REVIEW.md",
     "PUBLIC_MANIFEST.json"
   ],
   "brief": {
@@ -16,6 +17,11 @@
     "LOCAL_ONLY provenance"
   ],
   "prior_consultation": "previous low-level consultation is historical, not completed direction review",
-  "reply_status": "NOT_YET_RECEIVED",
-  "advisory_only": true
+  "reply_status": "THREE_COMPLETED_REPLIES_VISIBLY_VERIFIED",
+  "advisory_only": true,
+  "review": {
+    "bytes": 2912,
+    "sha256": "d49be7538211e64be8769f8fe5b61391d1548bab94294d1ddeee23e655b4b58a"
+  },
+  "source_access": "exact brief commit source card visibly verified; no independent source/runtime validation"
 }
