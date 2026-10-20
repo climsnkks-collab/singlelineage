@@ -5,6 +5,7 @@
     "BRIEF.md",
     "REVIEW.md",
     "PRO_REVIEW.md",
+    "FOCUSED_BRIEF.md",
     "PUBLIC_MANIFEST.json"
   ],
   "brief": {
@@ -28,7 +29,13 @@
   "pro_consultation_status": "AUTHENTICATED_USER_PRO_SELECTED_BEFORE_SEND_FINAL_RESPONSE_VISIBLY_VERIFIED",
   "pro_model_ui": "Pro (5/5), verified in actual selector before send; Pro also visible in completed reply UI",
   "pro_review": {
-    "bytes": 4429,
-    "sha256": "aa1a67051beb834750bea9b94f400a0cb9b7be0c3a3ccbe413c76175be9c1aa4"
+    "bytes": 4762,
+    "sha256": "8df317243af8dccae58eb0e678ff6c3eb2b6741d3352e68f3145bef4a0a53b05"
+  },
+  "prior_pro_review_scope": "authenticated Pro response was broader than latest user request; historical background, not current Drop-blocker consultation completion",
+  "focused_consultation_status": "PENDING_SAME_AUTHENTICATED_PRO_CURRENT_DROP_POPUP_GET_BLOCKER",
+  "focused_brief": {
+    "bytes": 6034,
+    "sha256": "758a575460f43ac544ac9262c06c77279308ecb5650bcc88299970bdeed6272d"
   }
 }
