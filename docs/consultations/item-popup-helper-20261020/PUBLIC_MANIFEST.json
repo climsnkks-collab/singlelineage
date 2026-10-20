@@ -1,0 +1,58 @@
+{
+  "schema": "popup-static-consultation-public-v1",
+  "purpose": "redacted static design consultation; no runtime reproducer or cause claim",
+  "allowlist": [
+    "README.md",
+    "adapter-control-flow.cpp",
+    "PUBLIC_MANIFEST.json"
+  ],
+  "payload_hashes": [
+    {
+      "file": "README.md",
+      "bytes": 7922,
+      "sha256": "c9b18b75ad5625e4aa8b0dbf5e6127d11775e8007b471f6b1fbedaef2ec4d8d4"
+    },
+    {
+      "file": "adapter-control-flow.cpp",
+      "bytes": 5706,
+      "sha256": "99567cb0125883bee5368c7e08e3744808817781c2b58eb9a8ddca266fa8ce39"
+    }
+  ],
+  "self_hash": "reported separately at delivery; not recursively embedded",
+  "excluded_local_file": "LOCAL_ONLY_PROVENANCE.json",
+  "artifact_identity_only": {
+    "frozen_parent_A": {
+      "sha256": "ad2b4af5e4d7d8757fd7291488f63a23d0ed629254ca89511e3b0d6fe3c9f5b7",
+      "bytes": 528896
+    },
+    "diagnostic_candidate_D": {
+      "sha256": "31c28271cea47e24a0895caf4b457152a13fa04e1c5c8cb02779a611ebcf1207",
+      "bytes": 529408,
+      "next_runtime_result": "NOT_RECEIVED"
+    }
+  },
+  "publication_performed": false,
+  "privacy_scan_payload_files": {
+    "README.md": {
+      "absolute_windows_path": 0,
+      "absolute_unix_user_path": 0,
+      "web_or_email_endpoint": 0,
+      "address_or_layout_literal": 0,
+      "binary_or_memory_encoding": 0,
+      "known_local_account": 0,
+      "runtime_identifier_value": 0,
+      "original_source_marker": 0
+    },
+    "adapter-control-flow.cpp": {
+      "absolute_windows_path": 0,
+      "absolute_unix_user_path": 0,
+      "web_or_email_endpoint": 0,
+      "address_or_layout_literal": 0,
+      "binary_or_memory_encoding": 0,
+      "known_local_account": 0,
+      "runtime_identifier_value": 0,
+      "original_source_marker": 0
+    }
+  },
+  "scope_checks": "No binary, original-source, raw runtime, account, address/layout or absolute local path copied. Abstract predicates are not actual product source."
+}
