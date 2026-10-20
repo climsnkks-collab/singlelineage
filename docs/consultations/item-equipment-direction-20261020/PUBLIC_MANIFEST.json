@@ -4,6 +4,7 @@
   "allowlist": [
     "BRIEF.md",
     "REVIEW.md",
+    "PRO_REVIEW.md",
     "PUBLIC_MANIFEST.json"
   ],
   "brief": {
@@ -17,12 +18,17 @@
     "LOCAL_ONLY provenance"
   ],
   "prior_consultation": "previous low-level consultation is historical, not completed direction review",
-  "reply_status": "WITHDRAWN_ANONYMOUS_REPLY_NOT_REQUESTED_AUTHENTICATED_PRO",
+  "reply_status": "ANONYMOUS_HISTORICAL_COMPLETION_WITHDRAWN",
   "advisory_only": true,
   "review": {
     "bytes": 3213,
     "sha256": "e7f0903556e2452b25e4953fb1c1bf9753a232b31d09b1997c578a28172d5245"
   },
-  "source_access": "exact brief commit source card visibly verified; no independent source/runtime validation",
-  "pro_consultation_status": "PENDING_UI_VERIFIED_AUTHENTICATED_PRO_RESPONSE"
+  "source_access": "Pro explicitly cites both fixed public files and reports GitHub read; current product code/original contracts/runtime not independently verified",
+  "pro_consultation_status": "AUTHENTICATED_USER_PRO_SELECTED_BEFORE_SEND_FINAL_RESPONSE_VISIBLY_VERIFIED",
+  "pro_model_ui": "Pro (5/5), verified in actual selector before send; Pro also visible in completed reply UI",
+  "pro_review": {
+    "bytes": 4429,
+    "sha256": "aa1a67051beb834750bea9b94f400a0cb9b7be0c3a3ccbe413c76175be9c1aa4"
+  }
 }
