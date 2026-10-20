@@ -17,11 +17,12 @@
     "LOCAL_ONLY provenance"
   ],
   "prior_consultation": "previous low-level consultation is historical, not completed direction review",
-  "reply_status": "THREE_COMPLETED_REPLIES_VISIBLY_VERIFIED",
+  "reply_status": "WITHDRAWN_ANONYMOUS_REPLY_NOT_REQUESTED_AUTHENTICATED_PRO",
   "advisory_only": true,
   "review": {
-    "bytes": 2912,
-    "sha256": "d49be7538211e64be8769f8fe5b61391d1548bab94294d1ddeee23e655b4b58a"
+    "bytes": 3213,
+    "sha256": "e7f0903556e2452b25e4953fb1c1bf9753a232b31d09b1997c578a28172d5245"
   },
-  "source_access": "exact brief commit source card visibly verified; no independent source/runtime validation"
+  "source_access": "exact brief commit source card visibly verified; no independent source/runtime validation",
+  "pro_consultation_status": "PENDING_UI_VERIFIED_AUTHENTICATED_PRO_RESPONSE"
 }
