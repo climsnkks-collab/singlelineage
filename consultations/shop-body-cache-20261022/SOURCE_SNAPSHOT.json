@@ -1,0 +1,55 @@
+{
+  "scope": "Authored SHOP adapter only; no original binaries, disassembly, private execution logs or save data. Includes and source contracts are not a full standalone build.",
+  "files": [
+    {
+      "path": "shop_normal_input_driver.py",
+      "bytes": 25922,
+      "sha256": "7e3cdfcf630af824f6d2c07c74317bc016e0c2576ae663ef8324347fb7095293"
+    },
+    {
+      "path": "shop_wndproc_input.py",
+      "bytes": 15943,
+      "sha256": "0fddc31b062f2c0a17c0e19e94c122fc994f7d3605de23706d0e4792fa0f9276"
+    },
+    {
+      "path": "shop_wndproc_protocol.hpp",
+      "bytes": 3287,
+      "sha256": "3d4232d791a71dc739ced58ba7d7c4a1d17239c999798bf059db3b6ca03e9888"
+    },
+    {
+      "path": "shop_wndproc_input.hpp",
+      "bytes": 16808,
+      "sha256": "2d0055dd8d80c5ad037905541cbd188fe6633a9b3662e0ffffca2d362a72d063"
+    },
+    {
+      "path": "shop_wndproc_sequence.hpp",
+      "bytes": 7421,
+      "sha256": "52a6627ba107d48f6888f9e7c644b2cbe26b10d7a3d5ff580ebd7008e3281f75"
+    },
+    {
+      "path": "shop_wndproc_body_math.hpp",
+      "bytes": 6907,
+      "sha256": "2d40d65c40d8617d4d44ecc9d0446a528a50e4f5b98e0204d2ebee15af6a4973"
+    },
+    {
+      "path": "shop_wndproc_body_cache.hpp",
+      "bytes": 11827,
+      "sha256": "c64a5059616a55fccedc3ea8da685181b2adbc50f34e0bc59a2adb0c79c42511"
+    },
+    {
+      "path": "shop_wndproc_body_binding.hpp",
+      "bytes": 1999,
+      "sha256": "6d50ccf7a5d4dd0a970dd63588bcce761966d68833380bd8e86786e31618b2fe"
+    },
+    {
+      "path": "body_point.hpp",
+      "bytes": 1944,
+      "sha256": "97f21680129f61b9a7684802c9fd9a37a724039a47e928b3a228acd2e0d89663"
+    },
+    {
+      "path": "shop_wndproc_point_binding.hpp",
+      "bytes": 6154,
+      "sha256": "41b8d75bd569146d70267313e063806cb7a612fa2ea5640eaea4f83696c7d402"
+    }
+  ]
+}
