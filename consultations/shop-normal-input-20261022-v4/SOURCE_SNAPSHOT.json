@@ -1,0 +1,82 @@
+{
+  "scope": "Exact authored SHOP adapters only. No original binaries/raw spans/disassembly, runtime logs, saves, credentials or absolute personal paths. This is not a standalone build.",
+  "files": [
+    {
+      "path": "body_point.hpp",
+      "bytes": 3155,
+      "sha256": "b3741f0d48b6be8b219ecb7657ddde5771c7708be83aa0999c96b09302d724e0",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/body_point.hpp",
+      "private_sha256": "b3741f0d48b6be8b219ecb7657ddde5771c7708be83aa0999c96b09302d724e0"
+    },
+    {
+      "path": "shop_wndproc_point_binding.hpp",
+      "bytes": 6515,
+      "sha256": "739d38baaba60047a5469c3cba992ad1cab97b15af44777088d1e327e78d9273",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/shop_wndproc_point_binding.hpp",
+      "private_sha256": "739d38baaba60047a5469c3cba992ad1cab97b15af44777088d1e327e78d9273"
+    },
+    {
+      "path": "shop_wndproc_input.hpp",
+      "bytes": 16895,
+      "sha256": "6a621c50c0b1700382156428801cbcfd2a92792f7981768edf821e81b3469af1",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/shop_wndproc_input.hpp",
+      "private_sha256": "6a621c50c0b1700382156428801cbcfd2a92792f7981768edf821e81b3469af1"
+    },
+    {
+      "path": "shop_wndproc_body_math.hpp",
+      "bytes": 6907,
+      "sha256": "2d40d65c40d8617d4d44ecc9d0446a528a50e4f5b98e0204d2ebee15af6a4973",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/shop_wndproc_body_math.hpp",
+      "private_sha256": "2d40d65c40d8617d4d44ecc9d0446a528a50e4f5b98e0204d2ebee15af6a4973"
+    },
+    {
+      "path": "shop_wndproc_body_cache.hpp",
+      "bytes": 14136,
+      "sha256": "5f59dde6966d384d4b2ded275b6249140521d7b1b84d778e853bf917e186d916",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/shop_wndproc_body_cache.hpp",
+      "private_sha256": "5f59dde6966d384d4b2ded275b6249140521d7b1b84d778e853bf917e186d916"
+    },
+    {
+      "path": "shop_wndproc_body_binding.hpp",
+      "bytes": 1999,
+      "sha256": "700f578efd2de449a8427e14ff02435816be854bdb1c60b4dde824e0c76bcb1e",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/shop_wndproc_body_binding.hpp",
+      "private_sha256": "700f578efd2de449a8427e14ff02435816be854bdb1c60b4dde824e0c76bcb1e"
+    },
+    {
+      "path": "shop_wndproc_protocol.hpp",
+      "bytes": 3287,
+      "sha256": "3d4232d791a71dc739ced58ba7d7c4a1d17239c999798bf059db3b6ca03e9888",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/shop_wndproc_protocol.hpp",
+      "private_sha256": "3d4232d791a71dc739ced58ba7d7c4a1d17239c999798bf059db3b6ca03e9888"
+    },
+    {
+      "path": "shop_wndproc_sequence.hpp",
+      "bytes": 10228,
+      "sha256": "226d83f92c11e3b8d7d06d7a7a791d80a90bb2be58492dfad27a97ea892fb3ed",
+      "private_source": "work/local_original_session/implementation-4/shop-quest/shop-original-wndproc-input-v13/native370/shop_wndproc_sequence.hpp",
+      "private_sha256": "226d83f92c11e3b8d7d06d7a7a791d80a90bb2be58492dfad27a97ea892fb3ed"
+    },
+    {
+      "path": "shop_normal_input_driver.py",
+      "bytes": 25922,
+      "sha256": "7e3cdfcf630af824f6d2c07c74317bc016e0c2576ae663ef8324347fb7095293",
+      "private_source": "work/local_original_session/integration-1/shop-body-failure-serial356-v1/shop_normal_input_driver.py",
+      "private_sha256": "7e3cdfcf630af824f6d2c07c74317bc016e0c2576ae663ef8324347fb7095293"
+    },
+    {
+      "path": "shop_wndproc_input.py",
+      "bytes": 16826,
+      "sha256": "aa30421abfcbde2a8c6240a3225bb83b60d634e8de021e082ddcc4ecb961d1f8",
+      "private_source": "work/local_original_session/integration-1/shop-body-failure-serial356-v1/shop_wndproc_input.py",
+      "private_sha256": "aa30421abfcbde2a8c6240a3225bb83b60d634e8de021e082ddcc4ecb961d1f8"
+    },
+    {
+      "path": "operating_input.py",
+      "bytes": 25957,
+      "sha256": "b25189d49b3a4d92709d0d316827bd2c2747e4bcf95f852b7540f99883d4cb39",
+      "private_source": "work/local_original_session/integration-1/shop-changed-move-serial370-v1/operating_input.py",
+      "private_sha256": "b25189d49b3a4d92709d0d316827bd2c2747e4bcf95f852b7540f99883d4cb39"
+    }
+  ]
+}
