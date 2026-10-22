@@ -1,0 +1,163 @@
+{
+  "state": "SANITIZED_SOURCE_ONLY_ALLOWLIST_READY",
+  "selected_parent": "npc-two-enemy-serial395-v3",
+  "files": [
+    {
+      "name": "broker.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v20/broker.py",
+      "export_path": "src/broker.py",
+      "sha256": "3d994575d7bdb6b9eeff35c21c86c82e1768699810040793c8e4e8ef690a2b64",
+      "bytes": 326156
+    },
+    {
+      "name": "hp_resource_owner.py",
+      "original_path": "work/local_original_session/integration-1/repeated-player-life-integration/cohort/hp_resource_owner.py",
+      "export_path": "src/hp_resource_owner.py",
+      "sha256": "256f4d884440c9428e82292d5e144143fa8bcd71ce5b9e06f14ed86530c9dbe3",
+      "bytes": 57368
+    },
+    {
+      "name": "hp_status.py",
+      "original_path": "work/local_original_session/integration-1/repeated-player-life-integration/cohort/hp_status.py",
+      "export_path": "src/hp_status.py",
+      "sha256": "5a2da3c39f21a58748ef51cbc15d8499f34bae46feb7bef5f5f279d61d2a8739",
+      "bytes": 33407
+    },
+    {
+      "name": "canonical_feature_bootstrap.py",
+      "original_path": "work/local_original_session/integration-1/repeated-player-life-integration/cohort/canonical_feature_bootstrap.py",
+      "export_path": "src/canonical_feature_bootstrap.py",
+      "sha256": "f7fce6549c62204cb99605d0371669554368d97994fffa0fa319c4a09d1c98e0",
+      "bytes": 44342
+    },
+    {
+      "name": "inventory_aggregate.py",
+      "original_path": "work/local_original_session/integration-1/repeated-player-life-integration/cohort/inventory_aggregate.py",
+      "export_path": "src/inventory_aggregate.py",
+      "sha256": "dc21e6a1c79210c1a5ecc6d848cfa84d9f3a9fc569cff3230db673f9af4ecff4",
+      "bytes": 5621
+    },
+    {
+      "name": "npc_continuous_retaliation_runtime.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/runtime/npc_continuous_retaliation_runtime.py",
+      "export_path": "src/npc_continuous_retaliation_runtime.py",
+      "sha256": "b283705bc1cdf54f4438e731b92366755f07dc7d5c8727c81c619a3659b43045",
+      "bytes": 54375
+    },
+    {
+      "name": "npc_continuous_retaliation.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/npc_continuous_retaliation.py",
+      "export_path": "src/npc_continuous_retaliation.py",
+      "sha256": "ece459f01b27e998101eb6c93d245ae8037b3ef85d6d4ff1c709f59a45a3b916",
+      "bytes": 32778
+    },
+    {
+      "name": "npc_session.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/npc_session.py",
+      "export_path": "src/npc_session.py",
+      "sha256": "116c5eebc1edf1b98adf0018775b3d75a0a3e4b89128997c35f626fce9e62ce5",
+      "bytes": 25607
+    },
+    {
+      "name": "npc_respawn.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/producer/npc_respawn.py",
+      "export_path": "src/npc_respawn.py",
+      "sha256": "781cf72b8e6c92618857f20ae0d3301c33e1c66f29cd097a375143c2de72404d",
+      "bytes": 23110
+    },
+    {
+      "name": "npc_player_hit.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/producer/npc_player_hit.py",
+      "export_path": "src/npc_player_hit.py",
+      "sha256": "d69d195716ebc45861f11bf0213402047a364548181e1533943fac637bc9fcae",
+      "bytes": 34574
+    },
+    {
+      "name": "attack_session.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/producer/attack_session.py",
+      "export_path": "src/attack_session.py",
+      "sha256": "c0de043c4c42c84676abedbf6552c398d10b8b3018f980036b12adea30fddeff",
+      "bytes": 22014
+    },
+    {
+      "name": "npc_hp.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/producer/npc_hp.py",
+      "export_path": "src/npc_hp.py",
+      "sha256": "7e02ae67bcb50f8ff1d8fee558549f13f896babda9ea29725229bf26d44df3c4",
+      "bytes": 10081
+    },
+    {
+      "name": "npc_death.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/producer/npc_death.py",
+      "export_path": "src/npc_death.py",
+      "sha256": "321954b515fb4769f9077c446907bfd7e86ce9f0d583fef0377939a8110e1272",
+      "bytes": 12861
+    },
+    {
+      "name": "player_life.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/player_life.py",
+      "export_path": "src/player_life.py",
+      "sha256": "230e0eb7e41970ad8b2a251fa3fa27162ad0eb02b80a38c1ba305464a5e75748",
+      "bytes": 47693
+    },
+    {
+      "name": "npc.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/producer/npc.py",
+      "export_path": "src/npc.py",
+      "sha256": "ae4b39dec1f706ec0b1f706233d29f4db6a312036cb8dadd2c6645d692946512",
+      "bytes": 4579
+    },
+    {
+      "name": "attack.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/attack.py",
+      "export_path": "src/attack.py",
+      "sha256": "652bce74bb24c4f269c429dda3757a6b404df4fa636523f333257bf9ebf527f6",
+      "bytes": 22563
+    },
+    {
+      "name": "npc_edge.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/npc_edge.py",
+      "export_path": "src/npc_edge.py",
+      "sha256": "c55c1b1c286a14c634ee9dca8fb904cb91f2491b5981e64b1b5475b3fec1ab6e",
+      "bytes": 20591
+    },
+    {
+      "name": "continuous_lethal.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/continuous_lethal.py",
+      "export_path": "src/continuous_lethal.py",
+      "sha256": "0d3c1246158131d7cf8ab5d1d48457d682e663722583a028d63240fbccb5416c",
+      "bytes": 9838
+    },
+    {
+      "name": "npc_player_lethal.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/npc_player_lethal.py",
+      "export_path": "src/npc_player_lethal.py",
+      "sha256": "39c7ddb03f401c0ee071d9501474a82eaf460a331a267e96c0f23adf0757d3d9",
+      "bytes": 28033
+    },
+    {
+      "name": "feature_config.py",
+      "original_path": "work/local_original_session/integration-1/repeated-player-life-integration/cohort/feature_config.py",
+      "export_path": "src/feature_config.py",
+      "sha256": "bb4a4f70cebc70110df16140c93e5e3a366c463af9d72cea2efa76489fcf0cfb",
+      "bytes": 31931
+    },
+    {
+      "name": "canonical_batch.py",
+      "original_path": "work/local_original_session/implementation-1/item-equipment-product/use/empty-integration-311-v1/canonical_batch.py",
+      "export_path": "src/canonical_batch.py",
+      "sha256": "1844456802b3e22101aea41a14934cb7a8821368a450fce9515b560aa27de823",
+      "bytes": 127844
+    },
+    {
+      "name": "npc_continuous_retaliation_inputs.py",
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-two-enemy-v18/runtime/npc_continuous_retaliation_inputs.py",
+      "export_path": "src/npc_continuous_retaliation_inputs.py",
+      "sha256": "934c784c2fd11c818aa985830a5827ade8c18af9881eee1db868925263f6dc13",
+      "bytes": 14843
+    }
+  ],
+  "excluded": "No saves/profiles/raw logs/nonces/PIDs/birth/handles/binary/screenshots/credentials. Source-only plus summarized failure facts.",
+  "publication_prefix": "docs/npc-two-enemy-consult-20261022",
+  "private_absolute_paths_removed": true
+}
