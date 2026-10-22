@@ -1,0 +1,101 @@
+{
+  "state": "WRITER_RELEASED_PREPARED_FOR_ROOT_READ_AND_PUBLISH",
+  "implementation_owner": "Same Web Pro; this packet supplies context/feedback only.",
+  "parent_context": {
+    "branch": "codex/companion-context-20261022",
+    "base_commit": "24d10f31088b25d793da519fccad221ab184638d",
+    "base_parent": "ab701a977e0298b22ad0de1446a4a215386a50ec"
+  },
+  "review": {
+    "path": "work/local_original_session/integration-1/companion-webpro-review-v3/review.md",
+    "sha256": "a46b15231b75b1420e4a7e688b9c7af786180a1cae8a44890e97fd147c100739",
+    "bytes": 11004
+  },
+  "original_metadata": {
+    "cohort": {
+      "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/cohort.json",
+      "sha256": "10b0a63036f1bf9ab7135cb70a3cd11e94c5083820beed891d1788844877aaa8",
+      "bytes": 21810
+    },
+    "manifest": {
+      "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/manifest.json",
+      "sha256": "74217e4d147054c0e59b1f209b687d79297b360f2b90b9b63cef9594ed22546f",
+      "bytes": 58801
+    }
+  },
+  "raw_python_sources": [
+    {
+      "role": "cohort_loader",
+      "source": {
+        "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/cohort_loader.py",
+        "sha256": "bec48f6a8e8c9c0ee83079e3f142a00bafd027d6071bc63026b1b4f06477f941",
+        "bytes": 4479
+      },
+      "copy_path": "raw/cohort_loader.py"
+    },
+    {
+      "role": "canonical_skill",
+      "source": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/canonical_skill.py",
+        "sha256": "c1ef77e41fba8cec73b81941cd8e03b7d42b7f601f7e149999ff932f2ef332ed",
+        "bytes": 11907
+      },
+      "copy_path": "raw/canonical_skill.py"
+    }
+  ],
+  "derived_descriptor": {
+    "path": "selected393-source-descriptor.json",
+    "sha256": "1a46b8dfcc9132d7f53ed929f3cef479aaab3b9d106e4526f481c73cb01a8dae",
+    "bytes": 20269,
+    "selected_alias_count": 68,
+    "source_only": true,
+    "execution_cohort": false,
+    "raw_metadata_pin_substitute": false,
+    "normalization": "Source paths only, repository-relative; metadata and selected rows are records, not a new SourceModule/authority."
+  },
+  "own_native_summary_basis": {
+    "source": "REA221 MAIN external OWN SUMMARY only; raw REA and consumer details not copied.",
+    "sha256": "614503688f61be7ef0e3cfca90b4ae1d7f06673863a12bedd1f60f222842c613"
+  },
+  "checks": "Only two raw Python bytes/SHA and input metadata references plus bounded source-line context; no source/import/apply/test/performance/Factory/currentCold/native/game/REA execution or full68 source hash audit.",
+  "Git_worktree_publish": 0,
+  "product_changes": 0,
+  "writer_released": true,
+  "files": [
+    {
+      "path": "FEEDBACK.md",
+      "sha256": "1a7f201e4346f849ae1f6d43f2986c28802cfb340d0b604c9cbe393596715bfa",
+      "bytes": 4151
+    },
+    {
+      "path": "OWN_NATIVE_SUMMARY221.md",
+      "sha256": "a7a47234ae6fb8ccf54cd52cb70249b2aaba0a253330a8a3e7173a87b9591b72",
+      "bytes": 1366
+    },
+    {
+      "path": "raw/canonical_skill.py",
+      "sha256": "c1ef77e41fba8cec73b81941cd8e03b7d42b7f601f7e149999ff932f2ef332ed",
+      "bytes": 11907
+    },
+    {
+      "path": "raw/cohort_loader.py",
+      "sha256": "bec48f6a8e8c9c0ee83079e3f142a00bafd027d6071bc63026b1b4f06477f941",
+      "bytes": 4479
+    },
+    {
+      "path": "README.md",
+      "sha256": "072f30170f9339decd85204291afca18f9f33ac479ee690832939ac1b4c62e0c",
+      "bytes": 2281
+    },
+    {
+      "path": "selected393-source-descriptor.json",
+      "sha256": "1a46b8dfcc9132d7f53ed929f3cef479aaab3b9d106e4526f481c73cb01a8dae",
+      "bytes": 20269
+    },
+    {
+      "path": "SOURCES.md",
+      "sha256": "a1ebf79591f528345bc9dda8cb72b20ff81094d2e05ddbc5f8cc953db3aea9f9",
+      "bytes": 2226
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+{
+  "format": "companion-selected393-source-context-descriptor-v1",
+  "derived_source_context_only": true,
+  "execution_cohort": false,
+  "original_metadata": {
+    "cohort": {
+      "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/cohort.json",
+      "sha256": "10b0a63036f1bf9ab7135cb70a3cd11e94c5083820beed891d1788844877aaa8",
+      "bytes": 21810
+    },
+    "manifest": {
+      "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/manifest.json",
+      "sha256": "74217e4d147054c0e59b1f209b687d79297b360f2b90b9b63cef9594ed22546f",
+      "bytes": 58801
+    }
+  },
+  "cohort": {
+    "schema": 1,
+    "status": "SOURCE_ONLY393_EXPLICIT_ELF_LIBRARY_REFERENCE_EXCLUSIVE_INPUT_UNSUPPLIED",
+    "selected": {
+      "attack_session": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/attack_session.py",
+        "sha256": "73313bd2da4a1bfa9751b011eb9d909b3eb8b502abfdde4ed62713aacbad010d",
+        "bytes": 21425
+      },
+      "bootstrap_progress": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/bootstrap_progress.py",
+        "sha256": "e4caf75f6b46118f6349b7f3427f6be9ea218fe796afb9b12d57d8500699b81c",
+        "bytes": 3227
+      },
+      "broker": {
+        "path": "work/local_original_session/integration-1/spell-light-catalog-serial379-v1/broker.py",
+        "sha256": "36a340950db7890f60e1603060e8dfb05043c6c88739e7b2ec65265e0a0a2090",
+        "bytes": 346070
+      },
+      "canonical_delivery": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/canonical_delivery.py",
+        "sha256": "8b1507f019e5f89f3fa7008fe1b96e510f374a85ff54b3988e9b115016e60e2f",
+        "bytes": 10888
+      },
+      "canonical_feature_bootstrap": {
+        "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/canonical_feature_bootstrap.py",
+        "sha256": "1ceeef0b629f4a32d3c69ffe8fbbdb454c8fefe7b6233d6a293f2e6dcc624b82",
+        "bytes": 66255
+      },
+      "canonical_port": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/canonical_port.py",
+        "sha256": "521d720404c88ff91b751485c34b6481178c5c1222e7e52de7e65d418ecc69b4",
+        "bytes": 11371
+      },
+      "canonical_skill": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/canonical_skill.py",
+        "sha256": "c1ef77e41fba8cec73b81941cd8e03b7d42b7f601f7e149999ff932f2ef332ed",
+        "bytes": 11907
+      },
+      "dialogue_route": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/dialogue_route.py",
+        "sha256": "58477805d7d868eb63c2a549f66897b7488f8b96711909d843bb5041d008b09d",
+        "bytes": 9460
+      },
+      "equipment_store": {
+        "path": "work/local_original_session/implementation-1/item-equipment-product/use/empty-integration-311-v1/equipment_store.py",
+        "sha256": "cce184e828da856f289bcdde91ceed5aef4cd8c01a891c8b513370b3935f5b06",
+        "bytes": 11485
+      },
+      "feature_config": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/feature_config.py",
+        "sha256": "bb4a4f70cebc70110df16140c93e5e3a366c463af9d72cea2efa76489fcf0cfb",
+        "bytes": 31931
+      },
+      "hp_resource_document": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/hp_resource_document.py",
+        "sha256": "4b691ab2a57ee6a3897ab738031cfa7f86b3994f0b4690755e948533a637c594",
+        "bytes": 6885
+      },
+      "hp_resource_owner": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-reference-exclusive-v1/hp_resource_owner.py",
+        "sha256": "756260f8aeb8e0963b7ee28a4c0e328b024cbbe3f22da563b77b143bbbe85225",
+        "bytes": 67706
+      },
+      "hp_status": {
+        "path": "work/local_original_session/implementation-3/skill-buff/buff-effective-stats-v2/hp_status.py",
+        "sha256": "8388776e5282d131dce820f60cd4f2d7be375781ca57fc759dcaeae7bb4f8f9d",
+        "bytes": 33697
+      },
+      "inventory_aggregate": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/inventory_aggregate.py",
+        "sha256": "dc21e6a1c79210c1a5ecc6d848cfa84d9f3a9fc569cff3230db673f9af4ecff4",
+        "bytes": 5621
+      },
+      "inventory_observe": {
+        "path": "work/local_original_session/validation-minimal-refactor/source-init-v1/inventory_observe.py",
+        "sha256": "40a9e9c343f987ec6e9707b64e57adf381df220fb68d94f14d6cb0e3a9a8dccc",
+        "bytes": 31960
+      },
+      "inventory_store": {
+        "path": "work/local_original_session/validation-minimal-refactor/source-init-v1/inventory_store.py",
+        "sha256": "7dbf9725b9147031393c578342dcea3bfaee9a1f8bf0b1029af697f458e5f1e1",
+        "bytes": 30525
+      },
+      "inventory_update": {
+        "path": "tools/local_original_session/inventory_update.py",
+        "sha256": "e86a7a280de663403f6b125bce93a73593678c1382664e1515315eb76f9120d1",
+        "bytes": 9674
+      },
+      "item_use_session": {
+        "path": "work/local_original_session/integration-1/npc-retaliation-serial344-v1/item_use_session.py",
+        "sha256": "97195611433e85bbef6e5eb238a0e17c16aa29a0b657f28daaa332da884cf303",
+        "bytes": 129937
+      },
+      "launcher": {
+        "path": "work/local_original_session/integration-1/spell-cold-handoff-serial390-v1/launcher.py",
+        "sha256": "124246414ebf35895b2a7714d564863e19de85c37e3c2dc26d1c7610292b356e",
+        "bytes": 362403
+      },
+      "manual_move_commands": {
+        "path": "tools/local_original_session/manual_move_commands.py",
+        "sha256": "091a237261533753c8cf1ed9969634171a2d91696372779fde201c13f7f305ec",
+        "bytes": 202500
+      },
+      "npc_approach_hit": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/npc_approach_hit.py",
+        "sha256": "57be7447a6e64ccd4f21f6f00e5ea2bc1abf83b249fac1a72cac9b314e4f7c0c",
+        "bytes": 20040
+      },
+      "npc_hp": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/npc_hp.py",
+        "sha256": "d12a8ac2f5da29666b3af8da17715739d27f3246308a27aa1b371c5a5662baf5",
+        "bytes": 9766
+      },
+      "npc_kill_events": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/npc_kill_events.py",
+        "sha256": "112d47e609685f0078c64a6945b88859ec0f5574f93b62519c8325fffe85ae05",
+        "bytes": 11138
+      },
+      "npc_player_hit": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/npc_player_hit.py",
+        "sha256": "ad85bc6c8277c9bf7fdb8e846f9f6f9cabef7dddb2265d6a78876bb95d4c1c26",
+        "bytes": 26617
+      },
+      "npc_player_lethal": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/npc_player_lethal.py",
+        "sha256": "04430a914d99d5fb5a107a3987fa33a4acebf2da5fb7aea636dae3aca4d8e75c",
+        "bytes": 20126
+      },
+      "npc_player_lethal_recovery_focused": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/npc_player_lethal_recovery_focused.py",
+        "sha256": "fb049a6599c61f8241a8be3a33de741f78026ed7177ed44b4b9809b9786bd5a2",
+        "bytes": 4613
+      },
+      "npc_session": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/npc_session.py",
+        "sha256": "4b6312cf15aef5b900190bf3c9b5174eec43133fc50ba0c75d67ed6867abccb5",
+        "bytes": 21224
+      },
+      "player_death_recovery_focused": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/player_death_recovery_focused.py",
+        "sha256": "e7f7bd7778c28b05fcf516e7f0a88d96c5bf302ba6919fa93483e7615ba64fb5",
+        "bytes": 19752
+      },
+      "player_life": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/player_life.py",
+        "sha256": "cbc7162e4d6aca857fa249c237fce29542b0b4c4e0ec1bed126fde9ae1417907",
+        "bytes": 38279
+      },
+      "player_life_observe": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/player_life_observe.py",
+        "sha256": "d0922093ce47104d645e8fb1d1b475b27c68247ff51d9666269023145cce23c1",
+        "bytes": 27975
+      },
+      "projection": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/projection.py",
+        "sha256": "16c354a066549fec22a9ee1f350731d2ade8f5d55dece52b668dde9e578e3427",
+        "bytes": 3328
+      },
+      "repeated_dead_restart": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/repeated_dead_restart.py",
+        "sha256": "fa857093b29a96c3144cd2118b7c01aa536bdb96a387d17f133446ab08ed373d",
+        "bytes": 21085
+      },
+      "repeated_player_life_focused": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/repeated_player_life_focused.py",
+        "sha256": "ba4084ecbf494861f409d07ea049a0f9a4b86117687cf546e28acf8fcf3798d0",
+        "bytes": 11719
+      },
+      "run_manual_baseline_scenario": {
+        "path": "work/local_original_session/integration-1/spell-postret-serial298-v1/scenario.py",
+        "sha256": "f61d8d9354ed184d3e0b7e0b35610392a84e5e1e740e3aa45fd6f526f43799da",
+        "bytes": 442045
+      },
+      "server_death_event": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/server_death_event.py",
+        "sha256": "b3e64c57089f41baf3224e444cb298258969cde33ef86c369fb53e7c522510dd",
+        "bytes": 7814
+      },
+      "shop_quest": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/shop_quest.py",
+        "sha256": "5e19a035c678a583cabccdb2fb1e3cfc244a5416ec6b4094b3800f762f916f71",
+        "bytes": 21464
+      },
+      "shop_quest_binding": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/shop_quest_binding.py",
+        "sha256": "931e1190960201d87a46ba4c656859886cdff1aa27fa28ceb41bf8b653a21b95",
+        "bytes": 9658
+      },
+      "skill_buff": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/skill_buff.py",
+        "sha256": "d18a2356f1c0663c72ae4290aaf43fed94c17994e8551412318bb78251d6dfde",
+        "bytes": 17626
+      },
+      "skill_cost_delivery": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-reference-exclusive-v1/skill_cost_delivery.py",
+        "sha256": "d8d320fdcf5a105b1a658ec240bc83f80dd739a76d38e70c300ea15cd169b32d",
+        "bytes": 19173
+      },
+      "trade_delivery": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/trade_delivery.py",
+        "sha256": "afcebef885c4d7e6b2ada83df340dfb5dbe0c16a28d95c247a1363ae1b274cf3",
+        "bytes": 29146
+      },
+      "trade_ingress": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/trade_ingress.py",
+        "sha256": "43274398f266c5f072037996940545834f887ea0891202fb1630993ba625aab1",
+        "bytes": 36360
+      },
+      "trade_request_wire": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/trade_request_wire.py",
+        "sha256": "a41b36045c9bbd2ec7f60fff9c91d5b0733e4d1c313f65da801f353d39115e0b",
+        "bytes": 5830
+      },
+      "trade_use_retirement": {
+        "path": "work/local_original_session/integration-1/buff-factory-join-v1/cohort/trade_use_retirement.py",
+        "sha256": "c790b54575f78dbc4c757a85ce4996cc3d931396aa14449b21a72efb63253ed4",
+        "bytes": 15781
+      },
+      "cast_route": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-elf-self-v1/cast_route.py",
+        "sha256": "accbb98c4691e1a80282c2f6ea6d2a71558a3a43eaf7546952d84bfd4a4d9101",
+        "bytes": 24082
+      },
+      "buff_lifecycle": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-reference-exclusive-v1/lifecycle.py",
+        "sha256": "329012034b6dafd3ecda2dac2dcfce304ff2c8df9c9dcf446c3322a92c04c145",
+        "bytes": 37255
+      },
+      "buff_skill_document": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-reference-exclusive-v1/skill_document.py",
+        "sha256": "105a42b06b77262da49947eabbbc0057bf086d76846454bbebf044022702b1e2",
+        "bytes": 14164
+      },
+      "buff_bootstrap": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-reference-exclusive-v1/buff_bootstrap.py",
+        "sha256": "ede7290e33d49db80fd2f6514f601b37798935e5cd61b8b62a852791523dd0e4",
+        "bytes": 16116
+      },
+      "buff_source_response": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-multi-self-v1/source_response.py",
+        "sha256": "d2a9fbdfa1991e64230bb522ba5aea53a5c99cd0482509fee39fbfd69d6913fc",
+        "bytes": 18036
+      },
+      "manual_source_quit": {
+        "path": "work/local_original_session/integration-1/spell-cold-handoff-serial390-v1/manual_source_quit.py",
+        "sha256": "8b6755188ce87d6585db79b1cb493a5589b355e1615a56434941105cb1453595",
+        "bytes": 28726
+      },
+      "inventory": {
+        "path": "work/local_original_session/validation-minimal-refactor/source-init-v1/inventory.py",
+        "sha256": "d7d62c069d7e0c6f2c5c1fd241f2209758c41b8ae8aae355d5ce00ec12c5d5ca",
+        "bytes": 60323
+      },
+      "item_equipment_effect": {
+        "path": "work/local_original_session/implementation-1/item-equipment-product/use/empty-integration-311-v1/item_equipment_effect.py",
+        "sha256": "87c93ec3eb27d8109eab3e70eaa5d215bcdf1c3bf07d9e0fe2a9efcf9d9422ed",
+        "bytes": 40374
+      },
+      "buff_passive": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/book-client-light-contact-v25/buff_passive.py",
+        "sha256": "cf861a635347d26962c6661e3a3c87ad1ad215d1d3f3f5029a10f72f5d0cc3de",
+        "bytes": 30935
+      },
+      "observe": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/book-client-light-contact-v25/observe.py",
+        "sha256": "387e3b23298499c84bda34e11827990a892124d56353486af5b598472d927704",
+        "bytes": 46814
+      },
+      "item_custody": {
+        "path": "tools/local_original_session/item_custody.py",
+        "sha256": "83555ca0c927a0bd57f38cce9b759b1e1a94643d3a3f46e5d4fc695bf20f322d",
+        "bytes": 8348
+      },
+      "item_transfer_session": {
+        "path": "work/local_original_session/implementation-1/item-equipment-product/drop-pickup/live/dropped-generation-recovery-334-v1/item_transfer_session.py",
+        "sha256": "e1f2ca7ceddaf27e3358b47c9e894385a85dc75951c945bc8b7386aa39a87ce3",
+        "bytes": 31503
+      },
+      "item_transfer_frame": {
+        "path": "tools/local_original_session/item_transfer_frame.py",
+        "sha256": "5135614ecbb4bc792898aa60fc6fc18f058003968ded1c133d0e6019bd75c9df",
+        "bytes": 6189
+      },
+      "item_transfer_entry": {
+        "path": "tools/local_original_session/item_transfer_entry.py",
+        "sha256": "4b84fc68b71228bcbb97ed60407b7f28e9dfc759cdb5b9c9ae89813ae74e7efc",
+        "bytes": 15413
+      },
+      "item_quantity_popup": {
+        "path": "tools/local_original_session/item_quantity_popup.py",
+        "sha256": "73817c26bd23ab7e8b29dd1b0002fce0ec29aa241598b1f4e85a6044056307c2",
+        "bytes": 14661
+      },
+      "item_ground": {
+        "path": "work/local_original_session/implementation-1/item-equipment-product/drop-pickup/live/dropped-generation-recovery-334-v1/item_ground.py",
+        "sha256": "4e91081a3c057f198eeccb7e859cd1e769e14f6492e321b18ea49a58a5eefa9a",
+        "bytes": 24216
+      },
+      "ground_client_retirement": {
+        "path": "work/local_original_session/validation-minimal-refactor/source-init-v1/ground_client_retirement.py",
+        "sha256": "5646546363bc40f0c1102e350b3016f1b8fa31939c648a278cedaa1c62ced4e7",
+        "bytes": 10565
+      },
+      "item_transfer_ui": {
+        "path": "work/local_original_session/implementation-1/item-equipment-product/drop-pickup/live/dropped-generation-recovery-ui-338-v1/item_transfer_ui.py",
+        "sha256": "d6a4ae2a0ada10d0d1aec636709b830d19e1847c66c4f286033cf88fecbffe1e",
+        "bytes": 57632
+      },
+      "item_transfer_runner": {
+        "path": "work/local_original_session/implementation-1/item-equipment-product/drop-pickup/live/dropped-generation-recovery-ui-338-v1/item_transfer_runner.py",
+        "sha256": "a2a54fb555bc1a38173881b78e6c97665a7dc743cb8ac540db8ef6e0f1e5c77b",
+        "bytes": 18907
+      },
+      "item_uid_namespace": {
+        "path": "work/local_original_session/implementation-1/item-equipment-product/popup-helper-high/popup-partial-namespace-consumers-v2/item_uid_namespace.py",
+        "sha256": "a93480cb8e0d86c5abc47b26b92c9f0331c0260e9bc49d9a8ad3d13ea0dce714",
+        "bytes": 15594
+      },
+      "item_equipment_ui": {
+        "path": "tools/local_original_session/item_equipment_ui.py",
+        "sha256": "6536f3b5b47c8617f9f98d4e7162a5b6acd034542330164e6263e339fc2558e8",
+        "bytes": 17631
+      },
+      "original_screenshot": {
+        "path": "tools/local_original_session/original_screenshot.py",
+        "sha256": "d90ed7e331a6697949be94ae908943f241fec0c30527599d988c3ce1cb06b357",
+        "bytes": 38211
+      },
+      "light_state": {
+        "path": "work/local_original_session/implementation-3/skill-buff/buff-light-effect-v1/light_state.py",
+        "sha256": "b938058c24ae5b65d3fb4b55dd9cb9ce391faf77760804d7c37a1ce21b83ae7b",
+        "bytes": 4110
+      },
+      "move_state": {
+        "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/book-client-light-contact-v25/move_state.py",
+        "sha256": "bb738ca86cc8c779e9ece6e3425e0f5c4b7ac0e743827ea72f5b194559eaf8c1",
+        "bytes": 35147
+      },
+      "combat_buff_reference": {
+        "path": "work/local_original_session/implementation-5/combat-adjudication/buff-modifiers-v1/candidate/tools/local_original_session/combat_buff_reference.py",
+        "sha256": "72ca4309931f89837a29495ad651cdcdef37155f4c7b276c2d4c781237903647",
+        "bytes": 4233
+      }
+    }
+  },
+  "manifest_static": {
+    "status": "SOURCE_PREPARATION_ONLY393_INPUT_UNSUPPLIED_RUNTIME_UNRUN",
+    "writer": "RELEASED",
+    "source_only": true,
+    "input_supplied": false,
+    "runtime_execution": false,
+    "loader": {
+      "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/cohort_loader.py",
+      "sha256": "bec48f6a8e8c9c0ee83079e3f142a00bafd027d6071bc63026b1b4f06477f941",
+      "bytes": 4479
+    },
+    "core": {
+      "path": "work/local_original_session/implementation-3/skill-buff/buff-effective-stats-v2/canonical_batch.py",
+      "sha256": "2fd02106d855745248e31e6b2d1a63d1903754286b37056b41ae6147250db4c0",
+      "bytes": 128269
+    },
+    "cohort": {
+      "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/cohort.json",
+      "sha256": "10b0a63036f1bf9ab7135cb70a3cd11e94c5083820beed891d1788844877aaa8",
+      "bytes": 21810
+    }
+  },
+  "limits": "Paths normalized to repository-relative source paths; raw metadata content/history excluded. This descriptor is not raw10b0/raw7421 and must never replace either local file or its fixed pin. Original files remain local for the Pro root resolver. No selected68 source-file stat/hash audit/import/Factory/execution performed."
+}
