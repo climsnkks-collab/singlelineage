@@ -1,0 +1,76 @@
+{
+  "state": "READ_ONLY_SOURCE_CONTEXT",
+  "purpose": "Same Pro assistant85b9ef5b requested exact393 selected buff_lifecycle/buff_skill_document; source context only; implementation remains same Pro.",
+  "parent_context": {
+    "branch": "codex/companion-context-20261022",
+    "commit": "ab701a977e0298b22ad0de1446a4a215386a50ec",
+    "initial_context_commit": "a2959fb928ef88bfc4e5a0b1a17edf7905c61d14",
+    "existing_extra_v1": "work/local_original_session/integration-1/companion-context-extra-v1",
+    "existing_sources_duplicated": false
+  },
+  "selected_cohort": {
+    "path": "work/local_original_session/integration-1/spell-reference-exclusive-serial393-v1/cohort.json",
+    "sha256": "10b0a63036f1bf9ab7135cb70a3cd11e94c5083820beed891d1788844877aaa8",
+    "bytes": 21810
+  },
+  "selected_sources": [
+    {
+      "selected_alias": "buff_lifecycle",
+      "source_path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-reference-exclusive-v1/lifecycle.py",
+      "copy_path": "selected/lifecycle.py",
+      "sha256": "329012034b6dafd3ecda2dac2dcfce304ff2c8df9c9dcf446c3322a92c04c145",
+      "bytes": 37255,
+      "selection": "Exact selected row in393 cohort; not reconstructed from headers or public sibling."
+    },
+    {
+      "selected_alias": "buff_skill_document",
+      "source_path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-reference-exclusive-v1/skill_document.py",
+      "copy_path": "selected/skill_document.py",
+      "sha256": "105a42b06b77262da49947eabbbc0057bf086d76846454bbebf044022702b1e2",
+      "bytes": 14164,
+      "selection": "Exact selected row in393 cohort; not reconstructed from headers or public sibling."
+    }
+  ],
+  "own_summary_basis": {
+    "source": "REA216 MAIN_REVIEW external OWN SUMMARY only; paraphrased, raw REA not copied.",
+    "sha256": "b1ef1de6ad5b52e30be129a4864bda27a60db7d443da71bd8270e991b742ea08"
+  },
+  "unsupplied": [
+    "Other-caster SupportResponseSource/native send",
+    "Potion effect owner",
+    "Complete mage DTO/numeric gender/appearance",
+    "Legitimate companion UID allocation, current generation and actual Player register/remove",
+    "ATS create/callback/close/shortcut/lifetime",
+    "Other-character ITEM target/view/transaction adapter"
+  ],
+  "product_implementation": 0,
+  "import_apply_tests_Factory_current_Cold_Native_REA_game": 0,
+  "writer_released": true,
+  "files": [
+    {
+      "path": "selected/lifecycle.py",
+      "sha256": "329012034b6dafd3ecda2dac2dcfce304ff2c8df9c9dcf446c3322a92c04c145",
+      "bytes": 37255
+    },
+    {
+      "path": "selected/skill_document.py",
+      "sha256": "105a42b06b77262da49947eabbbc0057bf086d76846454bbebf044022702b1e2",
+      "bytes": 14164
+    },
+    {
+      "path": "SOURCES.md",
+      "sha256": "fa710464a0c636f37b1312cc6a28bd3bbb9e335bf4e622b6542e84c9ae802afe",
+      "bytes": 2004
+    },
+    {
+      "path": "README.md",
+      "sha256": "387615a2b9c4c4376da91affdc549fdb936ec955d76efb676486f8b32af8bf3a",
+      "bytes": 2314
+    },
+    {
+      "path": "OWN_NATIVE_SUMMARY.md",
+      "sha256": "4964ae5a9b88c3421f04808574750032637b65b38588f98f3606bd69911423c7",
+      "bytes": 1889
+    }
+  ]
+}
