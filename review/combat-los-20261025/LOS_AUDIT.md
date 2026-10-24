@@ -1,3 +1,5 @@
+> Review correction (2026-10-25): this is the historical pre-review audit. The manually supplied review was reconciled in REVIEW_RESPONSE.md / review-accepted-findings.md and the revised PLAN. PC range/cadence are also absent in the inspected upstream dispatcher and Session. First admission must precede _hp_prepare/RNG; do not add dynamic LOS to all postcommit revalidate calls. NPC attack wire precedes HP: preserve partial results and phase-specific lifetimes. Existing terrain/reference code is not a live current-map/door producer. The versions and results below are historical scope, not the latest executing family.
+
 # COMBAT LOS source audit / 2026-10-25
 
 Source-only bounded audit, WRITER_RELEASED. Product/test/runtime changes0. This is preparation for main's webGPT review, not a claim that webGPT has reviewed it. Requirement: walls must prevent hits against NPCs AND characters; include melee, ranged, targeted offensive/status magic and NPC attacks. Existing PC→NPC test exemption is not production LOS support or PvP admission.

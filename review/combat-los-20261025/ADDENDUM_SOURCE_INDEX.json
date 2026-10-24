@@ -1,0 +1,739 @@
+{
+  "kind": "read-only-source-addendum-NOT_EXECUTABLE",
+  "existing_source_index_sha256": "a94bc041a264bbb2a9d71e3018346627d9cab3ddc97e7ff1dfa314aaba57fbbf",
+  "existing23_source_bytes_verified": [
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/attack-magic/poison10-received-ingress-v1/cast_route.py",
+      "sha256": "f50866f60b1fc55c75b8f110a4e69ca2a47e26a57608a9059ee9821c4686ffff",
+      "bytes": 46551,
+      "verified": true,
+      "original_full_sha256": "f50866f60b1fc55c75b8f110a4e69ca2a47e26a57608a9059ee9821c4686ffff",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/attack-magic/poison10-received-ingress-v1/local_visibility.py",
+      "sha256": "fd69bb4725483820a0b689a7bb9563b1d429115eb373a9fd450273e0e4f247f5",
+      "bytes": 12447,
+      "verified": true,
+      "original_full_sha256": "fd69bb4725483820a0b689a7bb9563b1d429115eb373a9fd450273e0e4f247f5",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/attack-session-bound-static-v1/attack_session.py",
+      "sha256": "73944b0678e1fdf341297ccf39d1dc74ac90a8ede4ed862ed3781effbf9bda75",
+      "bytes": 24111,
+      "verified": true,
+      "original_full_sha256": "73944b0678e1fdf341297ccf39d1dc74ac90a8ede4ed862ed3781effbf9bda75",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-player-hit-bound-static-v1/npc_player_hit.py",
+      "sha256": "a960baa08a8b6f099ce7ec74d44328f9913ad82c75ea1e06fd1ae74f74436c8b",
+      "bytes": 40942,
+      "verified": true,
+      "original_full_sha256": "a960baa08a8b6f099ce7ec74d44328f9913ad82c75ea1e06fd1ae74f74436c8b",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v48/npc_hp.py",
+      "sha256": "49265e8fad22bd9ce3e6bc5eb926fdb2cea6ab095d5df72d8db5fa8d1c400ef3",
+      "bytes": 32434,
+      "verified": true,
+      "original_full_sha256": "49265e8fad22bd9ce3e6bc5eb926fdb2cea6ab095d5df72d8db5fa8d1c400ef3",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v56/npc_world_navigation.py",
+      "sha256": "0e5d03f1c2155e3220cb7abb85dc651135250bab8d7c41eae31ecd64ba49ca26",
+      "bytes": 23556,
+      "verified": true,
+      "original_full_sha256": "0e5d03f1c2155e3220cb7abb85dc651135250bab8d7c41eae31ecd64ba49ca26",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v57/npc_continuous_retaliation.py",
+      "sha256": "41e86a6c88beac296e65309d230b17d4adc2156d539b2a52a558cfa7e6a6fdf5",
+      "bytes": 52819,
+      "verified": true,
+      "original_full_sha256": "41e86a6c88beac296e65309d230b17d4adc2156d539b2a52a558cfa7e6a6fdf5",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-server-navigation-v26/npc_edge.py",
+      "sha256": "b75d14b05f4736c53f2faf5be3d5c2b75f4121d29a5bd4fb17aee1b32d0570d6",
+      "bytes": 22551,
+      "verified": true,
+      "original_full_sha256": "b75d14b05f4736c53f2faf5be3d5c2b75f4121d29a5bd4fb17aee1b32d0570d6",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/npc-pc-resource-current-v2/candidate/tools/local_original_session/combat_adapters.py",
+      "sha256": "97c512e4c137a32488835f06fca7d870d212550b31387a3bdb5a34bbadc5e403",
+      "bytes": 20665,
+      "verified": true,
+      "original_full_sha256": "97c512e4c137a32488835f06fca7d870d212550b31387a3bdb5a34bbadc5e403",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/pve-accuracy-rng-v1/candidate/tools/local_original_session/combat_physical.py",
+      "sha256": "6da72f15c4787f7185999334d495426592b231870fa829e3d913e4d6d48d405d",
+      "bytes": 9634,
+      "verified": true,
+      "original_full_sha256": "6da72f15c4787f7185999334d495426592b231870fa829e3d913e4d6d48d405d",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/integration-1/attack-bound-static-source-v1/attack.py",
+      "sha256": "e925eca00410211443d3428090023e7e75100e179f849d9b24a0de79913cc6d7",
+      "bytes": 35123,
+      "verified": true,
+      "original_full_sha256": "e925eca00410211443d3428090023e7e75100e179f849d9b24a0de79913cc6d7",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/mob-current-owned-mover-consumer-v1/npc_session.py",
+      "sha256": "7c22325c4674cb5b0afb0d65d22d29cb17104fa7f517bb1037f7ef18f1f1e928",
+      "bytes": 34747,
+      "verified": true,
+      "original_full_sha256": "7c22325c4674cb5b0afb0d65d22d29cb17104fa7f517bb1037f7ef18f1f1e928",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/pc-adjudicated-lethal-resource-v1/hp_resource_owner.py",
+      "sha256": "d45ce98c8471f681164c3b7802d1ed3d5086ec9ad8437f161bec507efb8f1e6e",
+      "bytes": 78629,
+      "verified": true,
+      "original_full_sha256": "d45ce98c8471f681164c3b7802d1ed3d5086ec9ad8437f161bec507efb8f1e6e",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-adjudicated-pre-v34/player_life.py",
+      "sha256": "cad9b9d1c9b20efe69a1f6402a3473e8e93deada0a17f8cceba55ca268b696ff",
+      "bytes": 53942,
+      "verified": true,
+      "original_full_sha256": "cad9b9d1c9b20efe69a1f6402a3473e8e93deada0a17f8cceba55ca268b696ff",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/integration-1/packet-npc-shared-v4/hp_status.py",
+      "sha256": "55275a5504f12808dda095bd90bf0acdbc03262dbe312a3b0824a5a96971333e",
+      "bytes": 33971,
+      "verified": true,
+      "original_full_sha256": "55275a5504f12808dda095bd90bf0acdbc03262dbe312a3b0824a5a96971333e",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-producer-v1/candidate/tools/local_original_session/combat_selected_stats.py",
+      "sha256": "97dc660f31c6403bc130a5de569f5d35fed54dac6a1d923f22079f97c00907af",
+      "bytes": 45184,
+      "verified": true,
+      "original_full_sha256": "97dc660f31c6403bc130a5de569f5d35fed54dac6a1d923f22079f97c00907af",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-cold-binding-v1/candidate/tools/local_original_session/combat_roster_setup.py",
+      "sha256": "e68710e2fd0dce786b09e6dc1d58166e44e4925e96037a93c57704bc16079691",
+      "bytes": 23410,
+      "verified": true,
+      "original_full_sha256": "e68710e2fd0dce786b09e6dc1d58166e44e4925e96037a93c57704bc16079691",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/cast-stats-adoption-v2/candidate/combat_adapters.py",
+      "sha256": "7e715ac328d35cdb6c7677931e5008657effc1948073a85b1b7821aa83a480a2",
+      "bytes": 13491,
+      "verified": true,
+      "original_full_sha256": "7e715ac328d35cdb6c7677931e5008657effc1948073a85b1b7821aa83a480a2",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-3/skill-buff/buff-cast-stats-carrier-v1/runtime_caller.py",
+      "sha256": "e9a8a66ca7a9ae3eafad2aab722d57b256b234a59b9f80ef0ed3dc0a8ace5143",
+      "bytes": 20375,
+      "verified": true,
+      "original_full_sha256": "e9a8a66ca7a9ae3eafad2aab722d57b256b234a59b9f80ef0ed3dc0a8ace5143",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/magic/candidate/tools/local_original_session/combat_magic.py",
+      "sha256": "f4d883ba8b3f985d560b223fb467d1b1432394e1f7441e1c4b5b8a61512f2706",
+      "bytes": 16482,
+      "verified": true,
+      "original_full_sha256": "f4d883ba8b3f985d560b223fb467d1b1432394e1f7441e1c4b5b8a61512f2706",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/BROKER_CURRENT_EXCERPTS.py",
+      "sha256": "12e55e777a4599f9ef609516353ad1f50f380a17c23cdaf0be5e0474292d4cfd",
+      "bytes": 14472,
+      "verified": true,
+      "original_full_sha256": "8b289b8bdc71e2c4139429028a1ea6a9b21587367225e9ad7a26cbec9aa09a89",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-producer-v1/candidate/tools/local_original_session/hp_resource_owner.py",
+      "sha256": "de1e70a4995be09a9dbbcccc01ab8759e24ead8e4ecc1857685f71fe4623fa27",
+      "bytes": 103714,
+      "verified": true,
+      "original_full_sha256": "de1e70a4995be09a9dbbcccc01ab8759e24ead8e4ecc1857685f71fe4623fa27",
+      "original_source_matches_index": true
+    },
+    {
+      "snapshot_path": "review/combat-los-20261025/sources/BUFF_CARRIER_SCOPE_EXCERPTS.py",
+      "sha256": "7a9845ac441a6279060ec83aaacf4adc5e9d053561c218da2c3fe870f1a2b437",
+      "bytes": 21816,
+      "verified": true,
+      "original_full_sha256": "4a25568f51d1cb61b8c28a736ff010a968e24a760887469e798e598f52083fe8",
+      "original_source_matches_index": true
+    }
+  ],
+  "original_source_root": "Original workspace; paths deliberately repository-relative (no personal absolute path).",
+  "scope": "Source/docs/cached-reference export only; no D external source or raw REA/binary/profile/launcher secrets/logs exported.",
+  "entries": [
+    {
+      "id": "A00",
+      "role": "common29_selected_cohort.sanitized.json",
+      "original_path": "work/local_original_session/attack-magic/energybolt-book182-result-join-v1/cohort.json",
+      "original_full_sha256": "1297744802569e0c25d351ea048a228beb63649e5cf20e51f076c3981fda518d",
+      "original_bytes": 65816,
+      "export_path": "review/combat-los-20261025/sources-addendum/common29_selected_cohort.sanitized.json",
+      "export_sha256": "064bb814e17392caba5f11dfa61d18bcdb14d2459a39cbb84b1493106a50df19",
+      "export_bytes": 52145,
+      "kind": "sanitized-selection-metadata",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": false,
+      "transform": "JSON decoded local workspace absolute paths -> repo-relative, external absolute paths omitted. Original source hash records original bytes; export hash intentionally differs.",
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A01",
+      "role": "common29_hp_resource_owner.source.txt",
+      "original_path": "work/local_original_session/attack-magic/common29-cast-graph-v1/hp_resource_owner.py",
+      "original_full_sha256": "e894dd37078348714664761940ea13658bbc7348dd34d4ffe6266504c483a68b",
+      "original_bytes": 100520,
+      "export_path": "review/combat-los-20261025/sources-addendum/common29_hp_resource_owner.source.txt",
+      "export_sha256": "e894dd37078348714664761940ea13658bbc7348dd34d4ffe6266504c483a68b",
+      "export_bytes": 100520,
+      "kind": "full-source-review-text",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": true,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A02",
+      "role": "common29_skill_cost_delivery.source.txt",
+      "original_path": "work/local_original_session/attack-magic/lethal-server-cast-v1/skill_cost_delivery.py",
+      "original_full_sha256": "decbfb6d400cf0352b392698f3b1ed2e943255892b2b97f4fe6e5d9ff6e235a2",
+      "original_bytes": 24848,
+      "export_path": "review/combat-los-20261025/sources-addendum/common29_skill_cost_delivery.source.txt",
+      "export_sha256": "decbfb6d400cf0352b392698f3b1ed2e943255892b2b97f4fe6e5d9ff6e235a2",
+      "export_bytes": 24848,
+      "kind": "full-source-review-text",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": true,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A03",
+      "role": "common29_combat_hostile_cast.source.txt",
+      "original_path": "work/local_original_session/attack-magic/direct-local-graph-v1/combat_hostile_cast.py",
+      "original_full_sha256": "c0554ced46be83e432361230577ffe53822762b542ab8d6d68b87297b464d040",
+      "original_bytes": 17835,
+      "export_path": "review/combat-los-20261025/sources-addendum/common29_combat_hostile_cast.source.txt",
+      "export_sha256": "c0554ced46be83e432361230577ffe53822762b542ab8d6d68b87297b464d040",
+      "export_bytes": 17835,
+      "kind": "full-source-review-text",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": true,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A04",
+      "role": "common29_broker_cast_skill_locked.excerpt.txt",
+      "original_path": "work/local_original_session/attack-magic/common29-cast-graph-v1/broker.py",
+      "original_full_sha256": "98a11ac66c08ac508e9e0df3c934e264e096d52eb776c99f2eaeecae17906901",
+      "original_bytes": 397927,
+      "export_path": "review/combat-los-20261025/sources-addendum/common29_broker_cast_skill_locked.excerpt.txt",
+      "export_sha256": "e9a7efc103b57a999c7de17138d53ec69e9caea9e2e9b61909c6f860a1f924bf",
+      "export_bytes": 2722,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        2146,
+        2185
+      ],
+      "symbol": "cast_skill_locked",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A05",
+      "role": "common29_broker_positive_delivery_send.excerpt.txt",
+      "original_path": "work/local_original_session/attack-magic/common29-cast-graph-v1/broker.py",
+      "original_full_sha256": "98a11ac66c08ac508e9e0df3c934e264e096d52eb776c99f2eaeecae17906901",
+      "original_bytes": 397927,
+      "export_path": "review/combat-los-20261025/sources-addendum/common29_broker_positive_delivery_send.excerpt.txt",
+      "export_sha256": "d8de76b9fd90a8eba5fb4d0eadf0cb19b0da5b254b861832b98b6c765aed7e12",
+      "export_bytes": 68657,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        4778,
+        5689
+      ],
+      "symbol": "_send",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A06",
+      "role": "common38_selected_cohort.sanitized.json",
+      "original_path": "work/local_original_session/attack-magic/common38-energybolt3-original-caller-v1/cohort.json",
+      "original_full_sha256": "5e9fce2ebb3208f5af812f8b0d236f26ee95b61f0d8007e4f205cdbc07c84a36",
+      "original_bytes": 75312,
+      "export_path": "review/combat-los-20261025/sources-addendum/common38_selected_cohort.sanitized.json",
+      "export_sha256": "47e3861028220860c742144c42923c0b68c8bc85186bf2dc2fe0dbdd55de7a80",
+      "export_bytes": 60666,
+      "kind": "sanitized-selection-metadata",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": false,
+      "transform": "JSON decoded local workspace absolute paths -> repo-relative, external absolute paths omitted. Original source hash records original bytes; export hash intentionally differs.",
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A07",
+      "role": "common38_hp_resource_owner.source.txt",
+      "original_path": "work/local_original_session/attack-magic/common38-hostile-cold-graph-v1/hp_resource_owner.py",
+      "original_full_sha256": "a0d00d8d603b4a6d521828dda1d965194b09c106eae575bd2d86aba7bf47b092",
+      "original_bytes": 106892,
+      "export_path": "review/combat-los-20261025/sources-addendum/common38_hp_resource_owner.source.txt",
+      "export_sha256": "a0d00d8d603b4a6d521828dda1d965194b09c106eae575bd2d86aba7bf47b092",
+      "export_bytes": 106892,
+      "kind": "full-source-review-text",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": true,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A08",
+      "role": "common38_skill_cost_delivery.source.txt",
+      "original_path": "work/local_original_session/attack-magic/common38-hostile-cold-graph-v1/skill_cost_delivery.py",
+      "original_full_sha256": "4c7f1b98722c002ea528cffa3355d4dc8156cbe2150de72bea39c8a774ea0521",
+      "original_bytes": 29486,
+      "export_path": "review/combat-los-20261025/sources-addendum/common38_skill_cost_delivery.source.txt",
+      "export_sha256": "4c7f1b98722c002ea528cffa3355d4dc8156cbe2150de72bea39c8a774ea0521",
+      "export_bytes": 29486,
+      "kind": "full-source-review-text",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": true,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A09",
+      "role": "common38_combat_hostile_cast.source.txt",
+      "original_path": "work/local_original_session/attack-magic/common38-hostile-cold-graph-v1/combat_hostile_cast.py",
+      "original_full_sha256": "e494a330b964cb77c13917ab08bd3bce023663ec9f5ff7ffbccfc74af26b70d6",
+      "original_bytes": 20874,
+      "export_path": "review/combat-los-20261025/sources-addendum/common38_combat_hostile_cast.source.txt",
+      "export_sha256": "e494a330b964cb77c13917ab08bd3bce023663ec9f5ff7ffbccfc74af26b70d6",
+      "export_bytes": 20874,
+      "kind": "full-source-review-text",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": true,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A10",
+      "role": "common38_broker_cast_skill_locked.excerpt.txt",
+      "original_path": "work/local_original_session/attack-magic/ice-lance49-motion-fences-v1/broker.py",
+      "original_full_sha256": "aa8812622acc7e7887d2c856d37afcb16f4091cf153daedbcfae5e5e1c269916",
+      "original_bytes": 398220,
+      "export_path": "review/combat-los-20261025/sources-addendum/common29_broker_cast_skill_locked.excerpt.txt",
+      "export_sha256": "e9a7efc103b57a999c7de17138d53ec69e9caea9e2e9b61909c6f860a1f924bf",
+      "export_bytes": 2722,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        2146,
+        2185
+      ],
+      "symbol": "cast_skill_locked",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": true,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A11",
+      "role": "common38_broker_positive_delivery_send.excerpt.txt",
+      "original_path": "work/local_original_session/attack-magic/ice-lance49-motion-fences-v1/broker.py",
+      "original_full_sha256": "aa8812622acc7e7887d2c856d37afcb16f4091cf153daedbcfae5e5e1c269916",
+      "original_bytes": 398220,
+      "export_path": "review/combat-los-20261025/sources-addendum/common38_broker_positive_delivery_send.excerpt.txt",
+      "export_sha256": "d4c249593db07c2332d51b35fa2b74543c8bc8d26f86d73434e2103eedb5d32c",
+      "export_bytes": 68806,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        4780,
+        5693
+      ],
+      "symbol": "_send",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A12",
+      "role": "strdex9038_broker_cast_postcast.excerpt.txt",
+      "original_path": "work/local_original_session/integration-1/post-drain-owner-current-fix-v1/broker.py",
+      "original_full_sha256": "9038706a614e92c01618c424d5984a6eba1105140a7d115932f3815f15ba15ab",
+      "original_bytes": 402334,
+      "export_path": "review/combat-los-20261025/sources-addendum/strdex9038_broker_cast_postcast.excerpt.txt",
+      "export_sha256": "11386c2d12aa6de9c1692bd7193825919fd2db8a18b1b4c6d0094f033afa1c3d",
+      "export_bytes": 2093,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        2146,
+        2177
+      ],
+      "symbol": "cast_skill_locked",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A13",
+      "role": "strdex_bf5186_lifecycle.source.txt",
+      "original_path": "work/local_original_session/implementation-3/skill-buff/advanced-spirit-lifecycle-joint-v1/lifecycle.py",
+      "original_full_sha256": "bf5186ad8c5069ce14b51a973453836a782005fa299f53d38bb1e91c0f463a13",
+      "original_bytes": 42859,
+      "export_path": "review/combat-los-20261025/sources-addendum/strdex_bf5186_lifecycle.source.txt",
+      "export_sha256": "bf5186ad8c5069ce14b51a973453836a782005fa299f53d38bb1e91c0f463a13",
+      "export_bytes": 42859,
+      "kind": "full-source-review-text",
+      "executable": false,
+      "original_lines": null,
+      "symbol": null,
+      "byte_identical_to_original": true,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A14",
+      "role": "pc_ac682_attack_intent.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682_attack_intent.excerpt.txt",
+      "export_sha256": "05d69a90fb8af7caa5c57b4dd18edc4c3f9e95c387d38011575357e37900c4da",
+      "export_bytes": 1608,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        877,
+        901
+      ],
+      "symbol": "attack_intent",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A15",
+      "role": "pc_ac682__selected_owner_current.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682__selected_owner_current.excerpt.txt",
+      "export_sha256": "a0277ba227276e7bb181791cf052ff94e92e269fdc95b184292e329fcc85934f",
+      "export_bytes": 1029,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        3166,
+        3182
+      ],
+      "symbol": "_selected_owner_current",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A16",
+      "role": "pc_ac682__row_operation.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682__row_operation.excerpt.txt",
+      "export_sha256": "aecbefab1e3edfa31f9ec2a9aaaec292813284694ab3f4ab69120be35233b7a0",
+      "export_bytes": 1643,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        2077,
+        2106
+      ],
+      "symbol": "_row_operation",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A17",
+      "role": "pc_ac682_attack_player_once.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682_attack_player_once.excerpt.txt",
+      "export_sha256": "236eed625adf2de0226a61d0ca73f2500a670af3e0bdcfc8e9c393eaef25f007",
+      "export_bytes": 405,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        3270,
+        3274
+      ],
+      "symbol": "attack_player_once",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A18",
+      "role": "pc_ac682_attack_player_repeated.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682_attack_player_repeated.excerpt.txt",
+      "export_sha256": "d88b58c582edfc18b432135ad394bb9fcacb47aa02cf0350a884c14eebb26ce7",
+      "export_bytes": 470,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        3247,
+        3250
+      ],
+      "symbol": "attack_player_repeated",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A19",
+      "role": "pc_ac682__attack_player_current.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682__attack_player_current.excerpt.txt",
+      "export_sha256": "199183d375902ea5cd399c538666b6cae1320237b768f6157b7e27eaaf505198",
+      "export_bytes": 6514,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        3276,
+        3363
+      ],
+      "symbol": "_attack_player_current",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A20",
+      "role": "pc_ac682__player_life_service.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682__player_life_service.excerpt.txt",
+      "export_sha256": "b838618cf7f46f7429450e887d209a169d8dc545fe0513649ba05661a42ee261",
+      "export_bytes": 405,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        3366,
+        3372
+      ],
+      "symbol": "_player_life_service",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    },
+    {
+      "id": "A21",
+      "role": "pc_ac682_player_life_context.excerpt.txt",
+      "original_path": "work/local_original_session/shared-api/npc-respawn-close-current/broker.py",
+      "original_full_sha256": "ac682cbfdcf50a8b8fb012130e9b2449f79b451aca4110b9b0e196fdb0004f6a",
+      "original_bytes": 403716,
+      "export_path": "review/combat-los-20261025/sources-addendum/pc_ac682_player_life_context.excerpt.txt",
+      "export_sha256": "fa38e8394ef9cf58f23eee7ee2271887658b86cc6da682ae2d5dd763bf6d893c",
+      "export_bytes": 479,
+      "kind": "exact-function-excerpt-review-text",
+      "executable": false,
+      "original_lines": [
+        3374,
+        3381
+      ],
+      "symbol": "player_life_context",
+      "byte_identical_to_original": false,
+      "transform": null,
+      "reuses_existing_payload": false,
+      "privacy_scan": {
+        "private_user_path": 0,
+        "credential_assignment": 0,
+        "email_marker": 0
+      }
+    }
+  ],
+  "cohort_pre_export_privacy_scan": [
+    {
+      "source": "work/local_original_session/attack-magic/energybolt-book182-result-join-v1/cohort.json",
+      "original_scan": {
+        "private_user_path": 205,
+        "credential_assignment": 0
+      },
+      "action": "Normalize original-workspace paths to repository relative; suppress external local absolute paths; no save/account/runtime log contents exported."
+    },
+    {
+      "source": "work/local_original_session/attack-magic/common38-energybolt3-original-caller-v1/cohort.json",
+      "original_scan": {
+        "private_user_path": 238,
+        "credential_assignment": 0
+      },
+      "action": "Normalize original-workspace paths to repository relative; suppress external local absolute paths; no save/account/runtime log contents exported."
+    }
+  ],
+  "scan_policy": "private user path/credential literal/email marker counts must be0 for exported payloads; path normalization explicitly recorded.",
+  "runtime": "NOT_EXECUTED",
+  "tests": "NOT_EXECUTED",
+  "git_mutations": false
+}

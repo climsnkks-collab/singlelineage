@@ -1,0 +1,535 @@
+"""One ordered full-status + source-Buff operation, one canonical receipt.
+
+All source frames are preflighted before cost. Uses ITEM's constrained pending
+delivery port; generic current/recover is never used in pending phases. No raw
+socket sender, per-frame receipt, new clock, retransmission or rollback.
+"""
+from copy import deepcopy
+from dataclasses import dataclass
+
+import hashlib
+import importlib.util
+from pathlib import Path
+import sys
+
+
+def _load_optional():
+    root=next(p for p in Path(__file__).resolve().parents if (p/'AGENTS.md').is_file())
+    path=root/'work/local_original_session/implementation-3/skill-buff/buff-wire/optional-enum-v3/optional_enum.py'
+    if hashlib.sha256(path.read_bytes()).hexdigest() != '9d3cc09e3d147161d713de7c8320611700045a5ff6969ed4f80298b7f3681a72':
+        raise ValueError('RESOURCE_OPTIONAL_BUFF_CONSUMER_CHANGED')
+    name = '_skill_buff_optional_enum_v3'
+    if name not in sys.modules:
+        spec = importlib.util.spec_from_file_location(name, path)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[name] = module
+        spec.loader.exec_module(module)
+    module = sys.modules[name]
+    delivery = module.retirement.delivery
+    alias = 'tools.local_original_session.buff_delivery'
+    if alias in sys.modules and sys.modules[alias] is not delivery:
+        raise ValueError('RESOURCE_CANONICAL_BUFF_MODULE_IDENTITY_REQUIRED')
+    sys.modules[alias] = delivery
+    return module
+
+
+optional_buff = _load_optional()
+buff_delivery = optional_buff.retirement.delivery
+
+
+def need(value, code):
+    if not value:
+        raise ValueError(code)
+
+
+@dataclass(frozen=True,slots=True,eq=False,init=False)
+class CatalystInventoryPart:
+    parent:object
+    index:int
+    wire:bytes
+    phase:str
+    def validate(self):
+        p=self.parent
+        need(type(p)is CostDelivery and p.inventory_part is self and p.plan.catalyst is not None
+             and p.frames[self.index]is self.wire and p.parts[self.index]is self,
+             'CATALYST_EXACT_INVENTORY_PART_REQUIRED')
+    def transition(self,before,after):
+        self.validate();need(self.phase==before,'CATALYST_INVENTORY_PART_PHASE_REQUIRED')
+        object.__setattr__(self,'phase',after)
+    def retire(self):
+        object.__setattr__(self,'parent',None);object.__setattr__(self,'wire',None)
+
+class CostDelivery(optional_buff.retirement.ParentLifetime):
+    def __init__(self, owner, plan):
+        super().__init__()
+        self.owner, self.plan = owner, plan
+        owner.validate_plan(plan)
+        self.binding = plan.operation.binding
+        self.txid, self.request = plan.operation.txid, plan.operation.request
+        self.local_outcome = None
+        self.area_outcome = None
+        self.buff_services = ()
+        self.source_plans=();self.source_schema=owner.skill_schema
+        self.preflights = ()
+        self.frames = ()
+        self.parts = []
+        self.status_delivery = None
+        self.light_wire=self.light_scalar=self.light_part=None
+        self.inventory_wire=None if plan.catalyst is None else plan.catalyst.inventory_wire
+        self.inventory_part=None
+        self.receipt = self.cap = None
+        self.index = 0
+        self.phase = 'PREFLIGHTING'
+        self.port_phase = 'BEFORE_RESERVE'
+        self._drain_returned = False
+        self._failure = None
+        self._digest = owner.plan_digest(plan)
+
+    def preflight(self, service):
+        self.require_live()
+        need(self.phase == 'PREFLIGHTING' and type(service) is optional_buff.OptionalScopedService
+             and service._retirement_parent is self, 'RESOURCE_EXACT_SOURCE_SCOPED_SERVICE_REQUIRED')
+        self.source_plans=self.source_schema.cast_event_plans(self.plan)
+        self.buff_services=(service,)*len(self.source_plans)
+        owner, plan = self.owner, self.plan
+        try:
+            prepared = []
+            for service,source_plan in zip(self.buff_services,self.source_plans):
+                owner.validate_plan(plan)
+                prepared.append(service.preflight(self.binding, request=self.request, source_plan=source_plan))
+                owner.validate_plan(plan)
+            self.preflights = tuple(prepared)
+            self.frames = (plan.status_wire,) + tuple(p.wire for p in prepared)
+            light=owner.cast_light_wire(plan)
+            if light is not None:
+                self.light_wire,self.light_scalar=light;self.frames+=(self.light_wire,)
+            if self.inventory_wire is not None:self.frames+=(self.inventory_wire,)
+            need(2 <= len(self.frames) <= 5, 'RESOURCE_EXISTING_REPLY_BOUND_REQUIRED')
+            self.parts = [None] * len(self.frames)
+            owner.register_delivery_dispatcher()
+            self.phase = 'PREFLIGHTED'
+        except BaseException:
+            self.phase = 'TERMINAL'
+            if plan.phase == 'PLANNED' and plan.operation is owner._prepared_operation:
+                owner.discard_cast_plan(plan)
+            self.retire()
+            raise
+
+    def preflight_local(self, outcome):
+        from tools.local_original_session.combat_hostile_cast import LocalServerOutcome
+        from tools.local_original_session.turn_undead_outcome import CostOnlyOutcome
+        self.require_live()
+        need(self.phase == 'PREFLIGHTING' and type(outcome) in (LocalServerOutcome,CostOnlyOutcome),
+             'LOCAL_CAST_TYPED_STATUS_ONLY_PREFLIGHT_REQUIRED')
+        try:
+            outcome.validate_precommit(self.owner, self.plan)
+            self.local_outcome = outcome
+            self.frames = (self.plan.status_wire,)  # verified own-PC SC_STATUS only
+            self.parts = [None]
+            self.owner.register_delivery_dispatcher()
+            self.phase = 'PREFLIGHTED'
+        except BaseException:
+            self.phase = 'TERMINAL'
+            if self.plan.phase == 'PLANNED' and self.plan.operation is self.owner._prepared_operation:
+                self.owner.discard_cast_plan(self.plan)
+            self.retire()
+            raise
+
+    def preflight_aoe(self, outcome):
+        from tools.local_original_session.aoe_cast import AreaOutcome
+        self.require_live()
+        need(self.phase=='PREFLIGHTING' and type(outcome)is AreaOutcome,
+             'AOE_TYPED_SINGLE_STATUS_PREFLIGHT_REQUIRED')
+        try:
+            outcome.validate_precommit(self.owner,self.plan)
+            self.area_outcome=outcome
+            self.frames=(self.plan.status_wire,)
+            self.parts=[None]
+            self.owner.register_delivery_dispatcher()
+            self.phase='PREFLIGHTED'
+        except BaseException:
+            self.phase='TERMINAL'
+            if self.plan.phase=='PLANNED' and self.plan.operation is self.owner._prepared_operation:
+                self.owner.discard_cast_plan(self.plan)
+            self.retire()
+            raise
+
+    def preflight_poison(self, outcome):
+        from tools.local_original_session.poison_native_status import PoisonLocalOutcome
+        self.require_live()
+        need(self.phase=='PREFLIGHTING' and type(outcome) is PoisonLocalOutcome,
+             'POISON10_TYPED_OWN_STATUS_PREFLIGHT_REQUIRED')
+        try:
+            outcome.validate_precommit(self.owner,self.plan)
+            self.local_outcome=outcome
+            self.frames=(self.plan.status_wire,)+(() if self.inventory_wire is None else (self.inventory_wire,))
+            self.parts=[None]*len(self.frames)
+            self.owner.register_delivery_dispatcher()
+            self.phase='PREFLIGHTED'
+        except BaseException:
+            self.phase='TERMINAL'
+            if self.plan.phase=='PLANNED' and self.plan.operation is self.owner._prepared_operation:
+                self.owner.discard_cast_plan(self.plan)
+            self.retire()
+            raise
+
+    def preflight_slow(self, outcome):
+        from tools.local_original_session.slow_native_status import SlowLocalOutcome
+        self.require_live()
+        need(self.phase == 'PREFLIGHTING' and type(outcome) is SlowLocalOutcome,
+             'SLOW28_TYPED_NATIVE_STATUS_PREFLIGHT_REQUIRED')
+        try:
+            outcome.validate_precommit(self.owner,self.plan)
+            need(self.inventory_wire is not None,'SLOW28_REAL_CATALYST_WIRE_REQUIRED')
+            self.local_outcome=outcome
+            self.frames=(self.plan.status_wire,self.inventory_wire)
+            self.parts=[None,None]
+            self.owner.register_delivery_dispatcher()
+            self.phase='PREFLIGHTED'
+        except BaseException:
+            self.phase='TERMINAL'
+            if self.plan.phase=='PLANNED' and self.plan.operation is self.owner._prepared_operation:
+                self.owner.discard_cast_plan(self.plan)
+            self.retire()
+            raise
+
+    def validate_precommit(self, plan):
+        need(self.phase == 'PREFLIGHTED' and self.plan is plan
+             and self.owner.plan_digest(plan) == self._digest,
+             'RESOURCE_SOURCE_REPLY_PLAN_CHANGED')
+        self.owner.validate_plan(plan)
+        if self.area_outcome is not None:
+            self.area_outcome.validate_precommit(self.owner,plan)
+            need(self.frames==(plan.status_wire,) and not self.preflights
+                 and self.light_wire is self.inventory_wire is None and self.local_outcome is None,
+                 'AOE_SINGLE_OWN_STATUS_FRAME_REQUIRED')
+        if self.local_outcome is not None:
+            self.local_outcome.validate_precommit(self.owner, plan)
+            from tools.local_original_session.poison_native_status import PoisonLocalOutcome
+            from tools.local_original_session.slow_native_status import SlowLocalOutcome
+            if type(self.local_outcome) is PoisonLocalOutcome:
+                need(self.frames==(plan.status_wire,)+(() if self.inventory_wire is None else (self.inventory_wire,))
+                     and not self.preflights and self.light_wire is None,
+                     'POISON10_OWN_STATUS_AND_NATIVE_CATALYST_FRAMES_REQUIRED')
+            elif type(self.local_outcome) is SlowLocalOutcome:
+                need(self.frames==(plan.status_wire,self.inventory_wire) and not self.preflights
+                     and self.light_wire is None and self.inventory_wire is not None,
+                     'SLOW28_OWN_STATUS_THEN_REAL_INVENTORY_REQUIRED')
+            else:
+                need(self.frames == (plan.status_wire,) and not self.preflights
+                     and self.light_wire is self.inventory_wire is None,
+                     'LOCAL_CAST_SINGLE_OWN_STATUS_FRAME_REQUIRED')
+        need(self.frames[0] is plan.status_wire and len(self.frames) == len(self.preflights) + 1 + int(self.light_wire is not None)+int(self.inventory_wire is not None),
+             'RESOURCE_IMMUTABLE_SOURCE_REPLY_PLAN_REQUIRED')
+        need(self.inventory_wire is (None if plan.catalyst is None else plan.catalyst.inventory_wire),
+             'CATALYST_SEALED_INVENTORY_WIRE_CHANGED')
+        if self.inventory_wire is not None:self.owner.catalyst_current()
+        expected=self.owner.cast_light_wire(plan)
+        need(expected==(None if self.light_wire is None else (self.light_wire,self.light_scalar)),
+             'LIGHT_SEALED_CAST_PREFLIGHT_CHANGED')
+        for index, preflight in enumerate(self.preflights, 1):
+            need(preflight.service is self.buff_services[index - 1]
+                 and preflight.binding is self.binding and preflight.source_plan is self.source_plans[index-1]
+                 and preflight.request == self.request and preflight.wire is self.frames[index],
+                 'RESOURCE_EXACT_BEFORE_COST_BUFF_PREFLIGHT_REQUIRED')
+            service = preflight.service
+            need(service.codec.encode_frame(preflight.prepared.request) == preflight.wire,
+                 'RESOURCE_SOURCE_PREFLIGHT_WIRE_CHANGED')
+            need(service.adapter.current(self.binding, preflight.prepared, preflight.source_plan, self.request) is None,
+                 'RESOURCE_SOURCE_ADAPTER_MUST_RAISE_NOT_BOOLEAN')
+            self.owner.validate_plan(plan)
+        return None
+
+    def bind_committed(self, receipt, status_delivery):
+        need(self.phase == 'PREFLIGHTED' and self.plan.phase == 'COMMITTED'
+             and self.owner.plan_digest(self.plan) == self._digest
+             and receipt['phase'] == 'COMMITTED' and receipt['delivery'] == 'UNATTEMPTED'
+             and status_delivery.resource_context.operation is self.plan.operation
+             and status_delivery.wire is self.frames[0], 'RESOURCE_EXACT_COMMITTED_REPLY_PLAN_REQUIRED')
+        need(self.owner._delivery_active is None, 'RESOURCE_PARENT_REPLY_ALREADY_ACTIVE')
+        self.receipt, self.status_delivery = deepcopy(receipt), status_delivery
+        self.parts[0] = status_delivery
+        if self.area_outcome is not None:self.area_outcome.validate_committed(self)
+        if self.local_outcome is not None:self.local_outcome.validate_committed(self)
+        self.phase = 'ATTACHING'
+        self.owner._delivery_active = self
+        try:
+            for index, preflight in enumerate(self.preflights, 1):
+                preflight.service.bind_committed(preflight, parent=self, index=index, txid=self.txid)
+            if self.light_wire is not None:
+                self.light_part=self.owner._light.LightPart(self,self.light_wire,self.light_scalar,len(self.parts)-1-int(self.inventory_wire is not None))
+                self.parts[self.light_part.index]=self.light_part
+            if self.inventory_wire is not None:
+                part=object.__new__(CatalystInventoryPart)
+                for name,value in dict(parent=self,index=len(self.parts)-1,wire=self.inventory_wire,phase='PREPARED').items():object.__setattr__(part,name,value)
+                self.inventory_part=part;self.parts[-1]=part
+            need(all(part is not None for part in self.parts), 'RESOURCE_COMPLETE_REPLY_PARTICIPANTS_REQUIRED')
+            self.parts = tuple(self.parts)
+            self.phase = 'OPENING'
+            self.cap = self.owner.store.open_delivery(self.binding, self.owner._delivery_dispatcher, self,
+                txid=self.txid, request=self.request, receipt=self.receipt, frames=self.frames)
+            self.phase = 'READY'
+        except BaseException:
+            self.phase = 'TERMINAL'
+            self.retire()
+            raise
+
+    def attach_active(self, participant):
+        need(self.phase == 'ATTACHING' and type(participant) is buff_delivery.Operation
+             and participant.parent is self and participant.binding is self.binding
+             and 0 < participant.index < len(self.parts) and self.parts[participant.index] is None
+             and participant.preflight is self.preflights[participant.index - 1]
+             and participant.wire is self.frames[participant.index],
+             'RESOURCE_EXACT_DECLARED_BUFF_SLOT_REQUIRED')
+        self.parts[participant.index] = participant
+        return None
+
+    def validate_memory(self, binding, *, txid, request, receipt, participant, index, wire, phase):
+        # Pure dispatcher path: no provider/store/parent.current recursion.
+        need(self.phase not in ('TERMINAL',) and self.owner._delivery_active is self
+             and binding is self.binding and txid == self.txid and request == self.request
+             and receipt == self.receipt and self.owner.plan_digest(self.plan) == self._digest,
+             'RESOURCE_CURRENT_FIXED_REPLY_OPERATION_REQUIRED')
+        need(type(index) is int and 0 <= index < len(self.frames) and wire is self.frames[index],
+             'RESOURCE_EXACT_REPLY_INDEX_WIRE_REQUIRED')
+        need(index == self.index or phase == 'AFTER_DRAIN' and index == self.index - 1,
+             'RESOURCE_REPLY_FRAME_ORDER_REQUIRED')
+        need(participant is None and self.phase == 'OPENING' and index == 0
+             or participant is self.parts[index], 'RESOURCE_EXACT_REPLY_PARTICIPANT_REQUIRED')
+        if self.area_outcome is not None:self.area_outcome.validate_committed(self)
+        if self.local_outcome is not None:self.local_outcome.validate_committed(self)
+        if self.light_part is not None:self.light_part.validate()
+        if self.inventory_part is not None:self.inventory_part.validate()
+        if phase == 'UNKNOWN':
+            need(self.phase == 'FAILING' and isinstance(self._failure, BaseException),
+                 'RESOURCE_REAL_SEND_FAILURE_CONTEXT_REQUIRED')
+        else:
+            need(phase in ('BEFORE_RESERVE', 'BEFORE_WRITE_CHECKPOINT', 'BEGIN_WRITE',
+                           'DRAIN_PENDING', 'AFTER_DRAIN'), 'RESOURCE_REPLY_PHASE_REQUIRED')
+        return True
+
+    def _receipt(self, *, phase=None, participant=None, index=None):
+        idx = self.index if index is None else index
+        part = self.parts[idx] if participant is None else participant
+        actual = self.owner.store.receipt_for_delivery(self.cap, participant=part,
+            index=idx, wire=self.frames[idx], phase=self.port_phase if phase is None else phase)
+        expected = deepcopy(self.receipt)
+        expected['delivery'] = actual['delivery']
+        need(actual == expected, 'RESOURCE_FIXED_COMMITTED_REPLY_RECEIPT_CHANGED')
+        return actual
+
+    def current_active(self, binding, *, txid, request, participant, index, wire, phase):
+        need(binding is self.binding and txid == self.txid and request == self.request,
+             'RESOURCE_CURRENT_PARENT_BINDING_REQUEST_REQUIRED')
+        if self.phase == 'ATTACHING':
+            self.owner.provider.current(binding)
+            need(0 < index < len(self.frames) and phase in ('PREPARING', 'PREPARED')
+                 and (phase == 'PREPARING' and participant is wire is None
+                      or participant is self.parts[index] and wire is self.frames[index]),
+                 'RESOURCE_EXACT_QUIESCENT_ATTACH_SLOT_REQUIRED')
+            actual = self.owner.store.recover(binding, txid=txid, request=request)
+            need(actual == self.receipt, 'RESOURCE_COMMIT_RECEIPT_CHANGED_BEFORE_OPEN')
+            return None
+        need(self.cap is not None and self.phase in ('READY', 'SENDING', 'DONE', 'FAILING'),
+             'RESOURCE_ISSUED_PENDING_REPLY_CAPABILITY_REQUIRED')
+        need(index == self.index and participant is self.parts[index] and wire is self.frames[index],
+             'RESOURCE_CURRENT_PARENT_FRAME_REQUIRED')
+        actual = self._receipt(participant=participant, index=index)
+        need(actual['delivery'] in (('UNATTEMPTED', 'WRITE_ATTEMPTED') if phase in ('PREPARED', 'RESERVED')
+                                   else ('WRITE_ATTEMPTED',)), 'RESOURCE_PARENT_RECEIPT_LIFETIME_REQUIRED')
+        return None
+
+    def validate_projection(self, snapshot):
+        need(self.status_delivery is not None and snapshot is self.status_delivery.result.after,
+             'RESOURCE_PARENT_EXACT_STATUS_PROJECTION_REQUIRED')
+        if self.cap is None:
+            # Attachment/opening is still quiescent. Pending phases never use
+            # this generic path or mint authority from a locked boolean.
+            self.owner.provider.current(self.binding)
+            row = self.owner.store.participant(self.binding, 'RESOURCE')
+        else:
+            row = self.owner.store.participant_for_delivery(self.cap, 'RESOURCE',
+                participant=self.parts[self.index], index=self.index, wire=self.frames[self.index],
+                phase=self.port_phase)
+        need(row['document'] == self.plan.operation.after
+             and snapshot.fields == self.plan.status_fields, 'RESOURCE_PARENT_CANONICAL_PROJECTION_CHANGED')
+        return True
+
+    def validate_batch(self, writer, row, replies):
+        need(self.phase == 'READY' and self.index == 0 and type(replies) is tuple
+             and len(replies) == len(self.frames) and all(a is b for a, b in zip(replies, self.frames))
+             and writer is self.binding.writer and row is self.binding.generation.row
+             and self.cap is not None, 'RESOURCE_EXACT_READY_REPLY_BATCH_REQUIRED')
+        self._receipt()
+
+    def reserve(self, writer, row, wire):
+        need(self.phase in ('READY', 'SENDING') and wire is self.frames[self.index],
+             'RESOURCE_EXACT_NEXT_REPLY_REQUIRED')
+        self.port_phase = 'BEFORE_RESERVE'
+        self._receipt()
+        part = self.parts[self.index]
+        if self.index == 0:
+            need(part.phase == 'PREPARED', 'RESOURCE_STATUS_SINGLE_RESERVATION_REQUIRED')
+            part.phase = 'RESERVED'
+        elif part is self.light_part or part is self.inventory_part:part.transition('PREPARED','RESERVED')
+        else:
+            self.buff_services[self.index - 1].reserve(writer, row, wire, part)
+        self.phase = 'SENDING'
+
+    def before_write_checkpoint(self, writer, row, wire):
+        need(wire is self.frames[self.index], 'RESOURCE_CURRENT_REPLY_WIRE_REQUIRED')
+        self.port_phase = 'BEFORE_WRITE_CHECKPOINT'
+        self._receipt()
+
+    def attempt(self, writer, row, wire):
+        need(wire is self.frames[self.index], 'RESOURCE_CURRENT_REPLY_WIRE_REQUIRED')
+        self.port_phase = 'BEGIN_WRITE'
+        part = self.parts[self.index]
+        self.owner.store.mark_delivery(self.cap, participant=part, index=self.index,
+            wire=wire, phase='BEGIN_WRITE', state='WRITE_ATTEMPTED')
+        if self.index == 0:
+            need(part.phase == 'RESERVED', 'RESOURCE_STATUS_SINGLE_WRITE_REQUIRED')
+            part.phase = 'WRITE_ATTEMPTED'
+        elif part is self.light_part or part is self.inventory_part:part.transition('RESERVED','WRITE_ATTEMPTED')
+        else:
+            self.buff_services[self.index - 1].attempt(writer, row, wire, part)
+
+    def drain_returned(self, writer, row, wire):
+        self.port_phase = 'DRAIN_PENDING'
+        self._drain_returned = True
+        self._receipt()
+        if self.index and self.parts[self.index]is not self.light_part and self.parts[self.index]is not self.inventory_part:
+            self.buff_services[self.index - 1].drain_returned(writer, row, wire, self.parts[self.index])
+
+    def validate_pending_drain(self, writer, row, wire):
+        need(self._drain_returned, 'RESOURCE_ORIGINAL_DRAIN_MUST_RETURN')
+        self.port_phase = 'DRAIN_PENDING'
+        self._receipt()
+        if self.index and self.parts[self.index]is not self.light_part and self.parts[self.index]is not self.inventory_part:
+            self.buff_services[self.index - 1].validate_pending_drain(writer, row, wire, self.parts[self.index])
+
+    def drained(self, writer, row, wire, queued):
+        need(self._drain_returned and type(queued) is int and queued == 0,
+             'RESOURCE_ORIGINAL_QUEUE_ZERO_DRAIN_REQUIRED')
+        weight_refresh = None
+        self.port_phase = 'AFTER_DRAIN'
+        self._receipt()
+        part = self.parts[self.index]
+        if self.index == 0:
+            need(part.phase == 'WRITE_ATTEMPTED', 'RESOURCE_STATUS_EXACT_DRAIN_REQUIRED')
+            part.phase = 'DRAINED'
+        elif part is self.light_part or part is self.inventory_part:part.transition('WRITE_ATTEMPTED','DRAINED')
+        else:
+            self.buff_services[self.index - 1].drained(writer, row, wire, part, queued)
+        self.owner.store.mark_delivery(self.cap, participant=part, index=self.index,
+            wire=wire, phase='AFTER_DRAIN', state='DRAINED')
+        if self.area_outcome is not None:
+            self.owner.status.broker._attack_session._notifications.prepare_aoe_deaths(self)
+        from tools.local_original_session.combat_hostile_cast import LocalServerOutcome
+        if type(self.local_outcome) is LocalServerOutcome and self.local_outcome.result.died:
+            self.owner.status.broker._attack_session._notifications.prepare_cast_death(self)
+        if self.inventory_part is not None and self.index==len(self.frames)-1:
+            self.phase='DRAINED_ADOPTION'
+            adopt=self.owner.catalyst_current()
+            need(adopt(self)is True,'CATALYST_ITEM_ADOPTION_MUST_CONFIRM_POSTSTATE')
+            need(self.binding.generation.current_frame is self.plan.catalyst.after_inventory
+                 and self.owner.provider.broker._inventory_current_frame is self.plan.catalyst.after_inventory,
+                 'CATALYST_ITEM_ADOPTION_POSTSTATE_REQUIRED')
+            if (getattr(self.owner,'_combat_stats',None) is None
+                and getattr(self.owner,'_combat_empty_weight',None) is not None):
+                weight_refresh=(self.owner,self.binding.writer)
+        self.index += 1
+        self._drain_returned = False
+        self.port_phase = 'BEFORE_RESERVE'
+        if self.index == len(self.frames):
+            self.phase = 'DONE'
+            self.owner._delivery_active = None
+            self.retire()
+            if weight_refresh is not None:
+                from tools.local_original_session.combat_trial_inputs import refresh_empty_weight
+                refresh_empty_weight(*weight_refresh)
+        else:
+            self.phase = 'READY'
+
+    def committed_receipt(self):
+        need(self.phase=='DRAINED_ADOPTION'and self.inventory_part is not None
+             and self.index==len(self.frames)-1 and self._drain_returned
+             and self.port_phase=='AFTER_DRAIN','CATALYST_LAST_INVENTORY_DRAIN_REQUIRED')
+        receipt=self._receipt()
+        need(receipt['phase']=='COMMITTED'and receipt['delivery']=='DRAINED','CATALYST_COMPLETE_RECEIPT_REQUIRED')
+        return receipt
+
+    def materialization(self):
+        receipt=self.committed_receipt();debit=self.plan.catalyst
+        need(self.owner._delivery_active is self and self.owner.plan_digest(self.plan)==self._digest
+             and self.plan.phase=='COMMITTED'and debit.binding is self.binding
+             and debit.owner_ref()is self.owner and self.inventory_part.phase=='DRAINED',
+             'CATALYST_ISSUED_CAST_MATERIALIZATION_REQUIRED')
+        frame,revision=self.owner.store.inventory_for_delivery(self.cap,participant=self.inventory_part,
+            index=self.index,wire=self.frames[self.index],phase='AFTER_DRAIN')
+        need(frame==debit.after_inventory and revision==receipt['asset_revision'],
+             'CATALYST_FINAL_CANONICAL_ASSET_REQUIRED')
+        return self.binding,debit.before_inventory,debit.after_inventory,revision
+
+    def failed(self, failure):
+        need(isinstance(failure, BaseException), 'RESOURCE_ORIGINAL_SEND_EXCEPTION_REQUIRED')
+        if self.phase in ('DONE', 'TERMINAL'):
+            return
+        if self.plan.phase == 'PLANNED' and self.plan.operation is self.owner._prepared_operation:
+            self.owner.discard_cast_plan(self.plan)
+        self._failure = failure
+        self.phase = 'FAILING'
+        try:
+            if self.cap is not None and self.index < len(self.frames):
+                try:
+                    self.owner.store.terminal_unknown(self.cap, index=self.index, wire=self.frames[self.index],
+                        participant=self.parts[self.index])
+                except BaseException:
+                    pass  # Preserve ambiguous attempted receipt and original send exception.
+                if self.index and self.parts[self.index]is not self.light_part and self.parts[self.index]is not self.inventory_part and self.parts[self.index].phase != 'DRAINED':
+                    try:
+                        self.buff_services[self.index - 1].failed(self.parts[self.index])
+                    except BaseException:
+                        pass  # Retirement still revokes all consumer references.
+        finally:
+            self.phase = 'TERMINAL'
+            self.owner._delivery_active = None
+            try:
+                self.retire()
+            except BaseException:
+                pass  # Caller re-raises the actual original send exception.
+
+    def retirement_state(self):
+        return 'DRAINED' if self.phase == 'DONE' else 'TERMINAL' if self.phase == 'TERMINAL' else None
+
+    def release_parent_refs(self):
+        owner, delivery, binding = self.owner, self.status_delivery, self.binding
+        try:
+            if owner is not None and self.cap is not None:
+                owner.store.retire_delivery(self.cap)
+        finally:
+            if owner is not None:
+                if owner._delivery_active is self:
+                    owner._delivery_active = None
+                if binding is not None and delivery is not None:
+                    for mapping in (owner._deliveries, owner.status._resource_deliveries):
+                        if mapping.get(id(binding.writer)) is delivery:
+                            mapping.pop(id(binding.writer))
+                    delivery.resource_context = None
+            if self.light_part is not None:self.light_part.retire()
+            if self.inventory_part is not None:self.inventory_part.retire()
+            self.inventory_part=self.inventory_wire=None
+            self.light_part=self.light_wire=self.light_scalar=None
+            if self.source_schema is not None and self.plan is not None:self.source_schema.release_cast_events(self.plan)
+            self.source_plans=();self.source_schema=None
+            if self.plan is not None:
+                self.plan._local_server_outcome = None
+                self.plan._aoe_outcome = None
+                self.plan._poison_local_outcome = None
+                self.plan._slow_local_outcome = None
+            self.area_outcome = None
+            self.local_outcome = None
+            self.parts = self.preflights = self.frames = self.buff_services = ()
+            self.owner = self.plan = self.binding = self.status_delivery = None
+            self.receipt = self.cap = self.request = self._failure = None
+        return None

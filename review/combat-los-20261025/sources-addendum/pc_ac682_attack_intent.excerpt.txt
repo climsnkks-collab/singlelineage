@@ -1,0 +1,25 @@
+        async def attack_intent(payload):
+            self.registry.resolve(writer)
+            service = self._attack_session
+            need(service is not None and service.targets.broker.realm is self
+                 and service.targets.broker._attack_session is service,
+                 'ATTACK_SAME_REAL_BROKER_SESSION_REQUIRED')
+            # _serve already holds this row's operation_lock. The session
+            # checkpoints native ownership without reacquiring that lock.
+            accepted_before = service.accepted_count
+            replies = await service.handle(writer, payload)
+            shop_hook = getattr(self, '_shop_quest_after_attack_locked', None)
+            result = service.last_hp_result
+            if (shop_hook is not None and service.accepted_count == accepted_before + 1
+                    and result is not None and result.died
+                    and result.accepted_ordinal == service.accepted_count):
+                canonical_provider = getattr(self, '_canonical_provider', None)
+                need(canonical_provider is not None, 'SHOP_QUEST_CANONICAL_CONNECTION_SCOPE_REQUIRED')
+                binding = canonical_provider.bind_selected(writer)
+                await shop_hook(binding, service, accepted_before)
+                canonical_provider.current(binding)
+            need(type(replies) is tuple and (replies == () or len(replies) == 1),
+                 'ATTACK_BOUNDED_FEEDBACK_REQUIRED')
+            for wire in replies:
+                service.validate_feedback(writer, wire, state='PREPARED')
+            return replies

@@ -1,0 +1,380 @@
+"""Private PC→NPC ordinary cast cost/HP contact; no wire target inference.
+
+Default OFF. Explicit cold LOCAL scope permits own-PC cost status plus NPC
+memory state only; NPC spell visual/HPbar remain unknown. LOCAL admission is
+not native actor/input proof. Lethal memory results require the typed
+CostDelivery-drained Death path; physical KillReceipt/quest ordinals are not reused.
+"""
+from abc import abstractmethod
+from copy import deepcopy
+from dataclasses import dataclass
+from types import MappingProxyType
+
+from tools.local_original_session import attack, npc_hp, cast_route
+from tools.local_original_session.combat_magic import MagicActor, MagicTarget, DamageSpell, DamageResult, Direction, resolve_damage
+
+
+def need(value, code):
+    if not value:
+        raise ValueError(code)
+
+
+class SourceNpcCastAdmission(cast_route.SourceCastAdmission):
+    """Source owner supplies an already-authorized BoundTarget for THIS cast.
+
+    target_bound cannot infer a UID from optional CS4EE6 params or borrow the
+    last physical AttackIntent. It proves original actor/input/sourceepoch →
+    NPC target selection, then returns the real AttackTargets capability.
+    """
+    @abstractmethod
+    def target_bound(self, operation, decoded, decision): ...
+
+
+@dataclass(frozen=True)
+class HostileCastContext:
+    feature: object
+    operation: object
+    decoded: object
+    decision: object
+    admission: object
+    bound: attack.BoundTarget
+
+    def current(self):
+        f, op, d = self.feature, self.operation, self.decision
+        source=(type(d)is cast_route.AdmittedCast and isinstance(self.admission,SourceNpcCastAdmission)
+                and all(x is not None for x in (d.original_input_owner,d.original_actor_owner,d.source_epoch)))
+        local=(type(d)is cast_route.LocalPacketNpcDecision
+               and type(self.admission)is cast_route.LocalPacketNpcAdmission)
+        same=(f.admission is self.admission or
+              (local and type(f.admission)is cast_route.LocalBackendSelfAdmission
+               and getattr(f,'hostile_admission',None)is self.admission
+               and type(getattr(f,'_hostile_attachment',None))is cast_route.HostileAttachment
+               and f._hostile_attachment.feature is f
+               and f._hostile_attachment.admission is self.admission
+               and f._hostile_attachment.policy is f.broker._hp_resource_owner._combat_hostile
+               and not f._hostile_attachment.closed))
+        need(type(op)is cast_route.InputOperation and same and (source or local),
+             'HOSTILE_CAST_SOURCE_OR_EXPLICIT_LOCAL_PACKET_ADMISSION_REQUIRED')
+        f._current(op)
+        need(self.admission.current(op, self.decoded, d) is None,
+             'HOSTILE_CAST_SOURCE_CURRENT_MUST_RAISE_NOT_BOOLEAN')
+        need(self.admission.target_bound(op, self.decoded, d) is self.bound
+             and type(self.bound) is attack.BoundTarget
+             and self.bound._writer is op.binding.writer
+             and self.bound.attacker.uid == op.binding.uid
+             and self.bound.target_uid == d.target_uid != op.binding.uid
+             and d.spell_id == self.decoded.request.signed_lookup_key,
+             'HOSTILE_CAST_EXACT_ORIGINAL_NPC_TARGET_REQUIRED')
+        owner = f.broker._hp_resource_owner
+        combat = f.broker._attack_session
+        need(combat.targets.broker is f.broker and combat.targets.revalidate(self.bound) is op.row
+             and op.row is op.binding.generation.row
+             and op.row['operation_lock'] is op.binding.operation_lock
+             and op.binding.operation_lock.locked()
+             and owner.status.current(op.binding.writer) is d.snapshot,
+             'HOSTILE_CAST_CURRENT_ROW_STATUS_AND_NPC_REQUIRED')
+        return None
+
+
+@dataclass(frozen=True)
+class HostileRule:
+    spell_id: int
+    spell: DamageSpell
+    cost_rule: object
+
+
+@dataclass(frozen=True)
+class HostileNpcIntent:
+    context: HostileCastContext
+    result: DamageResult
+    accepted_now_ms: int = None  # actual server cast clock, never a client timestamp
+
+    @property
+    def accepted_ordinal(self):
+        # Received CAST ordinal for metadata only, never physical acceptance.
+        return self.context.operation.received_ordinal
+
+    @property
+    def _bound(self):
+        return self.context.bound
+
+
+class HostilePolicy:
+    def __init__(self, owner, rules, *, selected_stats, npc_inputs, rng,
+                 turn_undead_selection=None, turn_undead_published=None):
+        if turn_undead_selection is not None:
+            from tools.local_original_session.turn_undead_cold_bind import initialize_disabled
+            initialize_disabled(self,owner,rules,selected_stats=selected_stats,npc_inputs=npc_inputs,
+                rng=rng,selection=turn_undead_selection,published=turn_undead_published)
+            return
+        need(turn_undead_published is None,'TURN_UNDEAD17_COLD_SELECTION_REQUIRED')
+        from tools.local_original_session.combat_selected_stats import SelectedStatsSource
+        need(not owner.active and not getattr(owner.status.broker, '_started', False)
+             and type(rules) is tuple and rules
+             and type(selected_stats) is SelectedStatsSource and selected_stats.owner is owner,
+             'HOSTILE_CAST_EXPLICIT_COLD_CURRENT_STATS_REQUIRED')
+        need(len({r.spell_id for r in rules}) == len(rules), 'HOSTILE_CAST_DUPLICATE_RULE')
+        for r in rules:
+            need(type(r) is HostileRule and type(r.spell) is DamageSpell
+                 and r.spell.name not in ('FINAL_BURN', 'JOY_OF_PAIN')
+                 and owner.skill_schema.instant_rule(r.spell_id) is r.cost_rule
+                 and r.spell_id not in (1, 2), 'HOSTILE_CAST_EXPLICIT_ORDINARY_DAMAGE_REQUIRED')
+            from tools.local_original_session import offensive_direct_policy, combat_magic
+            if r.spell_id in (9, 27):
+                from tools.local_original_session import life_drain
+                life_drain.validate_rule(r, combat_magic=combat_magic, core=owner.core, schema=owner.skill_schema)
+            else:
+                offensive_direct_policy.validate_hostile_rule(r, combat_magic=combat_magic,
+                    core=owner.core, skill_schema=owner.skill_schema)
+        need(type(npc_inputs) is tuple and npc_inputs
+             and all(type(t) is npc_hp.Target and type(v) is MagicTarget for t, v in npc_inputs)
+             and len({t for t, v in npc_inputs}) == len(npc_inputs),
+             'HOSTILE_CAST_EXPLICIT_NPC_MAGIC_INPUTS_REQUIRED')
+        self.owner, self.stats, self.rng = owner, selected_stats, rng
+        self.rules = MappingProxyType({r.spell_id: r for r in rules})
+        self.npc_inputs = MappingProxyType(dict(npc_inputs))
+
+    def plan(self, context, *, owner_module, txid, request, now_ms):
+        if context.decision.spell_id==49:
+            from tools.local_original_session.ice_lance_combined import prepare
+            return prepare(self,context,owner_module=owner_module,txid=txid,request=request,now_ms=now_ms)
+        if context.decision.spell_id == 17:
+            from tools.local_original_session.turn_undead_outcome import prepare
+            return prepare(self,context,owner_module=owner_module,txid=txid,request=request,now_ms=now_ms)
+        owner, op = self.owner, context.operation
+        need(context.feature.broker._hp_resource_owner is owner
+             and op.payload is request and op.txid == txid,
+             'HOSTILE_CAST_EXACT_OWNER_REQUEST_REQUIRED')
+        context.current()
+        binding, snapshot = op.binding, context.decision.snapshot
+        prior = owner.store.lookup(binding, txid=txid, request_sha=owner.batch.request_digest(request))
+        if prior is not None:
+            return prior
+        owner.require_hp_quiescent(binding.writer)
+        need(owner.active and owner._prepared_operation is None,
+             'HOSTILE_CAST_ACTIVE_QUIESCENT_OWNER_REQUIRED')
+        combat = owner.status.broker._attack_session
+        need(all(callable(getattr(combat._hp, name, None)) for name in
+                 ('_prepare_cast', '_validate_cast', '_commit_cast')),
+             'HOSTILE_CAST_NPC_AUTHORITY_PORT_UNSUPPLIED')
+        rule = self.rules[context.decision.spell_id]
+        need(not dict(getattr(owner.skill_schema.key_policy, 'catalyst_recipes', ())).get(rule.spell_id),
+             'HOSTILE_CAST_CATALYST_UNSUPPORTED')
+        need(owner.skill_schema.instant_rule(rule.spell_id) is rule.cost_rule,
+             'HOSTILE_CAST_CURRENT_COST_RULE_REQUIRED')
+        with owner.store.lock:
+            context.current()
+            before = owner._participant(binding)
+            skill = owner.store.participant(binding, 'SKILL')
+            owner.skill_schema.validate(skill['document'])
+            cost, after_skill = owner.skill_schema.plan_instant_cost(skill['document'], binding,
+                spell_id=rule.spell_id, now_ms=now_ms)
+            need(snapshot.fields[10] > cost.hp_cost and snapshot.fields[12] >= cost.mp_cost,
+                 'HOSTILE_CAST_ALIVE_AND_COST_REQUIRED')
+            selected = self.stats.capture_locked(binding)
+            need(selected.uid == binding.uid, 'HOSTILE_CAST_SELECTED_ACTOR_REQUIRED')
+            lifetime, target = combat._hp_binding(binding.writer, op.row, context.bound.target_uid)
+            defense = self.npc_inputs.get(target)
+            need(defense is not None, 'HOSTILE_CAST_EXPLICIT_CURRENT_NPC_TEMPLATE_REQUIRED')
+            damage = resolve_damage(MagicActor.from_derived(selected.derived), defense, rule.spell,
+                                    Direction.PC_NPC, self.rng)
+            context.current()
+            intent = HostileNpcIntent(context, damage, now_ms)
+            prepared = combat._hp._prepare_cast(binding.writer, op.row, lifetime, target, intent)
+            values = dict(before['document']['values'])
+            values['10'] -= cost.hp_cost
+            values['12'] -= cost.mp_cost
+            if rule.spell_id in (9, 27):
+                from tools.local_original_session.life_drain import recovery
+                values['10'] = recovery(values['10'], values['11'], damage.damage)[0]
+            after = owner.document.next_values(before['document'], values=values)
+            semantic = dict(events=[dict(kind='resource_debit', hp=cost.hp_cost, mp=cost.mp_cost),
+                dict(kind='magic_npc_damage', spell_id=rule.spell_id, target_uid=target.uid,
+                     damage=damage.damage, policy=damage.policy)])
+            operation = owner_module.Operation(binding, snapshot, before['document'], after,
+                request, txid, 'CAST_COST', semantic)
+            changes = (owner.batch.ParticipantChange('RESOURCE', before['revision'], before['digest'], after),
+                owner.batch.ParticipantChange('SKILL', skill['revision'], skill['digest'], after_skill))
+            fields = dict(snapshot.fields)
+            fields.update({int(k): v for k, v in after['values'].items()})
+            fields = owner.shield_status_fields(binding, fields, after_skill)
+            plan = owner_module.CastPlan(operation, changes, deepcopy(skill['document']), after_skill,
+                                        fields, owner.status_module.frame(fields), now_ms)
+            plan.hostile_context, plan.hostile_intent = context, intent
+            plan.hostile_prepared, plan.hostile_phase = prepared, 'PREPARED'
+            if rule.spell_id in (9, 27):
+                from tools.local_original_session.life_drain import DrainPlan
+                plan.life_drain = DrainPlan(owner, plan, operation, context, intent, prepared)
+                semantic['events'].append(plan.life_drain.event())
+            owner._prepared_operation = operation
+            owner._hostile_cast_plan = plan  # Existing one prepared owner slot, not a replay ledger.
+            try:
+                owner._prepared_digest = owner.plan_digest(plan)
+                owner.skill_schema.seal_cost_plan(plan, owner)
+            except BaseException:
+                owner.discard_cast_plan(plan)
+                raise
+            return plan
+
+
+def validate_prepared(owner, plan):
+    context = getattr(plan, 'hostile_context', None)
+    if context is None:
+        return
+    if context.decision.spell_id==49:
+        from tools.local_original_session.ice_lance_combined import validate_prepared as validate_ice_lance
+        return validate_ice_lance(owner,plan)
+    need(type(context) is HostileCastContext and owner._hostile_cast_plan is plan
+         and plan.hostile_phase == 'PREPARED'
+         and context.operation.binding is plan.operation.binding
+         and context.operation.payload is plan.operation.request
+         and context.operation.txid == plan.operation.txid,
+         'HOSTILE_CAST_EXACT_PREPARED_PLAN_REQUIRED')
+    if context.decision.spell_id == 17:
+        from tools.local_original_session.turn_undead_outcome import validate_prepared
+        return validate_prepared(owner,plan)
+    context.current()
+    owner.skill_schema.cost_plan_current(plan, owner)
+    if context.decision.spell_id in (9, 27):
+        from tools.local_original_session.life_drain import validate_plan
+        validate_plan(owner, plan)
+    combat = owner.status.broker._attack_session
+    need(plan.hostile_intent.context is context
+         and plan.operation.semantic_result['events'][1] == dict(kind='magic_npc_damage',
+             spell_id=context.decision.spell_id, target_uid=context.bound.target_uid,
+             damage=plan.hostile_intent.result.damage, policy=plan.hostile_intent.result.policy),
+         'HOSTILE_CAST_SEALED_DAMAGE_AND_TARGET_REQUIRED')
+    lifetime, target = combat._hp_binding(context.operation.binding.writer, context.operation.row, context.bound.target_uid)
+    combat._hp._validate_cast(plan.hostile_prepared, plan.hostile_intent, lifetime, target)
+
+
+def commit_after_cost(owner, operation, receipt):
+    plan = getattr(owner, '_hostile_cast_plan', None)
+    if plan is None or plan.operation is not operation:
+        return
+    if plan.hostile_context.decision.spell_id==49:
+        from tools.local_original_session.ice_lance_combined import commit_after_cost as commit_ice_lance
+        return commit_ice_lance(owner,operation,receipt)
+    if plan.hostile_context.decision.spell_id == 17:
+        from tools.local_original_session.turn_undead_outcome import commit_after_cost as commit17
+        return commit17(owner,operation,receipt)
+    need(receipt['phase'] == 'COMMITTED' and plan.hostile_phase == 'PREPARED',
+         'HOSTILE_CAST_CONFIRMED_SINGLE_COST_RECEIPT_REQUIRED')
+    # No callback/await here: canonical commit has returned while row lock is
+    # still held. _commit_cast only checks/stores this prepared memory entry.
+    authority = owner.status.broker._attack_session._hp
+    result = authority._commit_cast(plan.hostile_prepared, plan.hostile_intent)
+    plan.hostile_phase, plan.hostile_result = 'COMMITTED', result
+    # The NPC entry has adopted its intent/result and the CastPlan is retained
+    # by the existing CostDelivery lifetime. The owner slot is no replay cache.
+    owner._hostile_cast_plan = None
+
+
+def bind_cold(owner, policy):
+    need(type(policy) is HostilePolicy and policy.owner is owner and not owner.active
+         and getattr(owner, '_combat_hostile', None) is None,
+         'HOSTILE_CAST_EXACT_COLD_POLICY_REQUIRED')
+    owner._combat_hostile = policy
+
+
+LOCAL_SERVER_STATE_ONLY = 'LOCAL_PC_COST_AND_NPC_MEMORY_ONLY_V1'
+
+
+def enable_local_server_state_cold(policy, *, scope):
+    """Explicit limited product choice; packet admission has its separate gate."""
+    need(type(policy) is HostilePolicy and not policy.owner.active
+         and policy.owner._combat_hostile is policy and scope == LOCAL_SERVER_STATE_ONLY
+         and not getattr(policy, '_local_server_state', False),
+         'LOCAL_CAST_EXACT_COLD_SCOPED_POLICY_REQUIRED')
+    policy._local_server_state = True
+
+
+@dataclass(frozen=True, eq=False)
+class LocalServerOutcome:
+    """Memory participant, NOT an NPC packet, ACK, animation or HPbar result."""
+    owner: object
+    plan: object
+    operation: object
+    authority: object
+    prepared: tuple
+    result: npc_hp.Result
+    death_wire: object = None
+
+    def validate_precommit(self, owner, plan):
+        need(self.owner is owner and self.plan is plan and self.operation is plan.operation
+             and getattr(plan, '_local_server_outcome', None) is self
+             and self.prepared is plan.hostile_prepared
+             and self.result is self.prepared[3]
+             and self.authority is owner.status.broker._attack_session._hp,
+             'LOCAL_CAST_SAME_PREPARED_MEMORY_OUTCOME_REQUIRED')
+        validate_prepared(owner, plan)
+        need(type(self.result) is npc_hp.Result and self.result.hit.damage > 0
+             and self.result.after.current == max(0, self.result.before.current-self.result.hit.damage)
+             and plan.hostile_intent.accepted_now_ms == plan.accepted_now_ms
+             and plan.catalyst is None
+             and plan.status_wire == owner.status_module.frame(plan.status_fields),
+             'LOCAL_CAST_OWN_STATUS_AND_EXACT_HP_REQUIRED')
+        if self.result.died:
+            from tools.local_original_session import npc_death
+            notifications = owner.status.broker._attack_session._notifications
+            need(type(notifications) is npc_death.Notifications
+                 and notifications.service is owner.status.broker._attack_session
+                 and notifications.death_policy == npc_death.DEATH_POLICY
+                 and (id(self.operation.binding.writer), self.result.target.uid) not in notifications._records
+                 and self.death_wire is not None, 'LOCAL_CAST_DEATH_SOURCE_PREFLIGHT_REQUIRED')
+        else:
+            need(self.death_wire is None, 'LOCAL_CAST_NONLETHAL_NO_DEATH_REQUIRED')
+        return None
+
+    def validate_committed(self, parent):
+        p, op = self.plan, self.operation
+        key, previous, replacement, result = self.prepared
+        need(parent.owner is self.owner and parent.plan is p
+             and parent.binding is op.binding and parent.txid == op.txid
+             and parent.request is op.request and parent.local_outcome is self
+             and p.phase == p.hostile_phase == 'COMMITTED'
+             and p.hostile_result is result is self.result
+             and self.authority._entries.get(key) is replacement
+             and replacement.intent is p.hostile_intent
+             and replacement.intent.context is p.hostile_context
+             and replacement.intent.context.operation.binding is op.binding
+             and replacement.intent.context.operation.txid == op.txid
+             and replacement.intent.context.operation.payload is op.request
+             and replacement.hp is result.after
+             and result.after.current == max(0, result.before.current-result.hit.damage)
+             and parent.receipt['phase'] == 'COMMITTED'
+             and parent.frames == (p.status_wire,),
+             'LOCAL_CAST_SAME_COST_RECEIPT_AND_ADOPTED_NPC_RESULT_REQUIRED')
+        if p.hostile_context.decision.spell_id==49:
+            from tools.local_original_session.ice_lance_combined import validate_committed
+            validate_committed(parent)
+        return None
+
+
+def preflight_response(owner, plan):
+    # Default remains OFF. This product scope promises PC cost status and
+    # server NPC memory only; no NPC/client spell-response semantics are minted.
+    if plan.hostile_context.decision.spell_id == 17 and plan.hostile_prepared is None:
+        from tools.local_original_session.turn_undead_outcome import preflight_cost_only
+        return preflight_cost_only(owner,plan)
+    validate_prepared(owner, plan)
+    need(getattr(owner._combat_hostile, '_local_server_state', False) is True,
+         'HOSTILE_CAST_ORIGINAL_NPC_FEEDBACK_SOURCE_UNRESOLVED')
+    outcome = getattr(plan, '_local_server_outcome', None)
+    if outcome is None:
+        prepared = plan.hostile_prepared
+        death_wire = None
+        if prepared[3].died:
+            from tools.local_original_session import npc_death
+            notifications = owner.status.broker._attack_session._notifications
+            need(type(notifications) is npc_death.Notifications
+                 and notifications.service is owner.status.broker._attack_session
+                 and notifications.death_policy == npc_death.DEATH_POLICY,
+                 'LOCAL_CAST_LETHAL_NOTIFICATIONS_REQUIRED_BEFORE_COST')
+            death_wire = npc_death.frame(npc_death.DEATH_OPCODE, prepared[3].target.uid)
+        outcome = LocalServerOutcome(owner, plan, plan.operation,
+            owner.status.broker._attack_session._hp, prepared, prepared[3], death_wire)
+        plan._local_server_outcome = outcome
+    need(type(outcome) is LocalServerOutcome, 'LOCAL_CAST_TYPED_OUTCOME_REQUIRED')
+    outcome.validate_precommit(owner, plan)
+    return outcome

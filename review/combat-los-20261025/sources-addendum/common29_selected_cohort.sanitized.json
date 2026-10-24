@@ -1,0 +1,1033 @@
+{
+  "scope": "PRIVATE_ENERGYBOLT_BOOK182_PERSISTED_RESULT_JOIN_DEFAULT_OFF",
+  "parent": {
+    "path": "work/local_original_session/attack-magic/energybolt-common29-caller-v2/cohort.json",
+    "sha256": "4d1d57211dec70007a1d9f256c2ac34e4227cfdae19a173b1d0040c19747b18a",
+    "bytes": 65489
+  },
+  "selected": {
+    "attack_session": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v47/attack_session.py",
+      "sha256": "33eb86f16ca70746a8310a8f3ee9774dbf7909d85454dc2a8173558d8caabf9b",
+      "bytes": 22520
+    },
+    "bootstrap_progress": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/bootstrap_progress.py",
+      "sha256": "0c3f1a5cde581ad099b50e0713c98937a74c14642e7bf767d9d579513cbae277",
+      "bytes": 3512
+    },
+    "broker": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/broker.py",
+      "sha256": "98a11ac66c08ac508e9e0df3c934e264e096d52eb776c99f2eaeecae17906901",
+      "bytes": 397927
+    },
+    "canonical_delivery": {
+      "path": "work/local_original_session/integration-1/packet-gameplay-shared-v5/canonical_delivery.py",
+      "sha256": "156b3653d08d4733ba91c1aea9ffbfa8500fba0918a76083158d865e9ebb686c",
+      "bytes": 14458
+    },
+    "canonical_feature_bootstrap": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v2/canonical_feature_bootstrap.py",
+      "sha256": "e1d146c954dda1aa7b49480b4f79e37999bd4dd87e5ab12ef12ea03cd9e890eb",
+      "bytes": 88049
+    },
+    "canonical_port": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/canonical_port.py",
+      "sha256": "521d720404c88ff91b751485c34b6481178c5c1222e7e52de7e65d418ecc69b4",
+      "bytes": 11371
+    },
+    "canonical_skill": {
+      "path": "work/local_original_session/attack-magic/instant-rule-v1/canonical_skill.py",
+      "sha256": "395b872e9921f82c9ce92581e41b746fb5fca7ea90bf7e8b37e526b20c7a72a3",
+      "bytes": 11927
+    },
+    "dialogue_route": {
+      "path": "work/local_original_session/implementation-4/shop-quest/dialogue-contract/dialogue_route.py",
+      "sha256": "58477805d7d868eb63c2a549f66897b7488f8b96711909d843bb5041d008b09d",
+      "bytes": 9460
+    },
+    "equipment_store": {
+      "path": "work/local_original_session/implementation-1/item-equipment-product/use/empty-integration-311-v1/equipment_store.py",
+      "sha256": "cce184e828da856f289bcdde91ceed5aef4cd8c01a891c8b513370b3935f5b06",
+      "bytes": 11485
+    },
+    "feature_config": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/feature_config.py",
+      "sha256": "bb4a4f70cebc70110df16140c93e5e3a366c463af9d72cea2efa76489fcf0cfb",
+      "bytes": 31931
+    },
+    "hp_resource_document": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/advance-spirit-resource-cast-v1/candidate/tools/local_original_session/hp_resource_document.py",
+      "sha256": "1d4bf13686e8316f860b70c2f0bdfe5827d4f60d0de3707614ad56f7b83b3fd8",
+      "bytes": 6775
+    },
+    "hp_resource_owner": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/hp_resource_owner.py",
+      "sha256": "e894dd37078348714664761940ea13658bbc7348dd34d4ffe6266504c483a68b",
+      "bytes": 100520
+    },
+    "hp_status": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/hp-status-current-map-v1/candidate/tools/local_original_session/hp_status.py",
+      "sha256": "6c7e5cce626560cff2ad1a3dd6a70295a617467af8a703a34d3212c31466b85e",
+      "bytes": 33961
+    },
+    "inventory_aggregate": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/inventory_aggregate.py",
+      "sha256": "dc21e6a1c79210c1a5ecc6d848cfa84d9f3a9fc569cff3230db673f9af4ecff4",
+      "bytes": 5621
+    },
+    "inventory_observe": {
+      "path": "work/local_original_session/integration-1/adena-book-integration-v1/inventory_observe.py",
+      "sha256": "6297c51b917995e4b2f610af4388bf3231f2a63765366a5910ca64ebad754882",
+      "bytes": 32872
+    },
+    "inventory_store": {
+      "path": "work/local_original_session/spellbook/credit-global-allocation-v1/inventory_store.py",
+      "sha256": "d489a21fbc3145f3166aa6f2a26d4c74cd9f37664b136251d26ab8abd61a1b37",
+      "bytes": 53412
+    },
+    "inventory_update": {
+      "path": "tools/local_original_session/inventory_update.py",
+      "sha256": "e86a7a280de663403f6b125bce93a73593678c1382664e1515315eb76f9120d1",
+      "bytes": 9674
+    },
+    "item_use_session": {
+      "path": "work/local_original_session/equipment-window/packet-scoped-gear103-buy-stats-trial-v2/pin-closure/item_use_session.py",
+      "sha256": "096de03f7387242ffd843f2b23ff16e0d08714374f202f192291eed08a698c25",
+      "bytes": 192100
+    },
+    "launcher": {
+      "path": "work/local_original_session/integration-1/adena-book-integration-v1/launcher.py",
+      "sha256": "1cc72cdccbb703e8b85485a3ba677ef14fbe1b7ee18920869921337b8750ec11",
+      "bytes": 354494
+    },
+    "manual_move_commands": {
+      "path": "tools/local_original_session/manual_move_commands.py",
+      "sha256": "091a237261533753c8cf1ed9969634171a2d91696372779fde201c13f7f305ec",
+      "bytes": 202500
+    },
+    "npc_approach_hit": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-aggro-v22/npc_approach_hit.py",
+      "sha256": "b1c694e937b0d473e305d8f4f9cdb03389707b10f34f9f05949c6c689b7850fa",
+      "bytes": 20140
+    },
+    "npc_hp": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/npc_hp.py",
+      "sha256": "f43fac1939054e9c6b4993a79ff8eb765a82aafbaf7dc0c16ad3435425f1e923",
+      "bytes": 57976
+    },
+    "npc_kill_events": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/npc_kill_events.py",
+      "sha256": "112d47e609685f0078c64a6945b88859ec0f5574f93b62519c8325fffe85ae05",
+      "bytes": 11138
+    },
+    "npc_player_hit": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/packet-combat-v38/npc_player_hit.py",
+      "sha256": "45195917ac9c3d93aa70a28221901a46edb15cc10a06e19d724dde2e327990c8",
+      "bytes": 39309
+    },
+    "npc_player_lethal": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-explicit-poll-v29/npc_player_lethal.py",
+      "sha256": "c2eb48270aa25b316665d7880a926721622058c799ffe6cd41c57c72c3a82359",
+      "bytes": 28510
+    },
+    "npc_player_lethal_recovery_focused": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/npc_player_lethal_recovery_focused.py",
+      "sha256": "fb049a6599c61f8241a8be3a33de741f78026ed7177ed44b4b9809b9786bd5a2",
+      "bytes": 4613
+    },
+    "npc_session": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/packet-combat-v39/npc_session.py",
+      "sha256": "62b6cdc674a9b5f62489fb2d8a005084efb4426eafc4745a25fd511552f82325",
+      "bytes": 32774
+    },
+    "player_death_recovery_focused": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/player_death_recovery_focused.py",
+      "sha256": "e7f7bd7778c28b05fcf516e7f0a88d96c5bf302ba6919fa93483e7615ba64fb5",
+      "bytes": 19752
+    },
+    "player_life": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-adjudicated-pre-v34/player_life.py",
+      "sha256": "cad9b9d1c9b20efe69a1f6402a3473e8e93deada0a17f8cceba55ca268b696ff",
+      "bytes": 53942
+    },
+    "player_life_observe": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/player_life_observe.py",
+      "sha256": "d0922093ce47104d645e8fb1d1b475b27c68247ff51d9666269023145cce23c1",
+      "bytes": 27975
+    },
+    "projection": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-empty-current-consumers-v1/projection.py",
+      "sha256": "3f3cf22114b0037546573fd521d9c6f541dd15fe283a561a46ae2f00596773de",
+      "bytes": 3340
+    },
+    "repeated_dead_restart": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/repeated_dead_restart.py",
+      "sha256": "fa857093b29a96c3144cd2118b7c01aa536bdb96a387d17f133446ab08ed373d",
+      "bytes": 21085
+    },
+    "repeated_player_life_focused": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/repeated_player_life_focused.py",
+      "sha256": "ba4084ecbf494861f409d07ea049a0f9a4b86117687cf546e28acf8fcf3798d0",
+      "bytes": 11719
+    },
+    "run_manual_baseline_scenario": {
+      "path": "work/local_original_session/integration-1/shop-startup-serial299-v1/run_manual_baseline_scenario.py",
+      "sha256": "7ddc7d75c4ef3d302161bd09e4a653f5ff180d120665c395cfb4b429c942e203",
+      "bytes": 459145
+    },
+    "server_death_event": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/server_death_event.py",
+      "sha256": "b3e64c57089f41baf3224e444cb298258969cde33ef86c369fb53e7c522510dd",
+      "bytes": 7814
+    },
+    "shop_quest": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-first-adena-sale-v38/shop_quest.py",
+      "sha256": "16b8022e5fd4dac206c0d4690808796e33c31e9998833f52cde53995ba51f3f1",
+      "bytes": 23994
+    },
+    "shop_quest_binding": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/shop_quest_binding.py",
+      "sha256": "931e1190960201d87a46ba4c656859886cdff1aa27fa28ceb41bf8b653a21b95",
+      "bytes": 9658
+    },
+    "skill_buff": {
+      "path": "work/local_original_session/attack-magic/offensive-instant-rules-v1/skill_buff.py",
+      "sha256": "8d6a9454350884526b729daae19025fd81b136deab33b079cbae5d2f8a9b5628",
+      "bytes": 20637
+    },
+    "skill_cost_delivery": {
+      "path": "work/local_original_session/attack-magic/lethal-server-cast-v1/skill_cost_delivery.py",
+      "sha256": "decbfb6d400cf0352b392698f3b1ed2e943255892b2b97f4fe6e5d9ff6e235a2",
+      "bytes": 24848
+    },
+    "trade_delivery": {
+      "path": "work/local_original_session/spellbook/character-starter-inventory-v1/cold-graph/trade_delivery.py",
+      "sha256": "0684b8578e6b19cc9657fc23fff6282ed7d11706994d76a5e6c2059437e4acdd",
+      "bytes": 29643
+    },
+    "trade_ingress": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-trade-failure-cause-v54/trade_ingress.py",
+      "sha256": "7b926aa19a7fb0012f1e247ba00945883fad90ef0d46cb25684c80ec0e92348d",
+      "bytes": 46620
+    },
+    "trade_request_wire": {
+      "path": "work/local_original_session/integration-1/shop-resource-menu-join-v1/cohort/trade_request_wire.py",
+      "sha256": "a41b36045c9bbd2ec7f60fff9c91d5b0733e4d1c313f65da801f353d39115e0b",
+      "bytes": 5830
+    },
+    "trade_use_retirement": {
+      "path": "work/local_original_session/equipment-window/packet-scoped-gear103-buy-stats-trial-v2/pin-closure/trade_use_retirement.py",
+      "sha256": "5543b03216c761b8e86e1e770efe4be884483b19ff52a92bb5d46fc6cc03a5d4",
+      "bytes": 16691
+    },
+    "dialogue_send": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-packet-source-v27/dialogue_send.py",
+      "sha256": "d5c29446ce60045c76f0c59178a85a83cbf35a3ef047b707b0f49371fb8fd135",
+      "bytes": 15258
+    },
+    "server_owned_menu": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-first-adena-sale-v38/server_owned_menu.py",
+      "sha256": "3eff5ed048093d993727c60224971fb6d34fdc3ff147f9429839c5150a3133df",
+      "bytes": 35747
+    },
+    "dialogue_target": {
+      "path": "work/local_original_session/implementation-4/shop-quest/dialogue-contract/dialogue_target.py",
+      "sha256": "8604552e029bb7c7d937d90d1548da536f0658a1ed723ccaa715832ffe88af26",
+      "bytes": 9939
+    },
+    "dialogue_wire": {
+      "path": "work/local_original_session/implementation-4/shop-quest/dialogue-contract/hypertext-field4/dialogue_wire_f4.py",
+      "sha256": "d91dc2046f9996d1f17637318aec9c87cda9b17f90cf4336ab60efaef040ac31",
+      "bytes": 10998
+    },
+    "shop_list_wire": {
+      "path": "work/local_original_session/implementation-4/shop-quest/dialogue-contract/shop-list-wire/shop_list_wire.py",
+      "sha256": "cbedc5e9b91f1662b09ae1267321c921ce9b9c2c2fc63a36f1762b18289f1dc5",
+      "bytes": 10032
+    },
+    "normal_npc_source": {
+      "path": "work/local_original_session/implementation-4/shop-quest/dialogue-contract/normal-npc-target/normal_npc_source.py",
+      "sha256": "b2e46f24a4e30b8a365bf1d7c9fe0c199d7e87cea4fd273ebe52e1ad364297c3",
+      "bytes": 5794
+    },
+    "haction_list_ingress": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-packet-action-current-sample-v2/haction_list_ingress.py",
+      "sha256": "8f75ce8f05ed42a96a7041ddcd6c8646ebfc775e26c9d68060e8d8b603e4d6b9",
+      "bytes": 30620
+    },
+    "manual_source_quit": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-human-paired-quit-v22/manual_source_quit.py",
+      "sha256": "33cd79e4a72eeac36e02617a493a8cf9e4ddb822d445c8e1420a036486a6fb40",
+      "bytes": 28553
+    },
+    "menu_content_input": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-book-credit-caller-v1/menu_content_input.py",
+      "sha256": "e25c16c6a53e3115e69ff15c08567ad842d7286280b8f19e5b3befccc333cd61",
+      "bytes": 9838
+    },
+    "original_screenshot": {
+      "path": "tools/local_original_session/original_screenshot.py",
+      "sha256": "d90ed7e331a6697949be94ae908943f241fec0c30527599d988c3ce1cb06b357",
+      "bytes": 38211
+    },
+    "inventory": {
+      "path": "work/local_original_session/spellbook/adena-normal-acquisition-v1/inventory.py",
+      "sha256": "3b802fb82019c919108102c14b45e7d662a7356bbfc0f7ea89c6e8add1457e89",
+      "bytes": 65996
+    },
+    "item_equipment_effect": {
+      "path": "work/local_original_session/equipment-window/scoped-equipment-profile-v1/item_equipment_effect.py",
+      "sha256": "d7a99bee89d763106d00eea3fbefd6fa342815e410cbbbcf7115077656542005",
+      "bytes": 54892
+    },
+    "item_transfer_runner": {
+      "path": "work/local_original_session/spellbook/packet-book-global-buy-trial-v1/item_transfer_runner.py",
+      "sha256": "20384f76a708570b53ec5dde1a3ee14d0592ac42dc31b67d4c8942c77730da9e",
+      "bytes": 18593
+    },
+    "public_broker": {
+      "path": "tools/local_original_session/broker.py",
+      "sha256": "b6950e2612074bdd36b704a5848e2e6a8b33266a6d8da17a480f8506e4b309aa",
+      "bytes": 262506
+    },
+    "shop_input_receipts": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-trade-cleanup-outcome-v30/shop_input_receipts.py",
+      "sha256": "993eeea29b282f3a083d70e0936db03c2caa7e4e1a4289ef187e5dbbbbdf4685",
+      "bytes": 12627
+    },
+    "shop_normal_input_driver": {
+      "path": "work/local_original_session/integration-1/shop-body-failure-serial356-v1/shop_normal_input_driver.py",
+      "sha256": "7e3cdfcf630af824f6d2c07c74317bc016e0c2576ae663ef8324347fb7095293",
+      "bytes": 25922
+    },
+    "shop_startup_caller": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-startup-caller-v1/shop_startup_caller.py",
+      "sha256": "22ec7345ca31aac883847ad9bd48a4a1ecb3b5ac5b113560a46443888e4c6839",
+      "bytes": 5044
+    },
+    "shop_store_initializer": {
+      "path": "work/local_original_session/integration-1/packet-book-buy-trial-v1/shop_store_initializer.py",
+      "sha256": "2c09aea19d941ab10d9394e018a0e6661b97755af1596aa20b5e055828ce08c1",
+      "bytes": 16244
+    },
+    "item_transfer_ui": {
+      "path": "work/local_original_session/integration-1/adena-book-integration-v1/item_transfer_ui.py",
+      "sha256": "abda01ed8ecae73e0bfa1c0744e768950be9fd1f4c1a22fef45b85b05d4228ab",
+      "bytes": 56773
+    },
+    "ground_client_retirement": {
+      "path": "work/local_original_session/spellbook/packet-book-global-buy-trial-v1/ground_client_retirement.py",
+      "sha256": "53527d5eedbeccefc6468020fc886cf0859503c374642a5ae907fc0e8980ca63",
+      "bytes": 10757
+    },
+    "desktop": {
+      "path": "tools/local_original_session/desktop.py",
+      "sha256": "16c7432939b47e6a8185a00ffb6c0820f11344bc0bf3efbdd727f18d9f9c3c61",
+      "bytes": 31786
+    },
+    "shop_wndproc_input": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-wm-local-result-v20/shop_wndproc_input.py",
+      "sha256": "a89c4d4b53d739943f15198970e6af3d2c9f3f410639bcca293400f54bf4a1a6",
+      "bytes": 20115
+    },
+    "item_custody": {
+      "path": "tools/local_original_session/item_custody.py",
+      "sha256": "83555ca0c927a0bd57f38cce9b759b1e1a94643d3a3f46e5d4fc695bf20f322d",
+      "bytes": 8348
+    },
+    "item_ground": {
+      "path": "work/local_original_session/spellbook/packet-global-allocation-v1/item_ground.py",
+      "sha256": "5c17c05c474992c02d17699e05f898ba38b1acaa304f534e89c08c5f8490de00",
+      "bytes": 42572
+    },
+    "item_transfer_session": {
+      "path": "work/local_original_session/spellbook/packet-partial-get-remainder-v1/item_transfer_session.py",
+      "sha256": "8853d5267099173205f77b4f8ec8be439b2efc188c5dfced7fc4ad2ec950ae39",
+      "bytes": 43394
+    },
+    "item_transfer_frame": {
+      "path": "tools/local_original_session/item_transfer_frame.py",
+      "sha256": "5135614ecbb4bc792898aa60fc6fc18f058003968ded1c133d0e6019bd75c9df",
+      "bytes": 6189
+    },
+    "item_transfer_entry": {
+      "path": "tools/local_original_session/item_transfer_entry.py",
+      "sha256": "4b84fc68b71228bcbb97ed60407b7f28e9dfc759cdb5b9c9ae89813ae74e7efc",
+      "bytes": 15413
+    },
+    "item_quantity_popup": {
+      "path": "tools/local_original_session/item_quantity_popup.py",
+      "sha256": "73817c26bd23ab7e8b29dd1b0002fce0ec29aa241598b1f4e85a6044056307c2",
+      "bytes": 14661
+    },
+    "observe": {
+      "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/book-client-light-contact-v25/observe.py",
+      "sha256": "387e3b23298499c84bda34e11827990a892124d56353486af5b598472d927704",
+      "bytes": 46814
+    },
+    "move_state": {
+      "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/book-client-light-contact-v25/move_state.py",
+      "sha256": "bb738ca86cc8c779e9ece6e3425e0f5c4b7ac0e743827ea72f5b194559eaf8c1",
+      "bytes": 35147
+    },
+    "buff_passive": {
+      "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/book-client-light-contact-v25/buff_passive.py",
+      "sha256": "cf861a635347d26962c6661e3a3c87ad1ad215d1d3f3f5029a10f72f5d0cc3de",
+      "bytes": 30935
+    },
+    "light_state": {
+      "path": "work/local_original_session/implementation-3/skill-buff/light-current-map-v1/light_state.py",
+      "sha256": "524f2049cc0e5f33d4b120e083ac54a84c0534f6f8b9d89a8e3dd084cdccda19",
+      "bytes": 4255
+    },
+    "buff_lifecycle": {
+      "path": "work/local_original_session/attack-magic/book182-cast-common-schema-v1/buff_lifecycle.py",
+      "sha256": "9a7f5fc33fa69746a2d0daa890396472fec3d163d624f1588079b6e0d6200d1f",
+      "bytes": 42441
+    },
+    "buff_skill_document": {
+      "path": "work/local_original_session/attack-magic/book182-cast-common-schema-v1/buff_skill_document.py",
+      "sha256": "ad78e80440b46ed46f7bedb8c97a97f6c258ea8fe701943f8ab9034054422802",
+      "bytes": 28796
+    },
+    "cast_route": {
+      "path": "work/local_original_session/attack-magic/energybolt-book182-result-join-v1/cast_route.py",
+      "sha256": "5cb2f16fee50813f74b9f6c77b4becbb91ba9462af273889650496ffe293411f",
+      "bytes": 45923
+    },
+    "buff_source_response": {
+      "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/buff-multi-self-v1/source_response.py",
+      "sha256": "d2a9fbdfa1991e64230bb522ba5aea53a5c99cd0482509fee39fbfd69d6913fc",
+      "bytes": 18036
+    },
+    "spell_metadata": {
+      "path": "work/local_original_session/implementation-3/skill-buff/enchant-mighty-self-cast-v1/metadata/spell_metadata.py",
+      "sha256": "6924aa26060dc56a186a8aa1a6b53778b4ed4f833e01952e265fb4bc37308f03",
+      "bytes": 11209
+    },
+    "cast_inventory_adoption": {
+      "path": "work/local_original_session/spellbook/cast-gear-continuity-v1/cast_inventory_adoption.py",
+      "sha256": "5fc79b6a61bbdd9dcb6a401cc01002f599ebefc9988acea6cdfd05727fcbf42c",
+      "bytes": 3808
+    },
+    "combat_buff_reference": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/buff-modifiers-v1/candidate/tools/local_original_session/combat_buff_reference.py",
+      "sha256": "72ca4309931f89837a29495ad651cdcdef37155f4c7b276c2d4c781237903647",
+      "bytes": 4233
+    },
+    "canonical_batch": {
+      "path": "work/local_original_session/attack-magic/book182-cast-common-schema-v1/canonical_batch.py",
+      "sha256": "b4374ebabeeb32238883ed892b2fee24d84e9d13122df33bcdf937b1681cbe70",
+      "bytes": 147917
+    },
+    "normal_consumable_runtime": {
+      "path": "work/local_original_session/spellbook/character-starter-inventory-v1/cold-graph/normal_consumable_runtime.py",
+      "sha256": "504eed4774e4fc9c78ea712cb28642b342dab02bd7797f5542ed7b86e9a1b761",
+      "bytes": 4916
+    },
+    "operating_input": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/operating_input.py",
+      "sha256": "0e79a5b0abddd35ea583c500b13157821b6f253efdccce128d5f2c6e0588f7e4",
+      "bytes": 53076
+    },
+    "athame_policy": {
+      "path": "work/local_original_session/implementation-1/item-equipment-product/normal-book-equipment-current-v4/athame_policy.py",
+      "sha256": "77e972c8dc9d29fc068c83eb1f73cfb5c630d00bb2adbd0e285f7db3aeb7e300",
+      "bytes": 8862
+    },
+    "item_equipment_ui": {
+      "path": "work/local_original_session/equipment-window/current-ui-v1/item_equipment_ui.py",
+      "sha256": "1926db62424296d1c2e1f06f07d09aef8392485157f100695b06545cdad0ab22",
+      "bytes": 17639
+    },
+    "buff_bootstrap": {
+      "path": "work/local_original_session/attack-magic/book182-cast-common-schema-v1/buff_bootstrap.py",
+      "sha256": "a959945aff0b3f4621a9b7d2c7adfeee5b241ab6f76a60b82f39b334836fb87c",
+      "bytes": 26070
+    },
+    "spell_book_learning": {
+      "path": "work/local_original_session/implementation-3/skill-buff/live-progression-book-eligibility-v1/book_batch.py",
+      "sha256": "cfa0130c3bb8ef34e52a91a1f8ef21e7e55922880616dbbc5ece9d78b6c203a6",
+      "bytes": 33327
+    },
+    "spell_book_delivery": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/mixed-loadout-adoption-v1/candidate/book_delivery.py",
+      "sha256": "84ac85cd6834e1aca5eaf7ac933221b24e9d801a046bda231440bdc1febc1545",
+      "bytes": 17914
+    },
+    "spell_book_policy": {
+      "path": "work/local_original_session/attack-magic/book182-map0-full22-policy-v1/local_book_policy.py",
+      "sha256": "42ddcb92c0e55f883f5b57d53dbebf58cc25ecae54f47d22369a87ad1f9e343d",
+      "bytes": 16341
+    },
+    "spell_learned_input": {
+      "path": "work/local_original_session/implementation-3/skill-buff/learned-scoped-owner-fix-v1/learned_input.py",
+      "sha256": "06c4c10be9f05482f523e25d6fbc4c0e58cb98f549a354304275efe2f7b0be3e",
+      "bytes": 15274
+    },
+    "normal_book_runtime": {
+      "path": "work/local_original_session/attack-magic/book182-cast-common-schema-v1/normal_book_runtime.py",
+      "sha256": "2caf23aba740210644d3c0b71f840d7bb081ca15731698c03e86e9cab85b4dea",
+      "bytes": 5068
+    },
+    "consumable_healing": {
+      "path": "work/local_original_session/spellbook/character-starter-inventory-v1/cold-graph/consumable_healing.py",
+      "sha256": "2372d2ab15a6a1d24b420f789b5fb046a53086c929b07027a52f0d81b4cfd29f",
+      "bytes": 32254
+    },
+    "consumable_delivery": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/mixed-loadout-adoption-v1/candidate/consumable_delivery.py",
+      "sha256": "11361ab0eb62057863e8bb6b0d81bdd3019bf61fefe3d7182b15a5d7509d50f6",
+      "bytes": 13755
+    },
+    "healing_policy": {
+      "path": "work/local_original_session/consumables/packet-installer-input-v1/policy/healing_policy.py",
+      "sha256": "7919f4e0df6354b6fbee23d1ed0d6f61d6ba5dda6923904a3d1be9c9e17285c1",
+      "bytes": 11662
+    },
+    "potion_credit_source": {
+      "path": "work/local_original_session/spellbook/packet-book-global-buy-trial-v1/potion_credit_source.py",
+      "sha256": "e1b8a72d6227aa7489d00ecc5a8ac37f2cac31827120f6332130af91cff402da",
+      "bytes": 4409
+    },
+    "book_credit_source": {
+      "path": "work/local_original_session/spellbook/book-full-source-v1/book_credit_source.py",
+      "sha256": "0292400280144a4eaa0927b707c921e132d09f2f10cc65189b8bf589d8b7b2d3",
+      "bytes": 2172
+    },
+    "book_definition_facts": {
+      "path": "work/local_original_session/integration-1/basic-item-shared-integration-v6/book_definition_facts.py",
+      "sha256": "0d51625d01e28fa2c12c94d673e1cfa70c9ceb8198068abf30eb667718f67d58",
+      "bytes": 5896
+    },
+    "armor_credit_source": {
+      "path": "work/local_original_session/equipment-window/armor-credit-source-v1/armor_credit_source.py",
+      "sha256": "9023fa64a3261cc03149fa33e3e832725fee5c65e13504070f29ebed3b767354",
+      "bytes": 4528
+    },
+    "popup_partial_stack_v2": {
+      "path": "work/local_original_session/spellbook/packet-global-allocation-v1/popup_partial_stack_v2.py",
+      "sha256": "06f156fa26d87dc782ec01e960625cb3e989e693df474455f16768102008b82d",
+      "bytes": 20259
+    },
+    "credit_content": {
+      "path": "work/local_original_session/implementation-1/item-equipment-product/normal-book-content-issuer-v1/credit_content.py",
+      "sha256": "875af97532caf29b7fc406653115d0ed0b75f7a386cb5f21bb51bea75167373f",
+      "bytes": 2748
+    },
+    "item_uid_namespace_root": {
+      "path": "work/local_original_session/attack-magic/energybolt-book182-result-join-v1/item_uid_namespace_root.py",
+      "sha256": "6c8318a26d9e403fb51607b63f2f79c2ce1759e6ef3df8ff5901294442e80560",
+      "bytes": 63845
+    },
+    "item_uid_namespace": {
+      "path": "work/local_original_session/spellbook/character-starter-inventory-v1/singleton-model/item_uid_namespace.py",
+      "sha256": "7af8c98664e228124ddd02b446e6e9978e2ec9c61b1eb1a8f0372efdaac9317b",
+      "bytes": 17469
+    },
+    "book_content_input": {
+      "path": "work/local_original_session/spellbook/character-starter-inventory-v1/cold-graph/book_content_input.py",
+      "sha256": "e550dd36ec549644c7d40fda1606e05f24f2c574d67117690d74b192b9e38f93",
+      "bytes": 5573
+    },
+    "buy_row_content": {
+      "path": "work/local_original_session/implementation-4/shop-quest/buy-row-content-v1/buy_row_content.py",
+      "sha256": "e893318c05564eb808d7d1c6fb1c616479debf32015798ac43afa238b5029857",
+      "bytes": 6271
+    },
+    "merchant_source_input": {
+      "path": "work/local_original_session/implementation-4/shop-quest/merchant-source-input-v1/merchant_source_input.py",
+      "sha256": "b4a4396f37cd3e2d1754b3f11c65ad032872e8e1c8d8d61ca808bb6368fd8800",
+      "bytes": 4759
+    },
+    "shared_credit_source": {
+      "path": "work/local_original_session/integration-1/basic-item-shared-integration-v6/shared_credit_source.py",
+      "sha256": "a25fc2f1acc202e35e6e4fde4a3ec14f2f891ca0b5ba63c0f3c8cfc094ac66cd",
+      "bytes": 3390
+    },
+    "cold_input": {
+      "path": "work/local_original_session/integration-1/basic-item-shared-integration-v6/cold_input.py",
+      "sha256": "9a23c59e4e77e17ec1c9a503018f0e51f57b7ae42f6aebbf00f5f1c83839adc7",
+      "bytes": 5129
+    },
+    "armor_policy": {
+      "path": "work/local_original_session/equipment-window/armor-use-v1/armor_policy.py",
+      "sha256": "8e80087a54e1f305cb4d13da0cf09307b171604c05dac097165be8136139a208",
+      "bytes": 2799
+    },
+    "armor_store": {
+      "path": "work/local_original_session/equipment-window/armor-use-v1/armor_store.py",
+      "sha256": "4243415024f3b5ce4e8d30411936445373790cffccbf13459a53288de4be27b4",
+      "bytes": 6381
+    },
+    "armor_consumer": {
+      "path": "work/local_original_session/equipment-window/armor-use-v1/armor_consumer.py",
+      "sha256": "6938ef5805d87e54da39a221a834de18551f56ffc90dafad99f862504f5e2f38",
+      "bytes": 14395
+    },
+    "armor_plain_policy": {
+      "path": "work/local_original_session/equipment-window/armor-use-v1/armor_plain_policy.py",
+      "sha256": "73d49577b1ae2ee8293086411f87e89e6417e580b62066cbf60b1773d08e5e1e",
+      "bytes": 2942
+    },
+    "learnable_catalog": {
+      "path": "work/local_original_session/implementation-3/skill-buff/spell-normal-learning-v1/learnable-catalog-v1/catalog.py",
+      "sha256": "a8e8990289c6ed832dc4d0925c450117b45d766aa6a18290eada9986bf2ebdb8",
+      "bytes": 1592
+    },
+    "gear_consumer": {
+      "path": "work/local_original_session/equipment-window/full-gear-transfer-continuity-v1/gear_consumer.py",
+      "sha256": "d82a4391ca628143c70e03fd32c463eb134bee55f113548f37bb671afc7486a4",
+      "bytes": 30280
+    },
+    "gear_policy": {
+      "path": "work/local_original_session/equipment-window/full-gear-policy-v1/gear_policy.py",
+      "sha256": "9adb8cdfb9b71dee04169702cfe8e31a290085085f821ebc704c08491f2f907a",
+      "bytes": 9245
+    },
+    "gear_store": {
+      "path": "work/local_original_session/equipment-window/full-gear-first-adoption-v2/gear_store.py",
+      "sha256": "42b4ddea81efc36b1247b6dd84e6ebdffaaeba7bd8269b91c6a460b2da6789bc",
+      "bytes": 11854
+    },
+    "fullgear_admission": {
+      "path": "work/local_original_session/equipment-window/full-gear-admission-v1/fullgear_admission.py",
+      "sha256": "d760ccd3a4d6d07a867b2173d51333e325e9f438c779d305a41f5aba78c2cea7",
+      "bytes": 8359
+    },
+    "full_gear_credit_source": {
+      "path": "work/local_original_session/equipment-window/full-gear-credit-source-v1/full_gear_credit_source.py",
+      "sha256": "ffd646d8f6d157300e56a421e5549e287272ee4fe41bd1b91e74622b3fefb63b",
+      "bytes": 8387
+    },
+    "combat_stats": {
+      "path": "work/local_original_session/integration-1/combat-pve-serial386-v2/cohort/combat_stats.py",
+      "sha256": "fd718c4737b54fd0985f84e7ed5ae71c7c7abad7c0419bea9b385e8153c8cba0",
+      "bytes": 10958
+    },
+    "combat_physical": {
+      "path": "work/local_original_session/integration-1/combat-pve-serial386-v2/cohort/combat_physical.py",
+      "sha256": "68d5833b6418af146574ebed88a37cf39a43576bf6a2379bc3a4ce1a59756ffc",
+      "bytes": 9568
+    },
+    "combat_magic": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/combat_magic.py",
+      "sha256": "e6ed0e76eacfae5ea5262ebd7d702bb72fcc60285cefc623768561bd4430e5d2",
+      "bytes": 16601
+    },
+    "combat_weight": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/nonempty-combat-weight-v1/candidate/tools/local_original_session/combat_weight.py",
+      "sha256": "7e729c036bdff2c15d63f307ac5753cab711c2ac08cf6d012e2c35f9eaee841c",
+      "bytes": 4529
+    },
+    "combat_full_gear_stats": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/full-gear-transfer-stats-v1/combat_full_gear_stats.py",
+      "sha256": "1acec439c9bc65e3f35a56a91c2f44377a2f7a28afde7aac40026c50ea9f1dc0",
+      "bytes": 10845
+    },
+    "combat_selected_stats": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/full-skill-progression-stats-v1/candidate/tools/local_original_session/combat_selected_stats.py",
+      "sha256": "c7fb147861bc19138efae6964047ce5f842c320e12bdb5762237ad0700a0f4ff",
+      "bytes": 22173
+    },
+    "combat_catalyst_reference": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/advance-spirit-selected-stats-v1/candidate/tools/local_original_session/combat_catalyst_reference.py",
+      "sha256": "17e9a997f5c67715719ef7f9a0e5cbb1d0dae46b59f479919ccad779fbf528d0",
+      "bytes": 15382
+    },
+    "combat_full_gear_weight": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/full-gear-selected-weight-v1/candidate/tools/local_original_session/combat_full_gear_weight.py",
+      "sha256": "fa205b75f2ec054dd81091a091b0d0cb628c65eeb9485784162d92e1f40b15d8",
+      "bytes": 3235
+    },
+    "book_weight_facts": {
+      "path": "work/local_original_session/spellbook/book-weight-facts-v1/book_weight_facts.py",
+      "sha256": "7c1afb8beb4ebe2cc5ff9f0d0fc8fb391cd508c51c0c454e6c510c9516ef4f57",
+      "bytes": 24036
+    },
+    "potion_weight_facts": {
+      "path": "work/local_original_session/equipment-window/mixed-item-weight-data-v1/potion_weight_facts.py",
+      "sha256": "31745dd1c1e7ec32afb40d14dd2e4709b7f3774488168158c2b2f3d8f2c8562a",
+      "bytes": 1773
+    },
+    "combat_mixed_gear_weight": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/mixed-adena-weight-v1/candidate/tools/local_original_session/combat_mixed_gear_weight.py",
+      "sha256": "55cb3689085fcb9692a20357ae765aa80998226933a1659f6c2a7df46062f215",
+      "bytes": 6394
+    },
+    "combat_trial_inputs": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/mixed-adena-weight-v1/candidate/tools/local_original_session/combat_trial_inputs.py",
+      "sha256": "1f53da751188c1f01cf9f6ec64434cce48e7f7c7efc17a0baaf7fe49561556fa",
+      "bytes": 21220
+    },
+    "combat_adapters": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/cast-stats-adoption-v2/candidate/combat_adapters.py",
+      "sha256": "7e715ac328d35cdb6c7677931e5008657effc1948073a85b1b7821aa83a480a2",
+      "bytes": 13491
+    },
+    "reference_combat_actor": {
+      "path": "work/local_original_session/integration-1/combat-pve-serial386-v2/cohort/reference_combat_actor.py",
+      "sha256": "724fe74c2519de828306f6d96df3238117541ecac5dc9ee667dffacf593cde8f",
+      "bytes": 8076
+    },
+    "source_roster_combat": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/source-roster-combat-publisher-v1/candidate/tools/local_original_session/source_roster_combat.py",
+      "sha256": "f9c0c4ba658b78a82fd83b6a707c04b329f91d5aae402b56495059690104eebe",
+      "bytes": 8218
+    },
+    "combat_roster_setup": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/full-skill-progression-stats-v1/candidate/tools/local_original_session/combat_roster_setup.py",
+      "sha256": "9e04d269d1689a441874550f36a35c274e226e91c765018c469ee1677210c54f",
+      "bytes": 21292
+    },
+    "packet_peer": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/packet_peer.py",
+      "sha256": "0ea67278b1f190e8dc3e089e278a8fe145a67bb2a18e6cef5acf4ea32eee5298",
+      "bytes": 28084
+    },
+    "packet_server": {
+      "path": "work/local_original_session/integration-1/post-drain-owner-current-fix-v1/packet_server.py",
+      "sha256": "7c990ff23aee7938d4b653f2fcd1b83c828949c6496503fd829e2a5eda64198d",
+      "bytes": 21230
+    },
+    "packet_inventory_authority": {
+      "path": "work/local_original_session/spellbook/character-starter-inventory-v1/global-allocator/packet_inventory_authority.py",
+      "sha256": "3f1176cf2e9aa41ffcb7d6da7b0e0b82e1456337a110449772cc34da05cc6f74",
+      "bytes": 29718
+    },
+    "packet_canonical": {
+      "path": "work/local_original_session/integration-1/packet-pending-source-witness-integration-v2/packet_canonical.py",
+      "sha256": "2ff0090b4270f6629cab368b6ebc61b48cfc33fc751627ecb5423e376ac05226",
+      "bytes": 23300
+    },
+    "packet_gear_authority": {
+      "path": "work/local_original_session/equipment-window/scoped-packet-gear-authority-v1/packet_gear_authority.py",
+      "sha256": "640916dffeb14b8046cba3744135a730b8bedeb3fe9d07decc5f27cf444be9bd",
+      "bytes": 23229
+    },
+    "packet_buff_rules": {
+      "path": "work/local_original_session/implementation-3/skill-buff/packet-buff-rules-v1/rules.py",
+      "sha256": "1749e24af3bedffa86df9cc65d806905fd3df86af5c16ad5e5e3b9d21e5dc0fc",
+      "bytes": 4799
+    },
+    "packet_buff_install": {
+      "path": "work/local_original_session/integration-1/packet-basic-shared-v3/packet_buff_install.py",
+      "sha256": "9cc125220dfbe0c0a1dbc9c372e1b5a8442dd4bd0d56e268ea12b6fa8d6068f0",
+      "bytes": 3115
+    },
+    "owned_book_inputs": {
+      "path": "work/local_original_session/attack-magic/book182-cast-common-schema-v1/owned_book_inputs.py",
+      "sha256": "fa8befac9e567eac411563d8177e752b077f84e994a78fb111afa43a2b4441a0",
+      "bytes": 6913
+    },
+    "gear_cold_input": {
+      "path": "work/local_original_session/equipment-window/packet-gear-cold-input-v1/gear_cold_input.py",
+      "sha256": "64dfd1a5957ca81886d2ebaa803815dd7b127a8f08a24dfde00bd4e84ec350f0",
+      "bytes": 2942
+    },
+    "healing_cold": {
+      "path": "work/local_original_session/consumables/packet-installer-v1/healing_cold.py",
+      "sha256": "6f3028b2d2b18f40bc82ed8f0e21f06c3ccb6a70ba2dc0c49785bad259cdeec2",
+      "bytes": 10621
+    },
+    "npc_world_navigation": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-neighbour-goal-v28/npc_world_navigation.py",
+      "sha256": "1eb2e16b37d8df78401fba2e4f50c45403905b25d9f10246d29c42ab079b34cc",
+      "bytes": 14652
+    },
+    "npc_edge": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-server-navigation-v26/npc_edge.py",
+      "sha256": "b75d14b05f4736c53f2faf5be3d5c2b75f4121d29a5bd4fb17aee1b32d0570d6",
+      "bytes": 22551
+    },
+    "npc_death": {
+      "path": "work/local_original_session/attack-magic/original-cast-assembly-v1/npc_death.py",
+      "sha256": "b4a7a36b7617e8ae6c8287915431e2c45a0b5bd52971bd6450cef7621176d9db",
+      "bytes": 16573
+    },
+    "npc_retaliation": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-feedback340-v1/npc_retaliation.py",
+      "sha256": "989047c442003c60676154f8914bf21783eea0e6b85cece8d280656d03b421d7",
+      "bytes": 24084
+    },
+    "continuous_policy": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/continuous-retaliation-v1/continuous_policy.py",
+      "sha256": "9bd8c193728b5ba2070dc9f7ddb5fc7ce5a3218e523e307812a9eeaf6c795e59",
+      "bytes": 2799
+    },
+    "npc": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v41/npc.py",
+      "sha256": "522019ceabdbb263ce05a8f9dd8df96d697228ee0c42c48346461bfe7fe98d8f",
+      "bytes": 4515
+    },
+    "attack": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/packet-combat-v39/attack.py",
+      "sha256": "204d6b52dc5a739e277f1aab84f7d5a80a422d655694c9d275316e416a800bf9",
+      "bytes": 27655
+    },
+    "npc_continuous_retaliation": {
+      "path": "work/local_original_session/integration-1/packet-gameplay-shared-v5/npc_continuous_retaliation.py",
+      "sha256": "9e358682f8b4a2eee3638d2db99c5d485e827c0bc58d1ff1daacc09ebe3a8ddc",
+      "bytes": 47415
+    },
+    "continuous_lethal": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-native-recovery-v37/continuous_lethal.py",
+      "sha256": "cfcfa93cf45712642fc159d3ae9afb797b4eb95ef254280f3f518c8bc89de0a0",
+      "bytes": 17713
+    },
+    "npc_respawn": {
+      "path": "work/local_original_session/integration-1/packet-gameplay-shared-v5/npc_respawn.py",
+      "sha256": "87691eefb89fcac7947f76864a854e419bcec894d2ae40208f01cbc0648f22f8",
+      "bytes": 37851
+    },
+    "npc_packet_runtime": {
+      "path": "work/local_original_session/integration-1/packet-gameplay-shared-v5/npc_packet_runtime.py",
+      "sha256": "1a79d9b0a712373d65ef6b52d2e375237415c8363288b684cb1a9cb6d1b9a682",
+      "bytes": 17735
+    },
+    "npc_packet_services": {
+      "path": "work/local_original_session/integration-1/packet-gameplay-shared-v5/npc_packet_services.py",
+      "sha256": "f18abac3495fe4342c9079f5c7e7ee452825afaf0790f259814dd53a4bf03d32",
+      "bytes": 16293
+    },
+    "npc_packet_play": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v41/npc_packet_play.py",
+      "sha256": "bede76b8a57fce4fd5c981bf8b1ac8c50c5e7b897f38cf8b9243d9d43da5b089",
+      "bytes": 23672
+    },
+    "attack_feedback": {
+      "path": "tools/local_original_session/attack_feedback.py",
+      "sha256": "a0ee6b4bcc366caf8329222d3bf303c9c27463577d65c1cfb1c4d33143da0b31",
+      "bytes": 10575
+    },
+    "edge": {
+      "path": "tools/local_original_session/edge.py",
+      "sha256": "dfc4ae875123f3375880778f6d1d50bd36881e26ea32f8913cefe3f5cd5459c3",
+      "bytes": 37510
+    },
+    "npc_observe": {
+      "path": "tools/local_original_session/npc_observe.py",
+      "sha256": "d436d4c9a12d09d83115f9add1ee256aecf17c04541e8a66449f94b4f01741d3",
+      "bytes": 43889
+    },
+    "combat_recovery_inputs": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-adjudicated-pre-v34/combat_recovery_inputs.py",
+      "sha256": "036cc0a269b42190c138b9c7d95627cb7c56f9c4be62405ba134f0cc5bbb590c",
+      "bytes": 1260
+    },
+    "packet_transfer_owner": {
+      "path": "work/local_original_session/spellbook/packet-global-allocation-v1/packet_transfer_owner.py",
+      "sha256": "85eb7b9bb866800e6ce08a47a857444a75eb2ae389e7f557690febc34e5f0083",
+      "bytes": 49136
+    },
+    "shop_packet_source": {
+      "path": "work/local_original_session/integration-1/packet-book-buy-trial-v1/shop_packet_source.py",
+      "sha256": "dd4553c30be6ef83b7f3453c950e659321eb002ecc0aa658e661dd4883325128",
+      "bytes": 16863
+    },
+    "character_scope": {
+      "path": "work/local_original_session/spellbook/scoped-full-skill-current-progression-v1/character_scope.py",
+      "sha256": "b9c268208629db2f64b03777ab6a82401e98a7646b3cae6e20e0d12393b68567",
+      "bytes": 76793
+    },
+    "selected_actor": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/progression-selected-stats-v1/selected_actor.py",
+      "sha256": "08a03d2b04dd670c96929b05fe725dc3ae09c1d334e280d7648ed84acb102898",
+      "bytes": 12826
+    },
+    "shop_packet_plan": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/shop_packet_plan.py",
+      "sha256": "0f2493cc6cdeb5a5d0693b513a42ba58110ada621844e35b795432da3c13f833",
+      "bytes": 14636
+    },
+    "adena_credit_source": {
+      "path": "work/local_original_session/spellbook/adena-normal-acquisition-v1/adena_credit_source.py",
+      "sha256": "2dbb38354b99da4769fab881e05b9fa8e2c1015fed5a67a6eafff4f7fb3d64df",
+      "bytes": 2550
+    },
+    "adena_catalog_identity": {
+      "path": "work/local_original_session/spellbook/adena-catalog-identity-v1/adena_catalog_identity.py",
+      "sha256": "d41d3ee4f568cc61bfd41b8ebd50c0c1598e3a8342149039386f9117e94afb76",
+      "bytes": 1477
+    },
+    "book_product_input": {
+      "path": "work/local_original_session/spellbook/book-generic-product-input-v1/book_product_input.py",
+      "sha256": "159bdfc6fbbb22110297ee6ac693547c1296448d240548d26bd9cfe2411fa77b",
+      "bytes": 3568
+    },
+    "book_buy_inputs": {
+      "path": "work/local_original_session/implementation-3/skill-buff/normal-book-buff22-trial-v1/book_buy_inputs.py",
+      "sha256": "22b5fbdb04a89a8053b8f305320ef9df3c1e5ed118232f4fb560485b6184d252",
+      "bytes": 18393
+    },
+    "packet_buff_rules18": {
+      "path": "work/local_original_session/implementation-3/skill-buff/berserkers-self-cast-v1/rules/rules.py",
+      "sha256": "bdc9da48e974101b64580106d60225647876bd5d31591d46b6b70465cdbf4f39",
+      "bytes": 3920
+    },
+    "packet_buff_rules19": {
+      "path": "work/local_original_session/implementation-3/skill-buff/fire-bless-self-cast-v1/rules/rules.py",
+      "sha256": "ce499d6dd235bf6e39a07543f558ee6a94f0adc2cb3a2f9af8464a5aa253de85",
+      "bytes": 3696
+    },
+    "packet_buff_rules20": {
+      "path": "work/local_original_session/implementation-3/skill-buff/enchant-dex-self-cast-v1/rules/rules.py",
+      "sha256": "46b49d68df526d9e93e4c915ee9c921f57f53c8d3c3547a562dad4b7bb020b09",
+      "bytes": 3725
+    },
+    "book_catalog": {
+      "path": "work/local_original_session/spellbook/book-full-catalog-v1/book_catalog.py",
+      "sha256": "4081e4f93615abfdd5b64f6ee8dbea45ab367f6abeff783ace3f191b38ab596d",
+      "bytes": 53152
+    },
+    "book_offers": {
+      "path": "work/local_original_session/implementation-4/shop-quest/book-reference-offers-v6/book_offers.py",
+      "sha256": "8ed09a5c81dd75baf3d4de14e113806caab8013af67490964c4eb3e69bde9259",
+      "bytes": 4686
+    },
+    "light_book_product_input": {
+      "path": "work/local_original_session/spellbook/normal-book-buy-learn-v1/book_product_input.py",
+      "sha256": "49ff7d4949d16680c571ae1d69d6d218c272e132153e2a904cf5a68a42d5f76e",
+      "bytes": 2393
+    },
+    "packet_buff_rules21": {
+      "path": "work/local_original_session/implementation-3/skill-buff/enchant-mighty-self-cast-v1/rules/rules.py",
+      "sha256": "334c42429b4faa60156c001996db04bf6d497a4a1baed7da035d49ee22bbd4f3",
+      "bytes": 3785
+    },
+    "character_growth_initial": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/character-growth-initial-v1/character_growth_initial.py",
+      "sha256": "e84a22f0fc7fad10d3c902fde87be2755b3329c1590a16e686e033f3555fae1f",
+      "bytes": 2168
+    },
+    "experience_progression": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/experience-progression-v2/experience_progression.py",
+      "sha256": "ac721cd3a87cce7f39d31ac2f856944dc9039c92ea44e38b518d365659cf5f47",
+      "bytes": 6693
+    },
+    "progression_document": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/progression-owner-v1/progression_document.py",
+      "sha256": "7c8f8a8313ac7fea861cba476dfc29ddeebacb95d70501658bed0cc3c12e919e",
+      "bytes": 7192
+    },
+    "progression_capability": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/progression-owner-v1/progression_capability.py",
+      "sha256": "d220f0eba46e4b3a7d584fd2bba4c6339164d265df5a74e5a44d7a5de37a90e2",
+      "bytes": 3926
+    },
+    "progression_math": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/progression-owner-v1/progression_math.py",
+      "sha256": "0ff8fafad99fd839d09ce98c473ed731764ef784aee16d4f17ada1ad94f3f1d3",
+      "bytes": 3836
+    },
+    "progression_owner": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/progression-owner-v1/progression_owner.py",
+      "sha256": "574d4419f82f43caf1a60fbf3f82cfc0d309a4f1ee5e999c92b34d107f5ad358",
+      "bytes": 33036
+    },
+    "experience_kill_source": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/progression-owner-v1/experience_kill_source.py",
+      "sha256": "668ebba4d6b4c6da04240512c4e1f033d5ff1bc49f2fc5ef82e43845279a2a66",
+      "bytes": 13336
+    },
+    "progression_reward_scope": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/progression-reward-scope-v1/progression_reward_scope.py",
+      "sha256": "2e7461829e578d45296d925971308df55d20623dd23f7a0a919af6b0f29a41ad",
+      "bytes": 12850
+    },
+    "book_progression_level": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/book-progression-level-v1/book_progression_level.py",
+      "sha256": "8b1473c78373f37e96ae3a7667bfd620cc95b979f6ec1cf2ac479d2ffcfbaea7",
+      "bytes": 10381
+    },
+    "gear_reference_offers": {
+      "path": "work/local_original_session/equipment-window/l1j-gear-offers-all-v1/gear_reference_offers.py",
+      "sha256": "32656642a1602395ba5ead90d6b05bdf0c18c2c1c992d93b512b81c7b3e25312",
+      "bytes": 200660
+    },
+    "native_gear_display": {
+      "path": "work/local_original_session/equipment-window/native-gear-product-display-v1/native_gear_display.py",
+      "sha256": "2afb0eb2d30f693f703e4c002d86df4118c47830af765fd321c1950b64b54f6a",
+      "bytes": 30970
+    },
+    "gear_product_input": {
+      "path": "work/local_original_session/implementation-4/shop-quest/shop-native-gear-product-input-v50/gear_product_input.py",
+      "sha256": "c442a0d6a87c230c927c7898935d3760a287e070be8590fb6a6c26adb3a7ed15",
+      "bytes": 6001
+    },
+    "packet_buff_rules22": {
+      "path": "work/local_original_session/implementation-3/skill-buff/advanced-spirit-self-cast-v1/rules/rules.py",
+      "sha256": "7a9e758bb31dd4ea4754248b9adaec692ffbb6eedbf27f13d05c2cb7fa26446a",
+      "bytes": 3669
+    },
+    "advance_spirit_math": {
+      "path": "work/local_original_session/implementation-5/combat-adjudication/advance-spirit-resource-v1/advance_spirit_math.py",
+      "sha256": "fe1f50cb117e07364d306cc279282746bccd1128c81a6badee5d234baa70004a",
+      "bytes": 2408
+    },
+    "local_visibility": {
+      "path": "work/local_original_session/attack-magic/energybolt-book182-result-join-v1/local_visibility.py",
+      "sha256": "03073b99a9aed7fb152ad5ac538ed53e75be2fa5b72eca15d0363875f9909fd1",
+      "bytes": 20979
+    },
+    "original_evidence": {
+      "path": "work/local_original_session/attack-magic/energybolt-book182-result-join-v1/original_evidence.py",
+      "sha256": "ef16405ddf0e984ce0c17a1ef7d38aecf69a9e74f364aac99390524c9d2c0be3",
+      "bytes": 7292
+    },
+    "attack_cold_factory": {
+      "path": "work/local_original_session/attack-magic/common29-cast-graph-v1/cold_factory.py",
+      "sha256": "f24dd060f26b029d48f5e59c1a25de20f6353459083ec186a5d6529331efe62d",
+      "bytes": 15988
+    },
+    "common_schema_factory": {
+      "path": "work/local_original_session/attack-magic/common29-cast-factory-v1/common_schema_factory.py",
+      "sha256": "be614dff57b20f08d52bf58113b42ec4fa3735553355aad053d837bfb3e4a91a",
+      "bytes": 14086
+    },
+    "offensive_direct_policy": {
+      "path": "work/local_original_session/attack-magic/offensive-instant-rules-v1/offensive_direct_policy.py",
+      "sha256": "48fca3a275980eaa174252e6bdbadc61e9387647db07cec22a78f0fc1a76937f",
+      "bytes": 4262
+    },
+    "combat_hostile_cast": {
+      "path": "work/local_original_session/attack-magic/direct-local-graph-v1/combat_hostile_cast.py",
+      "sha256": "c0554ced46be83e432361230577ffe53822762b542ab8d6d68b87297b464d040",
+      "bytes": 17835
+    },
+    "energy_bolt_cost": {
+      "path": "work/local_original_session/attack-magic/energy-bolt-cost-v1/energy_bolt_cost.py",
+      "sha256": "99a7cf6cf373da09b47f5cf17432195f6f47b9245137bf12366964454032cdcd",
+      "bytes": 1729
+    },
+    "energy_bolt_policy": {
+      "path": "work/local_original_session/attack-magic/energy-bolt-damage-l1j-v1/energy_bolt_policy.py",
+      "sha256": "63d907fbfe22d3ab7230448b02713ac083e94a28bad0df1f5ec5113b78b431bd",
+      "bytes": 3219
+    },
+    "npc_magic_defense": {
+      "path": "work/local_original_session/attack-magic/energy-bolt-damage-l1j-v1/npc_magic_defense.py",
+      "sha256": "9aba41c065d89a253c7eb3de51d6a219d11eea73842f05278e6e8267ac8c12a6",
+      "bytes": 3888
+    },
+    "npc_client_recipe": {
+      "path": "work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v51/npc_client_recipe.py",
+      "sha256": "876fb6504057e267b88b9901c67f6fc56b8871d5a9f7f51f508de11dc1aabed1",
+      "bytes": 2722
+    },
+    "npc_uid_issuer": {
+      "path": "work/local_original_session/integration-1/npc-uid-issuer-integration-v1/npc_uid_issuer.py",
+      "sha256": "74b62bbf26b5d2a9f8f4b107bbe0830a4126caac4297766b0f7a972b6e46d133",
+      "bytes": 13704
+    },
+    "book182_admission": {
+      "path": "work/local_original_session/attack-magic/energybolt-book182-result-join-v1/book182_admission.py",
+      "sha256": "ce35f2c51c625b74c01c9490298803f30a5a5bf6c2d6ae2724cd8cc43feb1095",
+      "bytes": 23328
+    }
+  },
+  "default_enabled": false,
+  "test_ready": false,
+  "RUN_COMMAND": null
+}

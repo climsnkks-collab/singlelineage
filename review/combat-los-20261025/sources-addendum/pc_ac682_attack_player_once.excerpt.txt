@@ -1,0 +1,5 @@
+    async def attack_player_once(self, writer, *, expected_context, raw_effect, direction, policy):
+        from tools.local_original_session import npc_player_hit
+        service = self._npc_player_hit_service(policy)
+        return await self._attack_player_current(writer, service=service, expected_context=expected_context,
+            raw_effect=raw_effect, direction=direction, repeated=False)

@@ -1,0 +1,30 @@
+    @asynccontextmanager
+    async def _row_operation(self, writer, row):
+        provider = self._canonical_provider
+        if provider is None:
+            async with row['operation_lock']:
+                yield
+        else:
+            # This REPLACES the real outer acquisition, including preselection,
+            # read-poll and EOF. It never adopts/reacquires a held legacy lock.
+            task = asyncio.current_task()
+            need(self._canonical_operation_task is not task,
+                 'BATCH_OPERATION_SCOPE_ALREADY_ACTIVE')
+            async with self._canonical_operation_gate:
+                need(self._canonical_operation_task is None and self._canonical_provider is provider,
+                     'RESOURCE_SAME_CANONICAL_PROVIDER_REQUIRED')
+                # A queued server-owned row task may resume after close begins.
+                # Cancel that task; foreign callers still face the original guard.
+                if self._closing and row.get('task') is task:
+                    raise asyncio.CancelledError()
+                self._canonical_operation_task = task
+                try:
+                    async with provider.connection_operation(writer, row):
+                        try:
+                            yield
+                        finally:
+                            controller=getattr(self,'_character_scopes',None)
+                            if controller is not None:
+                                controller.source.check().finish_scope_chunk(self,provider,writer,row)
+                finally:
+                    self._canonical_operation_task = None

@@ -1,0 +1,912 @@
+    async def _send(self, writer, row, replies, *, game=False, inventory_service=None,
+                    inventory_authority=None, operation_lock=None, inventory_restore_only=False,
+                    inventory_update_operation=None, inventory_update_request=None, equipment_operation=None,
+                    npc_respawn_operation=None, status_operation=None, npc_player_hit_operation=None,
+                    item_transfer_operation=None, player_life_operation=None, npc_player_lethal_operation=None,
+                    skill_operation=None, dialogue_send_operation=None, trade_delivery_part=None, action_list_send_operation=None, retaliation_lease=None, continuous_lease=None, continuous_motion_lease=None, continuous_lethal_context=None, transfer_delivery=None):
+        if continuous_lethal_context is not None:
+            from tools.local_original_session import npc_continuous_retaliation
+            npc_continuous_retaliation.validate_lethal(self,writer,row,continuous_lethal_context)
+        if retaliation_lease is not None:
+            from tools.local_original_session import npc_retaliation
+            need(npc_player_hit_operation is not None and game is True and len(replies)==1,
+                 'RETALIATION_ORIGINAL_SINGLE_HIT_SEND_REQUIRED')
+            npc_retaliation.validate(self,writer,row,retaliation_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+        if continuous_lease is not None:
+            from tools.local_original_session import npc_continuous_retaliation
+            need(npc_player_hit_operation is not None and game is True and len(replies)==1,
+                 'RETALIATION_ORIGINAL_SINGLE_HIT_SEND_REQUIRED')
+            npc_continuous_retaliation.validate(self,writer,row,continuous_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+        if continuous_motion_lease is not None:
+            from tools.local_original_session import npc_continuous_retaliation
+            need(game is True and len(replies)==1 and continuous_lease is retaliation_lease is None,
+                 'CONTINUOUS_MOTION_SINGLE_FRAME_REQUIRED')
+            npc_continuous_retaliation.validate_motion(self,writer,row,continuous_motion_lease,
+                continuous_motion_lease.issuer.state_for_exact_receipt(continuous_motion_lease.target).motion_step,replies[0])
+        server_menu=None if getattr(self,'_server_owned_menu',None) is None else __import__('server_owned_menu').get_server_menu(self)
+        publication_send=None if server_menu is None else server_menu.begin_publication_send(writer,row,replies,game,operation_lock)
+        action=getattr(self,'_haction_list_feature',None) if action_list_send_operation is not None else None
+        if action_list_send_operation is not None:
+            need(action is not None and game is True and len(replies)==1
+                 and operation_lock is row['operation_lock'] and operation_lock.locked()
+                 and all(v is None for v in (trade_delivery_part,dialogue_send_operation,skill_operation,
+                     inventory_service,inventory_authority,inventory_update_operation,inventory_update_request,
+                     equipment_operation,npc_respawn_operation,status_operation,npc_player_hit_operation,
+                     item_transfer_operation,player_life_operation,npc_player_lethal_operation)),
+                 'HACTION_EXCLUSIVE_READONLY_ORIGINAL_SEND')
+            action.validate(action_list_send_operation,writer,row,replies[0])
+        trade_delivery=getattr(self,'_shop_trade_delivery',None) if trade_delivery_part is not None else None
+        if trade_delivery_part is not None:
+            need(trade_delivery is not None and game is True and len(replies)==1
+                 and operation_lock is row['operation_lock'] and operation_lock.locked()
+                 and all(value is None for value in (skill_operation,dialogue_send_operation,inventory_service,
+                     inventory_authority,inventory_update_operation,inventory_update_request,equipment_operation,
+                     npc_respawn_operation,status_operation,npc_player_hit_operation,item_transfer_operation,
+                     player_life_operation,npc_player_lethal_operation)),'SHOP_EXCLUSIVE_GENERIC_INVENTORY_SEND')
+            trade_delivery.validate(trade_delivery_part,writer,row,replies[0])
+        if transfer_delivery is not None:
+            from packet_transfer_owner import TransferDelivery
+            need(type(transfer_delivery) is TransferDelivery and
+                 transfer_delivery.owner is getattr(self, '_packet_transfer_owner', None)
+                 and transfer_delivery.prepared.capture.session is self._inventory_generation.transfer_session
+                 and game is True and operation_lock is row['operation_lock'] and operation_lock.locked()
+                 and all(v is None for v in (skill_operation, dialogue_send_operation,
+                     trade_delivery_part, action_list_send_operation, inventory_service, inventory_authority,
+                     inventory_update_operation, inventory_update_request, equipment_operation,
+                     npc_respawn_operation, status_operation, npc_player_hit_operation,
+                     item_transfer_operation, player_life_operation, npc_player_lethal_operation,
+                     retaliation_lease, continuous_lease, continuous_motion_lease, continuous_lethal_context)),
+                 'PACKET_TRANSFER_EXCLUSIVE_ORIGINAL_SEND_REQUIRED')
+            transfer_delivery.validate_batch(writer, row, replies)
+        book_reply = buff_reply = healing_reply = False
+        if skill_operation is not None:
+            from tools.local_original_session.skill_cost_delivery import CostDelivery
+            skill_types=(CostDelivery,)
+            if getattr(self,'_buff_lifecycle',None) is not None:
+                from tools.local_original_session.buff_lifecycle import Delivery as BuffLifecycleDelivery
+                skill_types+=(BuffLifecycleDelivery,)
+                buff_reply = type(skill_operation) is BuffLifecycleDelivery
+            book = getattr(self, '_book_learning', None)
+            if book is not None:
+                from tools.local_original_session.spell_book_delivery import BookDelivery
+                need(book.service is self._buff_lifecycle, 'BOOK_SAME_EXISTING_BUFF_OWNER_REQUIRED')
+                if type(skill_operation) is BookDelivery:
+                    need(skill_operation.batch is book,
+                         'BOOK_EXACT_REGISTERED_DELIVERY_OWNER_REQUIRED')
+                    book_reply = True
+                skill_types+=(BookDelivery,)
+            healing = getattr(self, '_consumable_healing', None)
+            if healing is not None:
+                from tools.local_original_session.consumable_delivery import HealingDelivery
+                if type(skill_operation) is HealingDelivery:
+                    need(skill_operation.batch is healing and healing.service is self._buff_lifecycle,
+                         'HEALING_EXACT_REGISTERED_DELIVERY_OWNER_REQUIRED')
+                    healing_reply = True
+                skill_types+=(HealingDelivery,)
+            need(type(skill_operation) in skill_types and skill_operation.owner is self._hp_resource_owner
+                 and game is True and operation_lock is row['operation_lock']
+                 and all(value is None for value in (inventory_service, inventory_update_operation,
+                     equipment_operation, npc_respawn_operation, status_operation, npc_player_hit_operation,
+                     item_transfer_operation, player_life_operation, npc_player_lethal_operation, dialogue_send_operation)),
+                 'RESOURCE_EXCLUSIVE_ORIGINAL_SEND_OPERATION_REQUIRED')
+            skill_operation.validate_batch(writer, row, replies)
+        need(type(replies) in (tuple, list)
+             and (len(replies) <= ack.realm.MAX_CHARACTERS + 2
+                  or PersistentBroker._npc_selection_bundle(self,writer,row,replies,game=game,operation_lock=operation_lock)),
+             'BOUNDED_ROUTE_REPLIES_REQUIRED')
+        dialogue = getattr(self, '_dialogue_feature', None) if dialogue_send_operation is not None else None
+        if dialogue_send_operation is not None:
+            need(dialogue is not None and game is True and len(replies) == 1
+                 and operation_lock is row['operation_lock'] and operation_lock.locked()
+                 and all(value is None for value in (skill_operation, inventory_service, inventory_authority,
+                     inventory_update_operation, inventory_update_request, equipment_operation,
+                     npc_respawn_operation, status_operation, npc_player_hit_operation,
+                     item_transfer_operation, player_life_operation, npc_player_lethal_operation)),
+                 'DIALOGUE_EXCLUSIVE_ORIGINAL_LOCKED_SEND_REQUIRED')
+            dialogue.validate(dialogue_send_operation, writer, row, replies[0])
+        readonly=action if action is not None else dialogue
+        readonly_operation=action_list_send_operation if action is not None else dialogue_send_operation
+        transfer = self._inventory_generation.transfer_session if item_transfer_operation is not None else None
+        if item_transfer_operation is not None:
+            from tools.local_original_session.item_transfer_session import ItemTransferSession
+            need(type(transfer) is ItemTransferSession and game is True and
+                 operation_lock is row['operation_lock'] and operation_lock.locked() and
+                 inventory_service is None and equipment_operation is None and inventory_update_operation is None,
+                 'ITEM_TRANSFER_ORIGINAL_LOCKED_SEND_REQUIRED')
+        life = getattr(self,'_player_life',None)
+        if npc_player_lethal_operation is not None:
+            from tools.local_original_session import npc_player_lethal
+            lethal = self._npc_player_lethal
+            need(type(lethal) is npc_player_lethal.Service
+                 and type(npc_player_lethal_operation) is npc_player_lethal._Attack
+                 and player_life_operation is None and npc_player_hit_operation is None
+                 and status_operation is None and item_transfer_operation is None
+                 and inventory_service is None and equipment_operation is None
+                 and inventory_update_operation is None, 'NPC_LETHAL_EXCLUSIVE_SEND_OPERATION_REQUIRED')
+            life,player_life_operation = lethal,npc_player_lethal_operation
+        if player_life_operation is not None:
+            need(life is not None and game is True and len(replies) == 1
+                 and operation_lock is row['operation_lock'] and operation_lock.locked()
+                 and status_operation is None, 'PLAYER_LIFE_ORIGINAL_LOCKED_SEND_REQUIRED')
+            life.validate(writer,row,replies[0],player_life_operation,'PREPARED')
+        elif life is not None and game and not (status_operation is not None and status_operation.life_context is not None):
+            # Empty route replies (including the already-sent dead ACK) emit nothing.
+            if replies and not all(type(wire) is bytes and wire in (QUIT_SUCCESS_FRAME,ALIVE_FRAME)
+                                   for wire in replies):
+                life.check_normal_locked(writer)
+        status_service = getattr(self, '_hp_status', None)
+        player_hit = getattr(self, '_npc_player_hit', None) if npc_player_hit_operation is not None else None
+        if npc_player_hit_operation is not None:
+            need(player_hit is not None and player_hit is self.realm._npc_player_hit and game is True
+                 and len(replies) == 1 and operation_lock is row['operation_lock'] and operation_lock.locked(),
+                 'NPC_PLAYER_HIT_ORIGINAL_LOCKED_SEND_REQUIRED')
+            player_hit.validate_delivery(writer, row, replies[0], npc_player_hit_operation)
+        world_status = (status_service.begin_world(writer, row, replies)
+                        if game and status_service is not None and status_operation is None and skill_operation is None and readonly is None and trade_delivery is None and transfer_delivery is None else None)
+        hp_source_read = None
+        if self._hp_resource_owner is not None and status_operation is None and len(replies) == 1 and any(
+                v is not None for v in (npc_player_hit_operation,npc_player_lethal_operation,player_life_operation)):
+            hp_source_read = self._hp_resource_owner.begin_hp_source_read(writer,row,replies[0],
+                npc=npc_player_hit_operation,lethal=npc_player_lethal_operation,
+                life_delivery=player_life_operation if npc_player_lethal_operation is None else None)
+        for wire in replies:
+            feedback_service = feedback_intent = feedback_policy_row = None
+            feedback_sent = None
+            notification_service = notification_delivery = notification_policy_row = None
+            notification_sent = None
+            restart_state = restart_policy_row = None
+            restart_sent = None
+            action_source_port = action_source_witness = None
+            try:
+                status_sent = None
+                status_drain_started = None
+                if transfer_delivery is not None:
+                    transfer_delivery.reserve(writer, row, wire)
+                if skill_operation is not None:
+                    skill_operation.reserve(writer, row, wire)
+                elif status_operation is not None:
+                    need(status_service is not None and status_service is self.realm._hp_status
+                         and game is True and len(replies) == 1
+                         and operation_lock is row['operation_lock'] and operation_lock.locked()
+                         and status_service.validate(writer, wire, phase='PREPARED') is status_operation,
+                         'HP_STATUS_EXACT_SEND_CAPABILITY_REQUIRED')
+                    status_sent = row['policy_row'].sent
+                elif (game and int.from_bytes(wire[2:4], 'little') == 0x4e38
+                      and status_service is not None and id(writer) in status_service._states):
+                    raise ValueError('HP_STATUS_EXACT_SEND_CAPABILITY_REQUIRED')
+                inventory_wire = inventory_service is not None
+                packet_inventory_sent = (row['policy_row'].sent
+                    if inventory_wire and self._packet_inventory is not None else None)
+                effect_op = equipment_operation
+                if effect_op is not None:
+                    from tools.local_original_session.item_equipment_effect import ItemEquipmentEffect
+                    effect = self._item_equipment_effect
+                    need(type(effect) is ItemEquipmentEffect and effect.broker is self and
+                         effect is self.realm._item_equipment_effect and
+                         effect.validate_reply.__func__ is ItemEquipmentEffect.validate_reply and
+                         effect.attempt.__func__ is ItemEquipmentEffect.attempt and
+                         effect.drained.__func__ is ItemEquipmentEffect.drained,
+                         'EQUIPMENT_ORIGINAL_SEND_CONSUMER_REQUIRED')
+                    need(game is True and operation_lock is effect_op['lock'] and not inventory_wire and
+                         inventory_update_operation is None and wire is effect_op['wire'], 'EQUIPMENT_EXACT_SEND_REQUIRED')
+                    effect.validate_reply(writer, wire)
+                update_state = inventory_update_operation
+                if update_state is not None:
+                    need(game is True and not inventory_wire and wire is update_state['wire']
+                         and operation_lock is update_state['lock'], 'INVENTORY_UPDATE_EXACT_WIRE_REQUIRED')
+                    self._inventory_update_current(writer, row, update_state, inventory_update_request)
+                if game and int.from_bytes(wire[2:4], 'little') == 0x4e96 and self._npc_respawn is not None and self._npc_respawn._pending is not None:
+                    need(npc_respawn_operation is self._npc_respawn._pending,
+                         'NPC_RESPAWN_EXACT_SEND_CAPABILITY_REQUIRED')
+                if npc_respawn_operation is not None:
+                    need(game is True and not inventory_wire and effect_op is None and update_state is None
+                         and operation_lock is row['operation_lock'] and operation_lock.locked()
+                         and self._npc_respawn._pending is npc_respawn_operation,
+                         'NPC_RESPAWN_ORIGINAL_LOCKED_SEND_REQUIRED')
+                    self._npc_respawn.reserve(writer, row, wire)
+                if inventory_wire:
+                    from tools.local_original_session import inventory
+                    need(game is True and type(inventory_service) is inventory.InventoryService
+                         and inventory_service is self._inventory_service
+                         and inventory_service.broker is self and self._inventory_attempted
+                         and wire == self._inventory_frame, 'INVENTORY_EXPLICIT_FRAME_REQUIRED')
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                    self._inventory_items(wire)
+                elif transfer is not None:
+                    transfer.validate_wire(writer,row,wire,item_transfer_operation)
+                elif game and status_operation is not None and status_operation.life_context is not None:
+                    status_service.validate(writer,wire,phase='PREPARED')
+                elif game and player_life_operation is not None:
+                    life.validate(writer,row,wire,player_life_operation,'PREPARED')
+                elif skill_operation is not None:
+                    pass  # Exact preflighted source wire is validated by the concrete parent.
+                elif trade_delivery is not None:
+                    trade_delivery.validate(trade_delivery_part,writer,row,wire)
+                elif readonly is not None:
+                    readonly.validate(readonly_operation, writer, row, wire)
+                elif game:
+                    self.realm.validate_reply(wire, writer=writer)
+                else:
+                    need(type(wire) in (bytes, bytearray) and len(wire) >= 6
+                         and int.from_bytes(wire[:2], 'little') == len(wire)
+                         and wire[-2:] == b'\0\0', 'SOURCE_BOOT_REPLY_REQUIRED')
+                    op = int.from_bytes(wire[2:4], 'little')
+                    need((op == 0x4e35 and type(wire) is bytearray and len(wire) == 76)
+                         or (op == 0x4f3e and wire == EMPTY_COUNTS), 'EXACT_BOOT_REPLY_REQUIRED')
+                if player_life_operation is not None:
+                    life.reserve(writer,row,wire,player_life_operation)
+                if player_life_operation is None and transfer is None and game and int.from_bytes(wire[2:4], 'little') in (0x4e39, 0x4e40):
+                    notification_service = self._attack_session._notifications
+                    actual_row, record, notification_delivery = notification_service.reserve(writer, wire)
+                    need(actual_row is row and operation_lock is row['operation_lock']
+                         and operation_lock is record.entry.lock and operation_lock.locked(),
+                         'NPC_DEATH_SAME_ROW_LOCK_REQUIRED')
+                    notification_policy_row, notification_sent = row['policy_row'], row['policy_row'].sent
+                if player_hit is not None and npc_player_hit_operation.phase == 'ATTACK':
+                    player_hit.reserve(writer, row, wire, npc_player_hit_operation)
+                if game and int.from_bytes(wire[2:4], 'little') == ATTACK_FEEDBACK and player_hit is None and npc_player_lethal_operation is None:
+                    feedback_service = self._attack_session
+                    need(feedback_service is not None and feedback_service is self.realm._attack_session,
+                         'ATTACK_FEEDBACK_SAME_SERVICE_REQUIRED')
+                    feedback_intent = feedback_service.validate_feedback(writer, wire, state='PREPARED')
+                    need(feedback_service._feedback_row is row
+                         and operation_lock is feedback_service._feedback_lock
+                         and row['operation_lock'] is operation_lock and operation_lock.locked(),
+                         'ATTACK_FEEDBACK_SAME_ROW_LOCK_REQUIRED')
+                    feedback_policy_row = row['policy_row']
+                    feedback_sent = feedback_policy_row.sent
+                    feedback_service.reserve_feedback(writer, wire)
+                if status_operation is not None:
+                    status_service.reserve(writer, wire)
+                if game and int.from_bytes(wire[2:4], 'little') == RESTART_ACK:
+                    actual_row, restart_state = self._validate_restart(writer, wire, phase='PREPARED')
+                    need(actual_row is row and operation_lock is restart_state['lock']
+                         and operation_lock is row['operation_lock'] and operation_lock.locked(),
+                         'RESTART_SAME_OPERATION_LOCK_REQUIRED')
+                    restart_policy_row = row['policy_row']
+                    restart_sent = restart_policy_row.sent
+                    restart_state['phase'] = 'RESERVED'
+                if action is not None and self._packet_peer_mode is not None:
+                    from packet_canonical import PacketCanonicalPort
+                    action_source_port = action.packet_port
+                    need(type(action_source_port) is PacketCanonicalPort
+                         and action_source_port.broker is self, 'PACKET_ACTION_EXACT_SOURCE_PORT_REQUIRED')
+                    action_source_witness = action_source_port.begin_action_sources(
+                        action, readonly_operation, writer, row, wire)
+                row['await_phase'] = 'WRITE_CHECKPOINT'
+                sample = await self._checkpoint(writer, row)
+                if transfer_delivery is not None:
+                    current = self._packet_inventory.current(writer, row, world_required=True)
+                    sample = self._packet_inventory.owner_checkpoint_sync(writer, row,
+                        self._inventory_service, current, wire, True, operation_lock,
+                        item_transfer_operation=transfer_delivery)
+                if skill_operation is not None:
+                    skill_operation.before_write_checkpoint(writer, row, wire)
+                if player_life_operation is not None:
+                    life.validate(writer,row,wire,player_life_operation,'RESERVED')
+                elif life is not None and game and not (status_operation is not None and status_operation.life_context is not None):
+                    if not (type(wire) is bytes and wire in (QUIT_SUCCESS_FRAME,ALIVE_FRAME)):
+                        life.check_normal_locked(writer)
+                if player_hit is not None:
+                    player_hit.validate_delivery(writer, row, wire, npc_player_hit_operation)
+                    if retaliation_lease is not None:
+                        from tools.local_original_session import npc_retaliation
+                        npc_retaliation.validate(self,writer,row,retaliation_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                    if continuous_lease is not None:
+                        from tools.local_original_session import npc_continuous_retaliation
+                        npc_continuous_retaliation.validate(self,writer,row,continuous_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                opcode = int.from_bytes(wire[2:4], 'little')
+                if update_state is not None:
+                    self._inventory_update_current(writer, row, update_state, inventory_update_request)
+                if inventory_wire:
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                    need(inventory_service is self._inventory_service and wire == self._inventory_frame,
+                         'INVENTORY_EXPLICIT_FRAME_REQUIRED')
+                    self._inventory_selection_frame_current(writer, row, wire)
+                    inventory_service._same(inventory_authority, inventory_service._current(writer, row))
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                    self.inventory_sample_monotonic_ns = self._inventory_admission_time()
+                    try:
+                        prepared_wire = inventory_service.validate_pre_write_locked(writer, row, wire,
+                            now_ns=self.inventory_sample_monotonic_ns)
+                        if self._inventory_collection_policy is not None:
+                            need(type(prepared_wire) is bytes and prepared_wire is self._inventory_frame
+                                 and prepared_wire is self._inventory_operation_frame
+                                 and inventory_service._claimed is True
+                                 and inventory_service.last_result.get('status') ==
+                                     ('OBSERVED' if self._packet_inventory is None else 'SERVER_VALIDATED'),
+                                 'INVENTORY_COLLECTION_EXACT_INITIAL_WIRE_REQUIRED')
+                            wire = prepared_wire
+                            self._inventory_selection_frame_current(writer, row, wire)
+                    except (inventory.PreWriteReadRefusal, inventory.ReadOnlyPreWriteRefusal) as error:
+                        # Only the original leaf's exact refusal precedes reservation/write.
+                        readonly = type(error) is inventory.ReadOnlyPreWriteRefusal
+                        if readonly:
+                            need(inventory.InventoryService.validate_readonly_refusal(
+                                inventory_service, error, writer, row, wire) is True,
+                                'INVENTORY_READONLY_REFUSAL_UNPROVEN')
+                        else:
+                            need(type(error) is inventory.PreWriteReadRefusal
+                                 and error.reason == 'region_not_readable'
+                                 and error.stage == inventory_service.last_pre_write_stage,
+                                 'INVENTORY_PRE_WRITE_REFUSAL_UNPROVEN')
+                        need(row['policy_row'].drain_started_ns is None,
+                             'INVENTORY_PRE_WRITE_REFUSAL_UNPROVEN')
+                        inventory_service._same(inventory_authority, inventory_service._current(writer, row))
+                        await self._checkpoint(writer, row)
+                        inventory_service._same(inventory_authority, inventory_service._current(writer, row))
+                        need(row['policy_row'].drain_started_ns is None,
+                             'INVENTORY_PRE_WRITE_REFUSAL_UNPROVEN')
+                        task = asyncio.current_task()
+                        if task is not None and task.cancelling():
+                            raise asyncio.CancelledError()
+                        self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                        if readonly:
+                            need(inventory.InventoryService.validate_readonly_refusal(
+                                inventory_service, error, writer, row, wire) is True,
+                                'INVENTORY_READONLY_REFUSAL_UNPROVEN')
+                        self._inventory_prewrite_refusal = (error, inventory_authority, inventory_service,
+                                                           inventory_restore_only, wire)
+                        self._inventory_admission_time()
+                        raise
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                    self._inventory_prewrite_refusal = None  # A successful leaf consumes admission.
+                    self._inventory_admission_time()
+                # A checkpoint awaits native ownership; selection/realm lifetime
+                # can change there. Recheck opt-in NPC authority at the write.
+                if game and opcode == 0x4e96 and any(
+                        wire == prepared for _, prepared in self.realm._npc_spawns):
+                    self.realm._validate_npc_reply(writer, wire)
+                if game and opcode == npc_motion.OPCODE:
+                    self.realm.npc_motion_for_frame(writer,wire).validate_frame(wire)
+                if feedback_service is not None:
+                    need(feedback_service is self._attack_session
+                         and feedback_service.validate_feedback(writer, wire, state='RESERVED') is feedback_intent
+                         and row['policy_row'] is feedback_policy_row,
+                         'ATTACK_FEEDBACK_SAME_SERVICE_INTENT_REQUIRED')
+                if restart_state is not None:
+                    actual_row, actual_state = self._validate_restart(writer, wire, phase='RESERVED')
+                    need(actual_row is row and actual_state is restart_state
+                         and row['policy_row'] is restart_policy_row, 'RESTART_AUTHORITY_CHANGED')
+                if update_state is not None:
+                    need(update_state['phase'] == 'PERSISTED' and wire is update_state['wire'],
+                         'INVENTORY_UPDATE_EXACT_WIRE_REQUIRED')
+                    update_state['phase'] = 'RESERVING'
+                if effect_op is not None:
+                    need(effect_op['phase'] == 'PERSISTED', 'EQUIPMENT_PERSISTED_SEND_REQUIRED')
+                    effect_op['phase'] = 'RESERVING'
+                if inventory_wire and (self._packet_inventory is not None
+                        or getattr(self, '_inventory_owner_guard', None) is not None):
+                    sample = self._inventory_owner_checkpoint_sync(writer, row, inventory_service,
+                        inventory_authority, wire, inventory_restore_only, operation_lock)
+                if transfer is not None:
+                    context = transfer.validate_wire(writer,row,wire,item_transfer_operation)
+                    sample = self._inventory_owner_checkpoint_sync(writer,row,context.inventory_service,
+                        context.authority,wire,True,operation_lock,item_transfer_operation=item_transfer_operation)
+                self.policy._skill_write_operation = skill_operation
+                if trade_delivery is not None:
+                    self._policy_sample(row,self.policy.begin_write,writer,sample,opcode,len(wire),
+                        writer.transport.get_write_buffer_size(),time.monotonic_ns(),trade_delivery_part=trade_delivery_part)
+                    trade_delivery.reserved(trade_delivery_part,writer,row,wire)
+                elif readonly is not None:
+                    self._policy_sample(row, self.policy.begin_write, writer, sample, opcode, len(wire),
+                        writer.transport.get_write_buffer_size(), time.monotonic_ns(),
+                        **({"action_list_send_operation":readonly_operation} if action is not None
+                           else {"dialogue_send_operation":readonly_operation}))
+                    readonly.reserved(readonly_operation, writer, row, wire)
+                else:
+                    self._policy_sample(row, self.policy.begin_write, writer, sample, opcode, len(wire),
+                                            writer.transport.get_write_buffer_size(), time.monotonic_ns())
+                if update_state is not None:
+                    self._inventory_update_current(writer, row, update_state, inventory_update_request)
+                    need(update_state['phase'] == 'RESERVING' and not update_state['write_attempted']
+                         and wire is update_state['wire']
+                         and row['policy_row'].pending_opcode == 0x0965
+                         and row['policy_row'].pending_size == len(wire)
+                         and row['policy_row'].drain_started_ns is not None,
+                         'INVENTORY_UPDATE_SINGLE_WRITE_REQUIRED')
+                    self._inventory_update_time(update_state)
+                    update_state['phase'], update_state['write_attempted'] = 'WRITE_ATTEMPTED', True
+                if inventory_wire:
+                    # Synchronous policy/source callbacks may cancel without yielding.
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                    need(inventory_service is self._inventory_service and wire == self._inventory_frame,
+                         'INVENTORY_EXPLICIT_FRAME_REQUIRED')
+                    inventory_service._same(inventory_authority, inventory_service._current(writer, row))
+                    self._inventory_selection_frame_current(writer, row, wire)
+                    task = asyncio.current_task()
+                    if task is not None and task.cancelling():
+                        raise asyncio.CancelledError()
+                if inventory_wire:
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                    self._inventory_admission_time()
+                    self._inventory_write_attempted = True
+                if feedback_service is not None:
+                    # Final source/current-target validation follows synchronous
+                    # policy callbacks, then cancel/once-mark without an await.
+                    need(feedback_service is self._attack_session
+                         and feedback_service._feedback_intent is feedback_intent
+                         and row['policy_row'] is feedback_policy_row,
+                         'ATTACK_FEEDBACK_SAME_SERVICE_INTENT_REQUIRED')
+                    feedback_service.feedback_attempt(writer, wire)
+                if restart_state is not None:
+                    actual_row, actual_state = self._validate_restart(writer, wire, phase='RESERVED')
+                    need(actual_row is row and actual_state is restart_state
+                         and row['policy_row'] is restart_policy_row, 'RESTART_AUTHORITY_CHANGED')
+                    task = asyncio.current_task()
+                    if task is not None and task.cancelling():
+                        raise asyncio.CancelledError()
+                    restart_state['phase'] = 'WRITE_ATTEMPTED'
+                    restart_state['write_attempted'] = True
+                if effect_op is not None:
+                    effect.attempt(writer, row, effect_op)
+                if notification_service is not None:
+                    actual_row, record, actual_delivery = notification_service.attempt(writer, wire)
+                    need(actual_row is row and actual_delivery is notification_delivery
+                         and row['policy_row'] is notification_policy_row
+                         and operation_lock is row['operation_lock'] is record.entry.lock,
+                         'NPC_DEATH_SAME_PENDING_SEND_REQUIRED')
+                if npc_respawn_operation is not None:
+                    self._npc_respawn.attempt(writer, row, wire)
+                if hp_source_read is not None: hp_source_read.consume('BEGIN_WRITE')
+                if player_hit is not None:
+                    player_hit.validate_delivery(writer, row, wire, npc_player_hit_operation)
+                    if retaliation_lease is not None:
+                        from tools.local_original_session import npc_retaliation
+                        npc_retaliation.validate(self,writer,row,retaliation_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                    if continuous_lease is not None:
+                        from tools.local_original_session import npc_continuous_retaliation
+                        npc_continuous_retaliation.validate(self,writer,row,continuous_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                    if npc_player_hit_operation.phase == 'ATTACK':
+                        player_hit.attempt(writer, row, wire, npc_player_hit_operation)
+                if status_operation is not None:
+                    status_drain_started = row['policy_row'].drain_started_ns
+                    status_service.attempt(writer, wire)
+                    if player_hit is not None:
+                        player_hit.validate_delivery(writer, row, wire, npc_player_hit_operation)
+                        if retaliation_lease is not None:
+                            from tools.local_original_session import npc_retaliation
+                            npc_retaliation.validate(self,writer,row,retaliation_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                        if continuous_lease is not None:
+                            from tools.local_original_session import npc_continuous_retaliation
+                            npc_continuous_retaliation.validate(self,writer,row,continuous_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                        npc_player_hit_operation.hp_transport = 'WRITE_ATTEMPTED'
+                        player_hit.remember(npc_player_hit_operation)
+                if world_status is not None:
+                    status_service.validate_world_pending(writer, row, replies, wire, world_status)
+                if transfer is not None:
+                    transfer.attempt(writer,row,wire,item_transfer_operation)
+                if player_life_operation is not None:
+                    life.attempt(writer,row,wire,player_life_operation)
+                if transfer_delivery is not None:
+                    transfer_delivery.attempt(writer, row, wire)
+                if skill_operation is not None:
+                    skill_operation.attempt(writer, row, wire)
+                if readonly is not None:
+                    readonly.attempt(readonly_operation, writer, row, wire)
+                if retaliation_lease is not None:
+                    need(player_hit is not None and npc_player_hit_operation is not None, 'RETALIATION_HIT_SEND_ONLY_REQUIRED')
+                    npc_retaliation.validate(self,writer,row,retaliation_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                if continuous_lease is not None:
+                    need(player_hit is not None and npc_player_hit_operation is not None, 'RETALIATION_HIT_SEND_ONLY_REQUIRED')
+                    npc_continuous_retaliation.validate(self,writer,row,continuous_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                if continuous_motion_lease is not None:
+                    npc_continuous_retaliation.validate_motion(self,writer,row,continuous_motion_lease,
+                        continuous_motion_lease.issuer.state_for_exact_receipt(continuous_motion_lease.target).motion_step,wire)
+                if continuous_lethal_context is not None:
+                    npc_continuous_retaliation.validate_lethal(self,writer,row,continuous_lethal_context)
+                if inventory_wire and packet_inventory_sent is not None:
+                    packet_inventory_pending = (row['policy_row'], row['policy_row'].drain_started_ns)
+                if trade_delivery is not None:trade_delivery.write(trade_delivery_part,writer,row,wire)
+                else:writer.write(wire)
+                row['await_phase'] = 'WRITE_DRAIN' 
+                await asyncio.wait_for(writer.drain(), self.policy.DRAIN_NS / 1e9)
+                if trade_delivery is not None:
+                    trade_delivery.validate(trade_delivery_part,writer,row,wire,'DRAIN_PENDING')
+                if hp_source_read is not None: hp_source_read.consume('DRAIN_PENDING')
+                hp_owner = self._hp_resource_owner
+                if status_operation is not None and hp_owner is not None and hp_owner._hp_effect is not None:
+                    hp_owner._hp_effect.drain_returned()
+                if world_status is not None:
+                    world_status['resource_drain_returned'] = True
+                if transfer_delivery is not None:
+                    transfer_delivery.drain_returned(writer, row, wire)
+                if skill_operation is not None:
+                    skill_operation.drain_returned(writer, row, wire)
+                if readonly is not None:
+                    if action_source_witness is not None:
+                        # queue_zero retains the full post-await current/Store/body
+                        # validation. Reuse only this issued part's source lifetime
+                        # here; do not run that same full tree three times.
+                        action_source_port.check_action_sources()
+                    else:
+                        readonly.validate(readonly_operation, writer, row, wire)
+                if player_life_operation is not None: player_life_operation.drain_returned = True
+                if effect_op is not None:
+                    effect_op['receipt']['drain_returned'] = True
+                if inventory_wire:
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                if update_state is not None:
+                    update_state['drain_returned'] = True
+                    self._inventory_update_current(writer, row, update_state, inventory_update_request)
+                queued = writer.transport.get_write_buffer_size()
+                if restart_state is not None:
+                    restart_state['drain_returned'] = True
+                quit_reply = game and wire == QUIT_SUCCESS_FRAME
+                if quit_reply:
+                    self.realm.quit_response_drained(writer, wire, queued)
+                if transfer is not None:
+                    # Full source/Store validation precedes the fresh owner
+                    # await; only bound refs/reservation are checked afterwards.
+                    transfer.validate_wire(writer,row,wire,item_transfer_operation)
+                try:
+                    row['await_phase'] = 'POST_DRAIN_OWNER'
+                    # Buff's original pending receipt validation can outlive a
+                    # sample. For that exact delivery, check the receipt first
+                    # and take the existing synchronous owner proof immediately
+                    # before policy consumption below.
+                    # Packet action-list validation owns the existing sample
+                    # issuance immediately before its queue-zero checkpoint.
+                    # None is only an unissued marker; it is never owner proof.
+                    sample = (None if buff_reply or
+                              (action is not None and self._packet_peer_mode is not None)
+                              else await self._sample(row))
+                    if readonly is not None:
+                        if action_source_witness is not None:
+                            action_source_port.check_action_sources()
+                        else:
+                            readonly.validate(readonly_operation, writer, row, wire)
+                except ValueError as error:
+                    if not quit_reply or error.args != ('CURRENT_OWNER_REQUIRED',):
+                        raise
+                    proof = await self._quit_exit(writer, row)
+                    self.policy.quit_drained_after_exit(writer, proof=proof, queued_bytes=queued,
+                                                       now=time.monotonic_ns())
+                else:
+                    if inventory_wire and packet_inventory_sent is not None:
+                        # drain() permits a nonzero low-water queue. Complete
+                        # this exact packet reservation only at a fresh zero.
+                        while True:
+                            need(operation_lock is row['operation_lock'] and operation_lock.locked()
+                                 and inventory_service is self._inventory_service
+                                 and inventory_service._packet_authority is self._packet_inventory
+                                 and row['policy_row'] is packet_inventory_pending[0]
+                                 and row['policy_row'].pending_opcode == opcode
+                                 and row['policy_row'].pending_size == len(wire)
+                                 and row['policy_row'].drain_started_ns == packet_inventory_pending[1]
+                                 and packet_inventory_pending[1] is not None
+                                 and row['policy_row'].sent == packet_inventory_sent,
+                                 'PACKET_INVENTORY_SAME_PENDING_DRAIN_REQUIRED')
+                            sample = self._inventory_owner_checkpoint_sync(writer, row, inventory_service,
+                                inventory_authority, wire, inventory_restore_only, operation_lock)
+                            self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'PACKET_INVENTORY_CURRENT_DRAIN_QUEUE_REQUIRED')
+                            if queued == 0:break
+                            await asyncio.sleep(0)  # Same reservation/deadline; never write/drain again.
+                            sample = await self._sample(row)
+                    if skill_operation is not None:
+                        while True:
+                            skill_operation.validate_pending_drain(writer, row, wire)
+                            if buff_reply:
+                                sample = await self._sample(row, synchronous_exact=True)
+                                sample = await self._buff_post_drain_policy(
+                                    writer, row, skill_operation, wire, sample)
+                            else:
+                                if book_reply or healing_reply:
+                                    sample = await (self._healing_post_drain_sample if healing_reply else self._book_post_drain_sample)(
+                                        writer, row, skill_operation, wire, sample)
+                                self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'RESOURCE_CURRENT_DRAIN_QUEUE_REQUIRED')
+                            if queued == 0:
+                                break
+                            await asyncio.sleep(0)
+                            if not buff_reply:
+                                sample = await self._sample(row)
+                    if world_status is not None:
+                        # Reuse the original NPC/equipment conditional drain
+                        # progress: one reservation, original deadline, no resend.
+                        while True:
+                            need(operation_lock is row['operation_lock'] and operation_lock.locked(),
+                                 'HP_STATUS_SAME_WORLD_RESERVATION_REQUIRED')
+                            status_service.validate_world_pending(writer, row, replies, wire, world_status)
+                            sample = await self._sample(row, synchronous_exact=True)
+                            sample = await self._world_post_drain_checkpoint(writer, row, sample)
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'HP_STATUS_WORLD_CURRENT_QUEUE_REQUIRED')
+                            if queued == 0:
+                                break
+                            await asyncio.sleep(0)
+                            sample = await self._sample(row)
+                    if status_operation is not None:
+                        while True:
+                            need(operation_lock is row['operation_lock'] and operation_lock.locked()
+                                 and row['policy_row'].pending_opcode == opcode
+                                 and row['policy_row'].pending_size == len(wire)
+                                 and row['policy_row'].drain_started_ns == status_drain_started
+                                 and row['policy_row'].sent == status_sent
+                                 and status_service.validate(writer, wire, phase='WRITE_ATTEMPTED') is status_operation,
+                                 'HP_STATUS_SAME_PENDING_DRAIN_REQUIRED')
+                            self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'HP_STATUS_CURRENT_DRAIN_QUEUE_REQUIRED')
+                            if queued == 0:
+                                break
+                            await asyncio.sleep(0)
+                            sample = await self._sample(row)
+                    if effect_op is not None:
+                        # StreamWriter.drain may return below the transport's
+                        # low-water mark while this exact write is still queued.
+                        # The prior queued value predates the owner await: only
+                        # a fresh post-owner zero completes equipment delivery.
+                        while True:
+                            need(operation_lock is row['operation_lock'] is effect_op['lock']
+                                 and operation_lock.locked() and equipment_operation is effect_op
+                                 and effect_op['phase'] == 'WRITE_ATTEMPTED'
+                                 and wire is effect_op['wire']
+                                 and row['policy_row'].pending_opcode == opcode
+                                 and row['policy_row'].pending_size == len(wire)
+                                 and row['policy_row'].drain_started_ns is not None,
+                                 'EQUIPMENT_SAME_PENDING_DRAIN_REQUIRED')
+                            # Original owner/freshness/deadline checks retain
+                            # the original reservation's DRAIN_NS, never reset.
+                            self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'EQUIPMENT_CURRENT_DRAIN_QUEUE_REQUIRED')
+                            if queued == 0:
+                                break
+                            await asyncio.sleep(0)  # Conditional progress only; no write/drain replay.
+                            sample = await self._sample(row)
+                    if transfer_delivery is not None:
+                        while True:
+                            transfer_delivery.validate_pending_drain(writer, row, wire)
+                            self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'PACKET_TRANSFER_CURRENT_QUEUE_REQUIRED')
+                            if queued == 0:break
+                            await asyncio.sleep(0)
+                            sample = await self._sample(row)
+                    if transfer is not None:
+                        while True:
+                            transfer.validate_write_binding(writer,row,wire,item_transfer_operation)
+                            need(transfer._wire_phase == 'WRITE_ATTEMPTED' and
+                                 row['policy_row'].drain_started_ns == transfer._drain_started and
+                                 row['policy_row'].sent == transfer._sent_before,
+                                 'ITEM_TRANSFER_SAME_PENDING_DRAIN_REQUIRED')
+                            self._policy_sample(row,self.policy.checkpoint,writer,sample,time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'ITEM_TRANSFER_CURRENT_QUEUE_REQUIRED')
+                            if queued == 0:break
+                            await asyncio.sleep(0)
+                            sample = await self._sample(row)
+                    if notification_service is not None:
+                        while True:
+                            need(operation_lock is row['operation_lock'] is record.entry.lock
+                                 and notification_delivery.phase == 'WRITE_ATTEMPTED'
+                                 and row['policy_row'] is notification_policy_row
+                                 and notification_policy_row.pending_opcode == opcode
+                                 and notification_policy_row.pending_size == len(wire)
+                                 and notification_policy_row.drain_started_ns is not None,
+                                 'NPC_DEATH_SAME_PENDING_DRAIN_REQUIRED')
+                            self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
+                                 'NPC_DEATH_CURRENT_QUEUE_REQUIRED')
+                            if queued == 0:
+                                break
+                            await asyncio.sleep(0)  # Same reservation; no write/drain/deadline replay.
+                            sample = await self._sample(row)
+                    if player_hit is not None:
+                        player_hit.validate_delivery(writer, row, wire, npc_player_hit_operation)
+                        if retaliation_lease is not None:
+                            from tools.local_original_session import npc_retaliation
+                            npc_retaliation.validate(self,writer,row,retaliation_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                        if continuous_lease is not None:
+                            from tools.local_original_session import npc_continuous_retaliation
+                            npc_continuous_retaliation.validate(self,writer,row,continuous_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                    if trade_delivery is not None:
+                        sample,queued=await trade_delivery.queue_zero(trade_delivery_part,writer,row,wire,sample)
+                    if readonly is not None:
+                        sample, queued = await readonly.queue_zero(readonly_operation, writer, row, wire, sample)
+                    if book_reply or healing_reply:
+                        sample = await (self._healing_post_drain_sample if healing_reply else self._book_post_drain_sample)(
+                            writer, row, skill_operation, wire, sample)
+                    if buff_reply:
+                        sample = await self._buff_post_drain_policy(
+                            writer, row, skill_operation, wire, sample, queued=queued)
+                    else:
+                        self._policy_sample(row, self.policy.drained, writer, sample, queued, time.monotonic_ns())
+                    if action_source_witness is not None:
+                        action_source_port.retire_action_sources(action_source_witness)
+                        action_source_witness = None
+                    if self._packet_peer_mode is not None:
+                        self._packet_peer_mode.reply_drained(row, wire)
+                    if hp_source_read is not None: hp_source_read.consume('AFTER_DRAIN')
+                    if trade_delivery is not None:
+                        trade_delivery.drained(trade_delivery_part,writer,row,wire,queued)
+                    if readonly is not None:
+                        readonly.drained(readonly_operation, writer, row, wire, queued)
+                    if quit_reply and queued == 0:
+                        self.policy.mark_quit_drained(writer)
+                if transfer_delivery is not None:
+                    transfer_delivery.drained(writer, row, wire, queued)
+                if skill_operation is not None:
+                    skill_operation.drained(writer, row, wire, queued)
+                if inventory_wire:
+                    self._inventory_operation_mode_current(inventory_restore_only, writer, row, wire)
+                    if self._packet_inventory is not None:
+                        need(queued == 0 and inventory_service._packet_authority is self._packet_inventory,
+                             'PACKET_INVENTORY_ORIGINAL_DRAIN_REQUIRED')
+                        self._inventory_delivery_authority = self._packet_inventory.record_drained(
+                            inventory_authority, wire, packet_inventory_sent)
+                if update_state is not None:
+                    self._inventory_update_current(writer, row, update_state, inventory_update_request)
+                    need(queued == 0 and row['policy_row'].drain_started_ns is None
+                         and row['policy_row'].pending_opcode is None
+                         and row['policy_row'].sent == update_state['sent_before'] + 1
+                         and wire is update_state['wire'], 'INVENTORY_UPDATE_EXACT_DRAIN_REQUIRED')
+                    update_state['sent_after'] = row['policy_row'].sent
+                    update_state['post_owner_verified'] = True
+                if transfer is not None:
+                    transfer.drained(writer,row,wire,item_transfer_operation,queued)
+                if effect_op is not None:
+                    effect.drained(writer, row, effect_op, queued)
+                if feedback_service is not None:
+                    need(feedback_service is self._attack_session
+                         and feedback_service._feedback_intent is feedback_intent
+                         and row['policy_row'] is feedback_policy_row
+                         and queued == 0 and feedback_policy_row.drain_started_ns is None
+                         and feedback_policy_row.pending_opcode is None
+                         and feedback_policy_row.sent == feedback_sent + 1,
+                         'ATTACK_FEEDBACK_EXACT_DRAIN_REQUIRED')
+                    feedback_service.feedback_drain(writer, wire)
+                    if getattr(self,'_npc_continuous',None) is not None:
+                        from tools.local_original_session import npc_continuous_retaliation
+                        npc_continuous_retaliation.feedback_drained(self,writer,row,feedback_service,
+                            feedback_intent,wire,now_ns=time.monotonic_ns())
+                    await self._npc_death_after_feedback_locked(writer, row, feedback_intent)
+                if notification_service is not None:
+                    need(notification_service is self._attack_session._notifications
+                         and row['policy_row'] is notification_policy_row and queued == 0
+                         and notification_policy_row.drain_started_ns is None
+                         and notification_policy_row.pending_opcode is None
+                         and notification_policy_row.sent == notification_sent + 1,
+                         'NPC_DEATH_EXACT_DRAIN_REQUIRED')
+                    notification_service.drained(writer, wire)
+                if player_hit is not None and npc_player_hit_operation.phase == 'ATTACK':
+                    player_hit.drained(writer, row, wire, npc_player_hit_operation)
+                if status_operation is not None:
+                    need(queued == 0 and row['policy_row'].pending_opcode is None
+                         and row['policy_row'].drain_started_ns is None
+                         and row['policy_row'].sent == status_sent + 1,
+                         'HP_STATUS_EXACT_DRAIN_REQUIRED')
+                    status_service.drained(writer, wire)
+                    if player_hit is not None:
+                        player_hit.validate_delivery(writer, row, wire, npc_player_hit_operation)
+                        if retaliation_lease is not None:
+                            from tools.local_original_session import npc_retaliation
+                            npc_retaliation.validate(self,writer,row,retaliation_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                        if continuous_lease is not None:
+                            from tools.local_original_session import npc_continuous_retaliation
+                            npc_continuous_retaliation.validate(self,writer,row,continuous_lease,npc_player_hit_operation.context,npc_player_hit_operation)
+                        npc_player_hit_operation.hp_transport = 'DRAINED'
+                        player_hit.remember(npc_player_hit_operation)
+                if restart_state is not None:
+                    actual_row, actual_state = self._validate_restart(writer, wire, phase='WRITE_ATTEMPTED')
+                    need(actual_row is row and actual_state is restart_state
+                         and row['policy_row'] is restart_policy_row and queued == 0
+                         and restart_policy_row.drain_started_ns is None
+                         and restart_policy_row.pending_opcode is None
+                         and restart_policy_row.sent == restart_sent + 1, 'RESTART_EXACT_DRAIN_REQUIRED')
+                    task = asyncio.current_task()
+                    if task is not None and task.cancelling():
+                        raise asyncio.CancelledError()
+                    restart_state['response_drained'] = True
+                    self._restart_selection_drained(writer, row, restart_state)
+                if npc_respawn_operation is not None:
+                    self._npc_respawn.drained(writer, row, wire, queued)
+                if quit_reply:
+                    self.realm.quit_state(writer)['response_drained'] = queued == 0
+                if npc_respawn_operation is None and game and opcode == 0x4e96 and id(writer) in self.realm._npc_motion and any(
+                        wire == prepared for _, prepared in self.realm._npc_spawns):
+                    matched=[spawn.uid for spawn,prepared in self.realm._npc_spawns if wire==prepared]
+                    need(len(matched)==1,'NPC_SPAWN_EXACT_DRAINED_UID_REQUIRED')
+                    self.realm.npc_mover(writer,target_uid=matched[0]).spawn_drained = True
+                if player_life_operation is not None:
+                    life.drained(writer,row,wire,player_life_operation)
+                if world_status is not None:
+                    status_service.world_frame_drained(writer, row, wire, world_status, queued)
+            except BaseException as error:
+                # First send failure only, before native failure/cleanup callbacks.
+                # Primitive metadata, no traceback locals/arguments/payload or paths.
+                try:
+                    packet_error = row.get('packet_error', {})
+                    if self._packet_peer_mode is not None and 'send_failure_context' not in packet_error:
+                        now_ns = time.monotonic_ns()
+                        policy_row = row.get('policy_row')
+                        phase = row.get('await_phase')
+                        detail = dict(schema='packet-first-send-failure-v1',
+                            exception_type=type(error).__name__[:96],
+                            await_phase=phase[:96] if type(phase) is str else None,
+                            monotonic_ns=now_ns)
+                        for name in ('pending_opcode', 'pending_size', 'sent', 'drain_started_ns'):
+                            value = getattr(policy_row, name, None)
+                            detail[name] = value if type(value) is int else None
+                        frames = deque(maxlen=12)
+                        trace = error.__traceback__
+                        while trace is not None:
+                            code = trace.tb_frame.f_code
+                            frames.append(dict(file=Path(code.co_filename).name[:128],
+                                function=code.co_name[:96], line=trace.tb_lineno))
+                            trace = trace.tb_next
+                        detail['traceback'] = list(frames)
+                        row.setdefault('packet_error', {})['send_failure_context'] = detail
+                except BaseException:
+                    pass  # Diagnostic failure never replaces the original exception.
+                if inventory_service is not None:
+                    try: self._record_inventory_failure(error, 'SEND_BEFORE_FAILURE_CALLBACKS')
+                    except BaseException: pass  # Preserve primary/finally/cleanup.
+                if hp_source_read is not None and hasattr(hp_source_read,'failed'):
+                    try: hp_source_read.failed(error)
+                    except BaseException: pass
+                hp_owner = self._hp_resource_owner
+                if status_operation is not None and hp_owner is not None and hp_owner._hp_effect is not None:
+                    try: hp_owner._hp_effect.failed(error)
+                    except BaseException: pass  # Preserve original send/cancel exception.
+                if transfer_delivery is not None:
+                    transfer_delivery.failed(error)
+                if skill_operation is not None:
+                    skill_operation.failed(error)
+                if player_life_operation is not None: life.terminal(writer)
+                if player_hit is not None:
+                    player_hit.terminal(npc_player_hit_operation)
+                if status_service is not None and (world_status is not None or status_operation is not None):
+                    status_service.release(writer)
+                if notification_service is not None:
+                    self._attack_session.fail()
+                if restart_state is not None:
+                    restart_state['phase'] = 'TERMINAL'
+                if feedback_service is not None:
+                    feedback_service.fail()  # Once-only ambiguous/cancelled frame is terminal.
+                raise
+            finally:
+                if action_source_witness is not None:
+                    primary = sys.exception()
+                    try: action_source_port.retire_action_sources(action_source_witness)
+                    except BaseException as cleanup:
+                        if primary is None: raise
+                        primary.add_note('packet source witness cleanup: ' + type(cleanup).__name__)
+                if hp_source_read is not None: hp_source_read.retire()
+                self.policy._skill_write_operation = None
+                if isinstance(wire, bytearray):
+                    wire[:] = b'\0' * len(wire)
+        if world_status is not None:
+            try:
+                status_service.finish_world(writer, row, world_status)
+                buffs=getattr(self,'_buff_lifecycle',None)
+                if buffs is not None:
+                    if self._packet_peer_mode is not None:
+                        need(row.get('_packet_world_ready') is None,
+                             'PACKET_WORLD_READY_ALREADY_PENDING')
+                        row['_packet_world_ready'] = world_status
+                    else:
+                        binding=buffs.provider.bind_selected(writer)
+                        buffs.legacy.selected_locked(binding)
+                        # Existing original world ACK/Map/SelfInfo/Actor have all
+                        # drained under this same row lock. Use the normal sender;
+                        # original client parser/owned events perform ready/replay.
+                        await self._send_user_start_done_locked(writer, row, world_status)
+                        await buffs.lifecycle_locked(binding,restore=True)
+            except BaseException:
+                status_service.release(writer)
+                raise
+
+        if publication_send is not None:server_menu.publication_drained_locked(publication_send)

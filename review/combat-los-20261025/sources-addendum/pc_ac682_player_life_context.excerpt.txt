@@ -1,0 +1,8 @@
+    async def player_life_context(self, writer, *, policy, target_uid=None):
+        service = self._player_life_service(policy)
+        row = service.status._checked(writer)[3]
+        async with self._row_operation(writer, row):
+            if self._hp_resource_owner is not None:
+                self._hp_resource_owner.require_hp_quiescent(writer)
+            await self._checkpoint(writer,row)
+            return service.capture_locked(writer,source_uid=target_uid)

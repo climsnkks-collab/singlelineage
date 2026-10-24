@@ -1,0 +1,4 @@
+    async def attack_player_repeated(self, writer, *, expected_context, raw_effect, direction, policy, retaliation_lease=None, continuous_lease=None):
+        service = self._npc_player_hit_repeated_service(policy)
+        return await self._attack_player_current(writer, service=service, expected_context=expected_context,
+            raw_effect=raw_effect, direction=direction, repeated=True, retaliation_lease=retaliation_lease,continuous_lease=continuous_lease)

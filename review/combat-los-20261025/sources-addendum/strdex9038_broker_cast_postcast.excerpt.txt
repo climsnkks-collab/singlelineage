@@ -1,0 +1,32 @@
+    async def cast_skill_locked(self, binding, plan, *, source_adapter, legacy_bindings):
+        """Server-only semantic caller; original target admission remains required.
+
+        Default unresolved response producer refuses before any prepare/debit.
+        This never acquires a second scope, guesses target/clock, or sends raw
+        packets outside the existing _send/checkpoint/drain path.
+        """
+        from tools.local_original_session.skill_cost_delivery import CostDelivery, optional_buff
+        owner = self._hp_resource_owner
+        need(owner is not None and owner.provider is self._canonical_provider
+             and plan.operation.binding is binding, 'RESOURCE_CURRENT_SERVER_CAST_PLAN_REQUIRED')
+        owner.provider.current(binding)
+        refresh_provider = owner.provider
+        refresh_event = 'skills' if plan.catalyst is None else 'cast_adoption'
+        parent = CostDelivery(owner, plan)
+        try:
+            service = optional_buff.OptionalScopedService(parent=parent, root=owner.status_module.observe.ROOT,
+                broker=self, store=owner.store, owned_provider=owner.provider,
+                legacy_bindings=legacy_bindings, source_adapter=source_adapter)
+            parent.preflight(service)
+            receipt = owner.commit_cast_locked(plan, reply_parent=parent)
+            await self._send(binding.writer, binding.generation.row, parent.frames, game=True,
+                operation_lock=binding.operation_lock, skill_operation=parent)
+            need(self._hp_resource_owner is owner and owner.provider is refresh_provider
+                 and self._canonical_provider is refresh_provider and parent.phase == 'DONE'
+                 and owner._delivery_active is None, 'RESOURCE_CAST_DELIVERY_COMPLETION_REQUIRED')
+            from tools.local_original_session.combat_adapters import refresh_selected_stats
+            refresh_selected_stats(owner, binding.writer, refresh_event)
+            return receipt
+        except BaseException as error:
+            parent.failed(error)
+            raise

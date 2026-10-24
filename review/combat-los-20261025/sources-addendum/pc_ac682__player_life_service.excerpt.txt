@@ -1,0 +1,7 @@
+    def _player_life_service(self, policy):
+        from tools.local_original_session import player_life
+        service = self._player_life
+        need(type(service) is player_life.Service and type(policy) is player_life.Policy
+             and service.policy is policy and self.realm._player_life_broker is self,
+             'PLAYER_LIFE_EXACT_EXPLICIT_POLICY_REQUIRED')
+        return service

@@ -1,0 +1,17 @@
+    def _selected_owner_current(self, writer, row, position):
+        policy_row = row['policy_row']
+        if (row['writer'] is not writer or policy_row is None or policy_row.writer is not writer
+                or policy_row.stage != 1 or row['joined'] or row['failed']
+                or self._closing or self.failure.is_set()):
+            return False
+        game = self.realm.registry.resolve(writer)
+        service = self.realm.service(writer)
+        selected = game.selection
+        if (selected is None or selected.reference != position.name
+                or self.realm.registry.selected.get(position.name) is not selected
+                or service.snapshot() is not position or position.map_id != 0):
+            return False
+        saved_uid, _ = self.realm.store.select(selected.reference)
+        return (saved_uid == position.uid == self.realm.profile_uid
+                and position.name == self.realm.profile_name
+                and self.realm.positions.restore(position) == position)

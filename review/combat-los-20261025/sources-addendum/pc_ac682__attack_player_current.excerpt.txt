@@ -1,0 +1,88 @@
+    async def _attack_player_current(self, writer, *, service, expected_context, raw_effect, direction, repeated, retaliation_lease=None, continuous_lease=None):
+        from tools.local_original_session import npc_player_hit
+        rows = [r for values in self._claims.values() for r in values if r['writer'] is writer]
+        need(len(rows) == 1, 'NPC_PLAYER_HIT_CURRENT_ROW_REQUIRED')
+        row, = rows
+        operation = None
+        async with self._row_operation(writer, row):
+            if self._hp_resource_owner is not None:
+                self._hp_resource_owner.require_hp_quiescent(writer)
+            # Invalid/stale requests do not consume a different active request.
+            service.validate_locked(writer, expected_context)
+            if retaliation_lease is not None:
+                from tools.local_original_session import npc_retaliation
+                need(repeated is True, 'RETALIATION_REPEATED_PRODUCER_REQUIRED')
+                npc_retaliation.validate(self,writer,row,retaliation_lease,expected_context)
+            if continuous_lease is not None:
+                from tools.local_original_session import npc_continuous_retaliation
+                need(repeated is True, 'RETALIATION_REPEATED_PRODUCER_REQUIRED')
+                npc_continuous_retaliation.validate(self,writer,row,continuous_lease,expected_context)
+            if repeated:
+                service.require_repeated_ready(writer, row, expected_context.snapshot,source_uid=expected_context.source_uid)
+            else:
+                need(id(writer) not in service._operations, 'NPC_PLAYER_HIT_ONCE_REQUEST_REQUIRED')
+            await self._checkpoint(writer, row)
+            service.validate_locked(writer, expected_context)
+            need(id(writer) not in service.status._operations, 'HP_STATUS_CURRENT_SNAPSHOT_ONCE_REQUIRED')
+            if retaliation_lease is not None:
+                npc_retaliation.validate(self,writer,row,retaliation_lease,expected_context)
+            if continuous_lease is not None:
+                npc_continuous_retaliation.validate(self,writer,row,continuous_lease,expected_context)
+            operation = service.prepare_locked(writer, expected_context=expected_context)
+            try:
+                if retaliation_lease is not None:
+                    npc_retaliation.validate(self,writer,row,retaliation_lease,expected_context).bind_operation_locked(
+                        writer,row,retaliation_lease,expected_context,operation)
+                if continuous_lease is not None:
+                    npc_continuous_retaliation.validate(self,writer,row,continuous_lease,expected_context).bind_operation_locked(
+                        writer,row,continuous_lease,expected_context,operation)
+                wire = service.build_locked(writer, operation, raw_effect=raw_effect, direction=direction)
+                await self._send(writer, row, (wire,), game=True, operation_lock=row['operation_lock'],
+                                 npc_player_hit_operation=operation,retaliation_lease=retaliation_lease,continuous_lease=continuous_lease)
+                service.validate_locked(writer, expected_context)
+                if retaliation_lease is not None:
+                    npc_retaliation.validate(self,writer,row,retaliation_lease,expected_context,operation)
+                if continuous_lease is not None:
+                    npc_continuous_retaliation.validate(self,writer,row,continuous_lease,expected_context,operation)
+                before = expected_context.snapshot
+                decision = service.decision_locked(writer,operation)
+                if decision.damage == 0:
+                    result=npc_player_hit.Result(before,before,expected_context.source_uid,service,operation)
+                    operation.result,operation.phase=result,'COMMITTED'
+                    operation.hp_transport='NOT_REQUIRED'
+                    service.last_result=result.metadata()
+                    return result
+                if decision.damage >= before.current_hp:
+                    need(operation.adjudication is not None,'COMBAT_LETHAL_DECISION_REQUIRED')
+                    inputs=await service.adjudicator.prepare_recovery_inputs_locked(writer,service,operation)
+                    operation.life_result=await self._player_life.lethal_adjudicated_locked(
+                        writer,operation,inputs,continuous_context=continuous_lease,
+                        expected_context=getattr(inputs,'_context',None))
+                    operation.phase='LETHAL_COMMITTED'
+                    return operation.life_result
+                if repeated:
+                    from tools.local_original_session import hp_status
+                    status = service.status.prepare_repeated(writer, row, expected_snapshot=before,
+                        expected_revision=before.revision, policy=hp_status.REPEATED_POLICY,
+                        current_hp=before.current_hp-decision.damage)
+                else:
+                    status = service.status.prepare(writer, row, current_hp=before.current_hp-decision.damage,
+                        maximum_hp=before.maximum_hp, expected_snapshot=before, expected_revision=before.revision)
+                operation.hp_operation, operation.phase, operation.hp_transport = status, 'STATUS', 'PREPARED'
+                service.remember(operation)
+                await self._send(writer, row, (status.wire,), game=True, operation_lock=row['operation_lock'],
+                                 status_operation=status, npc_player_hit_operation=operation,retaliation_lease=retaliation_lease,continuous_lease=continuous_lease)
+                result = npc_player_hit.Result(before, status.result.after, expected_context.source_uid,
+                                               service, operation)
+                operation.result = result
+                operation.phase = 'COMMITTED'
+                service.last_result = result.metadata()
+                return result
+            except BaseException as error:
+                if self._hp_resource_owner is not None:
+                    try: self._hp_resource_owner.fail_active_hp(writer,error)
+                    except BaseException: pass
+                service.terminal(operation)  # Preserve both partial transports and committed HP.
+                row['failed'] = True
+                self._fail('NPC_PLAYER_HIT_OUTCOME_UNKNOWN')
+                raise

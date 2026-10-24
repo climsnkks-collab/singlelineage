@@ -1,5 +1,7 @@
 # COMBAT 전체 완료 계획
 
+**기준 시점:** 본 수용 비교는 review commit `4f5b0875f59cd67a484824d097c3a0a5652a83a3`의 23 Source와 당시 관측 근거에 고정한다. 아래 actual199/200·ready9v5/601v2·HP5/next549 등은 당시의 역사적 한정 상태이며 최신 전체 실행 상태가 아니다. 이후 결과를 재조사·폴링하지 않았다. 현재 실행 선정/최신 계보는 `docs/ACTIVE_TASK.md`와 각 원담당 최신 HANDOFF가 우선한다. 이 후속은 전역현황 갱신이 아니다.
+
 작성 기준: 2026-10-25 KST. COMBAT main과 모든 후속은 combat 전담이다. 이 문서는 단위 Source 큐나 HANDOFF를 대체하지 않고, 전체 목표·빠진 기능·순서·완료 기준을 묶는다. 이번 작성은 계획 정리이며 제품 변경이나 시험 발주가 아니다. 구현 현황은 작성 당시 각 원담당 HANDOFF와 실제 결과의 제한된 성공 범위를 따른다. 실행 입력은 항상 그때의 최신 같은 계보 POST를 사용한다.
 
 ## 1. 최종 목표와 범위
@@ -24,19 +26,19 @@ PC가 죽는 분기도 포함한다. 실제 치명 피해 → HP0 저장 → 원
 
 | 경로 | 현재 확인된 코드 | 아직 완료되지 않은 것 |
 |---|---|---|
-| PC→NPC 근접/원거리 | 실제 대상/current/거리·HP/판정 연결 | 검토한 admission에 실제 벽·문·공격 edge/segment 차폐 입력·판정 미연결 |
+| PC→NPC 근접/원거리 | 실제 대상/current·HP/판정 연결; PC→NPC 거리·공격주기 gate는 P0 미구현 | 검토한 admission에 실제 벽·문·공격 edge/segment 차폐 입력·판정 미연결 |
 | NPC→PC 근접/원거리 | 실제 위치·거리·이동/반격 operation | 거리1/길찾기가 벽·대각코너·문 뒤 공격 차단을 보증하지 않음. 해당 공격 LOS 미연결 |
 | PC→NPC 공격/상태마법 | VisibilityGuard 계약·미확정 거부·시험 전용 우회 | 실제 지형 projectile 차폐·동적 문 owner와 real CLEAR 생산 미연결. 거부 코드만으로 LOS 기능 완료 아님 |
 | 선분/광역/주기 효과 | 일부 geometry·현재 후보·수치 코드 | 선분 열거와 대상 목록은 장애물 검사가 아님. 효과별 origin/각 피해 대상 LOS와 실제 admission 필요 |
 | 캐릭터 대상/받는 마법 | 일부 수치/read-only target facts | 지원되는 NPC→PC에도 차폐 필요. 미지원 PC→PC/incoming admission·실 caster는 별도 미구현/미연결로 유지 |
 
-구현 순서: (1) 원 map의 공격/투사체 차폐 의미와 실제 door 상태 owner 확인 → (2) 같은 attacker/target/map/세대/operation에 결속한 현재 CLEAR/BLOCKED/UNKNOWN 생산 → (3) 원 물리 admission과 ATTACK VisibilityGuard 소비 → (4) 기존 잠금·async 경계에서 필요한 current/door 변경 재확인 → (5) 실제 차단/개방 시나리오.
+구현 순서: (1) 기존 raw S32/terrain decoder와 L1J 참고를 재사용하되 실제 current map/door producer는 별도 미완으로 두고 원 map의 공격/투사체 차폐 의미와 실제 door 상태 owner 확인 → (2) 같은 attacker/target/map/세대/operation에 결속한 현재 CLEAR/BLOCKED/UNKNOWN 생산 → (3) 원 물리 admission과 ATTACK VisibilityGuard 소비 → (4) 기존 잠금·async 경계에서 필요한 current/door 변경 재확인 → (5) 실제 차단/개방 시나리오.
 
 이동 불가 비트·actor 점유를 곧바로 projectile 차폐로 재사용하지 않는다. Unknown 또는 stale geometry/문 상태를 CLEAR/빈 문 목록으로 채우지 않는다. 기본 정상 Source에서 LOCAL_TEST_VISIBILITY_BYPASS는 일반 기능 통과로 인정하지 않는다. 한 주 대상의 CLEAR를 광역의 모든 대상에 복사하지 않는다. 실제 적중에 필요한 재확인은 원 prepare/commit 수명에 두고, 이미 commit/시도된 결과를 문 변경 뒤 임의 rollback하거나 재추첨하지 않는다.
 
 수용 시나리오: 동일 거리의 열린 경로/벽 차단 비교, 양방향 NPC/PC 근접·원거리, 대각 코너, 닫힌/열린 문과 요청 간 변경, 다른 맵/층·stale/unknown, 선분/광역의 대상별 차폐, 정상 선택에서 시험 우회 배제. BLOCKED/UNKNOWN 대상에는 피해·유해 효과·적중 성공 결과가 없어야 한다. 비용·탄약·시도/실패 표현의 시점은 원 정책을 명시해 확인한다. 새 codec/가짜 상태·권한이나 중복 검증 프레임워크를 만들지 않는다.
 
-자세한 세션별 상태는 `combat-los-plan-review-v1/status-matrix.md`, 실제 LOS Source/행 근거는 같은 폴더의 `los-audit.md` 및 `source-file-list.json`을 따른다. 이는 로컬 코드 감사이며 웹 GPT 검토 완료를 뜻하지 않는다.
+자세한 세션별 상태는 `combat-los-plan-review-v1/status-matrix.md`, 실제 LOS Source/행 근거는 같은 폴더의 `los-audit.md` 및 `source-file-list.json`을 따른다. 웹 GPT 지정 snapshot 검토와 원본 workspace 신규 교정 확인을 수용했다. 정확 범위는 같은 폴더 review-accepted-findings.md이며, runtime 성공을 추가한 검토가 아니다.
 
 ## 2. 완료 수준을 구분하는 기준
 
@@ -71,7 +73,7 @@ PC가 죽는 분기도 포함한다. 실제 치명 피해 → HP0 저장 → 원
 4. 빗나감·0피해·무효 대상의 HP 변화/탄약·효과 소비는 원 정책대로 구분한다. 거절된 요청으로 피해나 RNG 재추첨을 만들지 않는다.
 5. 대상 교체·사망·제거·종료 중 취소와 이후 입력을 원 수명에 맞춘다.
 
-현재: 계산/HP Authority 연결과 실제 처치가 있다. actual148은 hit/miss와 NPC HP6→0, actual198은 NPC HP6→5가 확인됐다. 이것만으로 원거리·특수 무기·전 공격 주기를 완료로 세지 않는다.
+현재: **P0 — PC→NPC 최초 거리·공격주기 gate 미구현**이다. 실제 dispatcher Brokerac682:877–886과 Session7394:217–263에는 거리·무기속도 기반 due 검사가 없다. 좌표/current 일치·counter capacity·row 직렬화 및 NPC continuous의 거리1/next_action은 이 gate가 아니다. 계산/HP Authority 연결과 실제 처치가 있다. actual148은 hit/miss와 NPC HP6→0, actual198은 NPC HP6→5가 확인됐다. 이것만으로 원거리·특수 무기·전 공격 주기를 완료로 세지 않는다.
 
 완료 기준: 지원하는 공격 종류의 정상 입력 → 같은 판정 → 단일 HP 반영 → 실제 응답 → 다음 공격이 닫힌다. 범위/생존/current 거절은 관련 RNG·commit 전에 수행된다.
 
@@ -84,7 +86,7 @@ PC가 죽는 분기도 포함한다. 실제 치명 피해 → HP0 저장 → 원
 4. 목표 이탈·대상 사망·NPC 사망/제거·세대 교체·세션 종료 시 반복 공격과 goal을 정리한다. 여러 NPC는 서로의 목표·operation을 혼용하지 않는다.
 5. 속도 변화와 이동 제한 효과가 적용되면 실제 소비자에 반영하고 해제 후 정상 동작을 복구한다.
 
-현재: actual198에서 PC HP10→5, hp-1-45 COMMITTED/DRAINED와 PCMove 저장이 실제 통과했다. 이후 owned-mover/current 세대 경계부터 미확인이다. NPC 원담당은 실제 mover 전달 한 곳을 수정하고 현재 좌표용 후속 후보를 준비했다. actual199는 이전 anchor와 현재 PC 좌표의 차이로 전투 전에 멈췄다. 최신 HP5에서 추적을 계속할 정상 회복 입력은 CONSUM 담당의 OPEN 계약이다.
+현재: actual198에서 PC HP10→5, hp-1-45 COMMITTED/DRAINED와 PCMove 저장이 실제 통과했다. 이후 owned-mover/current 세대 경계부터 미확인이다. NPC 원담당은 실제 mover 전달 한 곳을 수정하고 현재 좌표용 후속 후보를 준비했다. actual199는 이전 anchor와 현재 PC 좌표의 차이로 전투 전에 멈췄다. 당시 HP5에서 추적을 계속할 정상 회복 입력은 CONSUM 담당의 OPEN 계약이다.
 
 완료 기준: 실제 NPCMove drain/current pose 뒤 추적·반격이 이어지고, 취소/정리 후 공격이 더 발생하지 않는다. 현재 HP·좌표·UID 계보를 옛 사본으로 되돌려 성공시키지 않는다. 전체 공격 cadence는 별도 근거를 갖추고 이 단계에서 닫는다.
 
@@ -178,7 +180,7 @@ PC가 죽는 분기도 포함한다. 실제 치명 피해 → HP0 저장 → 원
 
 | 묶음 | 다음 실제 작업 | 병렬로 진행 가능한 일 | 마감 조건 |
 |---|---|---|---|
-| 0. 공통 LOS | 실제 map 공격 차폐·문 상태 producer와 각 공격 admission을 연결한다. | 이미 준비된 비관련 기능은 별도 진행 | 벽/닫힌 문/코너 뒤 NPC·PC 적중 금지와 열린 경로 정상 동작. 시험 bypass 제외 |
+| 0. 공통 LOS·PC 입장 P0 | 실제 map 공격 차폐·문 상태 producer, PC 거리·주기·LOS와 NPC LOS admission을 각각 연결한다. | 실제 무기/속도 입력과 map/door 공급은 독립 준비; 이미 준비된 비관련 기능은 별도 진행 | 벽/닫힌 문/코너·과거리·too-early 요청은 최초 RNG 전 거절, NPC 첫 wire 전 확인. 열린 경로/허용 주기 정상 동작. 시험 bypass 제외 |
 | 1. 현재 물리 PvE | NPC의 owned-mover/current 후손·현재 좌표 후보와 CONSUM 정상 HP 회복 입력을 결합해 추적/새 pose 반격을 닫는다 | COMBAT의 실제 수치/Resource 결함, PC lethal 입력 구성 | 실제 이동/추적/새 반격과 정리. 기존HIT·HP10→5·PCMove는 재사용 |
 | 2. PC 사망 | d45에 맞는 원 Life/Status/NPC/observer family·실PRE를 마련해 정상 lethal caller를 완결한다 | 버프의 정상 cast/current 수치 확인 | 실제 HP>1 lethal0·죽음·후속입력차단·정식복귀 |
 | 3. 버프와 스탯 | BUFF200 장비 projection 전달 후 정상 cast→다음 수치/공격 소비→만료/복원을 닫는다 | NPC 사망/제거/재생성과 이미 준비된 공격마법 | 실제 current 효과 변화/원복·다음행동·저장 일치 |
@@ -227,7 +229,7 @@ PC가 죽는 분기도 포함한다. 실제 치명 피해 → HP0 저장 → 원
 - 공격속도/재사용·특수 효과·무기/탄약·주문/대상별 지원 목록과 원문 정책/LOCAL/미확정 구분을 이 계획과 실제 구현에 맞춘다. 미지원 값을 일반 공격/기본값으로 대체하지 않는다.
 - 사망 패널티/정식 복귀·전 몬스터 보상표·미확정 공식 규칙은 실제 근거/명시 제품 결정이 필요하다. 이 계획이 그 수치를 임의 결정하지 않는다.
 - 현재 실제 막힘은 각 원담당의 최신 HANDOFF로 갱신한다. 계획 작성 자체를 제품 완료나 새 시험 Source로 등록하지 않는다.
-- 새 버전·인계·소스 수용을 이유로 완료 검토/성공을 다시 시작하지 않는다. 계획의 남은 항목과 현재 가장 앞 실패만 갱신한다.
+- 새 버전·인계·소스 수용을 이유로 완료 검토/성공을 다시 시작하지 않는다. 계획의 남은 항목과 각 실제 후속에서 그때의 가장 앞 실패만 갱신한다.
 
 ## 8. 핵심 근거
 
@@ -243,3 +245,38 @@ PC가 죽는 분기도 포함한다. 실제 치명 피해 → HP0 저장 → 원
 - [lethal 실입력/family](work/local_original_session/implementation-5/combat-adjudication/pc-adjudicated-lethal-packet-v1/API.md)
 - [incoming 마법](work/local_original_session/implementation-5/combat-adjudication/magic/incoming-admission-v1/API.md)
 - [추가 물리 효과](work/local_original_session/implementation-5/combat-adjudication/additional-physical-effects-v1/API.md)
+
+
+## 수용된 웹 검토 반영 — P0·선정 family·실행 이정표
+
+2026-10-25. 기존 PASS·원 Source·실패/partial·UIDburn 보존. 원본 기준 경로는 ``이며 검토 snapshot은 실행 선정판이 아니다. 신규 교정 근거: `work/local_original_session/implementation-5/combat-adjudication/combat-los-plan-review-v1/review-accepted-findings.md` (59bfe6a8). 이번 변경은 계획 두 파일뿐이다.
+
+### 단계별 판정 시점과 family 경계
+
+- **PC→NPC P0:** 실제 거리/무기 reach·공격속도/서버 clock due·LOS의 최초 admission은 Session7394 handle의 final current/capacity 뒤, `_hp_prepare`263 및 내부 capture/RNG176 **전**이다. 원 distance/current/생존 입력과 명시 정책이 없으면 임의 사거리/주기 상수로 채우지 않는다. precommit269 재검증은 동기 callback 변경을 다루는 별도 phase 검증이며 RNG를 재실행하지 않는다.
+- **postcommit:** HP commit276→ACCEPTED279–282→damage/kill284–286 뒤 feedback292에서도 AttackTargets.revalidate를 쓴다. 여기에 동적 LOS를 일괄 추가하지 않는다. commit 뒤 문이 닫혔다고 HP rollback/재공격·재추첨/배송을 새 공격거절로 바꾸지 않는다.
+- **NPC→PC:** Brokerac682:3306 prepare/RNG→3315 공격 wire send/drain→3323 decision→3330 lethal PRE 또는3340 Status/HP→3348 STATUS 송신 순서다. 최초 LOS는 prepare/RNG 전, 최초 wire 전 current 유지가 필요하다. async 이후 아직 미확정인 HP 경계의 재검사/실패 정책은 명시하고 이미 보낸 wire·native commit·UNKNOWN/partial·죽음 once는 보존한다. transport failure를 무피해·rollback 성공으로 바꾸지 않는다.
+- **별도 선정 family:** 웹 snapshot S08(97c5 adapter/기존 비치명 흐름), exact6f72+d45 lethal 후손, de1e Resource/97dc Stats/e687 STRDEX producer, ATTACK hostile common29·38은 각각 자기 current/SourceModule/Cost/Scope 계약을 가진다. 이들의 source/check/PASS를 합산해 하나의 lethal+buff+magic 선정판 성공이라 하지 않는다. d45를 NPCb4 위에 overlay하지 않는다. 실제 family 결합은 해당 부모·nominal alias·native participant·caller 근거가 있을 때만 별도 delta로 닫는다.
+- **자료와 live 권위:** raw S32/terrain decoder·mask1 이동 probe 및 고정 L1J range/LOS 참고는 존재한다. 새 decoder/수식을 재개발할 이유는 없다. 그러나 투사체/근접 공격 edge·대각 corner 의미와 현재 동적 문/override revision을 실제 operation에 결속한 producer/consumer는 미완이다. walkable/actor occupancy·Bresenham 대상 열거를 CLEAR로 승격하지 않는다. 시험 전용 key3 LOS bypass는 정상/NPC/캐릭터 차폐 PASS가 아니다.
+
+### 효과·소모·정책의 남은 범위
+
+| 항목 | 이미 있는 것 / 남은 접점 | 수용 전에 확정할 정책 |
+|---|---|---|
+| 탄약·속도 | 실제 무기/탄약 수치 분기와 Stats를 재사용. 실제 stack UID/Q 소비·취소/partial·native CAS 및 선정 무기속도·서버 due 소비는 별도 미완 | blocked/unknown·miss/0damage에서 비용/탄약/시도 소모 시점, 속도효과 중첩·변경 후 next due. 실제 source 없는 숫자0 |
+| proc·추가타 | 순수 확률/배율 source는 재사용; canonical 소모/효과 적용/별도 타격 consumer·once가 필요 | same-hit 배율 vs 별도 타격, proc별 새 LOS/거리/RNG·중간 사망/반사·소모 시점. 일반 critical/모든 무기 자동지원0 |
+| 추적·우회 | 원 axis/clear-neighbour·단일 edge/점유·mover/lease current 존재; owned-mover 교정과198 반격 PASS는 재사용 | 막힌 길의 일반 우회/pathfinding 완료 미주장. 범위 밖 추적과 공격 가능 LOS를 분리; door 변경/goal 퇴역·새 pose 공격 재검증 |
+| AoE·line·DoT | geometry/current 후보/참고 tick source는 재사용; 실제 caster/대상별 eligibility/현재 HP·effect consumer 미완 | 효과마다 caster→primary/center→victim/연쇄 각 hop LOS, 최초 vs 매 tick LOS, 중심/피해범위, door 변화/hidden·map·세대, 한 비용/다중 HP 원자성·tick once를 명시. 공통 blanket 정책/가짜 issuer0 |
+| 기타 미확정 | PC 복귀·패널티, incoming spell/StatusResult, 반사·동시 lethal, 미선정 무기·class·NPC 콘텐츠 | 원 source 또는 명시 제품 결정 전 OPEN. PvP admission 미구현을 벽뒤 캐릭터 요구로 자동 허용0; 동료/창고 소유 보류 유지 |
+
+### 다음 3개 실제 작업과 실행 이정표
+
+아래는 소유 분리된 최소 작업이며 전체 spell/장비/map 완성을 공통 선행 gate로 두지 않는다. 각 실행은 구현 담당 caller/RUN/부분보존·strictclose가 준비된 해당 family만 Root 선정/Test 실행으로 넘긴다. 이 계획 자체는 제품 발주·실행이 아니다.
+
+| 다음 작업 / 실제 접점 | 필요한 실제 입력·담당 | 최소 수용 기준 / 실행 이정표 |
+|---|---|---|
+| **1. 실제 current map/door LOS 공급** — 기존 `CurrentProjectileVisibility`/`VisibilityGuard.verify` 계약을 재사용. NpcWorldNavigation0e5d `_flags114–134/probe34`는 MOVE 자료이며 공격 producer 대체 불가 | 원 map/door/common 담당: 명시 공격/projectile 의미·코너/endpoint/층 규칙·실 door/override epoch/current. COMBAT/NPC/ATTACK는 같은 operation/target에 소비. 지원 map/문 한 종류부터 | M1: 같은 거리 clear/blocked, 대각코너, 문 열림/닫힘, stale/UNKNOWN을 실제 데이터로 구분. 정상 Source에 test bypass·빈 doors/추정비트 CLEAR 배제. 정적 지형·문 증거와 변경 수명 명시 |
+| **2. PC 물리 pre-RNG 거리·cadence·LOS admission P0** — Brokerac682 `Realm.attack_intent877–886`→Session7394 `handle245–263/_hp_prepare170–178`; HP/수식 재구현0 | COMBAT와 NPC/원 actor owner: 같은 selected PC/NPC current grid/map/생애·실 weapon reach/공격속도/효과·server clock/once 상태 및 M1 map/door current. 속도/거리 입력은 독립 준비 가능 | M2: 과거리/too-early/BLOCKED/UNKNOWN/stale는 최초 RNG·HP·유해효과 전 거절. 정상 거절을 기존 LOCAL_REJECTIONS/outcome에 매핑하고 실제 authority fault는 숨기지 않음. 허용 요청은 기존 Decision/HP를 한 번 사용. postcommit feedback revalidate에 LOS 일괄 추가 금지 |
+| **3. NPC pre-RNG·첫 wire 전 LOS 소비** — Brokerac682 `_attack_player_current`: checkpoint/current3299–3300 뒤 prepare3306 전과 첫 send3315 경계; Hit `prepare_locked`/geometry 수명. 기존 mover 전달 수정 재사용 | NPC/원 actor·map owner: 실제 current NPC/PC/map/문 version·기존 거리/next_action·동일 operation과 NPC attack wire 의미/비동기 변경 정책. COMBAT는 기존 Decision/Resource 소비 유지 | M3: 막힌 근접/원거리·코너·닫힌 문은 RNG/첫 공격 wire 전 거절, 열린 경로에서 기존 단일 판정/HP/status 유지. send 뒤 변경·실패는 단계별 정책으로 처리하고 sent wire·committed HP·UNKNOWN/partial·death once 보존. 새 pose 후속 공격은 기존 mover 후손으로 연결 |
+
+M1–M3는 실행 준비/Source 접속/실제 packet 관측을 구분한다. 기존 actual148 hit/miss·처치,159/163 성장·fresh,186 단일 복원/close,198 NPC/PC HP 결과는 각 원래 범위 그대로 유지한다. 새로운 벽·사거리·공격주기·탄약·추적 우회·buff/lethal/magic 통합 PASS로 확대하지 않는다. 준비완료 시나리오의 독립 실행을 막는 거대한 전역 validator/통짜 graph·새 검증 체계는 추가하지 않는다.
