@@ -1,0 +1,629 @@
+"""Source-bound attack wire parts plus current selected-realm target binding.
+
+No route, sender, combat calculation, HP mutation, timer or client prediction is
+installed here. The bounded parser and current-coordinate target restriction are
+explicit local subsets, not a reconstruction of official server acceptance.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+import hashlib
+from pathlib import Path
+import struct
+import sys
+from types import MethodType
+
+from tools.local_original_session import movement, npc, npc_motion, observe
+
+pb = movement.pb
+ROOT = observe.ROOT
+REQUEST_OPCODE = 0x4e30
+ACTION_OPCODE = 0x4e31
+TARGET_POLICY = 'EXPLICIT_LOCAL_CURRENT_TARGET_COORDINATES'
+SOURCE_PINS = {
+    'work/local_server_rea_20261016/run24_normal_attack/findings.md':
+        '6efc85b1a8da53dc4fdcf40c7ca88da2e098568b0e95ef8ba3341e11329d7ebc',
+    'work/local_server_rea_20261016/run24_normal_attack/source-evidence.json':
+        'ee7ae07d4c3928a02c8d91db0fa642f64106901c35ff90c654ff8c01b724a6aa',
+}
+U64_MAX = (1 << 64) - 1
+
+
+def need(ok, reason):
+    if not ok:
+        raise ValueError(reason)
+
+
+def _typed_value(value):
+    # Keep snapshots primitive and immutable: equality must never call an
+    # arbitrary authority object's __eq__, or equate True with handle/PID 1.
+    need(type(value) in (int, str, bool, bytes, type(None)),
+         'ATTACK_TYPED_AUTHORITY_VALUE_REQUIRED')
+    return type(value), value
+
+
+def _handle_value(value):
+    need(type(value) is int and value > 0, 'ATTACK_TYPED_HANDLE_REQUIRED')
+    return _typed_value(value)
+
+
+def _same_binding(left_identities, left_values, right_identities, right_values):
+    return (len(left_identities) == len(right_identities)
+            and all(a is b for a, b in zip(left_identities, right_identities))
+            and left_values == right_values)
+
+
+class _BoundStaticSource:
+    """One declared AttackSession slot; frozen evidence only, never live authority."""
+    __slots__ = ('_owner', '_broker', '_targets', '_server', '_helper', '_source_check',
+                 '_guard', '_generation', '_rows', '_exports_fn', '_exports', '_codes', '_constants')
+
+    def __init__(self, *args, **kwargs):
+        raise TypeError('ATTACK_BIND_SOURCE_MODULES_REQUIRED')
+
+
+def _static_constants():
+    return (ROOT, REQUEST_OPCODE, ACTION_OPCODE, TARGET_POLICY, U64_MAX,
+            tuple(SOURCE_PINS.items()), pb, movement, npc, npc_motion, observe,
+            AttackRequest, BoundTarget, AttackTargets)
+
+
+def bind_static_source(source, *, owner_source, owner):
+    """Cold opt-in for this actual packet AttackSession; no implicit shared witness."""
+    from tools.local_original_session.canonical_feature_bootstrap import SourceModule, _export_bindings
+    from tools.local_original_session.broker import PersistentBroker
+    from packet_server import PacketServer
+    need(type(source) is type(owner_source) is SourceModule, 'ATTACK_EXACT_SOURCE_MODULES_REQUIRED')
+    module, owner_module = source.check(), owner_source.check()
+    need(module is sys.modules[__name__] and owner_module is sys.modules.get(owner_module.__name__)
+         and owner_module.attack is module and type(owner) is owner_module.AttackSession,
+         'ATTACK_EXACT_SOURCE_OWNER_REQUIRED')
+    need(type(owner.__dict__) is dict and '_attack_static_source' in owner.__dict__
+         and owner.__dict__['_attack_static_source'] is None,
+         'ATTACK_DECLARED_EMPTY_SOURCE_SLOT_REQUIRED')
+    targets = owner.targets
+    need(type(targets) is AttackTargets and targets.reader is None,
+         'ATTACK_PACKET_SOURCE_TARGETS_REQUIRED')
+    broker, server = targets.broker, targets.packet_server
+    guard = broker.source_guard
+    need(type(broker) is PersistentBroker and not broker._started and not broker._closing
+         and not owner.closed and not owner.fatal and type(server) is PacketServer
+         and targets._packet_server is server and server.broker is broker
+         and server.prepared and not server.started and not server.closed
+         and type(guard) is MethodType and guard.__self__ is server
+         and guard.__func__ is PacketServer.check_sources,
+         'ATTACK_COLD_PACKET_SOURCE_GENERATION_REQUIRED')
+    generation = server.sources
+    need(generation is not None, 'ATTACK_SOURCE_GENERATION_REQUIRED')
+    rows = []
+    for role, pin, actual in (('attack', source, module), ('attack_session', owner_source, owner_module)):
+        row = generation.selected[role]
+        need(generation.modules.get(actual.__name__) is actual
+             and Path(row['path']).resolve() == pin.path.resolve() and row['sha256'] == pin.sha256,
+             'ATTACK_SELECTED_SOURCE_GENERATION_REQUIRED')
+        rows.append((role, pin, actual, pin.path, pin.sha256, actual.__file__, row, tuple(row.items())))
+    source_ready()  # Original two evidence-file hashes, once for this cold binding.
+    bound = object.__new__(_BoundStaticSource)
+    bound._owner, bound._broker, bound._targets, bound._server = owner, broker, targets, server
+    bound._helper, bound._source_check = sys.modules[SourceModule.__module__], SourceModule.check
+    bound._guard, bound._generation, bound._rows = guard, generation, tuple(rows)
+    bound._exports_fn = _export_bindings
+    bound._exports = tuple((actual, _export_bindings(actual)) for actual in (module, owner_module))
+    functions = [SourceModule.check, _export_bindings, guard.__func__]
+    for actual, exports in bound._exports:
+        for name, value in exports:
+            candidates = ((value.fget, value.fset, value.fdel) if isinstance(value, property)
+                          else (getattr(value, '__func__', value),))
+            functions.extend(f for f in candidates if hasattr(f, '__code__'))
+    bound._codes = tuple((f, f.__code__, f.__defaults__, tuple((f.__kwdefaults__ or {}).items()))
+                         for f in functions)
+    bound._constants = (_static_constants(), owner_module.EXPLICIT_LOCAL_VALIDATED_ATTACK_INTENT,
+                        owner_module.LOCAL_REJECTIONS)
+    owner._attack_static_source = bound
+    return bound
+
+
+def _check_bound_static_source(bound, owner):
+    need(type(bound) is _BoundStaticSource and owner is not None and bound._owner is owner
+         and type(owner.__dict__) is dict and owner.__dict__.get('_attack_static_source') is bound,
+         'ATTACK_SAME_BOUND_SOURCE_OWNER_REQUIRED')
+    need(all(f.__code__ is code and f.__defaults__ is defaults
+             and tuple((f.__kwdefaults__ or {}).items()) == keywords
+             for f, code, defaults, keywords in bound._codes),
+         'ATTACK_BOUND_STATIC_BINDINGS_CHANGED')
+    guard, generation, helper = bound._guard, bound._generation, bound._helper
+    broker, targets, server = bound._broker, bound._targets, bound._server
+    need(not owner.closed and not owner.fatal and owner.targets is targets
+         and targets.broker is broker and targets.packet_server is targets._packet_server is server
+         and server.broker is broker and not server.closed
+         and type(server).check_sources is guard.__func__
+         and getattr(sys.modules.get(type(server).__module__), 'PacketServer', None) is type(server)
+         and generation.modules.get(type(server).__module__) is sys.modules.get(type(server).__module__)
+         and broker._attack_session is broker.realm._attack_session is owner
+         and broker.source_guard is guard and guard.__self__ is server and server.sources is generation
+         and sys.modules.get(helper.__name__) is helper
+         and helper.SourceModule.check is bound._source_check and helper._export_bindings is bound._exports_fn,
+         'ATTACK_BOUND_SOURCE_GENERATION_CHANGED')
+    for role, pin, actual, path, digest, filename, row, values in bound._rows:
+        need(type(pin) is helper.SourceModule and pin.module is actual and pin.path is path
+             and pin.sha256 == digest and actual.__file__ == filename
+             and sys.modules.get(actual.__name__) is actual
+             and generation.modules.get(actual.__name__) is actual
+             and generation.selected.get(role) is row and tuple(row.items()) == values,
+             'ATTACK_BOUND_SOURCE_GENERATION_CHANGED')
+    owner_module = bound._rows[1][2]
+    need(type(owner) is owner_module.AttackSession and owner_module.attack is sys.modules[__name__]
+         and (_static_constants(), owner_module.EXPLICIT_LOCAL_VALIDATED_ATTACK_INTENT,
+              owner_module.LOCAL_REJECTIONS) == bound._constants
+         and all(bound._exports_fn(actual) == exports for actual, exports in bound._exports),
+         'ATTACK_BOUND_STATIC_BINDINGS_CHANGED')
+
+
+def retire_static_source(bound, *, owner):
+    """Discard this declared source slot only; no actor/operation/Store retirement."""
+    need(type(bound) is _BoundStaticSource and owner is not None and bound._owner is owner
+         and type(owner.__dict__) is dict and owner.__dict__.get('_attack_static_source') is bound,
+         'ATTACK_SAME_BOUND_SOURCE_OWNER_REQUIRED')
+    owner._attack_static_source = None
+    for name in _BoundStaticSource.__slots__:
+        setattr(bound, name, None)
+
+
+def source_ready(*, bound_source=None, owner=None):
+    """Original evidence scan by default, or explicit owner-bound memory check."""
+    if bound_source is not None:
+        _check_bound_static_source(bound_source, owner)
+        return
+    need(owner is None, 'ATTACK_BOUND_SOURCE_REQUIRED')
+    for relative, digest in SOURCE_PINS.items():
+        need(hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == digest,
+             'ATTACK_SOURCE_CHANGED')
+
+
+def _int32(value):
+    need(type(value) is int and -(1 << 31) <= value < (1 << 31), 'ATTACK_INT32_REQUIRED')
+    return value
+
+
+def _signed(value):
+    if 0 <= value < (1 << 31):
+        return value
+    need(0xffffffff80000000 <= value <= U64_MAX, 'ATTACK_INT32_WIRE_REQUIRED')
+    return value - (1 << 64)
+
+
+def _field(number, value):
+    return pb.encode_varint(number << 3) + pb.encode_varint(value & U64_MAX)
+
+
+@dataclass(frozen=True, slots=True)
+class AttackRequest:
+    target_uid: int
+    target_x: int | None = None
+    target_y: int | None = None
+
+    def __post_init__(self):
+        # The wire schema allows zero and the complete uint64 range. The actor
+        # target policy below, separately, refuses zero/sentinel/self targets.
+        need(type(self.target_uid) is int and 0 <= self.target_uid <= U64_MAX,
+             'ATTACK_TARGET_UINT64_REQUIRED')
+        for value in (self.target_x, self.target_y):
+            if value is not None:
+                _int32(value)
+
+
+def npc_recipe(realm, target_uid):
+    """Resolve the literal configured target; a request never creates an actor."""
+    need(type(target_uid) is int and 0 < target_uid <= U64_MAX,
+         'ATTACK_EXPLICIT_NPC_UID_REQUIRED')
+    rows = [spawn for spawn, _ in realm._npc_spawns if spawn.uid == target_uid]
+    need(len(rows) == 1, 'ATTACK_CURRENT_TYPED_NPC_REQUIRED')
+    return rows[0]
+
+
+def npc_mover(realm, writer, target_uid):
+    npc_recipe(realm, target_uid)
+    # Keep the existing singleton producer callable. Multi-spawn requires the
+    # root producer's explicit UID lookup; never fall back to its first mover.
+    mover = (realm.npc_mover(writer) if len(realm._npc_spawns) == 1 else
+             realm.npc_mover(writer, target_uid=target_uid))
+    need(mover.state.uid == target_uid, 'ATTACK_CURRENT_NPC_MOVER_UID_REQUIRED')
+    return mover
+
+
+def npc_generation(lifecycle, realm, writer, target_uid):
+    npc_recipe(realm, target_uid)
+    generation = (lifecycle.current_generation(writer) if len(realm._npc_spawns) == 1 else
+                  lifecycle.current_generation(writer, target_uid=target_uid))
+    need(generation.recipe.uid == target_uid and generation.mover.state.uid == target_uid,
+         'ATTACK_CURRENT_NPC_GENERATION_UID_REQUIRED')
+    return generation
+
+
+def registered_npc_generation(lifecycle, realm, writer, target_uid):
+    """Pure identity projection also valid during an owned pending motion step."""
+    npc_recipe(realm, target_uid)
+    key = id(writer) if len(realm._npc_spawns) == 1 else (id(writer), target_uid)
+    return lifecycle._generations.get(key)
+
+
+def parse_payload(payload):
+    """4E30: required f1 uint64, optional f2/f3 signed int32, no self UID.
+
+    Local parser policy rejects unknown/duplicate/wrong-wire fields, truncation,
+    overflow and non-sign-extended negative int32 values. The reused parser's
+    bounded overlong varints remain accepted; field order is unrestricted.
+    Optional coordinates retain independent presence, including explicit zero.
+    """
+    source_ready()
+    try:
+        with pb.parse_message(payload, schema={1: 0, 2: 0, 3: 0},
+                limits=pb.WireLimits(max_body=33, max_fields=3, max_field_bytes=33)) as parsed:
+            need(len(parsed.occurrences(1)) == 1
+                 and all(len(parsed.occurrences(n)) <= 1 for n in (2, 3)),
+                 'ATTACK_REQUIRED_UNIQUE_FIELDS')
+            values = {item.number: item.value for item in parsed.fields}
+            return AttackRequest(values[1],
+                _signed(values[2]) if 2 in values else None,
+                _signed(values[3]) if 3 in values else None)
+    except (ValueError, TypeError, BufferError):
+        raise ValueError('MALFORMED_ATTACK_PAYLOAD') from None
+
+
+@dataclass(frozen=True, slots=True)
+class BoundTarget:
+    """A short-lived proof tied to its resolver; revalidate after every await.
+
+    This is no queued command or atomic snapshot. The owning broker must hold
+    its existing row operation lock while routing and writing. Revalidation at
+    the actual write remains necessary after the broker's write checkpoint.
+    """
+    request: AttackRequest
+    attacker: movement.Position
+    target_uid: int
+    map_id: int
+    target_x: int
+    target_y: int
+    source: str
+    _authority: object = field(repr=False, compare=False)
+    _writer: object = field(repr=False, compare=False)
+    _identities: tuple = field(repr=False, compare=False)
+    _values: tuple = field(repr=False, compare=False)
+
+
+class AttackTargets:
+    """Use the actual broker/realm/retained reader, with no cached NPC authority.
+
+    authorize/checkpoint await the existing broker native-owner check and then
+    repeat the same authority projection. They do not acquire a second lock.
+    Motion-off static targets have no separate spawn-drain marker in LocalRealm;
+    the caller's existing serialized select/write/drain path owns that ordering.
+    """
+    def __init__(self, broker, reader=None, *, packet_server=None):
+        from tools.local_original_session.broker import PersistentBroker
+        need(type(broker) is PersistentBroker, 'ATTACK_REAL_BROKER_REQUIRED')
+        self.packet_server = self._packet_server = packet_server
+        self._packet_current_type = None
+        if packet_server is not None:
+            from packet_server import PacketServer
+            from packet_peer import PacketCurrent
+            need(type(packet_server) is PacketServer and packet_server.broker is broker
+                 and packet_server.prepared is True and packet_server.started is False
+                 and packet_server.closed is False and not broker._started
+                 and reader is None, 'ATTACK_EXPLICIT_PACKET_SERVER_REQUIRED')
+            self._packet_current_type = PacketCurrent
+            self.broker, self.reader = broker, None
+            self._reader = self._reader_backend = None
+            source_ready()
+            return
+        need(type(reader) is observe.RetainedSceneReader, 'ATTACK_RETAINED_READER_REQUIRED')
+        source_ready()
+        self.broker, self.reader = broker, reader
+        self._reader, self._reader_backend = reader, reader.backend
+        self._reader_binding()
+
+    def _packet_current(self, writer, context=None):
+        server = self.packet_server
+        need(server is not None and server is self._packet_server and server.broker is self.broker,
+             'ATTACK_SAME_PACKET_SERVER_REQUIRED')
+        context = server.current_for(writer) if context is None else context
+        need(type(context) is self._packet_current_type
+             and server.check_current(context) is context
+             and context.broker is self.broker and context.writer is writer
+             and context.row['writer'] is writer
+             and context.row['policy_row'] is context.policy_row,
+             'ATTACK_ISSUED_PACKET_CURRENT_REQUIRED')
+        return context
+
+    def _reader_binding(self):
+        reader = self.reader
+        need(type(reader) is observe.RetainedSceneReader and reader is self._reader,
+             'ATTACK_SAME_RETAINED_READER_REQUIRED')
+        native = reader.backend
+        need(native is self._reader_backend, 'ATTACK_SAME_RETAINED_BACKEND_REQUIRED')
+        for validator in (reader.validate, getattr(native, 'validate', None)):
+            need(type(validator) is MethodType and validator.__self__ is reader
+                 and validator.__func__ is observe.RetainedSceneReader.validate,
+                 'ATTACK_EXACT_RETAINED_VALIDATOR_REQUIRED')
+        return native
+
+    def _current(self, writer, request, *, _motion_lease=None, _packet_context=None):
+        from tools.local_original_session.broker import LocalRealm, _TransportPolicy
+        need(type(request) is AttackRequest, 'ATTACK_TYPED_REQUEST_REQUIRED')
+        need(0 < request.target_uid < U64_MAX, 'ATTACK_LOCAL_ACTOR_TARGET_REQUIRED')
+        broker, reader = self.broker, self.reader
+        packet = self.packet_server is not None
+        context = None
+        if packet:
+            context = self._packet_current(writer, _packet_context)
+            policy = broker.policy
+            need(type(policy) is _TransportPolicy, 'ATTACK_REAL_PACKET_POLICY_REQUIRED')
+        else:
+            need(_packet_context is None, 'ATTACK_NATIVE_CONTEXT_MIXED')
+            native = self._reader_binding()
+            policy, retained, member = broker.policy, reader.owner, reader.member
+            need(not getattr(reader, 'closed', False)
+                 and type(policy) is _TransportPolicy and retained is not None and not retained.closed
+                 and policy.owner is retained and member is not None and retained.child is member
+                 and _handle_value(policy.handle) == _handle_value(retained.owner_handle)
+                 and _handle_value(policy.job) == _handle_value(retained.owner_job)
+                 and member.process == retained.owner_handle and member.job == retained.owner_job,
+                 'ATTACK_SAME_RETAINED_BROKER_REQUIRED')
+        need(not broker._closing and not broker.failure.is_set() and policy.state == 'OPEN',
+             'ATTACK_BROKER_LIFETIME_REQUIRED')
+        claims = [row for rows in broker._claims.values() for row in rows if row['writer'] is writer]
+        need(len(claims) == 1, 'ATTACK_CURRENT_CLAIM_REQUIRED')
+        row, = claims
+        policy_row = policy._connection(writer)
+        need(row['policy_row'] is policy_row and policy_row.writer is writer
+             and policy_row.stage == 1 and policy_row.rx_boot == 2 and policy_row.tx_boot == 3
+             and not any((row['failed'], row['joined'], policy_row.failed, policy_row.eof,
+                          policy_row.task_joined, policy_row.registry_removed)),
+             'ATTACK_CURRENT_POLICY_ADMISSION_REQUIRED')
+        realm = broker.realm
+        need(type(realm) is LocalRealm, 'ATTACK_REAL_REALM_REQUIRED')
+        game = realm.registry.resolve(writer)
+        service = realm.service(writer)
+        selected = service.snapshot()
+        need(type(service) is movement.MovementService and type(selected) is movement.Position
+             and service._connection is writer, 'ATTACK_SAME_SELECTED_SERVICE_REQUIRED')
+        realm._npc_authority(writer, game, service, selected)
+        if packet:
+            need(context.row is row and context.policy_row is policy_row
+                 and context.game is game and context.selection is game.selection
+                 and context.mover is service and context.position is selected,
+                 'ATTACK_PACKET_REALM_CURRENT_CHANGED')
+            self._packet_current(writer, context)
+        need(request.target_uid != selected.uid, 'ATTACK_LOCAL_SELF_TARGET_REFUSED')
+        attack_session = getattr(broker, '_attack_session', None)
+        notifications = None if attack_session is None else attack_session._notifications
+        if notifications is not None:
+            notifications.require_not_removed_target(writer, request.target_uid)
+        bound = (realm._npc_frames.get(id(writer)) if len(realm._npc_spawns) == 1 else
+                 realm.npc_frames(writer, target_uid=request.target_uid))
+        need(bound is not None and bound[0] is writer and bound[1] is game and bound[2] is service,
+             'ATTACK_CURRENT_BOUND_NPC_REQUIRED')
+        candidates = [(spawn, wire) for spawn, wire in realm._npc_spawns
+                      if type(spawn) is npc.NpcSpawn and spawn.uid == request.target_uid]
+        need(len(candidates) == 1, 'ATTACK_CURRENT_TYPED_NPC_REQUIRED')
+        spawn, wire = candidates[0]
+        body = npc.session.world.encode_payload(0x4e96, spawn.fields)
+        expected = struct.pack('<HH', len(body) + 6, 0x4e96) + body + b'\0\0'
+        need(spawn.map_id == selected.map_id and type(wire) is bytes
+             and wire == expected and wire in bound[3], 'ATTACK_CURRENT_NPC_MAP_FRAME_REQUIRED')
+        if realm._npc_motion_interval_ns is not None:
+            mover = npc_mover(realm, writer, request.target_uid)
+            state = mover.state
+            need(type(mover) is npc_motion.NpcMotion and type(state) is npc_motion.State
+                 and not mover.closed and not mover.fatal
+                 and (mover.pending is None if _motion_lease is None else
+                      self._continuous_pending_motion(writer,row,mover,state,_motion_lease))
+                 and mover.spawn_drained is True and state.uid == spawn.uid
+                 and state.map_id == spawn.map_id == selected.map_id,
+                 'ATTACK_CURRENT_DRAINED_NPC_STATE_REQUIRED')
+            x, y = movement.authority.unpack_grid(state.packed)
+            source = 'CURRENT_NPC_MOTION_STATE'
+        else:
+            need(id(writer) not in realm._npc_motion, 'ATTACK_INCONSISTENT_STATIC_NPC_REQUIRED')
+            mover, state = None, spawn
+            x, y = movement.authority.unpack_grid(spawn.fields[1])
+            source = 'CURRENT_BOUND_TYPED_NPC_SPAWN'
+        # Request coordinates are comparisons only, never authority or direction.
+        need((request.target_x is None or request.target_x == x)
+             and (request.target_y is None or request.target_y == y),
+             'ATTACK_LOCAL_CURRENT_TARGET_COORDINATES_REQUIRED')
+        if packet:
+            # Real packet objects have their own layout, never native handle placeholders.
+            identities = (self.packet_server, context.issuer, broker, policy, broker.failure,
+                row, row['peer'], policy_row, policy_row.peer, realm, realm.registry,
+                realm.store, realm.positions, game, game.selection, service, selected,
+                realm._npc_spawns, bound, spawn, mover, state, context.world_receipt)
+            values = tuple(_typed_value(value) for value in (
+                policy_row.peer.port, policy_row.peer.client_port, policy_row.peer.accepted_ns,
+                wire, *row['peer'].keys(), *row['peer'].values()))
+            self._packet_current(writer, context)
+        else:
+            identities = (broker, policy, retained, member, member.identity,
+                broker.failure, row, row['peer'], policy_row, policy_row.peer, realm,
+                realm.registry, realm.store, realm.positions, game, game.selection,
+                service, selected, realm._npc_spawns, bound, spawn, mover, state,
+                reader, reader.owner, reader.member, native)
+            # PROCESS.process is a ctypes HANDLE field: every access can produce a
+            # fresh Python int. Bind its exact typed value, together with all other
+            # handles and process/peer metadata, while retaining real objects above.
+            values = tuple(_handle_value(value) for value in (
+                policy.handle, policy.job, retained.owner_handle, retained.owner_job,
+                member.process, member.job, native.handle))
+            values += tuple(_typed_value(value) for value in (
+                member.pid, *(member.identity.get(key) for key in ('pid', 'birth', 'image', 'parent_pid')),
+                policy_row.peer.port, policy_row.peer.client_port, policy_row.peer.accepted_ns,
+                wire, *row['peer'].keys(), *row['peer'].values()))
+        life = getattr(broker,'_player_life',None)
+        if life is not None: identities += (life.token(writer),)
+        return row, selected, x, y, source, values, identities
+
+    @staticmethod
+    def same_authority(left, right):
+        """Compare two _project results, retaining references and typed values.
+
+        Consumers that hold a projection across reads/awaits must use both
+        components; the final reference-only tuple alone is insufficient.
+        """
+        return _same_binding(left[-1], left[-2], right[-1], right[-2])
+
+    def _project(self, writer, request, *, _motion_lease=None):
+        if self.packet_server is not None:
+            context = self._packet_current(writer)
+            before = self._current(writer, request, _motion_lease=_motion_lease, _packet_context=context)
+            self._packet_current(writer, context)
+            after = self._current(writer, request, _motion_lease=_motion_lease, _packet_context=context)
+        else:
+            before = self._current(writer, request, _motion_lease=_motion_lease)
+            self.reader.validate()  # Existing injected/read-only identity verifier.
+            after = self._current(writer, request, _motion_lease=_motion_lease)
+        need(self.same_authority(before, after), 'ATTACK_AUTHORITY_CHANGED')
+        return after
+
+    def life_authority_identities(self, projection):
+        need(type(projection) is tuple and len(projection) == 7,
+             'ATTACK_LIFE_PROJECTION_REQUIRED')
+        identities = projection[-1]
+        if self.packet_server is not None:
+            need(len(identities) == 23 + int(getattr(self.broker, '_player_life', None) is not None)
+                 and identities[0] is self.packet_server and identities[2] is self.broker
+                 and identities[16] is projection[1], 'ATTACK_PACKET_LIFE_PROJECTION_REQUIRED')
+            return tuple(value for index, value in enumerate(identities) if index not in (16, 21))
+        return tuple(value for index, value in enumerate(identities) if index not in (17, 22))
+
+    def _continuous_pending_motion(self,writer,row,mover,state,lease):
+        # Pure references only: the outer controller validates source/HP/clock.
+        # Never recurse into Controller.validate_motion from a projection.
+        from tools.local_original_session import npc_continuous_retaliation as continuous
+        need(type(lease) is continuous.MotionLease and type(lease.issuer) is continuous.Controller,
+             'ATTACK_TYPED_CONTINUOUS_MOTION_LEASE_REQUIRED')
+        owner,target=lease.issuer,lease.target
+        aggro=owner.state_for_exact_receipt(target);step=aggro.motion_step
+        need(self is owner.combat.targets and self.broker is owner.broker
+             and self.broker._npc_continuous is owner and aggro.motion_lease is lease
+             and target is aggro.target and target.writer is writer and target.row is row
+             and row['operation_lock'].locked() and type(step) is npc_motion.Step
+             and mover is target.mover and mover.pending is step and step.before is state is lease.state
+             and step.after.goal is lease.goal and owner.npc_session.lane_for(target.target_uid).goal is lease.goal
+             and owner.npc_session.lane_for(target.target_uid).generation is target.generation,
+             'ATTACK_CURRENT_LITERAL_PENDING_MOTION_REQUIRED')
+        return True
+
+    def observe_committed_approach(self, writer, request, previous, counters, event_start):
+        """Observe one real received Move commit; never authorize an Attack.
+
+        The complete authority comparator remains unchanged. Only this source
+        boundary separates its exact Position reference after a verified move.
+        No BoundTarget, Position, packet, Store write or retry is created.
+        """
+        source_ready()
+        current = AttackTargets._project(self, writer, request)
+        row, position = current[:2]
+        need(type(previous) is tuple and len(previous) == 7, 'ATTACK_APPROACH_BINDING_CHANGED')
+        old = previous[1]
+        if self.packet_server is not None:
+            left, right = previous[-1], current[-1]
+            need(type(old) is movement.Position and type(position) is movement.Position
+                 and position is not old
+                 and len(left) == len(right) == 23 + int(getattr(self.broker, '_player_life', None) is not None)
+                 and left[0] is right[0] is self.packet_server
+                 and left[16] is old and right[16] is position
+                 and current[0] is previous[0] and current[2:5] == previous[2:5]
+                 and _same_binding(left[:16] + left[17:], previous[-2],
+                                   right[:16] + right[17:], current[-2]),
+                 'ATTACK_PACKET_APPROACH_BINDING_CHANGED')
+        else:
+            need(type(old) is movement.Position and type(position) is movement.Position
+                 and position is not old and len(previous[-1]) == len(current[-1]) ==
+                     (27 + int(getattr(self.broker,'_player_life',None) is not None))
+                 and previous[-1][17] is old and current[-1][17] is position
+                 and current[0] is previous[0] and current[2:5] == previous[2:5]
+                 and _same_binding(current[-1][:17] + current[-1][18:], current[-2],
+                                   previous[-1][:17] + previous[-1][18:], previous[-2]),
+                 'ATTACK_APPROACH_BINDING_CHANGED')
+        service, policy = self.broker.realm.service(writer), self.broker.policy
+        actual = (service.requests_received, service.committed, service.corrections_prepared)
+        need(type(service) is movement.MovementService and service._connection is writer
+             and service._store is self.broker.realm.positions and not service.fatal
+             and type(counters) is tuple and len(counters) == 3
+             and all(type(n) is int and 0 <= n < movement.MAX_COUNTER for n in (*counters, *actual))
+             and actual == (counters[0] + 1, counters[1] + 1, counters[2])
+             and (position.uid, position.name, position.map_id) == (old.uid, old.name, old.map_id)
+             and (position.word0 - old.word0, position.word1 - old.word1) in movement.authority.DELTAS,
+             'ATTACK_APPROACH_SINGLE_COMMIT_REQUIRED')
+        last = service.last_result
+        need(type(last) is dict and last.get('accepted') is True and last.get('reason') == 'COMMITTED'
+             and last.get('unknown') is False and last.get('fatal') is False
+             and last.get('authority') == position.metadata()
+             and last.get('reply_count') == 0 and last.get('own_SC4E2C_count') == 0
+             and self.broker.realm.positions.restore(position) == position,
+             'ATTACK_APPROACH_CURRENT_STORE_COMMIT_REQUIRED')
+        need(type(event_start) is int, 'ATTACK_APPROACH_RECEIVED_MOVE_REQUIRED')
+        end = policy.events
+        offset = event_start - (end - len(policy.log))
+        need(0 <= offset <= len(policy.log), 'ATTACK_APPROACH_RECEIVED_MOVE_REQUIRED')
+        received = [event for event in list(policy.log)[offset:] if event[0] == 'rx'
+                    and event[1] == row['peer']['endpoint_port'] and event[2] == 0x4e2b]
+        need(len(received) == 1 and row['policy_row'].received > 0,
+             'ATTACK_APPROACH_RECEIVED_MOVE_REQUIRED')
+        after = AttackTargets._project(self, writer, request)
+        need(AttackTargets.same_authority(current, after)
+             and actual == (service.requests_received, service.committed, service.corrections_prepared)
+             and service.last_result is last and self.broker.policy is policy and policy.events == end,
+             'ATTACK_APPROACH_CHANGED_DURING_OBSERVATION')
+        return after, actual, end
+
+    async def authorize(self, writer, request):
+        source_ready()
+        row, selected, x, y, source, values, identities = self._project(writer, request)
+        bound = BoundTarget(request, selected, request.target_uid, selected.map_id, x, y,
+                            source, self, writer, identities, values)
+        need(await self.broker._movement_owner(writer, row, selected) is True,
+             'ATTACK_CURRENT_NATIVE_OWNER_REQUIRED')
+        self.revalidate(bound)
+        return bound
+
+    def revalidate(self, bound):
+        need(type(bound) is BoundTarget and bound._authority is self,
+             'ATTACK_SAME_TARGET_AUTHORITY_REQUIRED')
+        row, selected, x, y, source, values, identities = self._project(bound._writer, bound.request)
+        need(_same_binding(identities, values, bound._identities, bound._values)
+             and selected is bound.attacker
+             and (bound.target_uid, bound.map_id, bound.target_x, bound.target_y, bound.source)
+                 == (bound.request.target_uid, selected.map_id, x, y, source),
+             'ATTACK_BOUND_TARGET_STALE')
+        return row
+
+    async def checkpoint(self, bound):
+        row = self.revalidate(bound)
+        need(await self.broker._movement_owner(bound._writer, row, bound.attacker) is True,
+             'ATTACK_CURRENT_NATIVE_OWNER_REQUIRED')
+        self.revalidate(bound)
+        return bound
+
+    def action_frame(self, bound, *, raw_effect, direction, self_action):
+        """Build kind1; all policy inputs explicit, f13 None omits the field.
+
+        raw_effect is source f4, not a verified damage/HP value. Direction0..8
+        is this local builder's subset; value8 reuses current Transform+88.
+        f13 False skips an own action; True takes common admission. Omission's
+        default, own prediction/Start side effects and official reply duty are
+        UNKNOWN. A built frame is not authorization to send or a combat result.
+        """
+        source_ready()
+        self.revalidate(bound)
+        _int32(raw_effect)
+        need(type(direction) is int and 0 <= direction <= 8, 'ATTACK_EXPLICIT_DIRECTION_REQUIRED')
+        need(self_action is None or type(self_action) is bool, 'ATTACK_EXPLICIT_F13_REQUIRED')
+        fields = [_field(1, 1), _field(2, bound.attacker.uid), _field(3, bound.target_uid),
+                  _field(4, raw_effect), _field(5, direction)]
+        if self_action is not None:
+            fields.append(pb.encode_bool(13, self_action))
+        body = pb.encode_message(fields)
+        wire = struct.pack('<HH', len(body) + 6, ACTION_OPCODE) + body + b'\0\0'
+        self.revalidate(bound)
+        return wire

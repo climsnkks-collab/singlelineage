@@ -1,0 +1,238 @@
+{
+  "kind": "read-only-review-snapshot",
+  "base_commit": "f599fd7af903e0724999fff110601c8a724d52f0",
+  "branch": "codex/combat-los-review-20261025",
+  "code": [
+    {
+      "original_path": "work/local_original_session/attack-magic/poison10-received-ingress-v1/cast_route.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/attack-magic/poison10-received-ingress-v1/cast_route.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "f50866f60b1fc55c75b8f110a4e69ca2a47e26a57608a9059ee9821c4686ffff",
+      "bytes": 46551,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/attack-magic/poison10-received-ingress-v1/local_visibility.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/attack-magic/poison10-received-ingress-v1/local_visibility.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "fd69bb4725483820a0b689a7bb9563b1d429115eb373a9fd450273e0e4f247f5",
+      "bytes": 12447,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/attack-session-bound-static-v1/attack_session.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/attack-session-bound-static-v1/attack_session.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "73944b0678e1fdf341297ccf39d1dc74ac90a8ede4ed862ed3781effbf9bda75",
+      "bytes": 24111,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/npc-player-hit-bound-static-v1/npc_player_hit.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-player-hit-bound-static-v1/npc_player_hit.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "a960baa08a8b6f099ce7ec74d44328f9913ad82c75ea1e06fd1ae74f74436c8b",
+      "bytes": 40942,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v48/npc_hp.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v48/npc_hp.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "49265e8fad22bd9ce3e6bc5eb926fdb2cea6ab095d5df72d8db5fa8d1c400ef3",
+      "bytes": 32434,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v56/npc_world_navigation.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v56/npc_world_navigation.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "0e5d03f1c2155e3220cb7abb85dc651135250bab8d7c41eae31ecd64ba49ca26",
+      "bytes": 23556,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v57/npc_continuous_retaliation.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/npc-source-packet-family-v57/npc_continuous_retaliation.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "41e86a6c88beac296e65309d230b17d4adc2156d539b2a52a558cfa7e6a6fdf5",
+      "bytes": 52819,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-server-navigation-v26/npc_edge.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-server-navigation-v26/npc_edge.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "b75d14b05f4736c53f2faf5be3d5c2b75f4121d29a5bd4fb17aee1b32d0570d6",
+      "bytes": 22551,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/npc-pc-resource-current-v2/candidate/tools/local_original_session/combat_adapters.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/npc-pc-resource-current-v2/candidate/tools/local_original_session/combat_adapters.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "97c512e4c137a32488835f06fca7d870d212550b31387a3bdb5a34bbadc5e403",
+      "bytes": 20665,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/pve-accuracy-rng-v1/candidate/tools/local_original_session/combat_physical.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/pve-accuracy-rng-v1/candidate/tools/local_original_session/combat_physical.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "6da72f15c4787f7185999334d495426592b231870fa829e3d913e4d6d48d405d",
+      "bytes": 9634,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/integration-1/attack-bound-static-source-v1/attack.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/integration-1/attack-bound-static-source-v1/attack.py",
+      "scope": "LOS audited selected source; exact audited version",
+      "sha256": "e925eca00410211443d3428090023e7e75100e179f849d9b24a0de79913cc6d7",
+      "bytes": 35123,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/mob-current-owned-mover-consumer-v1/npc_session.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/mob-current-owned-mover-consumer-v1/npc_session.py",
+      "scope": "current owned-mover successor; source only",
+      "sha256": "7c22325c4674cb5b0afb0d65d22d29cb17104fa7f517bb1037f7ef18f1f1e928",
+      "bytes": 34747,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/pc-adjudicated-lethal-resource-v1/hp_resource_owner.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/pc-adjudicated-lethal-resource-v1/hp_resource_owner.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "d45ce98c8471f681164c3b7802d1ed3d5086ec9ad8437f161bec507efb8f1e6e",
+      "bytes": 78629,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-adjudicated-pre-v34/player_life.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-2/npc-motion-goal/retaliation-npc-adjudicated-pre-v34/player_life.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "cad9b9d1c9b20efe69a1f6402a3473e8e93deada0a17f8cceba55ca268b696ff",
+      "bytes": 53942,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/integration-1/packet-npc-shared-v4/hp_status.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/integration-1/packet-npc-shared-v4/hp_status.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "55275a5504f12808dda095bd90bf0acdbc03262dbe312a3b0824a5a96971333e",
+      "bytes": 33971,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-producer-v1/candidate/tools/local_original_session/combat_selected_stats.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-producer-v1/candidate/tools/local_original_session/combat_selected_stats.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "97dc660f31c6403bc130a5de569f5d35fed54dac6a1d923f22079f97c00907af",
+      "bytes": 45184,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-cold-binding-v1/candidate/tools/local_original_session/combat_roster_setup.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-cold-binding-v1/candidate/tools/local_original_session/combat_roster_setup.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "e68710e2fd0dce786b09e6dc1d58166e44e4925e96037a93c57704bc16079691",
+      "bytes": 23410,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/cast-stats-adoption-v2/candidate/combat_adapters.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/cast-stats-adoption-v2/candidate/combat_adapters.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "7e715ac328d35cdb6c7677931e5008657effc1948073a85b1b7821aa83a480a2",
+      "bytes": 13491,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-3/skill-buff/buff-cast-stats-carrier-v1/runtime_caller.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-3/skill-buff/buff-cast-stats-carrier-v1/runtime_caller.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "e9a8a66ca7a9ae3eafad2aab722d57b256b234a59b9f80ef0ed3dc0a8ace5143",
+      "bytes": 20375,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/magic/candidate/tools/local_original_session/combat_magic.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/magic/candidate/tools/local_original_session/combat_magic.py",
+      "scope": "supporting actual code; distinct source family as documented",
+      "sha256": "f4d883ba8b3f985d560b223fb467d1b1432394e1f7441e1c4b5b8a61512f2706",
+      "bytes": 16482,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/shared-api/npc-postreply-drain-current/broker.py",
+      "snapshot_path": "review/combat-los-20261025/sources/BROKER_CURRENT_EXCERPTS.py",
+      "scope": "exact focused line excerpts; not full/not executable",
+      "original_sha256": "8b289b8bdc71e2c4139429028a1ea6a9b21587367225e9ad7a26cbec9aa09a89",
+      "snapshot_sha256": "12e55e777a4599f9ef609516353ad1f50f380a17c23cdaf0be5e0474292d4cfd",
+      "original_lines": [
+        [
+          2077,
+          2106
+        ],
+        [
+          3279,
+          3282
+        ],
+        [
+          3302,
+          3306
+        ],
+        [
+          3308,
+          3395
+        ],
+        [
+          1085,
+          1104
+        ],
+        [
+          4833,
+          4852
+        ],
+        [
+          4997,
+          5016
+        ]
+      ],
+      "byte_identical": false
+    },
+    {
+      "original_path": "work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-producer-v1/candidate/tools/local_original_session/hp_resource_owner.py",
+      "snapshot_path": "review/combat-los-20261025/sources/work/local_original_session/implementation-5/combat-adjudication/buff-cast-stats-producer-v1/candidate/tools/local_original_session/hp_resource_owner.py",
+      "scope": "actual STRDEX producer Resource, separate from d45 lethal family",
+      "sha256": "de1e70a4995be09a9dbbcccc01ab8759e24ead8e4ecc1857685f71fe4623fa27",
+      "bytes": 103714,
+      "byte_identical": true
+    },
+    {
+      "original_path": "work/local_original_session/implementation-3/skill-buff/buff-cast-stats-carrier-v1/character_scope.py",
+      "snapshot_path": "review/combat-los-20261025/sources/BUFF_CARRIER_SCOPE_EXCERPTS.py",
+      "scope": "actual base Buff carrier constructor/graph excerpt; later200 successor tracked by status docs",
+      "original_sha256": "4a25568f51d1cb61b8c28a736ff010a968e24a760887469e798e598f52083fe8",
+      "snapshot_sha256": "7a9845ac441a6279060ec83aaacf4adc5e9d053561c218da2c3fe870f1a2b437",
+      "original_lines": [
+        [
+          368,
+          535
+        ],
+        [
+          923,
+          1013
+        ]
+      ],
+      "byte_identical": false
+    }
+  ],
+  "notes": [
+    "Full code snapshots are byte-identical actual source. Broker is marked exact-line excerpt.",
+    "Different source families must not be overlaid or treated as one executable product.",
+    "Runtime evidence is summarized from owner records, not independently re-run; raw logs/saves are omitted.",
+    "Original game binaries/assets, save data, credentials, full execution logs and REA raw material are excluded.",
+    "WebGPT consultation is not yet performed."
+  ]
+}
