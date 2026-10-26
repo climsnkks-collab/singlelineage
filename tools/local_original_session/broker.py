@@ -10,12 +10,13 @@ import asyncio
 from collections import deque
 import copy
 import inspect
+import os
 import re
 import socket
 import time
 from pathlib import Path
 
-from tools.local_entry_server.codecs import ClientPlaintextDecoder
+from tools.local_entry_server.codecs import ClientPlaintextDecoder, Frame
 from tools.local_game_session import session
 from tools.local_own_login_request import codec as login
 from tools.local_native_login_local_ack_hook import ack_enter_world as ack
@@ -37,6 +38,9 @@ ALIVE_FRAME = b'\x06\0\x57\x4f\0\0'  # SC_ALIVE_NOTI: empty protobuf body.
 ATTACK_REQUEST = 0x4e30
 ATTACK_FEEDBACK = 0x4e31
 RESTART_REQUEST = 0x4e33
+# CS_DEAD_RESTART_REQ, body0: the original Restart button while the own Action
+# is dead (run102 findings.md "DeathAction과 own UI": ACBF10 +46==0 -> 4EEC).
+DEAD_RESTART_REQUEST = 0x4eec
 RESTART_ACK = 0x4e3b
 ITEM_USE_REQUEST = 0x0960
 ATTACK_INTENT_POLICY = 'EXPLICIT_LOCAL_VALIDATED_ATTACK_INTENT'
@@ -92,7 +96,7 @@ async def _finish_cleanup(operation):
 
 
 class _TransportPolicy(PersistentPolicy):
-    def __init__(self, *args, attack_intent=False, attack_feedback=False, inventory_add=False, restart_enabled=False, item_use_intent=False, inventory_update=False, item_transfer=False, item_equipment_effect=False, npc_death=False, npc_remove=False, player_life=False, **kwargs):
+    def __init__(self, *args, attack_intent=False, attack_feedback=False, inventory_add=False, restart_enabled=False, item_use_intent=False, inventory_update=False, item_transfer=False, item_equipment_effect=False, npc_death=False, npc_remove=False, player_life=False, world=False, item_kit=False, **kwargs):
         need(type(attack_intent) is bool, 'EXPLICIT_ATTACK_INTENT_SWITCH_REQUIRED')
         need(type(inventory_add) is bool, 'EXPLICIT_INVENTORY_SWITCH_REQUIRED')
         need(type(attack_feedback) is bool and (not attack_feedback or attack_intent),
@@ -118,6 +122,11 @@ class _TransportPolicy(PersistentPolicy):
              and (not npc_death or attack_feedback) and (not npc_remove or npc_death),
              'NPC_DEATH_EXPLICIT_TRANSPORT_SWITCH_REQUIRED')
         self.npc_death, self.npc_remove = npc_death, npc_remove
+        need(type(world) is bool, 'WORLD_EXPLICIT_TRANSPORT_SWITCH_REQUIRED')
+        self.world = world
+        need(type(item_kit) is bool and (not item_kit or world and inventory_add),
+             'ITEM_KIT_EXPLICIT_TRANSPORT_SWITCH_REQUIRED')
+        self.item_kit = item_kit  # M1 kit potion: SC0965 quantity / SC0978 removal.
 
     def _verified_exit(self, proof, now):
         need(type(proof) is dict and proof.get('status') == 'VERIFIED'
@@ -134,6 +143,23 @@ class _TransportPolicy(PersistentPolicy):
         need(row.stage == 1 and row.rx_boot == 2 and row.tx_boot == 3
              and row.drain_started_ns is None, 'QUIT_DRAIN_STATE_REQUIRED')
         self._quit_drained[id(writer)] = writer
+
+    def received_drained_quit_terminal(self, writer, receipt, *, raw_size, now):
+        """Account only one decoded no-effect Quit after first ACK drain."""
+        self._time(now); self._open()
+        row = self._connection(writer)
+        need(type(receipt) is _TerminalQuitReceipt and receipt.writer is writer
+             and receipt.policy_row is row and receipt.frame.opcode == QUIT_REQUEST
+             and receipt.frame.payload == b'' and receipt.frame.wire_length == raw_size == 10
+             and self._quit_drained.get(id(writer)) is writer
+             and row.stage == 1 and row.rx_boot == 2 and row.tx_boot == 3
+             and not row.eof and row.buffered == 0 and row.drain_started_ns is None
+             and row.pending_opcode is None and row.pending_size == 0,
+             'QUIT_TERMINAL_EXACT_NOEFFECT_RECEIPT_REQUIRED')
+        row.rx_bytes.take(raw_size, now)
+        row.rx_frames.take(1, now)
+        row.received = min(MAX_COUNTER, row.received + 1)
+        self._emit('rx', row.peer.port, QUIT_REQUEST, raw_size)
 
     def quit_drained_after_exit(self, writer, *, proof, queued_bytes, now):
         self._time(now); self._open(); self._verified_exit(proof, now)
@@ -160,14 +186,21 @@ class _TransportPolicy(PersistentPolicy):
     def received_frame(self, writer, sample, opcode, size, now):
         extension = (0x4e2b, settings.OPCODE, QUIT_REQUEST, ALIVE_REQUEST)
         if getattr(self, 'player_life', False) is True: extension += (0x4eec,)
-        if getattr(self, 'attack_intent', False) is True:
+        if getattr(self, 'attack_intent', False) is True or getattr(self, 'world', False) is True:
             extension += (ATTACK_REQUEST,)
         if getattr(self, 'restart_enabled', False) is True:
             extension += (RESTART_REQUEST,)
+            if getattr(self, 'world', False) is True and DEAD_RESTART_REQUEST not in extension:
+                extension += (DEAD_RESTART_REQUEST,)  # world PC death -> Restart button
         if getattr(self, 'item_use_intent', False) is True:
             extension += (ITEM_USE_REQUEST,)
+        if getattr(self, 'world', False) is True:
+            from tools.local_original_session.world_handlers import HANDLERS
+            extension += tuple(HANDLERS) + (ITEM_USE_REQUEST,)
         if self.item_transfer:
             extension += (0x4e3f, 0x4e3e)
+        elif getattr(self, 'world', False) is True:
+            extension += (0x4e3e,)  # CS_GET_ITEM_REQ on a world ground drop
         if opcode not in extension:
             return super().received_frame(writer, sample, opcode, size, now)
         # Only these source-bound game opcodes extend the frozen policy. Preserve its
@@ -183,6 +216,11 @@ class _TransportPolicy(PersistentPolicy):
 
     def begin_write(self, writer, sample, opcode, size, queued_bytes, now):
         extension = (movement.CORRECTION_OPCODE, QUIT_SUCCESS_OPCODE, ALIVE_RESPONSE, npc_motion.OPCODE)
+        if getattr(self, 'world', False) is True and opcode in (0x4e44, 0x4e48, 0x4ee7, 0x4e5c):
+            extension += (opcode,)
+        if (getattr(self, 'world', False) is True and opcode in (0x4f1a, 0x4ec8)
+                and os.environ.get('SL_EXPERIMENT_HPBAR') in ('1', '2', '3')):
+            extension += (opcode,)
         if self.player_life and opcode in (0x4e39,0x4eed,0x4f16):
             extension += (opcode,)
             need(type(size) is int and 8 <= size <= 32, 'PLAYER_LIFE_FRAME_BOUND')
@@ -192,6 +230,13 @@ class _TransportPolicy(PersistentPolicy):
         if getattr(self, 'npc_remove', False) is True and opcode == 0x4e40:
             extension += (opcode,)
             need(type(size) is int and 8 <= size <= 17, 'NPC_REMOVE_FRAME_BOUND')
+        if getattr(self, 'world', False) is True and opcode == 0x4e40 and opcode not in extension:
+            extension += (opcode,)
+            need(type(size) is int and 8 <= size <= 17, 'WORLD_REMOVE_FRAME_BOUND')
+        if getattr(self, 'world', False) is True and opcode in (0x4e39, ATTACK_FEEDBACK) and opcode not in extension:
+            extension += (opcode,)  # World combat Death / kind1 attack, same bounds as above/below.
+            need(type(size) is int and (10 <= size <= 19 if opcode == 0x4e39 else 6 <= size <= 45),
+                 'WORLD_COMBAT_FRAME_BOUND')
         if getattr(self, 'attack_feedback', False) is True:
             extension += (ATTACK_FEEDBACK,)
             if opcode == ATTACK_FEEDBACK:
@@ -214,10 +259,20 @@ class _TransportPolicy(PersistentPolicy):
             from tools.local_original_session import inventory
             extension += (inventory.OPCODE,)
             if opcode == inventory.OPCODE:
-                need(type(size) is int and 6 <= size <= inventory.MAX_FRAME, 'INVENTORY_FRAME_BOUND')
+                # M1 kit delivery is one write of several <= MAX_FRAME 0964 frames
+                # (inventory.kit_wire_frames); any other 0964 stays one frame.
+                limit = (inventory.KIT_MAX_FRAME + inventory.MAX_FRAME
+                         if getattr(self, 'item_kit', False) is True else inventory.MAX_FRAME)
+                need(type(size) is int and 6 <= size <= limit, 'INVENTORY_FRAME_BOUND')
         if self.item_transfer and opcode in (0x0978, 0x4e96, 0x4e40):
             extension += (opcode,)
             need(type(size) is int and 6 <= size <= self.MAX_FRAME, 'ITEM_TRANSFER_FRAME_BOUND')
+        if getattr(self, 'item_kit', False) is True and opcode in (0x0965, 0x0978) and opcode not in extension:
+            extension += (opcode,)
+            need(type(size) is int and 6 <= size <= 1024, 'ITEM_KIT_FRAME_BOUND')
+        if getattr(self, 'item_kit', False) is True and opcode == 0x4e5b:
+            extension += (opcode,)  # Kit speed potion SC_SPEED_BONUS_NOTI (world_combat.speed_frame).
+            need(type(size) is int and 6 <= size <= 64, 'ITEM_KIT_SPEED_FRAME_BOUND')
         if opcode not in extension:
             return super().begin_write(writer, sample, opcode, size, queued_bytes, now)
         row = self.checkpoint(writer, sample, now)
@@ -282,6 +337,7 @@ class LocalRealm:
         self._quit_closed = deque(maxlen=4)
         need(edge_passability is None or callable(edge_passability), 'EDGE_CALLBACK_REQUIRED')
         self.edge_passability = edge_passability or (lambda *_: None)
+        self.edge_fallback = None  # World mode: static terrain when the client-memory edge is UNKNOWN.
         self.store.snapshot()  # Reject malformed storage before listening.
         self.registry = session.Registry()
         self.login_consumed = False
@@ -366,18 +422,94 @@ class LocalRealm:
                     fallback_grid=list(movement.authority.unpack_grid(self._actor_fields[1])),
                     position_policy='SAVED_UID_POSITION_FIRST_ELSE_PROFILE_FALLBACK')
 
-    def _frames_for(self, position, *, status_fields=None):
-        need(position.uid == self.profile_uid and position.name == self.profile_name
-             and position.map_id == 0, 'EXACT_PROFILE_OWN_STORED_SELECTION_REQUIRED')
+    def _actor_for(self, position, *, heading=None):
         actor = dict(self._actor_fields)
-        actor[1] = position.packed  # Existing ActorNotify field1 packed grid.
+        actor[1] = position.packed
+        if heading is not None:
+            actor[5] = heading
+        if getattr(self, '_world_hp', None) is not None:
+            sprite, _ = self._world_look(position.name)
+            if sprite is not None:
+                actor[3] = sprite
+            # Equipment is read from the saved row, never the clicked inventory item.
+            actor[4] = self._world_stance(position.uid)
+            appearance = getattr(self, '_world_appearance', None)
+            if appearance is not None:
+                actor[3] = appearance(position.uid, actor[3])
+            import os
+            experiment = os.environ.get('SL_EXPERIMENT_ACTOR_F4')
+            if experiment is not None and experiment != '':
+                actor[4] = int(experiment)
+        return actor
+
+    def _frames_for(self, position, *, status_fields=None, heading=None):
+        need(position.uid == self.profile_uid and position.name == self.profile_name
+             and self.serves_map(position.map_id), 'EXACT_PROFILE_OWN_STORED_SELECTION_REQUIRED')
+        actor = self._actor_for(position, heading=heading)
         fields = self._self_fields if status_fields is None else status_fields
+        world_hp = getattr(self, '_world_hp', None)
+        if status_fields is None and world_hp is not None:
+            progress = getattr(self, '_world_progress', None)
+            saved = None if progress is None else progress(position.uid)
+            if saved is not None:
+                # M1 world: saved level / grown maxima (world_progress sidecar).
+                fields = dict(fields)
+                fields[2] = saved.level
+                fields[18] = saved.lawful
+                if saved.max_hp is not None:
+                    fields[11] = fields[10] = saved.max_hp  # full until the world HP says otherwise
+                if saved.max_mp is not None and 13 in fields:
+                    fields[13] = saved.max_mp
+            # M1 world: SelfInfo current HP comes from the world combat authority.
+            hp = world_hp(position.uid)
+            if type(hp) is int and 0 < hp:
+                fields = dict(fields)
+                fields[10] = min(hp, fields[11])
+            world_mp = getattr(self, '_world_mp', None)
+            mp = None if world_mp is None else world_mp(position.uid)
+            if type(mp) is int and 0 <= mp and 13 in fields:
+                fields = dict(fields)
+                fields[12] = min(mp, fields[13])  # current MP (SC4E38 field12)
+            _, stats = self._world_look(position.name)
+            fields = dict(fields)
+            fields.update(stats)
+        stats_fields = getattr(self, '_world_stats_fields', None)
+        if stats_fields is not None:
+            fields = stats_fields(position, fields)
         session.world.validate_self_spawn(fields, actor, this_is_self=True)
         def encode(opcode, fields):
             body = session.world.encode_payload(opcode, fields)
             return (len(body) + 6).to_bytes(2, 'little') + opcode.to_bytes(2, 'little') + body + b'\0\0'
         # SelfInfo has no grid field. Preserve its source field numbers/values.
-        return self.map_frame, encode(0x4e38, fields), encode(0x4e96, actor)
+        map_frame = self.map_frame
+        if position.map_id != 0:
+            # run380 section 8: required presence. These are LOCAL experiment
+            # values; normal f1/f2/environment and tile readiness UNKNOWN.
+            map_frame = encode(0x4e95, {1: position.map_id, 2: 0, 3: False, 4: False})
+        return map_frame, encode(0x4e38, fields), encode(0x4e96, actor)
+
+    def serves_map(self, map_id):
+        return map_id == 0 or getattr(self, '_world_map_exp', 0) == 2 and map_id in (1, 2)
+
+    def _world_look(self, name):
+        """M1 world: the stored row's class/gender/attributes for the own frames.
+
+        SelfInfo f4..f9 = STR/DEX/INT/WIS/CON/CHA (tools/local_self_info_profile/model.py
+        _values/provenance projection of the store's STR/DEX/CON/WIS/CHA/INT). ActorNotify
+        f3 is the sprite key (tools/local_self_actor_profile/profile.py require_sprite_key);
+        class/gender -> sprite is LOCAL policy from world_combat.PC_SPRITES (list.spr
+        #0 prince/#61 knight..., same as L1J C_CreateChar MALE_LIST/FEMALE_LIST). The
+        fixed royal profile maps to its own values, so SoloKnight's frames are unchanged.
+        """
+        looks = getattr(self, '_world_looks', None)
+        if looks is None:
+            looks = self._world_looks = {}
+        if name not in looks:
+            from tools.local_original_session.world_combat import PC_SPRITES
+            _, info = self.store.select(name)
+            looks[name] = (PC_SPRITES.get((info[3], info[5])),
+                           {4: info[11], 5: info[12], 6: info[16], 7: info[14], 8: info[13], 9: info[15]})
+        return looks[name]
 
     def service(self, writer):
         row = self._movement.get(id(writer))
@@ -390,11 +522,20 @@ class LocalRealm:
         if cached is None or cached[0] is not service.snapshot():
             status = getattr(self, '_hp_status', None)
             fields = None if status is None else status.fields_for(writer)
-            cached = (service.snapshot(), self._frames_for(service.snapshot(), status_fields=fields))
+            cached = (service.snapshot(), self._frames_for(service.snapshot(), status_fields=fields,
+                      heading=getattr(service, '_actor_heading', None)))
             self._world_frames[id(writer)] = cached
         return cached[1]
 
-    def grant(self, writer, *, movement_owner_guard=None, account_owner_guard=None, connection_id=None):
+    def grant(self, writer, *, movement_owner_guard=None, account_owner_guard=None,
+              closing_quit_owner_guard=None, connection_id=None):
+        need(closing_quit_owner_guard is None or
+             (type(closing_quit_owner_guard) is _ClosingQuitOwnerGuard
+              and closing_quit_owner_guard.broker.realm is self
+              and closing_quit_owner_guard.writer is writer
+              and closing_quit_owner_guard.row['writer'] is writer
+              and closing_quit_owner_guard.broker._source_quit_closing is not None),
+             'QUIT_CLOSING_CALLBACK_REQUIRED')
         empty = dict(schema='lc-owned-local-core-roster-v1', realm='owned-local',
                      source_provenance='explicit_local_game_configuration',
                      expected_count=0, display_slots=3, rows=[], existing_rows=[],
@@ -408,11 +549,16 @@ class LocalRealm:
             need(callable(movement_owner_guard), 'SELECTED_MOVEMENT_OWNER_GUARD_REQUIRED')
             need(id(writer) not in self._movement, 'MOVEMENT_WRITER_REUSE_REFUSED')
             need(len(self._movement) < 2, 'MOVEMENT_SESSION_LIMIT')
+            respawn = getattr(self, '_world_respawn_commit', None)
+            if respawn is not None:
+                # M1 world: a PC that died re-enters at the town point. A failed town
+                # save fails this selection (pending kept) instead of a normal entry.
+                respawn(result[0], strict=True)
             words = movement.authority.unpack_grid(self._actor_fields[1])
             initial = movement.Position(result[0], selected.reference, 0, *words)
             service = movement.MovementService(initial, connection=writer,
                 owner_guard=movement_owner_guard, edge_passability=self.edge_passability,
-                store=self.positions)
+                store=self.positions, edge_fallback=getattr(self, 'edge_fallback', None))
             frames = self._frames_for(service.snapshot())  # Reject unserved saved maps.
             self._movement[id(writer)] = (writer, service, connection_id)
             self._world_frames[id(writer)] = (service.snapshot(), frames)
@@ -473,9 +619,19 @@ class LocalRealm:
         async def move(payload):
             self.registry.resolve(writer)
             need(game.selection is not None, 'SELECTED_MOVEMENT_REQUIRED')
-            result = await self.service(writer).handle_CS4E2B(payload)
+            service = self.service(writer)
+            world_dead = getattr(self, '_world_is_dead', None)
+            if world_dead is not None and world_dead(service.snapshot().uid):
+                return ()  # M1 world: a dead PC's late move changes nothing (no save, no reply).
+            stair = getattr(service, '_world_step_transition', None)
+            result = (await service.handle_CS4E2B(payload) if stair is None else
+                      await service.handle_CS4E2B(payload, transition=stair))
             if result.fatal or result.reason in ('OWNER_REFUSED', 'OWNER_UNKNOWN'):
                 raise ValueError(result.reason)
+            if result.accepted and result.reason != 'LOCAL_MAP_TRANSITION':
+                # The accepted request is the current heading; attack direction8
+                # means keep this transform. It belongs to this movement life.
+                _, service._actor_heading = movement.parse_payload(payload)
             return result.replies
 
         async def alive(payload):
@@ -520,9 +676,17 @@ class LocalRealm:
                 # The received request already owns the real row lock. Initial
                 # sync may not have reached the feature poll yet; finish it here
                 # before consuming this same accepted intent, without re-locking.
-                initial = await effect.prepare_locked(writer)
-                if initial['status'] == 'SYNCHRONIZED':
-                    await effect.consume_locked(writer, accepted_ordinal=ordinal, expected_intent=intent)
+                life = getattr(effect, '_selection', None)
+                if (getattr(service.broker, '_inventory_kit_policy', None) is not None
+                        and not (type(life) is dict and life.get('synced') is True)):
+                    # M1 kit: the feature poll runs the initial 097A sync only after the
+                    # AddInventory client check; a sync here (~1.4 s per worn item under the
+                    # row lock) would starve that 10 s check. This early Use has no effect.
+                    pass
+                else:
+                    initial = await effect.prepare_locked(writer)
+                    if initial['status'] == 'SYNCHRONIZED':
+                        await effect.consume_locked(writer, accepted_ordinal=ordinal, expected_intent=intent)
             need(type(replies) is tuple and replies == (), 'ITEM_USE_INTENT_REPLY_FORBIDDEN')
             return replies
 
@@ -598,7 +762,8 @@ class LocalRealm:
                         and self.registry.selected.get(position.name) is selected)
 
             need(exact() and callable(movement_owner_guard), 'QUIT_CURRENT_SELECTED_AUTHORITY_REQUIRED')
-            need(await movement_owner_guard(writer, position) is True, 'QUIT_CURRENT_SELECTED_OWNER_REQUIRED')
+            duplicate_owner = closing_quit_owner_guard or movement_owner_guard
+            need(await duplicate_owner(writer, position) is True, 'QUIT_CURRENT_SELECTED_OWNER_REQUIRED')
             need(exact(), 'QUIT_CURRENT_SELECTED_AUTHORITY_REQUIRED')
             # Explicit local idempotency: preserve the first terminal state and
             # its one ACK. This does not assert why the original retries Quit.
@@ -654,6 +819,11 @@ class LocalRealm:
             game.routes[0x4eec] = dead_restart
         if self._restart_broker is not None:
             game.routes[RESTART_REQUEST] = restart_game
+            if life_broker is None and getattr(self, '_world_dead_restart', False) is True:
+                # M1 world PC death: the dead Restart button (4EEC, body0) takes the
+                # existing Restart path (4E3B true -> character select -> reselect
+                # at the town point). Local policy; no 4EED/4F16 in-place revival.
+                game.routes[DEAD_RESTART_REQUEST] = restart_game
         if self._attack_session is not None:
             game.routes[ATTACK_REQUEST] = attack_intent
         if self._item_use_session is not None:
@@ -665,6 +835,12 @@ class LocalRealm:
                 need(not self._settings_failed, 'SETTINGS_PERSISTENCE_FATAL')
                 if id(writer) in self._quit and route_opcode == QUIT_REQUEST:
                     return await duplicate_quit(payload)
+                quit_state = self._quit.get(id(writer))
+                if (route_opcode == ALIVE_REQUEST and quit_state is not None
+                        and quit_state.get('request_verified') is True):
+                    # The client may send one more keepalive after the Quit ACK
+                    # while it closes: no reply, no effect, normal close follows.
+                    return ()
                 need(id(writer) not in self._quit, 'QUIT_TERMINAL_SESSION')
                 life_broker = getattr(self,'_player_life_broker',None)
                 if life_broker is not None and route_opcode not in (0x4eec,QUIT_REQUEST,ALIVE_REQUEST,settings.OPCODE):
@@ -786,6 +962,8 @@ class LocalRealm:
         return dict(connection_id=cid, committed=service.committed,
                     requests_received=getattr(service, 'requests_received', None),
                     corrections_prepared=getattr(service, 'corrections_prepared', None),
+                    correction_reasons=dict(getattr(service, 'correction_reasons', None) or {}),
+                    edge_fallback_accepted=getattr(service, 'edge_fallback_accepted', None),
                     authority=service.snapshot().metadata(),
                     last_result=copy.deepcopy(service.last_result), fatal=service.fatal,
                     closed=closed)
@@ -904,6 +1082,41 @@ def _inventory_property(name):
     return property(get, set_)
 
 
+class _ClosingQuitOwnerGuard:
+    """The real accepted game row's no-effect duplicate Quit capability only."""
+    __slots__ = ('broker', 'row', 'writer')
+
+    def __init__(self, broker, row, writer):
+        need(type(broker) is PersistentBroker and row['writer'] is writer
+             and broker._source_quit_closing is not None,
+             'QUIT_CLOSING_REAL_BROKER_ROW_REQUIRED')
+        self.broker, self.row, self.writer = broker, row, writer
+
+    async def __call__(self, writer, position):
+        need(writer is self.writer and self.row['writer'] is writer,
+             'QUIT_CLOSING_WRITER_CHANGED')
+        return await self.broker._quit_duplicate_owner(writer, self.row, position)
+
+
+class _TerminalQuitReceipt:
+    """One decoded empty Quit on the same retained read, never an OwnerSample."""
+    __slots__ = ('broker', 'writer', 'row', 'peer', 'peer_values', 'policy_row',
+                 'operation_lock', 'transport', 'read_task', 'decoder', 'frame')
+
+    def __init__(self, broker, writer, row, read_task, decoder, frame):
+        need(type(broker) is PersistentBroker and row['writer'] is writer
+             and row['_read_task'] is read_task and row['operation_lock'].locked()
+             and type(decoder) is ClientPlaintextDecoder and type(frame) is Frame
+             and frame.opcode == QUIT_REQUEST and frame.wire_length == 10
+             and frame.payload == b'' and decoder.buffered_bytes == 0,
+             'QUIT_TERMINAL_SAME_READER_FRAME_REQUIRED')
+        self.broker, self.writer, self.row = broker, writer, row
+        self.peer, self.peer_values = row['peer'], tuple(sorted(row['peer'].items()))
+        self.policy_row, self.operation_lock = row['policy_row'], row['operation_lock']
+        self.transport, self.read_task = writer.transport, read_task
+        self.decoder, self.frame = decoder, frame
+
+
 class PersistentBroker:
     """One retained owner, two sequential streams/endpoint, no session deadline.
 
@@ -950,7 +1163,8 @@ class PersistentBroker:
                  inventory_missing_row_policy=None, hp_status_policy=None,
                  inventory_collection_policy=None, inventory_collection_grant=None,
                  inventory_owner_guard=None, npc_player_hit_policy=None, npc_player_hit_repeated_policy=None,
-                 inventory_custody_policy=None, item_transfer_policy=None, player_life_policy=None):
+                 inventory_custody_policy=None, item_transfer_policy=None, player_life_policy=None,
+                 world_policy=None, world_starter_kit=None, world_handler_sources=()):
         if item_transfer_policy is not None or inventory_custody_policy is not None:
             from tools.local_original_session import item_transfer_session
             item_transfer_session.validate_mode(policy=item_transfer_policy,
@@ -1101,6 +1315,14 @@ class PersistentBroker:
         self._inventory_reader = inventory_reader
         self._inventory_item_use_policy = item_use_policy
         self._inventory_generation = _InventoryGeneration(self)
+        # M1 world starter kit: with the world policy, a missing saved row gets the
+        # selected class's data/m1/starter.json items (instead of the singleton
+        # Athame) and the kit equipment/potion effects. Saved singleton rows stay valid.
+        self._inventory_kit_policy = None
+        if (world_policy is not None and inventory_missing_row_policy is not None
+                and inventory_collection_policy is None and item_transfer_policy is None
+                and inventory_store_policy == inventory_store.POLICY):
+            self._inventory_kit_policy = inventory.KIT_POLICY
         need((attack_policy is None and attack_reader is None)
              or (type(attack_policy) is str and attack_policy == ATTACK_INTENT_POLICY
                  and attack_reader is not None and bool(npc_spawns)),
@@ -1134,7 +1356,9 @@ class PersistentBroker:
                                       item_use_intent=item_use_policy is not None,
                                       item_transfer=item_transfer_policy is not None,
                                       item_equipment_effect=item_equipment_policy is not None,
-                                      inventory_update=inventory_update_policy is not None)
+                                      inventory_update=inventory_update_policy is not None,
+                                      world=world_policy is not None,
+                                      item_kit=self._inventory_kit_policy is not None)
         self.realm = LocalRealm(expected_uuid, Path(store_path), edge_passability=edge_passability,
                                 settings_path=settings_path, world_profile=world_profile, npc_spawns=npc_spawns,
                                 npc_motion_interval_ns=npc_motion_interval_ns,
@@ -1152,6 +1376,7 @@ class PersistentBroker:
         self._claims = {p: [] for p in PORTS}
         self._closing = False
         self._started = False
+        self._source_quit_closing = None
         self._loop = None
         self._close_task = None
         self._hp_status = None
@@ -1166,6 +1391,7 @@ class PersistentBroker:
         self._inventory_service = None
         self._inventory_frame = inventory_frame
         self._inventory_config_frame = inventory_frame
+        self._inventory_athame_config_frame = inventory_frame  # Kit mode may replace the config frame.
         self._inventory_store = None
         self._inventory_selection_binding = None
         self._inventory_restored = False
@@ -1184,7 +1410,8 @@ class PersistentBroker:
         if inventory_enabled:
             if inventory_store_policy is not None:
                 self._inventory_store = inventory_store.InventoryStore(self.realm.store.path,
-                    policy=inventory_store_policy, custody_policy=inventory_custody_policy)
+                    policy=inventory_store_policy, custody_policy=inventory_custody_policy,
+                    kit_policy=self._inventory_kit_policy)
             self._inventory_service = inventory.InventoryService(self, inventory_reader, policy=inventory_policy,
                                                                store=self._inventory_store, collection_policy=self._inventory_collection_policy)
             self._inventory_generation.reader = inventory_reader
@@ -1195,6 +1422,11 @@ class PersistentBroker:
                 self.realm._inventory_broker = self
         if inventory_update_policy is not None:
             self.realm._inventory_update_broker = self
+        self._world_warehouse_store = None
+        if world_policy is not None and self._inventory_kit_policy is not None:
+            from tools.local_original_session.world_warehouse import WarehouseStore
+            # Recover the inventory/equipment transaction before EquipmentStore reads.
+            self._world_warehouse_store = WarehouseStore(self._inventory_store)
         if item_use_policy is not None:
             self._item_use_session = item_use_session.ItemUseSession(self, policy=item_use_policy)
             self.realm.bind_item_use_session(self._item_use_session)
@@ -1231,6 +1463,133 @@ class PersistentBroker:
             from tools.local_original_session import player_life
             self._player_life = player_life.Service(self,policy=player_life_policy)
             self.realm._player_life_broker = self
+        self._world = None
+        self._world_pcs = {}
+        if world_policy is not None:
+            from tools.local_original_session import (world_visibility, world_town, world_handlers,
+                world_item_effects, world_interest_spawn, world_town_services, world_polymorph,
+                world_alignment, world_status_frames)
+            need(type(world_policy) is str and world_policy == world_visibility.POLICY,
+                 'WORLD_EXPLICIT_POLICY_REQUIRED')
+            from tools.local_original_session.game_data import load_m1
+            self._world = world_visibility.WorldView.create(
+                data=world_interest_spawn.with_dungeon_data(load_m1()))
+            from tools.local_original_session import world_enchant, world_enchant_inventory
+            world_enchant._policy()  # LOCAL probability table: startup, never first use.
+            self._world_enchant_exp = world_enchant_inventory.parse_experiment(
+                os.environ.get('SL_EXPERIMENT_ENCHANT'))
+            self._world_warehouse_exp = os.environ.get('SL_EXPERIMENT_WAREHOUSE', '').strip()
+            if self._world_warehouse_exp:
+                parts = (1, 0, 150, 0, 0, 30, 150) if self._world_warehouse_exp == '1' else tuple(
+                    int(value) for value in self._world_warehouse_exp.split(','))
+                need(len(parts) == 7 and parts[0] in (1, 2, 3)
+                     and all(0 <= value < 1 << 32 for value in parts), 'WAREHOUSE_EXPERIMENT_VALUES')
+                self._world_warehouse_exp = parts
+            self._world_enchant_results, self._world_warehouse_results = [], []
+            candidates = os.environ.get('SL_WORLD_TOWN_CANDIDATES', '')
+            town_data = world_town.load_town()
+            town_config = world_town.TownConfig(enable_candidates=candidates == 'all',
+                candidate_npc_ids=world_town.confirmed_npc_ids(town_data) | frozenset(
+                    int(value.strip()) for value in candidates.split(',')
+                    if value.strip() and candidates != 'all'))
+            self._world.town = world_town.TownNpcs(self._world.entities, town_data, town_config)
+            self._world_services = world_town_services.load_town_services(
+                experimental=os.environ.get('SL_EXPERIMENT_MAP', '0') in ('1', '2', '3'))
+            self._world_inn_price = self._world_services.inn_price
+            service_menus = world_town_services.load_service_menus(self._world.town,
+                warehouse_experiment=bool(self._world_warehouse_exp))
+            from dataclasses import replace
+            warehouse_keys = frozenset(source.placement_key for source in service_menus
+                                       if source.stem == 'storage')
+            if warehouse_keys:
+                town_config = replace(town_config,
+                    candidate_npc_ids=town_config.candidate_npc_ids | frozenset(k[0] for k in warehouse_keys),
+                    shop_sprite_candidates=town_config.shop_sprite_candidates | warehouse_keys)
+            # Unmapped service actors must not become invisible default blockers.
+            # Existing explicit town candidates or MapExp may enable the backend
+            # experiment; neither supplies an invented Classic sprite.
+            if os.environ.get('SL_EXPERIMENT_MAP', '0') in ('1', '2', '3'):
+                town_config = replace(town_config, candidate_npc_ids=town_config.candidate_npc_ids
+                                      | frozenset(source.placement_key[0] for source in service_menus))
+            from tools.local_original_session import world_shop_menu
+            self._world_shop_experiment = world_shop_menu.parse_experiment(os.environ.get('SL_EXPERIMENT_SHOP'))
+            menu_sources = world_shop_menu.load_menu_sources(self._world.town,
+                experiment=self._world_shop_experiment)
+            if self._world_shop_experiment is not None:
+                from dataclasses import replace
+                town_config = replace(town_config,
+                    candidate_npc_ids=town_config.candidate_npc_ids | frozenset(
+                        source.placement_key[0] for source in menu_sources),
+                    shop_sprite_candidates=town_config.shop_sprite_candidates | frozenset(
+                        source.placement_key for source in menu_sources))
+            self._world.town.register(town_config)
+            # Explicit externally prepared sources retain priority over JSON menus.
+            supplied = {source.placement_key for source in world_handler_sources}
+            self._world_handler_bindings = world_handlers.prepare_host_bindings(
+                self._world.town, sources=tuple(world_handler_sources) + tuple(
+                    source for source in (*menu_sources, *service_menus)
+                    if source.placement_key not in supplied))
+            self._world_poly_catalog = world_polymorph.load_polymorphs()
+            self._world_poly_exp = os.environ.get('SL_EXPERIMENT_POLY', '').strip()
+            need(not self._world_poly_exp or self._world_poly_exp in self._world_poly_catalog.forms,
+                 'WORLD_POLY_EXPERIMENT_FORM_REQUIRED')
+            self._world_polymorphs, self._world_poly_timers = {}, {}
+            self.realm._world_appearance = lambda uid, base: (
+                self._world_polymorphs[uid].current_sprite_id if uid in self._world_polymorphs else base)
+            self._world_alignment_catalog = world_alignment.load_alignment_catalog()
+            self._world_lawful, self._world_alignment_changes = {}, []
+            self._world_death_risks = []
+            self._world.combat.on_kill = self._world_alignment_kill
+            arrow = os.environ.get('SL_EXPERIMENT_ARROW', '0').split(',')
+            need(len(arrow) in (1, 2), 'WORLD_ARROW_EXPERIMENT_REQUIRED')
+            self._world.arrow_id = int(arrow[0])
+            self._world.arrow_mode = int(arrow[1]) if len(arrow) == 2 else 1
+            need(-(1 << 31) <= self._world.arrow_id < (1 << 31)
+                 and self._world.arrow_mode in (1, 2), 'WORLD_ARROW_EXPERIMENT_REQUIRED')
+            self._world_item_effects = world_item_effects.WorldItemEffects(self._world.combat,
+                                                                        self._world.terrain)
+            self._world_ailments = {}
+            self._world.prepare_pc_attack = self._world_prepare_pc_attack
+            self._world.on_pc_death = self._world_pc_died
+            self._world.on_npc_hit = self._world_npc_hit
+            self._world.notify = self._world_wake  # tick -> per-PC wake event, never a send
+            self.realm.edge_fallback = self._world_edge_fallback
+            self.realm._world_hp = self._world.combat.hp_of  # SelfInfo HP from the world authority
+            self.realm._world_mp = self._world.combat.mp_of
+            self.realm._world_stats_fields = self._world_fields_for
+            self._world.on_stats_changed = self._world_recalculate_uid
+            from tools.local_original_session.game_data import load_stances
+            self._world_stances = load_stances()
+            self.realm._world_stance = self._world_stance_for
+            self.realm._world_respawn_commit = self._world_commit_respawn
+            self.realm._world_dead_restart = restart_policy is not None
+            self.realm._world_is_dead = self._world.combat.is_dead
+            from tools.local_original_session import inventory_update, item_transfer_protocol, world_progress
+            self._world_progress = world_progress.ProgressStore(store_path)
+            self.realm._world_progress = self._world_progress_for
+            inventory_update.source_ready()  # 0965 pickup quantity frames: contract once
+            item_transfer_protocol.source_ready()  # 4E3E pickup request: contract once
+        # Optional named data/m1/starter.json kit for a missing saved row (manual -TestKnight).
+        self._world_starter_kit = None
+        if world_starter_kit is not None:
+            from tools.local_original_session.game_data import load_m1
+            need(world_policy is not None and type(world_starter_kit) is str
+                 and world_starter_kit in load_m1().starter.kits, 'WORLD_STARTER_KIT_REQUIRED')
+            self._world_starter_kit = world_starter_kit
+        self._world_events = {}  # pc uid -> asyncio.Event read by that writer's _serve loop
+        self._world_names = {}  # pc uid -> selected saved name (for the town respawn commit)
+        self._world_respawn = {}  # pc uid -> name: left dead, next entry is at the town point
+        self._world_respawn_errors = []
+        self._world_progress_errors = []
+        self._world_pickups = 0
+        self._world_pickup_errors = []
+        self._world_handler_errors = []
+        self._world_item_errors = []
+        self._world_relocations = {}  # restart/reselect fallback
+        self._world_map_exp = int(os.environ.get('SL_EXPERIMENT_MAP', '0'))
+        need(self._world_map_exp in (0, 1, 2, 3), 'WORLD_MAP_EXPERIMENT_REQUIRED')
+        self.realm._world_map_exp = self._world_map_exp if self._world is not None else 0
+        self._world_map_transitions = 0
         self._npc_player_lethal = None
         if player_life_policy is not None and player_life_policy.label == player_life.NPC_POLICY_LABEL:
             from tools.local_original_session import npc_player_lethal
@@ -1260,6 +1619,8 @@ class PersistentBroker:
         except BaseException:
             await self.close()
             raise
+        if self._world is not None:
+            self._world.runtime.start(self._loop)
         return self
 
     def _fail(self, code):
@@ -1300,6 +1661,22 @@ class PersistentBroker:
             return code
         return type(failure).__name__
 
+    def bind_source_quit_closing(self, source_quit):
+        """Bind the existing SourceQuit object before the primary is resumed.
+
+        This is an owner receipt for one later no-effect duplicate Quit, never
+        an owner sample for an ordinary frame or a transport policy change.
+        """
+        from tools.local_original_session.manual_source_quit import SourceQuitRequests
+        need(type(source_quit) is SourceQuitRequests and source_quit.broker is self
+             and source_quit.owner is self.policy.owner
+             and source_quit.requests.consumer is source_quit.consumer
+             and source_quit.consumer.reader.owner is self.policy.owner
+             and source_quit._started is False and source_quit._closed is False
+             and self._source_quit_closing is None and not self._closing
+             and not self.failure.is_set(), 'QUIT_CLOSING_SOURCE_BINDING_REQUIRED')
+        self._source_quit_closing = source_quit
+
     def _accept(self, port, reader, writer):
         rows = self._claims[port]
         if (self._closing or self.failure.is_set() or len(rows) >= 2
@@ -1312,7 +1689,7 @@ class PersistentBroker:
         row = dict(writer=writer, peer=None, policy_row=None, eof=False,
                    positive_close=False, registry_removed=False, decoder_empty=False,
                    joined=False, promotable=False, boot_complete=False, failed=False,
-                   operation_lock=asyncio.Lock())
+                   operation_lock=asyncio.Lock(), _quit_frame_owner=None)
         rows.append(row)
         try:
             need(client and server and client[0] == server[0] == '127.0.0.1'
@@ -1338,8 +1715,27 @@ class PersistentBroker:
             writer.transport.abort()
             self._fail('ACCEPT_OR_FAST_KEY_FAILED')
 
-    async def _sample(self, row):
-        result = self.owner_guard(dict(row['peer']))
+    async def _sample(self, row, *, synchronous_exact=False):
+        need(type(synchronous_exact) is bool, 'OWNER_SAMPLE_MODE_REQUIRED')
+        if synchronous_exact:
+            # The actual launcher binds NativeOwner.guard, an async wrapper whose
+            # whole body calls this same synchronous guard. After an expensive
+            # source validation, obtain a NEW exact tuple/handle/Job result with
+            # no event-loop yield between that result and policy consumption.
+            from tools.local_original_session.launcher import NativeOwner
+            owner, guard = self.policy.owner, self.owner_guard
+            direct = getattr(owner, 'guard_exact_sync', None)
+            need(type(owner) is NativeOwner and getattr(guard, '__self__', None) is owner
+                 and getattr(guard, '__func__', None) is NativeOwner.guard
+                 and getattr(direct, '__self__', None) is owner
+                 and getattr(direct, '__func__', None) is NativeOwner.guard_exact_sync
+                 and self.policy.handle is owner.owner_handle
+                 and self.policy.job is owner.owner_job
+                 and row['operation_lock'].locked(),
+                 'OWNER_EXACT_SYNC_SOURCE_REQUIRED')
+            result = direct(dict(row['peer']))
+        else:
+            result = self.owner_guard(dict(row['peer']))
         if inspect.isawaitable(result):
             result = await asyncio.wait_for(result, 1.5)
         if result is not True:
@@ -1576,7 +1972,80 @@ class PersistentBroker:
         row['eof'] = True
         row['boot_complete'] = row['policy_row'].rx_boot == 2 and row['policy_row'].tx_boot == 3
 
-    async def _poll_checkpoint(self, writer, row, read_task, *, decoder_empty, operation_lock=None):
+    async def _drained_quit_read_eof(self, writer, row, read_task, *, decoder,
+                                     decoder_empty, quit_binding, binding_check, original_error):
+        """Same retained read: actual EOF or one parsed no-effect duplicate Quit."""
+        task = asyncio.current_task()
+        if task is not None and task.cancelling():
+            raise asyncio.CancelledError()
+        try:
+            raw = await asyncio.wait_for(asyncio.shield(read_task), self.policy.CLOSE_NS / 1e9)
+        except asyncio.TimeoutError:
+            raise original_error  # Same strict owner failure; no inferred EOF.
+        need(type(raw) is bytes, 'QUIT_TERMINAL_READ_BYTES_REQUIRED')
+        if task is not None and task.cancelling():
+            raise asyncio.CancelledError()
+        current = binding_check()
+        need(current is not None and quit_binding is not None
+             and len(current) == len(quit_binding)
+             and all(a is b for a, b in zip(quit_binding, current)),
+             'QUIT_EOF_BINDING_CHANGED')
+        if raw:
+            need(len(raw) == 10 and type(decoder) is ClientPlaintextDecoder
+                 and decoder.cipher_pointer == 'present_disabled'
+                 and decoder_empty is True and decoder.buffered_bytes == 0,
+                 'QUIT_TERMINAL_EXACT_FRAME_REQUIRED')
+            frames = decoder.feed(raw)  # The same original C2S parser, no invented frame.
+            need(len(frames) == 1 and type(frames[0]) is Frame
+                 and frames[0].opcode == QUIT_REQUEST and frames[0].wire_length == 10
+                 and frames[0].payload == b'' and decoder.buffered_bytes == 0,
+                 'QUIT_TERMINAL_EXACT_FRAME_REQUIRED')
+            frame = frames[0]
+            receipt = _TerminalQuitReceipt(self, writer, row, read_task, decoder, frame)
+            row['_quit_frame_owner'] = receipt
+            row['await_phase'] = 'TERMINAL_QUIT_DISPATCH'
+            try:
+                need(self._quit_closing_witness(writer, row, quit_binding[4]),
+                     'QUIT_TERMINAL_SOURCE_WRITER_REQUIRED')
+                from tools.local_original_session.launcher import NativeOwner
+                owner = self.policy.owner
+                callback = getattr(owner, 'quit_terminal_retained_sync', None)
+                target = getattr(NativeOwner, 'quit_terminal_retained_sync', None)
+                need(type(owner) is NativeOwner
+                     and target is not None
+                     and getattr(callback, '__self__', None) is owner
+                     and getattr(callback, '__func__', None) is target
+                     and callback(row['peer']) is True,
+                     'QUIT_TERMINAL_RETAINED_PRIMARY_REQUIRED')
+                self.source_guard()
+                current = binding_check()
+                need(current is not None and len(current) == len(quit_binding)
+                     and all(a is b for a, b in zip(quit_binding, current))
+                     and self._quit_closing_witness(writer, row, quit_binding[4]),
+                     'QUIT_TERMINAL_BINDING_CHANGED')
+                self.policy.received_drained_quit_terminal(writer, receipt,
+                    raw_size=len(raw), now=time.monotonic_ns())
+                replies = await quit_binding[2].received(frame)
+                need(type(replies) is tuple and replies == (),
+                     'QUIT_TERMINAL_NOEFFECT_REPLY_REQUIRED')
+                current = binding_check()
+                need(current is not None and len(current) == len(quit_binding)
+                     and all(a is b for a, b in zip(quit_binding, current))
+                     and self.realm.quit_state(writer)['duplicate_requests'] == 1,
+                     'QUIT_TERMINAL_NOEFFECT_CHANGED')
+            finally:
+                row['_quit_frame_owner'] = None
+                row['await_phase'] = 'READ_POLL_CHECKPOINT'
+            return 'QUIT_DUPLICATE_CONTINUE'  # Continue ordinary read; EOF is still unproved.
+        await self._complete_eof(writer, row, decoder_empty=decoder_empty)
+        current = binding_check(eof=True)
+        need(current is not None and len(current) == len(quit_binding)
+             and all(a is b for a, b in zip(quit_binding, current)),
+             'QUIT_EOF_BINDING_CHANGED')
+        return True
+
+    async def _poll_checkpoint(self, writer, row, read_task, *, decoder,
+                               decoder_empty, operation_lock=None):
         policy, policy_row = self.policy, row['policy_row']
         pending_bootstrap = (not read_task.done() and policy_row.stage == 0
                              and operation_lock is not None)
@@ -1817,11 +2286,9 @@ class PersistentBroker:
             # No live OwnerSample, payload dispatch or write is permitted here.
             need(decoder_empty is True and row['policy_row'].buffered == 0,
                  'EXACT_DRAINED_QUIT_EOF_REQUIRED')
-            await self._quit_exit(writer, row)
-            raw = await asyncio.wait_for(asyncio.shield(read_task), self.policy.CLOSE_NS / 1e9)
-            need(raw == b'', 'QUIT_TERMINAL_EOF_REQUIRED')
-            await self._complete_eof(writer, row, decoder_empty=decoder_empty)
-            return True
+            return await self._drained_quit_read_eof(writer, row, read_task,
+                decoder=decoder, decoder_empty=decoder_empty, quit_binding=quit_binding,
+                binding_check=drained_quit_binding, original_error=error)
 
     async def join_quit_exit(self):
         """Give only proven terminal Quit tasks the existing close bound to join."""
@@ -1844,6 +2311,146 @@ class PersistentBroker:
         except (ValueError, TimeoutError):
             return dict(status='UNKNOWN')
 
+    def _quit_closing_witness(self, writer, row, position):
+        """First-ACK drain and this exact frame's already-proved owner sample."""
+        from tools.local_original_session.manual_source_quit import SourceQuitRequests
+        source = self._source_quit_closing
+        if type(source) is not SourceQuitRequests:
+            return False
+        try:
+            policy, realm = self.policy, self.realm
+            peer, policy_row = row['peer'], row['policy_row']
+            state = realm._quit.get(id(writer))
+            evidence = source._drain_evidence
+            receipt = row['_quit_frame_owner']
+            late = source._requests.get('Quit6Approval')
+            first = source._requests.get('FirstLandQuit')
+            first_returned = source._returned.get('FirstLandQuit')
+            claims = [claim for rows in self._claims.values() for claim in rows
+                      if claim['writer'] is writer]
+            frame_receipt = type(receipt) is tuple and len(receipt) == 10
+            terminal_receipt = type(receipt) is _TerminalQuitReceipt
+            sample = receipt[7] if frame_receipt else None
+            return (source.broker is self and source.owner is policy.owner
+                    and source.consumer.reader.owner is policy.owner
+                    and source.requests.consumer is source.consumer
+                    and source._started is True and source._closed is False
+                    and source._claimed == {'FirstLandQuit', 'Quit6Approval'}
+                    and type(first) is dict and type(late) is dict
+                    and type(first_returned) is tuple and len(first_returned) == 2
+                    and first_returned[0]['status'] == 'RETURNED'
+                    and type(first['seq']) is int and type(late['seq']) is int
+                    and 0 < first['seq'] < late['seq'] == source.consumer.sequence
+                    and type(evidence) is tuple and len(evidence) == 5
+                    and evidence[0] is writer and evidence[1] is row
+                    and evidence[2] is realm and evidence[3] is state
+                    and evidence[4] == peer['connection_id'] == 4
+                    and state is not None and state['writer'] is writer
+                    and state['position'] is position
+                    and state['source_connection_id'] == peer['connection_id']
+                    and all(state[key] is True for key in ('request_verified',
+                        'response_drain_returned', 'response_queue_empty', 'response_drained'))
+                    and policy._quit_drained.get(id(writer)) is writer
+                    and len(claims) == 1 and claims[0] is row
+                    and row['writer'] is writer
+                    and row['await_phase'] == ('FRAME_DISPATCH' if frame_receipt
+                                                 else 'TERMINAL_QUIT_DISPATCH')
+                    and row['operation_lock'].locked() and not row['failed']
+                    and not row['joined'] and not row['eof']
+                    and policy_row is policy._connection(writer)
+                    and policy_row.writer is writer and policy_row.stage == 1
+                    and policy_row.rx_boot == 2 and policy_row.tx_boot == 3
+                    and not policy_row.eof and policy_row.drain_started_ns is None
+                    and policy_row.pending_opcode is None and policy_row.pending_size == 0
+                    and policy_row.buffered == 0 and policy.state == 'OPEN'
+                    and not self._closing and not self.failure.is_set()
+                    and ((frame_receipt
+                          and receipt[0] is writer and receipt[1] is row and receipt[2] is peer
+                          and receipt[3] == tuple(sorted(peer.items()))
+                          and receipt[4] is policy_row and receipt[5] is row['operation_lock']
+                          and receipt[6] is writer.transport
+                          and receipt[8] == QUIT_REQUEST and receipt[9] == 10
+                          and type(sample) is OwnerSample and sample.owner is policy.owner
+                          and sample.handle is policy.handle and sample.job is policy.job
+                          and sample.exact_identity_and_tuple is True and sample.alive is True
+                          and sample.peer.port == peer['server_port'] == peer['endpoint_port'] == 14030
+                          and sample.peer.client_port == peer['client_port']
+                          and sample.peer.accepted_ns == peer['accepted_monotonic_ns']
+                          and type(sample.observed_ns) is int
+                          and 0 < sample.observed_ns <= time.monotonic_ns())
+                         or (terminal_receipt and receipt.broker is self
+                             and receipt.writer is writer and receipt.row is row
+                             and receipt.peer is peer and receipt.peer_values == tuple(sorted(peer.items()))
+                             and receipt.policy_row is policy_row
+                             and receipt.operation_lock is row['operation_lock']
+                             and receipt.transport is writer.transport
+                             and receipt.read_task is row['_read_task']
+                             and receipt.read_task.done() and not receipt.read_task.cancelled()
+                             and receipt.read_task.exception() is None
+                             and type(receipt.read_task.result()) is bytes
+                             and len(receipt.read_task.result()) == 10
+                             and type(receipt.decoder) is ClientPlaintextDecoder
+                             and receipt.decoder.buffered_bytes == 0
+                             and type(receipt.frame) is Frame
+                             and receipt.frame.opcode == QUIT_REQUEST
+                             and receipt.frame.wire_length == 10
+                             and receipt.frame.payload == b''
+                             and state['duplicate_requests'] == 0)))
+        except (AttributeError, KeyError, TypeError, ValueError):
+            return False
+
+    async def _quit_duplicate_owner(self, writer, row, position):
+        """No-effect duplicate Quit using the strict sample from this frame."""
+        if not self._selected_owner_current(writer, row, position):
+            self._owner_failure(row, 'QUIT_SELECTED_CURRENT_FALSE')
+            return False
+        if self._source_quit_closing is None:
+            return await self._movement_owner(writer, row, position)
+        if not self._quit_closing_witness(writer, row, position):
+            self._owner_failure(row, 'QUIT_SOURCE_FRAME_WITNESS_FALSE')
+            return False
+        from tools.local_original_session.launcher import NativeOwner
+        owner = self.policy.owner
+        receipt = row['_quit_frame_owner']
+        terminal = type(receipt) is _TerminalQuitReceipt
+        method = 'quit_terminal_retained_sync'
+        target = getattr(NativeOwner, method, None)
+        callback = getattr(owner, method, None)
+        if (type(owner) is not NativeOwner or target is None
+                or getattr(callback, '__self__', None) is not owner
+                or getattr(callback, '__func__', None) is not target):
+            self._owner_failure(row, 'QUIT_NATIVE_CALLBACK_BINDING_FALSE')
+            return False
+        current = callback(row['peer'])  # The broker witness bound either receipt.
+        if current is not True:
+            self._owner_failure(row, 'QUIT_RETAINED_PRIMARY_FALSE' if terminal
+                                else 'QUIT_FRAME_RETAINED_FALSE')
+            return False
+        self.source_guard()
+        current = (self._quit_closing_witness(writer, row, position)
+                   and self._selected_owner_current(writer, row, position))
+        if not current:
+            self._owner_failure(row, 'QUIT_POST_CURRENT_FALSE')
+        return current
+
+    def _selected_owner_current(self, writer, row, position):
+        policy_row = row['policy_row']
+        if (row['writer'] is not writer or policy_row is None or policy_row.writer is not writer
+                or policy_row.stage != 1 or row['joined'] or row['failed']
+                or self._closing or self.failure.is_set()):
+            return False
+        game = self.realm.registry.resolve(writer)
+        service = self.realm.service(writer)
+        selected = game.selection
+        if (selected is None or selected.reference != position.name
+                or self.realm.registry.selected.get(position.name) is not selected
+                or service.snapshot() is not position or not self.realm.serves_map(position.map_id)):
+            return False
+        saved_uid, _ = self.realm.store.select(selected.reference)
+        return (saved_uid == position.uid == self.realm.profile_uid
+                and position.name == self.realm.profile_name
+                and self.realm.positions.restore(position) == position)
+
     async def _movement_owner(self, writer, row, position):
         def exact_selection():
             policy_row = row['policy_row']
@@ -1856,7 +2463,7 @@ class PersistentBroker:
             selected = game.selection
             if (selected is None or selected.reference != position.name
                     or self.realm.registry.selected.get(position.name) is not selected
-                    or service.snapshot() is not position or position.map_id != 0):
+                    or service.snapshot() is not position or not self.realm.serves_map(position.map_id)):
                 return False
             saved_uid, _ = self.realm.store.select(selected.reference)
             return (saved_uid == position.uid == self.realm.profile_uid
@@ -2152,6 +2759,8 @@ class PersistentBroker:
         from tools.local_original_session import inventory
         policy = self._inventory_collection_policy
         if policy is None:
+            if getattr(self, '_inventory_kit_policy', None) == inventory.KIT_POLICY:
+                return inventory.validate_kit_frame(frame)
             return (inventory.validate_frame(frame),)
         need(type(policy) is str and policy == inventory.COLLECTION_POLICY,
              'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
@@ -2251,6 +2860,9 @@ class PersistentBroker:
              'INVENTORY_RESELECTION_REAL_GENERATION_REQUIRED')
         if generation.writer is None or generation.phase in ('RETIRED', 'PREPARING'):
             return None
+        if generation.writer is writer and (generation.row.get('joined') is True
+                                            or self.realm.registry._sessions.get(id(writer)) is None):
+            return None  # The selected connection ended (Quit/EOF); no current selection remains.
         need(type(self.inventory_reselection_policy) is str
              and self.inventory_reselection_policy == INVENTORY_RESELECTION_POLICY
              and type(self.inventory_delivery_policy) is str
@@ -2417,10 +3029,17 @@ class PersistentBroker:
             frame = None if generation is not None and restored is None else (fallback_config if restored is None else restored)
             if generation is not None and restored is None and missing_policy is not None:
                 from tools.local_original_session import inventory
+                athame = getattr(self, '_inventory_athame_config_frame', fallback_config)
                 need(before[0].uid == self.realm.profile_uid == 1
-                     and dict(inventory.validate_frame(fallback_config).raw_fields) == INVENTORY_STARTER_FIELDS,
+                     and dict(inventory.validate_frame(athame).raw_fields) == INVENTORY_STARTER_FIELDS,
                      'INVENTORY_MISSING_ROW_CURRENT_ATHAME_STARTER_REQUIRED')
                 frame, mode = fallback_config, 'FIRST_GRANT'
+                if getattr(self, '_inventory_kit_policy', None) == inventory.KIT_POLICY:
+                    # Selected class's starter kit replaces the singleton literal for this
+                    # selection (the launcher consumer compares it with the config frame).
+                    _, info = self.realm.store.select(before[0].name)
+                    frame = self._inventory_kit_frame(info[3])
+                    self._inventory_config_frame = frame
             self._inventory_frame = frame  # Adopt this object exactly once for this selection.
             self._inventory_selection_binding = (None if frame is None else
                 (writer, row, lock, self.realm, self.realm.registry, game, mover, selected, service, store, frame))
@@ -2461,7 +3080,9 @@ class PersistentBroker:
                 need(mode is False and generation.restored is False
                      and getattr(self, 'inventory_missing_row_policy', None) == INVENTORY_MISSING_ROW_POLICY
                      and frame is self._inventory_config_frame
-                     and dict(inventory.validate_frame(frame).raw_fields) == INVENTORY_STARTER_FIELDS,
+                     and (bool(inventory.validate_kit_frame(frame))
+                          if getattr(self, '_inventory_kit_policy', None) == inventory.KIT_POLICY else
+                          dict(inventory.validate_frame(frame).raw_fields) == INVENTORY_STARTER_FIELDS),
                      'INVENTORY_FIRST_GRANT_MODE_REQUIRED')
             else:
                 need(generation.mode == 'RESTORED_EXISTING' and mode is True
@@ -3040,9 +3661,13 @@ class PersistentBroker:
                     inventory_authority=None, operation_lock=None, inventory_restore_only=False,
                     inventory_update_operation=None, inventory_update_request=None, equipment_operation=None,
                     npc_respawn_operation=None, status_operation=None, npc_player_hit_operation=None,
-                    item_transfer_operation=None, player_life_operation=None, npc_player_lethal_operation=None):
+                    item_transfer_operation=None, player_life_operation=None, npc_player_lethal_operation=None,
+                    world_operation=None):
         need(type(replies) in (tuple, list) and len(replies) <= ack.realm.MAX_CHARACTERS + 2,
              'BOUNDED_ROUTE_REPLIES_REQUIRED')
+        need(world_operation is None or (self._world is not None and game is True
+             and world_operation is replies and operation_lock is row['operation_lock']
+             and operation_lock.locked()), 'WORLD_LOCKED_SEND_REQUIRED')
         transfer = self._inventory_generation.transfer_session if item_transfer_operation is not None else None
         if item_transfer_operation is not None:
             from tools.local_original_session.item_transfer_session import ItemTransferSession
@@ -3079,7 +3704,8 @@ class PersistentBroker:
                  'NPC_PLAYER_HIT_ORIGINAL_LOCKED_SEND_REQUIRED')
             player_hit.validate_delivery(writer, row, replies[0], npc_player_hit_operation)
         world_status = (status_service.begin_world(writer, row, replies)
-                        if game and status_service is not None and status_operation is None else None)
+                        if game and status_service is not None and status_operation is None
+                        and world_operation is None else None)
         for wire in replies:
             feedback_service = feedback_intent = feedback_policy_row = None
             feedback_sent = None
@@ -3097,7 +3723,7 @@ class PersistentBroker:
                          and status_service.validate(writer, wire, phase='PREPARED') is status_operation,
                          'HP_STATUS_EXACT_SEND_CAPABILITY_REQUIRED')
                     status_sent = row['policy_row'].sent
-                elif (game and int.from_bytes(wire[2:4], 'little') == 0x4e38
+                elif (game and world_operation is None and int.from_bytes(wire[2:4], 'little') == 0x4e38
                       and status_service is not None and id(writer) in status_service._states):
                     raise ValueError('HP_STATUS_EXACT_SEND_CAPABILITY_REQUIRED')
                 inventory_wire = inventory_service is not None
@@ -3142,6 +3768,10 @@ class PersistentBroker:
                     status_service.validate(writer,wire,phase='PREPARED')
                 elif game and player_life_operation is not None:
                     life.validate(writer,row,wire,player_life_operation,'PREPARED')
+                elif world_operation is not None:
+                    need(any(wire is item for item in world_operation)
+                         and int.from_bytes(wire[2:4], 'little') in self.WORLD_SEND_OPCODES,
+                         'WORLD_EXACT_PREPARED_FRAME_REQUIRED')
                 elif game:
                     self.realm.validate_reply(wire, writer=writer)
                 else:
@@ -3153,7 +3783,7 @@ class PersistentBroker:
                          or (op == 0x4f3e and wire == EMPTY_COUNTS), 'EXACT_BOOT_REPLY_REQUIRED')
                 if player_life_operation is not None:
                     life.reserve(writer,row,wire,player_life_operation)
-                if player_life_operation is None and transfer is None and game and int.from_bytes(wire[2:4], 'little') in (0x4e39, 0x4e40):
+                if player_life_operation is None and transfer is None and world_operation is None and game and int.from_bytes(wire[2:4], 'little') in (0x4e39, 0x4e40):
                     notification_service = self._attack_session._notifications
                     actual_row, record, notification_delivery = notification_service.reserve(writer, wire)
                     need(actual_row is row and operation_lock is row['operation_lock']
@@ -3162,7 +3792,7 @@ class PersistentBroker:
                     notification_policy_row, notification_sent = row['policy_row'], row['policy_row'].sent
                 if player_hit is not None and npc_player_hit_operation.phase == 'ATTACK':
                     player_hit.reserve(writer, row, wire, npc_player_hit_operation)
-                if game and int.from_bytes(wire[2:4], 'little') == ATTACK_FEEDBACK and player_hit is None and npc_player_lethal_operation is None:
+                if game and world_operation is None and int.from_bytes(wire[2:4], 'little') == ATTACK_FEEDBACK and player_hit is None and npc_player_lethal_operation is None:
                     feedback_service = self._attack_session
                     need(feedback_service is not None and feedback_service is self.realm._attack_session,
                          'ATTACK_FEEDBACK_SAME_SERVICE_REQUIRED')
@@ -3254,7 +3884,7 @@ class PersistentBroker:
                 if game and opcode == 0x4e96 and any(
                         wire == prepared for _, prepared in self.realm._npc_spawns):
                     self.realm._validate_npc_reply(writer, wire)
-                if game and opcode == npc_motion.OPCODE:
+                if game and world_operation is None and opcode == npc_motion.OPCODE:
                     self.realm.npc_mover(writer).validate_frame(wire)
                 if feedback_service is not None:
                     need(feedback_service is self._attack_session
@@ -3279,7 +3909,13 @@ class PersistentBroker:
                     context = transfer.validate_wire(writer,row,wire,item_transfer_operation)
                     sample = self._inventory_owner_checkpoint_sync(writer,row,context.inventory_service,
                         context.authority,wire,True,operation_lock,item_transfer_operation=item_transfer_operation)
-                self._policy_sample(row, self.policy.begin_write, writer, sample, opcode, len(wire),
+                payload = wire
+                if inventory_wire and getattr(self, '_inventory_kit_policy', None) == inventory.KIT_POLICY:
+                    # Saved kit row above MAX_FRAME: same items as consecutive append
+                    # 0964 frames (outer f2 false each), written and drained once.
+                    kit_frames = inventory.kit_wire_frames(wire)
+                    payload = kit_frames[0] if len(kit_frames) == 1 else b''.join(kit_frames)
+                self._policy_sample(row, self.policy.begin_write, writer, sample, opcode, len(payload),
                                         writer.transport.get_write_buffer_size(), time.monotonic_ns())
                 if update_state is not None:
                     self._inventory_update_current(writer, row, update_state, inventory_update_request)
@@ -3349,8 +3985,8 @@ class PersistentBroker:
                     transfer.attempt(writer,row,wire,item_transfer_operation)
                 if player_life_operation is not None:
                     life.attempt(writer,row,wire,player_life_operation)
-                writer.write(wire)
-                row['await_phase'] = 'WRITE_DRAIN' 
+                writer.write(payload)
+                row['await_phase'] = 'WRITE_DRAIN'
                 await asyncio.wait_for(writer.drain(), self.policy.DRAIN_NS / 1e9)
                 if player_life_operation is not None: player_life_operation.drain_returned = True
                 if effect_op is not None:
@@ -3380,6 +4016,18 @@ class PersistentBroker:
                     self.policy.quit_drained_after_exit(writer, proof=proof, queued_bytes=queued,
                                                        now=time.monotonic_ns())
                 else:
+                    if restart_state is not None:
+                        # drain() may return below the low watermark while the
+                        # ACK is still queued. Keep its original reservation and
+                        # deadline; owner sampling can let that queue finish.
+                        while True:
+                            self._validate_restart(writer, wire, phase='WRITE_ATTEMPTED')
+                            self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
+                            queued = writer.transport.get_write_buffer_size()
+                            if queued == 0:
+                                break
+                            await asyncio.sleep(0)
+                            sample = await self._sample(row)
                     if world_status is not None:
                         # Reuse the original NPC/equipment conditional drain
                         # progress: one reservation, original deadline, no resend.
@@ -3387,6 +4035,7 @@ class PersistentBroker:
                             need(operation_lock is row['operation_lock'] and operation_lock.locked(),
                                  'HP_STATUS_SAME_WORLD_RESERVATION_REQUIRED')
                             status_service.validate_world_pending(writer, row, replies, wire, world_status)
+                            sample = await self._sample(row, synchronous_exact=True)
                             self._policy_sample(row, self.policy.checkpoint, writer, sample, time.monotonic_ns())
                             queued = writer.transport.get_write_buffer_size()
                             need(type(queued) is int and 0 <= queued <= self.policy.WRITE_HIGH,
@@ -3562,10 +4211,1024 @@ class PersistentBroker:
                 status_service.release(writer)
                 raise
 
+    WORLD_SEND_CHUNK = ack.realm.MAX_CHARACTERS + 2  # _send's bounded reply count.
+    WORLD_OPCODES = (0x4e28, 0x4e2b, ALIVE_REQUEST)  # select, move, alive
+    # Actor, Remove, NPC step, kind1 attack, Death, full SC_STATUS (PC HP).
+    # M1 kit potion: SC0965 quantity update / SC0978 removal / SC4E5B speed bonus
+    # (policy admits them only with item_kit).
+    # Ground pickup: SC0964 inventory add (M1_REWARD_PACKETS 2(4)); 0965 above for a stack.
+    WORLD_SEND_OPCODES = (0x4e96, 0x4e40, npc_motion.OPCODE, ATTACK_FEEDBACK, 0x4e39, 0x4e38, 0x0965, 0x0978,
+                          0x4e5b, 0x0964, 0x4e44, 0x4e48, 0x4ee7, 0x4ee0, 0x4f1a, 0x4ec8, 0x4e95, 0x4e5c)
+
+    def _world_edge_fallback(self, map_id, x, y, direction):
+        """Player move whose client-memory edge was UNKNOWN: static mask1 terrain
+        (world_terrain.can_step) plus a live world NPC standing on the target."""
+        world = self._world
+        if world is None or world.terrain is None:
+            return None
+        step = world.terrain.can_step(map_id, x, y, direction)
+        if step is not True:
+            return step
+        from tools.local_original_session.world_entities import Kind
+        from tools.local_original_session.world_terrain import DELTAS
+        tx, ty = x + DELTAS[direction][0], y + DELTAS[direction][1]
+        if any(entity.x == tx and entity.y == ty
+               for entity in world.entities.near(map_id, tx, ty, 0, kind=Kind.NPC)):
+            return False
+        return True
+
+    def _world_wake(self, pc_uid):
+        event = self._world_events.get(pc_uid)
+        if event is not None:
+            event.set()
+
+    def _world_ready(self, writer, game):
+        if (self._closing or self.failure.is_set() or game is None or game.selection is None
+                or id(writer) not in self.realm._movement or id(writer) in self.realm._quit):
+            return None
+        service = self.realm.service(writer)
+        return None if service.fatal else service
+
+    async def _world_send(self, writer, row, frames, operation_lock):
+        for start in range(0, len(frames), self.WORLD_SEND_CHUNK):
+            chunk = tuple(frames[start:start + self.WORLD_SEND_CHUNK])
+            await self._send(writer, row, chunk, game=True, operation_lock=operation_lock,
+                             world_operation=chunk)
+
+    def _world_progress_for(self, uid):
+        try:
+            return self._world_progress.get(uid)
+        except Exception as error:  # unreadable sidecar: baseline values, never a session failure
+            self._world_progress_errors = (self._world_progress_errors + [type(error).__name__])[-4:]
+            return None
+
+    def _world_save_progress(self, uid):
+        dirty = self._world.progress_dirty.get(uid)
+        if dirty is None:
+            return
+        try:
+            from dataclasses import replace
+            self._world_progress.commit(uid, replace(dirty, lawful=getattr(self, '_world_lawful', {}).get(
+                uid, dirty.lawful)))
+            if self._world.progress_dirty.get(uid) is dirty:
+                self._world.progress_dirty.pop(uid, None)
+        except Exception as error:  # the next kill retries with the newer value
+            self._world_progress_errors = (self._world_progress_errors + [type(error).__name__])[-4:]
+
+    def _world_alignment_kill(self, event):
+        """Existing kill-once callback; L1J calculation, run395 full SelfInfo f18."""
+        from tools.local_original_session import world_alignment
+        world, uid = self._world, event.pc_uid
+        state = world.combat.pcs.get(uid)
+        if state is None or event.template_id not in self._world_alignment_catalog:
+            return  # M1 table only; no guessed lawful for dungeon templates.
+        change = world_alignment.on_kill(self._world_lawful.get(uid, state.status_fields[18]),
+            world.data.monsters[event.template_id], catalog=self._world_alignment_catalog,
+            pc_dead=state.dead)
+        self._world_lawful[uid] = change.new_lawful
+        state.status_fields[18] = change.new_lawful  # _reward queues the complete status next.
+        from tools.local_original_session.world_progress import Progress
+        world.progress_dirty[uid] = Progress(world.exp[uid], state.profile.level,
+                                             state.max_hp, state.max_mp, change.new_lawful)
+        self._world_alignment_changes = (self._world_alignment_changes + [dict(
+            uid=uid, npc_uid=event.npc_uid, delta=change.delta, lawful=change.new_lawful)])[-16:]
+
+    def _world_polymorph_frame(self, uid, sprite):
+        """run390 SC_POLYMORPH_NOTI: only required signed int32 f1/2/3."""
+        from tools.local_original_session import attack
+        signed_uid = uid if uid < (1 << 31) else uid - (1 << 32)
+        body = b''.join(attack._field(n, value) for n, value in
+                        ((1, signed_uid), (2, sprite), (3, self._world_stance_for(uid))))
+        return (len(body) + 6).to_bytes(2, 'little') + b'\x5c\x4e' + body + b'\0\0'
+
+    async def _world_enchant_use(self, ctx, payload, now):
+        """run393 targeted 0960 -> one saved LOCAL enchant -> generic projection."""
+        from dataclasses import replace
+        from tools.local_original_session import inventory, world_enchant, world_enchant_inventory
+        from tools.local_original_session.world_status_frames import full_status_frame
+        if self._inventory_kit_policy != inventory.KIT_POLICY:
+            return False
+        pb = ack.realm.pb
+        with pb.parse_message(payload, limits=pb.WireLimits(max_body=4096, max_fields=2,
+                                                           max_field_bytes=2048)) as parsed:
+            if not (len(parsed.fields) == 2 and len(parsed.occurrences(1)) == len(parsed.occurrences(2)) == 1
+                    and parsed.occurrences(1)[0].wire_type == 0
+                    and parsed.occurrences(2)[0].wire_type == 2):
+                return False
+            scroll_uid = parsed.occurrences(1)[0].value
+            params = bytes(parsed.occurrences(2)[0].value)
+        before = self._inventory_current_frame
+        items = inventory.validate_kit_frame(before)
+        scroll = next((item for item in items if item.identifier == scroll_uid), None)
+        if scroll is None or scroll.template_bits not in (25, 26):
+            return False
+        with pb.parse_message(params, limits=pb.WireLimits(max_body=2048, max_fields=5,
+                                                          max_field_bytes=2048)) as parsed:
+            expected = {1: 1, 3: 0, 15: 0, 16: 0}
+            need(len(parsed.fields) == 5 and all(len(parsed.occurrences(n)) == 1 for n in (*expected, 2))
+                 and all(f.wire_type == 0 for f in parsed.fields)
+                 and all(parsed.occurrences(n)[0].value == value for n, value in expected.items()),
+                 'ENCHANT_TARGETED_PARAMS_REQUIRED')
+            target_uid = parsed.occurrences(2)[0].value  # int64 varint, never ZigZag or truncated.
+        target = next((item for item in items if item.identifier == target_uid), None)
+        need(target is not None and target_uid != scroll_uid, 'ENCHANT_OWNED_TARGET_REQUIRED')
+        definition = self._world.data.items.get(target.template_bits)
+        need(definition is not None and definition.kind in ('weapon', 'armor'), 'ENCHANT_EQUIPMENT_REQUIRED')
+        proposal = world_enchant.propose_enchant(
+            world_enchant.EnchantScroll(scroll.template_bits, world_enchant_inventory.scroll_grade(scroll)),
+            world_enchant.EnchantTarget(target.template_bits, definition.kind,
+                world_enchant_inventory.enchant_level(target, definition)))
+        need(proposal.accepted, 'ENCHANT_' + proposal.reason.upper())
+        rng = self._world.combat.rng
+        result = world_enchant.resolve_enchant(proposal,
+            outcome_roll=rng.randint(1, 100), blessing_roll=rng.randint(1, 100))
+        mutation = world_enchant_inventory.kit_mutation(items, scroll_uid, target_uid, result,
+                                                        self._world.data.items)
+        result_wire = world_enchant_inventory.result_frame(scroll_uid, target_uid, result,
+            self._world_enchant_exp, scroll_template_id=scroll.template_bits)
+        effect = self._item_equipment_effect
+        equipment = None if effect is None else effect.store.restore(ctx.pc_uid, before)
+        equipment_after, changes = equipment, ()
+        if equipment is not None:
+            removed = set(mutation.removed_uids)
+            if equipment.weapon_uid in removed:
+                changes += ((equipment.weapon_uid, self._world.data.items[target.template_bits].slot_key, False),)
+            changes += tuple((member_uid, key, False) for key, member_uid in equipment.slots
+                             if member_uid in removed)
+            if changes or equipment.item_uid in removed:
+                anchor = inventory.validate_kit_frame(mutation.frame)[0]
+                equipment_after = replace(equipment,
+                    item_uid=anchor.identifier if equipment.item_uid in removed else equipment.item_uid,
+                    template=anchor.template_bits if equipment.item_uid in removed else equipment.template,
+                    weapon_uid=0 if equipment.weapon_uid in removed else equipment.weapon_uid,
+                    slots=tuple((key, member_uid) for key, member_uid in equipment.slots if member_uid not in removed),
+                    revision=equipment.revision + 1)
+        warehouse = self._world_warehouse_store.restore(ctx.pc_uid)
+        ctx.commit_attempted = True
+        self._world_warehouse_store.commit(ctx.pc_uid, before, mutation.frame, warehouse, warehouse,
+            equipment_store=effect.store if equipment_after != equipment else None,
+            equipment_before=equipment, equipment_after=equipment_after)
+        self._inventory_current_frame = mutation.frame
+        ctx.row.pop('_world_warehouse_window', None)
+        if equipment_after != equipment:
+            if changes:
+                from tools.local_original_session.item_equipment_effect import _receipt
+                receipt = _receipt('INITIAL_SYNC')
+                await effect._notify_kit(effect._context(ctx.writer), equipment_after, receipt, changes)
+            if effect._selection is not None:
+                effect._selection['state'] = equipment_after
+        self._world_recalculate_uid(ctx.pc_uid)
+        for frame in (*self._world.drain(ctx.pc_uid), *mutation.frames,
+                      *((result_wire,) if result_wire is not None else ()),
+                      full_status_frame(self._world.combat.pcs[ctx.pc_uid].status_fields)):
+            ctx.send_frame(frame)
+        if changes:
+            await self._world_refresh_stance_locked(ctx.writer, ctx.row)
+        self._world_enchant_results = (self._world_enchant_results + [dict(
+            uid=ctx.pc_uid, scroll_uid=scroll_uid, target_uid=target_uid,
+            status=result.status, before=result.level_before, after=result.level_after,
+            result_packet=result_wire is not None)])[-16:]
+        return True
+
+    def _world_expire_polymorph(self, uid, now):
+        from tools.local_original_session import world_polymorph
+        state = self._world_polymorphs.get(uid)
+        if state is None:
+            return
+        result = world_polymorph.expire_polymorph(state, now_ms=int(now * 1000))
+        if result.reason != 'expired':
+            return
+        wire = self._world_polymorph_frame(uid, result.state.current_sprite_id)
+        self._world_polymorphs.pop(uid, None)
+        handle = self._world_poly_timers.pop(uid, None)
+        if handle is not None:
+            self._world.runtime.scheduler.cancel(handle)
+        self._world._queue(uid, wire)
+        self._world_recalculate_uid(uid)
+        from tools.local_original_session.world_status_frames import full_status_frame
+        self._world._queue(uid, full_status_frame(self._world.combat.pcs[uid].status_fields))
+        self._world._announce()
+
+    def _world_polymorph_use(self, ctx, payload, now):
+        """Registry 0960 extension; native form selection/zero-stance are EXP only.
+
+        -PolyExp selects one explicit form for raw0 use. It does not pretend to
+        decode an unproven native selection operand. Incompatible worn weapons
+        must be taken off through the ordinary equipment owner before use.
+        """
+        from tools.local_original_session import inventory, world_polymorph
+        if self._inventory_kit_policy != inventory.KIT_POLICY:
+            return False
+        pb = ack.realm.pb
+        with pb.parse_message(payload, limits=pb.WireLimits(max_body=4096, max_fields=2,
+                                                           max_field_bytes=2048)) as parsed:
+            fields = parsed.fields
+            if not (len(fields) == 2 and len(parsed.occurrences(1)) == len(parsed.occurrences(2)) == 1
+                    and parsed.occurrences(1)[0].wire_type == 0
+                    and parsed.occurrences(2)[0].wire_type == 2):
+                return False
+            item_uid = parsed.occurrences(1)[0].value
+            params = bytes(parsed.occurrences(2)[0].value)
+        item = next((r for r in inventory.validate_kit_frame(self._inventory_current_frame)
+                     if r.identifier == item_uid), None)
+        if item is None:
+            return False
+        uid = ctx.pc_uid
+        self._world_expire_polymorph(uid, now)
+        effect = getattr(self, '_item_equipment_effect', None)
+        worn, _ = (None, 0) if effect is None else effect.combat_inputs(uid)
+        active = self._world_polymorphs.get(uid)
+        definition = (getattr(effect, '_defs', None) or {}).get(item.template_bits)
+        if active is not None and definition is not None and definition.weapon_type is not None:
+            allowed = world_polymorph.weapon_allowed(self._world_poly_catalog.forms[active.active.form_key],
+                                                       definition.weapon_type)
+            need(definition == worn or allowed is True, 'POLYMORPH_WEAPON_NOT_ALLOWED')
+        if item.template_bits != 299:
+            return False
+        need(self._world_poly_exp, 'POLYMORPH_NOT_READY_ENABLE_POLYEXP')
+        with pb.parse_message(params, limits=pb.WireLimits(max_body=2048, max_fields=3,
+                                                          max_field_bytes=2048)) as parsed:
+            expected = {1: 1, 15: 0, 16: 0}
+            need(len(parsed.fields) == 3 and all(len(parsed.occurrences(n)) == 1 for n in expected)
+                 and all(f.wire_type == 0 and f.value == expected[f.number] for f in parsed.fields),
+                 'POLYMORPH_SELECTION_PARAMS_UNVERIFIED_RAW0_EXPERIMENT_ONLY')
+        need(dict(item.raw_fields)[4] > 0, 'WORLD_ITEM_OWNED_POSITIVE_STACK_REQUIRED')
+        position = self.realm.service(ctx.writer).snapshot()
+        base = self.realm._actor_for(position)[3] if active is None else active.base_sprite_id
+        result = world_polymorph.use_scroll(active or world_polymorph.initial_appearance(base),
+            self._world_poly_catalog, item_template_id=299, grade=1, form_key=self._world_poly_exp,
+            character_level=self._world.combat.pcs[uid].profile.level, now_ms=int(now * 1000),
+            weapon_type='unarmed' if worn is None else worn.weapon_type)
+        need(result.allowed, result.reason)
+        need(not result.unequip_weapon, 'POLYMORPH_UNEQUIP_WEAPON_BEFORE_USE')
+        wire = self._world_polymorph_frame(uid, result.state.current_sprite_id)
+        ctx.commit_attempted = True
+        cost = self._world_consume_kit(ctx.writer, item_uid, result.consume_count)
+        old = self._world_poly_timers.pop(uid, None)
+        if old is not None:
+            self._world.runtime.scheduler.cancel(old)
+        self._world_polymorphs[uid] = result.state
+        self._world_poly_timers[uid] = self._world.runtime.scheduler.schedule(
+            result.state.active.expires_at_ms / 1000, None, 'pc_polymorph',
+            lambda at: self._world_expire_polymorph(uid, at))
+        self._world_recalculate_uid(uid)
+        from tools.local_original_session.world_status_frames import full_status_frame
+        for frame in (*self._world.drain(uid), cost, wire,
+                      full_status_frame(self._world.combat.pcs[uid].status_fields)):
+            ctx.send_frame(frame)
+        return True
+
+    def _world_service_action(self, ctx, interaction, menu, fields, now):
+        """Current/drained native menu -> existing inventory/position owners."""
+        from tools.local_original_session import inventory, world_status_frames, world_town_services
+        from tools.local_original_session.world_handlers import Dialogue
+        from tools.local_original_session.world_maps import MapDestination
+        owner, uid = menu.source.owner, ctx.pc_uid
+        action, stem = fields[2].decode('utf-8'), menu.fields[2].decode('utf-8')
+        need(action in owner.pages.get(stem, ()), 'TOWN_SERVICE_ACTION_NOT_LISTED')
+        ctx.state.window = None
+        if interaction.npc.npc_id == 50015 and stem == 'lucas1' and action == 'teleportURL':
+            next_menu = Dialogue({1: fields[1], 2: b'lucas2'}, menu.source)
+            ctx.send_frame(ctx.wire.dialogue_frame(next_menu.fields))
+            menu.source.delivered = False
+            ctx.pending.append(menu.source)
+            ctx.state.menu = next_menu
+            return
+        state = self._world.combat.pcs[uid]
+        need(not state.dead and state.hp > 0, 'TOWN_SERVICE_LIVING_PC_REQUIRED')
+        items = inventory.validate_kit_frame(self._inventory_current_frame)
+        coins = [r for r in items if r.template_bits == 7]
+        need(len(coins) <= 1, 'UNIQUE_ADENA_STACK_REQUIRED')
+        adena = dict(coins[0].raw_fields)[4] if coins else 0
+        destination = None
+        if interaction.npc.npc_id in self._world_services.inn_ids:
+            need(action == 'room', 'TOWN_SERVICE_NOT_READY_INN_ACTION')
+            # Explicit LOCAL price in the startup table, never Healer's 5A rule.
+            proposal = world_town_services.calculate_inn_rest(self._world_services,
+                interaction.npc.npc_id, adena=adena, hp=state.hp, max_hp=state.max_hp,
+                mp=state.mp, max_mp=state.max_mp, price=self._world_inn_price)
+            values = dict(state.status_fields)
+            values.update({10: proposal.hp_after, 12: proposal.mp_after})
+            status = world_status_frames.full_status_frame(values)
+        else:
+            # Native literal differs from L1J XML's 'teleport ' prefix.
+            route = 'teleport ' + action
+            trip = self._world_services.teleports.get((interaction.npc.npc_id, route))
+            need(trip is not None, 'TOWN_SERVICE_NOT_READY_DESTINATION')
+            destination = MapDestination(trip.map_id, trip.x, trip.y, trip.heading)
+            position = self.realm.service(ctx.writer).snapshot()
+            need(destination.map_id == position.map_id or self._world_map_exp == 2,
+                 'TOWN_SERVICE_NOT_READY_ENABLE_MAPEXP_2')
+            need(self.realm.serves_map(destination.map_id)
+                 and self._world.terrain.can_stand(destination.map_id, destination.x, destination.y) is True,
+                 'TOWN_SERVICE_NOT_READY_DESTINATION_DATA')
+            proposal = world_town_services.calculate_teleport(self._world_services,
+                interaction.npc.npc_id, route, adena=adena, level=state.profile.level)
+        for frame in self._world.drain(uid):
+            ctx.send_frame(frame)  # older HP/state must precede paid recovery/relocation
+        if proposal.cost:
+            ctx.commit_attempted = True
+            ctx.send_frame(self._world_consume_kit(ctx.writer, coins[0].identifier, proposal.cost))
+        if destination is None:
+            state.hp, state.status_fields[12] = proposal.hp_after, proposal.mp_after
+            ctx.send_frame(status)
+        else:
+            for frame in self._world_relocate_locked(ctx.writer, ctx.row, ctx.game, destination,
+                                                     context=ctx, same_map_correction=True):
+                ctx.send_frame(frame)
+        ctx.state.clear()  # successful service cannot replay the paid menu
+
+    def _world_pc_died(self, uid):
+        """Death-once callback from WorldView; keep HP0/status/death wire order."""
+        from dataclasses import replace
+        from tools.local_original_session import world_reward, world_combat
+        from tools.local_original_session.world_progress import Progress, exp_percent
+        world = self._world
+        state = world.combat.pcs[uid]
+        from tools.local_original_session import world_alignment
+        lawful = self._world_lawful.get(uid, state.status_fields[18])
+        self._world_death_risks = (self._world_death_risks + [dict(uid=uid, lawful=lawful,
+            chance_per_mille=world_alignment.death_drop_chance(lawful),
+            max_attempts=world_alignment.death_drop_max_attempts(lawful),
+            applied=False, reason='CALCULATION_ONLY_DEATH_CONTEXT_UNRESOLVED')])[-16:]
+        try:
+            penalty = world_reward.death_exp_penalty(world.exp[uid], data=world.data)
+        except ValueError as error:
+            # The final supplied level has no next-level threshold. Do not invent one.
+            self._world_progress_errors = (self._world_progress_errors + [str(error)[:96]])[-4:]
+            return
+        world.exp[uid] = penalty.new_exp
+        state.profile = replace(state.profile, level=penalty.new_level)
+        state.status_fields.update({2: penalty.new_level,
+            26: exp_percent(world.data, penalty.new_exp, penalty.new_level)})
+        self._world_recalculate_uid(uid)
+        frames = world.outbox.get(uid, [])
+        for index in range(len(frames) - 1, -1, -1):
+            if int.from_bytes(frames[index][2:4], 'little') == 0x4e38:
+                frames[index] = world_combat.status_frame(state.status_fields, 0)
+                break
+        world.progress_dirty[uid] = Progress(penalty.new_exp, penalty.new_level,
+                                            state.max_hp, state.max_mp)
+        self._world_save_progress(uid)
+
+    def _world_npc_hit(self, uid):
+        """One explicit HP-bar candidate per normal damaging hit; no auto steps."""
+        if os.environ.get('SL_EXPERIMENT_HPBAR') not in ('1', '2', '3'):
+            return
+        from tools.local_original_session.world_hpbar_experiment import build_hpbar_experiment_frames
+        entity = self._world.entities.get(uid)
+        if entity is None:
+            return
+        for wire in build_hpbar_experiment_frames(uid):
+            for pc_uid in self._world._watchers(entity):
+                self._world._queue(pc_uid, wire)
+
+    def _world_consume_kit(self, writer, item_uid, count=1):
+        """Existing kit CAS and 0965/0978, before effects or a fired arrow."""
+        from tools.local_original_session import inventory, inventory_update, item_transfer_protocol
+        need(self._inventory_kit_policy == inventory.KIT_POLICY and self._world_bound(writer),
+             'WORLD_ITEM_CURRENT_KIT_REQUIRED')
+        current = self._inventory_current_frame
+        items = inventory.validate_kit_frame(current)
+        item = next((member for member in items if member.identifier == item_uid), None)
+        need(item is not None and count > 0, 'WORLD_ITEM_OWNED_STACK_REQUIRED')
+        quantity = dict(item.raw_fields)[4]
+        need(quantity >= count, 'WORLD_ITEM_INSUFFICIENT_QUANTITY')
+        rows = []
+        removed = quantity == count and len(items) > 1
+        for member in items:
+            fields = dict(member.raw_fields)
+            if member.identifier == item_uid:
+                if removed:
+                    continue
+                fields[4] = quantity - count
+            rows.append(fields)
+        updated = inventory.build_kit_frame(rows)
+        wire = (item_transfer_protocol.build_remove(uid=item_uid) if removed else
+                inventory_update._encode(inventory_update._values({1: item_uid, 4: quantity - count})))
+        uid = self._world_pcs[id(writer)][1]
+        need(self._inventory_store.replace_kit(uid, current, updated) is True,
+             'WORLD_ITEM_PERSISTED_CHANGE_REQUIRED')
+        self._inventory_current_frame = updated
+        return wire
+
+    def _world_prepare_pc_attack(self, pc_uid, target, now):
+        """Called after world life/cadence/LOS checks, before hit RNG/cooldown."""
+        from tools.local_original_session import inventory, world_ammo, world_combat
+        pc = self._world.entities.get(pc_uid)
+        effect = getattr(self, '_item_equipment_effect', None)
+        weapon, _ = (None, 0) if effect is None else effect.combat_inputs(pc_uid)
+        if weapon is None or weapon.weapon_type != 'bow':
+            if max(abs(pc.x - target.x), abs(pc.y - target.y)) > world_combat.MELEE_RANGE:
+                return None
+            return world_ammo.AttackPreparation(True)
+        writer = next((writer for writer, uid in self._world_pcs.values() if uid == pc_uid), None)
+        if writer is None or self._inventory_kit_policy != inventory.KIT_POLICY:
+            return None
+        items = inventory.validate_kit_frame(self._inventory_current_frame)
+        prepared = world_ammo.prepare_attack(weapon,
+            (world_ammo.AmmoStack(item.identifier, item.template_bits, dict(item.raw_fields)[4])
+             for item in items), attacker=(pc.map_id, pc.x, pc.y),
+            target=(target.map_id, target.x, target.y), items=self._world.data.items)
+        if not prepared.allowed:
+            return None
+        cost = prepared.cost
+        try:
+            wire = self._world_consume_kit(writer, cost.item_uid, cost.count)
+        except ValueError as error:
+            self._world_item_errors = (self._world_item_errors + [str(error)[:96]])[-4:]
+            return None
+        self._world._queue(pc_uid, wire)
+        return prepared
+
+    async def _world_move_for_handler(self, writer, row, game, payload, now, context=None):
+        """Inside the dispatcher world lock: original movement and committed view."""
+        from tools.local_original_session.world_handlers import MovementResult
+        service = self.realm.service(writer)
+        prior = service.last_result
+        if self._world_map_exp == 2:
+            from tools.local_original_session.world_maps import resolve_transition
+
+            def stair(position, x, y):
+                destination = resolve_transition(position.map_id, x, y)
+                if destination is None:
+                    return None
+                return self._world_relocate_locked(writer, row, game, destination, context=context)
+
+            service._world_step_transition = stair
+        try:
+            replies = await game.received(Frame(payload, 0x4e2b, len(payload) + 10))
+        finally:
+            if self._world_map_exp == 2:
+                del service._world_step_transition
+        result = service.last_result
+        accepted = result is not None and result is not prior and result.get('accepted') is True
+        position = service.snapshot()
+        frames = self._world.update_pc_and_drain(position.uid, position.map_id,
+                                                position.word0, position.word1)
+        return MovementResult(bool(accepted), tuple(replies) + tuple(frames),
+                              transitioned=bool(accepted and result.get('reason') == 'LOCAL_MAP_TRANSITION'))
+
+    async def _world_transition_for_handler(self, writer, row, game, destination, now, context=None):
+        if self._world_map_exp != 2:
+            code = 'MAP_TRANSITION_NATIVE_PUBLICATION_UNKNOWN'
+            if code not in self._world_handler_errors:
+                self._world_handler_errors = (self._world_handler_errors + [code])[-8:]
+            return ()
+        return self._world_relocate_locked(writer, row, game, destination, context=context)
+
+    def _world_relocate_locked(self, writer, row, game, destination, *, context=None,
+                               same_map_correction=False):
+        """run380 LOCAL candidates, under the row lock and world dispatch.
+
+        1: same-map baseline; 2: dungeon/same-map; 3: same-map minus 4E95.
+        1/3 use identical remove/reset/spawn operations. No readiness ACK/wait
+        or 4EE0-as-teleport. Values/order are not verified original behavior.
+        """
+        service = self.realm.service(writer)
+        position = service.snapshot()
+        need(row['operation_lock'].locked()
+             and self.realm.registry.resolve(writer) is game
+             and self._selected_owner_current(writer, row, position), 'WORLD_MAP_CURRENT_OWNER_REQUIRED')
+        need(self.realm.serves_map(destination.map_id)
+             and (destination.map_id == position.map_id or self._world_map_exp == 2)
+             and self._world.terrain.can_stand(destination.map_id, destination.x, destination.y) is True,
+             'WORLD_MAP_KNOWN_DESTINATION_REQUIRED')
+        updated = movement.Position(position.uid, position.name, destination.map_id, destination.x, destination.y)
+        world, uid = self._world, position.uid
+        if destination.map_id == position.map_id and (self._world_map_exp == 0 or same_map_correction):
+            # run389 same-map LOCAL sequence. Keep MyPlayer and intersection
+            # actors; refresh NPC/town/ground known sets and spawn-group interest.
+            older = tuple(world.drain(uid))
+            if context is not None:
+                context.commit_attempted = True
+            service.relocate(updated)
+            service._actor_heading = destination.heading
+            nearby = tuple(world.update_pc_and_drain(uid, updated.map_id, updated.word0, updated.word1))
+            removals = tuple(w for w in nearby if int.from_bytes(w[2:4], 'little') == 0x4e40)
+            additions = tuple(w for w in nearby if int.from_bytes(w[2:4], 'little') != 0x4e40)
+            if context is not None:
+                context.begin_click()  # retire the old NPC menu/listing lifetime
+            else:
+                slot = row.get('_world_handler_state')
+                if slot is not None:
+                    slot[1].clear()
+                    for source in slot[2]:
+                        source.retired = True
+                    slot[2].clear()
+            self._world_map_transitions += 1
+            return older + removals + (movement.correction_frame(updated),) + additions
+        state = world.combat.pcs[uid]
+        fields = dict(state.status_fields)
+        fields[10], fields[12] = state.hp, state.mp
+        frames = self.realm._frames_for(updated, status_fields=fields, heading=destination.heading)
+        old_known = set(world.visibility.known.get(uid, ())) | set(world.item_known.get(uid, ()))
+        from tools.local_original_session.world_visibility import remove_frame
+        removals = tuple(remove_frame(known) for known in sorted(old_known))
+        older = tuple(world.drain(uid))
+        if context is not None:
+            context.commit_attempted = True
+        service.relocate(updated)
+        service._actor_heading = destination.heading
+        self.realm._world_frames[id(writer)] = (updated, frames)
+        nearby = tuple(world.update_pc_and_drain(uid, updated.map_id, updated.word0, updated.word1, reset=True))
+        self._world_map_transitions += 1
+        first = () if self._world_map_exp == 3 else (frames[0],)
+        return older + first + frames[1:] + removals + nearby
+
+    async def _world_dispatch(self, writer, row, game, frame, operation_lock):
+        from tools.local_original_session import world_handlers
+        if frame.opcode not in world_handlers.HANDLERS:
+            return False
+        if not self._world_bound(writer) or self._world_ready(writer, game) is None:
+            return False
+        uid = self._world_pcs[id(writer)][1]
+        if self._world.combat.is_dead(uid):
+            await self._world_flush(writer, row, game, operation_lock)
+            return True
+        context = world_handlers.HostContext(self, writer, row, game, operation_lock)
+        delivered = False
+        try:
+            handled = await self._world.runtime.dispatch_now(world_handlers.dispatch, context,
+                                                              frame.opcode, frame.payload)
+            if not handled:
+                return False
+            delivered = True
+        except (world_handlers.HandlerError, ValueError) as error:
+            if getattr(context, 'commit_attempted', False):
+                raise  # ambiguous persistence is never turned into a harmless refusal
+            self._world_handler_errors = (self._world_handler_errors + [str(error)[:96]])[-8:]
+        # A failed optional stair publication must not discard the accepted move.
+        await self._world_send(writer, row, tuple(context.frames), operation_lock)
+        if delivered:
+            context.mark_delivered()
+        return True
+
+    async def _world_use_item(self, writer, row, game, frame, operation_lock):
+        """One world 0960 lane; equipment and unsupported templates retain their route.
+
+        The reviewed double-click raw0 parameters are parsed with the existing
+        protobuf codec. Source preparation stays at startup, never per request.
+        """
+        from tools.local_original_session import inventory, world_item_effects
+        if (not self._world_bound(writer) or self._world_ready(writer, game) is None
+                or self._inventory_kit_policy != inventory.KIT_POLICY):
+            return False
+        pb = ack.realm.pb
+        try:
+            with pb.parse_message(frame.payload, limits=pb.WireLimits(
+                    max_body=4096, max_fields=2, max_field_bytes=2048)) as parsed:
+                need(len(parsed.occurrences(1)) == len(parsed.occurrences(2)) == 1
+                     and len(parsed.fields) == 2, 'WORLD_ITEM_REQUIRED_PARENT_FIELDS')
+                identifier, params = parsed.occurrences(1)[0], parsed.occurrences(2)[0]
+                need(identifier.wire_type == 0 and params.wire_type == 2,
+                     'WORLD_ITEM_PARENT_WIRE_TYPE')
+                item_uid, params_raw = identifier.value, bytes(params.value)
+            items = inventory.validate_kit_frame(self._inventory_current_frame)
+            item = next((member for member in items if member.identifier == item_uid), None)
+            if item is None or item.template_bits not in self._world_item_effects.definitions:
+                return False
+            with pb.parse_message(params_raw, limits=pb.WireLimits(
+                    max_body=2048, max_fields=3, max_field_bytes=2048)) as parsed:
+                expected = {1: 1, 15: 0, 16: 0}
+                need(len(parsed.fields) == 3 and all(len(parsed.occurrences(n)) == 1
+                     for n in expected) and all(field.wire_type == 0
+                     and field.value == expected[field.number] for field in parsed.fields),
+                     'WORLD_ITEM_REVIEWED_RAW0_PARAMS_REQUIRED')
+        except (ValueError, pb.WireError) as error:
+            self._world_item_errors = (self._world_item_errors + [str(error)[:96]])[-4:]
+            return True
+        uid = self._world_pcs[id(writer)][1]
+        position = self.realm.service(writer).snapshot()
+        event = self._world_events.get(uid)
+        if event is not None:
+            event.clear()
+        attempted = False
+
+        async def apply():
+            nonlocal attempted
+            world = self._world
+            need(self.realm.registry.resolve(writer) is game and self._world_bound(writer)
+                 and not world.combat.is_dead(uid), 'WORLD_ITEM_LIVING_SELECTED_PC_REQUIRED')
+            current_item = next((member for member in inventory.validate_kit_frame(
+                self._inventory_current_frame) if member.identifier == item_uid), None)
+            need(current_item is not None and current_item.template_bits == item.template_bits
+                 and dict(current_item.raw_fields)[4] > 0, 'WORLD_ITEM_OWNED_POSITIVE_STACK_REQUIRED')
+            kind = self._world_item_effects.definitions[item.template_bits].kind
+            destination = world_item_effects.MapDestination(position.map_id, position.word0,
+                                                             position.word1, 5)
+            result = None
+            if kind in ('return_town', 'random_teleport'):
+                result = self._world_item_effects.use(uid, item.template_bits, world.runtime.clock(),
+                                                      position=destination)
+                need(result.destination is not None, result.reason or 'WORLD_ITEM_DESTINATION_REQUIRED')
+                need(self.realm.serves_map(result.destination.map_id)
+                     and (result.destination.map_id == position.map_id or self._world_map_exp == 2)
+                     and world.terrain.can_stand(result.destination.map_id,
+                         result.destination.x, result.destination.y) is True,
+                     'WORLD_MAP_KNOWN_DESTINATION_REQUIRED')
+            attempted = True
+            wire = self._world_consume_kit(writer, item_uid)
+            if result is None:
+                ailments = self._world_ailments.setdefault(uid, world_item_effects.PcAilments())
+                result = self._world_item_effects.use(uid, item.template_bits, world.runtime.clock(),
+                                                      position=destination, ailments=ailments)
+            if result.buff_kind is not None:
+                key = (uid, result.buff_kind)
+                old = world.buffs.pop(key, None)
+                if old is not None:
+                    world.runtime.scheduler.cancel(old)
+                world.buffs[key] = world.runtime.scheduler.schedule(
+                    result.buff_expires_at, None, 'pc_buff',
+                    lambda now: world._buff_expired(uid, result.buff_kind, now))
+            transition_frames = ()
+            if result.destination is not None:
+                transition_frames = self._world_relocate_locked(writer, row, game, result.destination)
+            return tuple(world.drain(uid)) + (wire,) + result.frames + transition_frames
+        try:
+            frames = await self._world.runtime.dispatch_now(apply)
+        except ValueError as error:
+            if attempted:
+                raise  # a saved cost / uncertain save is not retried or refunded
+            self._world_item_errors = (self._world_item_errors + [str(error)[:96]])[-4:]
+            return True
+        await self._world_send(writer, row, frames, operation_lock)
+        return True
+
+    def _world_stats_for(self, position, *, level=None):
+        """One LOCAL calculation for combat and run395 full SelfInfo projection."""
+        from tools.local_original_session import inventory, world_stats, world_enchant_inventory
+        _, info = self.realm.store.select(position.name)
+        if level is None:
+            saved = self._world_progress_for(position.uid)
+            level = info[10] if saved is None else saved.level
+        worn = []
+        effect = getattr(self, '_item_equipment_effect', None)
+        if effect is not None:
+            equipment, frame = effect.store.peek(position.uid)
+            if equipment is not None and frame is not None:
+                selected = {equipment.weapon_uid, *(uid for _, uid in equipment.slots)} - {0}
+                for item in inventory.validate_kit_frame(frame):
+                    if item.identifier in selected:
+                        definition = self._world.data.items[item.template_bits]
+                        worn.append(world_stats.EquippedItem(definition,
+                            enchant=world_enchant_inventory.enchant_level(item, definition)))
+        base = world_stats.CharacterStats(level, info[3], world_stats.Attributes(
+            info[11], info[12], info[13], info[14], info[15], info[16]))
+        return world_stats.calculate_stats(base, worn), tuple(worn), info
+
+    def _world_fields_for(self, position, existing):
+        from tools.local_original_session import world_stats
+        state = self._world.combat.pcs.get(position.uid)
+        # Existing live snapshot owns optional presence, EXP and current vitals.
+        fields = dict(existing if state is None else state.status_fields)
+        calculated, _, _ = self._world_stats_for(position,
+            level=fields[2] if state is None else state.profile.level)
+        fields = world_stats.self_info_fields(fields, calculated)
+        if state is not None:
+            fields[10], fields[12] = state.hp, state.mp
+        fields[18] = self._world_lawful.get(position.uid, fields[18])
+        return fields
+
+    def _world_pc_profile(self, writer, position, *, level=None):
+        from dataclasses import replace
+        from tools.local_original_session import world_combat
+        calculated, worn, info = self._world_stats_for(position, level=level)
+        weapon = next((entry for entry in worn if entry.item.kind == 'weapon'), None)
+        combat_weapon = (world_combat.FIST if weapon is None else replace(
+            world_combat.weapon_from_item(weapon.item), enchant=weapon.enchant))
+        return world_combat.PcProfile(level=calculated.level, character_class=info[3], gender=info[5],
+            strength=calculated.attributes.strength, dexterity=calculated.attributes.dexterity,
+            ac=calculated.ac, weapon=combat_weapon, con=calculated.attributes.con,
+            wis=calculated.attributes.wis)
+
+    def _world_recalculate_uid(self, uid):
+        state = self._world.combat.pcs.get(uid)
+        writer = next((value[0] for value in self._world_pcs.values() if value[1] == uid), None)
+        if state is None or writer is None:
+            return False
+        position = self.realm.service(writer).snapshot()
+        state.profile = self._world_pc_profile(writer, position, level=state.profile.level)
+        state.status_fields.update(self._world_fields_for(position, state.status_fields))
+        return True
+
+    def _world_commit_respawn(self, uid, *, strict=False):
+        """Dead PC's town return: persist data/m1/town.json respawn_point through the
+        existing PositionStore before the next selection restores it. Runs only when
+        no restart/quit drain binding still compares the old saved position.
+
+        The pending return is dropped only after the town save (or when already in
+        town). A failure keeps it for the next selection/cleanup; ``strict`` (the
+        selection path) re-raises so the dead PC never enters at the old position.
+        """
+        name = self._world_respawn.get(uid)
+        if name is None or self._world is None:
+            return False
+        town = self._world.data.town
+        try:
+            destination = self._world_relocations.get(uid)
+            target = (movement.Position(uid, name, town.map_id, town.respawn_x, town.respawn_y)
+                      if destination is None else movement.Position(uid, name, destination.map_id,
+                                                                  destination.x, destination.y))
+            current = self.realm.positions.restore(target)
+            if current != target:
+                self.realm.positions.commit(current, target)
+        except Exception as error:
+            self._world_respawn_errors = (self._world_respawn_errors + [type(error).__name__])[-4:]
+            if strict:
+                raise
+            return False
+        self._world_respawn.pop(uid, None)
+        self._world_relocations.pop(uid, None)
+        return True
+
+    def _world_bound(self, writer):
+        bound = getattr(self, '_world_pcs', {}).get(id(writer))
+        return (getattr(self, '_world', None) is not None and bound is not None and bound[0] is writer
+                and self._world.combat.pcs.get(bound[1]) is not None)
+
+    async def _world_refresh_pc(self, writer):
+        """Saved equipment -> combat + complete SelfInfo; preserve all optional fields."""
+        if not self._world_bound(writer):
+            return False
+        uid = self._world_pcs[id(writer)][1]
+        def refresh():
+            from tools.local_original_session.world_status_frames import full_status_frame
+            changed = self._world_recalculate_uid(uid)
+            if changed:
+                self._world._queue(uid, full_status_frame(self._world.combat.pcs[uid].status_fields))
+                self._world._announce()
+            return changed
+        return await self._world.runtime.dispatch_now(refresh)
+
+    def _world_stance_for(self, uid):
+        effect = getattr(self, '_item_equipment_effect', None)
+        weapon, _ = (None, 0) if effect is None else effect.combat_inputs(uid)
+        weapon_type = 'unarmed' if weapon is None else weapon.weapon_type
+        return self._world_stances.get(weapon_type, 0)
+
+    async def _world_refresh_stance_locked(self, writer, row):
+        """After persisted equipment/097A drain, refresh the same self actor.
+
+        Reuse its current position, accepted heading, class sprite and complete
+        source DTO through the existing world send lane. Client rendering is unverified.
+        """
+        if not self._world_bound(writer):
+            return None
+        service = self.realm.service(writer)
+        position = service.snapshot()
+        frames = self.realm._frames_for(position, heading=getattr(service, '_actor_heading', None))
+        self.realm._world_frames[id(writer)] = (position, frames)
+        await self._world_send(writer, row, (frames[2],), row['operation_lock'])
+        return session.world.decode_payload(0x4e96, frames[2][4:-2])[4]
+
+    async def _world_potion_locked(self, writer, row, wire, heal_hp):
+        """Kit potion (caller holds the row lock, Store already replaced): heal, then
+        send the inventory change and the PC's SC_STATUS through the world lane."""
+        need(self._world_bound(writer) and row['writer'] is writer and row['operation_lock'].locked(),
+             'ITEM_USE_POTION_REQUIRES_WORLD_PC')
+        uid = self._world_pcs[id(writer)][1]
+        world = self._world
+
+        def heal():
+            # Queued tick frames (older HP/speed) go before the new effect.
+            return world.drain(uid), world.combat.heal(uid, heal_hp)
+        event = self._world_events.get(uid)
+        if event is not None:
+            event.clear()
+        older, result = await world.runtime.dispatch_now(heal)
+        need(result is not None, 'ITEM_USE_POTION_REQUIRES_WORLD_PC')
+        healed, status = result
+        await self._world_send(writer, row, tuple(older) + (wire, status), row['operation_lock'])
+        return dict(healed_hp=healed, hp_after=self._world.combat.hp_of(uid))
+
+    async def _world_buff_locked(self, writer, row, wire, buff):
+        """Kit speed potion (caller holds the row lock, Store already replaced): timed
+        buff in world combat, then the inventory change and SC4E5B (if it took effect)."""
+        need(self._world_bound(writer) and row['writer'] is writer and row['operation_lock'].locked(),
+             'ITEM_USE_POTION_REQUIRES_WORLD_PC')
+        uid = self._world_pcs[id(writer)][1]
+        world = self._world
+
+        def apply():
+            # Queued tick frames (e.g. an older expiry reset) go before the new buff.
+            return world.drain(uid), world.apply_buff(uid, buff)
+        event = self._world_events.get(uid)
+        if event is not None:
+            event.clear()
+        older, frame = await world.runtime.dispatch_now(apply)
+        frames = tuple(older) + ((wire,) if frame is None else (wire, frame))
+        await self._world_send(writer, row, frames, row['operation_lock'])
+        return dict(buff_kind=buff.kind, buff_applied=frame is not None)
+
+    def _inventory_kit_frame(self, character_class):
+        """Selected class's data/m1/starter.json entries as one canonical 0964 kit frame."""
+        from tools.local_original_session import inventory
+        from tools.local_original_session.game_data import load_m1
+        data = load_m1()
+        starter = data.starter
+        entries = starter.entries(character_class, getattr(self, '_world_starter_kit', None))
+        need(entries, 'INVENTORY_KIT_CLASS_STARTER_REQUIRED')
+        rows = []
+        for index, entry in enumerate(entries):
+            fields = dict(INVENTORY_STARTER_FIELDS)  # Same explicit 17 raw fields as the Athame starter.
+            # f7 = inventory icon number: client 509390 copies f7 to ItemEntity+20, B03780 to the
+            # slot model+C, and B046F0 shows '<f7>.png' only when it is >0 (f7=0 left every cell blank).
+            fields.update({1: starter.uid_base + index, 2: entry.template_id, 4: entry.count,
+                           7: data.items[entry.template_id].icon})
+            if entry.grade is not None:
+                from tools.local_original_session.world_enchant_inventory import scroll_name
+                fields[18] = scroll_name(entry.template_id, entry.grade)
+                # run393 actual scroll raw is UNKNOWN; candidate interaction is opt-in.
+                if self._world_enchant_exp is not None:
+                    fields[5] = 7
+            rows.append(fields)
+        return inventory.build_kit_frame(rows)
+
+    async def _world_after_request(self, writer, row, game, opcode, operation_lock):
+        """After a request: select/move/alive refresh the PC's screen; any request flushes queued world frames."""
+        if (opcode in (RESTART_REQUEST, DEAD_RESTART_REQUEST) and game is not None
+                and game.selection is None
+                and self._world_pcs.get(id(writer), (None,))[0] is writer):
+            # Restart back to character select: drop the PC, its known set and outbox;
+            # the next select (0x4e28) binds and resets it again.
+            await self._world_leave(writer)
+            return
+        service = self._world_ready(writer, game)
+        if service is None:
+            return
+        position = service.snapshot()
+        bound = self._world_pcs.get(id(writer))
+        if opcode == 0x4e28:
+            frame = self.realm.world_frames(writer)[1]  # the SC_STATUS this client just received
+            status = session.world.decode_payload(0x4e38, frame[4:-2])
+            saved = self._world_progress_for(position.uid)
+            self._world_lawful[position.uid] = status[18] if saved is None else saved.lawful
+            exp_status = await self._world.runtime.dispatch_now(
+                self._world.bind_pc, position.uid, self._world_pc_profile(writer, position), status,
+                0 if saved is None else saved.exp)
+            self._world_events[position.uid] = asyncio.Event()
+            self._world_names[position.uid] = position.name
+        elif opcode not in self.WORLD_OPCODES:
+            if bound is None or bound[0] is not writer:
+                return
+            await self._world_flush(writer, row, game, operation_lock)
+            return
+        event = self._world_events.get(position.uid)
+        if event is not None:
+            event.clear()  # before draining: a later tick sets it again
+        frames = await self._world.runtime.dispatch_now(
+            self._world.update_pc_and_drain, position.uid, position.map_id, position.word0,
+            position.word1, reset=opcode == 0x4e28)
+        if opcode == 0x4e28 and exp_status is not None:
+            frames = [exp_status] + frames  # same full SC_STATUS plus the saved f26 EXP percent
+        self._world_pcs[id(writer)] = (writer, position.uid)
+        await self._world_send(writer, row, frames, operation_lock)
+
+    async def _world_flush(self, writer, row, game, operation_lock):
+        """Send world frames queued by ticks (AI, corpse removal, respawn) through _send."""
+        bound = self._world_pcs.get(id(writer))
+        if bound is None or bound[0] is not writer or self._world_ready(writer, game) is None:
+            return
+        event = self._world_events.get(bound[1])
+        if event is not None:
+            event.clear()
+        frames = await self._world.runtime.dispatch_now(self._world.drain, bound[1])
+        self._world_save_progress(bound[1])
+        await self._world_send(writer, row, frames, operation_lock)
+
+    async def _world_attack(self, writer, row, game, frame, operation_lock):
+        """CS4E30 on a world monster: immediate swing. False = not ours, keep the original route."""
+        from tools.local_original_session import attack
+        bound = self._world_pcs.get(id(writer))
+        if bound is None or bound[0] is not writer or self._world_ready(writer, game) is None:
+            return False
+        try:
+            request = attack.parse_payload(frame.payload)
+        except ValueError:
+            return False
+        event = self._world_events.get(bound[1])
+        if event is not None:
+            event.clear()
+        frames = await self._world.runtime.dispatch_now(self._world.pc_attack, bound[1],
+                                                        request.target_uid)
+        if frames is None:
+            if event is not None:
+                event.set()  # queued frames stay for the next flush
+            # Not a world monster. Without the original attack route the request
+            # has no handler; answer nothing instead of failing the session.
+            return getattr(self, '_attack_session', None) is None
+        self._world_save_progress(bound[1])  # kill reward: EXP/level saved before the status is sent
+        await self._world_send(writer, row, frames, operation_lock)
+        return True
+
+    def _world_pickup_commit(self, writer, item, count):
+        """Synchronous durable insert of a picked ground item into the M1 kit row.
+
+        Same saved kit row and send lane as the kit potion (replace_kit): a
+        stackable template already held gets SC0965 with the new absolute count,
+        anything else is appended as a new ItemInfo with SC0964 (outer f2 false =
+        append; run30/run41, M1_REWARD_PACKETS 2(4)). Adena is template 7.
+        Runs under the world lock, before the ground item is consumed.
+        """
+        from tools.local_original_session import inventory, inventory_update, world_visibility
+        from tools.local_original_session.game_data import load_m1
+        current = self._inventory_current_frame
+        store = getattr(self, '_inventory_store', None)
+        need(type(current) is bytes and store is not None
+             and getattr(self, '_inventory_kit_policy', None) == inventory.KIT_POLICY,
+             'WORLD_PICKUP_KIT_INVENTORY_REQUIRED')
+        uid = self._world_pcs[id(writer)][1]
+        items = inventory.validate_kit_frame(current)
+        rows = [dict(member.raw_fields) for member in items]
+        held = next((fields for fields in rows if fields[2] & 0xffffffff == item.item_id), None)
+        if item.stackable and held is not None:
+            held[4] += count
+            need(held[4] <= (1 << 31) - 1, 'WORLD_PICKUP_STACK_LIMIT')
+            wire = inventory_update._encode(inventory_update._values({1: held[1], 4: held[4]}))
+        else:
+            need(len(rows) < inventory.KIT_MAX_ITEMS, 'WORLD_PICKUP_INVENTORY_FULL')
+            fields = dict(INVENTORY_STARTER_FIELDS)  # same 17 explicit raw fields as the kit rows
+            definition = load_m1().items.get(item.item_id)
+            icon = definition.icon if definition is not None else world_visibility.item_gfx()[item.item_id][0]
+            fields.update({1: max(member.identifier for member in items) + 1, 2: item.item_id,
+                           4: count, 7: icon})
+            rows.append(fields)
+            wire = inventory.build_add(fields)
+        # Saved kit row up to inventory.KIT_MAX_FRAME (delivered as split 0964 frames);
+        # the bag limit is KIT_MAX_ITEMS (L1J 180) above: a full bag keeps the drop.
+        try:
+            new_frame = inventory.build_kit_frame(rows)
+        except ValueError as error:
+            if error.args != ('INVENTORY_COLLECTION_FRAME_SIZE',):
+                raise
+            raise ValueError('WORLD_PICKUP_INVENTORY_FULL') from None
+        need(store.replace_kit(uid, current, new_frame, append=True) is True,
+             'WORLD_PICKUP_PERSISTED_CHANGE_REQUIRED')
+        self._inventory_current_frame = new_frame
+        return (wire,)
+
+    async def _world_pickup(self, writer, row, game, frame, operation_lock):
+        """CS4E3E on a world ground drop. False = not ours (original transfer route)."""
+        from tools.local_original_session import item_transfer_protocol
+        bound = self._world_pcs.get(id(writer))
+        if bound is None or bound[0] is not writer or self._world_ready(writer, game) is None:
+            return getattr(self, '_item_transfer_broker', None) is None
+        try:
+            request = item_transfer_protocol.parse_get_payload_prevalidated(frame.payload)
+        except ValueError:
+            return getattr(self, '_item_transfer_broker', None) is None
+        event = self._world_events.get(bound[1])
+        if event is not None:
+            event.clear()
+
+        def commit(item, count):
+            return self._world_pickup_commit(writer, item, count)
+        try:
+            frames = await self._world.runtime.dispatch_now(
+                self._world.pc_pickup, bound[1], request.uid, request.quantity, commit)
+        except ValueError as error:  # inventory insert refused: the item stays on the ground
+            self._world_pickup_errors = (self._world_pickup_errors + [str(error)[:64]])[-4:]
+            if event is not None:
+                event.set()
+            return True
+        if frames is None:
+            if event is not None:
+                event.set()
+            return getattr(self, '_item_transfer_broker', None) is None
+        if any(int.from_bytes(wire[2:4], 'little') in (0x0964, 0x0965) for wire in frames):
+            self._world_pickups += 1
+        await self._world_send(writer, row, frames, operation_lock)
+        return True
+
+    async def _world_leave(self, writer):
+        bound = self._world_pcs.pop(id(writer), None)
+        if bound is not None and bound[0] is writer:
+            self._world_save_progress(bound[1])
+            self._world_events.pop(bound[1], None)
+            self._world_ailments.pop(bound[1], None)
+            handle = self._world_poly_timers.pop(bound[1], None)
+            if handle is not None:
+                self._world.runtime.scheduler.cancel(handle)
+            self._world_polymorphs.pop(bound[1], None)
+            self._world_lawful.pop(bound[1], None)
+            row = next((row for rows in self._claims.values() for row in rows
+                        if row['writer'] is writer), None)
+            if row is not None:
+                row.pop('_world_handler_state', None)
+            try:
+                dead = await self._world.runtime.dispatch_now(self._world.leave_pc, bound[1])
+            except Exception:
+                dead = False  # Writer cleanup continues; a stale PC only keeps its groups active.
+            name = self._world_names.get(bound[1])
+            if dead is True and name is not None:
+                self._world_respawn[bound[1]] = name  # committed at reselect or writer cleanup
+
     async def _serve(self, reader, writer, row):
         decoder = ClientPlaintextDecoder(cipher_pointer='present_disabled',
                                          max_buffer=self.policy.MAX_BUFFER)
         read_task = None
+        world_wait = world_wait_event = None
         conversation = None
         try:
             row['await_phase'] = 'INITIAL_DRAIN'
@@ -3585,15 +5248,37 @@ class PersistentBroker:
                     read_task = asyncio.create_task(reader.read(self.policy.READ_SIZE))
                     row['_read_task'] = read_task
                 row['await_phase'] = 'READ_WAIT'
-                completed, _ = await asyncio.wait((read_task,), timeout=self.policy.POLL_NS / 1e9)
-                if not completed:
+                waits = (read_task,)
+                bound = self._world_pcs.get(id(writer)) if self._world is not None else None
+                world_event = None if bound is None else self._world_events.get(bound[1])
+                if world_event is not None:
+                    # Tick-time world frames wake this loop; they are sent below
+                    # under the row lock through _send, like a request's replies.
+                    if world_wait is None or world_wait_event is not world_event:
+                        if world_wait is not None:
+                            world_wait.cancel()
+                        world_wait = asyncio.ensure_future(world_event.wait())
+                        world_wait_event = world_event
+                    waits = (read_task, world_wait)
+                completed, _ = await asyncio.wait(waits, timeout=self.policy.POLL_NS / 1e9,
+                                                  return_when=asyncio.FIRST_COMPLETED)
+                world_ready = world_wait is not None and world_wait.done()
+                if world_ready:
+                    world_wait = world_wait_event = None
+                if read_task not in completed:
                     row['await_phase'] = 'READ_POLL_CHECKPOINT'
                     operation_lock = row['operation_lock']
                     async with operation_lock:
-                        if await self._poll_checkpoint(writer, row, read_task,
-                                                       decoder_empty=decoder.buffered_bytes == 0,
-                                                       operation_lock=operation_lock):
+                        if world_ready:
+                            await self._world_flush(writer, row, game, operation_lock)
+                        outcome = await self._poll_checkpoint(writer, row, read_task,
+                            decoder=decoder, decoder_empty=decoder.buffered_bytes == 0,
+                            operation_lock=operation_lock)
+                        if outcome is True:
                             break
+                        if outcome == 'QUIT_DUPLICATE_CONTINUE':
+                            read_task = None
+                            row['_read_task'] = None
                     continue  # Owner/source/partial/bootstrap checks; no idle limit.
                 raw = read_task.result()
                 read_task = None
@@ -3638,11 +5323,40 @@ class PersistentBroker:
                                     return await self._account_owner(connection, row)
                                 game = self.realm.grant(writer, movement_owner_guard=movement_owner,
                                                         account_owner_guard=account_owner,
+                                                        closing_quit_owner_guard=(_ClosingQuitOwnerGuard(self,row,writer)
+                                                            if self._source_quit_closing is not None else None),
                                                         connection_id=row['peer']['connection_id'])
                             need(self.realm.registry.resolve(writer) is game, 'SAME_REGISTERED_WRITER_REQUIRED')
-                            replies = await game.received(frame)
+                            peer = row['peer']
+                            row['_quit_frame_owner'] = ((writer, row, peer, tuple(sorted(peer.items())),
+                                row['policy_row'], operation_lock, writer.transport, sample,
+                                frame.opcode, frame.wire_length)
+                                if self._source_quit_closing is not None and frame.opcode == QUIT_REQUEST
+                                   and frame.wire_length == 10 else None)
+                            if (self._world is not None
+                                    and await self._world_dispatch(writer, row, game, frame, operation_lock)):
+                                row['_quit_frame_owner'] = None
+                                continue
+                            if (self._world is not None and frame.opcode == ITEM_USE_REQUEST
+                                    and await self._world_use_item(writer, row, game, frame, operation_lock)):
+                                row['_quit_frame_owner'] = None
+                                continue
+                            if (self._world is not None and frame.opcode == ATTACK_REQUEST
+                                    and await self._world_attack(writer, row, game, frame, operation_lock)):
+                                row['_quit_frame_owner'] = None
+                                continue  # World monster swing answered immediately (no tick wait).
+                            if (self._world is not None and frame.opcode == 0x4e3e
+                                    and await self._world_pickup(writer, row, game, frame, operation_lock)):
+                                row['_quit_frame_owner'] = None
+                                continue  # World ground drop pickup (or ignored when not pickable).
+                            try:
+                                replies = await game.received(frame)
+                            finally:
+                                row['_quit_frame_owner'] = None  # Never survives this original dispatch.
                             need(row['operation_lock'] is operation_lock, 'SAME_OPERATION_LOCK_REQUIRED')
                             await self._send(writer, row, replies, game=True, operation_lock=operation_lock)
+                            if self._world is not None:
+                                await self._world_after_request(writer, row, game, frame.opcode, operation_lock)
         except asyncio.CancelledError:
             raise
         except Exception as failure:
@@ -3653,7 +5367,16 @@ class PersistentBroker:
                 if read_task is not None:
                     read_task.cancel()
                     await asyncio.gather(read_task, return_exceptions=True)
+                if world_wait is not None:
+                    world_wait.cancel()
+                    await asyncio.gather(world_wait, return_exceptions=True)
                 self.realm.close(writer)
+                if getattr(self, '_world', None) is not None:
+                    await self._world_leave(writer)
+                    bound_uids = {uid for _, uid in self._world_pcs.values()}
+                    for uid in tuple(self._world_respawn):
+                        if uid not in bound_uids:  # this stream's drain checks are over
+                            self._world_commit_respawn(uid)
                 row['registry_removed'] = (id(writer) not in self.realm.registry._sessions
                                            and id(writer) not in self.realm._movement
                                            and id(writer) not in self.realm._world_frames
@@ -3723,6 +5446,9 @@ class PersistentBroker:
                     self._inventory_generation.phase = 'TERMINAL'
                 self._inventory_delivery_authority = None
                 inventory_service.close()
+            world = getattr(self, '_world', None)
+            if world is not None:
+                world.close()  # Stops spawner work and releases the registered town NPCs.
             self.policy.stop('explicit_session_exit')
             self._close_task = asyncio.create_task(self._close())
         # This wrapper also shields the shared cleanup task from repeat cancel.
@@ -3737,6 +5463,9 @@ class PersistentBroker:
         # Let it install its finally before cancellation; cancelling a never-
         # started coroutine would otherwise bypass writer cleanup entirely.
         await asyncio.sleep(0)
+        world = getattr(self, '_world', None)
+        if world is not None:
+            await world.runtime.stop()
         tasks = tuple(self._tasks)
         for task in tasks:
             if not task.done():
@@ -3760,6 +5489,7 @@ class PersistentBroker:
                    for rows in self._claims.values() for row in rows)
         if good:
             self.policy.release(self.sockets, listeners_closed=True, tasks_joined=not self._tasks)
+        self._source_quit_closing = None  # No terminal receipt survives joined tasks.
         self.cleanup_complete = good
         return self.report()
 
@@ -3811,4 +5541,21 @@ class PersistentBroker:
         effect = getattr(self, '_item_equipment_effect', None)
         if effect is not None:
             result['item_equipment_effect'] = dict(effect._last)
+        world = getattr(self, '_world', None)
+        if world is not None:
+            result['world'] = dict(kills=len(world.combat.kills), ground_items=len(world.ground),
+                pickups=self._world_pickups, pickup_errors=list(self._world_pickup_errors),
+                reward_errors=list(world.reward_errors), progress_errors=list(self._world_progress_errors),
+                respawn_errors=list(self._world_respawn_errors), pending_respawn=len(self._world_respawn),
+                handler_errors=list(self._world_handler_errors), item_errors=list(self._world_item_errors),
+                town_npcs=(0 if world.town is None else sum(1 for entity in world.entities
+                            if world.town.npc_for(entity.uid) is not None)),
+                menu_sources=len(self._world_handler_bindings.sources),
+                shop_experiment=self._world_shop_experiment is not None,
+                polymorph_experiment=self._world_poly_exp, active_polymorphs=len(self._world_polymorphs),
+                alignment_changes=list(self._world_alignment_changes), death_drop_risks=list(self._world_death_risks),
+                relocation_policy=('LOCAL_SAME_MAP_REMOVE_4EE0_SPAWN' if self._world_map_exp == 0
+                                   else 'LOCAL_MAP_EXPERIMENT'),
+                map_transition='NATIVE_PUBLICATION_UNKNOWN',
+                map_experiment=self._world_map_exp, experimental_transitions=self._world_map_transitions)
         return result

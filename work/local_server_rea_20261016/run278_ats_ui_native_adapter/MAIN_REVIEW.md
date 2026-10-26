@@ -1,0 +1,11 @@
+# REA278 main review
+
+main은완료native3/host3핀·4JSON및native8/host6입력핀을확인했다. sourceonlynative0이며originalsubsystem/rowprocessor와실제창entry를구별한기성216/139계약을재사용했다.139findings의441890row소비/미결caller한계를직접읽었고1169행본문을새로분석했다는주장은하지않는다.
+
+원actorHost367..392의동기interface.open/layoutATS/model/character_uid=state.direct.uid와coroutinecommand생성,307..317의epoch/render,522..542의retire순서/오류보존을직접읽었다. v5/private공통AST14개비교는해당scope의기성source비교결과로수용했으며native설치/창성공/ownerthread해제근거로확대하지않았다.
+
+실adapter/UIidentity/caller/등록이첫결손이다. source주입interface가있다는사실로native창이열렸다고하지않는다. 임의windowID/callback/화면좌표·Inventory생성/자동사냥executor대입0. 제품/caller는기능main소유이고다른readygate0,Root/Test진행·ACK·큐·실행발주0. featuremain답은mcp__codex_app__send_message_to_thread성공으로실제1회전달했다. 다음예약279는SummonLayout/f2=2 concretev98/vA0만별도조사하며이번ATSgraph로혼합하지않았다.
+
+- source/contract.md: 2523B SHA256 `986d62d98b28b4dcab5fcfb55c8e5192e0ae1809aff6e5cc4a2000527c30fd44`
+- source/source-refs.json: 3670B SHA256 `209134d68a622756f0bee5051b0709b68ce6dd8f9892e9d242099d5a6066e081`
+- source/selected-evidence.json: 3964B SHA256 `ccb97d90b4a32ae80d6a4d206e787a5fdd2d81bd6f182c5e236a0513309db42a`

@@ -270,6 +270,17 @@ class NpcSession:
             state = mover.state
             grid = movement.authority.unpack_grid(state.packed)
             if grid == goal:
+                # Arrival is still a live gameplay decision. A later lethal
+                # hit/removal must retire this captured goal even though no
+                # further step/edge query will pass through broker.step_npc.
+                try:
+                    await self._require_live_arrival(binding, mover, state)
+                except ValueError as error:
+                    if type(error) is not ValueError or str(error) != 'NPC_HP_DEAD_MOTION_REFUSED':
+                        raise
+                    if self._goal is goal:
+                        self._goal = None
+                    return Outcome('DEAD', state, reason='NPC_HP_DEAD_MOTION_REFUSED')
                 return Outcome('AT_GOAL', state)
             if state.last_step_ns is not None and now_ns < state.last_step_ns + mover.interval_ns:
                 return Outcome('CADENCE', state)
@@ -298,6 +309,41 @@ class NpcSession:
                     return Outcome(status, reason=edge_result['reason'])
                 raise
             return Outcome('MOVED', state)
+
+    async def _require_live_arrival(self, binding, mover, state):
+        """Reuse original owner/HP authority under the existing selected lock.
+
+        No movement, edge query, packet, new HP authority or lock is produced.
+        Revalidate after await: an old state or connection cannot clear a goal.
+        """
+        broker, writer = self.broker, binding.owner
+        combat = getattr(broker, '_attack_session', None)
+        if combat is None:
+            return
+        from tools.local_original_session import attack_session
+        need(type(combat) is attack_session.AttackSession
+             and combat is broker.realm._attack_session,
+             'NPC_SESSION_ARRIVAL_CURRENT_COMBAT_REQUIRED')
+        rows = [row for claims in broker._claims.values() for row in claims
+                if row['writer'] is writer]
+        need(len(rows) == 1, 'NPC_SESSION_ARRIVAL_CURRENT_CLAIM_REQUIRED')
+        row, = rows
+        async with row['operation_lock']:
+            current = self.current_binding()
+            need(current is not None and current.owner is writer and current.broker is broker
+                 and broker.realm.npc_mover(writer) is mover and mover.state is state,
+                 'NPC_SESSION_ARRIVAL_CURRENT_BINDING_REQUIRED')
+            selected = broker.realm.service(writer).snapshot()
+            need(await broker._movement_owner(writer, row, selected) is True,
+                 'NPC_SESSION_ARRIVAL_CURRENT_OWNER_REQUIRED')
+            current = self.current_binding()
+            need(current is not None and current.owner is writer and current.broker is broker
+                 and broker.realm.service(writer).snapshot() is selected
+                 and broker.realm.npc_mover(writer) is mover and mover.state is state,
+                 'NPC_SESSION_ARRIVAL_AUTHORITY_CHANGED')
+            need(broker._attack_session is combat and broker.realm._attack_session is combat,
+                 'NPC_SESSION_ARRIVAL_CURRENT_COMBAT_REQUIRED')
+            combat.require_live_npc_motion(writer, row, state.uid)
 
     def close(self):
         """Stop accepting goals; native reader/broker ownership stays in caller."""

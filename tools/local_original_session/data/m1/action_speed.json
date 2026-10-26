@@ -1,0 +1,47 @@
+{
+  "table": "m1_action_speed",
+  "version": 1,
+  "note": "클라이언트 list.spr 명목 시간 = round(C합/24*1000)ms (기본 재생률 24, 2배 플래그 꺼짐, 외부 보정 0 가정; docs/CLIENT_SPEED_RESEARCH.md). 이 값을 서버의 이동·공격 허용 간격으로 쓰는 것은 로컬 정책이며, 헤이스트 등 보정은 M1 범위 밖. 참고용 L1J 값은 framecount*40*24/framerate (SprTable.java:150) 또는 npc passispeed/atkspeed.",
+  "ref_abbrev": {
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql"
+  },
+  "pc": [
+    {"sprite_id": {"value": 0, "source": "client", "ref": "list.spr:2 #0 prince"},
+     "walk_ms": {"value": 667, "source": "client", "ref": "list.spr:7 30.walk onehandsword C합16"},
+     "attack_ms": {"value": 1000, "source": "client", "ref": "list.spr:8 31.attack onehandsword C합24", "note": "L1J SPR0 한손검 960ms (l1jdb:52207)"}},
+    {"sprite_id": {"value": 1, "source": "client", "ref": "list.spr:48 #1 princess"},
+     "walk_ms": {"value": 667, "source": "client", "ref": "list.spr:53 C합16"},
+     "attack_ms": {"value": 1000, "source": "client", "ref": "list.spr:54 C합24"}},
+    {"sprite_id": {"value": 61, "source": "client", "ref": "list.spr:419 #61 knight"},
+     "walk_ms": {"value": 667, "source": "client", "ref": "list.spr:424 C합16"},
+     "attack_ms": {"value": 917, "source": "client", "ref": "list.spr:425 C합22"}},
+    {"sprite_id": {"value": 48, "source": "client", "ref": "list.spr:278 #48 knight female"},
+     "walk_ms": {"value": 667, "source": "client", "ref": "list.spr:283 C합16"},
+     "attack_ms": {"value": 917, "source": "client", "ref": "list.spr:284 C합22"}},
+    {"sprite_id": {"value": 138, "source": "client", "ref": "list.spr:746 #138 elf male"},
+     "walk_ms": {"value": 667, "source": "client", "ref": "list.spr:751 C합16"},
+     "attack_ms": {"value": 875, "source": "client", "ref": "list.spr:752 C합21"}},
+    {"sprite_id": {"value": 37, "source": "client", "ref": "list.spr:208 #37 elf female"},
+     "walk_ms": {"value": 667, "source": "client", "ref": "list.spr:213 C합16"},
+     "attack_ms": {"value": 875, "source": "client", "ref": "list.spr:214 C합21"}}
+  ],
+  "monsters": [
+    {"sprite_id": {"value": 56, "source": "client", "ref": "list.spr:390 #56 orc"},
+     "walk_ms": {"value": 833, "source": "client", "ref": "list.spr:391 0.walk C합20"},
+     "attack_ms": {"value": 1375, "source": "client", "ref": "list.spr:392 1.attack C합33"},
+     "l1j_reference": {"value": {"walk_ms": 800, "attack_ms": 1320}, "source": "l1j", "ref": "l1jdb:20631 passispeed/atkspeed"}},
+    {"sprite_id": {"value": 1022, "source": "client", "ref": "list.spr:3245 #1022 goblin"},
+     "walk_ms": {"value": 792, "source": "client", "ref": "list.spr:3246 0.walk C합19"},
+     "attack_ms": {"value": 958, "source": "client", "ref": "list.spr:3248 1.attack C합23"},
+     "l1j_reference": {"value": {"walk_ms": 760, "attack_ms": 920}, "source": "l1j", "ref": "l1jdb:20630"}},
+    {"sprite_id": {"value": 57, "source": "client", "ref": "list.spr:401 #57 orc bow"},
+     "walk_ms": {"value": 833, "source": "client", "ref": "list.spr:402 0.walk bow C합20"},
+     "attack_ms": {"value": 1958, "source": "client", "ref": "list.spr:403 1.attack bow C합47"},
+     "l1j_reference": {"value": {"walk_ms": 800, "attack_ms": 1880}, "source": "l1j", "ref": "l1jdb:20640 (gfx 3860 기준)"}},
+    {"sprite_id": {"value": 33, "source": "client", "ref": "list.spr:187 #33 werewolf"},
+     "walk_ms": {"value": 667, "source": "client", "ref": "list.spr:188 0.walk C합16"},
+     "attack_ms": {"value": 1000, "source": "client", "ref": "list.spr:189 1.attack axe C합24"},
+     "l1j_reference": {"value": {"walk_ms": 640, "attack_ms": 840}, "source": "l1j", "ref": "l1jdb:20645 (gfx 1110 기준)"}}
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "table": "m1_level_growth",
+  "version": 1,
+  "note": "L1J 참고 수치를 채택한 로컬 성장 정책이며 클래식 원본 공식의 확인 근거가 아니다. HP는 hp_base + 0..1 + max(CON-15,0), MP는 WIS 주사위에 직업 배율을 적용한다. 각 기본 증가량은 cap까지 자른 뒤 original CON/WIS 보너스를 더한다(CalcStat 원순서). PcProfile에 base/original 구분이 없어 M1에서는 profile CON/WIS와 현재 최대 HP/MP를 base/생성 능력치로 사용한다. 세부 WIS 주사위와 original 보너스는 world_reward.py의 원문 출처를 따른다. 현재 지원 직업 0..3.",
+  "classes": [
+    {
+      "character_class": {"value": 0, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:108 Prince -> M1 royal0"},
+      "hp_base": {"value": 11, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:109"},
+      "hp_cap": {"value": 1400, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:6"},
+      "mp_cap": {"value": 800, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:7"},
+      "mp_multiplier": {"value": {"numerator": 1, "denominator": 1}, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:202-207 Prince unscaled"}
+    },
+    {
+      "character_class": {"value": 1, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:114 Knight -> M1 knight1"},
+      "hp_base": {"value": 17, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:115"},
+      "hp_cap": {"value": 2000, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:8"},
+      "mp_cap": {"value": 600, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:9"},
+      "mp_multiplier": {"value": {"numerator": 2, "denominator": 3}, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:209 Knight"}
+    },
+    {
+      "character_class": {"value": 2, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:120 Elf -> M1 elf2"},
+      "hp_base": {"value": 10, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:121"},
+      "hp_cap": {"value": 1400, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:10"},
+      "mp_cap": {"value": 900, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:11"},
+      "mp_multiplier": {"value": {"numerator": 3, "denominator": 2}, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:214 Elf"}
+    },
+    {
+      "character_class": {"value": 3, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:126 Wizard -> M1 wizard3"},
+      "hp_base": {"value": 7, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:127"},
+      "hp_cap": {"value": 1000, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:12"},
+      "mp_cap": {"value": 1200, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties:13"},
+      "mp_multiplier": {"value": {"numerator": 2, "denominator": 1}, "source": "local_policy", "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java:220 Wizard"}
+    }
+  ]
+}

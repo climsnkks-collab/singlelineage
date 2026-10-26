@@ -1,0 +1,21 @@
+# COMPANION-MAGE LRS1 inventory + corrected WM_COMMAND v2
+
+**WRITER_RELEASED.** Private immutable combination only. Product source_ready/test_ready/ui_ready/runtime_ready/action_ready/save_ready=false; RUN_COMMAND=null. primitive_source_ready=true. No actual ITEM/Host/Store/game/user-input execution. No other private/common/original/Test/client/API/queue/ACTIVE path edits, no game/ports/Store/save/profile, branch/worktree/commit. Owned runtime resources0.
+
+Exact parents: inventory v1 manifest `7d486271743ed3dafac328a5f1d6c296b3a888dba75d45d7be98086d8f024fdd`; corrected LRS1 button v2 manifest `98001d2ec1b705526efa403db063d64958151991a743d2b6da580fd25c14ddef`. All parent files' exact absolute path/hash/size/mtime are frozen in parent-pins.json.
+
+Nine copied production files retain the complete LIP1/LIT1/LIR1 inventory phase, actual owner WM_PAINT/revoke/erase, original one State/key/token/pipe/reader and unchanged <=30s absolute deadline. Only ui_owner_panel.hpp differs from inventory v1: remove the one shadowing `else if(message==WM_COMMAND)result=0; // no settings/command authority` line, exactly as corrected LRS1 v2. Single-line inverse recovers the full inventory v1 header. Other8 production files are byte-identical. Inventory source/owner/current recapture and every ITEM/GEAR/Store authority are unchanged. ui_owner_panel.hpp.diff is the entire production delta.
+
+Actual new bounded isolated non-input desktop case uses the corrected parent's exact helper/caller, compiled against THIS combined family without LOCAL_SETTINGS_FIXTURE. Authenticated original retained process/Job/one pipe -> real panel/actual enabled Follow Button -> owner-thread BM_CLICK -> real BN_CLICKED/WM_COMMAND/SettingsCommandOnOwner/TakeSettings/Run -> exactly1 signed LSQ1 with current epoch/revision/window/owner. Controls disable and burn0->1; second BM_CLICK on the same now-disabled actual Button issues no second request/burn. UNKNOWN is the ONLY peer result (no fabricated Store success), actual owner UNKNOWN paint remains disabled, then signed owner revoke/DestroyWindow/NCDESTROY/close. Original native+issuer deadlines and focus/activation unchanged; retained0; cleanup COMPLETE. No game, selected NativeInput/Factory, human input, real canonical save or behavior claim. MSVC C++17 /W4 /WX production+helper compile/link PASS.
+
+UNKNOWN remains terminal. The requested combined UNKNOWN-then-inventory same-State sequence is impossible without violating original terminal semantics; coordinator confirmed preserving that boundary. This new button/UNKNOWN case ends on its original State. Separately, inventory v1's final3 actual same-State synthetic LIT1 paint/revoke/erase+close, bad-MAC refusal and stale-OPEN-epoch refusal remain reusable because every inventory codec/transport/publication/native phase production file is identical and only the unrelated dead button branch was removed. No v1 native OS or parent verifier rerun. No single session crossing UNKNOWN was executed or claimed. No successful save fixture response was needed.
+
+Read-only verifier additionally executes the unchanged actual pure LSQ1 decoder to reject item-action kind3, stale view epoch, and any action during all4 inventory phases, checks original producer exact-family refusal/current-before-IO structure and exact native lifecycle preservation. These are source/pure checks, never actual item/Host/Store execution. Equipment remains explicit UNAVAILABLE, real ITEM3192 still pins Hoste14 and lacks exact LRS1 Host family. The live data producer MUST remain unselected until actual ITEM owner supplies a compatible exact descendant. Item use/equip/transfer and Gear/save owners remain absent. See immutable inventory v1 PROTOCOL.md for unchanged wire fields/lifetime.
+
+Remaining product edges are exact Factory/Plan/native DLL/strict NativeInput/cold and owner lifecycle selection, actual ITEM LRS1 family and original owner/current rows execution, actual backend/readback/save. This artifact alone does not select the interface or native DLL.
+
+After finalization use only the bounded read-only verifier, no build/OS rerun/regeneration:
+
+    python -B <absolute-this-directory>/verify_readonly.py
+
+Parent main reviews/integrates/relinks. Writer released.

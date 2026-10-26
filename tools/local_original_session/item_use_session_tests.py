@@ -10,13 +10,13 @@ from unittest.mock import patch
 import unittest
 
 from tools.local_original_session import broker, inventory, item_use, item_use_session as session
-from tools.local_original_session.broker_tests import InventoryRestoreOnlyBrokerTests
+from tools.local_original_session import broker_tests as broker_fixture
 from tools.local_original_session.item_use_tests import body, scalar, blob
 from tools.local_original_session.movement_tests import payload as move_payload
 
 
 class SessionTests(unittest.IsolatedAsyncioTestCase):
-    asyncSetUp = InventoryRestoreOnlyBrokerTests.asyncSetUp
+    asyncSetUp = broker_fixture.InventoryRestoreOnlyBrokerTests.asyncSetUp
 
     def bind(self, *, policy=session.POLICY):
         leaf = session.ItemUseSession(self.producer, policy=policy)
@@ -570,7 +570,7 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
         self.no_effect()
 
     async def test_original_restored_delivery_seed_and_committed_move_keep_current_authority(self):
-        await InventoryRestoreOnlyBrokerTests.adopt_restored(self)
+        await broker_fixture.InventoryRestoreOnlyBrokerTests.adopt_restored(self)
         initial = self.producer._inventory_frame
         stored = self.service.store.path.read_bytes()
         result = await self.producer.add_inventory(self.writer, restore_only=True)

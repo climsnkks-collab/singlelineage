@@ -140,10 +140,13 @@ class _ObservationBudget(edge._Budget):
 
     def read(self, at, size, image=False):
         # Preserve the original _Budget checks and exactly one Native read.
-        need(type(size) is int and self.spent + size <= BYTE_LIMIT, 'NPC_OBSERVE_BYTE_BUDGET')
+        # inventory_observe's M1 kit query (up to 180 rows) sets its own larger limit.
+        limit = BYTE_LIMIT if getattr(self, 'limit', None) is None else self.limit
+        need(type(size) is int and self.spent + size <= limit, 'NPC_OBSERVE_BYTE_BUDGET')
         need(type(at) is int and type(size) is int and 0 < size <= 4096 and
              0x10000 <= at <= 0x7fffffffffff - size, 'EDGE_TYPED_READ_BOUND')
-        need(self.spent + size <= edge.LIMIT, 'EDGE_REQUEST_BYTE_BOUND')
+        need(self.spent + size <= (edge.LIMIT if getattr(self, 'byte_limit', None) is None else self.byte_limit),
+             'EDGE_REQUEST_BYTE_BOUND')
         self.spent += size
         raw = self.native.read(at, size, self.sampler.g['base'] if image else None)
         need(type(raw) is bytes and len(raw) == size, 'EDGE_PARTIAL_TYPED_READ')

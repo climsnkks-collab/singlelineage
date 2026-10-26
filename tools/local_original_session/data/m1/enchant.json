@@ -1,0 +1,448 @@
+{
+  "table": "m1_enchant",
+  "version": 1,
+  "source": "local_policy",
+  "note": "LOCAL backend policy adopted from fixed L1J normal/blessed/cursed weapon and armor enchant rules. This is not evidence of Classic probabilities, grade wire encoding or client behavior. IDs are Classic templates; grade is separate local instance input.",
+  "ref_abbrev": {
+    "l1j": "D:/SingleLineageRef/l1j-en-classic",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl"
+  },
+  "grade_meaning": {
+    "0": "blessed",
+    "1": "normal",
+    "2": "cursed"
+  },
+  "grade_ref": "data/m1/drops.json:6; game_data.DropDef; docs/NPC_FIELD_SEMANTICS.md:49. Reuses existing npc f21.f2 grade0/1/2 correspondence. Grade is never inferred from item25/26 template alone; live instance wire delivery remains unconnected.",
+  "rates": {
+    "weapon": 1,
+    "armor": 1,
+    "source": "local_policy",
+    "ref": "l1j/config/rates.properties:87-88"
+  },
+  "rules": {
+    "outcome": "roll=1..100, strict roll < integer threshold; source Java integer division",
+    "weapon_threshold": "(100+3+weapon_rate)/(level>=9?6:3)",
+    "armor_threshold": "divisor=safe==0?level+2:level; (100+divisor*armor_rate)/(level>=9?divisor*2:divisor)",
+    "high_level_unchanged": "level>=9 and success_threshold<=roll<success_threshold*2",
+    "safe": "noncursed and level<safe: success. safe<0 or target bless>=128: reject without consuming. target kind and scroll eligibility must match.",
+    "cursed": "level>-7: -1; level<=-7: destroy. Cursed check precedes safe.",
+    "blessed_delta": "level<=2: +1 rolls1..32,+2 rolls33..76,+3 rolls77..100; level3..5: +2 rolls1..49,+1 rolls50..100; level>=6:+1",
+    "refs": [
+      "l1j/src/l1j/server/server/clientpackets/C_ItemUSe.java:233-237,316-324",
+      "l1j/src/l1j/server/server/model/Enchant.java:211-222,305-323,376-409,412-524"
+    ]
+  },
+  "scrolls": [
+    {
+      "classic_id": 25,
+      "name_token": "$244",
+      "name_ko": "무기 마법 주문서",
+      "kind": "weapon",
+      "mapping_status": "template_and_drop_grade_correspondence_supported_instance_wire_unresolved",
+      "native_ref": "native-dump:975 f45=1004 scroll family, f5=468 f6=22 f10=625",
+      "grade_input": "required_local_instance_grade",
+      "variants": [
+        {
+          "grade": 1,
+          "l1j_id": 40087,
+          "ref": "l1jdb:16541",
+          "classic_drop_grade_ref": "work/npc_field_semantics/hypotheses/all-drop-pairs.json:842 ; docs/NPC_FIELD_SEMANTICS.md:49"
+        },
+        {
+          "grade": 0,
+          "l1j_id": 140087,
+          "ref": "l1jdb:18301",
+          "classic_drop_grade_ref": "work/npc_field_semantics/hypotheses/all-drop-pairs.json:1087 ; docs/NPC_FIELD_SEMANTICS.md:49"
+        },
+        {
+          "grade": 2,
+          "l1j_id": 240087,
+          "ref": "l1jdb:18312",
+          "classic_drop_grade_ref": "work/npc_field_semantics/hypotheses/all-drop-pairs.json:5032 ; docs/NPC_FIELD_SEMANTICS.md:49"
+        }
+      ]
+    },
+    {
+      "classic_id": 26,
+      "name_token": "$249",
+      "name_ko": "갑옷 마법 주문서",
+      "kind": "armor",
+      "mapping_status": "template_and_drop_grade_correspondence_supported_instance_wire_unresolved",
+      "native_ref": "native-dump:976 f45=1004 scroll family, f5=467 f6=22 f10=625",
+      "grade_input": "required_local_instance_grade",
+      "variants": [
+        {
+          "grade": 1,
+          "l1j_id": 40074,
+          "ref": "l1jdb:16528",
+          "classic_drop_grade_ref": "work/npc_field_semantics/hypotheses/all-drop-pairs.json:847 ; docs/NPC_FIELD_SEMANTICS.md:49"
+        },
+        {
+          "grade": 0,
+          "l1j_id": 140074,
+          "ref": "l1jdb:18300",
+          "classic_drop_grade_ref": "work/npc_field_semantics/hypotheses/all-drop-pairs.json:1172 ; docs/NPC_FIELD_SEMANTICS.md:49"
+        },
+        {
+          "grade": 2,
+          "l1j_id": 240074,
+          "ref": "l1jdb:18311",
+          "classic_drop_grade_ref": "work/npc_field_semantics/hypotheses/all-drop-pairs.json:5047 ; docs/NPC_FIELD_SEMANTICS.md:49"
+        }
+      ]
+    }
+  ],
+  "mapping_limits": [
+    "Mapping follows work/local_original_session/game-core-prep/MAPPING_SCOPE.md section3: match Classic name token and Korean name, distinguish weapon/armor scroll use, then select the L1J variant by the separate drop grade. The shared token alone leaves three grade candidates per template.",
+    "Never use the six L1J variant IDs as Classic IDs. Classic templates25/26 and their grade0/1/2 drop combinations are supported by existing evidence. A template ID alone does not determine grade.",
+    "Base-template correspondence uses name token, name, scroll family and f5/f6 graphics: Classic25/$244/weapon corresponds to L1J scroll/dai, Classic26/$249/armor to scroll/zel. All three L1J candidates in each family share the token and graphics; their SQL bless0/1/2 selects blessed/normal/cursed. Native weight625 differs from L1J630.",
+    "Classic correspondence for IvoryTower/quest/illusion equipment requiring special scrolls is unresolved. Equipment outside this table requires explicit safe_enchant and normal_scroll_eligible=True.",
+    "GM success bypass, elemental/accessory/IvoryTower/quest/illusion scrolls are outside this LOCAL module scope."
+  ],
+  "equipment": [
+    {
+      "classic_id": 1,
+      "name_ko": "아탐",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 137,
+      "source": "local_policy",
+      "ref": "items.json id 1 existing correspondence; l1jdb:63838; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 40,
+      "name_ko": "오크족 단검",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 1,
+      "source": "local_policy",
+      "ref": "items.json id 40 existing correspondence; l1jdb:63702; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 41,
+      "name_ko": "단검",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 4,
+      "source": "local_policy",
+      "ref": "items.json id 41 existing correspondence; l1jdb:63705; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 39,
+      "name_ko": "요정족 단검",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 5,
+      "source": "local_policy",
+      "ref": "items.json id 39 existing correspondence; l1jdb:63706; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 103,
+      "name_ko": "가죽 재킷",
+      "kind": "armor",
+      "safe_enchant": 0,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20322,
+      "source": "local_policy",
+      "ref": "items.json id 103 existing correspondence; l1jdb:3158; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 102,
+      "name_ko": "가죽 갑옷",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20089,
+      "source": "local_policy",
+      "ref": "items.json id 102 existing correspondence; l1jdb:2933; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 99,
+      "name_ko": "징박힌 가죽 갑옷",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20147,
+      "source": "local_policy",
+      "ref": "items.json id 99 existing correspondence; l1jdb:2991; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 90,
+      "name_ko": "투구",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20043,
+      "source": "local_policy",
+      "ref": "items.json id 90 existing correspondence; l1jdb:2887; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 88,
+      "name_ko": "오크족 투구",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20034,
+      "source": "local_policy",
+      "ref": "items.json id 88 existing correspondence; l1jdb:2878; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 104,
+      "name_ko": "티셔츠",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20085,
+      "source": "local_policy",
+      "ref": "items.json id 104 existing correspondence; l1jdb:2929; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 106,
+      "name_ko": "오크족 망토",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20072,
+      "source": "local_policy",
+      "ref": "items.json id 106 existing correspondence; l1jdb:2916; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 120,
+      "name_ko": "짧은 부츠",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20213,
+      "source": "local_policy",
+      "ref": "items.json id 120 existing correspondence; l1jdb:3057; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 128,
+      "name_ko": "부츠",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20205,
+      "source": "local_policy",
+      "ref": "items.json id 128 existing correspondence; l1jdb:3049; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 129,
+      "name_ko": "장갑",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20182,
+      "source": "local_policy",
+      "ref": "items.json id 129 existing correspondence; l1jdb:3026; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 113,
+      "name_ko": "작은 방패",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20239,
+      "source": "local_policy",
+      "ref": "items.json id 113 existing correspondence; l1jdb:3083; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 263,
+      "name_ko": "나무방패",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20222,
+      "source": "local_policy",
+      "ref": "items.json id 263 existing correspondence; l1jdb:3066; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 3,
+      "name_ko": "장검",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 31,
+      "source": "local_policy",
+      "ref": "items.json id 3 existing correspondence; l1jdb:63732; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 89,
+      "name_ko": "난쟁이족 철 투구",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20007,
+      "source": "local_policy",
+      "ref": "items.json id 89 existing correspondence; l1jdb:2851; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 98,
+      "name_ko": "비늘 갑옷",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20122,
+      "source": "local_policy",
+      "ref": "items.json id 98 existing correspondence; l1jdb:2966; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 109,
+      "name_ko": "보호 망토",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20063,
+      "source": "local_policy",
+      "ref": "items.json id 109 existing correspondence; l1jdb:2907; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 117,
+      "name_ko": "큰 방패",
+      "kind": "armor",
+      "safe_enchant": 4,
+      "normal_scroll_eligible": true,
+      "l1j_id": 20242,
+      "source": "local_policy",
+      "ref": "items.json id 117 existing correspondence; l1jdb:3086; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 6,
+      "name_ko": "양손검",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 52,
+      "source": "local_policy",
+      "ref": "items.json id 6 existing correspondence; l1jdb:63753; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 4,
+      "name_ko": "도끼",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 136,
+      "source": "local_policy",
+      "ref": "items.json id 4 existing correspondence; l1jdb:63837; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 12,
+      "name_ko": "창",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 96,
+      "source": "local_policy",
+      "ref": "items.json id 12 existing correspondence; l1jdb:63797; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 11,
+      "name_ko": "활",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 172,
+      "source": "local_policy",
+      "ref": "items.json id 11 existing correspondence; l1jdb:63873; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 230,
+      "name_ko": "참나무 지팡이",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 128,
+      "source": "local_policy",
+      "ref": "items.json id 230 existing correspondence; l1jdb:63829; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 71,
+      "name_ko": "오크족 창",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 91,
+      "source": "local_policy",
+      "ref": "items.json id 71 existing correspondence; l1jdb:63792; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 38,
+      "name_ko": "몽둥이",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 138,
+      "source": "local_policy",
+      "ref": "items.json id 38 existing correspondence; l1jdb:63839; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 8,
+      "name_ko": "철퇴",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 140,
+      "source": "local_policy",
+      "ref": "items.json id 8 existing correspondence; l1jdb:63841; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    },
+    {
+      "classic_id": 45,
+      "name_ko": "도리깨",
+      "kind": "weapon",
+      "safe_enchant": 6,
+      "normal_scroll_eligible": true,
+      "l1j_id": 139,
+      "source": "local_policy",
+      "ref": "items.json id 45 existing correspondence; l1jdb:63840; safenchant column weapon:2105 / armor:75",
+      "note": "LOCAL policy adopting the L1J safenchant value for an existing M1 item correspondence; not a confirmed Classic safety rule."
+    }
+  ],
+  "combat": {
+    "source": "local_policy",
+    "effective_weapon_enchant": "level-(ranged?0:durability)",
+    "damage_bonus": "effective_weapon_enchant",
+    "hit_bonus": "Java integer truncation toward zero(effective_weapon_enchant/2)",
+    "armor_ac_bonus": "-enchant_level for non-accessory armor; accessory types8..12 excluded",
+    "refs": [
+      "l1j/src/l1j/server/server/model/L1Attack.java:294-295,386,768",
+      "l1j/src/l1j/server/server/model/L1EquipmentSlot.java:92-96",
+      "l1j/src/l1j/server/server/model/Enchant.java:286-301"
+    ],
+    "limits": "Only ordinary enchant contributions to damage, hit and AC are provided. Special-equipment MR, accessories and final damage/hit formulas are outside this scope."
+  }
+}

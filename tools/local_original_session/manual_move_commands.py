@@ -20,6 +20,7 @@ import os
 from pathlib import Path
 import re
 import threading
+import weakref
 import time
 from types import MethodType
 
@@ -186,6 +187,9 @@ class _RespawnAttackCompleted:
     _state_data: object = field(repr=False)
 
 
+_SOURCE_RESTART_ATTEMPTS = weakref.WeakKeyDictionary()
+
+
 class ManualMoveCommands:
     """Sync MoveGoal and awaited optional intents in the existing loop.
 
@@ -275,6 +279,7 @@ class ManualMoveCommands:
         self.allow_attack, self._attack_observer = allow_attack, None
         self._thread = threading.get_ident()
         self._busy = False
+        self._source_quit_owner = None  # Exit-only handoff; never cleared to reopen commands.
         self.pending = None
         self.sequence = 0
         self._action_sequence = None  # Cache of _publish assignment, never a second counter.
@@ -292,6 +297,7 @@ class ManualMoveCommands:
                           cleanup_required=False, phase='IDLE', native_attempted=False)
 
     def _terminal(self, reason):
+        _SOURCE_RESTART_ATTEMPTS.pop(self, None)
         if not self._respawn_attack_claimed:
             self._lethal_preparation_completed = None
         if not self._respawn_attack_completions:
@@ -345,9 +351,18 @@ class ManualMoveCommands:
         self._now = now
         return now
 
-    def _current(self):
+    def _source_quit_terminal_current(self, source_quit):
+        from tools.local_original_session.manual_source_quit import SourceQuitRequests
+        need(type(source_quit) is SourceQuitRequests and self._source_quit_owner is source_quit
+             and source_quit.consumer is self and source_quit._busy is True,
+             'SOURCE_QUIT_EXACT_TERMINAL_HANDOFF_REQUIRED')
+        source_quit._failure_current()
+        return True
+
+    def _current(self, *, source_quit=None):
         from tools.local_original_session.broker import LocalRealm, PersistentBroker, _TransportPolicy
-        need(self.state['status'] != 'UNKNOWN', 'MANUAL_MOVE_TERMINAL')
+        need(self.state['status'] != 'UNKNOWN' if source_quit is None else
+             self._source_quit_terminal_current(source_quit), 'MANUAL_MOVE_TERMINAL')
         binding = self.current()
         need(type(binding) is ManualMoveBinding, 'MANUAL_MOVE_CURRENT_BINDING_REQUIRED')
         broker, writer, reader = binding.broker, binding.writer, self.reader
@@ -431,7 +446,8 @@ class ManualMoveCommands:
              'MANUAL_MOVE_COUNTER_UNKNOWN')
         # Resolver/owner/read callbacks may cancel or reject reentry. A valid
         # returned binding must never revive that terminal state at the caller.
-        need(self.state['status'] != 'UNKNOWN', 'MANUAL_MOVE_TERMINAL')
+        need(self.state['status'] != 'UNKNOWN' if source_quit is None else
+             self._source_quit_terminal_current(source_quit), 'MANUAL_MOVE_TERMINAL')
         return binding, row, service, position, proof, boundary, identity, counters
 
     def _window(self, current):
@@ -686,11 +702,15 @@ class ManualMoveCommands:
         return matches, idle
 
     def _enter(self):
+        need(self._source_quit_owner is None, 'MANUAL_MOVE_EXIT_ONLY')
         need(threading.get_ident() == self._thread and not self._busy, 'MANUAL_MOVE_REENTRANT_OR_THREAD')
         need(self._readonly_pending is None, 'MANUAL_MOVE_READONLY_PENDING')
         self._busy = True
 
     def _pending_state(self, reason=None):
+        if self.pending.get('kind') == 'SourceQuit' and self._source_quit_owner is not None:
+            self._source_quit_terminal_current(self._source_quit_owner)
+            return  # Preserve the original terminal state and failure evidence.
         self.state = dict(status='PENDING', reason=reason, sequence=self.sequence,
                           automatic_retry=False, cleanup_required=False,
                           phase=self.pending['phase'], native_attempted=self.pending['native_attempted'])
@@ -1021,6 +1041,67 @@ class ManualMoveCommands:
              and pending['result_identity'] == identity), 'MANUAL_SOURCE_RESTART_IMMUTABLE_RESULT_CHANGED')
         pending.update(native=dict(row), result_identity=identity)
 
+    def _source_restart_failure_result(self):
+        """Read only a same-issued failure; no current/ACK/success authority."""
+        issued = _SOURCE_RESTART_ATTEMPTS.get(self)
+        if issued is None:
+            return False
+        (pending, request, values, bound, current, reader, owner, member, backend,
+         contract, sequence, thread, directory_identity) = issued
+        def same():
+            return (self.pending is pending and self._bound is bound and self.reader is reader
+                and reader.owner is owner and reader.member is member and reader.backend is backend
+                and reader.contract is contract and owner.child is member
+                and pending.get('request') is request and pending.get('restart_current') is current
+                and self.sequence == sequence == request.get('seq') and self._thread == thread == threading.get_ident()
+                and pending.get('kind') == 'SourceRestart' and pending.get('phase') == 'NATIVE_WAIT'
+                and pending.get('native_attempted') is True and self.state.get('status') == 'PENDING'
+                and tuple((k,type(v),v) for k,v in request.items()) == values
+                and Path(owner.directory).absolute() == current[5]
+                and member.pid == request['pid'] and int(member.identity['birth']) == request['birth']
+                and owner.image_sha == request['candidate_sha256'])
+        if not same():
+            return False  # A late old result cannot mutate a different request.
+        directory = commands._ordinary(current[5], directory=True)
+        info = directory.stat()
+        need((info.st_dev, info.st_ino) == directory_identity,
+             'MANUAL_SOURCE_RESTART_RESULT_BOUNDARY_CHANGED')
+        path = directory / ('source-restart-result-' + str(sequence) + '.json')
+        try:
+            published = commands._closed_health_json(directory / 'source-restart-request.json')
+            result = commands._closed_health_json(path)
+        except (FileNotFoundError, json.JSONDecodeError, UnicodeError):
+            return False
+        if result is None or published is None:
+            return False
+        need(type(published) is dict and tuple((k,type(v),v) for k,v in published.items()) == values,
+             'MANUAL_SOURCE_RESTART_RESULT_REQUEST_CHANGED')
+        expected = dict(request, schema='own-source-restart-result-v1')
+        need(type(result) is dict and set(result) == set(expected) | {'status','reason','invoked'}
+             and all(type(result.get(k)) is type(v) and result[k] == v for k,v in expected.items())
+             and type(result['status']) is str and type(result['reason']) is int
+             and 0 <= result['reason'] <= 0xffffffff and type(result['invoked']) is bool,
+             'MANUAL_SOURCE_RESTART_RESULT_IDENTITY_OR_SCHEMA')
+        if result['status'] not in ('CODE_ANCHOR_BLOCKED','BLOCKED_SOURCE_BINDING','UNKNOWN') or result['invoked'] is not False:
+            return False  # RETURNED/partial results retain every original current/ACK gate.
+        before = commands._ordinary(path).stat()
+        again = commands._closed_health_json(path)
+        after = commands._ordinary(path).stat()
+        fields = ('st_dev','st_ino','st_size','st_mtime_ns')
+        need(0 < before.st_size <= 767 and result == again
+             and all(getattr(before,k) == getattr(after,k) for k in fields),
+             'MANUAL_SOURCE_RESTART_IMMUTABLE_RESULT_CHANGED')
+        task = asyncio.current_task()
+        if task is not None and task.cancelling():
+            raise asyncio.CancelledError()
+        need(same() and _SOURCE_RESTART_ATTEMPTS.get(self) is issued,
+             'MANUAL_SOURCE_RESTART_RESULT_REQUEST_CHANGED')
+        failure = dict(status=result['status'],reason=result['reason'],invoked=False,
+                       native_sequence=sequence,proof_scope='SAME_ISSUED_NATIVE_FAILURE_ONLY')
+        self._terminal('MANUAL_SOURCE_RESTART_NATIVE_NOT_RETURNED')
+        self.state['native_refusal'] = failure
+        return True
+
     async def _poll_source_restart(self):
         entered = False
         try:
@@ -1030,6 +1111,10 @@ class ManualMoveCommands:
             current = pending['restart_current']
             broker, writer, row = current[0].broker, current[0].writer, current[1]
             async with row['operation_lock']:
+                task = asyncio.current_task()
+                if task is not None and task.cancelling(): raise asyncio.CancelledError()
+                if self._source_restart_failure_result():
+                    return dict(self.state)
                 if pending['phase'] == 'ADMISSION':
                     current = self._current()
                     need(current[3] is pending['initial'] and current[7] == pending['before'],
@@ -1084,6 +1169,7 @@ class ManualMoveCommands:
                     if self.allow_source_reselect:
                         pending['completed_restart_frame'] = state['frame']
                         self._source_restart_completed = pending
+                    _SOURCE_RESTART_ATTEMPTS.pop(self, None)
                     self.pending = None
                     self.state = dict(status='COMMITTED', reason=None, sequence=self.sequence,
                         automatic_retry=False, cleanup_required=False, phase='COMMITTED', native_attempted=True,
@@ -1765,6 +1851,11 @@ class ManualMoveCommands:
             await observer.prepare(current[0].writer, pending['target_uid'], now_ns=now)
             need(self.pending is pending, 'MANUAL_ATTACK_PENDING_CHANGED')
             current = self._attack_current(admission=pending['phase'] == 'ADMISSION')
+            hp4ec8 = getattr(self.reader, '_hp4ec8_subscribers', None)
+            if stage == 'post_feedback' and hp4ec8 is not None:
+                from tools.local_original_session.hp4ec8_subscribers import Observation
+                if type(hp4ec8) is Observation:
+                    hp4ec8.record_npc_stage(self, pending, current, feedback_intent, at_ns=now)
             row, _count = self.reader.sample(include_input_state=False, attack_action_observer=observer)
             self.last_sample_ns = self._clock()
             current = self._attack_current(admission=pending['phase'] == 'ADMISSION')
@@ -1971,6 +2062,18 @@ class ManualMoveCommands:
             await self._action_sample(current, 'post_command')
             self._pending_state('MANUAL_ATTACK_FEEDBACK_DRAIN_PENDING')
             return
+        retaliation = getattr(current[0].broker, '_npc_retaliation', None)
+        if retaliation is not None and getattr(retaliation, '_native_manual', None) is not None:
+            from tools.local_original_session import npc_retaliation
+            need(type(retaliation) is npc_retaliation.Service
+                 and retaliation.broker is current[0].broker
+                 and retaliation._native_manual.consumer is self,
+                 'MANUAL_REGISTERED_LOCAL_RETALIATION_REQUIRED')
+            await retaliation.consume_feedback(self, pending, intent)
+            need(self.pending is pending, 'MANUAL_ATTACK_PENDING_CHANGED')
+            current = self._attack_current()
+            need(self._feedback_intent(current) is intent,
+                 'MANUAL_ATTACK_CURRENT_FEEDBACK_REQUIRED')
         if pending['feedback_intent'] is None:
             post = await self._action_sample(current, 'post_feedback', feedback_intent=intent)
             if post is False:
@@ -2496,7 +2599,9 @@ class ManualMoveCommands:
             return self._attack_current(admission=True)
         if self.pending.get('kind') == 'UseItem':
             return self._use_item_current(admission=True)
-        current, pending = self._current(), self.pending
+        pending = self.pending
+        current = self._current(source_quit=self._source_quit_owner) if (pending.get('kind') == 'SourceQuit'
+            and self._source_quit_owner is not None) else self._current()
         need(current[3] is pending['initial'] and current[7] == pending['before'],
              'MANUAL_MOVE_ADMISSION_AUTHORITY_CHANGED')
         if pending.get('kind') == 'SourceQuit':
@@ -2645,6 +2750,11 @@ class ManualMoveCommands:
                 self._lethal_mode_current(pending)
         pending['native_attempted'] = True  # Post attempt, not engine invocation.
         if is_reselect: pending['phase_posted'] = True
+        if is_restart:
+            _SOURCE_RESTART_ATTEMPTS[self] = (pending, request,
+                tuple((k,type(v),v) for k,v in request.items()), self._bound,
+                pending['restart_current'], self.reader, self.reader.owner, self.reader.member,
+                self.reader.backend, self.reader.contract, self.sequence, self._thread, self._bound[4])
         owner = self.reader.owner
         private_desktop = getattr(owner, 'private_desktop', None)
         if private_desktop is not None:
@@ -2657,7 +2767,9 @@ class ManualMoveCommands:
         need(self._clock() - pending['started'] < WAIT_NS, 'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
         final = self._admission_current()
         need(self._window(final) == hwnd, 'MANUAL_MOVE_POST_BOUNDARY_CHANGED')
-        need(self.state['status'] != 'UNKNOWN', 'MANUAL_MOVE_TERMINAL')
+        need(self._source_quit_terminal_current(self._source_quit_owner) if is_quit
+             and self._source_quit_owner is not None else self.state['status'] != 'UNKNOWN',
+             'MANUAL_MOVE_TERMINAL')
         if is_attack or is_use_item or is_restart or is_reselect:
             task = asyncio.current_task()
             if task is not None and task.cancelling():
@@ -2892,3 +3004,7 @@ LETHAL_PREPARATION_SETTLED = ManualMoveCommands.lethal_preparation_settled
 
 RESPAWN_ATTACK_PROOF_TYPE = _RespawnAttackCompleted
 RESPAWN_ATTACK_VALIDATE = ManualMoveCommands.validate_respawn_attack
+
+# Exact existing producer identities for the optional historical diagnostic stage.
+HP4EC8_STAGE_PRODUCER = ManualMoveCommands._action_sample
+HP4EC8_STAGE_CURRENT = ManualMoveCommands._attack_current

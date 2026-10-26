@@ -1,0 +1,272 @@
+{
+ "table": "m1_item_gfx",
+ "version": 1,
+ "note": "클라이언트 item 행 f5(인벤 아이콘 invgfx)·f6(바닥 그래픽 grdgfx). 아탐(1)의 f6=14가 기존 검증된 바닥 Item 4E96 f3=14(item_ground_wire.local_candidate, run101 local14)와 같아서 f6을 4E96 f3 appearance로 쓴다. icon은 items.json icon과 같은 값이며 items.json에 없는 드롭 아이템의 0964 f7에 쓴다. 바닥 그래픽 실제 렌더링은 아탐 외에는 미검증(로컬 정책).",
+ "source": "work/source_game_data/native-dump-v1.jsonl item 행",
+ "items": {
+  "1": {
+   "icon": 8,
+   "ground": 14,
+   "name_ko": "아탐",
+   "ref": "native-dump:952"
+  },
+  "3": {
+   "icon": 2,
+   "ground": 3,
+   "name_ko": "장검",
+   "ref": "native-dump:954"
+  },
+  "4": {
+   "icon": 1,
+   "ground": 2,
+   "name_ko": "도끼",
+   "ref": "native-dump:955"
+  },
+  "6": {
+   "icon": 4,
+   "ground": 59,
+   "name_ko": "양손검",
+   "ref": "native-dump:957"
+  },
+  "7": {
+   "icon": 5,
+   "ground": 7,
+   "name_ko": "아데나",
+   "ref": "native-dump:958"
+  },
+  "8": {
+   "icon": 67,
+   "ground": 60,
+   "name_ko": "철퇴",
+   "ref": "native-dump:959"
+  },
+  "11": {
+   "icon": 20,
+   "ground": 12,
+   "name_ko": "활",
+   "ref": "native-dump:962"
+  },
+  "12": {
+   "icon": 101,
+   "ground": 27,
+   "name_ko": "창",
+   "ref": "native-dump:963"
+  },
+  "14": {
+   "icon": 80,
+   "ground": 45,
+   "name_ko": "빨간 물약",
+   "ref": "native-dump:965"
+  },
+  "17": {
+   "icon": 77,
+   "ground": 42,
+   "name_ko": "초록 물약",
+   "ref": "native-dump:968"
+  },
+  "29": {
+   "icon": 7,
+   "ground": 66,
+   "name_ko": "화살",
+   "ref": "native-dump:978"
+  },
+  "34": {
+   "icon": 19,
+   "ground": 12,
+   "name_ko": "오크족 활",
+   "ref": "native-dump:983"
+  },
+  "35": {
+   "icon": 21,
+   "ground": 82,
+   "name_ko": "넓은 검",
+   "ref": "native-dump:984"
+  },
+  "38": {
+   "icon": 31,
+   "ground": 14,
+   "name_ko": "몽둥이",
+   "ref": "native-dump:987"
+  },
+  "39": {
+   "icon": 33,
+   "ground": 68,
+   "name_ko": "요정족 단검",
+   "ref": "native-dump:988"
+  },
+  "40": {
+   "icon": 34,
+   "ground": 68,
+   "name_ko": "오크족 단검",
+   "ref": "native-dump:989"
+  },
+  "41": {
+   "icon": 35,
+   "ground": 68,
+   "name_ko": "단검",
+   "ref": "native-dump:990"
+  },
+  "45": {
+   "icon": 42,
+   "ground": 83,
+   "name_ko": "도리깨",
+   "ref": "native-dump:994"
+  },
+  "71": {
+   "icon": 100,
+   "ground": 27,
+   "name_ko": "오크족 창",
+   "ref": "native-dump:1014"
+  },
+  "74": {
+   "icon": 105,
+   "ground": 26,
+   "name_ko": "오크족 검",
+   "ref": "native-dump:1017"
+  },
+  "88": {
+   "icon": 54,
+   "ground": 18,
+   "name_ko": "오크족 투구",
+   "ref": "native-dump:1026"
+  },
+  "89": {
+   "icon": 52,
+   "ground": 18,
+   "name_ko": "난쟁이족 철 투구",
+   "ref": "native-dump:1027"
+  },
+  "90": {
+   "icon": 55,
+   "ground": 18,
+   "name_ko": "투구",
+   "ref": "native-dump:1028"
+  },
+  "96": {
+   "icon": 26,
+   "ground": 3773,
+   "name_ko": "사슬 갑옷",
+   "ref": "native-dump:1034"
+  },
+  "97": {
+   "icon": 443,
+   "ground": 3774,
+   "name_ko": "오크족 사슬 갑옷",
+   "ref": "native-dump:1035"
+  },
+  "98": {
+   "icon": 89,
+   "ground": 3840,
+   "name_ko": "비늘 갑옷",
+   "ref": "native-dump:1036"
+  },
+  "99": {
+   "icon": 109,
+   "ground": 3842,
+   "name_ko": "징박힌 가죽 갑옷",
+   "ref": "native-dump:1037"
+  },
+  "101": {
+   "icon": 442,
+   "ground": 3834,
+   "name_ko": "오크족 고리 갑옷",
+   "ref": "native-dump:1039"
+  },
+  "102": {
+   "icon": 51,
+   "ground": 3830,
+   "name_ko": "가죽 갑옷",
+   "ref": "native-dump:1040"
+  },
+  "103": {
+   "icon": 62,
+   "ground": 30011,
+   "name_ko": "가죽 재킷",
+   "ref": "native-dump:1041"
+  },
+  "104": {
+   "icon": 110,
+   "ground": 24,
+   "name_ko": "티셔츠",
+   "ref": "native-dump:1042"
+  },
+  "106": {
+   "icon": 29,
+   "ground": 3824,
+   "name_ko": "오크족 망토",
+   "ref": "native-dump:1044"
+  },
+  "109": {
+   "icon": 30,
+   "ground": 3810,
+   "name_ko": "보호 망토",
+   "ref": "native-dump:1046"
+  },
+  "113": {
+   "icon": 97,
+   "ground": 23,
+   "name_ko": "작은 방패",
+   "ref": "native-dump:1049"
+  },
+  "117": {
+   "icon": 61,
+   "ground": 23,
+   "name_ko": "큰 방패",
+   "ref": "native-dump:1052"
+  },
+  "120": {
+   "icon": 65,
+   "ground": 25,
+   "name_ko": "짧은 부츠",
+   "ref": "native-dump:1055"
+  },
+  "128": {
+   "icon": 435,
+   "ground": 25,
+   "name_ko": "부츠",
+   "ref": "native-dump:1062"
+  },
+  "129": {
+   "icon": 141,
+   "ground": 182,
+   "name_ko": "장갑",
+   "ref": "native-dump:1063"
+  },
+  "195": {
+   "icon": 249,
+   "ground": 776,
+   "name_ko": "마법서 (인챈트 덱스터리티)",
+   "ref": "native-dump:1110"
+  },
+  "197": {
+   "icon": 254,
+   "ground": 777,
+   "name_ko": "마법서 (뱀파이어릭 터치)",
+   "ref": "native-dump:1112"
+  },
+  "230": {
+   "icon": 291,
+   "ground": 75,
+   "name_ko": "참나무 지팡이",
+   "ref": "native-dump:1139"
+  },
+  "263": {
+   "icon": 97,
+   "ground": 23,
+   "name_ko": "나무방패",
+   "ref": "native-dump:1166"
+  },
+  "296": {
+   "icon": 79,
+   "ground": 44,
+   "name_ko": "용기의 물약",
+   "ref": "native-dump:1192"
+  },
+  "332": {
+   "icon": 446,
+   "ground": 1164,
+   "name_ko": "동물가죽",
+   "ref": "native-dump:1217"
+  }
+ }
+}

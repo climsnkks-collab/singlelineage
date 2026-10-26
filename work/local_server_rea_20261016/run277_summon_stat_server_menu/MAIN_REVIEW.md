@@ -1,0 +1,13 @@
+# REA277 main review
+
+main은완료semantics3/menu3핀·4JSON과최종root의2JSON을확인했다. menu7완전CODE선정2604B의frozen104해시를직접확인하고typedlayout.v98/vA0및54A6B0→6C5C00/48Bdata정리접점을읽었다.54DB80조회실패는leaf확정이아니며미보존tail의정확량UNKNOWN을유지했다.
+
+child6C5CC0의기존32B선정해시와실14B/5행을확인하여requiredmask0x22F를수용했다. 원schema의presencebit와결합하면필수f1..6/선택f7..10이다. enumfastslot/aux와DEA870의byte1..max조건을검토했고canonical1..10허용을정상업무값으로확대하지않았다. selectedLOCALsource107..114도직접읽어등록uid/generation→Hostopen→return()임을확인했다. 이는현재설치/원서버/실제응답관측이아니다.
+
+f2의Summon/Pet분기는새양성이고server성공코드는아니다. 앞274의54A6B0capture는이번data객체확인으로명확히정정됐다. rawf1전달을requestUIDecho로,Pair정리를ownerthread/asyncinvoke종료로확정하지않는다. 실제serverrecord/child업무값과concrete layoutcallback/다음request가미공급이다. source질문을원본/UI실행성공으로바꾸지않는다.
+
+기능main계약답은mcp__codex_app__send_message_to_thread성공으로실제1회전달,Root/Test진행·ACK·큐·시험발주0.다른readygate0.다음예약은별도ATS최소UIadapter이며이번graph를거기로확대하지않았다.
+
+- source/contract.md: 2636B SHA256 `d5bf4541e0a4f666beaffb1bf6254242c4ca1d35915ef910009a72732c22f475`
+- source/source-refs.json: 4239B SHA256 `b16a5b8ee909b127bfce81754fb28c3074e673c87386c076194c1b619fbec311`
+- source/selected-evidence.json: 4246B SHA256 `1258486d0d17673b02c1d8b92e48cf10ef9557a9366450c545e395b1a9357c18`

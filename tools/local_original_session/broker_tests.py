@@ -64,6 +64,71 @@ def reserve():
         raise
 
 
+async def connected_motion_setup(self):
+    """Existing connected motion flow with a fully initialized, unstarted broker."""
+    from tools.local_original_session import npc_motion as motion
+    from tools.local_original_session.npc_tests import spawn
+    self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+    self.edge_result = True
+    self.edge_mutation = None
+    self.edges = []
+
+    async def npc_edge(*edge):
+        self.edges.append(edge)
+        if self.edge_mutation:
+            self.edge_mutation()
+        return self.edge_result
+
+    self.producer = b.PersistentBroker(sockets={12000: object(), 14030: object()},
+        retained_owner=object(), owner_handle=object(), owner_job=object(),
+        owner_guard=lambda _: True, owner_liveness_guard=lambda: True, source_guard=lambda: None,
+        conversation_factory=FixtureConversation, expected_uuid=str(uuid.uuid4()),
+        store_path=Path(self.temp.name) / 'characters.json', npc_spawns=(spawn(),),
+        npc_motion_interval_ns=100, npc_edge_passability=npc_edge,
+        npc_motion_policy=motion.LOCAL_PRE_STEP)
+    self.realm, self.policy = self.producer.realm, self.producer.policy
+    self.writer = types.SimpleNamespace(transport=types.SimpleNamespace(get_write_buffer_size=lambda: 0),
+                                        write=mock.Mock(), drain=mock.AsyncMock())
+    self.realm.store.create(b.ack.realm.Creation(self.realm.profile_name, 0, 0, (13,) * 6))
+    async def owner(*_):
+        return True
+    game = self.realm.grant(self.writer, movement_owner_guard=owner)
+    await game.received(types.SimpleNamespace(opcode=0x263,
+        payload=LocalLoginRequest(0, 'standalone.local', self.realm.expected_uuid).payload()))
+    pb = b.ack.realm.pb
+    payload = pb.encode_message([pb.encode_bytes(1, self.realm.profile_name.encode()),
+                                pb.encode_uint32(2, 0), pb.encode_uint32(3, 0)])
+    frames = await game.received(types.SimpleNamespace(opcode=0x4e28, payload=payload))
+    def sample(peer):
+        return b.OwnerSample(self.policy.owner, self.policy.handle, self.policy.job,
+                             peer, time.monotonic_ns(), True, True)
+    def boot(writer, peer):
+        row = self.policy.admit(writer, peer, sample(peer), time.monotonic_ns())
+        for opcode, size, request in ((0x4e20, 12, None), (0x4e35, 76, 0x4e34), (0x4f3e, 6, 0x4f3d)):
+            if request is not None:
+                self.policy.received_frame(writer, sample(peer), request, 10, time.monotonic_ns())
+            self.policy.begin_write(writer, sample(peer), opcode, size, 0, time.monotonic_ns())
+            self.policy.drained(writer, sample(peer), 0, time.monotonic_ns())
+        return row
+    prior, peer = object(), b.Peer(14030, 41000, time.monotonic_ns())
+    boot(prior, peer)
+    self.policy.eof(prior, sample(peer), True, time.monotonic_ns())
+    self.policy.closed(prior, positive_close=True, registry_removed=True, decoder_empty=True, task_joined=True)
+    peer = b.Peer(14030, 41001, time.monotonic_ns())
+    policy_row = boot(self.writer, peer)
+    self.row = dict(writer=self.writer, policy_row=policy_row, peer=dict(connection_id=4, endpoint_port=14030),
+                    joined=False, failed=False, operation_lock=asyncio.Lock())
+    self.producer._claims = {12000: [], 14030: [self.row]}
+    async def owned_sample(_):
+        return sample(peer)
+    self.producer._sample = owned_sample
+    await self.producer._send(self.writer, self.row, frames, game=True)
+    self.writer.write.reset_mock(); self.writer.drain.reset_mock()
+    self.mover = self.realm.npc_mover(self.writer)
+    self.initial = self.mover.state
+    self.x, self.y = b.movement.authority.unpack_grid(self.initial.packed)
+
+
 class BrokerTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -466,8 +531,9 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
                 raise
         broker._checkpoint = checkpoint  # Original owner/policy path executes; only EOF scheduling differs.
         async with lock:
-            self.assertTrue(await broker._poll_checkpoint(writer, row, read, decoder_empty=True,
-                                                         operation_lock=lock))
+            self.assertTrue(await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                decoder_empty=row['_decoder'].buffered_bytes == 0,
+                operation_lock=lock))
         self.assertTrue(row['eof'] and row['boot_complete'] and row['policy_row'].eof)
         self.assertFalse(row['failed'] or broker.failure.is_set())
         self.assertEqual(broker.policy.log[-1], ('eof', 14030, 0, 0))
@@ -482,8 +548,9 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             return False
         broker.owner_guard = departing
         async with row['operation_lock']:
-            self.assertTrue(await broker._poll_checkpoint(writer, row, read, decoder_empty=True,
-                                                         operation_lock=row['operation_lock']))
+            self.assertTrue(await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                decoder_empty=row['_decoder'].buffered_bytes == 0,
+                operation_lock=row['operation_lock']))
         self.assertTrue(row['eof'] and row['boot_complete'] and row['policy_row'].eof)
         self.assertFalse(row['failed'] or broker.failure.is_set())
         broker.owner_liveness_guard.assert_called_once_with()
@@ -501,6 +568,7 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             read, lock = row['_read_task'], row['operation_lock']
             replacement_lock = None
             if mode == 'already_done': read.set_result(b'')
+            if mode == 'partial': row['_decoder'].feed(b'\x0a')
             async def departing(_):
                 nonlocal replacement_lock
                 if mode not in ('pending', 'already_done'):
@@ -526,7 +594,8 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             try:
                 async with lock:
                     with self.subTest(mode=mode), self.assertRaises(ValueError):
-                        await broker._poll_checkpoint(writer, row, read, decoder_empty=mode != 'partial',
+                        await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                            decoder_empty=row['_decoder'].buffered_bytes == 0,
                             operation_lock=None if mode == 'no_caller_lock' else lock)
                 self.assertFalse(row['eof'])
                 self.assertFalse(any(event[0] == 'eof' for event in broker.policy.log))
@@ -547,8 +616,9 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
         broker.owner_guard = departing
         async def caller():
             async with old:
-                return await broker._poll_checkpoint(writer, row, read, decoder_empty=True,
-                                                     operation_lock=old)
+                return await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                    decoder_empty=row['_decoder'].buffered_bytes == 0,
+                    operation_lock=old)
         task = asyncio.create_task(caller())
         try:
             await asyncio.sleep(0)
@@ -618,7 +688,8 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             try:
                 async with lock:
                     with self.subTest(mode=mode), self.assertRaises((ValueError, OSError, asyncio.CancelledError)):
-                        await broker._poll_checkpoint(writer, row, read, decoder_empty=True, operation_lock=lock)
+                        await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                            decoder_empty=row['_decoder'].buffered_bytes == 0, operation_lock=lock)
                 self.assertFalse(row['eof'])
                 self.assertFalse(any(event[0] == 'eof' for event in broker.policy.log))
             finally:
@@ -655,7 +726,8 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             if mode == 'cancel': broker.source_guard = source
             async def poll():
                 async with lock:
-                    return await broker._poll_checkpoint(writer, row, read, decoder_empty=True, operation_lock=lock)
+                    return await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                        decoder_empty=row['_decoder'].buffered_bytes == 0, operation_lock=lock)
             task = asyncio.create_task(poll())
             with self.subTest(mode=mode), self.assertRaises((ValueError, asyncio.CancelledError)):
                 await task
@@ -682,6 +754,8 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
         row = dict(writer=writer, policy_row=connection, failed=False, joined=False, eof=False,
             operation_lock=asyncio.Lock(), _read_task=read, peer=dict(endpoint_port=14030,
                 server_port=14030, client_port=peer.client_port, accepted_monotonic_ns=now, connection_id=4))
+        row['_decoder'] = b.ClientPlaintextDecoder(
+            cipher_pointer='present_disabled', max_buffer=broker.policy.MAX_BUFFER)
         broker._claims[14030] = [row]
         broker.owner_guard = lambda _: True
         broker.owner_exit_proof = mock.Mock(side_effect=ValueError('NATIVE_STILL_ALIVE'))
@@ -717,7 +791,7 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
         before = tuple(broker.policy.log)
         async with lock:
             self.assertTrue(await broker._poll_checkpoint(writer, row, read,
-                decoder_empty=True, operation_lock=lock))
+                decoder=row['_decoder'], decoder_empty=row['_decoder'].buffered_bytes == 0, operation_lock=lock))
         self.assertTrue(row['eof'] and row['policy_row'].eof)
         self.assertFalse(row.get('quit_terminal_exit', False))
         broker.owner_exit_proof.assert_not_called()
@@ -785,11 +859,17 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             broker.owner_guard = departing
             async def poll():
                 async with lock:
-                    return await broker._poll_checkpoint(writer, row, read, decoder_empty=True,
+                    return await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                        decoder_empty=row['_decoder'].buffered_bytes == 0,
                         operation_lock=None if mode == 'no_caller_lock' else lock)
             try:
+                expected_error = {
+                    'error': OSError,
+                    'cancel_read': asyncio.CancelledError,
+                    'cancel_owner': asyncio.CancelledError,
+                }.get(mode, ValueError)
                 with self.subTest(mode=mode), self.assertRaises(
-                        asyncio.CancelledError if mode == 'cancel_owner' else ValueError):
+                        expected_error):
                     await asyncio.create_task(poll())
                 if mode != 'post_await_selection':
                     self.assertFalse(row['eof'] or row['policy_row'].eof)
@@ -810,7 +890,7 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
         async def poll():
             async with lock:
                 return await broker._poll_checkpoint(writer, row, read,
-                    decoder_empty=True, operation_lock=lock)
+                    decoder=row['_decoder'], decoder_empty=row['_decoder'].buffered_bytes == 0, operation_lock=lock)
         with self.assertRaises(asyncio.CancelledError): await asyncio.create_task(poll())
         self.assertEqual((writer.write.call_count, writer.drain.await_count), (1, 1))
         broker.owner_exit_proof.assert_not_called()
@@ -827,18 +907,23 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             return False
         broker.owner_guard = departing
         async with lock:
-            with self.assertRaisesRegex(ValueError, 'NATIVE_STILL_ALIVE'):
-                await broker._poll_checkpoint(writer, row, read, decoder_empty=True, operation_lock=lock)
+            with self.assertRaisesRegex(ValueError, '^QUIT_EOF_BINDING_CHANGED$'):
+                await broker._poll_checkpoint(writer, row, read, decoder=row['_decoder'],
+                    decoder_empty=row['_decoder'].buffered_bytes == 0, operation_lock=lock)
         self.assertFalse(row['eof'] or row['policy_row'].eof)
         broker.owner_liveness_guard.assert_not_called()
+        broker.owner_exit_proof.assert_not_called()
         self.assertEqual((writer.write.call_count, writer.drain.await_count), (1, 1))
 
     def fixture(self):
-        broker = b.PersistentBroker.__new__(b.PersistentBroker)
-        broker.owner_failure, broker.source_guard = None, lambda: None
-        broker.owner_guard = lambda peer: False
-        broker.policy = b._TransportPolicy(object(), object(), object(),
-            {12000: object(), 14030: object()}, now=10)
+        directory = tempfile.TemporaryDirectory(); self.addCleanup(directory.cleanup)
+        # The freshness cases below intentionally use the original 10ns epoch.
+        with mock.patch.object(b.time, 'monotonic_ns', return_value=10):
+            broker = b.PersistentBroker(sockets={12000: object(), 14030: object()},
+                retained_owner=object(), owner_handle=object(), owner_job=object(),
+                owner_guard=lambda peer: False, owner_liveness_guard=lambda: True, source_guard=lambda: None,
+                conversation_factory=FixtureConversation, expected_uuid=str(uuid.uuid4()),
+                store_path=Path(directory.name) / 'characters.json')
         writer = object()
         connection = types.SimpleNamespace(writer=writer, peer=b.Peer(14030, 52001, 10),
             positive_close=False, failed=False, rx_boot=2, tx_boot=3)
@@ -847,6 +932,8 @@ class OwnerFailureMetadataTests(unittest.IsolatedAsyncioTestCase):
             peer=dict(server_port=14030, client_port=52001, accepted_monotonic_ns=10, connection_id=2),
             _read_task=asyncio.get_running_loop().create_future())
         self.addCleanup(row['_read_task'].cancel)
+        row['_decoder'] = b.ClientPlaintextDecoder(
+            cipher_pointer='present_disabled', max_buffer=broker.policy.MAX_BUFFER)
         return broker, writer, row
 
     async def test_callback_false_preserves_original_exception_and_first_metadata(self):
@@ -1146,11 +1233,12 @@ class AliveRouteTests(unittest.IsolatedAsyncioTestCase):
 
 class AttackIntentRouteTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
-        from tools.local_original_session import attack_tests, feature_config, launcher
+        from tools.local_original_session import attack_tests, feature_config, launcher, npc_motion_tests
         from tools.local_original_session.npc_tests import spawn
         # Reuse only its source-pinned real retained-validator fixture, then
         # construct this unit's broker through the actual product factory.
-        await attack_tests.TargetTests.asyncSetUp(self)
+        with mock.patch.object(npc_motion_tests.ConnectedMotionTests, 'asyncSetUp', connected_motion_setup):
+            await attack_tests.TargetTests.asyncSetUp(self)
         retained = self.reader.owner
         config = feature_config.Features(spawns=(spawn(),), attack_policy=b.ATTACK_INTENT_POLICY,
                                          attack_feedback=getattr(self, 'feedback_config', None),
@@ -1315,7 +1403,8 @@ class InventoryPolicyTests(unittest.TestCase):
 
 class AttackIntentPolicyTests(unittest.TestCase):
     def test_only_explicit_attack_c2s_extends_frozen_policy_with_existing_checks(self):
-        policy = b._TransportPolicy.__new__(b._TransportPolicy)
+        policy = b._TransportPolicy(object(), object(), object(),
+            {12000: object(), 14030: object()}, now=123)
         row = types.SimpleNamespace(drain_started_ns=None, rx_boot=2, tx_boot=3, stage=1,
             rx_frames=mock.Mock(), received=0, peer=types.SimpleNamespace(port=14030))
         policy.checkpoint, policy._emit = mock.Mock(return_value=row), mock.Mock()
@@ -1344,7 +1433,8 @@ class AttackIntentPolicyTests(unittest.TestCase):
 class AlivePolicyTests(unittest.TestCase):
     """Pure existing policy extension, no sockets/native owner/runtime."""
     def test_only_typed_alive_extends_policy_with_stage_owner_and_drain_checks(self):
-        policy = b._TransportPolicy.__new__(b._TransportPolicy)
+        policy = b._TransportPolicy(object(), object(), object(),
+            {12000: object(), 14030: object()}, now=123)
         row = types.SimpleNamespace(drain_started_ns=None, rx_boot=2, tx_boot=3, stage=1,
             rx_frames=mock.Mock(), tx_frames=mock.Mock(), tx_bytes=mock.Mock(), received=0,
             peer=types.SimpleNamespace(port=14030))
@@ -1364,10 +1454,6 @@ class AlivePolicyTests(unittest.TestCase):
         row.stage, row.drain_started_ns = 1, now
         with self.assertRaisesRegex(ValueError, 'DISPATCH_PAUSED_UNTIL_DRAIN'):
             policy.received_frame(writer, sample, b.ALIVE_REQUEST, 274, now)
-
-
-if __name__ == '__main__':
-    unittest.main()
 
 
 class AttackFeedbackRouteTests(unittest.IsolatedAsyncioTestCase):
@@ -1731,6 +1817,8 @@ class RestartRouteTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(self.game.selection)
 
     async def arm_restart_eof(self):
+        self.row['_decoder'] = b.ClientPlaintextDecoder(
+            cipher_pointer='present_disabled', max_buffer=self.policy.MAX_BUFFER)
         mode = dict(closing=False, action=None, alive=True, source_error=False)
         def source():
             if mode['source_error']:
@@ -1756,7 +1844,8 @@ class RestartRouteTests(unittest.IsolatedAsyncioTestCase):
         mode['action'] = lambda: read_task.set_result(b'')
         async with self.row['operation_lock']:
             self.assertTrue(await self.producer._poll_checkpoint(self.writer, self.row, read_task,
-                decoder_empty=True, operation_lock=self.row['operation_lock']))
+                decoder=self.row['_decoder'], decoder_empty=self.row['_decoder'].buffered_bytes == 0,
+                operation_lock=self.row['operation_lock']))
         self.assertTrue(self.row['eof'])
         self.assertEqual(self.row['account_terminal_reason'], 'DRAINED_RESTART_ACTUAL_EOF')
         self.assertEqual(self.writer.write.call_count, before)
@@ -1784,7 +1873,8 @@ class RestartRouteTests(unittest.IsolatedAsyncioTestCase):
                 async with self.row['operation_lock']:
                     with self.subTest(case=case), self.assertRaisesRegex(ValueError, 'CURRENT_OWNER_REQUIRED'):
                         await self.producer._poll_checkpoint(self.writer, self.row, future,
-                            decoder_empty=True, operation_lock=self.row['operation_lock'])
+                            decoder=self.row['_decoder'], decoder_empty=self.row['_decoder'].buffered_bytes == 0,
+                            operation_lock=self.row['operation_lock'])
                 self.assertFalse(self.row['eof'])
                 self.assertNotIn('account_terminal_reason', self.row)
             finally:
@@ -1807,7 +1897,8 @@ class RestartRouteTests(unittest.IsolatedAsyncioTestCase):
                 async with self.row['operation_lock']:
                     with self.subTest(case=case), self.assertRaisesRegex(ValueError, expected):
                         await self.producer._poll_checkpoint(self.writer, self.row, future,
-                            decoder_empty=True, operation_lock=self.row['operation_lock'])
+                            decoder=self.row['_decoder'], decoder_empty=self.row['_decoder'].buffered_bytes == 0,
+                            operation_lock=self.row['operation_lock'])
                 self.assertFalse(self.row['eof'])
             finally:
                 mode['alive'], mode['source_error'] = True, False
@@ -1866,7 +1957,7 @@ class InventoryRestoreOnlyBrokerTests(unittest.IsolatedAsyncioTestCase):
         self.assertIs(self.writer.write.call_args.args[0], frame)
         self.assertEqual((self.writer.write.call_count, self.writer.drain.await_count), (1, 1))
         self.assertEqual(self.service.store.path.read_bytes(), stored)
-        self.assertEqual(self.service.last_result['typed_bytes_requested'], 2343)
+        self.assertEqual(self.service.last_result['typed_bytes_requested'], 1857)
         with self.assertRaises(ValueError): await self.producer.add_inventory(self.writer, restore_only=True)
 
     async def test_deleted_row_after_real_selection_is_never_regranted_or_sent(self):
@@ -1895,15 +1986,16 @@ class InventoryRestoreOnlyBrokerTests(unittest.IsolatedAsyncioTestCase):
         await self.assert_terminal_no_retry()
 
     async def test_continuation_cannot_swap_original_restore_mode(self):
-        from tools.local_original_session import launcher_tests as fixture
         await self.adopt_restored()
-        query, hits = fixture.InventoryProductTests.code_page_refusal(self)
+        # Current admission uses a changed data read on an existing saved row;
+        # passive source provenance no longer queries native function bodies.
+        InventoryReadonlyAdmissionBrokerTests.changed_physical_read(self)
         deadline = self.product_ns + 10_000_000_000
         first = await self.producer.add_inventory(self.writer, deadline_ns=deadline, restore_only=True)
         self.assertEqual(first['phase'], 'ADMISSION')
         self.assertIs(self.producer._inventory_prewrite_refusal[3], True)
         self.assertFalse(self.service._closed or self.service._claimed)
-        self.native.k.VirtualQueryEx = query
+        self.memory.fault = None
         self.product_ns += 500_000_000
         self.producer._inventory_restore_only = False  # Caller must not adopt a replacement mode.
         before = len(self.memory.calls)
@@ -1963,7 +2055,7 @@ class InventoryRestoreOnlyBrokerTests(unittest.IsolatedAsyncioTestCase):
         self.assertIs(self.producer._inventory_restore_only, False)
         self.assertEqual(len(calls), 1)
         self.assertEqual(calls[0][1], {})
-        self.assertEqual(self.service.last_result['typed_bytes_requested'], 2343)
+        self.assertEqual(self.service.last_result['typed_bytes_requested'], 1857)
         self.assertEqual((self.writer.write.call_count, self.writer.drain.await_count), (1, 1))
 
 
@@ -1986,25 +2078,25 @@ class InventoryRestoreOnlyBrokerTests(unittest.IsolatedAsyncioTestCase):
         self.writer.write.assert_not_called()
         await self.assert_terminal_no_retry()
 
-    async def test_continuation_two_frame_swap_cannot_reauthorize_false_mode(self):
-        from tools.local_original_session import launcher_tests as fixture
-        query, hits = fixture.InventoryProductTests.code_page_refusal(self)
+    async def test_continuation_two_frame_swap_cannot_reauthorize_restored_mode(self):
+        await self.adopt_restored()
+        InventoryReadonlyAdmissionBrokerTests.changed_physical_read(self)
         deadline = self.product_ns + 10_000_000_000
-        first = await self.producer.add_inventory(self.writer, deadline_ns=deadline)
+        first = await self.producer.add_inventory(self.writer, deadline_ns=deadline, restore_only=True)
         self.assertEqual(first['phase'], 'ADMISSION')
         original_frame = self.producer._inventory_prewrite_refusal[4]
         self.assertIs(original_frame, self.producer._inventory_frame)
-        self.native.k.VirtualQueryEx = query
+        self.memory.fault = None
         self.product_ns += 500_000_000
         replacement = bytes(bytearray(original_frame))
         self.producer._inventory_frame = self.producer._inventory_operation_frame = replacement
         self.producer._inventory_selection_binding = (*self.producer._inventory_selection_binding[:-1], replacement)
         before = len(self.memory.calls)
         with self.assertRaisesRegex(ValueError, 'PRE_WRITE_PROOF_REQUIRED'):
-            await self.producer.add_inventory(self.writer, deadline_ns=deadline)
+            await self.producer.add_inventory(self.writer, deadline_ns=deadline, restore_only=True)
         self.assertEqual(len(self.memory.calls), before)
         self.writer.write.assert_not_called()
-        await self.assert_terminal_no_retry(restore_only=False)
+        await self.assert_terminal_no_retry()
 
 
     async def test_literal_claimed_frame_survives_rowlock_wait_and_rejects_both_field_swap(self):
@@ -2782,3 +2874,7 @@ class InventoryReselectionTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(old.phase, 'RETIRED')
         self.assertTrue(old.service._claimed and old.attempted)
         with self.assertRaises(ValueError): await self.add()
+
+
+if __name__ == '__main__':
+    unittest.main()

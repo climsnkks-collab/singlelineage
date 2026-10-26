@@ -238,10 +238,10 @@ class RetainedSceneReader:
         need(self.owner.native.k.IsProcessInJob(self.backend.handle, self.owner.owner_job,
              C.byref(inside)) and inside.value, 'READONLY_DUPLICATE_JOB_CHANGED')
 
-    def request_hp4ec8_subscribers_once(self):
+    def request_hp4ec8_subscribers_once(self,*,stage="first-land"):
         need(getattr(self,'_hp4ec8_subscribers',None) is None,'HP4EC8_ONCE_REQUEST_REQUIRED')
         from tools.local_original_session.hp4ec8_subscribers import Observation
-        self._hp4ec8_subscribers = Observation(self)
+        self._hp4ec8_subscribers = Observation(self,stage=stage)
 
     def sample(self, *, include_input_state=True, attack_action_observer=None, player_life_observer=None):
         need(type(include_input_state) is bool, 'RETAINED_INPUT_SELECTION_BOOL_REQUIRED')
@@ -597,6 +597,13 @@ class SessionMonitor:
         self.first_scene = self.last_observed_scene = None
         self.first_error = None
         self.samples = self.total_bytes = self.revision = 0
+        # Steady in-world status (RUNNING, Land observed) refreshes the public
+        # window list and the scene sample less often: both run synchronously
+        # on the shared event loop (measured 20-100 ms per tick).
+        self.last_windows, self.windows_at, self.memory_at = [], None, None
+
+    STEADY_WINDOWS_SECONDS = 3.0
+    STEADY_MEMORY_SECONDS = 2.0
 
     def bind(self, owner):
         self.owner = owner
@@ -609,6 +616,8 @@ class SessionMonitor:
             return self.last_row
         self.next_tick = now + self.interval
         windows = []
+        steady = (state == 'RUNNING' and not force and self.last_observed_scene is not None
+                  and self.last_observed_scene.get('current') == 'Land')
         try:
             alive = self.owner.validate(self.owner.child)
             heavy_ready = state != 'RUNNING' or broker is None or first_key_drained(broker)
@@ -618,7 +627,12 @@ class SessionMonitor:
             quiet_window_fallback = (self.bound_at is not None and now - self.bound_at >= 5
                 and not broker_status(broker).get('connections'))
             if alive and (heavy_ready or quiet_window_fallback):
-                windows = public_windows(self.owner.native.job_windows(self.owner.child), self.owner)
+                if (steady and self.windows_at is not None
+                        and now - self.windows_at < self.STEADY_WINDOWS_SECONDS):
+                    windows = self.last_windows
+                else:
+                    windows = public_windows(self.owner.native.job_windows(self.owner.child), self.owner)
+                    self.last_windows, self.windows_at = windows, now
             if not alive:
                 self.last_memory = dict(status='UNKNOWN', reason='PROCESS_EXITED', current='unknown', pending='unknown')
                 self.last_world = public_world(dict(status='UNKNOWN', reason='PROCESS_EXITED'))
@@ -629,8 +643,10 @@ class SessionMonitor:
                 self.last_world = public_world(dict(status='UNKNOWN', reason='WAITING_FIRST_KEY_DRAIN'))
                 self.last_input_state = input_state.empty('WAITING_FIRST_KEY_DRAIN')
                 self.last_move_state = move_state.empty('WAITING_FIRST_KEY_DRAIN')
-            elif now >= self.next_memory:
+            elif now >= self.next_memory and not (steady and self.memory_at is not None
+                                                  and now - self.memory_at < self.STEADY_MEMORY_SECONDS):
                 self.next_memory = now + .5
+                self.memory_at = now
                 try:
                     hp4ec8 = getattr(self.reader,'_hp4ec8_subscribers',None)
                     # Host/cursor diagnostics are public status only. Existing
@@ -687,10 +703,10 @@ class SessionMonitor:
             need(len(raw) <= STATUS_LIMIT, 'STATUS_FILE_BYTE_BOUND')
             path = self.directory / 'status.json'
             temporary = self.directory / 'status.json.tmp'
+            # Live status only: os.replace keeps readers atomic; no per-tick fsync
+            # (measured up to ~600 ms on the shared event loop).
             with temporary.open('wb') as stream:
                 stream.write(raw)
-                stream.flush()
-                os.fsync(stream.fileno())
             os.replace(temporary, path)
             self.last_state, self.last_row = encoded, public
         return self.last_row

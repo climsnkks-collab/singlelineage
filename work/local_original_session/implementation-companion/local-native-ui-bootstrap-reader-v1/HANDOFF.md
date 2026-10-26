@@ -1,0 +1,34 @@
+# COMPANION-MAGE native bootstrap reader v1
+
+source_ready:true **bootstrap handshake only** / test_ready:false / game runtime:UNRUN / WRITER_RELEASED.
+
+Private descendant of `../local-native-ui-io-lifecycle-v1/`, paired with the exact `../local-ui-channel-issuer-v2/local_ui_channel.py`. Parent absolute paths/SHA256/length are in parent-pins.json; inherited compiler-selected workspace files are in input-pins.json. Existing dirty main was retained. This directory is the only write scope; no common/original/Test/queue/ACTIVE, branch/worktree, ports, game, DLL load, focus or input changes occurred.
+
+## Actual connection
+
+The existing WH_GETMESSAGE AfterUi owner callback still starts the same one-attempt worker. The only lifecycle behavior change is Entry calling bootstrap Run on that worker and recording its typed result. Start/Revoke/Join/Stop, event publication, permanent module pin, try-lock, error preservation, join bounds and ownership remain byte-identical. ABI bridge/original forwarding/F101 Sender, auto_ok and hook, host_lifetime, exports and bridge.def are unchanged. Compiler source-dependencies confirms the private reader/lifecycle/host files were selected by the production translation unit.
+
+Run derives `local-ui-bootstrap-v1/bootstrap.json` from existing OWN_KEY_INVOKE_BOUNDARY_DIR on the worker; context.json is never changed or reparsed. Only an absolute drive path is admitted. The file is opened overlapped with OPEN_REPARSE_POINT; final-file reparse/directory/non-disk/empty/>1024-byte files are refused. The bounded read requests 1025 bytes and requires the observed exact size and exact parse. This is a LOCAL launcher-owned path contract, not a claim of hostile-parent-directory junction isolation.
+
+Parser accepts exactly issuer-v2 canonical ASCII JSON in its emitted field order. Unknown/duplicate fields, BOM, trailing bytes, whitespace, JSON unicode escapes, non-ASCII, integer overflow, zero/negative/leading-zero identities, malformed lowercase hex and remote/noncanonical pipe endpoints are refused. Exact schema, 512-byte hello limit and reconnect:false are required. Canonical-order strictness is deliberate; a future issuer serializer change requires a new paired reader.
+
+Own actual PID/GetProcessTimes birth is checked before connecting. Client opens only the local canonical pipe, without retries/WaitNamedPipe or remote endpoint fallback, using SECURITY_IDENTIFICATION. Actual GetNamedPipeServerProcessId plus retained OpenProcess handle PID/birth/aliveness is checked before any capability WriteFile. Hello contains exactly schema/capability and newline; exact full write is required. ACK is accumulated across byte-pipe fragments and must equal the exact accepted-v1 JSON/newline, with no additional bytes in its reads. Server handle identity/aliveness and cancel/deadline are checked again before Accepted. No payload commands or persistent post-handshake channel are implemented: the pipe is closed when this bounded handshake completes.
+
+The issuer alone owns the real post-resume 10s admission deadline; bootstrap has no timestamp. Reader's independent 10s remaining budget starts at the genuine worker entry and **does not reactivate or extend issuer admission**. A late first UI callback can only connect/send to the verified real issuer and receive its refusal/closure/timeout; Accepted requires its actual ACK. The reader cannot independently infer elapsed time since resume from this format and makes no such claim. Issuer must continue its real tick polling. No reissue/reconnect or selected-authority reset was introduced.
+
+## Cancellation and lifetime
+
+Pending file/pipe I/O uses an event and heap-owned OVERLAPPED/buffer. Waits use the same lifecycle cancel event and absolute monotonic deadline. Cancellation/deadline/failure calls CancelIoEx on the exact operation, then allows at most 2000ms to observe completion before releasing anything. If drain is unknown, Result::IoUnknownRetained retains the whole state (pipe/file/process/event/OVERLAPPED/buffer) for process lifetime; no stack escape, free, handle recycle or false clean-close result. Existing lifecycle module pin and cancellation-event lifetime remain intact. No completion callback is registered. The Win32 local open/metadata calls are synchronous; the code bounds explicit waits and pending I/O, not an undocumented hard wall-time guarantee for a stalled kernel operation.
+
+One attempt per process is preserved, including failed parse/connect, timeout, cancellation and early Revoke before Start. Existing Selected/Close invalidation cancels it permanently. Character/world reselection does not rearm it, and successful completion cannot be reused as selected binding, panel state, native close/drain success or reconnect authority. Any future reusable selected UI needs an explicit new lifetime contract; this descendant does not silently loosen current revocation.
+
+## Verification
+
+From project root:
+
+- `cmd /c work\local_original_session\implementation-companion\local-native-ui-bootstrap-reader-v1\build.cmd`: PASS, actual production translation unit MSVC x64 `/c /std:c++17 /W4 /WX`, compile only.
+- `cmd /c work\local_original_session\implementation-companion\local-native-ui-bootstrap-reader-v1\check_parser.cmd`: PASS, same strict header, 19 accept/reject checks plus pre-cancel refusal; `/W4 /WX`.
+- `cmd /c work\local_original_session\implementation-companion\local-native-ui-bootstrap-reader-v1\build_helper.cmd`, then `python -B work/local_original_session/implementation-companion/local-native-ui-bootstrap-reader-v1/check_native.py`: PASS. Isolated real issuer-v2 and native executable in exact retained disposable process/Job; real hello/ACK, real pending ACK-read cancellation/completion drain, wrong own birth refusal, wrong actual server birth refusal. All four retained=0; processes/Jobs/handles and temporary files cleaned. No game or production DLL was linked/loaded by these checks. Malformed fixture files exist only inside the temporary harness directory and no secret bytes enter reports.
+- `python -B work/local_original_session/implementation-companion/local-native-ui-bootstrap-reader-v1/verify.py`: PASS, exact parent/inherited pins, unchanged forwarding/F101/hook/owner lifecycle, private compiler includes and recorded bounded results.
+
+isolated-verification.json and logs contain actual results; manifest.json pins deliverables; diff.patch contains the private delta. Unknown-drain retention is a source safety path, not an OS-induced failure-case PASS. Existing lifecycle doubles remain prior evidence for unchanged Start/Revoke/Join, not a claim of a new real race-scheduling test. Game callback timing, native game handshake, selected panel/ATS/settings/commands, live close and client UI success remain UNRUN/UNKNOWN. Runtime game RUN_COMMAND:null. Worker/process ownership released.

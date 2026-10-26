@@ -1,0 +1,49 @@
+{
+  "table": "m1_alignment",
+  "version": 1,
+  "note": "M1 map0 북쪽 초원 4종 성향. NPC 대응은 기존 monsters.json 후보 대응 재사용. 성향값과 계산은 L1J 출처를 밝힌 로컬 backend 정책이며 클래식 원본 서버 동등성 주장이 아니다.",
+  "ref_abbrev": {
+    "mapping": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md sections 2,3",
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/"
+  },
+  "policy": {
+    "pc_range": {"value": [-32768, 32767], "source": "l1j", "ref": "l1jsrc model/L1Character.java:1015-1017 addLawful"},
+    "lawful_rate": {"value": 1.0, "source": "l1j", "ref": "D:/SingleLineageRef/l1j-en-classic/config/rates.properties:70-71 RateLawful"},
+    "chaotic_lawful_rate": {"value": 1.0, "source": "l1j", "ref": "D:/SingleLineageRef/l1j-en-classic/config/rates.properties:73-75 RateChaoLawful"},
+    "kill_rule": {"value": "share=JavaDiv(npc_lawful*player_hate,total_lawful_hate); delta=-int(share*rate); if pre_kill_pc_lawful<0: delta=int(delta*chaotic_rate); clamp(pc_lawful+delta)", "source": "l1j", "ref": "l1jsrc utils/CalcExp.java:457-467,517-529", "note": "dead PC receives no change. M1 direct solo uses full hate; party/pet/summon distribution not implemented. No level-difference correction."},
+    "display_stages": {"value": [{"name": "chaotic", "min": -32768, "max": -1}, {"name": "neutral", "min": 0, "max": 499}, {"name": "lawful", "min": 500, "max": 32767}], "source": "l1j", "ref": "l1jsrc serverpackets/S_WhoCharinfo.java:35-42", "note": "Classic world color thresholds UNKNOWN. L1Who command's sign-only label is different."},
+    "death_drop": {"value": "signed=int(((lawful+32768.0)/1000.0-65.0)*4.0); chance_per_mille=(-signed*(2 if lawful<0 else 1)) if signed<0 else 0; roll 1..1000 <= chance", "source": "l1j", "ref": "l1jsrc model/Instance/L1PcInstance.java:419-440", "note": "lawful>=31983 -> 0/1000; lawful0 ->128/1000; lawful-32768 ->520/1000. Count max4/3/2/1 at <=-30000/-20000/-10000/otherwise; positive count fixed1, negative draws1..max. Caller owns zone/map/duel/simulation/missing-attacker early returns."},
+    "death_item_protection": {"value": "choose all entries first; Adena, nontradable, active-pet amulet -> no loss/no reroll; stack transfers full count, otherwise one", "source": "l1j", "ref": "l1jsrc model/L1PcInventory.java:645-663; model/Instance/L1PcInstance.java:3462-3474", "note": "Blessed/equipped status alone does not protect. Caller resolves current item metadata/pet bindings, unequips and transfers. Empty inventory is safe no-op locally; Java nextInt(0) throws."},
+    "magic_healing": {"value": "aligned=int(rolled_heal*(1.0+max(caster_lawful,0)/32768.0)); JavaDiv(aligned*leverage,10)", "source": "l1j", "ref": "l1jsrc model/L1Magic.java:714-735", "note": "Caster alignment; not target alignment. HpRegeneration.java/MpRegeneration.java contain no lawful modifier. No potion/natural-regen bonus."},
+    "classic_status_field": {"value": {"opcode": "0x4E38", "field": 18, "type": "int32", "proto_offset": "0x78", "character_data_offset": "0x7A4"}, "source": "client", "ref": "tools/local_self_info_profile/source.py OFFSETS[18]; model.py provenance; work/online_world_packet_source/world-notify-contract.json; self-info-receiver.json", "note": "Source-level field connection only. Character-list f6 Alignment is a separate message. Mid-world refresh/UI colors/save/reconnect not exercised by this module."}
+  },
+  "monsters": [
+    {
+      "template_id": {"value": 0, "source": "client", "ref": "native-dump:1; mapping section2"},
+      "l1j_npcid": {"value": 45009, "source": "l1j", "ref": "l1jdb:20631; monsters.json Orc $59 Lv2 map0"},
+      "lawful": {"value": -2, "source": "l1j", "ref": "l1jdb:20631 npc.lawful (column definition:1562)", "note": "x1 direct solo kill adds2 before PC clamp"},
+      "randomlawful": {"value": 0, "source": "l1j", "ref": "l1jdb:20631 npc.randomlawful; column definition:1595"}
+    },
+    {
+      "template_id": {"value": 245, "source": "client", "ref": "native-dump:152; mapping section2"},
+      "l1j_npcid": {"value": 45008, "source": "l1j", "ref": "l1jdb:20630; monsters.json Goblin $958 Lv2 map0"},
+      "lawful": {"value": -3, "source": "l1j", "ref": "l1jdb:20630 npc.lawful (column definition:1562)", "note": "x1 direct solo kill adds3 before PC clamp"},
+      "randomlawful": {"value": 0, "source": "l1j", "ref": "l1jdb:20630 npc.randomlawful; column definition:1595"}
+    },
+    {
+      "template_id": {"value": 1, "source": "client", "ref": "native-dump:2; mapping section2"},
+      "l1j_npcid": {"value": 45019, "source": "l1j", "ref": "l1jdb:20640; monsters.json Orc Archer $267 Lv3 map0"},
+      "lawful": {"value": -3, "source": "l1j", "ref": "l1jdb:20640 npc.lawful (column definition:1562)", "note": "x1 direct solo kill adds3 before PC clamp"},
+      "randomlawful": {"value": 0, "source": "l1j", "ref": "l1jdb:20640 npc.randomlawful; column definition:1595"}
+    },
+    {
+      "template_id": {"value": 8, "source": "client", "ref": "native-dump:8; mapping section2"},
+      "l1j_npcid": {"value": 45024, "source": "l1j", "ref": "l1jdb:20645; monsters.json Werewolf $18 Lv9 map0"},
+      "lawful": {"value": -9, "source": "l1j", "ref": "l1jdb:20645 npc.lawful (column definition:1562)", "note": "x1 direct solo kill adds9 before PC clamp"},
+      "randomlawful": {"value": 0, "source": "l1j", "ref": "l1jdb:20645 npc.randomlawful; column definition:1595"}
+    }
+  ],
+  "unverified": ["Classic server lawful rules", "Classic world display stage/color and mid-world update", "actual kill/packet/save/reconnect wiring", "full death-context early-return integration and item custody transfer"]
+}

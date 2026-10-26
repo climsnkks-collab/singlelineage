@@ -1,0 +1,15 @@
+# LOCAL F101 diagnostic v2 — exact same-directory source closure
+
+WRITER_RELEASED. Parent is `../local-f101-inner-error-capture-v1/manifest.json` and its exact 185-row cohort. Runtime UNRUN. This directory alone is owned/changed; no queue/common/Test/original writes, copies, sockets, servers or Test dispatch.
+
+v1's private Peer `_accept` filename guard required its sibling `broker.py`, while the cohort retained the old route Broker. v2 copies that exact Broker849c and Server8434 into this directory, preserving all their bytes. Host and Peer diagnostic product bytes and caller are also exact v1 bytes. Actor-config changes only its Broker and Host SourceSeal paths, keeping both digests unchanged. Cohort changes exactly five rows (Broker, Server, Peer, Host and config); 180 rows remain identical to v1. No guard removal, wrapper, product repair or second F101.
+
+`selection-delta.json`, `actual.diff`, `manifest.json` and `verification.json` record exact sources. Runtime constructor pins are derived from the selected cohort by the unchanged Server `_Sources.pin`/`selected_sources`; cold verification invokes actual `_Sources.check`, all SourceModules and actual PacketServer constructor without prepare/start. It verifies actual Broker `_accept` filename equals the selected Peer sibling Broker, exact constructor code filenames, genuine Peer class identity, callback seals, original cold READY/retirement and unchanged protected bytes. It does not invoke Broker construction, prepare, handlers or runtime; this closes source selection only, not execution success.
+
+Test alone prepares a NEW independent original55 whole7 copy from the unchanged `input-source.json` acquisition pins. Failed103 input and actual artifacts stay protected and forbidden as inputs. Normal KEY/VERSION/login/address/ROSTER → ROOT selection → WORLD/current RESOURCE/Store → packetless LOCAL temporary key → one empty F101, original first failure/partialStore/raw receipt and strict close remain the v1 caller exactly. No fresh after unclean. Inner code remains UNKNOWN until execution; capture is not summon/business success. Original UID/current/Store/cursor, failed103, retire_owner=False and removal-absence UNKNOWN are preserved.
+
+```powershell
+powershell -NoProfile -File "C:\Users\Chansol\Documents\ChatGPT\싱글리니지\work\local_original_session\implementation-companion\local-f101-inner-error-capture-v2\RUN_COMMAND.ps1" -AccountCopy "<Test NEW absolute original55 whole7 copy>" -AccountResult "<NEW absolute result JSON>"
+```
+
+Focused no-runtime verification: `python -B work/local_original_session/implementation-companion/local-f101-inner-error-capture-v2/verify_cold.py` → 21 checks PASS; 185 selected, 183 actual imports, 17 callbacks in original 24-source capture. v1 observation behavior and original trial inverse checks reused. All original55 and failed103 protected hashes unchanged. Runtime/ports/FIRST/copy/close remain Test owned; main reviews/enqueues and root alone dispatches. Native input/render/AI/normalQuit claims remain absent.

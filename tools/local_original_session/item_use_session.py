@@ -122,6 +122,11 @@ class ItemUseSession:
         need(self._collection_policy is None or (type(self._collection_policy) is str
              and self._collection_policy == inventory.COLLECTION_POLICY),
              'ITEM_USE_EXPLICIT_COLLECTION_POLICY_REQUIRED')
+        # M1 kit: the saved Store row is the current-frame authority (potion
+        # quantity/removal changes it without an UPDATE operation record).
+        self._kit_policy = getattr(broker, '_inventory_kit_policy', None)
+        need(self._kit_policy is None or (self._kit_policy == inventory.KIT_POLICY
+             and self._collection_policy is None), 'ITEM_USE_EXPLICIT_KIT_POLICY_REQUIRED')
         self.broker, self.policy = broker, policy
         self._service, self._reader, self._backend = service, reader, reader.backend
         self._store = service._persistence_store()
@@ -246,7 +251,8 @@ class ItemUseSession:
         need(type(frame) is bytes, 'ITEM_USE_DRAINED_CURRENT_FRAME_REQUIRED')
         operation = broker._inventory_update_operation
         if operation is None:
-            need(frame is initial_frame, 'ITEM_USE_INITIAL_CURRENT_LITERAL_REQUIRED')
+            need(frame is initial_frame or self._kit_policy is not None,
+                 'ITEM_USE_INITIAL_CURRENT_LITERAL_REQUIRED')
         else:
             need(type(operation) is dict and type(operation.get('phase')) is str
                  and operation.get('phase') == 'DRAINED'
@@ -279,7 +285,21 @@ class ItemUseSession:
                  and type(admitted.sent) is int
                  and 0 <= sent_before < sent_after <= U64_MAX and sent_after == sent_before + 1
                  and admitted.sent >= sent_after, 'ITEM_USE_DRAINED_UPDATE_COUNTER_REQUIRED')
-        if self._collection_policy is None:
+        if self._kit_policy is not None:
+            need(operation is None, 'ITEM_USE_KIT_NO_UPDATE_OPERATION_REQUIRED')
+            current_items = inventory.validate_kit_frame(frame)
+            initial_items = {item.identifier: item for item in inventory.validate_kit_frame(initial_frame)}
+            need(all(current.identifier in initial_items and
+                     {n for n, value in initial_items[current.identifier].raw_fields
+                      if dict(current.raw_fields)[n] != value} <= {4, 5, 7, 18}
+                     for current in current_items), 'ITEM_USE_SAME_CURRENT_COLLECTION_FIELDS_REQUIRED')
+            if item_identifier is None:
+                item = current_items[0]  # Initial/preparation anchor, not a selected-use UID.
+            else:
+                members = tuple(item for item in current_items if item.identifier == item_identifier)
+                need(type(item_identifier) is int and len(members) == 1, 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
+                item, = members
+        elif self._collection_policy is None:
             item = inventory.validate_frame(frame)
             initial = inventory.validate_frame(initial_frame)
             initial_fields, current_fields = dict(initial.raw_fields), dict(item.raw_fields)

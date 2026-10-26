@@ -1,0 +1,485 @@
+{
+  "table": "m3_spawns",
+  "version": 1,
+  "note": "M3 데이터 준비 전용. 실재 클래식 말하는 섬 던전 map1/2이며 가상맵을 만들지 않는다. L1J spawn의 map과 종별 대응을 보존하고 count와 리젠만 단일 플레이어 정책으로 정했다. 원본 region에 _bounds가 없어 L1J 경계를 클래식 확정 경계로 선언하지 않는다. 실제 통행과 스폰 실행은 미검증.",
+  "ref_abbrev": {
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "all-rows": "work/monster_level_comparison/analysis/all-rows.csv (공식 API 2026-10-09 저장본 대응)",
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "parsed-spr": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jcfg": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc",
+    "m1-items": "tools/local_original_session/data/m1/items.json"
+  },
+  "policy_basis": "선정 종의 L1J 합계1층120→11마리(3그룹),2층90→15마리(6그룹). 스폰 영역은 L1J 후보 전체를 보존하고 초기 과밀을 줄였으며, 실제 클래식 통행·점유 필터를 적용해야 한다. 다른 NPC·동물이 포함된 L1J 던전 전체 count를 뜻하지 않는다.",
+  "maps": [
+    {
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22"
+      },
+      "name_ko": {
+        "value": "말하는 섬 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:7"
+      },
+      "classic_bounds": {
+        "value": null,
+        "source": "client",
+        "ref": "region.jsonc:7 _bounds 없음",
+        "note": "미확인. L1J 경계로 보충하지 않는다."
+      },
+      "l1j_reference_bounds": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:19192; mapids 열 :1461-1467"
+      },
+      "classic_chunks": {
+        "value": 12,
+        "source": "client",
+        "ref": "work/asset_link_audit_20261007/map/map_namespaces.tsv:3",
+        "note": "old/current 각12청크. 청크 존재가 실제 통행 증명은 아님."
+      }
+    },
+    {
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23"
+      },
+      "name_ko": {
+        "value": "말하는 섬 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:9"
+      },
+      "classic_bounds": {
+        "value": null,
+        "source": "client",
+        "ref": "region.jsonc:9 _bounds 없음",
+        "note": "미확인. L1J 경계로 보충하지 않는다."
+      },
+      "l1j_reference_bounds": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:19193; mapids 열 :1461-1467"
+      },
+      "classic_chunks": {
+        "value": 16,
+        "source": "client",
+        "ref": "work/asset_link_audit_20261007/map/map_namespaces.tsv:4",
+        "note": "old/current 각16청크. 청크 존재가 실제 통행 증명은 아님."
+      }
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m3_tic1_zombie",
+        "source": "local_policy",
+        "ref": "l1jdb:45974 spawn100001"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22; l1jdb:45974 mapid=1",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45974 locx1/locy1/locx2/locy2; mapids:19192",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45974 count=35",
+        "note": "단일 플레이어용 35→4 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45974 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic1_floating_eye",
+        "source": "local_policy",
+        "ref": "l1jdb:45977 spawn100004"
+      },
+      "template_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22; l1jdb:45977 mapid=1",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45977 locx1/locy1/locx2/locy2; mapids:19192",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45977 count=15",
+        "note": "단일 플레이어용 15→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45977 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic1_skeleton",
+        "source": "local_policy",
+        "ref": "l1jdb:45976 spawn100003"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22; l1jdb:45976 mapid=1",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45976 locx1/locy1/locx2/locy2; mapids:19192",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 5,
+        "source": "local_policy",
+        "ref": "l1jdb:45976 count=70",
+        "note": "단일 플레이어용 70→5 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45976 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_zombie",
+        "source": "local_policy",
+        "ref": "l1jdb:45981 spawn200002"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45981 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45981 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45981 count=10",
+        "note": "단일 플레이어용 10→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45981 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_floating_eye",
+        "source": "local_policy",
+        "ref": "l1jdb:45983 spawn200004"
+      },
+      "template_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45983 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45983 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45983 count=10",
+        "note": "단일 플레이어용 10→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45983 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_skeleton",
+        "source": "local_policy",
+        "ref": "l1jdb:45984 spawn200005"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45984 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45984 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45984 count=20",
+        "note": "단일 플레이어용 20→4 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45984 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_skeleton_archer",
+        "source": "local_policy",
+        "ref": "l1jdb:45985 spawn200006"
+      },
+      "template_id": {
+        "value": 276,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45985 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45985 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45985 count=20",
+        "note": "단일 플레이어용 20→3 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45985 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_stone_golem",
+        "source": "local_policy",
+        "ref": "l1jdb:45988 spawn200009"
+      },
+      "template_id": {
+        "value": 6,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45988 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45988 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45988 count=10",
+        "note": "단일 플레이어용 10→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45988 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_spartoi",
+        "source": "local_policy",
+        "ref": "l1jdb:45990 spawn200011"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45990 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45990 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45990 count=20",
+        "note": "단일 플레이어용 20→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45990 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      }
+    }
+  ]
+}

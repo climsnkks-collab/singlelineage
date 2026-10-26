@@ -48,6 +48,8 @@ class FakeBroker:
     async def start(self):
         self.owner.events.append('broker_start')
         if self.fail_start: raise ValueError('START_FAILED')
+    def bind_source_quit_closing(self, source_quit):
+        self.source_quit = source_quit
     async def close(self):
         self.owner.events.append('broker_close_save')
         if self.fail_close: raise ValueError('CLOSE_FAILED')
@@ -72,9 +74,10 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
                 events.append('features_bind')
                 return features
             class Adapter:
-                def __init__(adapter, actual_owner, requests, actual_broker, directory):
+                def __init__(adapter, actual_owner, requests, actual_broker, directory, *, features):
                     self.assertIs(actual_owner, owner); self.assertIs(requests, manual)
                     self.assertIs(actual_broker, broker); self.assertEqual(directory, 'explicit-run')
+                    self.assertIs(features.manual, manual)
                     self.assertNotIn('resume', owner.events)
                     events.append('source_bind')
                     adapter.returned = False
@@ -115,7 +118,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         async def feature_poll(monitor): return {}
         features = SimpleNamespace(manual=object(), poll=feature_poll, close=Mock())
         class Adapter:
-            def __init__(adapter, *args): pass
+            def __init__(adapter, *args, features=None): pass
             def report(adapter): return dict(status='PENDING', first_returned=False)
             def start(adapter, count):
                 self.assertEqual(owner.events[-1], 'wm_close')
@@ -1125,25 +1128,22 @@ class ExitOutcomeTests(unittest.TestCase):
 
     def test_archived_quit_and_broker_row_publish_the_same_source_connection_id(self):
         from tools.local_original_session import broker as b
-        from collections import deque
-        realm = b.LocalRealm.__new__(b.LocalRealm)
+        from uuid import uuid4
+        directory = tempfile.TemporaryDirectory(); self.addCleanup(directory.cleanup)
+        # Use the normal realm lifetime, including all optional release services.
+        # Dummy socket values are never started or used as listeners here.
+        broker = b.PersistentBroker(sockets={12000: object(), 14030: object()},
+            retained_owner=object(), owner_handle=object(), owner_job=object(),
+            owner_guard=lambda peer: True, owner_liveness_guard=lambda: True,
+            source_guard=lambda: None, conversation_factory=lambda *args: None,
+            expected_uuid=str(uuid4()), store_path=Path(directory.name) / 'characters.json')
+        realm = broker.realm
         writer = object()
         state = dict(writer=writer, uid=1, source_connection_id=4, request_verified=True,
                      response_drain_returned=True, response_queue_empty=True, response_drained=True,
                      duplicate_requests=1)
-        realm._quit, realm._quit_closed = {id(writer): state}, deque(maxlen=4)
-        realm._account_bound, realm._movement, realm._world_frames = {}, {}, {}
-        realm.registry = SimpleNamespace(close=lambda target: None, _sessions={})
-        realm.movement_report = realm.edge_report = lambda: {}
-        realm.world_profile_report = lambda: {}
-        realm.settings, realm._settings_failed = None, False
+        realm._quit[id(writer)] = state
         realm.close(writer)
-        with patch.object(b, 'LocalRealm', return_value=realm):
-            broker = b.PersistentBroker(sockets={12000: object(), 14030: object()},
-                retained_owner=object(), owner_handle=object(), owner_job=object(),
-                owner_guard=lambda peer: True, owner_liveness_guard=lambda: True,
-                source_guard=lambda: None, conversation_factory=lambda *args: None,
-                expected_uuid='fixture', store_path=Path('fixture'))
         broker._claims[14030].append(dict(peer=dict(connection_id=4), eof=True, boot_complete=True,
             positive_close=True, joined=True, registry_removed=True, failed=False))
         report = broker.report()
@@ -1269,7 +1269,8 @@ class ManualIngressTests(unittest.TestCase):
                 calls.append((uid, x, y))
                 state.update(status='PENDING')
                 return dict(state)
-            consumer = SimpleNamespace(poll=lambda: dict(state), submit_goal=submit, close=Mock())
+            consumer = SimpleNamespace(poll=lambda: dict(state), submit_goal=submit, close=Mock(),
+                                       _readonly_pending=None)
             ingress = l.ManualMoveRequests(directory, consumer)
             request = dict(schema=REQUEST_SCHEMA, sequence=7, command='MoveGoal', uid=1, x=2, y=3)
             (directory / 'command.request.json').write_text(json.dumps(request))
@@ -1292,7 +1293,8 @@ class ManualIngressTests(unittest.TestCase):
         def submit(*args):
             state.update(status='PENDING')
             return dict(state)
-        consumer = SimpleNamespace(poll=lambda: dict(state), submit_goal=Mock(side_effect=submit), close=Mock())
+        consumer = SimpleNamespace(poll=lambda: dict(state), submit_goal=Mock(side_effect=submit), close=Mock(),
+                                   _readonly_pending=None)
         with tempfile.TemporaryDirectory() as folder:
             directory = Path(folder)
             request = dict(schema=REQUEST_SCHEMA, sequence=7, command='MoveGoal', uid=1, x=2, y=3)
@@ -1319,7 +1321,8 @@ class ManualIngressTests(unittest.TestCase):
                                 (None, dict(status='UNKNOWN', cleanup_required=True))):
             with self.subTest(request=request), tempfile.TemporaryDirectory() as directory:
                 directory = Path(directory)
-                consumer = SimpleNamespace(poll=lambda: result, submit_goal=Mock(), close=Mock())
+                consumer = SimpleNamespace(poll=lambda: result, submit_goal=Mock(), close=Mock(),
+                                           _readonly_pending=None)
                 ingress = l.ManualMoveRequests(directory, consumer)
                 if request is not None:
                     (directory / 'command.request.json').write_text(json.dumps(request))
@@ -1456,7 +1459,8 @@ class SourceRestartIngressValidationTests(unittest.IsolatedAsyncioTestCase):
         for allow, asynchronous, value in cases:
             with self.subTest(allow=allow, asynchronous=asynchronous, value=value), tempfile.TemporaryDirectory() as folder:
                 consumer = SimpleNamespace(poll=lambda: dict(status='READY'),
-                    poll_async=AsyncMock(return_value=dict(status='READY')), submit_source_restart=Mock(), close=Mock())
+                    poll_async=AsyncMock(return_value=dict(status='READY')), submit_source_restart=Mock(), close=Mock(),
+                    _readonly_pending=None)
                 wrapper = l.ManualMoveRequests(Path(folder), consumer, allow_source_restart=allow)
                 (Path(folder) / 'command.request.json').write_text(json.dumps(value))
                 with self.assertRaises(ValueError):
@@ -1530,7 +1534,7 @@ class SourceRestartProductTests(unittest.IsolatedAsyncioTestCase):
         desktop_native, self.menu_state = DesktopTests().fake_native()
         owner = l.NativeOwner.__new__(l.NativeOwner)
         owner.__dict__.update(vars(self.owner))
-        owner.image = Path(self.reader.member.identity['image'])
+        owner.image = self.reader.image = obs.IMAGE.with_name('LC.guard.exe')
         self.reader.member.identity['image'] = str(owner.image)
         owner.child.members = {owner.child.pid: owner.child}
         owner.source_guard = self.producer.source_guard
@@ -1643,9 +1647,9 @@ class SourceRestartProductTests(unittest.IsolatedAsyncioTestCase):
         consumer.pending = dict(kind='SourceRestart')
         self.assertFalse(wrapper._actual_source_restart_commit(original, asynchronous=True))
         consumer.pending = None
-        consumer.sequence += 1
+        consumer._action_sequence += 1
         self.assertFalse(wrapper._actual_source_restart_commit(original, asynchronous=True))
-        consumer.sequence -= 1
+        consumer._action_sequence -= 1
         async def fake_poll(): return dict(original)
         with patch.object(consumer, 'poll_async', fake_poll):
             self.assertFalse(wrapper._actual_source_restart_commit(original, asynchronous=True))
@@ -2440,32 +2444,37 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(self.service._closed and self.runtime.manual.closed)
         self.writer.write.assert_not_called(); self.writer.drain.assert_not_awaited()
 
-    def code_page_refusal(self, *, after=False):
-        from tools.local_original_session import inventory
-        checks = self.service._checks(self.memory.s, *inventory._source()[::2])
-        target = self.memory.base + checks[0]['rva']
-        query, hits = self.native.k.VirtualQueryEx, [0]
-        def unreadable(handle, at, info, size):
-            value = query(handle, at, info, size)
+    async def restored_inventory_admission(self):
+        # Reuse actual temporary Store grant, select-time restore and the
+        # existing world monitor; admission never creates a replacement row.
+        await InventoryWorldDeliveryTests.asyncSetUp(self)
+        self.producer.key_guard = lambda: True
+
+    def changed_inventory_readback(self):
+        target, hits = self.memory.header, [0]
+        def changed(at, size, raw):
             if at == target:
                 hits[0] += 1
-                if not after or hits[0] == 2: info._obj.protect = 1
-            return value
-        self.native.k.VirtualQueryEx = unreadable
-        return query, hits
+                # Each attempt reads the vector and then its physical
+                # readback. Repeat the same changed second buffer until clear.
+                if hits[0] % 2 == 0: return bytes([raw[0] ^ 1]) + raw[1:]
+            return raw
+        self.memory.fault = changed
+        return hits
 
-    async def test_code_before_admission_wait_uses_next_shared_slot_once_write_and_client_confirm(self):
-        self.product_clock(); self.producer.key_guard = lambda: True
-        query, hits = self.code_page_refusal()
-        self.publish()
-        monitor = SimpleNamespace(next_memory=0)
-        first = (await self.runtime.poll(monitor))['manual_move']
+    async def test_saved_row_readonly_admission_uses_next_shared_slot_once_write_and_client_confirm(self):
+        await self.restored_inventory_admission()
+        hits = self.changed_inventory_readback()
+        first = (await self.runtime.poll(self.monitor))['manual_move']
         wrapper = self.runtime.manual
         original = wrapper._inventory_started_ns
         request = wrapper._inventory_request
         authority = self.producer._inventory_prewrite_refusal[1]
         self.assertEqual((first['status'], first['phase'], first['stage'], first['sequence']),
-                         ('PENDING', 'ADMISSION', 'CODE_GUARD_BEFORE_0001', 2))
+                         ('PENDING', 'ADMISSION', 'FINAL_READBACK', 1))
+        self.assertEqual(first['reason'], 'INVENTORY_READONLY_ADMISSION_WAIT')
+        self.assertIs(self.producer._inventory_restore_only, True)
+        self.assertFalse((self.run / 'command.request.json').exists())
         self.assertFalse(first['write_attempted'] or wrapper.closed or self.service._closed or self.service._claimed)
         self.assertFalse(self.row['operation_lock'].locked())
         self.assertIsNone(self.row['policy_row'].drain_started_ns)
@@ -2474,15 +2483,15 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
         count = len(self.memory.calls)
         self.assertEqual(wrapper.poll()['phase'], 'ADMISSION')
         for _ in range(2):
-            await self.runtime.poll(monitor)
-            await wrapper.poll_async()
+            await self.runtime.poll(self.monitor)
+            await wrapper.poll_async(monitor=self.monitor)
         self.assertEqual(len(self.memory.calls), count)
-        self.assertEqual(hits, [1])
-        self.assertEqual(monitor.next_memory, self.product_ns / 1e9 + .5)
+        self.assertEqual(hits, [2])
+        self.assertEqual(self.monitor.next_memory, self.product_ns / 1e9 + .5)
         self.assertIs(wrapper._inventory_request, request)
-        self.native.k.VirtualQueryEx = query
+        self.memory.fault = None
         self.product_ns += 500_000_000
-        sent = (await self.runtime.poll(monitor))['manual_move']
+        sent = (await self.runtime.poll(self.monitor))['manual_move']
         self.assertEqual((sent['status'], sent['phase']), ('PENDING', 'CLIENT_WAIT'))
         self.assertIs(self.producer._inventory_delivery_authority[0], authority[0])
         self.assertEqual(wrapper._inventory_started_ns, original)
@@ -2490,76 +2499,76 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(wrapper._inventory_request)
         self.assertIsNone(wrapper._inventory_observer.last_sample_monotonic_ns)
         self.assertEqual((self.writer.write.call_count, self.writer.drain.await_count), (1, 1))
-        self.materialize(); self.product_ns += 500_000_000
-        done = (await self.runtime.poll(monitor))['manual_move']
+        InventoryWorldDeliveryTests.materialize(self)
+        self.product_ns += 500_000_000
+        done = (await self.runtime.poll(self.monitor))['manual_move']
         self.assertEqual((done['status'], done['proof_scope'], done['sequence']),
-                         ('COMMITTED', 'CLIENT_ITEM_ROW_SCALARS_ONLY', 2))
-        await wrapper.poll_async()
+                         ('COMMITTED', 'CLIENT_ITEM_ROW_SCALARS_ONLY', 1))
+        await wrapper.poll_async(monitor=self.monitor)
         self.assertEqual((self.writer.write.call_count, self.writer.drain.await_count), (1, 1))
 
-    async def test_code_before_all_fail_keeps_original_deadline_then_safe_typed_close(self):
+    async def test_saved_row_readonly_failures_keep_original_deadline_then_safe_typed_close(self):
         from tools.local_original_session import inventory
-        self.product_clock(); self.producer.key_guard = lambda: True
-        query, hits = self.code_page_refusal(); self.publish()
-        first = await self.runtime.manual.poll_async()
+        await self.restored_inventory_admission()
+        hits = self.changed_inventory_readback()
+        first = await self.runtime.manual.poll_async(monitor=self.monitor)
+        self.assertEqual((first['status'], first['phase'], first['sequence']), ('PENDING', 'ADMISSION', 1))
         wrapper = self.runtime.manual
         captured = wrapper._inventory_diagnostic_capture()
         original = wrapper._inventory_started_ns
         self.product_ns += 500_000_000
-        self.assertEqual((await wrapper.poll_async())['phase'], 'ADMISSION')
-        self.assertEqual(hits, [2])
+        self.assertEqual((await wrapper.poll_async(monitor=self.monitor))['phase'], 'ADMISSION')
+        self.assertEqual(hits, [4])
         self.assertEqual(wrapper._inventory_started_ns, original)
         count = len(self.memory.calls)
         self.product_ns = original + 10_000_000_000
-        with self.assertRaises(inventory.PreWriteReadRefusal) as caught: await wrapper.poll_async()
+        with self.assertRaises(inventory.ReadOnlyPreWriteRefusal) as caught:
+            await wrapper.poll_async(monitor=self.monitor)
         self.assertEqual(len(self.memory.calls), count)
         self.assertEqual((wrapper.last_result['status'], wrapper.last_result['reason']),
                          ('UNKNOWN', 'FEATURE_INVENTORY_ADMISSION_DEADLINE'))
         diagnostic = wrapper.last_result['inventory_pre_write']
         self.assertEqual(diagnostic, {key: self.service.last_result[key] for key in
-                         ('pre_write_stage', 'typed_read_requests', 'changed_read', 'refused_read')})
-        self.assertIsNone(diagnostic['changed_read'])
-        original = dict(self.service.last_result['refused_read'])
-        self.assertEqual(diagnostic['refused_read'], caught.exception.refused_read)
-        self.assertIsNot(diagnostic['refused_read'], self.service.last_result['refused_read'])
+                         ('pre_write_stage', 'typed_read_requests', 'changed_read')})
+        self.assertEqual((diagnostic['pre_write_stage'], diagnostic['changed_read']['comparison']),
+                         ('FINAL_READBACK', 'WORLD_READBACK'))
+        self.assertNotIn('refused_read', diagnostic)
+        self.assertIsNot(diagnostic['changed_read'], self.service.last_result['changed_read'])
         self.assertLessEqual((self.run / 'command.result.json').stat().st_size, 2048)
-        # Invalid optional evidence never replaces the original refusal, reads
-        # again, or creates write/retry authority. The other three keys survive.
-        for change in ({'extra': 1}, {'at': True}, {'size': 0}, {'image_base': -1},
-                       {'requested_bytes': 4097}, {'state': '4096'}, {'guard': 1},
-                       {'protection': original['protection'] ^ 1}):
-            self.service.last_result['refused_read'] = dict(original, **change)
-            reduced = wrapper._inventory_pre_write_diagnostic(caught.exception, captured,
-                refusal=self.producer._inventory_prewrite_refusal)
-            self.assertEqual(reduced, {key: diagnostic[key] for key in
-                ('pre_write_stage', 'typed_read_requests', 'changed_read')})
-        self.service.last_result['refused_read'] = original
+        # Malformed changed-read metadata cannot become diagnostic or admission
+        # authority; validation performs no additional physical read.
+        changed = self.service.last_result['changed_read']
+        for change in ({'extra': 1}, {'request_ordinal': True}, {'requested_width': 0},
+                       {'typed_bytes_requested': 16385}, {'image': 1}, {'comparison': 'OTHER'}):
+            self.service.last_result['changed_read'] = dict(changed, **change)
+            self.assertIsNone(wrapper._inventory_pre_write_diagnostic(caught.exception, captured,
+                refusal=self.producer._inventory_prewrite_refusal))
+        self.service.last_result['changed_read'] = changed
         self.assertEqual(wrapper._inventory_pre_write_diagnostic(caught.exception, captured,
             refusal=self.producer._inventory_prewrite_refusal), diagnostic)
         self.assertEqual(len(self.memory.calls), count)
-        self.assertEqual(wrapper.last_result['refusal_reason'], 'region_not_readable')
+        self.assertEqual(wrapper.last_result['refusal_reason'], 'EDGE_TYPED_READ_CHANGED')
         self.assertFalse(wrapper.last_result['write_attempted'])
         self.assertTrue(self.service._closed)
         self.assertFalse(self.producer.failure.is_set())
         self.assertTrue(wrapper.quiesce_for_source_quit())
         self.writer.write.assert_not_called(); self.writer.drain.assert_not_awaited()
         with self.assertRaisesRegex(ValueError, 'ONCE_OPERATION'):
-            await self.producer.add_inventory(self.writer, deadline_ns=self.producer._inventory_deadline_ns)
+            await self.producer.add_inventory(self.writer, deadline_ns=self.producer._inventory_deadline_ns,
+                                              restore_only=True)
         wrapper.close()
 
     async def test_admission_fresh_authority_source_cancel_or_frame_change_never_continues(self):
-        from dataclasses import replace
-        self.product_clock()
-        for mode in ('selection', 'owner', 'source', 'cancel', 'frame', 'hash', 'clock'):
-            await self.rebuild(); self.producer.key_guard = lambda: True
-            query, hits = self.code_page_refusal(); self.publish()
-            await self.runtime.manual.poll_async()
-            self.native.k.VirtualQueryEx = query
+        for mode in ('selection', 'owner', 'source', 'cancel', 'frame', 'cache', 'clock'):
+            await self.restored_inventory_admission()
+            self.changed_inventory_readback()
+            first = await self.runtime.manual.poll_async(monitor=self.monitor)
+            self.assertEqual((first['status'], first['phase']), ('PENDING', 'ADMISSION'))
+            self.memory.fault = None
             count = len(self.memory.calls)
             self.product_ns += 500_000_000
             if mode == 'selection':
-                movement = self.realm.service(self.writer)
-                movement._position = replace(movement.snapshot())
+                self.game.selection = copy.copy(self.game.selection)
             if mode == 'owner': self.reader.owner.closed = True
             if mode == 'source': self.producer.source_guard = Mock(side_effect=ValueError('FIXTURE_SOURCE_CHANGED'))
             if mode == 'cancel':
@@ -2568,16 +2577,14 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
                     return True
                 self.producer.key_guard = cancelled
             if mode == 'frame': self.producer._inventory_frame = bytes(bytearray(self.producer._inventory_frame))
-            if mode == 'hash':
-                from tools.local_original_session import inventory
-                checks = self.service._checks(self.memory.s, *inventory._source()[::2])
-                target = self.memory.base + checks[0]['rva']
-                self.memory.data[target] = self.memory.source().read(checks[0]['rva'], 1)[0] ^ 1
+            if mode == 'cache':
+                self.memory.s.c = copy.deepcopy(self.memory.s.c)
+                self.memory.s.c['image_size'] -= 1
             if mode == 'clock': self.product_ns = self.runtime.manual._inventory_started_ns - 1
-            task = asyncio.create_task(self.runtime.manual.poll_async())
+            task = asyncio.create_task(self.runtime.manual.poll_async(monitor=self.monitor))
             with self.subTest(mode=mode), self.assertRaises(asyncio.CancelledError if mode == 'cancel' else ValueError):
                 await task
-            if mode != 'hash': self.assertEqual(len(self.memory.calls), count)
+            self.assertEqual(len(self.memory.calls), count)
             self.assertEqual(self.runtime.manual.last_result['status'], 'UNKNOWN')
             self.assertTrue(self.runtime.manual.closed and self.service._closed)
             self.assertFalse(self.runtime.manual.quiesce_for_source_quit())
@@ -2585,20 +2592,31 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
             self.reader.owner.closed = False
             self.product_ns += 500_000_000
 
-    async def test_direct_call_and_code_after_refusal_stay_terminal_and_postwrite_never_retries(self):
+    async def test_direct_call_and_final_readback_refusal_stay_terminal_and_postwrite_never_retries(self):
         from tools.local_original_session import inventory
         self.product_clock()
         for mode in ('direct', 'after', 'drain'):
             await self.rebuild(); self.producer.key_guard = lambda: True
-            if mode != 'drain': query, _ = self.code_page_refusal(after=mode == 'after')
+            query, hits = self.native.k.VirtualQueryEx, [0]
+            if mode != 'drain':
+                # Passive provenance never reads function bodies. Refuse the
+                # real vector read or its final physical readback instead.
+                def unreadable(handle, at, info, size):
+                    value = query(handle, at, info, size)
+                    if at == self.memory.header:
+                        hits[0] += 1
+                        if mode == 'direct' or hits[0] == 2: info._obj.protect = 1
+                    return value
+                self.native.k.VirtualQueryEx = unreadable
             else:
-                query = self.native.k.VirtualQueryEx
                 self.writer.drain.side_effect = ValueError('FIXTURE_DRAIN_UNKNOWN')
             self.publish()
             with self.subTest(mode=mode):
-                with self.assertRaises(inventory.PreWriteReadRefusal if mode != 'drain' else ValueError):
+                with self.assertRaises(inventory.PreWriteReadRefusal if mode != 'drain' else ValueError) as caught:
                     if mode == 'direct': await self.producer.add_inventory(self.writer)
                     else: await self.runtime.manual.poll_async()
+                if mode != 'drain':
+                    self.assertEqual(caught.exception.stage, 'EMPTY_VECTOR' if mode == 'direct' else 'FINAL_READBACK')
                 self.assertTrue(self.service._closed)
                 self.assertEqual(self.writer.write.call_count, int(mode == 'drain'))
                 with self.assertRaisesRegex(ValueError, 'ONCE_OPERATION'):
@@ -2610,14 +2628,14 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_admission_deadline_survives_lock_checkpoint_and_successful_leaf(self):
         from tools.local_original_session import inventory
-        self.product_clock()
         for mode in ('lock', 'checkpoint', 'leaf', 'extension'):
-            await self.rebuild(); self.producer.key_guard = lambda: True
-            query, _ = self.code_page_refusal(); self.publish()
-            await self.runtime.manual.poll_async()
+            await self.restored_inventory_admission()
+            self.changed_inventory_readback()
+            first = await self.runtime.manual.poll_async(monitor=self.monitor)
+            self.assertEqual((first['status'], first['phase']), ('PENDING', 'ADMISSION'))
             wrapper = self.runtime.manual
             original = wrapper._inventory_started_ns
-            self.native.k.VirtualQueryEx = query
+            self.memory.fault = None
             count = len(self.memory.calls)
             self.product_ns += 500_000_000
             if mode == 'checkpoint':
@@ -2628,8 +2646,7 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
                     return sample
                 self.producer._checkpoint = expired
             if mode == 'leaf':
-                checks = self.service._checks(self.memory.s, *inventory._source()[::2])
-                target, hits = self.memory.base + checks[-1]['rva'], [0]
+                target, hits = self.memory.header, [0]
                 def expire_leaf(at, size, raw):
                     if at == target:
                         hits[0] += 1
@@ -2639,9 +2656,9 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
             if mode == 'lock': await self.row['operation_lock'].acquire()
             if mode == 'extension':
                 task = asyncio.create_task(self.producer.add_inventory(self.writer,
-                    deadline_ns=original + 10_000_000_001))
+                    deadline_ns=original + 10_000_000_001, restore_only=True))
             else:
-                task = asyncio.create_task(wrapper.poll_async())
+                task = asyncio.create_task(wrapper.poll_async(monitor=self.monitor))
             if mode == 'lock':
                 await asyncio.sleep(0)
                 self.assertFalse(task.done())
@@ -2650,7 +2667,7 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(mode=mode), self.assertRaises(ValueError) as caught:
                 await task
             if mode in ('lock', 'checkpoint'):
-                self.assertIs(type(caught.exception), inventory.PreWriteReadRefusal)
+                self.assertIs(type(caught.exception), inventory.ReadOnlyPreWriteRefusal)
                 self.assertEqual(len(self.memory.calls), count)
                 self.assertTrue(wrapper.quiesce_for_source_quit())
                 self.assertFalse(self.producer.failure.is_set())
@@ -2668,10 +2685,10 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
             self.product_ns = max(self.product_ns, original) + 500_000_000
 
     async def test_admission_final_sync_policy_clock_expiry_after_reservation_is_write_zero_terminal(self):
-        self.product_clock(); self.producer.key_guard = lambda: True
-        query, _ = self.code_page_refusal(); self.publish()
-        self.assertEqual((await self.runtime.manual.poll_async())['phase'], 'ADMISSION')
-        self.native.k.VirtualQueryEx = query
+        await self.restored_inventory_admission()
+        self.changed_inventory_readback()
+        self.assertEqual((await self.runtime.manual.poll_async(monitor=self.monitor))['phase'], 'ADMISSION')
+        self.memory.fault = None
         self.product_ns += 500_000_000
         original = self.policy.begin_write
         deadline = self.runtime.manual._inventory_started_ns + 10_000_000_000
@@ -2682,7 +2699,7 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
             return value
         self.policy.begin_write = expired
         with self.assertRaisesRegex(ValueError, 'INVENTORY_ADMISSION_DEADLINE'):
-            await self.runtime.manual.poll_async()
+            await self.runtime.manual.poll_async(monitor=self.monitor)
         self.assertTrue(self.producer.failure.is_set())
         self.assertTrue(self.service._claimed and self.service._closed)
         self.assertIsNone(self.producer._inventory_prewrite_refusal)
@@ -2693,7 +2710,7 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(self.runtime.manual.quiesce_for_source_quit())
         self.writer.write.assert_not_called(); self.writer.drain.assert_not_awaited()
         with self.assertRaisesRegex(ValueError, 'ONCE_OPERATION'):
-            await self.producer.add_inventory(self.writer, deadline_ns=deadline)
+            await self.producer.add_inventory(self.writer, deadline_ns=deadline, restore_only=True)
         self.writer.write.assert_not_called()
 
     def client_count_drift(self):
@@ -2761,7 +2778,6 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_client_wait_replaced_actual_producer_or_delivery_never_queries_or_rebinds(self):
         from tools.local_original_session import inventory_observe
-        from dataclasses import replace
         self.product_clock()
         for mode in ('observer', 'sample', 'delivery', 'service', 'reader', 'frame', 'selection'):
             await self.rebuild(); self.publish(); await self.runtime.manual.poll_async()
@@ -2779,8 +2795,9 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
             if mode == 'reader': wrapper.consumer.reader = copy.copy(self.reader)
             if mode == 'frame': self.producer._inventory_frame = bytes(bytearray(self.producer._inventory_frame))
             if mode == 'selection':
-                movement = self.realm.service(self.writer)
-                movement._position = replace(movement.snapshot())
+                # Movement may replace Position between samples; selection
+                # lifetime remains the delivered object in the real registry.
+                self.game.selection = copy.copy(self.game.selection)
             with self.subTest(mode=mode), self.assertRaises(ValueError): await wrapper.poll_async()
             self.assertEqual(len(self.memory.calls), count)
             self.assertEqual(wrapper.last_result['status'], 'UNKNOWN')
@@ -2896,7 +2913,9 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(empty['status'], 'PENDING')
         self.assertEqual(observer.last_result['entry_count'], 0)
         self.assertEqual(monitor.next_memory, self.product_ns / 1e9 + .5)
-        self.assertEqual(observer.last_result['typed_bytes_requested'], 2343)
+        # GateTests.Memory's empty vector uses the same 1857-byte world/route
+        # readback as ObservationTests; passive source checks add no code reads.
+        self.assertEqual(observer.last_result['typed_bytes_requested'], 1857)
         self.materialize()
         self.product_ns += 500_000_000
         complete = (await self.runtime.poll(monitor))['manual_move']
@@ -2917,9 +2936,7 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
         self.product_clock(); self.publish()
         await self.runtime.poll(SimpleNamespace(next_memory=0))
         original = self.producer._inventory_delivery_authority
-        movement = self.realm.service(self.writer)
-        from dataclasses import replace
-        movement._position = replace(movement.snapshot())
+        self.game.selection = copy.copy(self.game.selection)
         count = len(self.memory.calls)
         self.product_ns += 500_000_000
         with self.assertRaisesRegex(ValueError, 'MANUAL_MOVE_TERMINAL_UNKNOWN'):
@@ -3120,7 +3137,9 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(phases, ['WRITE_CHECKPOINT'])
         self.writer.write.assert_called_once_with(self.factory.config.inventory_frame)
         self.assertEqual(self.writer.drain.await_count, 1)
-        self.assertEqual(self.service.last_result['typed_bytes_requested'], 2343)
+        # This is GateTests.Memory's empty-vector pre-write query, as in
+        # inventory_tests.GateTests; delivery itself adds no native reads.
+        self.assertEqual(self.service.last_result['typed_bytes_requested'], 1857)
         self.assertEqual(monitor.next_memory, self.producer.inventory_sample_monotonic_ns / 1e9 + .5)
         self.assertEqual((self.memory.s.bytes, self.memory.s.read_limit, self.memory.s.total), (77, 8192, 900))
         await self.runtime.manual.poll_async()  # Duplicate public sequence performs nothing.
@@ -3240,8 +3259,9 @@ class InventoryProductTests(unittest.IsolatedAsyncioTestCase):
 
 class ProductFeatureNpcTests(unittest.IsolatedAsyncioTestCase):
     async def test_config_factory_real_session_edge_policy_write_drain_commit(self):
-        from tools.local_original_session import feature_config, npc_session, npc_edge_tests
-        await npc_edge_tests.NpcEdgeTests.asyncSetUp(self)
+        from tools.local_original_session import feature_config, npc_session, npc_edge_tests, npc_motion_tests, broker_tests
+        with patch.object(npc_motion_tests.ConnectedMotionTests, 'asyncSetUp', broker_tests.connected_motion_setup):
+            await npc_edge_tests.NpcEdgeTests.asyncSetUp(self)
         try:
             candidate, _ = self.realm._npc_spawns[0]
             config = feature_config.Features((candidate,), 100, npc_session.npc_motion.LOCAL_PRE_STEP,
@@ -3632,10 +3652,6 @@ class MonitorConditionTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(owner.closed)
 
 
-if __name__ == '__main__':
-    unittest.main()
-
-
 class AttackFeedbackFactoryTests(unittest.IsolatedAsyncioTestCase):
     async def test_feedback_observer_optin_requires_explicit_config_same_real_session_feedback(self):
         from tools.local_original_session import broker_tests, feature_config as fc, attack_session
@@ -3928,7 +3944,9 @@ class InventoryWorldDeliveryTests(unittest.IsolatedAsyncioTestCase):
         self.assertIs(self.producer._inventory_operation_frame, literal)
         self.assertTrue(self.service._claimed)
         self.assertIs(self.producer._inventory_restore_only, True)
-        self.assertEqual(self.service.last_result['typed_bytes_requested'], 2343)
+        # Restore-only uses the same empty-vector query as ReadonlyAdmissionTests;
+        # its persisted literal does not add native memory reads.
+        self.assertEqual(self.service.last_result['typed_bytes_requested'], 1857)
         self.assertEqual(self.monitor.next_memory, self.producer.inventory_sample_monotonic_ns / 1e9 + .5)
         before = len(self.memory.calls)
         await self.runtime.poll(self.monitor)
@@ -4683,8 +4701,8 @@ class UseItemProductMetadataTests(unittest.TestCase):
         old = l.PRODUCTS['sibling-background-source-quit-spawn']
         candidate = l.PRODUCTS['sibling-background-use-item-source-quit-spawn']
         expected = {**old, 'bridges': {**old['bridges'], 'own-login-bridge-dg49.dll':
-            '90dee4d8d7f56ef6400c059acaa0134309bc07d6bec14c59ffe575f9450004ed'},
-            'bridge_artifact': l.ROOT / 'work/local_original_session/implementation-1/manual-source-restart/own-login-bridge-dg49.dll',
+            '3db49209c95708c7a6588f55f85a7657612cbd4a7d0a64dd0869258ea20abec3'},
+            'bridge_artifact': l.ROOT / 'work/local_original_session/implementation-1/source-use-ui-matched-slot-binding/integration/own-login-bridge-dg49.dll',
             'manual_use_item': True}
         self.assertEqual(candidate, expected)
         self.assertEqual(l.digest(candidate['bridge_artifact']), candidate['bridges']['own-login-bridge-dg49.dll'])
@@ -4918,3 +4936,7 @@ class InventoryUpdateProductTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result['reason'], 'FEATURE_INVENTORY_ADMISSION_DEADLINE')
         self.assertEqual(result['command'], 'UpdateInventory')
         self.writer.write.assert_not_called()
+
+
+if __name__ == '__main__':
+    unittest.main()

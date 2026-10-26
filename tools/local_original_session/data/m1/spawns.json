@@ -1,0 +1,44 @@
+{
+  "table": "m1_spawns",
+  "version": 1,
+  "note": "map0 마을(경계 x32543-32671/y32905-32987, region.jsonc:3) 북쪽 초원. 사각형은 L1J 스폰 영역(x32559-32708/y32796-32886) 안에서 마을 쪽 남단으로 좁혔다. 실제 칸 통행은 확인하지 않았으므로 출현 때 NPC 통행·점유 검사가 필요하다.",
+  "ref_abbrev": {
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql (spawnlist 열 정의 :1813-1835)",
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc"
+  },
+  "policy_basis": "플레이어 기준점 32578,32946(마을 안)에서 y 북쪽 약 60칸이 가장 가까운 사냥 영역이다. L1J 전체 170마리는 148x90칸 기준이라 혼자 쓰기엔 과밀하다. 총 16마리를 마을 쪽 남단에 모아 30분 동안 걷는 시간보다 싸우는 시간이 길게 했다.",
+  "groups": [
+    {
+      "group_id": {"value": "m1_orc", "source": "local_policy", "ref": "l1jdb:45911 spawn 62018"},
+      "template_id": {"value": 0, "source": "client", "ref": "monsters.json 오크"},
+      "map_id": {"value": 0, "source": "l1j", "ref": "l1jdb:45911 mapid=0; region.jsonc:5 map0 경계 동일"},
+      "rect": {"value": {"x1": 32565, "y1": 32856, "x2": 32605, "y2": 32886}, "source": "local_policy", "ref": "l1jdb:45911 사각형 32561,32796-32708,32886", "note": "L1J 사각형 남서쪽 끝. 기준점에서 y 60~90칸"},
+      "target_count": {"value": 6, "source": "local_policy", "ref": "l1jdb:45911 count=60", "note": "Lv2 주력 사냥감. 처음 만나는 몹이 가장 많게"},
+      "respawn_delay_ms": {"value": {"min": 60000, "max": 120000}, "source": "l1j", "ref": "l1jdb:45911 min/max_respawn_delay=60/120초"}
+    },
+    {
+      "group_id": {"value": "m1_goblin", "source": "local_policy", "ref": "l1jdb:45899 spawn 62006"},
+      "template_id": {"value": 245, "source": "client", "ref": "monsters.json 고블린"},
+      "map_id": {"value": 0, "source": "l1j", "ref": "l1jdb:45899 mapid=0"},
+      "rect": {"value": {"x1": 32585, "y1": 32856, "x2": 32625, "y2": 32886}, "source": "local_policy", "ref": "l1jdb:45899 사각형 32560,32796-32708,32885", "note": "오크 영역과 일부 겹치게 동쪽으로 20칸 이동"},
+      "target_count": {"value": 4, "source": "local_policy", "ref": "l1jdb:45899 count=30", "note": "L1J 비율(오크 60:고블린 30)을 대략 따름"},
+      "respawn_delay_ms": {"value": {"min": 60000, "max": 120000}, "source": "l1j", "ref": "l1jdb:45899 60/120초"}
+    },
+    {
+      "group_id": {"value": "m1_orc_archer", "source": "local_policy", "ref": "l1jdb:45915 spawn 62022"},
+      "template_id": {"value": 1, "source": "client", "ref": "monsters.json 오크 궁수"},
+      "map_id": {"value": 0, "source": "l1j", "ref": "l1jdb:45915 mapid=0"},
+      "rect": {"value": {"x1": 32575, "y1": 32840, "x2": 32615, "y2": 32866}, "source": "local_policy", "ref": "l1jdb:45915 사각형 32561,32797-32705,32884", "note": "근접 몹 영역 바로 북쪽. 원거리 몹이 마을 입구에 몰리지 않게"},
+      "target_count": {"value": 3, "source": "local_policy", "ref": "l1jdb:45915 count=20"},
+      "respawn_delay_ms": {"value": {"min": 60000, "max": 120000}, "source": "l1j", "ref": "l1jdb:45915 60/120초"}
+    },
+    {
+      "group_id": {"value": "m1_werewolf", "source": "local_policy", "ref": "l1jdb:45893 spawn 62000"},
+      "template_id": {"value": 8, "source": "client", "ref": "monsters.json 늑대인간"},
+      "map_id": {"value": 0, "source": "l1j", "ref": "l1jdb:45893 mapid=0"},
+      "rect": {"value": {"x1": 32610, "y1": 32810, "x2": 32660, "y2": 32845}, "source": "local_policy", "ref": "l1jdb:45893 사각형 32559,32799-32706,32885", "note": "Lv9라서 L1J 영역 안쪽 북동부로 떼어 놓음. 기준점에서 약 100칸"},
+      "target_count": {"value": 3, "source": "local_policy", "ref": "l1jdb:45893 count=60", "note": "저레벨 PC가 몰려 만나지 않게 적게"},
+      "respawn_delay_ms": {"value": {"min": 60000, "max": 120000}, "source": "l1j", "ref": "l1jdb:45893 60/120초"}
+    }
+  ]
+}

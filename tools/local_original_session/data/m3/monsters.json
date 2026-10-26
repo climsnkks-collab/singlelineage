@@ -1,0 +1,698 @@
+{
+  "table": "m3_monsters",
+  "version": 1,
+  "note": "M3 성장 준비용 말하는 섬 던전1~2층의 선택적6종 데이터. 원본 클래식의 실제 map1/2만 대상이며 전 종 복원 표가 아니다. 식별/외형은 클라이언트, 레벨/지역은 저장된 공식 사전, 능력치/AI 기본값은 해당 L1J spawn NPC의 로컬 참고 정책이다. 연결·입력·프레임·특수효과·실제 전투는 미검증. M1과 같은 필드 형태를 유지하며 실행 연결은 하지 않는다.",
+  "ref_abbrev": {
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "all-rows": "work/monster_level_comparison/analysis/all-rows.csv (공식 API 2026-10-09 저장본 대응)",
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "parsed-spr": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jcfg": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc",
+    "m1-items": "tools/local_original_session/data/m1/items.json"
+  },
+  "monsters": [
+    {
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "native-dump:22; all-rows:39"
+      },
+      "name_token": {
+        "value": "$57",
+        "source": "client",
+        "ref": "native-dump:22 name.reference"
+      },
+      "name_ko": {
+        "value": "좀비",
+        "source": "client",
+        "ref": "native-dump:22 name.KR"
+      },
+      "sprite_id": {
+        "value": 52,
+        "source": "client",
+        "ref": "native-dump:22 f2; list.spr:352 #52 zombie; parsed-spr:49",
+        "note": "L1J gfxid=52 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45065,
+        "source": "l1j",
+        "ref": "l1jdb:20685; all-rows:39",
+        "note": "공식 좀비27은 두 층 출현. L1J45065/45066/45105 등 같은 이름·레벨을 합치지 않고 실제 map1/2 spawn의45065 선택."
+      },
+      "level": {
+        "value": 6,
+        "source": "official",
+        "ref": "all-rows:39 official_level; C:\\Users\\Chansol\\Documents\\ChatGPT\\싱글리니지\\work\\monster_level_comparison\\official\\20261009-fresh\\page-002.json page=2 row=8"
+      },
+      "hp": {
+        "value": 45,
+        "source": "l1j",
+        "ref": "l1jdb:20685 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 12,
+        "source": "l1j",
+        "ref": "l1jdb:20685 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": 8,
+        "source": "l1j",
+        "ref": "l1jdb:20685 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 37,
+        "source": "l1j",
+        "ref": "l1jdb:20685 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20685 agro=1",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 2083,
+        "source": "client",
+        "ref": "list.spr:353 walk C합50/24; parsed-spr:49",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=2000ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 1083,
+        "source": "client",
+        "ref": "list.spr:354 attack C합26/24; parsed-spr:49",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=1040ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20685 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 8,
+          "max": 13,
+          "str": 14,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20685 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      }
+    },
+    {
+      "template_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "native-dump:11; all-rows:48"
+      },
+      "name_token": {
+        "value": "$6",
+        "source": "client",
+        "ref": "native-dump:11 name.reference"
+      },
+      "name_ko": {
+        "value": "괴물 눈",
+        "source": "client",
+        "ref": "native-dump:11 name.KR"
+      },
+      "sprite_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "native-dump:11 f2; list.spr:143 #29 floating eye; parsed-spr:26",
+        "note": "L1J gfxid=29 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45068,
+        "source": "l1j",
+        "ref": "l1jdb:20688; all-rows:48",
+        "note": "공식 괴물 눈11은 두 층 출현. 같은 이름의45760 등 대신 실제 map1/2 spawn45068 선택."
+      },
+      "level": {
+        "value": 7,
+        "source": "official",
+        "ref": "all-rows:48 official_level; C:\\Users\\Chansol\\Documents\\ChatGPT\\싱글리니지\\work\\monster_level_comparison\\official\\20261009-fresh\\page-002.json page=2 row=17"
+      },
+      "hp": {
+        "value": 40,
+        "source": "l1j",
+        "ref": "l1jdb:20688 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 30,
+        "source": "l1j",
+        "ref": "l1jdb:20688 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "l1jdb:20688 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 50,
+        "source": "l1j",
+        "ref": "l1jdb:20688 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20688 agro=0",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:144 walk C합24/24; parsed-spr:26",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=960ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 1792,
+        "source": "client",
+        "ref": "list.spr:145 attack C합43/24; parsed-spr:26",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=1680ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20688 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 6,
+          "max": 12,
+          "str": 10,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20688 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      }
+    },
+    {
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "native-dump:24; all-rows:60"
+      },
+      "name_token": {
+        "value": "$7",
+        "source": "client",
+        "ref": "native-dump:24 name.reference"
+      },
+      "name_ko": {
+        "value": "해골",
+        "source": "client",
+        "ref": "native-dump:24 name.KR"
+      },
+      "sprite_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "native-dump:24 f2; list.spr:153 #30 skeleton; parsed-spr:27",
+        "note": "L1J gfxid=30 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45107,
+        "source": "l1j",
+        "ref": "l1jdb:20725; all-rows:60",
+        "note": "공식 해골29는1/2층 출현. 해골25는2층 전용이고 드롭 구성이 달라 합치지 않음. L1J45107/45108/45114 중 실제 양층 spawn45107 선택. map2에서29의 고유 변종이 실제 배치되는지는 미검증."
+      },
+      "level": {
+        "value": 10,
+        "source": "official",
+        "ref": "all-rows:60 official_level; C:\\Users\\Chansol\\Documents\\ChatGPT\\싱글리니지\\work\\monster_level_comparison\\official\\20261009-fresh\\page-002.json page=2 row=29"
+      },
+      "hp": {
+        "value": 80,
+        "source": "l1j",
+        "ref": "l1jdb:20725 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 30,
+        "source": "l1j",
+        "ref": "l1jdb:20725 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": 3,
+        "source": "l1j",
+        "ref": "l1jdb:20725 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 101,
+        "source": "l1j",
+        "ref": "l1jdb:20725 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20725 agro=1",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:160 walk C합16/24; parsed-spr:27",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=640ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 958,
+        "source": "client",
+        "ref": "list.spr:154 attack C합23/24; parsed-spr:27",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=920ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20725 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 9,
+          "max": 18,
+          "str": 16,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20725 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      }
+    },
+    {
+      "template_id": {
+        "value": 276,
+        "source": "client",
+        "ref": "native-dump:160; all-rows:72"
+      },
+      "name_token": {
+        "value": "$986",
+        "source": "client",
+        "ref": "native-dump:160 name.reference"
+      },
+      "name_ko": {
+        "value": "해골궁수",
+        "source": "client",
+        "ref": "native-dump:160 name.KR"
+      },
+      "sprite_id": {
+        "value": 1096,
+        "source": "client",
+        "ref": "native-dump:160 f2; list.spr:3580 #1096 skeleton archer; parsed-spr:695",
+        "note": "L1J gfxid=1096 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45122,
+        "source": "l1j",
+        "ref": "l1jdb:20740; all-rows:72",
+        "note": "공식 해골궁수276은1/2층 출현하나 이 표에서는 L1J spawn이 있는2층만 선정. 동명이형45123/45124/45129를 합치지 않음."
+      },
+      "level": {
+        "value": 12,
+        "source": "official",
+        "ref": "all-rows:72 official_level; C:\\Users\\Chansol\\Documents\\ChatGPT\\싱글리니지\\work\\monster_level_comparison\\official\\20261009-fresh\\page-003.json page=3 row=11"
+      },
+      "hp": {
+        "value": 80,
+        "source": "l1j",
+        "ref": "l1jdb:20740 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 25,
+        "source": "l1j",
+        "ref": "l1jdb:20740 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:20740 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 145,
+        "source": "l1j",
+        "ref": "l1jdb:20740 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20740 agro=1",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:3581 walk bow C합20/24; parsed-spr:695",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=800ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 1167,
+        "source": "client",
+        "ref": "list.spr:3587 attack bow C합28/24; parsed-spr:695",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=1120ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20740 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 9,
+          "max": 20,
+          "str": 16,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20740 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      }
+    },
+    {
+      "template_id": {
+        "value": 6,
+        "source": "client",
+        "ref": "native-dump:6; all-rows:75"
+      },
+      "name_token": {
+        "value": "$56",
+        "source": "client",
+        "ref": "native-dump:6 name.reference"
+      },
+      "name_ko": {
+        "value": "돌 골렘",
+        "source": "client",
+        "ref": "native-dump:6 name.KR"
+      },
+      "sprite_id": {
+        "value": 49,
+        "source": "client",
+        "ref": "native-dump:6 f2; list.spr:325 #49 golem; parsed-spr:46",
+        "note": "L1J gfxid=49 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45126,
+        "source": "l1j",
+        "ref": "l1jdb:20744; all-rows:75",
+        "note": "공식 돌 골렘6은 던전1/2층 출현, 지상형5 및162와 분리. 이 표는 L1J45126의2층 spawn200009를 근거로 선정. 동일 토큰/레벨45134와 합치지 않음. str58은 원문 그대로 유지."
+      },
+      "level": {
+        "value": 13,
+        "source": "official",
+        "ref": "all-rows:75 official_level; C:\\Users\\Chansol\\Documents\\ChatGPT\\싱글리니지\\work\\monster_level_comparison\\official\\20261009-fresh\\page-003.json page=3 row=14"
+      },
+      "hp": {
+        "value": 150,
+        "source": "l1j",
+        "ref": "l1jdb:20744 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 50,
+        "source": "l1j",
+        "ref": "l1jdb:20744 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": -1,
+        "source": "l1j",
+        "ref": "l1jdb:20744 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 170,
+        "source": "l1j",
+        "ref": "l1jdb:20744 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20744 agro=0",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 1333,
+        "source": "client",
+        "ref": "list.spr:326 walk C합32/24; parsed-spr:46",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=1280ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 2750,
+        "source": "client",
+        "ref": "list.spr:327 attack C합66/24; parsed-spr:46",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=1840ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20744 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 30,
+          "max": 42,
+          "str": 58,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20744 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      }
+    },
+    {
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "native-dump:25; all-rows:99"
+      },
+      "name_token": {
+        "value": "$318",
+        "source": "client",
+        "ref": "native-dump:25 name.reference"
+      },
+      "name_ko": {
+        "value": "스파토이",
+        "source": "client",
+        "ref": "native-dump:25 name.KR"
+      },
+      "sprite_id": {
+        "value": 145,
+        "source": "client",
+        "ref": "native-dump:25 f2; list.spr:818 #145 spartoi; parsed-spr:137",
+        "note": "L1J gfxid=145 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45161,
+        "source": "l1j",
+        "ref": "l1jdb:20777; all-rows:99",
+        "note": "공식 스파토이30은2층 출현. L1J45161/45181 중 실제2층 spawn45161 선택."
+      },
+      "level": {
+        "value": 16,
+        "source": "official",
+        "ref": "all-rows:99 official_level; C:\\Users\\Chansol\\Documents\\ChatGPT\\싱글리니지\\work\\monster_level_comparison\\official\\20261009-fresh\\page-004.json page=4 row=8"
+      },
+      "hp": {
+        "value": 120,
+        "source": "l1j",
+        "ref": "l1jdb:20777 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 30,
+        "source": "l1j",
+        "ref": "l1jdb:20777 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": -3,
+        "source": "l1j",
+        "ref": "l1jdb:20777 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 257,
+        "source": "l1j",
+        "ref": "l1jdb:20777 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20777 agro=1",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:819 walk C합20/24; parsed-spr:137",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=800ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 958,
+        "source": "client",
+        "ref": "list.spr:820 attack C합23/24; parsed-spr:137",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=920ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20777 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 9,
+          "max": 24,
+          "str": 17,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20777 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      }
+    }
+  ],
+  "unverified": [
+    "고유 변종의 양 버전1:1 대응과 실제 world 외형",
+    "조건부 선공·동족 반응·마법·언데드/마비 등 종별 특수 행동",
+    "맵 통행·LOS·층간 전환·실제 공격/보상/저장 소비"
+  ],
+  "excluded_variants": [
+    {
+      "template_id": 25,
+      "reason": "해골29와 이름토큰·레벨·SPR은 같지만 공식 지역과 클라이언트 드롭 구성이 다름. 같은 종으로 병합하지 않음.",
+      "ref": "native-dump:20,24; all-rows:59,60; drop-pairs npc25 vs29"
+    },
+    {
+      "template_ids": [
+        5,
+        162
+      ],
+      "reason": "지상/요정숲 돌 골렘 변종. 던전형6과 병합하지 않음.",
+      "ref": "all-rows:74,75,78"
+    }
+  ]
+}
