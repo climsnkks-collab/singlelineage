@@ -1,0 +1,27 @@
+{
+  "table": "m4_local_runtime_policy",
+  "version": 1,
+  "activation": "SL_EXPERIMENT_MAP=2 (-MapExp 2); default OFF",
+  "town_return": {
+    "value": {"map_id": 4, "x": 32608, "y": 32734, "heading": 5},
+    "source": "local_policy",
+    "ref": "travel.json teleporters[50015].destinations; M4_GLUDIN_DATA.md static can_stand=True",
+    "note": "Reuse the standable Lucas candidate for return scrolls and death on map4. LOCAL Gludin return policy, not a Classic official GetBack/respawn observation. Other maps retain the existing M1 town policy."
+  },
+  "boat": {
+    "mode": "LOCAL_DIRECT_HARBOR_EXPERIMENT",
+    "request": "run397: C2S4EF8 required signed int32 f1; retained opaque, not compared to invented ship keys",
+    "origin": "travel.json classic_static.f6_box_raw; inclusive bounds are a LOCAL trial rule",
+    "arrival": "travel.json classic_static_raw f8/f9 center; fixed center/heading5 are LOCAL trial choices, radius ignored",
+    "ticket": "Owned positive Classic124/125 stack required; consume one through existing kit CAS before relocation. No ticket is issued by this feature.",
+    "omitted_unresolved": ["map5/6 interiors", "official schedule/wait", "4F0E field semantics", "normal-server enter/arrival frames", "native ticket merchant/issuance"],
+    "failure": "Destination checked before consumption. Ambiguous persistence/relocation failure after consumption is fatal through the existing broker cleanup; no refund or replay.",
+    "evidence": "work/local_original_session/game-core-prep/BOAT_EVIDENCE.md; work/local_server_rea_20261016/run397_boat_travel/"
+  },
+  "town": {
+    "default": "Unique selected catalog correspondences only: L1J80093/80098 (Classic81/79). No selected native merchant menu/product exists for these two.",
+    "candidates": "Other M4 NPC/shop records remain attributed data. No native menu guessed from L1J dialogue stems. count0 and blocked/unknown placement centers are excluded.",
+    "shared_rewards": "M3 shared monster/reward policy retains precedence; M4 items extend the inventory definitions. M4 unresolved drop rows stay in the original JSON."
+  },
+  "verification_boundary": "Development data/loopback tests only; native graphics/input/voyage and 30-minute play remain UNRUN."
+}

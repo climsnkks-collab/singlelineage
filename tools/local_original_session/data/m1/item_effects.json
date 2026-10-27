@@ -1,0 +1,352 @@
+{
+  "table": "m1_item_effects",
+  "version": 1,
+  "note": "Classic IDs only. Healing uses official inclusive ranges with a local uniform integer draw and existing SC4E38 encoding. Speed reuses WorldCombat. No inventory/save ownership changes.",
+  "mapping_scope": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md section 3 (mapping methodology)",
+  "reuse": [
+    "tools/local_original_session/world_combat.py:WorldCombat.heal/apply_buff",
+    "tools/local_original_session/data/m1/items.json",
+    "tools/local_original_session/data/m1/town.json:respawn_point",
+    "work/local_original_session/consumables/facts-v1/API.md (old exact-f8-only subset; latest dump/shop candidates 15/130/126 explicitly added as local mappings)"
+  ],
+  "policy_limits": [
+    "Healing amount is a uniform integer within the official inclusive range. The official source supplies endpoints only, not a probability distribution; legacy WorldCombat.heal callers retain Gaussian policy.",
+    "DECAY_POTION, POLLUTE_WATER, absolute barriers, potion cooldown/admission, equipped haste and other skill interactions are caller-owned or unsupported M1 effects.",
+    "Cure126 is native jade potion ($233), mapped to L1J40017 cure poison. No existing M1 poison ticker or native display wire.",
+    "Return162 uses existing town respawn point; clan-return806 and anonymous10014 are distinct and unsupported.",
+    "Random teleport uses same-map radius200 square, uniform known can_stand cells; current cell excluded, no bookmarks/doors/occupancy/map restriction policy.",
+    "Movement outputs proposals only. Native teleport wire/order UNKNOWN; 4E2C walking and 4EE0 correction are not asserted as teleport.",
+    "Speed expiry uses existing combat.expire_buff scheduler; leave clears combat buffs as before."
+  ],
+  "wire_sources": {
+    "hp": "tools/local_original_session/world_combat.py:status_frame SC4E38",
+    "speed": "tools/local_original_session/world_combat.py:speed_frame SC4E5B",
+    "movement": "work/local_server_rea_20261016/run273_map_transition_contract/source/receive/contract.md; run287_temple4_77_return_map0_contract/source/contract.md; run314_sc4e2c_player_position_commit/contract.md; self_response_findings.md"
+  },
+  "excluded_shop_effects": [
+    "food/hunger (no M1 hunger authority)",
+    "identify22",
+    "curse-removal24",
+    "clan-return806",
+    "event/blessed/cursed/anonymous variants"
+  ],
+  "effects": [
+    {
+      "template_id": 14,
+      "name_ko": "빨간 물약",
+      "name_token": "$237",
+      "kind": "heal",
+      "l1j_item_id": 40010,
+      "heal_hp": 15,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:965",
+        "f4": 51,
+        "icon_f5": 80,
+        "ground_f6": 45,
+        "kind_f45": 1001
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_name_and_graphics_token_changed",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16464",
+        "l1j_tokens": {
+          "identified": "$26",
+          "unidentified": "$26"
+        }
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=14; work/official_data/raw/item/14.json options[회복량].origin/originMax",
+        "status": "OFFICIAL_INCLUSIVE_RANGE_LOCAL_UNIFORM_DISTRIBUTION"
+      },
+      "heal_hp_range": {
+        "min": 6,
+        "max": 27
+      },
+      "legacy_heal_hp_note": "heal_hp는 이전 가우스 경로의 호환 기준값이며 이 모듈은 공식 heal_hp_range를 사용한다."
+    },
+    {
+      "template_id": 15,
+      "name_ko": "주홍 물약",
+      "name_token": "$235",
+      "kind": "heal",
+      "l1j_item_id": 40011,
+      "heal_hp": 45,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:966",
+        "f4": 51,
+        "icon_f5": 78,
+        "ground_f6": 43,
+        "kind_f45": 1001
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16465",
+        "l1j_tokens": {
+          "identified": "$235",
+          "unidentified": "$235"
+        }
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=15; work/official_data/raw/item/15.json options[회복량].origin/originMax",
+        "status": "OFFICIAL_INCLUSIVE_RANGE_LOCAL_UNIFORM_DISTRIBUTION"
+      },
+      "heal_hp_range": {
+        "min": 26,
+        "max": 68
+      },
+      "legacy_heal_hp_note": "heal_hp는 이전 가우스 경로의 호환 기준값이며 이 모듈은 공식 heal_hp_range를 사용한다."
+    },
+    {
+      "template_id": 130,
+      "name_ko": "맑은 물약",
+      "name_token": "$238",
+      "kind": "heal",
+      "l1j_item_id": 40012,
+      "heal_hp": 75,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1064",
+        "f4": 51,
+        "icon_f5": 81,
+        "ground_f6": 46,
+        "kind_f45": 1001
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16466",
+        "l1j_tokens": {
+          "identified": "$238",
+          "unidentified": "$238"
+        }
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=130; work/official_data/raw/item/130.json options[회복량].origin/originMax",
+        "status": "OFFICIAL_INCLUSIVE_RANGE_LOCAL_UNIFORM_DISTRIBUTION"
+      },
+      "heal_hp_range": {
+        "min": 44,
+        "max": 107
+      },
+      "legacy_heal_hp_note": "heal_hp는 이전 가우스 경로의 호환 기준값이며 이 모듈은 공식 heal_hp_range를 사용한다."
+    },
+    {
+      "template_id": 17,
+      "name_ko": "초록 물약",
+      "name_token": "$234",
+      "kind": "speed",
+      "l1j_item_id": 40013,
+      "buff_template_id": 17,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:968",
+        "f4": 51,
+        "icon_f5": 77,
+        "ground_f6": 42,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16467",
+        "l1j_tokens": {
+          "identified": "$264",
+          "unidentified": "$234"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:486-491,2711-2800",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 296,
+      "name_ko": "용기의 물약",
+      "name_token": "$943",
+      "kind": "speed",
+      "l1j_item_id": 40014,
+      "buff_template_id": 296,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1192",
+        "f4": 51,
+        "icon_f5": 79,
+        "ground_f6": 44,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m1/items.json:296",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded."
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:492-500,2803-2931",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 495,
+      "name_ko": "강화 초록 물약",
+      "name_token": "$15699",
+      "kind": "speed",
+      "l1j_item_id": 40018,
+      "buff_template_id": 17,
+      "buff_add_s": 1800,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1299",
+        "f4": 51,
+        "icon_f5": 621,
+        "ground_f6": 42,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_name_and_graphics_token_changed",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16472",
+        "l1j_tokens": {
+          "identified": "$1652 $264",
+          "unidentified": "$1652 $234"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:486-491,2726-2727,2793-2794",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 126,
+      "name_ko": "비취 물약",
+      "name_token": "$233",
+      "kind": "cure_poison",
+      "l1j_item_id": 40017,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1060",
+        "f4": 51,
+        "icon_f5": 76,
+        "ground_f6": 41,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16471",
+        "l1j_tokens": {
+          "identified": "$233",
+          "unidentified": "$233"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:473-485",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 162,
+      "name_ko": "귀환 주문서",
+      "name_token": "$505",
+      "kind": "return_town",
+      "l1j_item_id": 40079,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1079",
+        "f4": 9,
+        "icon_f5": 474,
+        "ground_f6": 22,
+        "kind_f45": 1002
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16533",
+        "l1j_tokens": {
+          "identified": "$505",
+          "unidentified": "$505"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1123-1135",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 23,
+      "name_ko": "순간이동 주문서",
+      "name_token": "$230",
+      "kind": "random_teleport",
+      "l1j_item_id": 40100,
+      "teleport_radius": 200,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:973",
+        "f4": 6,
+        "icon_f5": 473,
+        "ground_f6": 22,
+        "kind_f45": 1004
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16554",
+        "l1j_tokens": {
+          "identified": "$230",
+          "unidentified": "$230"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1188-1240",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 28,
+      "name_ko": "\ubd80\ud65c \uc8fc\ubb38\uc11c",
+      "name_token": "$257",
+      "kind": "companion_resurrection",
+      "dispatch_owner": "companion",
+      "l1j_item_id": 40089,
+      "revive_hp_divisor": 4,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:977; data/official/items.json official_id=28 exact_id_and_name",
+        "icon_f5": 471
+      },
+      "effect_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1016-1019",
+        "note": "Normal40089 NPC/pet maxHP/4, blessed140089 fullHP. Adopt normal rule max(1,maxHP//4) for autonomous companion; MP unchanged. Only visible current dead owned companion accepted. Reject others without cost. Official classic HP formula UNKNOWN; not PC Y/N resurrection or blessed variant."
+      },
+      "wire_source": "work/local_original_session/game-core-prep/ENCHANT_USE_EVIDENCE.md run393 outerf1 useUID, nestedf2 int64 targetUID; COMPANION_DISPLAY_EVIDENCE.md section5 run404 default sameUID4E96 replacement, optional4F16 experiment"
+    }
+  ]
+}

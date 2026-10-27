@@ -1,0 +1,1290 @@
+{
+  "version": 1,
+  "status": "LOCAL_POLICY_SOURCE_STATIC_CHECKED_RUNTIME_UNRUN",
+  "reference_paths": {
+    "l1jdb": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql",
+    "native_dump": "work/source_game_data/native-dump-v1.jsonl",
+    "region": "work/local_resource_provider/assets/data/region.jsonc"
+  },
+  "scope": "five map4 village unions; count0/ambiguous/blocked rows preserved",
+  "groups": [
+    {
+      "group_id": {
+        "value": "m5_kent_8",
+        "source": "local_policy",
+        "ref": "l1jdb:37507"
+      },
+      "template_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "native-dump:8; all-rows:54"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 32972,
+          "y1": 32855,
+          "x2": 32978,
+          "y2": 32861
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:37507",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:37507",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:37507"
+      },
+      "town_id": "kent",
+      "reference_source_row": {
+        "id": "1779",
+        "location": "Werewolf",
+        "count": "1",
+        "npc_templateid": "45024",
+        "group_id": "0",
+        "locx": "32985",
+        "locy": "32853",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:37507"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_kent_4",
+        "source": "local_policy",
+        "ref": "l1jdb:37859"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "native-dump:4"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 32971,
+          "y1": 32765,
+          "x2": 32977,
+          "y2": 32771
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:37859",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:37859",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:37859"
+      },
+      "town_id": "kent",
+      "reference_source_row": {
+        "id": "2174",
+        "location": "Dwarf",
+        "count": "1",
+        "npc_templateid": "45041",
+        "group_id": "0",
+        "locx": "32974",
+        "locy": "32768",
+        "randomx": "4",
+        "randomy": "4",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:37859"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_kent_17",
+        "source": "local_policy",
+        "ref": "l1jdb:39890"
+      },
+      "template_id": {
+        "value": 17,
+        "source": "client",
+        "ref": "native-dump:16"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 32987,
+          "y1": 32869,
+          "x2": 32993,
+          "y2": 32875
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:39890",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:39890",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:39890"
+      },
+      "town_id": "kent",
+      "reference_source_row": {
+        "id": "6300",
+        "location": "Arachnevil",
+        "count": "1",
+        "npc_templateid": "45136",
+        "group_id": "0",
+        "locx": "32990",
+        "locy": "32872",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:39890"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_kent_223",
+        "source": "local_policy",
+        "ref": "l1jdb:42802"
+      },
+      "template_id": {
+        "value": 223,
+        "source": "client",
+        "ref": "native-dump:144"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33075,
+          "y1": 32664,
+          "x2": 33081,
+          "y2": 32670
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:42802",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:42802",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:42802"
+      },
+      "town_id": "kent",
+      "reference_source_row": {
+        "id": "13090",
+        "location": "Ogre",
+        "count": "1",
+        "npc_templateid": "45278",
+        "group_id": "0",
+        "locx": "33078",
+        "locy": "32667",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:42802"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_windawood_0",
+        "source": "local_policy",
+        "ref": "l1jdb:36301"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "native-dump:1; all-rows:5"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 32671,
+          "y1": 33202,
+          "x2": 32677,
+          "y2": 33208
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:36301",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:36301",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:36301"
+      },
+      "town_id": "windawood",
+      "reference_source_row": {
+        "id": "300",
+        "location": "Orc",
+        "count": "1",
+        "npc_templateid": "45009",
+        "group_id": "0",
+        "locx": "32669",
+        "locy": "33210",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:36301"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_windawood_1",
+        "source": "local_policy",
+        "ref": "l1jdb:36954"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "native-dump:2; all-rows:13"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 32638,
+          "y1": 33245,
+          "x2": 32644,
+          "y2": 33251
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:36954",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:36954",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:36954"
+      },
+      "town_id": "windawood",
+      "reference_source_row": {
+        "id": "1111",
+        "location": "Orc Archer",
+        "count": "1",
+        "npc_templateid": "45019",
+        "group_id": "0",
+        "locx": "32647",
+        "locy": "33236",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:36954"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_windawood_2",
+        "source": "local_policy",
+        "ref": "l1jdb:38941"
+      },
+      "template_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "native-dump:3"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 32686,
+          "y1": 33189,
+          "x2": 32692,
+          "y2": 33195
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:38941",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:38941",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:38941"
+      },
+      "town_id": "windawood",
+      "reference_source_row": {
+        "id": "3658",
+        "location": "Orc Fighter",
+        "count": "1",
+        "npc_templateid": "45082",
+        "group_id": "0",
+        "locx": "32689",
+        "locy": "33192",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:38941"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_windawood_274",
+        "source": "local_policy",
+        "ref": "l1jdb:39576"
+      },
+      "template_id": {
+        "value": 274,
+        "source": "client",
+        "ref": "native-dump:159"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 32688,
+          "y1": 33257,
+          "x2": 32694,
+          "y2": 33263
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:39576",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:39576",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:39576"
+      },
+      "town_id": "windawood",
+      "reference_source_row": {
+        "id": "5532",
+        "location": "Orc Wizard",
+        "count": "1",
+        "npc_templateid": "45121",
+        "group_id": "0",
+        "locx": "32691",
+        "locy": "33260",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:39576"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_giran_4",
+        "source": "local_policy",
+        "ref": "l1jdb:37995"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "native-dump:4"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33314,
+          "y1": 32835,
+          "x2": 33320,
+          "y2": 32841
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:37995",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:37995",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:37995"
+      },
+      "town_id": "giran",
+      "reference_source_row": {
+        "id": "2311",
+        "location": "Dwarf",
+        "count": "1",
+        "npc_templateid": "45041",
+        "group_id": "0",
+        "locx": "33332",
+        "locy": "32850",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:37995"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_giran_17",
+        "source": "local_policy",
+        "ref": "l1jdb:39936"
+      },
+      "template_id": {
+        "value": 17,
+        "source": "client",
+        "ref": "native-dump:16"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33345,
+          "y1": 32602,
+          "x2": 33351,
+          "y2": 32608
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:39936",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:39936",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:39936"
+      },
+      "town_id": "giran",
+      "reference_source_row": {
+        "id": "6346",
+        "location": "Arachnevil",
+        "count": "1",
+        "npc_templateid": "45136",
+        "group_id": "0",
+        "locx": "33350",
+        "locy": "32604",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:39936"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_giran_8",
+        "source": "local_policy",
+        "ref": "l1jdb:37455"
+      },
+      "template_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "native-dump:8; all-rows:54"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33633,
+          "y1": 32959,
+          "x2": 33639,
+          "y2": 32965
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:37455",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:37455",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:37455"
+      },
+      "town_id": "giran",
+      "reference_source_row": {
+        "id": "1727",
+        "location": "Werewolf",
+        "count": "1",
+        "npc_templateid": "45024",
+        "group_id": "0",
+        "locx": "33636",
+        "locy": "32962",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:37455"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_giran_297",
+        "source": "local_policy",
+        "ref": "l1jdb:42563"
+      },
+      "template_id": {
+        "value": 297,
+        "source": "client",
+        "ref": "native-dump:178"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33337,
+          "y1": 33001,
+          "x2": 33343,
+          "y2": 33007
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:42563",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:42563",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:42563"
+      },
+      "town_id": "giran",
+      "reference_source_row": {
+        "id": "12390",
+        "location": "Dark Elf",
+        "count": "1",
+        "npc_templateid": "45265",
+        "group_id": "0",
+        "locx": "33344",
+        "locy": "33008",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:42563"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_oren_4",
+        "source": "local_policy",
+        "ref": "l1jdb:37871"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "native-dump:4"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33993,
+          "y1": 32265,
+          "x2": 33999,
+          "y2": 32271
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:37871",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:37871",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:37871"
+      },
+      "town_id": "oren",
+      "reference_source_row": {
+        "id": "2186",
+        "location": "Dwarf",
+        "count": "1",
+        "npc_templateid": "45041",
+        "group_id": "0",
+        "locx": "34007",
+        "locy": "32279",
+        "randomx": "4",
+        "randomy": "4",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:37871"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_oren_27",
+        "source": "local_policy",
+        "ref": "l1jdb:38429"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "native-dump:22; all-rows:39"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 34030,
+          "y1": 32393,
+          "x2": 34036,
+          "y2": 32399
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:38429",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:38429",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:38429"
+      },
+      "town_id": "oren",
+      "reference_source_row": {
+        "id": "2899",
+        "location": "Zombie",
+        "count": "1",
+        "npc_templateid": "45065",
+        "group_id": "0",
+        "locx": "34033",
+        "locy": "32396",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:38429"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_heine_17",
+        "source": "local_policy",
+        "ref": "l1jdb:45773"
+      },
+      "template_id": {
+        "value": 17,
+        "source": "client",
+        "ref": "native-dump:16"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33675,
+          "y1": 33181,
+          "x2": 33681,
+          "y2": 33187
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45773",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45773",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45773"
+      },
+      "town_id": "heine",
+      "reference_source_row": {
+        "id": "28011",
+        "location": "Arachnevil",
+        "count": "1",
+        "npc_templateid": "45136",
+        "group_id": "0",
+        "locx": "33678",
+        "locy": "33184",
+        "randomx": "12",
+        "randomy": "12",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "0",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:45773"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_heine_297",
+        "source": "local_policy",
+        "ref": "l1jdb:42574"
+      },
+      "template_id": {
+        "value": 297,
+        "source": "client",
+        "ref": "native-dump:178"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33361,
+          "y1": 33093,
+          "x2": 33367,
+          "y2": 33099
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:42574",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:42574",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:42574"
+      },
+      "town_id": "heine",
+      "reference_source_row": {
+        "id": "12401",
+        "location": "Dark Elf",
+        "count": "1",
+        "npc_templateid": "45265",
+        "group_id": "0",
+        "locx": "33366",
+        "locy": "33098",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:42574"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_heine_245",
+        "source": "local_policy",
+        "ref": "l1jdb:36216"
+      },
+      "template_id": {
+        "value": 245,
+        "source": "client",
+        "ref": "native-dump:152; all-rows:7"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33268,
+          "y1": 33428,
+          "x2": 33274,
+          "y2": 33434
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:36216",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:36216",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:36216"
+      },
+      "town_id": "heine",
+      "reference_source_row": {
+        "id": "215",
+        "location": "Goblin",
+        "count": "1",
+        "npc_templateid": "45008",
+        "group_id": "0",
+        "locx": "33271",
+        "locy": "33431",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:36216"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m5_heine_0",
+        "source": "local_policy",
+        "ref": "l1jdb:36357"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "native-dump:1; all-rows:5"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc map4"
+      },
+      "rect": {
+        "value": {
+          "x1": 33264,
+          "y1": 33457,
+          "x2": 33270,
+          "y2": 33463
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:36357",
+        "note": "7x7 client S32 checked; within20 tiles of source centre; village14 buffer"
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:36357",
+        "note": "finite two per group"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:36357"
+      },
+      "town_id": "heine",
+      "reference_source_row": {
+        "id": "404",
+        "location": "Orc",
+        "count": "1",
+        "npc_templateid": "45009",
+        "group_id": "0",
+        "locx": "33269",
+        "locy": "33458",
+        "randomx": "10",
+        "randomy": "10",
+        "locx1": "0",
+        "locy1": "0",
+        "locx2": "0",
+        "locy2": "0",
+        "heading": "0",
+        "min_respawn_delay": "60",
+        "max_respawn_delay": "120",
+        "mapid": "4",
+        "respawn_screen": "0",
+        "movement_distance": "100",
+        "rest": "0",
+        "near_spawn": "0",
+        "spawn_home": "1",
+        "spawn_home_range": "8",
+        "spawn_home_count": "2",
+        "spawn_home_delay": "100",
+        "source_ref": "l1jdb:36357"
+      }
+    }
+  ]
+}

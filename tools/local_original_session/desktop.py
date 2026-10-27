@@ -3,6 +3,17 @@ import ctypes as C
 from ctypes import wintypes as W
 import threading
 import uuid
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class ClientClickResult:
+    status: str
+    queued: tuple
+    attempted: tuple
+    cleanup_up: bool
+    cleanup_errors: tuple
+    desktop_thread_check: dict | None = None
+
 from contextlib import contextmanager
 
 def need(value, code):
@@ -97,16 +108,91 @@ class PrivateDesktop:
             return self.u.EnumDesktopWindows(handle, callback, parameter)
 
     def verify_thread(self, thread_id):
-        row = self.probe_thread(thread_id)
-        need(row['status'] == 'OBSERVED' and row['matches_private'] is True,
-             'PRIVATE_CREATED_THREAD_DESKTOP_MISMATCH')
+        winerror = []
+        row = self.probe_thread(thread_id, winerror)
+        try:
+            need(row['status'] == 'OBSERVED' and row['matches_private'] is True,
+                 'PRIVATE_CREATED_THREAD_DESKTOP_MISMATCH')
+        except ValueError as error:
+            try:
+                error.desktop_thread_probe = dict(status=row['status'],
+                    reason=row.get('reason'), matches_private=row.get('matches_private'),
+                    get_thread_desktop_last_error=winerror[0] if winerror else None)
+            except BaseException:
+                pass  # Diagnostic attributes never replace the original refusal.
+            raise
 
-    def probe_thread(self, thread_id):
+    def verify_owned_window_thread(self, hwnd, thread_id, pid, native, child):
+        """Prove the target via its window when foreign thread desktop read is denied.
+
+        EnumDesktopWindows binds this exact HWND to our retained HDESK, while
+        GetWindowThreadProcessId binds that HWND to the expected thread/process.
+        A thread with a live window cannot move to another desktop. This path
+        never applies to the fresh posting helper or to another Win32 error.
+        """
+        try:
+            self.verify_thread(thread_id)
+            return None
+        except ValueError as original:
+            try:
+                probe = getattr(original, 'desktop_thread_probe', None)
+                access_denied = (str(original) == 'PRIVATE_CREATED_THREAD_DESKTOP_MISMATCH'
+                    and type(probe) is dict and probe.get('status') == 'UNKNOWN'
+                    and probe.get('reason') == 'THREAD_DESKTOP_UNAVAILABLE'
+                    and probe.get('matches_private') is None
+                    and probe.get('get_thread_desktop_last_error') == 5)
+            except BaseException:
+                access_denied = False
+            if not access_denied:
+                raise
+            try:
+                with self._lease() as handle:
+                    self.verify_non_input()
+                    need(self._name(handle).casefold() == self.name.casefold(),
+                         'PRIVATE_TARGET_WINDOW_DESKTOP_NAME_CHANGED')
+                    need(self.contains(hwnd) and self.u.IsWindow(hwnd),
+                         'PRIVATE_TARGET_WINDOW_NOT_ON_OWNED_DESKTOP')
+                    actual_pid = W.DWORD()
+                    need(self.u.GetWindowThreadProcessId(hwnd, C.byref(actual_pid)) == thread_id
+                         and actual_pid.value == pid and native.owned_hwnd(child, hwnd)
+                         and self.handle == handle,
+                         'PRIVATE_TARGET_WINDOW_OWNER_CHANGED')
+            except Exception as proof_error:
+                try:
+                    bounded = ('PRIVATE_TARGET_WINDOW_DESKTOP_NAME_CHANGED',
+                               'PRIVATE_TARGET_WINDOW_NOT_ON_OWNED_DESKTOP',
+                               'PRIVATE_TARGET_WINDOW_OWNER_CHANGED',
+                               'PRIVATE_DESKTOP_ENUM_INCOMPLETE',
+                               'PRIVATE_DESKTOP_CLOSED',
+                               'PRIVATE_DESKTOP_IS_INPUT',
+                               'PRIVATE_INPUT_DESKTOP_UNKNOWN',
+                               'PRIVATE_INPUT_DESKTOP_CLOSE_FAILED',
+                               'PRIVATE_DESKTOP_NAME_UNKNOWN')
+                    code = str(proof_error)
+                    probe['owned_window_proof_failure'] = (code if type(proof_error) is ValueError
+                        and code in bounded else type(proof_error).__name__)
+                except BaseException:
+                    pass
+                try:
+                    BaseException.add_note(original, 'owned window proof: '
+                        + type(proof_error).__name__ + ': ' + str(proof_error))
+                except BaseException:
+                    pass
+                raise original from None
+            return dict(stage='TARGET_UI_THREAD', status='WINDOW_DERIVED',
+                        reason='OWNED_WINDOW_ON_PRIVATE_DESKTOP', matches_private=True,
+                        get_thread_desktop_last_error=5)
+
+    def probe_thread(self, thread_id, winerror_out=None):
         with self._lease():
             self.verify_non_input()
+            C.set_last_error(0)
             handle = self.u.GetThreadDesktop(thread_id)
             if not handle:
                 # A suspended thread may not have initialized User32 yet.
+                code = int(C.get_last_error())
+                if type(winerror_out) is list and not winerror_out:
+                    winerror_out.append(code)
                 return dict(status='UNKNOWN', reason='THREAD_DESKTOP_UNAVAILABLE')
             return dict(status='OBSERVED', matches_private=self._name(handle).casefold() == self.name.casefold())
 
@@ -183,6 +269,313 @@ class PrivateDesktop:
         if errors:
             raise errors[0]
         return bool(posted)
+
+    @contextmanager
+    def _window_dpi_context(self, hwnd):
+        """Change only this detached helper, restoring even on partial input."""
+        for name, args, result in (
+            ('GetWindowDpiAwarenessContext', (W.HWND,), C.c_void_p),
+            ('GetThreadDpiAwarenessContext', (), C.c_void_p),
+            ('SetThreadDpiAwarenessContext', (C.c_void_p,), C.c_void_p),
+            ('AreDpiAwarenessContextsEqual', (C.c_void_p, C.c_void_p), W.BOOL),
+        ):
+            function = getattr(self.u, name)
+            function.argtypes, function.restype = args, result
+        context = self.u.GetWindowDpiAwarenessContext(hwnd)
+        need(context, 'CLIENT_GEOMETRY_WINDOW_CONTEXT_UNKNOWN')
+        previous = self.u.SetThreadDpiAwarenessContext(context)
+        need(previous, 'CLIENT_GEOMETRY_CONTEXT_JOIN_FAILED')
+        primary = None
+        try:
+            need(self.u.AreDpiAwarenessContextsEqual(context, self.u.GetThreadDpiAwarenessContext()),
+                 'CLIENT_GEOMETRY_CONTEXT_MISMATCH')
+            yield context
+        except BaseException as error:
+            primary = error
+            raise
+        finally:
+            try:
+                need(self.u.SetThreadDpiAwarenessContext(previous)
+                     and self.u.AreDpiAwarenessContextsEqual(previous,
+                         self.u.GetThreadDpiAwarenessContext()), 'CLIENT_GEOMETRY_CONTEXT_RESTORE_FAILED')
+            except BaseException as cleanup:
+                if primary is None:
+                    raise
+                try:
+                    BaseException.add_note(primary, 'client geometry cleanup: ' + type(cleanup).__name__ + ': ' + str(cleanup))
+                except BaseException:
+                    pass
+
+
+    def observe_client_geometry(self, owner, identity, hwnd, ui_thread):
+        """Detached read in the retained HDESK, in the window's DPI context.
+
+        No target thread/context is changed. Failed observation/restoration raises;
+        callers must not treat it as coordinate authority or input acceptance.
+        """
+        import time
+        identity = dict(identity)
+        need(type(hwnd) is int and hwnd > 0 and type(ui_thread) is int and ui_thread > 0
+             and type(identity.get('pid')) is int and identity['pid'] > 0
+             and type(identity.get('birth')) is int and identity['birth'] > 0
+             and type(identity.get('candidate_sha256')) is str,
+             'CLIENT_GEOMETRY_IDENTITY_REQUIRED')
+        for name, args, result in (
+            ('IsWindow', (W.HWND,), W.BOOL),
+            ('GetWindowThreadProcessId', (W.HWND, C.POINTER(W.DWORD)), W.DWORD),
+            ('GetClientRect', (W.HWND, C.POINTER(W.RECT)), W.BOOL),
+            ('GetDpiForWindow', (W.HWND,), W.UINT),
+            ('GetWindowDpiAwarenessContext', (W.HWND,), C.c_void_p),
+            ('GetThreadDpiAwarenessContext', (), C.c_void_p),
+            ('SetThreadDpiAwarenessContext', (C.c_void_p,), C.c_void_p),
+            ('GetAwarenessFromDpiAwarenessContext', (C.c_void_p,), C.c_int),
+            ('AreDpiAwarenessContextsEqual', (C.c_void_p, C.c_void_p), W.BOOL),
+        ):
+            function = getattr(self.u, name)
+            function.argtypes, function.restype = args, result
+        child, process, job, native = owner.child, owner.owner_handle, owner.owner_job, owner.native
+        errors, rows = [], []
+
+        def current():
+            need(owner.private_desktop is self and not owner.closed and owner.child is child
+                 and child is not None and process and job and owner.native is native
+                 and owner.owner_handle == process == child.process
+                 and owner.owner_job == job == child.job and child.pid == identity['pid']
+                 and int(child.identity['birth']) == identity['birth']
+                 and owner.image_sha == identity['candidate_sha256'] and owner.validate(child) is True,
+                 'CLIENT_GEOMETRY_OWNER_CHANGED')
+            self.verify_non_input()
+            need(self.contains(hwnd) and self.u.IsWindow(hwnd), 'CLIENT_GEOMETRY_PRIVATE_WINDOW_REQUIRED')
+            pid = W.DWORD()
+            need(self.u.GetWindowThreadProcessId(hwnd, C.byref(pid)) == ui_thread
+                 and pid.value == identity['pid'] and native.owned_hwnd(child, hwnd),
+                 'CLIENT_GEOMETRY_WINDOW_OWNER_MISMATCH')
+            need(owner.private_desktop is self and not owner.closed and owner.child is child
+                 and owner.native is native and owner.owner_handle == process == child.process
+                 and owner.owner_job == job == child.job and child.pid == identity['pid']
+                 and int(child.identity['birth']) == identity['birth']
+                 and owner.image_sha == identity['candidate_sha256'] and owner.validate(child) is True,
+                 'CLIENT_GEOMETRY_OWNER_LOST')
+
+        def body():
+            try:
+                current()
+                with self._window_dpi_context(hwnd) as context:
+                    rect = W.RECT()
+                    need(self.u.GetClientRect(hwnd, C.byref(rect)), 'CLIENT_GEOMETRY_RECT_UNKNOWN')
+                    dpi = self.u.GetDpiForWindow(hwnd)
+                    awareness = self.u.GetAwarenessFromDpiAwarenessContext(context)
+                    need(dpi > 0 and awareness in (0, 1, 2) and rect.left == 0 and rect.top == 0
+                         and rect.right > 0 and rect.bottom > 0, 'CLIENT_GEOMETRY_VALUES_UNKNOWN')
+                    sampled = time.monotonic_ns()
+                    current()
+                    after = W.RECT()
+                    need(self.u.GetClientRect(hwnd, C.byref(after)) and self.u.GetDpiForWindow(hwnd) == dpi
+                         and (rect.left, rect.top, rect.right, rect.bottom) ==
+                             (after.left, after.top, after.right, after.bottom), 'CLIENT_GEOMETRY_CHANGED')
+                    need(self.u.AreDpiAwarenessContextsEqual(context,
+                        self.u.GetWindowDpiAwarenessContext(hwnd)) and self.u.AreDpiAwarenessContextsEqual(
+                        context, self.u.GetThreadDpiAwarenessContext()), 'CLIENT_GEOMETRY_CONTEXT_CHANGED')
+                    rows.append(dict(status='OBSERVED', **identity, hwnd=hwnd, ui_thread=ui_thread,
+                        client_rect=[rect.left, rect.top, rect.right, rect.bottom], window_dpi=int(dpi),
+                        window_awareness=int(awareness), thread_awareness=int(awareness), awareness_equal=True,
+                        sample_monotonic_ns=sampled, desktop_name=self.name))
+            except BaseException as error:
+                errors.append(error)
+
+        def dispatch(handle):
+            try:
+                with self._lease():
+                    with self._joined_thread(handle):
+                        body()
+            except BaseException as error:
+                errors.append(error)
+
+        with self._lease() as handle:
+            thread = threading.Thread(target=dispatch, args=(handle,), name='local-session-client-geometry')
+            thread.start()
+            thread.join()
+        if errors:
+            primary = errors[0]
+            for extra in errors[1:]:
+                try:
+                    BaseException.add_note(primary, 'client geometry cleanup: ' + type(extra).__name__ + ': ' + str(extra))
+                except BaseException:
+                    pass
+            raise primary
+        need(len(rows) == 1, 'CLIENT_GEOMETRY_UNKNOWN')
+        return rows[0]
+
+
+    def post_client_click(self, owner, identity, hwnd, ui_thread, x, y):
+        """Queue explicit client XY on the retained non-input desktop only.
+
+        QUEUED proves PostMessage acceptance, never original Touch/ActorInput.
+        A failure raises the original exception with client_click_result attached.
+        No cursor/focus/capture manipulation: original WndProc owns those effects.
+        """
+        need(type(x) is int and type(y) is int and -32768 <= x <= 32767
+             and -32768 <= y <= 32767, 'CLIENT_CLICK_SIGNED16_REQUIRED')
+        need(type(hwnd) is int and hwnd > 0 and type(ui_thread) is int and ui_thread > 0,
+             'CLIENT_CLICK_WINDOW_REQUIRED')
+        identity = dict(identity)
+        need(type(identity.get('pid')) is int and identity['pid'] > 0
+             and type(identity.get('birth')) is int and identity['birth'] > 0
+             and type(identity.get('candidate_sha256')) is str,
+             'CLIENT_CLICK_IDENTITY_REQUIRED')
+        child, process, job, native = owner.child, owner.owner_handle, owner.owner_job, owner.native
+        queued, attempted, failures, cleanup_errors = [], [], [], []
+        cleanup_up = [False]
+        target_window_proof = [None]
+        packed = (x & 0xffff) | ((y & 0xffff) << 16)
+        self.u.GetClientRect.argtypes, self.u.GetClientRect.restype = (W.HWND, C.POINTER(W.RECT)), W.BOOL
+
+        def current(*, geometry=True):
+            with self._condition:
+                need(getattr(self, '_client_click_inflight', None) is claim,
+                     'CLIENT_CLICK_CLAIM_LOST')
+            need(owner.private_desktop is self and not owner.closed and owner.child is child
+                 and child is not None and process and job and owner.native is native
+                 and owner.owner_handle == process == child.process
+                 and owner.owner_job == job == child.job and child.pid == identity['pid']
+                 and int(child.identity['birth']) == identity['birth']
+                 and owner.image_sha == identity['candidate_sha256']
+                 and owner.validate(child) is True, 'CLIENT_CLICK_OWNER_CHANGED')
+            self.verify_non_input()
+            need(self.contains(hwnd) and self.u.IsWindow(hwnd), 'CLIENT_CLICK_PRIVATE_WINDOW_REQUIRED')
+            pid = W.DWORD()
+            need(self.u.GetWindowThreadProcessId(hwnd, C.byref(pid)) == ui_thread
+                 and pid.value == identity['pid'] and native.owned_hwnd(child, hwnd),
+                 'CLIENT_CLICK_WINDOW_OWNER_MISMATCH')
+            try:
+                proof = self.verify_owned_window_thread(hwnd, ui_thread, identity['pid'], native, child)
+            except ValueError as error:
+                try:
+                    if str(error) == 'PRIVATE_CREATED_THREAD_DESKTOP_MISMATCH':
+                        error.desktop_thread_stage = 'TARGET_UI_THREAD'
+                except BaseException:
+                    pass
+                raise
+            if geometry:
+                rect = W.RECT()
+                need(self.u.GetClientRect(hwnd, C.byref(rect)) and rect.left <= x < rect.right
+                     and rect.top <= y < rect.bottom, 'CLIENT_CLICK_OUTSIDE_CLIENT_RECT')
+            # The OS/owner queries above must not leave a changed retained owner.
+            need(owner.private_desktop is self and owner.child is child and owner.native is native
+                 and not owner.closed and owner.owner_handle == process == child.process
+                 and owner.owner_job == job == child.job and child.pid == identity['pid']
+                 and int(child.identity['birth']) == identity['birth']
+                 and owner.image_sha == identity['candidate_sha256']
+                 and owner.validate(child) is True, 'CLIENT_CLICK_OWNER_LOST')
+            if proof is not None:
+                target_window_proof[0] = proof
+
+        def post(message, keys):
+            current()
+            attempted.append(message)
+            need(self.u.PostMessageW(hwnd, message, keys, packed), 'CLIENT_CLICK_POST_FAILED')
+            queued.append(message)
+            current()
+
+        def body():
+            try:
+                post(0x200, 0)
+                post(0x201, 1)  # MK_LBUTTON; original button callback reads stored move position.
+                post(0x202, 0)
+            except BaseException as primary:
+                failures.append(primary)
+                # A failed PostMessage is not assumed to be an unattempted down.
+                # Never release against a replaced/dead/foreign owner.
+                if 0x201 in attempted and 0x202 not in queued:
+                    try:
+                        # Button-up consumes stored cursor position, not this lParam.
+                        # Resize must not strand same-window down/capture.
+                        current(geometry=False)
+                        attempted.append(0x202)
+                        need(self.u.PostMessageW(hwnd, 0x202, 0, packed),
+                             'CLIENT_CLICK_CLEANUP_UP_FAILED')
+                        cleanup_up[0] = True
+                        queued.append(0x202)
+                        current(geometry=False)
+                    except BaseException as cleanup:
+                        cleanup_errors.append(cleanup)
+
+        def dispatch(handle):
+            helper_joined = False
+            try:
+                with self._lease():
+                    # Catch the operation error inside the context so restore errors
+                    # cannot replace it in the original _joined_thread finally.
+                    with self._joined_thread(handle):
+                        helper_joined = True
+                        with self._window_dpi_context(hwnd):
+                            body()
+            except BaseException as error:
+                if (str(error) == 'PRIVATE_DESKTOP_THREAD_RESTORE_FAILED'
+                        and error.__context__ is not None):
+                    prior = error.__context__
+                    try:
+                        if (not helper_joined and str(prior) == 'PRIVATE_CREATED_THREAD_DESKTOP_MISMATCH'):
+                            prior.desktop_thread_stage = 'CLICK_HELPER_JOIN'
+                    except BaseException:
+                        pass
+                    failures.append(prior)
+                try:
+                    if (not helper_joined and str(error) == 'PRIVATE_CREATED_THREAD_DESKTOP_MISMATCH'):
+                        error.desktop_thread_stage = 'CLICK_HELPER_JOIN'
+                except BaseException:
+                    pass
+                failures.append(error)
+
+        claim = object()
+        with self._condition:
+            need(getattr(self, '_client_click_inflight', None) is None,
+                 'CLIENT_CLICK_ALREADY_INFLIGHT')
+            self._client_click_inflight = claim
+        try:
+            with self._lease() as handle:
+                thread = threading.Thread(target=dispatch, args=(handle,), name='local-session-client-click')
+                thread.start()
+                thread.join()
+        except BaseException as error:
+            failures.append(error)
+        finally:
+            with self._condition:
+                if getattr(self, '_client_click_inflight', None) is claim:
+                    self._client_click_inflight = None
+        desktop_thread_check = target_window_proof[0] if not failures else None
+        try:
+            for failure in failures:
+                probe = getattr(failure, 'desktop_thread_probe', None)
+                stage = getattr(failure, 'desktop_thread_stage', None)
+                if (type(probe) is dict and type(stage) is str
+                        and stage in ('CLICK_HELPER_JOIN', 'TARGET_UI_THREAD')):
+                    desktop_thread_check = dict(stage=stage, status=probe.get('status'),
+                        reason=probe.get('reason'), matches_private=probe.get('matches_private'),
+                        get_thread_desktop_last_error=probe.get('get_thread_desktop_last_error'))
+                    if 'owned_window_proof_failure' in probe:
+                        desktop_thread_check['owned_window_proof_failure'] = probe['owned_window_proof_failure']
+                    break
+        except BaseException:
+            desktop_thread_check = None  # Original click error and cleanup stay authoritative.
+        result = ClientClickResult('UNKNOWN' if failures else 'QUEUED', tuple(queued),
+                                   tuple(attempted), cleanup_up[0],
+                                   tuple(type(e).__name__ + ':' + str(e) for e in cleanup_errors),
+                                   desktop_thread_check)
+        if failures:
+            primary = failures[0]
+            try:
+                primary.client_click_result = result
+            except BaseException:
+                # Hostile/custom exception attribute hooks cannot replace primary.
+                pass
+            for extra in failures[1:] + cleanup_errors:
+                try:
+                    BaseException.add_note(primary, 'client click cleanup: ' + type(extra).__name__ + ': ' + str(extra))
+                except BaseException:
+                    pass
+            raise primary
+        return result
 
     @contextmanager
     def _joined_thread(self, handle):

@@ -7,6 +7,7 @@ Factory/profile installation and final DLL pin are root-owned integration work.
 import json
 import os
 import threading
+from tools.local_original_session import item_transfer_frame as frame
 from types import MethodType
 from tools.local_original_session import commands, manual_move_commands as original
 from tools.local_original_session.broker import PersistentBroker, _InventoryGeneration
@@ -55,7 +56,9 @@ class PopupHost:
     def __init__(self, manual, *, capability):
         need(type(manual) is _MANUAL_TYPE and type(capability) is str and capability==CAPABILITY,'POPUP_EXPLICIT_ACTUAL_CONSUMER')
         self.manual=manual;self.pending=None;self.terminal=False;self.last=None
-        self._thread=threading.get_ident();self._claimed=set()
+        self._thread=threading.get_ident();self._claimed=set();self._frame=None
+        self._native_return=None  # Successful native settlement; exit-only recheck, never backend authority.
+        self._native_refusal=None  # Immutable output only; never an ordinary rearm.
         self._context=(manual.reader,manual.current,manual.clock_ns,manual.reader.owner)
         self._original()
 
@@ -114,7 +117,8 @@ class PopupHost:
             # Consume before disk publication or Post attempt. Never unlink or
             # rewind this claim/sequence after any uncertain side effect.
             self._claimed.add(sequence);m.sequence=sequence
-            original._create_once(claim,dict(schema='own-item-quantity-popup-claim-v1',**identity,seq=sequence))
+            self._frame=frame.FrameClaim(row,started,original.WAIT_NS,m.clock_ns)
+            original._create_once(claim,dict(schema='own-item-quantity-popup-frame-claim-v1',**identity,seq=sequence,action=action,token=self._frame.token))
             original._create_once(path,row)
             user=m.reader.owner.native.u
             message=int(user.RegisterWindowMessageW(MESSAGE))
@@ -128,6 +132,7 @@ class PopupHost:
             self._current(bound,after_command=True)
             return dict(status='POSTED',sequence=sequence,automatic_retry=False,backend_effect='UNKNOWN')
         except BaseException:
+            self.cancel()
             self.terminal=True
             if type(m) is _MANUAL_TYPE:_TERMINAL(m,'POPUP_ADMISSION_OR_POST_UNKNOWN')
             raise
@@ -148,11 +153,80 @@ class PopupHost:
             value=json.loads(raw,object_pairs_hook=commands._unique_object)
             value=result(value,row)
             self._current(bound,after_command=True)
+            if value['status']=='REFUSED' and value['invoked'] is False:
+                self._native_refusal=(self.pending,tuple(value.items()),commands._ordinary(path).stat())
+                raise ValueError('POPUP_NATIVE_REFUSED')
             if value['status']!='RETURNED' or value['invoked'] is not True:
                 raise ValueError('POPUP_NATIVE_UNKNOWN')
+            settled=(self.pending,tuple(value.items()),commands._ordinary(path).stat())
             self.last=value;self.pending=None;m._busy=False
+            cleaned=self.cancel()
+            self._native_return=settled if cleaned else None  # Exit-only publication requires close returned.
             return dict(value,proof_scope='ORIGINAL_POPUP_ENTRY_RETURN_ONLY',backend_effect='UNKNOWN')
         except BaseException:
+            self.cancel()
             self.terminal=True
             if type(m) is _MANUAL_TYPE:_TERMINAL(m,'POPUP_RESULT_OR_CURRENT_UNKNOWN')
             raise
+
+    def native_refusal(self):
+        return None if self._native_refusal is None else dict(self._native_refusal[1])
+
+    def source_quit_return(self, source_quit):
+        """Recheck this issued, cleaned RETURNED output only for terminal Quit."""
+        from tools.local_original_session.manual_source_quit import SourceQuitRequests
+        m=self.manual
+        need(type(source_quit) is SourceQuitRequests and source_quit.consumer is m
+             and source_quit._busy is True and source_quit._failure_domain == 'BACKEND'
+             and type(m) is _MANUAL_TYPE and m.state['status'] == 'UNKNOWN'
+             and m._busy is False and m._readonly_pending is None
+             and (m._source_quit_owner is None or m._source_quit_owner is source_quit)
+             and threading.get_ident()==self._thread==m._thread,'POPUP_EXIT_EXACT_SETTLED_OWNER')
+        need(all(a is b for a,b in zip((m.reader,m.current,m.clock_ns,m.reader.owner),self._context)),
+             'POPUP_EXIT_ORIGINAL_CONTEXT_CHANGED')
+        need(not self.terminal and self.pending is None and self._frame is None
+             and self._native_refusal is None and self._native_return is not None,
+             'POPUP_EXIT_CLEANED_RETURN_REQUIRED')
+        pending,items,old=self._native_return
+        row,bound,path,hwnd,started=pending
+        expected=dict(items)
+        before=commands._ordinary(path).stat()
+        need((before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'POPUP_EXIT_RETURN_CHANGED')
+        value=commands._closed_health_json(path);after=commands._ordinary(path).stat()
+        need((after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'POPUP_EXIT_RETURN_CHANGED')
+        need(result(value,row)==expected and expected['status']=='RETURNED'
+             and expected['invoked'] is True and expected['reason']==0,'POPUP_EXIT_RETURN_CHANGED')
+        return pending
+
+    def source_quit_refusal(self):
+        """Recheck exact settled Popup output while ordinary commands stay terminal."""
+        m=self.manual
+        need(type(m) is _MANUAL_TYPE and self.terminal and m._busy is True
+             and m._readonly_pending is None and threading.get_ident()==self._thread==m._thread,
+             'POPUP_EXIT_EXACT_TERMINAL_OWNER')
+        need(all(a is b for a,b in zip((m.reader,m.current,m.clock_ns,m.reader.owner),self._context)),
+             'POPUP_EXIT_ORIGINAL_CONTEXT_CHANGED')
+        need(self._frame is None and self._native_refusal is not None
+             and self.pending is self._native_refusal[0],'POPUP_EXIT_SETTLED_REFUSAL_REQUIRED')
+        row,bound,path,hwnd,started=self.pending
+        expected=dict(self._native_refusal[1]);old=self._native_refusal[2]
+        before=commands._ordinary(path).stat()
+        need((before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'POPUP_EXIT_RESULT_CHANGED')
+        value=commands._closed_health_json(path);after=commands._ordinary(path).stat()
+        need((after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'POPUP_EXIT_RESULT_CHANGED')
+        need(result(value,row)==expected and expected['command']=='ItemQuantityPopup'
+             and expected['status']=='REFUSED' and expected['invoked'] is False,'POPUP_EXIT_RESULT_CHANGED')
+        return self.pending
+
+    def cancel(self):
+        # Same pending word. Claimed execution stays UNKNOWN/no retry.
+        cleaned=True
+        if self._frame is not None:
+            try:self._frame.close()
+            except BaseException:cleaned=False
+            self._frame=None
+        return cleaned  # Existing callers may ignore this; no ordinary result changes.

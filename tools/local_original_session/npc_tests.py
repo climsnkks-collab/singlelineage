@@ -152,6 +152,7 @@ class RealmSpawnTests(unittest.IsolatedAsyncioTestCase):
     async def test_checkpoint_selection_loss_prevents_actual_write(self):
         wire = (await self.selected())[-1]
         fake = object.__new__(b.PersistentBroker)
+        fake._npc_respawn = None
         fake.realm = self.realm
         fake.policy = types.SimpleNamespace(begin_write=mock.Mock())
         fake._policy_sample = mock.Mock()
@@ -194,6 +195,7 @@ class RealmSpawnTests(unittest.IsolatedAsyncioTestCase):
         peer = b.Peer(14030, 41001, time.monotonic_ns())
         boot(self.writer, peer)
         fake = object.__new__(b.PersistentBroker)
+        fake._npc_respawn = None
         fake.realm, fake.policy = self.realm, policy
 
         async def checkpoint(writer, row):

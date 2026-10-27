@@ -1,0 +1,639 @@
+{
+  "version": 1,
+  "status": "LOCAL_POLICY_SOURCE_STATIC_CHECKED_RUNTIME_UNRUN",
+  "reference_paths": {
+    "l1jdb": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql",
+    "native_dump": "work/source_game_data/native-dump-v1.jsonl",
+    "region": "work/local_resource_provider/assets/data/region.jsonc"
+  },
+  "scope": "five map4 village unions; count0/ambiguous/blocked rows preserved",
+  "resources": {
+    "steve2": {
+      "stem": "steve2",
+      "actions": [
+        "gludin-island",
+        "gludin-kent",
+        "gludin-willow",
+        "gludin-woods",
+        "gludin-aden",
+        "gludin-dungeon",
+        "gludin-dock",
+        "gludin-grape"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/steve2.uml",
+      "artifact": "uml/steve2.uml",
+      "provider_event": {
+        "path": "data/uml/steve2.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "11165c3cd5e0a43ab66bba21b3abc631d5b1dbbcf9b4e6fc71b430dfe6bbfc2e",
+        "sha256": "c587e5c1735586689a3e32fa1d639df1e6b6ff2ba431e05abdb37592f9a27869",
+        "size": 791,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "stanley2": {
+      "stem": "stanley2",
+      "actions": [
+        "kent-gludin",
+        "kent-giran",
+        "kent-silver",
+        "kent-aden",
+        "kent-lowful",
+        "kent-chaos"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/stanley2.uml",
+      "artifact": "uml/stanley2.uml",
+      "provider_event": {
+        "path": "data/uml/stanley2.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "e38d090cf6e46aa82ca9c20b9684b3ab3811f51684d35b96f9af8a27b9e51027",
+        "sha256": "46ace1318d30d2cfc64f2f872a4e31a0f0c914ba37348c0d1e3e43b32dfa978d",
+        "size": 620,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "trey2": {
+      "stem": "trey2",
+      "actions": [
+        "woods-gludin",
+        "woods-silver",
+        "woods-aden",
+        "woods-ashur"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/trey2.uml",
+      "artifact": "uml/trey2.uml",
+      "provider_event": {
+        "path": "data/uml/trey2.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "f24e5ea41f88454c724d91d3392126a31d438d91b823e5f36eaef57472b1a5ce",
+        "sha256": "f122e7fb4e683d84d9b7ee25e9cb6b261fa42f4a06ee652367a45a755224a666",
+        "size": 478,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "wilma2": {
+      "stem": "wilma2",
+      "actions": [
+        "giran-kent",
+        "giran-heine",
+        "giran-werldern",
+        "giran-oren",
+        "giran-aden",
+        "giran-dragonvalley",
+        "giran-Gdungeon"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/wilma2.uml",
+      "artifact": "uml/wilma2.uml",
+      "provider_event": {
+        "path": "data/uml/wilma2.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "7d1935c8e2c14b55086ce6722c6a690720f02e66566f04a968fcf33ce77d6d67",
+        "sha256": "c5e653cf17418f7cfde5726c28803028c5e147e9efbe49e3194a08701586a9d2",
+        "size": 721,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "kirius2": {
+      "stem": "kirius2",
+      "actions": [
+        "oren-werldern",
+        "oren-giran",
+        "oren-aden",
+        "oren-outpost",
+        "oren-ivory",
+        "oren-forsakengate"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/kirius2.uml",
+      "artifact": "uml/kirius2.uml",
+      "provider_event": {
+        "path": "data/uml/kirius2.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "968f54d5611ad5b8cdf4fbdb6f9b2f8a43eec6ad7d1f253af4eb7340911c90ff",
+        "sha256": "6e94e68e46638bdc209e46920accb0a7252099af0037fc422a35869cc46a5287",
+        "size": 630,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "riol2": {
+      "stem": "riol2",
+      "actions": [
+        "heine-giran",
+        "heine-silver",
+        "heine-werldern",
+        "heine-aden",
+        "heine-Hdungeon"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/riol2.uml",
+      "artifact": "uml/riol2.uml",
+      "provider_event": {
+        "path": "data/uml/riol2.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "ccb824953dd7cb708579dc8558b00a01ceb9ee764f54c269d9aa9f851415dfac",
+        "sha256": "85345bd145c84b03d7fe17148c68d3f7c2b1eb21c3a0c81e85e6ca001cddabca",
+        "size": 557,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "storage": {
+      "stem": "storage",
+      "actions": [
+        "deposit",
+        "retrieve",
+        "deposit-pledge",
+        "retrieve-pledge",
+        "history"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/storage.uml",
+      "artifact": "uml/storage.uml",
+      "provider_event": {
+        "path": "data/uml/storage.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "ede1acef698dfe440644f4590638139cbe7aecf717df275e8a784b7b9eae7a7a",
+        "sha256": "af875011fbfc4d45033b6b494a89603c92962a408be19c625bda652b734b5f16",
+        "size": 495,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "inn": {
+      "stem": "inn",
+      "actions": [
+        "room",
+        "hall",
+        "return",
+        "enter"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/inn.uml",
+      "artifact": "uml/inn.uml",
+      "provider_event": {
+        "path": "data/uml/inn.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "34b70b2cf90f80fee0111e7d559fff6ebfa48f9fd400cf8171552b45963a73b7",
+        "sha256": "284313114b805db8c8f318162e4f582accbcd28f43e02c18f619c83d5b67390c",
+        "size": 301,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "andyn1": {
+      "stem": "andyn1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax",
+        "asknpctax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/andyn1.uml",
+      "artifact": "uml/andyn1.uml",
+      "provider_event": {
+        "path": "data/uml/andyn1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "0fba431a9105bd409542e105aec4fb33f0c36bd3d6823dcf90a3eda9e5dc677f",
+        "sha256": "f1a330df97e2b3cc2a08f47880e14cefe8ce3cc7a4b014d7daf2bca627c375b4",
+        "size": 429,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "arieh1": {
+      "stem": "arieh1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax",
+        "asknpctax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/arieh1.uml",
+      "artifact": "uml/arieh1.uml",
+      "provider_event": {
+        "path": "data/uml/arieh1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "dbda911b904f280c066b96e9ec91778b8804275061042dae461a2b6cb9d0dbb2",
+        "sha256": "16ee60e88f0a3e9084f9e62097c649cb6646824d5f9b901872124b0c9e78b227",
+        "size": 428,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "bius1": {
+      "stem": "bius1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/bius1.uml",
+      "artifact": "uml/bius1.uml",
+      "provider_event": {
+        "path": "data/uml/bius1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "4649b140c09a4afc7963a5929dd7f84fe4926aa0e026ef6fdbe5736b93a8ab8b",
+        "sha256": "b357284f928766b91f32437fa530af4ed776eac76e0c1bd18e061a6838c03aec",
+        "size": 366,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "britt1": {
+      "stem": "britt1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/britt1.uml",
+      "artifact": "uml/britt1.uml",
+      "provider_event": {
+        "path": "data/uml/britt1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "ddb4c36d2f390d80ebe72aa432b093de5b31ad86e186c0b983bcc4cc27c3e3dd",
+        "sha256": "bedbc7718af8cb5c04df92f0387b98fbfdb898630301adc9a9077e9e87f6c9aa",
+        "size": 398,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "derek1": {
+      "stem": "derek1",
+      "actions": [
+        "buy",
+        "sell"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/derek1.uml",
+      "artifact": "uml/derek1.uml",
+      "provider_event": {
+        "path": "data/uml/derek1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "9d9bcbbc2f364f06859dbb6afdbd9cfc3bee8cc45b1846824ef7012edd0a592f",
+        "sha256": "b6db9edd4dacc079e7262a7caea766d6a0c2d323c76aaf5f195197058fc40af8",
+        "size": 359,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "elmina": {
+      "stem": "elmina",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax",
+        "asknpctax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/elmina.uml",
+      "artifact": "uml/elmina.uml",
+      "provider_event": {
+        "path": "data/uml/elmina.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "3e6a1951277398078ad4b8505d6a36f305a1df5c90253562e9c59e52e4cd601b",
+        "sha256": "5896038b31a02589644c8b6d71e010b07d716f8d818f4a32c43d5b6678094de4",
+        "size": 429,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "elmina1": {
+      "stem": "elmina1",
+      "actions": [],
+      "source_kind": "client",
+      "asset": "data/uml/elmina1.uml",
+      "artifact": "uml/elmina1.uml",
+      "provider_event": {
+        "path": "data/uml/elmina1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "88c819abe0667979608edfb04f4ce1ff9e2c10e5203d87430b3d518b2f612b46",
+        "sha256": "81447992f81149611ed0769a252497e1f0655e3d321d369163b0b5204e82f396",
+        "size": 170,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "evert1": {
+      "stem": "evert1",
+      "actions": [
+        "buy",
+        "sell"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/evert1.uml",
+      "artifact": "uml/evert1.uml",
+      "provider_event": {
+        "path": "data/uml/evert1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "a694f1cc7ccf2ce25c42db752e62a4e499b99fa4a360fad50d33efd643e453ec",
+        "sha256": "7e1001118f98f1d2f0471624dc7e19abf516172e95414ee2334722af8f22e5b0",
+        "size": 357,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "mandra1": {
+      "stem": "mandra1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/mandra1.uml",
+      "artifact": "uml/mandra1.uml",
+      "provider_event": {
+        "path": "data/uml/mandra1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "45f84a334ed8a003f7a37cd091a64ae21deb619f879fbaca907277b8c583c999",
+        "sha256": "0778008cea37ff2257b8fc6b261070332b5933abb4b0d5c544d2bc5977c4f4e6",
+        "size": 393,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "margaret1": {
+      "stem": "margaret1",
+      "actions": [
+        "buy",
+        "sell"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/margaret1.uml",
+      "artifact": "uml/margaret1.uml",
+      "provider_event": {
+        "path": "data/uml/margaret1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "fd2b078c3e7cc224ea262031fc267dae8f4c0fc29c0b6cd4d20c7664f3cf459c",
+        "sha256": "57bbbf64f70b018683c417fcdafdb91935d9beb040578d928939ce43c583446b",
+        "size": 367,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "mayer1": {
+      "stem": "mayer1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/mayer1.uml",
+      "artifact": "uml/mayer1.uml",
+      "provider_event": {
+        "path": "data/uml/mayer1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "3e3c68f9aa24afd2d071e95c3cd5f7cb15a6ac548e0932bbb8a5ce76eb11034b",
+        "sha256": "330bc616dca83711e9c4f4cd7c49f53aa9a94c763dacc7e78d0d3ef9721af442",
+        "size": 400,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "momo1": {
+      "stem": "momo1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax",
+        "asknpctax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/momo1.uml",
+      "artifact": "uml/momo1.uml",
+      "provider_event": {
+        "path": "data/uml/momo1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "155a0a78d640b3db5e4600c4dc50ace7cb207f0e4a64bc8f94f7c7161bcdaf5e",
+        "sha256": "57e60a690c3eff3fb3f6865151cc0b3a1560a14879e1cbbed7295419906a1ede",
+        "size": 436,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "old1": {
+      "stem": "old1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/old1.uml",
+      "artifact": "uml/old1.uml",
+      "provider_event": {
+        "path": "data/uml/old1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "2edb77106a8251ded9db8f595a811cd3d20e372212d909fbea2a75664fceec4e",
+        "sha256": "1e94eb5bc7684b25d610aa0edb8b1040d712b6354e9b5c844258b2a4ff023dd8",
+        "size": 400,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "philip1": {
+      "stem": "philip1",
+      "actions": [
+        "buy",
+        "sell"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/philip1.uml",
+      "artifact": "uml/philip1.uml",
+      "provider_event": {
+        "path": "data/uml/philip1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "fa74437c6d2f86065cc37aaf9ad5b038a200dbbd1828a063998c065abc552187",
+        "sha256": "2e26c0e7d83ee6a98074ce6279f95fe40ba252319e480b7c86e1dc2b76c6b2e4",
+        "size": 379,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "randal1": {
+      "stem": "randal1",
+      "actions": [
+        "buy",
+        "sell"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/randal1.uml",
+      "artifact": "uml/randal1.uml",
+      "provider_event": {
+        "path": "data/uml/randal1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "95067d3a67ffd7be2db8d43bd94eddd800e0660d7215c0cb34088c1902342f0a",
+        "sha256": "f4782911e07a987861f1fe692a42250f4b6fe1d8d56712729de23c9db15f19ad",
+        "size": 356,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "shivan1": {
+      "stem": "shivan1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/shivan1.uml",
+      "artifact": "uml/shivan1.uml",
+      "provider_event": {
+        "path": "data/uml/shivan1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "a9f31e80be7fdcbcc23e594ac0242ba6b808a1fe3d03d846706ed32d1d8fc6fc",
+        "sha256": "59a40f2559e2da7473c373197688950241d47d20861332b64d0344c639101e55",
+        "size": 390,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "stella1": {
+      "stem": "stella1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/stella1.uml",
+      "artifact": "uml/stella1.uml",
+      "provider_event": {
+        "path": "data/uml/stella1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "322a8ef87f49d6835663a962b56ba27f128c6b39484ae1f9b1dddd6dbc1e9f73",
+        "sha256": "432cb596857e043747fc34cfc5b62e8b79dc188460bdcaeac6bba5b365c5c1c6",
+        "size": 385,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "vergil1": {
+      "stem": "vergil1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/vergil1.uml",
+      "artifact": "uml/vergil1.uml",
+      "provider_event": {
+        "path": "data/uml/vergil1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "7429ae5356cc4bd3cd5a9088e7c7458a4ea414409e9256c8761b2a55a5a18f7b",
+        "sha256": "fe7dee289812e4bb6ddf50a8517326f21bee2d87efd82ba643ab35080d059b5f",
+        "size": 403,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "verita1": {
+      "stem": "verita1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/verita1.uml",
+      "artifact": "uml/verita1.uml",
+      "provider_event": {
+        "path": "data/uml/verita1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "e71e855bdbbe285d26b96dd7883c399039edd97e29511910b3730aab8f9be8ea",
+        "sha256": "7a0197908957e1ac5883bf2fd98b46048c8f9ba353cd5af2be772a0007080f2f",
+        "size": 363,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "werner1": {
+      "stem": "werner1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/werner1.uml",
+      "artifact": "uml/werner1.uml",
+      "provider_event": {
+        "path": "data/uml/werner1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "cfa178525f3b80fd45970f1340ab2cf5cc243e84204227546c2155d28e1303ef",
+        "sha256": "76ba44385512633007ce848abb5d74656fa74ed73a7fe04be8f78524b68217ee",
+        "size": 391,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    },
+    "ysorya1": {
+      "stem": "ysorya1",
+      "actions": [
+        "buy",
+        "sell",
+        "asktax",
+        "asknpctax"
+      ],
+      "source_kind": "client",
+      "asset": "data/uml/ysorya1.uml",
+      "artifact": "uml/ysorya1.uml",
+      "provider_event": {
+        "path": "data/uml/ysorya1.uml",
+        "archive": "data_0.lcx",
+        "outer_input_sha256": "2d3fbac39ccf6ed912ac4710d4aa741c1523b0b37cf6f21d5961956426f4f94a",
+        "sha256": "ee91fe351cf88a0c4c49e164de95761c3581de67916ef669c93d97801d740f9b",
+        "size": 402,
+        "outer_authenticated": true,
+        "catalog_hash_size_match": true,
+        "provider": "current_authenticated_outer"
+      }
+    }
+  },
+  "npc_to_resource_status": "LOCAL speaker/role mapping; raw current resource and literal actions are client evidence only"
+}

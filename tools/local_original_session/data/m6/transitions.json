@@ -1,0 +1,3251 @@
+{
+  "table": "m6_transitions",
+  "version": 1,
+  "transitions": [
+    {
+      "origin": [
+        51,
+        32681,
+        32848
+      ],
+      "destination": [
+        48,
+        32778,
+        32800,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15206",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        51,
+        32681,
+        32848
+      ],
+      "reference_destination": [
+        48,
+        32778,
+        32800,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 9F",
+      "l1j_destination_label": "Ant Caves 4F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        51,
+        32682,
+        32848
+      ],
+      "destination": [
+        48,
+        32778,
+        32800,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15215",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        51,
+        32682,
+        32848
+      ],
+      "reference_destination": [
+        48,
+        32778,
+        32800,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 9F",
+      "l1j_destination_label": "Ant Caves 4F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        19,
+        32723,
+        32725
+      ],
+      "destination": [
+        19,
+        32788,
+        32758,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15288",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        19,
+        32723,
+        32725
+      ],
+      "reference_destination": [
+        19,
+        32788,
+        32758,
+        2
+      ],
+      "l1j_source_label": "Elven Dungeon 1F",
+      "l1j_destination_label": "Elven Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        51,
+        32725,
+        32743
+      ],
+      "destination": [
+        47,
+        32744,
+        32778,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15307",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        51,
+        32725,
+        32743
+      ],
+      "reference_destination": [
+        47,
+        32744,
+        32778,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 9F",
+      "l1j_destination_label": "Ant Caves 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        10,
+        32726,
+        32737
+      ],
+      "destination": [
+        11,
+        32728,
+        32723,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15315",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        10,
+        32726,
+        32737
+      ],
+      "reference_destination": [
+        11,
+        32728,
+        32723,
+        4
+      ],
+      "l1j_source_label": "Gludio Dungeon 4F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        51,
+        32726,
+        32743
+      ],
+      "destination": [
+        47,
+        32744,
+        32778,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15316",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        51,
+        32726,
+        32743
+      ],
+      "reference_destination": [
+        47,
+        32744,
+        32778,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 9F",
+      "l1j_destination_label": "Ant Caves 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32726,
+        32744
+      ],
+      "destination": [
+        8,
+        32773,
+        32807,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15317",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32726,
+        32744
+      ],
+      "reference_destination": [
+        8,
+        32773,
+        32807,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        13,
+        32727,
+        32724
+      ],
+      "destination": [
+        12,
+        32770,
+        32810,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15325",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        13,
+        32727,
+        32724
+      ],
+      "reference_destination": [
+        12,
+        32770,
+        32810,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 7F",
+      "l1j_destination_label": "Gludio Dungeon 6F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        19,
+        32727,
+        32797
+      ],
+      "destination": [
+        19,
+        32796,
+        32795,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15332",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        19,
+        32727,
+        32797
+      ],
+      "reference_destination": [
+        19,
+        32796,
+        32795,
+        0
+      ],
+      "l1j_source_label": "Elven Dungeon 1F",
+      "l1j_destination_label": "Elven Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        12,
+        32728,
+        32768
+      ],
+      "destination": [
+        12,
+        32764,
+        32754,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15343",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        12,
+        32728,
+        32768
+      ],
+      "reference_destination": [
+        12,
+        32764,
+        32754,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 6F",
+      "l1j_destination_label": "Gludio Dungeon 6F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32728,
+        32929
+      ],
+      "destination": [
+        7,
+        32812,
+        32724,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15356",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32728,
+        32929
+      ],
+      "reference_destination": [
+        7,
+        32812,
+        32724,
+        4
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Gludio Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32729,
+        32722
+      ],
+      "destination": [
+        10,
+        32727,
+        32737,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15357",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32729,
+        32722
+      ],
+      "reference_destination": [
+        10,
+        32727,
+        32737,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 4F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        20,
+        32730,
+        32732
+      ],
+      "destination": [
+        21,
+        32731,
+        32736,
+        6
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15370",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        20,
+        32730,
+        32732
+      ],
+      "reference_destination": [
+        21,
+        32731,
+        32736,
+        6
+      ],
+      "l1j_source_label": "Elven Dungeon 2F",
+      "l1j_destination_label": "Elven Dungeon 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        21,
+        32732,
+        32736
+      ],
+      "destination": [
+        20,
+        32731,
+        32732,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15416",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        21,
+        32732,
+        32736
+      ],
+      "reference_destination": [
+        20,
+        32731,
+        32732,
+        2
+      ],
+      "l1j_source_label": "Elven Dungeon 3F",
+      "l1j_destination_label": "Elven Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        5,
+        32733,
+        32796
+      ],
+      "destination": [
+        0,
+        32631,
+        32982,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15444",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        5,
+        32733,
+        32796
+      ],
+      "reference_destination": [
+        0,
+        32631,
+        32982,
+        0
+      ],
+      "l1j_source_label": "Traveler`s Ship - Gludio",
+      "l1j_destination_label": "Talking Island",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        6,
+        32734,
+        32794
+      ],
+      "destination": [
+        4,
+        32544,
+        32727,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15469",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        6,
+        32734,
+        32794
+      ],
+      "reference_destination": [
+        4,
+        32544,
+        32727,
+        0
+      ],
+      "l1j_source_label": "Traveler`s Ship - Talking Island",
+      "l1j_destination_label": "Mainland of Aden",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        5,
+        32734,
+        32796
+      ],
+      "destination": [
+        0,
+        32631,
+        32982,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15471",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        5,
+        32734,
+        32796
+      ],
+      "reference_destination": [
+        0,
+        32631,
+        32982,
+        0
+      ],
+      "l1j_source_label": "Traveler`s Ship - Gludio",
+      "l1j_destination_label": "Talking Island",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32735,
+        32739
+      ],
+      "destination": [
+        11,
+        32768,
+        32805,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15493",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32735,
+        32739
+      ],
+      "reference_destination": [
+        11,
+        32768,
+        32805,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        6,
+        32735,
+        32794
+      ],
+      "destination": [
+        4,
+        32544,
+        32727,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15497",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        6,
+        32735,
+        32794
+      ],
+      "reference_destination": [
+        4,
+        32544,
+        32727,
+        0
+      ],
+      "l1j_source_label": "Traveler`s Ship - Talking Island",
+      "l1j_destination_label": "Mainland of Aden",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32736,
+        32772
+      ],
+      "destination": [
+        8,
+        32737,
+        32812,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15510",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32736,
+        32772
+      ],
+      "reference_destination": [
+        8,
+        32737,
+        32812,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        6,
+        32736,
+        32794
+      ],
+      "destination": [
+        4,
+        32544,
+        32727,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15512",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        6,
+        32736,
+        32794
+      ],
+      "reference_destination": [
+        4,
+        32544,
+        32727,
+        0
+      ],
+      "l1j_source_label": "Traveler`s Ship - Talking Island",
+      "l1j_destination_label": "Mainland of Aden",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        21,
+        32736,
+        32799
+      ],
+      "destination": [
+        21,
+        32760,
+        32763,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15515",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        21,
+        32736,
+        32799
+      ],
+      "reference_destination": [
+        21,
+        32760,
+        32763,
+        0
+      ],
+      "l1j_source_label": "Elven Dungeon 3F",
+      "l1j_destination_label": "Elven Dungeon 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        44,
+        32737,
+        32781
+      ],
+      "destination": [
+        49,
+        32781,
+        32732,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15527",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        44,
+        32737,
+        32781
+      ],
+      "reference_destination": [
+        49,
+        32781,
+        32732,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 6F",
+      "l1j_destination_label": "Ant Caves 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        44,
+        32737,
+        32782
+      ],
+      "destination": [
+        49,
+        32781,
+        32732,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15528",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        44,
+        32737,
+        32782
+      ],
+      "reference_destination": [
+        49,
+        32781,
+        32732,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 6F",
+      "l1j_destination_label": "Ant Caves 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32738,
+        32813
+      ],
+      "destination": [
+        8,
+        32737,
+        32772,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15543",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32738,
+        32813
+      ],
+      "reference_destination": [
+        8,
+        32737,
+        32772,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        48,
+        32740,
+        32757
+      ],
+      "destination": [
+        50,
+        32807,
+        32762,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15554",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        48,
+        32740,
+        32757
+      ],
+      "reference_destination": [
+        50,
+        32807,
+        32762,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 4F",
+      "l1j_destination_label": "Ant Caves 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        48,
+        32740,
+        32758
+      ],
+      "destination": [
+        50,
+        32807,
+        32762,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15555",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        48,
+        32740,
+        32758
+      ],
+      "reference_destination": [
+        50,
+        32807,
+        32762,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 4F",
+      "l1j_destination_label": "Ant Caves 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        7,
+        32740,
+        32807
+      ],
+      "destination": [
+        8,
+        32750,
+        32798,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15558",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        7,
+        32740,
+        32807
+      ],
+      "reference_destination": [
+        8,
+        32750,
+        32798,
+        4
+      ],
+      "l1j_source_label": "Gludio Dungeon 1F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32741,
+        32745
+      ],
+      "destination": [
+        8,
+        32797,
+        32803,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15574",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32741,
+        32745
+      ],
+      "reference_destination": [
+        8,
+        32797,
+        32803,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        49,
+        32742,
+        32740
+      ],
+      "destination": [
+        51,
+        32793,
+        32847,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15585",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        49,
+        32742,
+        32740
+      ],
+      "reference_destination": [
+        51,
+        32793,
+        32847,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 5F",
+      "l1j_destination_label": "Ant Caves 9F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        49,
+        32742,
+        32741
+      ],
+      "destination": [
+        51,
+        32793,
+        32847,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15586",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        49,
+        32742,
+        32741
+      ],
+      "reference_destination": [
+        51,
+        32793,
+        32847,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 5F",
+      "l1j_destination_label": "Ant Caves 9F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        47,
+        32743,
+        32778
+      ],
+      "destination": [
+        51,
+        32724,
+        32744,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15615",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        47,
+        32743,
+        32778
+      ],
+      "reference_destination": [
+        51,
+        32724,
+        32744,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 1F",
+      "l1j_destination_label": "Ant Caves 9F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        47,
+        32744,
+        32778
+      ],
+      "destination": [
+        51,
+        32724,
+        32744,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15626",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        47,
+        32744,
+        32778
+      ],
+      "reference_destination": [
+        51,
+        32724,
+        32744,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 1F",
+      "l1j_destination_label": "Ant Caves 9F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        46,
+        32745,
+        32741
+      ],
+      "destination": [
+        49,
+        32745,
+        32783,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15636",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        46,
+        32745,
+        32741
+      ],
+      "reference_destination": [
+        49,
+        32745,
+        32783,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 3F",
+      "l1j_destination_label": "Ant Caves 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        50,
+        32745,
+        32758
+      ],
+      "destination": [
+        45,
+        32770,
+        32790,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15637",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        50,
+        32745,
+        32758
+      ],
+      "reference_destination": [
+        45,
+        32770,
+        32790,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 7F",
+      "l1j_destination_label": "Ant Caves 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        49,
+        32745,
+        32782
+      ],
+      "destination": [
+        46,
+        32745,
+        32741,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15638",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        49,
+        32745,
+        32782
+      ],
+      "reference_destination": [
+        46,
+        32745,
+        32741,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 5F",
+      "l1j_destination_label": "Ant Caves 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32745,
+        32805
+      ],
+      "destination": [
+        11,
+        32757,
+        32804,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15646",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32745,
+        32805
+      ],
+      "reference_destination": [
+        11,
+        32757,
+        32804,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        46,
+        32746,
+        32741
+      ],
+      "destination": [
+        49,
+        32745,
+        32783,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15680",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        46,
+        32746,
+        32741
+      ],
+      "reference_destination": [
+        49,
+        32745,
+        32783,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 3F",
+      "l1j_destination_label": "Ant Caves 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        50,
+        32746,
+        32758
+      ],
+      "destination": [
+        45,
+        32770,
+        32790,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15681",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        50,
+        32746,
+        32758
+      ],
+      "reference_destination": [
+        45,
+        32770,
+        32790,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 7F",
+      "l1j_destination_label": "Ant Caves 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        49,
+        32746,
+        32782
+      ],
+      "destination": [
+        46,
+        32745,
+        32741,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15682",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        49,
+        32746,
+        32782
+      ],
+      "reference_destination": [
+        46,
+        32745,
+        32741,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 5F",
+      "l1j_destination_label": "Ant Caves 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32750,
+        32797
+      ],
+      "destination": [
+        7,
+        32740,
+        32806,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15741",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32750,
+        32797
+      ],
+      "reference_destination": [
+        7,
+        32740,
+        32806,
+        0
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32755,
+        33208
+      ],
+      "destination": [
+        43,
+        32783,
+        32751,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15786",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32755,
+        33208
+      ],
+      "reference_destination": [
+        43,
+        32783,
+        32751,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 8F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32757,
+        32805
+      ],
+      "destination": [
+        11,
+        32745,
+        32804,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15792",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32757,
+        32805
+      ],
+      "reference_destination": [
+        11,
+        32745,
+        32804,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        21,
+        32760,
+        32764
+      ],
+      "destination": [
+        21,
+        32737,
+        32799,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15806",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        21,
+        32760,
+        32764
+      ],
+      "reference_destination": [
+        21,
+        32737,
+        32799,
+        2
+      ],
+      "l1j_source_label": "Elven Dungeon 3F",
+      "l1j_destination_label": "Elven Dungeon 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32763,
+        32738
+      ],
+      "destination": [
+        11,
+        32773,
+        32765,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15813",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32763,
+        32738
+      ],
+      "reference_destination": [
+        11,
+        32773,
+        32765,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        20,
+        32763,
+        32754
+      ],
+      "destination": [
+        20,
+        32807,
+        32791,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15814",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        20,
+        32763,
+        32754
+      ],
+      "reference_destination": [
+        20,
+        32807,
+        32791,
+        0
+      ],
+      "l1j_source_label": "Elven Dungeon 2F",
+      "l1j_destination_label": "Elven Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        12,
+        32764,
+        32755
+      ],
+      "destination": [
+        12,
+        32729,
+        32768,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15818",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        12,
+        32764,
+        32755
+      ],
+      "reference_destination": [
+        12,
+        32729,
+        32768,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 6F",
+      "l1j_destination_label": "Gludio Dungeon 6F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        13,
+        32764,
+        32766
+      ],
+      "destination": [
+        13,
+        32780,
+        32741,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15819",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        13,
+        32764,
+        32766
+      ],
+      "reference_destination": [
+        13,
+        32780,
+        32741,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 7F",
+      "l1j_destination_label": "Gludio Dungeon 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        10,
+        32764,
+        32772
+      ],
+      "destination": [
+        9,
+        32771,
+        32764,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15820",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        10,
+        32764,
+        32772
+      ],
+      "reference_destination": [
+        9,
+        32771,
+        32764,
+        0
+      ],
+      "l1j_source_label": "Gludio Dungeon 4F",
+      "l1j_destination_label": "Gludio Dungeon 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32767,
+        32734
+      ],
+      "destination": [
+        8,
+        32811,
+        32761,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15827",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32767,
+        32734
+      ],
+      "reference_destination": [
+        8,
+        32811,
+        32761,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        20,
+        32767,
+        32795
+      ],
+      "destination": [
+        19,
+        32772,
+        32782,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15830",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        20,
+        32767,
+        32795
+      ],
+      "reference_destination": [
+        19,
+        32772,
+        32782,
+        0
+      ],
+      "l1j_source_label": "Elven Dungeon 2F",
+      "l1j_destination_label": "Elven Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32768,
+        32806
+      ],
+      "destination": [
+        11,
+        32736,
+        32739,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15840",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32768,
+        32806
+      ],
+      "reference_destination": [
+        11,
+        32736,
+        32739,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        45,
+        32769,
+        32791
+      ],
+      "destination": [
+        50,
+        32745,
+        32759,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15846",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        45,
+        32769,
+        32791
+      ],
+      "reference_destination": [
+        50,
+        32745,
+        32759,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 2F",
+      "l1j_destination_label": "Ant Caves 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        45,
+        32770,
+        32791
+      ],
+      "destination": [
+        50,
+        32745,
+        32759,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15850",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        45,
+        32770,
+        32791
+      ],
+      "reference_destination": [
+        50,
+        32745,
+        32759,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 2F",
+      "l1j_destination_label": "Ant Caves 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        12,
+        32770,
+        32811
+      ],
+      "destination": [
+        13,
+        32727,
+        32725,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15851",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        12,
+        32770,
+        32811
+      ],
+      "reference_destination": [
+        13,
+        32727,
+        32725,
+        4
+      ],
+      "l1j_source_label": "Gludio Dungeon 6F",
+      "l1j_destination_label": "Gludio Dungeon 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        9,
+        32771,
+        32765
+      ],
+      "destination": [
+        10,
+        32763,
+        32773,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15856",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        9,
+        32771,
+        32765
+      ],
+      "reference_destination": [
+        10,
+        32763,
+        32773,
+        4
+      ],
+      "l1j_source_label": "Gludio Dungeon 3F",
+      "l1j_destination_label": "Gludio Dungeon 4F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32772,
+        32765
+      ],
+      "destination": [
+        11,
+        32764,
+        32738,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15863",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32772,
+        32765
+      ],
+      "reference_destination": [
+        11,
+        32764,
+        32738,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        19,
+        32772,
+        32783
+      ],
+      "destination": [
+        20,
+        32766,
+        32796,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15866",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        19,
+        32772,
+        32783
+      ],
+      "reference_destination": [
+        20,
+        32766,
+        32796,
+        4
+      ],
+      "l1j_source_label": "Elven Dungeon 1F",
+      "l1j_destination_label": "Elven Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32773,
+        32808
+      ],
+      "destination": [
+        8,
+        32727,
+        32744,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15875",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32773,
+        32808
+      ],
+      "reference_destination": [
+        8,
+        32727,
+        32744,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        47,
+        32778,
+        32792
+      ],
+      "destination": [
+        43,
+        32807,
+        32805,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15908",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        47,
+        32778,
+        32792
+      ],
+      "reference_destination": [
+        43,
+        32807,
+        32805,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 1F",
+      "l1j_destination_label": "Ant Caves 8F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        48,
+        32778,
+        32801
+      ],
+      "destination": [
+        51,
+        32682,
+        32849,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15909",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        48,
+        32778,
+        32801
+      ],
+      "reference_destination": [
+        51,
+        32682,
+        32849,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 4F",
+      "l1j_destination_label": "Ant Caves 9F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        48,
+        32777,
+        32802
+      ],
+      "destination": [
+        51,
+        32682,
+        32849,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15910",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        48,
+        32778,
+        32802
+      ],
+      "reference_destination": [
+        51,
+        32682,
+        32849,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 4F",
+      "l1j_destination_label": "Ant Caves 9F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": true,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        47,
+        32779,
+        32792
+      ],
+      "destination": [
+        43,
+        32807,
+        32805,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15913",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        47,
+        32779,
+        32792
+      ],
+      "reference_destination": [
+        43,
+        32807,
+        32805,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 1F",
+      "l1j_destination_label": "Ant Caves 8F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        13,
+        32780,
+        32742
+      ],
+      "destination": [
+        13,
+        32765,
+        32766,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15917",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        13,
+        32780,
+        32742
+      ],
+      "reference_destination": [
+        13,
+        32765,
+        32766,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 7F",
+      "l1j_destination_label": "Gludio Dungeon 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        49,
+        32781,
+        32732
+      ],
+      "destination": [
+        44,
+        32738,
+        32781,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15924",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        49,
+        32781,
+        32732
+      ],
+      "reference_destination": [
+        44,
+        32738,
+        32781,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 5F",
+      "l1j_destination_label": "Ant Caves 6F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        49,
+        32782,
+        32731
+      ],
+      "destination": [
+        44,
+        32738,
+        32781,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15934",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        49,
+        32782,
+        32731
+      ],
+      "reference_destination": [
+        44,
+        32738,
+        32781,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 5F",
+      "l1j_destination_label": "Ant Caves 6F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        13,
+        32786,
+        32795
+      ],
+      "destination": [
+        13,
+        32811,
+        32729,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16007",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        13,
+        32786,
+        32795
+      ],
+      "reference_destination": [
+        13,
+        32811,
+        32729,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 7F",
+      "l1j_destination_label": "Gludio Dungeon 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        19,
+        32787,
+        32758
+      ],
+      "destination": [
+        19,
+        32724,
+        32725,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16015",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        19,
+        32787,
+        32758
+      ],
+      "reference_destination": [
+        19,
+        32724,
+        32725,
+        2
+      ],
+      "l1j_source_label": "Elven Dungeon 1F",
+      "l1j_destination_label": "Elven Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32788,
+        33149
+      ],
+      "destination": [
+        50,
+        32768,
+        32805,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16020",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32788,
+        33149
+      ],
+      "reference_destination": [
+        50,
+        32768,
+        32805,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32789,
+        33255
+      ],
+      "destination": [
+        45,
+        32776,
+        32731,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16023",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32789,
+        33255
+      ],
+      "reference_destination": [
+        45,
+        32776,
+        32731,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32794,
+        32728
+      ],
+      "destination": [
+        9,
+        32801,
+        32754,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16036",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32794,
+        32728
+      ],
+      "reference_destination": [
+        9,
+        32801,
+        32754,
+        4
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        51,
+        32794,
+        32847
+      ],
+      "destination": [
+        49,
+        32742,
+        32741,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16037",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        51,
+        32794,
+        32847
+      ],
+      "reference_destination": [
+        49,
+        32742,
+        32741,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 9F",
+      "l1j_destination_label": "Ant Caves 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        51,
+        32794,
+        32848
+      ],
+      "destination": [
+        49,
+        32742,
+        32740,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16038",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        51,
+        32794,
+        32848
+      ],
+      "reference_destination": [
+        49,
+        32742,
+        32740,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 9F",
+      "l1j_destination_label": "Ant Caves 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32795,
+        33189
+      ],
+      "destination": [
+        48,
+        32798,
+        32741,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16043",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32795,
+        33189
+      ],
+      "reference_destination": [
+        48,
+        32798,
+        32741,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 4F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        19,
+        32796,
+        32796
+      ],
+      "destination": [
+        19,
+        32728,
+        32797,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16044",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        19,
+        32796,
+        32796
+      ],
+      "reference_destination": [
+        19,
+        32728,
+        32797,
+        2
+      ],
+      "l1j_source_label": "Elven Dungeon 1F",
+      "l1j_destination_label": "Elven Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32797,
+        32745
+      ],
+      "destination": [
+        8,
+        32742,
+        32745,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16047",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32797,
+        32745
+      ],
+      "reference_destination": [
+        8,
+        32742,
+        32745,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        11,
+        32797,
+        32810
+      ],
+      "destination": [
+        12,
+        32804,
+        32725,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16052",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        11,
+        32797,
+        32810
+      ],
+      "reference_destination": [
+        12,
+        32804,
+        32725,
+        4
+      ],
+      "l1j_source_label": "Gludio Dungeon 5F",
+      "l1j_destination_label": "Gludio Dungeon 6F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        13,
+        32801,
+        32803
+      ],
+      "destination": [
+        13,
+        32808,
+        32802,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16100",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        13,
+        32801,
+        32803
+      ],
+      "reference_destination": [
+        13,
+        32808,
+        32802,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 7F",
+      "l1j_destination_label": "Gludio Dungeon 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        9,
+        32802,
+        32754
+      ],
+      "destination": [
+        8,
+        32795,
+        32728,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16102",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        9,
+        32802,
+        32754
+      ],
+      "reference_destination": [
+        8,
+        32795,
+        32728,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 3F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        19,
+        32805,
+        32723
+      ],
+      "destination": [
+        4,
+        32938,
+        32283,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16124",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        19,
+        32805,
+        32723
+      ],
+      "reference_destination": [
+        4,
+        32938,
+        32283,
+        0
+      ],
+      "l1j_source_label": "Elven Dungeon 1F",
+      "l1j_destination_label": "Mainland of Aden",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        12,
+        32805,
+        32724
+      ],
+      "destination": [
+        11,
+        32797,
+        32809,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16125",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        12,
+        32805,
+        32724
+      ],
+      "reference_destination": [
+        11,
+        32797,
+        32809,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 6F",
+      "l1j_destination_label": "Gludio Dungeon 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        50,
+        32806,
+        32763
+      ],
+      "destination": [
+        48,
+        32739,
+        32757,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16135",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        50,
+        32806,
+        32763
+      ],
+      "reference_destination": [
+        48,
+        32739,
+        32757,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 7F",
+      "l1j_destination_label": "Ant Caves 4F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        50,
+        32807,
+        32763
+      ],
+      "destination": [
+        48,
+        32739,
+        32757,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16151",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        50,
+        32807,
+        32763
+      ],
+      "reference_destination": [
+        48,
+        32739,
+        32757,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 7F",
+      "l1j_destination_label": "Ant Caves 4F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        20,
+        32807,
+        32792
+      ],
+      "destination": [
+        20,
+        32764,
+        32754,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16152",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        20,
+        32807,
+        32792
+      ],
+      "reference_destination": [
+        20,
+        32764,
+        32754,
+        2
+      ],
+      "l1j_source_label": "Elven Dungeon 2F",
+      "l1j_destination_label": "Elven Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        43,
+        32807,
+        32805
+      ],
+      "destination": [
+        47,
+        32779,
+        32793,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16154",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        43,
+        32807,
+        32805
+      ],
+      "reference_destination": [
+        47,
+        32779,
+        32793,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 8F",
+      "l1j_destination_label": "Ant Caves 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        13,
+        32808,
+        32802
+      ],
+      "destination": [
+        13,
+        32801,
+        32803,
+        6
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16170",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        13,
+        32808,
+        32802
+      ],
+      "reference_destination": [
+        13,
+        32801,
+        32803,
+        6
+      ],
+      "l1j_source_label": "Gludio Dungeon 7F",
+      "l1j_destination_label": "Gludio Dungeon 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        43,
+        32808,
+        32805
+      ],
+      "destination": [
+        47,
+        32779,
+        32793,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16172",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        43,
+        32808,
+        32805
+      ],
+      "reference_destination": [
+        47,
+        32779,
+        32793,
+        0
+      ],
+      "l1j_source_label": "Ant Caves 8F",
+      "l1j_destination_label": "Ant Caves 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        13,
+        32811,
+        32730
+      ],
+      "destination": [
+        13,
+        32787,
+        32795,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16196",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        13,
+        32811,
+        32730
+      ],
+      "reference_destination": [
+        13,
+        32787,
+        32795,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 7F",
+      "l1j_destination_label": "Gludio Dungeon 7F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        8,
+        32811,
+        32762
+      ],
+      "destination": [
+        8,
+        32767,
+        32733,
+        2
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16197",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        8,
+        32811,
+        32762
+      ],
+      "reference_destination": [
+        8,
+        32767,
+        32733,
+        2
+      ],
+      "l1j_source_label": "Gludio Dungeon 2F",
+      "l1j_destination_label": "Gludio Dungeon 2F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        7,
+        32812,
+        32723
+      ],
+      "destination": [
+        4,
+        32728,
+        32929,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16212",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        7,
+        32812,
+        32723
+      ],
+      "reference_destination": [
+        4,
+        32728,
+        32929,
+        5
+      ],
+      "l1j_source_label": "Gludio Dungeon 1F",
+      "l1j_destination_label": "Mainland of Aden",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32839,
+        33172
+      ],
+      "destination": [
+        47,
+        32796,
+        32745,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16267",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32839,
+        33172
+      ],
+      "reference_destination": [
+        47,
+        32796,
+        32745,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32848,
+        33294
+      ],
+      "destination": [
+        46,
+        32787,
+        32795,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16279",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32848,
+        33294
+      ],
+      "reference_destination": [
+        46,
+        32787,
+        32795,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 3F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32914,
+        33220
+      ],
+      "destination": [
+        44,
+        32798,
+        32754,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16352",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32914,
+        33220
+      ],
+      "reference_destination": [
+        44,
+        32798,
+        32754,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 6F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32924,
+        33252
+      ],
+      "destination": [
+        49,
+        32801,
+        32782,
+        0
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16359",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32924,
+        33252
+      ],
+      "reference_destination": [
+        49,
+        32801,
+        32782,
+        0
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Ant Caves 5F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32938,
+        32284
+      ],
+      "destination": [
+        19,
+        32805,
+        32724,
+        4
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16371",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "reference_origin": [
+        4,
+        32938,
+        32284
+      ],
+      "reference_destination": [
+        19,
+        32805,
+        32724,
+        4
+      ],
+      "l1j_source_label": "Mainland of Aden",
+      "l1j_destination_label": "Elven Dungeon 1F",
+      "local_basis": "Exact L1J trigger/destination if standable with an incoming S32 step; otherwise nearest Chebyshev cell (radius<=6, Manhattan/x/y tie-break). Preserve raw row. Static mask1 only; native trigger/publication UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    }
+  ],
+  "excluded": [
+    {
+      "reference": [
+        "32540",
+        "32728",
+        "4",
+        "Mainland of Aden",
+        "32735",
+        "32795",
+        "6",
+        "Traveler`s Ship - Talking Island",
+        "4"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:14946",
+      "reason": "walk boarding omitted: preserves existing owned-ticket 4EF8 path"
+    },
+    {
+      "reference": [
+        "32542",
+        "32728",
+        "4",
+        "Mainland of Aden",
+        "32735",
+        "32795",
+        "6",
+        "Traveler`s Ship - Talking Island",
+        "4"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:14947",
+      "reason": "walk boarding omitted: preserves existing owned-ticket 4EF8 path"
+    },
+    {
+      "reference": [
+        "32543",
+        "32728",
+        "4",
+        "Mainland of Aden",
+        "32735",
+        "32795",
+        "6",
+        "Traveler`s Ship - Talking Island",
+        "4"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:14948",
+      "reason": "walk boarding omitted: preserves existing owned-ticket 4EF8 path"
+    },
+    {
+      "reference": [
+        "32544",
+        "32728",
+        "4",
+        "Mainland of Aden",
+        "32735",
+        "32795",
+        "6",
+        "Traveler`s Ship - Talking Island",
+        "4"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:14950",
+      "reason": "walk boarding omitted: preserves existing owned-ticket 4EF8 path"
+    },
+    {
+      "reference": [
+        "32630",
+        "32983",
+        "0",
+        "Talking Island",
+        "32733",
+        "32797",
+        "5",
+        "Traveler`s Ship - Gludio",
+        "4"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15012",
+      "reason": "walk boarding omitted: preserves existing owned-ticket 4EF8 path"
+    },
+    {
+      "reference": [
+        "32631",
+        "32983",
+        "0",
+        "Talking Island",
+        "32733",
+        "32797",
+        "5",
+        "Traveler`s Ship - Gludio",
+        "4"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15013",
+      "reason": "walk boarding omitted: preserves existing owned-ticket 4EF8 path"
+    },
+    {
+      "reference": [
+        "32632",
+        "32983",
+        "0",
+        "Talking Island",
+        "32733",
+        "32797",
+        "5",
+        "Traveler`s Ship - Gludio",
+        "4"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15018",
+      "reason": "walk boarding omitted: preserves existing owned-ticket 4EF8 path"
+    },
+    {
+      "reference": [
+        "32657",
+        "32872",
+        "32",
+        "Dragon Valley Caves 3F",
+        "32777",
+        "32796",
+        "21",
+        "Elven Dungeon 3F",
+        "0"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15048",
+      "reason": "destination/source map outside selected expansion"
+    },
+    {
+      "reference": [
+        "32736",
+        "32807",
+        "237",
+        "Jim`s Dungeon",
+        "32813",
+        "32810",
+        "13",
+        "Gludio Dungeon 7F",
+        "2"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15516",
+      "reason": "destination/source map outside selected expansion"
+    },
+    {
+      "reference": [
+        "32777",
+        "32796",
+        "21",
+        "Elven Dungeon 3F",
+        "32657",
+        "32872",
+        "32",
+        "Dragon Valley Caves 3F",
+        "2"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15901",
+      "reason": "destination/source map outside selected expansion"
+    },
+    {
+      "reference": [
+        "32806",
+        "32724",
+        "13",
+        "Gludio Dungeon 7F",
+        "33000",
+        "32808",
+        "14",
+        "Underground Passage",
+        "7"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16134",
+      "reason": "destination/source map outside selected expansion"
+    },
+    {
+      "reference": [
+        "32813",
+        "32810",
+        "13",
+        "Gludio Dungeon 7F",
+        "32736",
+        "32807",
+        "237",
+        "Jim`s Dungeon",
+        "5"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16220",
+      "reason": "destination/source map outside selected expansion"
+    },
+    {
+      "reference": [
+        "33000",
+        "32808",
+        "14",
+        "Underground Passage",
+        "32807",
+        "32724",
+        "13",
+        "Gludio Dungeon 7F",
+        "2"
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16387",
+      "reason": "destination/source map outside selected expansion"
+    }
+  ],
+  "client_lookup": {
+    "checked": [
+      "work/local_resource_provider/assets/data/region.jsonc",
+      "work/all_table_semantics/travel_review/entermap-data-candidates.json",
+      "work/source_game_data/native-dump-v1.jsonl"
+    ],
+    "result": "Client region establishes identity, EnterMap candidates are destination data with unresolved typed consumer; no verified walking trigger for these maps in reused evidence. L1J dungeon rows supply explicit LOCAL fallback."
+  }
+}

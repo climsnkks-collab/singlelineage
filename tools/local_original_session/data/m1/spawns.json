@@ -1,0 +1,2438 @@
+{
+  "table": "m1_spawns",
+  "version": 1,
+  "note": "말하는 섬 map0 전역 필드의 검증된 11종. 기존 M1 네 그룹 ID/수량/리젠을 유지하고 rect만 정적 통행 가능 부분으로 축소했다(previous_rect 보존). 나머지 선정 L1J 원스폰을 같은 원영역 내부의 도달가능 사각형으로 확장했다. S32 can_stand는 로컬 배치 정책이고 동적 문/점유/원본 전체 Nav는 별도다.",
+  "ref_abbrev": {
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc",
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "all-rows": "work/monster_level_comparison/analysis/all-rows.csv",
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "spr-parsed": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "drop-pairs": "work/npc_field_semantics/hypotheses/all-drop-pairs.json (배열 i 시작 줄=2+5i)",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jcfg": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "m1": "tools/local_original_session/data/m1/",
+    "mapping-scope": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md 3장",
+    "official": "tools/local_original_session/data/official/monsters.json (수집 2026-10-26)",
+    "map0-catalog": "tools/local_original_session/data/catalog/map0/",
+    "terrain": "tools/local_original_session/world_terrain.py; work/local_resource_provider/assets/map/0/*.s32"
+  },
+  "policy_basis": "기존 북쪽 초원16마리 유지 + 공식 말하는 섬에 출현하는 기본 사냥감7종과 기존4종의 북서/서/남서/남/남동 필드. 신규그룹은 catalog 원count 축소값에 그룹상한4를 적용하고 17x17 사각형을 우선해 과밀을 줄인다. source/rect는 역사 L1J 후보를 클라이언트 통행으로 좁힌 로컬 정책; 공식 세부 스폰점으로 주장하지 않는다.",
+  "groups": [
+    {
+      "group_id": {
+        "value": "m1_orc",
+        "source": "local_policy",
+        "ref": "l1jdb:45911 spawn 62018"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "monsters.json 오크"
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45911 mapid=0; region.jsonc:5 map0 경계 동일"
+      },
+      "rect": {
+        "value": {
+          "x1": 32579,
+          "y1": 32865,
+          "x2": 32599,
+          "y2": 32885
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45911 사각형 32561,32796-32708,32886; terrain; region.jsonc:5",
+        "note": "기존 M1 사각형 안에서 loaded·can_stand True이며 마을32578,32946에서 정적 can_step으로 도달 가능한 전칸 사각형으로 축소. 종전 rect는 previous_rect 보존."
+      },
+      "target_count": {
+        "value": 6,
+        "source": "local_policy",
+        "ref": "l1jdb:45911 count=60",
+        "note": "Lv2 주력 사냥감. 처음 만나는 몹이 가장 많게"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45911 min/max_respawn_delay=60/120초"
+      },
+      "previous_rect": {
+        "value": {
+          "x1": 32565,
+          "y1": 32856,
+          "x2": 32605,
+          "y2": 32886
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45911 사각형 32561,32796-32708,32886",
+        "note": "L1J 사각형 남서쪽 끝. 기준점에서 y 60~90칸"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_goblin",
+        "source": "local_policy",
+        "ref": "l1jdb:45899 spawn 62006"
+      },
+      "template_id": {
+        "value": 245,
+        "source": "client",
+        "ref": "monsters.json 고블린"
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45899 mapid=0"
+      },
+      "rect": {
+        "value": {
+          "x1": 32594,
+          "y1": 32856,
+          "x2": 32614,
+          "y2": 32876
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45899 사각형 32560,32796-32708,32885; terrain; region.jsonc:5",
+        "note": "기존 M1 사각형 안에서 loaded·can_stand True이며 마을32578,32946에서 정적 can_step으로 도달 가능한 전칸 사각형으로 축소. 종전 rect는 previous_rect 보존."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45899 count=30",
+        "note": "L1J 비율(오크 60:고블린 30)을 대략 따름"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45899 60/120초"
+      },
+      "previous_rect": {
+        "value": {
+          "x1": 32585,
+          "y1": 32856,
+          "x2": 32625,
+          "y2": 32886
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45899 사각형 32560,32796-32708,32885",
+        "note": "오크 영역과 일부 겹치게 동쪽으로 20칸 이동"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_orc_archer",
+        "source": "local_policy",
+        "ref": "l1jdb:45915 spawn 62022"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "monsters.json 오크 궁수"
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45915 mapid=0"
+      },
+      "rect": {
+        "value": {
+          "x1": 32577,
+          "y1": 32845,
+          "x2": 32593,
+          "y2": 32861
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45915 사각형 32561,32797-32705,32884; terrain; region.jsonc:5",
+        "note": "기존 M1 사각형 안에서 loaded·can_stand True이며 마을32578,32946에서 정적 can_step으로 도달 가능한 전칸 사각형으로 축소. 종전 rect는 previous_rect 보존."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45915 count=20"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45915 60/120초"
+      },
+      "previous_rect": {
+        "value": {
+          "x1": 32575,
+          "y1": 32840,
+          "x2": 32615,
+          "y2": 32866
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45915 사각형 32561,32797-32705,32884",
+        "note": "근접 몹 영역 바로 북쪽. 원거리 몹이 마을 입구에 몰리지 않게"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_werewolf",
+        "source": "local_policy",
+        "ref": "l1jdb:45893 spawn 62000"
+      },
+      "template_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "monsters.json 늑대인간"
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45893 mapid=0"
+      },
+      "rect": {
+        "value": {
+          "x1": 32623,
+          "y1": 32816,
+          "x2": 32643,
+          "y2": 32836
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45893 사각형 32559,32799-32706,32885; terrain; region.jsonc:5",
+        "note": "기존 M1 사각형 안에서 loaded·can_stand True이며 마을32578,32946에서 정적 can_step으로 도달 가능한 전칸 사각형으로 축소. 종전 rect는 previous_rect 보존."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45893 count=60",
+        "note": "저레벨 PC가 몰려 만나지 않게 적게"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45893 60/120초"
+      },
+      "previous_rect": {
+        "value": {
+          "x1": 32610,
+          "y1": 32810,
+          "x2": 32660,
+          "y2": 32845
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45893 사각형 32559,32799-32706,32885",
+        "note": "Lv9라서 L1J 영역 안쪽 북동부로 떼어 놓음. 기준점에서 약 100칸"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62001",
+        "source": "local_policy",
+        "ref": "l1jdb:45894 spawn62001"
+      },
+      "template_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45024",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45894 spawn62001 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32444,
+          "y1": 32895,
+          "x2": 32460,
+          "y2": 32911
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45894 spawn62001; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45894 spawn62001 count=140",
+        "note": "catalog 싱글 축소값 7에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45894 spawn62001 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62001,
+      "l1j_npcid": 45024,
+      "original_count": 140,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32305,
+          "y1": 32863,
+          "x2": 32526,
+          "y2": 33192
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45894 spawn62001; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 7,
+        "source": "local_policy",
+        "ref": "l1jdb:45894 spawn62001 count=140",
+        "note": "M1 늑대인간60→3; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62002",
+        "source": "local_policy",
+        "ref": "l1jdb:45895 spawn62002"
+      },
+      "template_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45024",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45895 spawn62002 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32663,
+          "y1": 33051,
+          "x2": 32679,
+          "y2": 33067
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45895 spawn62002; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45895 spawn62002 count=100",
+        "note": "catalog 싱글 축소값 5에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45895 spawn62002 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62002,
+      "l1j_npcid": 45024,
+      "original_count": 100,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32527,
+          "y1": 33030,
+          "x2": 32729,
+          "y2": 33226
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45895 spawn62002; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 5,
+        "source": "local_policy",
+        "ref": "l1jdb:45895 spawn62002 count=100",
+        "note": "M1 늑대인간60→3; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62007",
+        "source": "local_policy",
+        "ref": "l1jdb:45900 spawn62007"
+      },
+      "template_id": {
+        "value": 245,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45008",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45900 spawn62007 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32497,
+          "y1": 32819,
+          "x2": 32513,
+          "y2": 32835
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45900 spawn62007; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45900 spawn62007 count=30",
+        "note": "catalog 싱글 축소값 4에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45900 spawn62007 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62007,
+      "l1j_npcid": 45008,
+      "original_count": 30,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32465,
+          "y1": 32789,
+          "x2": 32552,
+          "y2": 32857
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45900 spawn62007; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45900 spawn62007 count=30",
+        "note": "M1 고블린30→4; 원count×2/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62008",
+        "source": "local_policy",
+        "ref": "l1jdb:45901 spawn62008"
+      },
+      "template_id": {
+        "value": 245,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45008",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45901 spawn62008 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32337,
+          "y1": 32986,
+          "x2": 32353,
+          "y2": 33002
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45901 spawn62008; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45901 spawn62008 count=100",
+        "note": "catalog 싱글 축소값 14에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45901 spawn62008 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62008,
+      "l1j_npcid": 45008,
+      "original_count": 100,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32304,
+          "y1": 32862,
+          "x2": 32526,
+          "y2": 33193
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45901 spawn62008; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 14,
+        "source": "local_policy",
+        "ref": "l1jdb:45901 spawn62008 count=100",
+        "note": "M1 고블린30→4; 원count×2/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62009",
+        "source": "local_policy",
+        "ref": "l1jdb:45902 spawn62009"
+      },
+      "template_id": {
+        "value": 245,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45008",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45902 spawn62009 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32538,
+          "y1": 33080,
+          "x2": 32554,
+          "y2": 33096
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45902 spawn62009; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45902 spawn62009 count=60",
+        "note": "catalog 싱글 축소값 8에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45902 spawn62009 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62009,
+      "l1j_npcid": 45008,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32527,
+          "y1": 33030,
+          "x2": 32729,
+          "y2": 33225
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45902 spawn62009; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 8,
+        "source": "local_policy",
+        "ref": "l1jdb:45902 spawn62009 count=60",
+        "note": "M1 고블린30→4; 원count×2/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62014",
+        "source": "local_policy",
+        "ref": "l1jdb:45907 spawn62014"
+      },
+      "template_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45082",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45907 spawn62014 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32612,
+          "y1": 32844,
+          "x2": 32628,
+          "y2": 32860
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45907 spawn62014; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45907 spawn62014 count=30",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45907 spawn62014 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62014,
+      "l1j_npcid": 45082,
+      "original_count": 30,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32561,
+          "y1": 32796,
+          "x2": 32706,
+          "y2": 32883
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45907 spawn62014; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45907 spawn62014 count=30",
+        "note": "확장 로컬 정책 Lv8 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62015",
+        "source": "local_policy",
+        "ref": "l1jdb:45908 spawn62015"
+      },
+      "template_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45082",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45908 spawn62015 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32514,
+          "y1": 32818,
+          "x2": 32530,
+          "y2": 32834
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45908 spawn62015; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45908 spawn62015 count=16",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45908 spawn62015 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62015,
+      "l1j_npcid": 45082,
+      "original_count": 16,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32465,
+          "y1": 32782,
+          "x2": 32550,
+          "y2": 32856
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45908 spawn62015; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45908 spawn62015 count=16",
+        "note": "확장 로컬 정책 Lv8 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62016",
+        "source": "local_policy",
+        "ref": "l1jdb:45909 spawn62016"
+      },
+      "template_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45082",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45909 spawn62016 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32409,
+          "y1": 33061,
+          "x2": 32425,
+          "y2": 33077
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45909 spawn62016; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45909 spawn62016 count=60",
+        "note": "catalog 싱글 축소값 4에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45909 spawn62016 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62016,
+      "l1j_npcid": 45082,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32304,
+          "y1": 32860,
+          "x2": 32526,
+          "y2": 33192
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45909 spawn62016; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45909 spawn62016 count=60",
+        "note": "확장 로컬 정책 Lv8 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62017",
+        "source": "local_policy",
+        "ref": "l1jdb:45910 spawn62017"
+      },
+      "template_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45082",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45910 spawn62017 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32647,
+          "y1": 33146,
+          "x2": 32663,
+          "y2": 33162
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45910 spawn62017; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45910 spawn62017 count=40",
+        "note": "catalog 싱글 축소값 3에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45910 spawn62017 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62017,
+      "l1j_npcid": 45082,
+      "original_count": 40,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32528,
+          "y1": 33028,
+          "x2": 32729,
+          "y2": 33223
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45910 spawn62017; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45910 spawn62017 count=40",
+        "note": "확장 로컬 정책 Lv8 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62019",
+        "source": "local_policy",
+        "ref": "l1jdb:45912 spawn62019"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45009",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45912 spawn62019 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32527,
+          "y1": 32788,
+          "x2": 32543,
+          "y2": 32804
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45912 spawn62019; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45912 spawn62019 count=30",
+        "note": "catalog 싱글 축소값 3에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45912 spawn62019 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62019,
+      "l1j_npcid": 45009,
+      "original_count": 30,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32464,
+          "y1": 32781,
+          "x2": 32551,
+          "y2": 32857
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45912 spawn62019; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45912 spawn62019 count=30",
+        "note": "M1 오크60→6; 원count×1/10 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62020",
+        "source": "local_policy",
+        "ref": "l1jdb:45913 spawn62020"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45009",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45913 spawn62020 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32327,
+          "y1": 32974,
+          "x2": 32343,
+          "y2": 32990
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45913 spawn62020; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45913 spawn62020 count=100",
+        "note": "catalog 싱글 축소값 10에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45913 spawn62020 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62020,
+      "l1j_npcid": 45009,
+      "original_count": 100,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32305,
+          "y1": 32863,
+          "x2": 32525,
+          "y2": 33062
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45913 spawn62020; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 10,
+        "source": "local_policy",
+        "ref": "l1jdb:45913 spawn62020 count=100",
+        "note": "M1 오크60→6; 원count×1/10 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62021",
+        "source": "local_policy",
+        "ref": "l1jdb:45914 spawn62021"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45009",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45914 spawn62021 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32550,
+          "y1": 33056,
+          "x2": 32566,
+          "y2": 33072
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45914 spawn62021; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45914 spawn62021 count=60",
+        "note": "catalog 싱글 축소값 6에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45914 spawn62021 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62021,
+      "l1j_npcid": 45009,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32526,
+          "y1": 33030,
+          "x2": 32729,
+          "y2": 33222
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45914 spawn62021; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 6,
+        "source": "local_policy",
+        "ref": "l1jdb:45914 spawn62021 count=60",
+        "note": "M1 오크60→6; 원count×1/10 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62023",
+        "source": "local_policy",
+        "ref": "l1jdb:45916 spawn62023"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45019",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45916 spawn62023 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32531,
+          "y1": 32805,
+          "x2": 32547,
+          "y2": 32821
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45916 spawn62023; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45916 spawn62023 count=10",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45916 spawn62023 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62023,
+      "l1j_npcid": 45019,
+      "original_count": 10,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32464,
+          "y1": 32782,
+          "x2": 32550,
+          "y2": 32855
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45916 spawn62023; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45916 spawn62023 count=10",
+        "note": "M1 궁수20→3; 원count×3/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62024",
+        "source": "local_policy",
+        "ref": "l1jdb:45917 spawn62024"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45019",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45917 spawn62024 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32355,
+          "y1": 32997,
+          "x2": 32371,
+          "y2": 33013
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45917 spawn62024; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45917 spawn62024 count=60",
+        "note": "catalog 싱글 축소값 9에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45917 spawn62024 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62024,
+      "l1j_npcid": 45019,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32304,
+          "y1": 32863,
+          "x2": 32525,
+          "y2": 33063
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45917 spawn62024; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 9,
+        "source": "local_policy",
+        "ref": "l1jdb:45917 spawn62024 count=60",
+        "note": "M1 궁수20→3; 원count×3/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62025",
+        "source": "local_policy",
+        "ref": "l1jdb:45918 spawn62025"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45019",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45918 spawn62025 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32596,
+          "y1": 33088,
+          "x2": 32612,
+          "y2": 33104
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45918 spawn62025; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45918 spawn62025 count=60",
+        "note": "catalog 싱글 축소값 9에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45918 spawn62025 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62025,
+      "l1j_npcid": 45019,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32527,
+          "y1": 33029,
+          "x2": 32729,
+          "y2": 33223
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45918 spawn62025; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 9,
+        "source": "local_policy",
+        "ref": "l1jdb:45918 spawn62025 count=60",
+        "note": "M1 궁수20→3; 원count×3/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62026",
+        "source": "local_policy",
+        "ref": "l1jdb:45919 spawn62026"
+      },
+      "template_id": {
+        "value": 249,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45016",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45919 spawn62026 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32677,
+          "y1": 32860,
+          "x2": 32693,
+          "y2": 32876
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45919 spawn62026; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45919 spawn62026 count=20",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45919 spawn62026 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62026,
+      "l1j_npcid": 45016,
+      "original_count": 20,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32560,
+          "y1": 32796,
+          "x2": 32705,
+          "y2": 32883
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45919 spawn62026; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45919 spawn62026 count=20",
+        "note": "확장 로컬 정책 Lv3 구간 1/10; 원count×1/10 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62027",
+        "source": "local_policy",
+        "ref": "l1jdb:45920 spawn62027"
+      },
+      "template_id": {
+        "value": 249,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45016",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45920 spawn62027 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32526,
+          "y1": 32815,
+          "x2": 32542,
+          "y2": 32831
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45920 spawn62027; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45920 spawn62027 count=10",
+        "note": "catalog 싱글 축소값 1에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45920 spawn62027 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62027,
+      "l1j_npcid": 45016,
+      "original_count": 10,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32465,
+          "y1": 32782,
+          "x2": 32551,
+          "y2": 32855
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45920 spawn62027; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45920 spawn62027 count=10",
+        "note": "확장 로컬 정책 Lv3 구간 1/10; 원count×1/10 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62028",
+        "source": "local_policy",
+        "ref": "l1jdb:45921 spawn62028"
+      },
+      "template_id": {
+        "value": 249,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45016",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45921 spawn62028 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32457,
+          "y1": 32962,
+          "x2": 32473,
+          "y2": 32978
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45921 spawn62028; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45921 spawn62028 count=60",
+        "note": "catalog 싱글 축소값 6에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45921 spawn62028 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62028,
+      "l1j_npcid": 45016,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32304,
+          "y1": 32863,
+          "x2": 32525,
+          "y2": 33062
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45921 spawn62028; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 6,
+        "source": "local_policy",
+        "ref": "l1jdb:45921 spawn62028 count=60",
+        "note": "확장 로컬 정책 Lv3 구간 1/10; 원count×1/10 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62029",
+        "source": "local_policy",
+        "ref": "l1jdb:45922 spawn62029"
+      },
+      "template_id": {
+        "value": 249,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45016",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45922 spawn62029 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32699,
+          "y1": 33115,
+          "x2": 32715,
+          "y2": 33131
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45922 spawn62029; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45922 spawn62029 count=60",
+        "note": "catalog 싱글 축소값 6에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45922 spawn62029 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62029,
+      "l1j_npcid": 45016,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32528,
+          "y1": 33030,
+          "x2": 32728,
+          "y2": 33222
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45922 spawn62029; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 6,
+        "source": "local_policy",
+        "ref": "l1jdb:45922 spawn62029 count=60",
+        "note": "확장 로컬 정책 Lv3 구간 1/10; 원count×1/10 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62030",
+        "source": "local_policy",
+        "ref": "l1jdb:45923 spawn62030"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45041",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45923 spawn62030 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32630,
+          "y1": 32833,
+          "x2": 32646,
+          "y2": 32849
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45923 spawn62030; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45923 spawn62030 count=20",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45923 spawn62030 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62030,
+      "l1j_npcid": 45041,
+      "original_count": 20,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32561,
+          "y1": 32796,
+          "x2": 32707,
+          "y2": 32883
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45923 spawn62030; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45923 spawn62030 count=20",
+        "note": "확장 로컬 정책 Lv5 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62031",
+        "source": "local_policy",
+        "ref": "l1jdb:45924 spawn62031"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45041",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45924 spawn62031 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32534,
+          "y1": 32787,
+          "x2": 32550,
+          "y2": 32803
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45924 spawn62031; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45924 spawn62031 count=10",
+        "note": "catalog 싱글 축소값 1에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45924 spawn62031 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62031,
+      "l1j_npcid": 45041,
+      "original_count": 10,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32465,
+          "y1": 32782,
+          "x2": 32550,
+          "y2": 32856
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45924 spawn62031; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45924 spawn62031 count=10",
+        "note": "확장 로컬 정책 Lv5 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62032",
+        "source": "local_policy",
+        "ref": "l1jdb:45925 spawn62032"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45041",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45925 spawn62032 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32489,
+          "y1": 32875,
+          "x2": 32505,
+          "y2": 32891
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45925 spawn62032; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45925 spawn62032 count=40",
+        "note": "catalog 싱글 축소값 3에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45925 spawn62032 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62032,
+      "l1j_npcid": 45041,
+      "original_count": 40,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32306,
+          "y1": 32865,
+          "x2": 32525,
+          "y2": 33063
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45925 spawn62032; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45925 spawn62032 count=40",
+        "note": "확장 로컬 정책 Lv5 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62033",
+        "source": "local_policy",
+        "ref": "l1jdb:45926 spawn62033"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45041",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45926 spawn62033 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32665,
+          "y1": 33034,
+          "x2": 32681,
+          "y2": 33050
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45926 spawn62033; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45926 spawn62033 count=40",
+        "note": "catalog 싱글 축소값 3에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45926 spawn62033 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62033,
+      "l1j_npcid": 45041,
+      "original_count": 40,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32528,
+          "y1": 33031,
+          "x2": 32727,
+          "y2": 33221
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45926 spawn62033; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45926 spawn62033 count=40",
+        "note": "확장 로컬 정책 Lv5 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62039",
+        "source": "local_policy",
+        "ref": "l1jdb:45932 spawn62039"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45065",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45932 spawn62039 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32509,
+          "y1": 32823,
+          "x2": 32525,
+          "y2": 32839
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45932 spawn62039; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45932 spawn62039 count=16",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45932 spawn62039 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62039,
+      "l1j_npcid": 45065,
+      "original_count": 16,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32464,
+          "y1": 32782,
+          "x2": 32552,
+          "y2": 32858
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45932 spawn62039; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45932 spawn62039 count=16",
+        "note": "확장 로컬 정책 Lv6 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62040",
+        "source": "local_policy",
+        "ref": "l1jdb:45933 spawn62040"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45065",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45933 spawn62040 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32412,
+          "y1": 33141,
+          "x2": 32428,
+          "y2": 33157
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45933 spawn62040; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45933 spawn62040 count=60",
+        "note": "catalog 싱글 축소값 4에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45933 spawn62040 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62040,
+      "l1j_npcid": 45065,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32305,
+          "y1": 32863,
+          "x2": 32526,
+          "y2": 33191
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45933 spawn62040; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45933 spawn62040 count=60",
+        "note": "확장 로컬 정책 Lv6 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62041",
+        "source": "local_policy",
+        "ref": "l1jdb:45934 spawn62041"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45065",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45934 spawn62041 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32639,
+          "y1": 33174,
+          "x2": 32655,
+          "y2": 33190
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45934 spawn62041; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45934 spawn62041 count=60",
+        "note": "catalog 싱글 축소값 4에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45934 spawn62041 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62041,
+      "l1j_npcid": 45065,
+      "original_count": 60,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32527,
+          "y1": 33031,
+          "x2": 32730,
+          "y2": 33223
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45934 spawn62041; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45934 spawn62041 count=60",
+        "note": "확장 로컬 정책 Lv6 구간 1/15; 원count×1/15 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62045",
+        "source": "local_policy",
+        "ref": "l1jdb:45938 spawn62045"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45107",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45938 spawn62045 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32472,
+          "y1": 33077,
+          "x2": 32488,
+          "y2": 33093
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45938 spawn62045; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45938 spawn62045 count=40",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45938 spawn62045 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62045,
+      "l1j_npcid": 45107,
+      "original_count": 40,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32306,
+          "y1": 33066,
+          "x2": 32527,
+          "y2": 33189
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45938 spawn62045; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45938 spawn62045 count=40",
+        "note": "확장 로컬 정책 Lv10 구간 1/20; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62046",
+        "source": "local_policy",
+        "ref": "l1jdb:45939 spawn62046"
+      },
+      "template_id": {
+        "value": 17,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45136",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45939 spawn62046 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32394,
+          "y1": 33035,
+          "x2": 32410,
+          "y2": 33051
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45939 spawn62046; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45939 spawn62046 count=40",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45939 spawn62046 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62046,
+      "l1j_npcid": 45136,
+      "original_count": 40,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32306,
+          "y1": 32964,
+          "x2": 32456,
+          "y2": 33189
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45939 spawn62046; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45939 spawn62046 count=40",
+        "note": "확장 로컬 정책 Lv14 구간 1/20; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62047",
+        "source": "local_policy",
+        "ref": "l1jdb:45940 spawn62047"
+      },
+      "template_id": {
+        "value": 17,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45136",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45940 spawn62047 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32608,
+          "y1": 33116,
+          "x2": 32624,
+          "y2": 33132
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45940 spawn62047; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45940 spawn62047 count=40",
+        "note": "catalog 싱글 축소값 2에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45940 spawn62047 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62047,
+      "l1j_npcid": 45136,
+      "original_count": 40,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32460,
+          "y1": 33034,
+          "x2": 32728,
+          "y2": 33220
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45940 spawn62047; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45940 spawn62047 count=40",
+        "note": "확장 로컬 정책 Lv14 구간 1/20; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62050",
+        "source": "local_policy",
+        "ref": "l1jdb:45943 spawn62050"
+      },
+      "template_id": {
+        "value": 5,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45126",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45943 spawn62050 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32562,
+          "y1": 32840,
+          "x2": 32578,
+          "y2": 32856
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45943 spawn62050; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45943 spawn62050 count=16",
+        "note": "catalog 싱글 축소값 1에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45943 spawn62050 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62050,
+      "l1j_npcid": 45126,
+      "original_count": 16,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32562,
+          "y1": 32798,
+          "x2": 32704,
+          "y2": 32883
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45943 spawn62050; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45943 spawn62050 count=16",
+        "note": "확장 로컬 정책 Lv13 구간 1/20; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62051",
+        "source": "local_policy",
+        "ref": "l1jdb:45944 spawn62051"
+      },
+      "template_id": {
+        "value": 5,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45126",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45944 spawn62051 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32535,
+          "y1": 32808,
+          "x2": 32551,
+          "y2": 32824
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45944 spawn62051; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45944 spawn62051 count=10",
+        "note": "catalog 싱글 축소값 1에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45944 spawn62051 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62051,
+      "l1j_npcid": 45126,
+      "original_count": 10,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32468,
+          "y1": 32786,
+          "x2": 32551,
+          "y2": 32856
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45944 spawn62051; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45944 spawn62051 count=10",
+        "note": "확장 로컬 정책 Lv13 구간 1/20; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62052",
+        "source": "local_policy",
+        "ref": "l1jdb:45945 spawn62052"
+      },
+      "template_id": {
+        "value": 5,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45126",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45945 spawn62052 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32328,
+          "y1": 33005,
+          "x2": 32344,
+          "y2": 33021
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45945 spawn62052; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45945 spawn62052 count=20",
+        "note": "catalog 싱글 축소값 1에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45945 spawn62052 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62052,
+      "l1j_npcid": 45126,
+      "original_count": 20,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32305,
+          "y1": 32966,
+          "x2": 32458,
+          "y2": 33094
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45945 spawn62052; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45945 spawn62052 count=20",
+        "note": "확장 로컬 정책 Lv13 구간 1/20; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m1_field_62053",
+        "source": "local_policy",
+        "ref": "l1jdb:45946 spawn62053"
+      },
+      "template_id": {
+        "value": 5,
+        "source": "client",
+        "ref": "monsters.json mappings l1j_npcid=45126",
+        "note": "클래식 템플릿 후보. mapping_status와 지역 불일치를 확인할 것."
+      },
+      "map_id": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:45946 spawn62053 mapid=0; region.jsonc:5"
+      },
+      "rect": {
+        "value": {
+          "x1": 32577,
+          "y1": 33055,
+          "x2": 32593,
+          "y2": 33071
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45946 spawn62053; l1jsrc model/L1Spawn.java:423-439; terrain; region.jsonc:5",
+        "note": "L1J 외곽 사각형 안에서 실제 클라이언트 S32 정적 통행·마을 출발 도달 가능 전칸을 선정. 17x17 우선(불가시13/9/5); 동일 영역은 종별 기준점·중첩비용으로 분산. 공식 스폰점/지역명/동적 문·점유·완전 Nav 보장 아님."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45946 spawn62053 count=20",
+        "note": "catalog 싱글 축소값 1에 새 좁은 rect 밀집 방지 상한4 적용(min(4,catalog_count)); 원count/축소비율은 catalog_target_count 및 catalog source_rows 보존. 클래식 원수량 근거 아님."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45946 spawn62053 min/max_respawn_delay",
+        "note": "L1J 초→ms. 카탈로그 min/max로 원래 RNG·실재생성 시각/수명까지 보장하지 않음."
+      },
+      "l1j_spawn_id": 62053,
+      "l1j_npcid": 45126,
+      "original_count": 20,
+      "mapping_status": "candidate_region_supported",
+      "runtime_verified": false,
+      "catalog_rect": {
+        "value": {
+          "x1": 32528,
+          "y1": 33033,
+          "x2": 32729,
+          "y2": 33224
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45946 spawn62053; l1jsrc model/L1Spawn.java:423-439",
+        "note": "L1J area 초기 추첨 upper exclusive를 M1 inclusive에 맞춰 x2/y2에서1 감산. 50회 실패의 locx/locy fallback·spawn_home 재생성 분포/통행은 미표현."
+      },
+      "catalog_target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45946 spawn62053 count=20",
+        "note": "확장 로컬 정책 Lv13 구간 1/20; 원count×1/20 올림, 0은0, 양수는최소1, 원count 초과금지"
+      }
+    }
+  ],
+  "terrain_validation": {
+    "basis": "client S32 mask1; world_terrain.WorldTerrain.can_step/can_stand; region.jsonc:5",
+    "map_bounds": {
+      "x1": 32256,
+      "y1": 32768,
+      "x2": 32767,
+      "y2": 33279
+    },
+    "loaded_chunk_bounds": [
+      32256,
+      32704,
+      32767,
+      33279
+    ],
+    "bounds_note": "S32 로드 외접에는 북쪽 y32704..32767도 있으나 배치는 클라이언트 map0 경계 y32768 이상으로 제한.",
+    "origin": [
+      32578,
+      32946
+    ],
+    "reachable_cells_in_map_bounds": 124661,
+    "groups_checked": 37,
+    "all_rect_cells_checked": 11149,
+    "result": "all selected cells loaded, static can_stand=True and reachable from origin",
+    "limit": "정적 통행 자료 확인만 의미한다. 동적 문·점유·원본 전체 Nav·실제 플레이는 미확인."
+  }
+}

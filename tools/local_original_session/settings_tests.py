@@ -93,6 +93,8 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
             conversation_factory=lambda *args: None, expected_uuid=str(uuid.uuid4()),
             store_path=self.profile, settings_path=self.profile.with_name('account-settings.bin'))
         self.realm = self.broker.realm
+        self.decoder = b.ClientPlaintextDecoder(cipher_pointer='present_disabled',
+                                                max_buffer=self.broker.policy.MAX_BUFFER)
         self.realm.store.create(b.ack.realm.Creation(self.realm.profile_name, 0, 0, (13,) * 6))
         self.writer = Writer(self)
         now = time.monotonic_ns()
@@ -238,7 +240,7 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
             await self.broker._complete_eof(self.writer, self.row, decoder_empty=True)
         pending = asyncio.get_running_loop().create_future()
         with self.assertRaisesRegex(ValueError, 'CURRENT_OWNER_REQUIRED'):
-            await self.broker._poll_checkpoint(self.writer, self.row, pending, decoder_empty=True)
+            await self.broker._poll_checkpoint(self.writer, self.row, pending, decoder=self.decoder, decoder_empty=True)
         self.assertFalse(pending.done())
         pending.cancel()
         self.alive = True
@@ -254,7 +256,7 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
         self.alive = False
         reader = asyncio.get_running_loop().create_future()
         poll = asyncio.create_task(self.broker._poll_checkpoint(
-            self.writer, self.row, reader, decoder_empty=True))
+            self.writer, self.row, reader, decoder=self.decoder, decoder_empty=True))
         await asyncio.sleep(0)
         self.assertFalse(poll.done()); self.assertFalse(self.row['eof'])
         reader.set_result(b'')
@@ -269,14 +271,14 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
         self.alive = False
         reader = asyncio.get_running_loop().create_future()
         poll = asyncio.create_task(self.broker._poll_checkpoint(
-            self.writer, self.row, reader, decoder_empty=True))
+            self.writer, self.row, reader, decoder=self.decoder, decoder_empty=True))
         self.row['task'] = poll
         self.broker._claims[12000].append(self.row)
         joining = asyncio.create_task(self.broker.join_quit_exit())
         await asyncio.sleep(0); await asyncio.sleep(0)
         self.assertFalse(joining.done()); self.assertFalse(poll.cancelled())
         reader.set_result(b'not-eof')
-        with self.assertRaisesRegex(ValueError, 'QUIT_TERMINAL_EOF_REQUIRED'):
+        with self.assertRaisesRegex(ValueError, 'QUIT_TERMINAL_EXACT_FRAME_REQUIRED'):
             await poll
         self.assertEqual(await joining, dict(eligible=1, joined=1))
         self.assertFalse(self.row['eof'])

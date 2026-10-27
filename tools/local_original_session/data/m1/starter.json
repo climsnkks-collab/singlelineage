@@ -1,0 +1,100 @@
+{
+  "table": "m1_starter",
+  "version": 1,
+  "note": "월드(M1) 수동 플레이에서 저장 인벤토리가 없는 캐릭터의 첫 지급. 직업별 장비는 L1J beginner 표를 클래식 아이템 번호로 바꾼 것(items.json 대응)이고, 착용 상태·빨간 물약 개수·아이템 UID는 로컬 정책이다. 대응이 없는 L1J 항목(요정 나무 재킷·짧은 활·화살, 양초)은 넣지 않았다. 법사 최초 가방의 마법서16종·파란 물약20·말하는 두루마리1은 수동 시험용 로컬 정책이다.",
+  "ref_abbrev": {
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql (beginner 열 :166-175, 행 :3535-3554; activate A=전 직업, P=군주, K=기사, E=요정, W=마법사)"
+  },
+  "class_ids": {"value": {"0": "royal", "1": "knight", "2": "elf", "3": "mage"}, "source": "client", "ref": "tools/local_original_session/athame_policy.py CLASS_NAMES (UI 직업 번호)"},
+  "uid_base": {"value": 65537, "source": "local_policy", "ref": "기존 아탐 시작 지급 UID 65537(item-equipment-runtime-config.json inventory.fields.1)부터 지급 순서대로 1씩 증가"},
+  "classes": {
+    "0": [
+      {"value": {"item": 41, "count": 1, "equipped": true}, "source": "l1j", "ref": "l1jdb:3536 Dagger(4) P → 클래식 41", "note": "착용 상태는 로컬 정책"},
+      {"value": {"item": 103, "count": 1, "equipped": true}, "source": "l1j", "ref": "l1jdb:3541 Leather Jacket(20322) P → 클래식 103", "note": "착용 상태는 로컬 정책"},
+      {"value": {"item": 14, "count": 20, "equipped": false}, "source": "local_policy", "ref": "30분 사냥 시험용 빨간 물약 20개"},
+      {"value": {"item": 7, "count": 100, "equipped": false}, "source": "l1j", "ref": "l1jdb:3535 Adena(40308) 100 A → 클래식 7"}
+    ],
+    "1": [
+      {"value": {"item": 41, "count": 1, "equipped": true}, "source": "l1j", "ref": "l1jdb:3545 Dagger(4) K", "note": "착용 상태는 로컬 정책"},
+      {"value": {"item": 103, "count": 1, "equipped": true}, "source": "l1j", "ref": "l1jdb:3542 Leather Jacket(20322) K", "note": "착용 상태는 로컬 정책"},
+      {"value": {"item": 14, "count": 20, "equipped": false}, "source": "local_policy", "ref": "30분 사냥 시험용 빨간 물약 20개"},
+      {"value": {"item": 7, "count": 100, "equipped": false}, "source": "l1j", "ref": "l1jdb:3535 Adena 100 A"}
+    ],
+    "2": [
+      {"value": {"item": 41, "count": 1, "equipped": true}, "source": "l1j", "ref": "l1jdb:3546 Dagger(4) E", "note": "E의 나무 재킷(29001)·짧은 활(173)·화살(40743)은 클래식 대응 미확인으로 제외"},
+      {"value": {"item": 14, "count": 20, "equipped": false}, "source": "local_policy", "ref": "30분 사냥 시험용 빨간 물약 20개"},
+      {"value": {"item": 7, "count": 100, "equipped": false}, "source": "l1j", "ref": "l1jdb:3535 Adena 100 A"}
+    ],
+    "3": [
+      {"value": {"item": 41, "count": 1, "equipped": true}, "source": "l1j", "ref": "l1jdb:3547 Dagger(4) W", "note": "착용 상태는 로컬 정책"},
+      {"value": {"item": 103, "count": 1, "equipped": true}, "source": "l1j", "ref": "l1jdb:3543 Leather Jacket(20322) W", "note": "착용 상태는 로컬 정책"},
+      {"value": {"item": 14, "count": 20, "equipped": false}, "source": "local_policy", "ref": "30분 사냥 시험용 빨간 물약 20개"},
+      {"value": {"item": 7, "count": 100, "equipped": false}, "source": "l1j", "ref": "l1jdb:3535 Adena 100 A"},
+      {"value": {"item": 164, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 180, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 181, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 182, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 183, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 515, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 516, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 598, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 184, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 185, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 186, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 187, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 188, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 599, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 517, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 518, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag: data/m3/player_spells.json player_policy.book_classic_key; one book per supported spell"},
+      {"value": {"item": 492, "count": 20, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag blue potions; native-dump-v1.jsonl:1298"},
+      {"value": {"item": 12273, "count": 1, "equipped": false}, "source": "local_policy", "ref": "SoloMage first bag permanent reusable talking scroll; data/m2/talkscroll.json; no quantity consumption"}
+    ]
+  },
+  "kits": {
+    "test_knight": {
+      "class": {"value": 1, "source": "local_policy", "ref": "수동 플레이 -TestKnight 전용(월드 설정 world.starter_kit). 선택 캐릭터 직업이 다르면 classes 표를 쓴다", "note": "첫 지급 때 착용은 4부위만: 097A 통지 1건에 약 1.4초가 걸려(owner 표본 2회) 8부위면 launcher 인벤토리 확인 한도 10초(commands.TOOL_RESULT_WAIT_NS)를 넘는다(auto-test-knight-20261026a FEATURE_INVENTORY_CLIENT_DEADLINE). 나머지 4개는 가방에서 직접 착용"},
+      "companion_supplies": [
+        {"value": {"item": 492, "count": 20, "icon": 75}, "source": "client", "ref": "native-dump-v1.jsonl:1298 classic492 $232; official raw/item/492.json icon75 weight7; LOCAL companion blue-potion kit count20"}
+      ],
+      "entries": [
+        {"value": {"item": 3, "count": 1, "equipped": true}, "source": "local_policy", "ref": "시험용 기사 키트: 장검(items.json 3, L1J Long Sword 8/12)"},
+        {"value": {"item": 117, "count": 1, "equipped": true}, "source": "local_policy", "ref": "큰 방패(items.json 117, ac -2)"},
+        {"value": {"item": 89, "count": 1, "equipped": false}, "source": "local_policy", "ref": "난쟁이족 철 투구(items.json 89, ac -2). 가방에서 직접 착용"},
+        {"value": {"item": 98, "count": 1, "equipped": true}, "source": "local_policy", "ref": "비늘 갑옷(items.json 98, ac -4)"},
+        {"value": {"item": 104, "count": 1, "equipped": false}, "source": "local_policy", "ref": "티셔츠(items.json 104, ac 0). 가방에서 직접 착용"},
+        {"value": {"item": 109, "count": 1, "equipped": true}, "source": "local_policy", "ref": "보호 망토(items.json 109, ac -3)"},
+        {"value": {"item": 128, "count": 1, "equipped": false}, "source": "local_policy", "ref": "부츠(items.json 128, ac -2). 가방에서 직접 착용"},
+        {"value": {"item": 129, "count": 1, "equipped": false}, "source": "local_policy", "ref": "장갑(items.json 129, ac 0). 가방에서 직접 착용"},
+        {"value": {"item": 14, "count": 100, "equipped": false}, "source": "local_policy", "ref": "빨간 물약 100개"},
+        {"value": {"item": 17, "count": 20, "equipped": false}, "source": "local_policy", "ref": "초록 물약 20개"},
+        {"value": {"item": 296, "count": 20, "equipped": false}, "source": "local_policy", "ref": "용기의 물약 20개"},
+        {"value": {"item": 7, "count": 1000, "equipped": false}, "source": "local_policy", "ref": "아데나 1000"},
+        {"value": {"item": 41, "count": 1, "equipped": false}, "source": "local_policy", "ref": "2026-10-26 user weapon-stance stage 2: test_knight bag, 단검; items.json 41; native-dump:990"},
+        {"value": {"item": 6, "count": 1, "equipped": false}, "source": "local_policy", "ref": "2026-10-26 user weapon-stance stage 2: test_knight bag, 양손검; items.json 6; native-dump:957"},
+        {"value": {"item": 4, "count": 1, "equipped": false}, "source": "local_policy", "ref": "2026-10-26 user weapon-stance stage 2: test_knight bag, 도끼; items.json 4; native-dump:955"},
+        {"value": {"item": 12, "count": 1, "equipped": false}, "source": "local_policy", "ref": "2026-10-26 user weapon-stance stage 2: test_knight bag, 창; items.json 12; native-dump:963"},
+        {"value": {"item": 11, "count": 1, "equipped": false}, "source": "local_policy", "ref": "2026-10-26 user weapon-stance stage 2: test_knight bag, 활; items.json 11; native-dump:962"},
+        {"value": {"item": 230, "count": 1, "equipped": false}, "source": "local_policy", "ref": "2026-10-26 user weapon-stance stage 2: test_knight bag, 참나무 지팡이; items.json 230; native-dump:1139"},
+        {"value": {"item": 29, "count": 200, "equipped": false}, "source": "local_policy", "ref": "2026-10-26 사용자 요청 활과 화살: native-dump:978 item29 화살 200개, 가방 보유만"},
+        {"value": {"item": 299, "count": 5, "equipped": false}, "source": "local_policy", "ref": "LANE3 requested test-only kit; Classic 299 native catalog verified"},
+        {"value": {"item": 162, "count": 10, "equipped": false}, "source": "local_policy", "ref": "LANE3 requested test-only kit; Classic 162 native catalog verified"},
+        {"value": {"item": 23, "count": 10, "equipped": false}, "source": "local_policy", "ref": "LANE3 requested test-only kit; Classic 23 native catalog verified"},
+        {"value": {"item": 25, "count": 5, "equipped": false, "grade": 1}, "source": "local_policy", "ref": "LANE4 user test kit: explicit instance grade1 normal/0 blessed/2 cursed; f18 LOCAL marker, not native grade wire"},
+        {"value": {"item": 25, "count": 5, "equipped": false, "grade": 0}, "source": "local_policy", "ref": "LANE4 user test kit: explicit instance grade1 normal/0 blessed/2 cursed; f18 LOCAL marker, not native grade wire"},
+        {"value": {"item": 25, "count": 5, "equipped": false, "grade": 2}, "source": "local_policy", "ref": "LANE4 user test kit: explicit instance grade1 normal/0 blessed/2 cursed; f18 LOCAL marker, not native grade wire"},
+        {"value": {"item": 26, "count": 5, "equipped": false, "grade": 1}, "source": "local_policy", "ref": "LANE4 user test kit: explicit instance grade1 normal/0 blessed/2 cursed; f18 LOCAL marker, not native grade wire"},
+        {"value": {"item": 26, "count": 5, "equipped": false, "grade": 0}, "source": "local_policy", "ref": "LANE4 user test kit: explicit instance grade1 normal/0 blessed/2 cursed; f18 LOCAL marker, not native grade wire"},
+        {"value": {"item": 26, "count": 5, "equipped": false, "grade": 2}, "source": "local_policy", "ref": "LANE4 user test kit: explicit instance grade1 normal/0 blessed/2 cursed; f18 LOCAL marker, not native grade wire"},
+        {"value": {"item": 102, "count": 1, "equipped": false}, "source": "local_policy", "ref": "?? SoloMage ?? ??? ?? ??; ?? items.json ??????AC ???"},
+        {"value": {"item": 90, "count": 1, "equipped": false}, "source": "local_policy", "ref": "?? SoloMage ?? ??? ??; ?? items.json ??????AC ???"},
+        {"value": {"item": 106, "count": 1, "equipped": false}, "source": "local_policy", "ref": "?? SoloMage ?? ??? ??? ??; ?? items.json ??????AC ???"},
+        {"value": {"item": 120, "count": 1, "equipped": false}, "source": "local_policy", "ref": "?? SoloMage ?? ??? ?? ??; ?? items.json ??????AC ???"},
+        {"value": {"item": 113, "count": 1, "equipped": false}, "source": "local_policy", "ref": "?? SoloMage ?? ??? ?? ??; ?? items.json ??????AC ???"},
+        {"value": {"item": 28, "count": 10, "equipped": false}, "source": "local_policy", "ref": "TestKnight classic28/$257/icon471 (native-dump:977, official28), one scroll per targeted0960 owned dead companion resurrection"}
+      ],
+      "talkscroll_supplies": [
+        {"value": {"item": 12273, "count": 1, "icon": 20256}, "source": "local_policy", "ref": "2026-10-27 requested test_knight supply (user: permanent, not consumed — one copy); native-dump-v1.jsonl:1816 Classic12273  f4=133 f5=20256"}
+      ]
+    }
+  }
+}

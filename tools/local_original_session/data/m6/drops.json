@@ -1,0 +1,444 @@
+{
+  "table": "m6_drops",
+  "version": 1,
+  "chance_denominator": 1000000,
+  "drops": {
+    "156": [],
+    "235": [
+      {
+        "item": {
+          "value": {
+            "id": 17,
+            "token": "$234",
+            "name_ko": "초록 물약",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "work/source_game_data/native-dump-v1.jsonl item17; official monster235 drop composition; existing attributed itemId40013 mapping"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:4606 NPC45115 itemId40013",
+          "note": "Own NPC row only; official probability/count not provided."
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "work/source_game_data/native-dump-v1.jsonl item7; official monster235 drop composition; existing attributed itemId40308 mapping"
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 33,
+            "max": 65
+          },
+          "source": "l1j",
+          "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:4617 NPC45115 itemId40308",
+          "note": "Own NPC row only; official probability/count not provided."
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 23,
+            "token": "$230",
+            "name_ko": "순간이동 주문서",
+            "grade": 0
+          },
+          "source": "client",
+          "ref": "work/source_game_data/native-dump-v1.jsonl item23; official monster235 drop composition; existing attributed itemId140100 mapping"
+        },
+        "roll": {
+          "value": {
+            "chance": 175000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:4621 NPC45115 itemId140100",
+          "note": "Own NPC row only; official probability/count not provided."
+        }
+      }
+    ],
+    "236": [
+      {
+        "item": {
+          "value": {
+            "id": 17,
+            "token": "$234",
+            "name_ko": "초록 물약",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "work/source_game_data/native-dump-v1.jsonl item17; official monster236 drop composition; existing attributed itemId40013 mapping"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:5356 NPC45190 itemId40013",
+          "note": "Own NPC row only; official probability/count not provided."
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 23,
+            "token": "$230",
+            "name_ko": "순간이동 주문서",
+            "grade": 0
+          },
+          "source": "client",
+          "ref": "work/source_game_data/native-dump-v1.jsonl item23; official monster236 drop composition; existing attributed itemId140100 mapping"
+        },
+        "roll": {
+          "value": {
+            "chance": 200000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:5370 NPC45190 itemId140100",
+          "note": "Own NPC row only; official probability/count not provided."
+        }
+      }
+    ]
+  },
+  "unresolved": [
+    {
+      "template_id": 156,
+      "item": {
+        "id": 29,
+        "token": "$61",
+        "name_ko": "화살",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 40,
+        "token": "$13",
+        "name_ko": "오크족 단검",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 40,
+        "token": "$13",
+        "name_ko": "저주받은 오크족 단검",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 71,
+        "token": "$96",
+        "name_ko": "오크족 창",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 74,
+        "token": "$99",
+        "name_ko": "오크족 검",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 88,
+        "token": "$120",
+        "name_ko": "오크족 투구",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 88,
+        "token": "$120",
+        "name_ko": "저주받은 오크족 투구",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 101,
+        "token": "$165",
+        "name_ko": "오크족 고리 갑옷",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 101,
+        "token": "$165",
+        "name_ko": "저주받은 오크족 고리 갑옷",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 19,
+        "token": "$28",
+        "name_ko": "소나무 막대",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 20,
+        "token": "$27",
+        "name_ko": "단풍나무 막대",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 177,
+        "token": "$15777",
+        "name_ko": "사파이어",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 246,
+        "token": "$761",
+        "name_ko": "미스릴 원석",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 299,
+        "token": "$971",
+        "name_ko": "변신 주문서",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 156,
+      "item": {
+        "id": 569,
+        "token": "$1822",
+        "name_ko": "정령옥",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 235,
+      "item": {
+        "id": 291,
+        "token": "$938",
+        "name_ko": "마법의 투구: 치유",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 235,
+      "item": {
+        "id": 171,
+        "token": "$15780",
+        "name_ko": "에메랄드",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 235,
+      "item": {
+        "id": 296,
+        "token": "$943",
+        "name_ko": "용기의 물약",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 235,
+      "item": {
+        "id": 495,
+        "token": "$15699",
+        "name_ko": "강화 초록 물약",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 93,
+        "token": "$154",
+        "name_ko": "청동 판금 갑옷",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 293,
+        "token": "$940",
+        "name_ko": "마법의 투구: 힘",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 171,
+        "token": "$15780",
+        "name_ko": "에메랄드",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 172,
+        "token": "$15781",
+        "name_ko": "고급 에메랄드",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 173,
+        "token": "$15782",
+        "name_ko": "최고급 에메랄드",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 174,
+        "token": "$15774",
+        "name_ko": "루비",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 175,
+        "token": "$15775",
+        "name_ko": "고급 루비",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 176,
+        "token": "$15776",
+        "name_ko": "최고급 루비",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 296,
+        "token": "$943",
+        "name_ko": "용기의 물약",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    },
+    {
+      "template_id": 236,
+      "item": {
+        "id": 495,
+        "token": "$15699",
+        "name_ko": "강화 초록 물약",
+        "grade": 1
+      },
+      "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+      "reason": "Official composition retained; no selected own-NPC L1J roll + existing usable item mapping. Not awarded. Grade1 is unresolved-row placeholder."
+    }
+  ],
+  "note": "Only additional templates; existing policy unchanged. Original rates/quantities UNKNOWN."
+}

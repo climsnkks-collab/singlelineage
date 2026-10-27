@@ -192,18 +192,25 @@ class Memory:
 class GateTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
-        self.realm = b.LocalRealm(str(uuid.uuid4()), Path(self.temp.name) / 'characters.json')
+        async def owner(*_): return True
+        # Initialize the real broker's optional services and inventory lifetime;
+        # the opaque socket values are never started or bound by this fixture.
+        self.producer = b.PersistentBroker(
+            sockets={12000: object(), 14030: object()}, retained_owner=object(),
+            owner_handle=object(), owner_job=object(), owner_guard=owner,
+            owner_liveness_guard=lambda: True, source_guard=lambda: None,
+            conversation_factory=lambda *_: None, expected_uuid=str(uuid.uuid4()),
+            store_path=Path(self.temp.name) / 'characters.json')
+        self.realm = self.producer.realm
         self.writer = SimpleNamespace(transport=SimpleNamespace(get_write_buffer_size=lambda: 0),
                                       write=Mock(), drain=AsyncMock())
         self.realm.store.create(b.ack.realm.Creation(self.realm.profile_name, 0, 0, (13,) * 6))
-        async def owner(*_): return True
         game = self.realm.grant(self.writer, movement_owner_guard=owner, connection_id=4)
         await game.received(SimpleNamespace(opcode=0x263,
             payload=LocalLoginRequest(0, 'standalone.local', self.realm.expected_uuid).payload()))
         payload = i.pb.encode_bytes(1, self.realm.profile_name.encode()) + b'\x10\0\x18\0'
         await game.received(SimpleNamespace(opcode=0x4e28, payload=payload))
-        self.policy = b._TransportPolicy(object(), object(), object(),
-                                        {12000: object(), 14030: object()}, now=time.monotonic_ns())
+        self.policy = self.producer.policy
         def sample(peer):
             return b.OwnerSample(self.policy.owner, self.policy.handle, self.policy.job,
                                  peer, time.monotonic_ns(), True, True)
@@ -223,11 +230,7 @@ class GateTests(unittest.IsolatedAsyncioTestCase):
         policy_row = boot(self.writer, peer)
         self.row = dict(writer=self.writer, policy_row=policy_row, peer=dict(connection_id=4, endpoint_port=14030),
                         joined=False, failed=False, operation_lock=asyncio.Lock())
-        self.producer = object.__new__(b.PersistentBroker)
-        self.producer.realm, self.producer.policy = self.realm, self.policy
         self.producer._claims = {12000: [], 14030: [self.row]}
-        self.producer._closing, self.producer.failure = False, asyncio.Event()
-        self.producer._inventory_restore_only = False
         _, self.reader, self.native = edge_tests.Tests.retained_binding(self)
         self.reader.image = observe.IMAGE.with_name('LC.guard.exe')
         self.reader.member.identity['image'] = str(self.reader.image)
@@ -1212,7 +1215,10 @@ class PersistenceTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(mode=mode), self.assertRaisesRegex(ValueError, 'RESTORE_MODE_CHANGED'):
                 await self.check()
             self.assertFalse(self.store.path.exists() or self.service._claimed)
-        self.fresh(); del self.producer._inventory_restore_only
+        self.fresh()
+        # The broker facade has no deleter; corrupt the actual selected
+        # generation field to exercise the same missing-mode refusal.
+        del self.producer._inventory_generation.restore_only
         with self.assertRaises(ValueError): await self.check()
         self.fresh(enabled=False, restore_only=True)
         with self.assertRaisesRegex(ValueError, 'RESTORE_STORE_REQUIRED'): await self.check()
@@ -1639,7 +1645,9 @@ class ReadonlyAdmissionTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_source_owner_mode_claim_write_and_reservation_cannot_be_promoted(self):
         pins = dict(i.SOURCE_PINS)
-        for mode in ('source', 'owner', 'mode', 'claim', 'write', 'reservation'):
+        # No 'source' mode: inventory._source() verifies pins once per process and
+        # request paths deliberately do not re-hash (inventory.py _source comment).
+        for mode in ('owner', 'mode', 'claim', 'write', 'reservation'):
             self.fresh()
             def action():
                 if mode == 'source': i.SOURCE_PINS[i.EVIDENCE] = '0' * 64

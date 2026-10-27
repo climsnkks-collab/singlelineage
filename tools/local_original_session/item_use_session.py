@@ -32,6 +32,9 @@ _INVENTORY_SOURCE_ERRORS = frozenset({
     'INVENTORY_FIELD_SOURCE_CHANGED', 'INVENTORY_FIXED_CATALOG_CHANGED',
     'INVENTORY_EXACT_CURRENT_MAP_SOURCE_REQUIRED', 'INVENTORY_STORE_PARENT_SOURCE_CHANGED',
 })
+_NOT_YET_DELIVERED = frozenset({
+    'ITEM_USE_CURRENT_CANONICAL_FRAME_REQUIRED', 'ITEM_USE_COMPLETED_INVENTORY_DELIVERY_REQUIRED',
+})
 
 
 def _raw0_source_ready():
@@ -122,6 +125,11 @@ class ItemUseSession:
         need(self._collection_policy is None or (type(self._collection_policy) is str
              and self._collection_policy == inventory.COLLECTION_POLICY),
              'ITEM_USE_EXPLICIT_COLLECTION_POLICY_REQUIRED')
+        # M1 kit: the saved Store row is the current-frame authority (potion
+        # quantity/removal changes it without an UPDATE operation record).
+        self._kit_policy = getattr(broker, '_inventory_kit_policy', None)
+        need(self._kit_policy is None or (self._kit_policy == inventory.KIT_POLICY
+             and self._collection_policy is None), 'ITEM_USE_EXPLICIT_KIT_POLICY_REQUIRED')
         self.broker, self.policy = broker, policy
         self._service, self._reader, self._backend = service, reader, reader.backend
         self._store = service._persistence_store()
@@ -219,11 +227,11 @@ class ItemUseSession:
              'ITEM_USE_COMPLETED_INVENTORY_DELIVERY_REQUIRED')
         # Successful delivery proves this selection/owner/frame lifetime. Its
         # historical Position is not current movement authority: only identity
-        # uid/name/map is retained across ordinary movement in the same selection.
+        # uid/name is retained across ordinary movement (and map moves) in the same selection.
         old_position = delivered[0]
         need(type(old_position) is movement.Position and delivered[1][14] is old_position
-             and (old_position.uid, old_position.name, old_position.map_id)
-                 == (authority[0].uid, authority[0].name, authority[0].map_id)
+             and (old_position.uid, old_position.name)
+                 == (authority[0].uid, authority[0].name)
              and len(authority[1]) == len(delivered[1])
              and all(a is b for index, (a, b) in enumerate(zip(delivered[1], authority[1]))
                      if index != 14)
@@ -246,7 +254,8 @@ class ItemUseSession:
         need(type(frame) is bytes, 'ITEM_USE_DRAINED_CURRENT_FRAME_REQUIRED')
         operation = broker._inventory_update_operation
         if operation is None:
-            need(frame is initial_frame, 'ITEM_USE_INITIAL_CURRENT_LITERAL_REQUIRED')
+            need(frame is initial_frame or self._kit_policy is not None,
+                 'ITEM_USE_INITIAL_CURRENT_LITERAL_REQUIRED')
         else:
             need(type(operation) is dict and type(operation.get('phase')) is str
                  and operation.get('phase') == 'DRAINED'
@@ -279,7 +288,18 @@ class ItemUseSession:
                  and type(admitted.sent) is int
                  and 0 <= sent_before < sent_after <= U64_MAX and sent_after == sent_before + 1
                  and admitted.sent >= sent_after, 'ITEM_USE_DRAINED_UPDATE_COUNTER_REQUIRED')
-        if self._collection_policy is None:
+        if self._kit_policy is not None:
+            need(operation is None, 'ITEM_USE_KIT_NO_UPDATE_OPERATION_REQUIRED')
+            # The bag changes during play (pickup, drops, potions); the current
+            # stored frame is the authority, not the entry-time collection.
+            current_items = inventory.validate_kit_frame(frame)
+            if item_identifier is None:
+                item = current_items[0]  # Initial/preparation anchor, not a selected-use UID.
+            else:
+                members = tuple(item for item in current_items if item.identifier == item_identifier)
+                need(type(item_identifier) is int and len(members) == 1, 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
+                item, = members
+        elif self._collection_policy is None:
             item = inventory.validate_frame(frame)
             initial = inventory.validate_frame(initial_frame)
             initial_fields, current_fields = dict(initial.raw_fields), dict(item.raw_fields)
@@ -290,12 +310,6 @@ class ItemUseSession:
             need(store._collection_policy == inventory_store.COLLECTION_STORE_POLICY,
                  'ITEM_USE_COLLECTION_STORE_POLICY_REQUIRED')
             current_items = inventory.validate_collection_frame(frame, policy=self._collection_policy)
-            initial_items = inventory.validate_collection_frame(initial_frame, policy=self._collection_policy)
-            need(len(current_items) == len(initial_items) and all(
-                 current.identifier == initial.identifier and
-                 {n for n, value in initial.raw_fields if dict(current.raw_fields)[n] != value} <= {4, 5, 7, 18}
-                 for current, initial in zip(current_items, initial_items)),
-                 'ITEM_USE_SAME_CURRENT_COLLECTION_FIELDS_REQUIRED')
             if item_identifier is None:
                 item = current_items[0] # Initial/preparation anchor, not a selected-use UID.
             else:
@@ -350,6 +364,11 @@ class ItemUseSession:
                 try:
                     before = self._project(writer, item_identifier=request.identifier)
                 except ValueError as error:
+                    if str(error) in _NOT_YET_DELIVERED:
+                        # Use right after entry, before the inventory delivery
+                        # completed: refuse this request only.
+                        self._clear(str(error))
+                        return self._outcome(OutcomeKind.REJECTED, str(error))
                     if str(error) != 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM':raise
                     self._clear('ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')
                     return self._outcome(OutcomeKind.REJECTED, 'ITEM_USE_IDENTIFIER_NOT_CURRENT_ITEM')

@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "scope": "Source-backed legacy menus and attributed LOCAL Jem quest persistence/exchange. Official progress UI and reward ordering UNKNOWN.",
+  "sources": {
+    "l1j_root": "D:/SingleLineageRef/l1j-en-classic",
+    "l1j_quest": "data/xml/NpcActions/Quest.xml",
+    "l1j_dialogue_dispatch": "src/l1j/server/server/model/Instance/L1MerchantInstance.java",
+    "l1j_db": "db/l1jdb_m10.sql",
+    "classic_dump": "work/source_game_data/native-dump-v1.jsonl",
+    "classic_dialogue": "work/local_resource_provider/assets/data/dialogue.csv",
+    "classic_uml_root": "C:/Users/Chansol/Documents/Codex/2026-09-07/d-lineage-classic/outputs/decrypted-pack/data_0/data/uml",
+    "quest_display_evidence": "work/local_original_session/game-core-prep/QUEST_DISPLAY_EVIDENCE.md (run405 STATIC PARTIAL)"
+  },
+  "boundaries": {
+    "classic_confirmed": "확보한 UML action/stem·CSV 대사와 catalog 이름/토큰/ID만 확인. 실제 NPC 발급·화면·공식 수량·보상은 미확인.",
+    "local_policy": "수량 1개와 아래 보상·직업/레벨은 L1J 출처의 계산 후보. 명시 policy=l1j_local에서만 소비/보상 DATA 제안. 기본 Classic 계산은 지급을 제안하지 않는다.",
+    "action_mismatch": "Classic queststart/questcomplete는 L1J request ...와 다르다. action 문자열을 서로 대체하거나 L1J 숫자를 wire ID로 쓰지 않는다.",
+    "identity": "npc_key는 자료 식별자이며 live UID가 아니다. Classic template 후보도 실제 메뉴 발급 연결의 증명이 아니다.",
+    "acceptance": "Pure calculations require explicit reference_steps. LOCAL runtime initializes a missing Level15 to0 in the acceptance save; existing steps are preserved. End=255 follows L1Quest.java:64. This is separate from the existing SHOP participant/issuer store.",
+    "repeatability": "L1J first exchange is repeatable; this runtime retains one acceptance/completion per character. No reset/reaccept. After completion the next queststart selects existing jem9/4/10 pages.",
+    "runtime": "world_feature_quest/QuestStore persist per-character acceptance, current collection progress, completion and class-scoped Level15. Turn-in commits existing kit inventory and world_progress with forward recovery before responding. No 05xx progress/tip packets: their link to legacy menus is UNKNOWN (run405).",
+    "experience": "Jem Quest.xml:401-414 contains only item exchange. Explicit LOCAL additional EXP=0; this does not prove zero official Classic EXP. Positive EXP policy uses world_reward growth and world_progress in the same turn-in transaction."
+  },
+  "quests": [
+    {
+      "quest_id": "ti_jem_cursed_spellbook",
+      "name_ko": "젬의 연구: 구울 재료와 저주받은 마법서",
+      "npc_key": "l1j:70531",
+      "status": "l1j_local_policy_implemented",
+      "calculation_policy": "l1j_local",
+      "reference_repeatable": true,
+      "eligibility": {
+        "class_keys": [
+          "wizard"
+        ],
+        "min_level": 15,
+        "source": "L1MerchantInstance.java:451-460; Classic jem2_5는 경험 부족 안내로 정확한 15는 미확인"
+      },
+      "location": {
+        "l1j_map_id": 0,
+        "x": 32587,
+        "y": 32927,
+        "source": "l1jdb_m10.sql:49190",
+        "status": "l1j_placement_candidate"
+      },
+      "classic": {
+        "npc_template_id": null,
+        "accept_stem": "jem1",
+        "accept_action": "queststart",
+        "objective_stem": "jem3",
+        "completion_action": "questcomplete",
+        "result_stem": "jem8",
+        "sources": [
+          "jem1.uml:12",
+          "jem3.uml:15",
+          "dialogue.csv:474-498"
+        ],
+        "confirmed_content": "구울의 손톱/이빨을 가져오면 미완성 마법서 지급. CSV:490은 구울이 이 섬에는 없고 본토에 있다고 명시한다. 섬 내 초반 사냥 목표로 바꾸지 않는다."
+      },
+      "objectives": [
+        {
+          "kind": "collect",
+          "classic_item_id": 648,
+          "name_ko": "구울의 손톱",
+          "name_token": "$1920",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1397; l1jdb_m10.sql:16992",
+          "count_source": "Quest.xml:404",
+          "l1j_item_id": 40538
+        },
+        {
+          "kind": "collect",
+          "classic_item_id": 649,
+          "name_ko": "구울의 이빨",
+          "name_token": "$1921",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1398; l1jdb_m10.sql:16993",
+          "count_source": "Quest.xml:405",
+          "l1j_item_id": 40539
+        }
+      ],
+      "rewards": [
+        {
+          "classic_item_id": 644,
+          "name_ko": "저주받은 마법서",
+          "name_token": "$1916",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1393; l1jdb_m10.sql:17045",
+          "count_source": "Quest.xml:403",
+          "l1j_item_id": 40591
+        }
+      ],
+      "l1j": {
+        "action": "request cursed spellbook",
+        "source": "Quest.xml:401-406",
+        "quest_step": null
+      },
+      "unknown": [
+        "Official quantities and repeat-acceptance policy",
+        "Actual material drop/issuance and owned UID provenance",
+        "Official progress/completion display and reward order (run405 UNKNOWN)"
+      ],
+      "experience_reward": {
+        "amount": 0,
+        "source": "LOCAL no additional EXP; Quest.xml:401-406 contains only item exchange; Classic amount UNKNOWN"
+      }
+    },
+    {
+      "quest_id": "ti_jem_book_of_magic",
+      "name_ko": "젬의 연구: 해골 두개골과 마력서",
+      "npc_key": "l1j:70531",
+      "status": "l1j_local_policy_implemented",
+      "calculation_policy": "l1j_local",
+      "reference_repeatable": false,
+      "eligibility": {
+        "class_keys": [
+          "wizard"
+        ],
+        "min_level": 15,
+        "source": "L1MerchantInstance.java:451-460; Quest.xml:407 QuestStep=0"
+      },
+      "classic": {
+        "npc_template_id": null,
+        "accept_stem": "jem9",
+        "accept_action": "queststart",
+        "objective_stem": "jem4",
+        "completion_action": "questcomplete",
+        "result_stem": "jem10",
+        "sources": [
+          "jem9.uml:10",
+          "jem4.uml:13",
+          "dialogue.csv:499-513"
+        ],
+        "confirmed_content": "저주받은 마법서와 해골의 두개골을 가져오면 마력서로 완성. 해골은 북서쪽 던전 또는 본토에 있다는 대사. 앞 교환 완료 마커 대신 현재 마법서 보유를 요구한다."
+      },
+      "objectives": [
+        {
+          "kind": "collect",
+          "classic_item_id": 644,
+          "name_ko": "저주받은 마법서",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1393",
+          "count_source": "Quest.xml:409",
+          "l1j_item_id": 40591
+        },
+        {
+          "kind": "collect",
+          "classic_item_id": 647,
+          "name_ko": "해골의 두개골",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1396; l1jdb_m10.sql:17059",
+          "count_source": "Quest.xml:410",
+          "l1j_item_id": 40605
+        }
+      ],
+      "rewards": [
+        {
+          "classic_item_id": 645,
+          "name_ko": "마력서",
+          "name_token": "$1917",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1394; l1jdb_m10.sql:3070",
+          "count_source": "Quest.xml:408",
+          "l1j_item_id": 20226
+        }
+      ],
+      "l1j": {
+        "action": "request book of magical powers",
+        "source": "Quest.xml:407-414",
+        "quest_id": "Level15",
+        "quest_step": 0,
+        "after_step": "End"
+      },
+      "unknown": [
+        "Official quantities and per-character persistence contract",
+        "Official progress/completion display and reward order (run405 UNKNOWN)"
+      ],
+      "experience_reward": {
+        "amount": 0,
+        "source": "LOCAL no additional EXP; Quest.xml:407-414 contains only item exchange; Classic amount UNKNOWN"
+      }
+    },
+    {
+      "quest_id": "ti_gunter_secret_of_life",
+      "name_ko": "군터의 가르침: 생명의 비밀",
+      "npc_key": "l1j:70522",
+      "status": "l1j_local_policy_candidate",
+      "calculation_policy": "l1j_local",
+      "reference_repeatable": false,
+      "eligibility": {
+        "class_keys": [
+          "royal"
+        ],
+        "min_level": 15,
+        "source": "L1MerchantInstance.java:128-140; Quest.xml:16"
+      },
+      "location": {
+        "l1j_map_id": 3,
+        "x": 32669,
+        "y": 32788,
+        "source": "l1jdb_m10.sql:49197",
+        "status": "l1j_map3_gunter_house_not_map0; original SQL row87508 preserved, current runtime serves map0/1/2 only",
+        "source_row": "spawnlist_npc ('87508','Gunter','1','70522','32669','32788','0','0','5','0','3','0')"
+      },
+      "classic": {
+        "npc_template_id": 26,
+        "npc_identity_source": "native-dump-v1.jsonl:21 ($270 군터); l1jdb_m10.sql:22179",
+        "accept_stem": null,
+        "accept_action": null,
+        "objective_stem": "gunterp10",
+        "completion_action": "questcomplete",
+        "result_stem": "gunterp11",
+        "sources": [
+          "gunterp10.uml:12",
+          "dialogue.csv:573-581"
+        ],
+        "confirmed_content": "섬 곳곳 돌골렘에게서 생명의 비밀 주문서를 가져오라는 수집 의뢰. 고정 처치수·드롭 확률은 제시되지 않는다."
+      },
+      "objectives": [
+        {
+          "kind": "collect",
+          "classic_item_id": 677,
+          "name_ko": "생명의 비밀",
+          "name_token": "$1961",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1421; l1jdb_m10.sql:17018",
+          "count_source": "Quest.xml:18",
+          "l1j_item_id": 40564
+        }
+      ],
+      "rewards": [
+        {
+          "classic_item_id": 675,
+          "name_ko": "마법서 (트루 타겟)",
+          "name_token": "$1959",
+          "count": 1,
+          "identity_source": "native-dump-v1.jsonl:1419; l1jdb_m10.sql:16680",
+          "count_source": "Quest.xml:17",
+          "l1j_item_id": 40226
+        }
+      ],
+      "l1j": {
+        "action": "request spellbook112",
+        "source": "Quest.xml:16-25",
+        "quest_id": "Level15",
+        "quest_step": 1,
+        "step_boundary": "제로와 공유하는 상태: XML MakeItem의 QuestStep=1을 수락·반납 계산에 필수 입력으로 검사. 내부 Succeed에는0→2/1→End 조건이 있다. 이 독립 계산 모듈은 공유 step를 저장하지 않음."
+      },
+      "unknown": [
+        "Classic 수락 분기·제로 선행 조건",
+        "공식 보상 ID/수량",
+        "실제 골렘 종류·드롭 계약"
+      ],
+      "experience_reward": {
+        "amount": 0,
+        "source": "LOCAL no additional EXP; Quest.xml:16-25 contains only item exchange; Classic amount UNKNOWN"
+      }
+    }
+  ],
+  "candidates_not_loaded": [
+    {
+      "name_ko": "기사30 군터의 셸로브 발톱 시련",
+      "reason": "초기15레벨 범위 밖. Classic CSV:691은 셸로브 발톱, L1J Quest.xml:154-162는 Arachnevil Elder's Claw(40590/$2023)→검30. 현재 dump에 $2023 item 대응을 찾지 못해 Classic ID·보상은 미확정.",
+      "classic": {
+        "stems": [
+          "gunterkE1",
+          "gunterkE2",
+          "gunterkE3"
+        ],
+        "accept_action": "queststart",
+        "completion_action": "questcomplete",
+        "sources": [
+          "gunterkE1.uml:9",
+          "gunterkE2.uml:8",
+          "dialogue.csv:688-695"
+        ]
+      },
+      "kill_count": null,
+      "classic_material_id": null,
+      "classic_reward_id": null
+    },
+    {
+      "name_ko": "마법사30 게렝의 연구와 후속 젬 연구",
+      "reason": "초기 범위 밖이며 현행 내용과 옛 L1J 일치 보장 없음. gerengt4_1은 신비한 수정구·오림, jemw3_1은 신비한 두 물약+마법사 지팡이, jemw6_2는 서큐버스 퀸의 신비한 지팡이. 옛 수량·보상을 현재 완료 규칙으로 복사하지 않음.",
+      "sources": [
+        "dialogue.csv:1090-1098",
+        "dialogue.csv:2833-2863",
+        "Quest.xml:416-441",
+        "L1MerchantInstance.java:461-497"
+      ],
+      "classic_reward_id": null,
+      "classic_reward_count": null
+    }
+  ],
+  "coverage_gaps": [
+    "말하는 섬에서 초보자가 고정 수만큼 오크/고블린을 처치하는 퀘스트는 이번 확인 원문에서 확보하지 못했다. 임의 처치수·아데나/EXP 보상을 만들지 않았다.",
+    "초반 배달 의뢰의 발급 NPC·전달물·수신 NPC·보상 계약을 확보하지 못했다. gunterk10_3의 훗날 편지를 전해달라는 대사만으로 실행 가능한 배달 의뢰를 만들지 않았다.",
+    "Kuper70099의 C_NPCAction.java:314-319 get→20081 및 quest end는 의복 수령이다. 사냥/수집/배달 근거로 확대하지 않았다.",
+    "Liri50111은 M2 배치 count0·orenc14 미확보이며 퀘스트 NPC 분류만으로 의뢰를 추가하지 않았다."
+  ],
+  "native_dialogues": [
+    {
+      "l1j_npc_id": 70531,
+      "initial": "jem1",
+      "pages": {
+        "jem1": [
+          "queststart"
+        ],
+        "jem9": [
+          "queststart"
+        ],
+        "jem3": [
+          "questcomplete"
+        ],
+        "jem4": [
+          "questcomplete"
+        ],
+        "jem8": [],
+        "jem10": []
+      },
+      "starts": {
+        "jem1": [
+          "ti_jem_cursed_spellbook",
+          "jem3"
+        ],
+        "jem9": [
+          "ti_jem_book_of_magic",
+          "jem4"
+        ]
+      },
+      "completions": {
+        "jem3": "ti_jem_cursed_spellbook",
+        "jem4": "ti_jem_book_of_magic"
+      },
+      "source": "work/local_server_rea_20261016/run403_service_npc_dialogs/quest_resources.json",
+      "menu_selection": "LOCAL: initial jem1; saved first completion -> next queststart displays jem9 or accepted jem4 or completed jem10; official selection predicates UNKNOWN"
+    },
+    {
+      "l1j_npc_id": 70522,
+      "initial": "gunterp1",
+      "pages": {
+        "gunterp1": [
+          "queststart"
+        ],
+        "gunterp10": [
+          "questcomplete"
+        ],
+        "gunterp11": []
+      },
+      "starts": {},
+      "completions": {
+        "gunterp10": "ti_gunter_secret_of_life"
+      },
+      "source": "work/local_server_rea_20261016/run403_service_npc_dialogs/quest_resources.json",
+      "menu_selection": "gunterp1 is Zero introduction, never direct secret_of_life acceptance; map3 placement not served by current map0/1/2 runtime"
+    }
+  ],
+  "inventory_rewards": {
+    "644": {
+      "icon": 909,
+      "stackable": false,
+      "source": "native-dump-v1.jsonl:1393 f5=909; l1jdb_m10.sql:17045 etcitem40591 stackable=0; raw producer=world_handlers._starter_fields LOCAL kit; native f10 raw weight (LOCAL unit interpretation)",
+      "raw_weight": 0
+    },
+    "645": {
+      "icon": 906,
+      "stackable": false,
+      "source": "native-dump-v1.jsonl:1394 f5=906; l1jdb_m10.sql:3070 armor20226 nonstackable; raw producer=world_handlers._starter_fields LOCAL kit; native f10 raw weight (LOCAL unit interpretation)",
+      "raw_weight": 20000
+    }
+  },
+  "inventory_materials": {
+    "647": {
+      "icon": 921,
+      "raw_weight": 0,
+      "stackable": false,
+      "source": "native-dump-v1.jsonl:1396 f5=921/f10=0; l1jdb_m10.sql:17059 etcitem40605 stackable=0"
+    },
+    "648": {
+      "icon": 918,
+      "raw_weight": 0,
+      "stackable": false,
+      "source": "native-dump-v1.jsonl:1397 f5=918/f10=0; l1jdb_m10.sql:16992 etcitem40538 stackable=0"
+    },
+    "649": {
+      "icon": 926,
+      "raw_weight": 0,
+      "stackable": false,
+      "source": "native-dump-v1.jsonl:1398 f5=926/f10=0; l1jdb_m10.sql:16993 etcitem40539 stackable=0"
+    }
+  }
+}

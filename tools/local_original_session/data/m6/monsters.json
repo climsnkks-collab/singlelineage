@@ -1,0 +1,370 @@
+{
+  "table": "m6_monsters",
+  "version": 1,
+  "monsters": [
+    {
+      "template_id": {
+        "value": 156,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:100"
+      },
+      "name_token": {
+        "value": "$59",
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:100"
+      },
+      "name_ko": {
+        "value": "오크",
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:100"
+      },
+      "sprite_id": {
+        "value": 56,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:100"
+      },
+      "l1j_npcid": {
+        "value": 45009,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 nameid + gfxid mapping",
+        "note": "EFD Orc156 reuses L1J45009 identity/stat reference; later contaminated-orc45117 is not silently mapped."
+      },
+      "level": {
+        "value": 2,
+        "source": "official",
+        "ref": "tools/local_original_session/data/official/monsters.json official_id=156 level; https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR"
+      },
+      "hp": {
+        "value": 6,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 hp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "mp": {
+        "value": 4,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 mp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "ac": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 ac",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "kill_exp": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 kill_exp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 agro; no family/poison/magic mechanics"
+      },
+      "move_interval_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:391 walk Csum=20/24; L1J reference=800ms",
+        "note": "Nominal SPR duration adopted as local action interval; actual server speed UNKNOWN."
+      },
+      "attack_interval_ms": {
+        "value": 1375,
+        "source": "client",
+        "ref": "list.spr:392 attack Csum=33/24; L1J reference=1320ms",
+        "note": "Nominal SPR duration adopted as local action interval; actual server speed UNKNOWN."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 attack_range",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen(13칸 이하 항상 보임)",
+        "note": "PcRecognizeRange=-1(l1jcfg server.properties:128)일 때 화면 판정. 13은 그 안쪽 확정 반경"
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "existing M1 leash policy; no fixed-client source"
+      },
+      "damage": {
+        "value": {
+          "min": 4,
+          "max": 5,
+          "str": 6,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20631 STR/level; L1Attack.java:943-946"
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169"
+      },
+      "expansion_official_regions": {
+        "value": [
+          "요정숲 던전 1층",
+          "요정 숲",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "tools/local_original_session/data/official/monsters.json official_id=156 official.regionNames; https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR",
+        "note": "Official region names are occurrence evidence only; local spawn rectangles are separately sourced."
+      }
+    },
+    {
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:150"
+      },
+      "name_token": {
+        "value": "$960",
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:150"
+      },
+      "name_ko": {
+        "value": "거대 개미",
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:150"
+      },
+      "sprite_id": {
+        "value": 1037,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:150"
+      },
+      "l1j_npcid": {
+        "value": 45115,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 nameid + gfxid mapping",
+        "note": "Identity matched by client name token and sprite, not numeric id."
+      },
+      "level": {
+        "value": 12,
+        "source": "official",
+        "ref": "tools/local_original_session/data/official/monsters.json official_id=235 level; https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "hp": {
+        "value": 90,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 hp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "mp": {
+        "value": 20,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 mp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "ac": {
+        "value": -4,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 ac",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "kill_exp": {
+        "value": 145,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 kill_exp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 agro; no family/poison/magic mechanics"
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:3313 walk Csum=16/24; L1J reference=640ms",
+        "note": "Nominal SPR duration adopted as local action interval; actual server speed UNKNOWN."
+      },
+      "attack_interval_ms": {
+        "value": 917,
+        "source": "client",
+        "ref": "list.spr:3315 attack Csum=22/24; L1J reference=880ms",
+        "note": "Nominal SPR duration adopted as local action interval; actual server speed UNKNOWN."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 attack_range",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen(13칸 이하 항상 보임)",
+        "note": "PcRecognizeRange=-1(l1jcfg server.properties:128)일 때 화면 판정. 13은 그 안쪽 확정 반경"
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "existing M1 leash policy; no fixed-client source"
+      },
+      "damage": {
+        "value": {
+          "min": 8,
+          "max": 19,
+          "str": 15,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20733 STR/level; L1Attack.java:943-946"
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169"
+      },
+      "expansion_official_regions": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "tools/local_original_session/data/official/monsters.json official_id=235 official.regionNames; https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR",
+        "note": "Official region names are occurrence evidence only; local spawn rectangles are separately sourced."
+      }
+    },
+    {
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:151"
+      },
+      "name_token": {
+        "value": "$961",
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:151"
+      },
+      "name_ko": {
+        "value": "거대 병정 개미",
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:151"
+      },
+      "sprite_id": {
+        "value": 1039,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:151"
+      },
+      "l1j_npcid": {
+        "value": 45190,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 nameid + gfxid mapping",
+        "note": "Identity matched by client name token and sprite, not numeric id."
+      },
+      "level": {
+        "value": 20,
+        "source": "official",
+        "ref": "tools/local_original_session/data/official/monsters.json official_id=236 level; https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "hp": {
+        "value": 150,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 hp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "mp": {
+        "value": 100,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 mp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "ac": {
+        "value": -7,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 ac",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "kill_exp": {
+        "value": 401,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 kill_exp",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 agro; no family/poison/magic mechanics"
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:3323 walk Csum=16/24; L1J reference=640ms",
+        "note": "Nominal SPR duration adopted as local action interval; actual server speed UNKNOWN."
+      },
+      "attack_interval_ms": {
+        "value": 792,
+        "source": "client",
+        "ref": "list.spr:3325 attack Csum=19/24; L1J reference=760ms",
+        "note": "Nominal SPR duration adopted as local action interval; actual server speed UNKNOWN."
+      },
+      "attack_range": {
+        "value": 2,
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 attack_range",
+        "note": "LOCAL backend reference; not fixed-client original stats."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen(13칸 이하 항상 보임)",
+        "note": "PcRecognizeRange=-1(l1jcfg server.properties:128)일 때 화면 판정. 13은 그 안쪽 확정 반경"
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "existing M1 leash policy; no fixed-client source"
+      },
+      "damage": {
+        "value": {
+          "min": 16,
+          "max": 35,
+          "str": 30,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20802 STR/level; L1Attack.java:943-946"
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169"
+      },
+      "expansion_official_regions": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "tools/local_original_session/data/official/monsters.json official_id=236 official.regionNames; https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR",
+        "note": "Official region names are occurrence evidence only; local spawn rectangles are separately sourced."
+      }
+    }
+  ],
+  "note": "New identity/stat subset: EFD Orc156, Giant Ant235, Soldier Ant236. All other selected templates reuse existing M1/M3/M4 definitions unchanged. Poison/family/special magic/bosses remain unsupported."
+}

@@ -1,0 +1,2808 @@
+{
+  "version": 1,
+  "status": "SOURCE_DATA_ONLY_UNRUN",
+  "table": "m2_town_nonshop_npc_candidates",
+  "loaded_by_product": false,
+  "reference_paths": {
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jxml": "D:/SingleLineageRef/l1j-en-classic/data/xml/NpcActions/",
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "sprites": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "region": "work/local_resource_provider/assets/data/region.jsonc:3",
+    "shop_npcs": "tools/local_original_session/data/m2/shop_npcs.json",
+    "mapping_method": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md:39"
+  },
+  "scope": {
+    "map_id": 0,
+    "classic_village_bounds": {
+      "left": 32543,
+      "top": 32905,
+      "right": 32671,
+      "bottom": 32987
+    },
+    "bounds_ref": "region:3",
+    "selection": "Base DB map0 spawnlist_npc; inclusive village bounds. Keep zero-count rows and repeated template placements. Nonempty shop-product rows excluded; zero-shop L1Merchant services included and cross-referenced. Outside map0 services/props are separated as adjacent_npcs, not accepted village placements.",
+    "source_schemas": [
+      "l1jdb:1544",
+      "l1jdb:1616",
+      "l1jdb:1917"
+    ],
+    "source_precedence": "classic catalog fields and region first; L1J identity/behavior/placement only as attributed reference; no etc/name_id_test variant tables used"
+  },
+  "interpretation": {
+    "confirmed_scope": "confirmed_catalog_correspondence_only means a unique name-token/name/f2/SPR data correspondence, not confirmed classic placement, menu, NPC wire f39, spawned identity or live behavior. All placements remain L1J candidates.",
+    "candidate_scope": "Multiple token matches remain explicit and selected_classic_npc_id stays null; same numeric SPR alone is insufficient.",
+    "npcaction_loader_refs": [
+      "l1jsrc:datatables/NPCTalkDataTable.java:57",
+      "l1jsrc:datatables/NPCTalkDataTable.java:61"
+    ],
+    "menu_boundary": "normal_action/caotic_action/teleport_url/teleport_urla are L1J SQL stems, not verified classic normalhtmlid/menu resources. Runtime 4E44 resource-stem handling and actual menu identity must be checked separately.",
+    "sprite_type_boundary": "declared_type is the SPR type command body in this catalog, not a verified packet-type assignment or Python behavior contract.",
+    "execution_boundary": "No game, server, port or L1J was run. This file adds no Python NPC behavior. Data-only checks do not establish service completion or full runtime equivalence.",
+    "count_and_randomization": "count0 is preserved as disabled L1J placement. randomx/randomy remain placement uncertainty; a center inside village is not a guarantee every random position is inside. Do not activate count0 or coalesce duplicate rows by inference.",
+    "classification_boundary": "Guide, craft and other exact service roles are not assigned from a generic L1Merchant class alone. Unresolved roles stay unresolved; town adviser/manager, inn menu, quests and crafting have distinct source-based labels."
+  },
+  "npcs": [
+    {
+      "l1j_npc_id": 50015,
+      "l1j_name": "Lucas",
+      "name_token": "$829",
+      "l1j_impl": "L1Teleporter",
+      "classification": "teleporter",
+      "classification_basis": "L1J teleporter; menu price branch exists",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1TeleporterInstance.java:63",
+        "l1jsrc:model/Instance/L1TeleporterInstance.java:210"
+      ],
+      "l1j_npc_ref": "l1jdb:21734",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 50020,
+          "count": 1,
+          "locx": 32583,
+          "locy": 32922,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Lucas",
+          "source_ref": "l1jdb:48732",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "teleisland1",
+        "caotic_action": "teleisland1",
+        "teleport_url": "teleisland2",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23402",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:21734 supplies L1J Lucas / '$829' / gfx6377. No matching native npc name.reference in native-dump:1-951. No native npc f2 equals this gfxid in native-dump:1-951. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 6377,
+      "same_number_classic_sprite_candidate": null,
+      "sprite_selection_note": "No same-number SPR6377 in sprites:1-2976. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; do not use L1J gfxid as classic template or wire f39.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 50016,
+      "l1j_name": "Zeno",
+      "name_token": "$1418",
+      "l1j_impl": "L1Teleporter",
+      "classification": "novice_island_teleporter",
+      "classification_basis": "L1J Zeno action names singing-island destination",
+      "behavior_source_refs": [
+        "l1jxml:Teleporter.xml:16"
+      ],
+      "l1j_npc_ref": "l1jdb:21735",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 50059,
+          "count": 0,
+          "locx": 32600,
+          "locy": 32914,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Zeno",
+          "source_ref": "l1jdb:48758",
+          "enabled_in_l1j": false,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 90067,
+          "count": 1,
+          "locx": 32600,
+          "locy": 32914,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Unknown 71035",
+          "source_ref": "l1jdb:49913",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "zeno",
+        "caotic_action": "zeno",
+        "teleport_url": "zeno2",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23403",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:21735 supplies L1J Zeno / '$1418' / gfx1510. No matching native npc name.reference in native-dump:1-951. No native npc f2 equals this gfxid in native-dump:1-951. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 1510,
+      "same_number_classic_sprite_candidate": null,
+      "sprite_selection_note": "No same-number SPR1510 in sprites:1-2976. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; do not use L1J gfxid as classic template or wire f39.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null,
+      "placement_note": "The base DB retains count0 spawn50059 and active spawn90067 at the same coordinates; the active row location is Unknown 71035 while npc_templateid resolves to Zeno50016. Preserve both source rows, do not spawn count0."
+    },
+    {
+      "l1j_npc_id": 50017,
+      "l1j_name": "Keith",
+      "name_token": "$1068",
+      "l1j_impl": "L1Teleporter",
+      "classification": "teleporter",
+      "classification_basis": "L1Teleporter + telefire stems; exact classic service unresolved",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1TeleporterInstance.java:63"
+      ],
+      "l1j_npc_ref": "l1jdb:21736",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 50069,
+          "count": 1,
+          "locx": 32577,
+          "locy": 32957,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Keith",
+          "source_ref": "l1jdb:48767",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "telefire1",
+        "caotic_action": "telefire2",
+        "teleport_url": "telefire3",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23404",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:21736 supplies L1J Keith / '$1068' / gfx984. No matching native npc name.reference in native-dump:1-951. No native npc f2 equals this gfxid in native-dump:1-951. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 984,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 984,
+        "name": "glen",
+        "declared_type": 6,
+        "source_ref": "sprites:589",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR984 glen exists at sprites:589 only. No native npc f2 equals this gfxid in native-dump:1-951. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 60001,
+      "l1j_name": "Dorin",
+      "name_token": "$309",
+      "l1j_impl": "L1Dwarf",
+      "classification": "warehouse",
+      "classification_basis": "L1Dwarf; retrieve/pledge-storage action names",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1DwarfInstance.java:56",
+        "l1jsrc:model/Instance/L1DwarfInstance.java:83"
+      ],
+      "l1j_npc_ref": "l1jdb:21952",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 60009,
+          "count": 1,
+          "locx": 32575,
+          "locy": 32946,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Dorin",
+          "source_ref": "l1jdb:48955",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "dorin",
+        "caotic_action": "dorinl",
+        "teleport_url": "pdorin",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23620",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:21952 supplies L1J Dorin / '$309' / gfx143. No matching native npc name.reference in native-dump:1-951. No native npc f2 equals this gfxid in native-dump:1-951. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 143,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 143,
+        "name": "dorin",
+        "declared_type": 6,
+        "source_ref": "sprites:135",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR143 dorin exists at sprites:135 only. No native npc f2 equals this gfxid in native-dump:1-951. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70012,
+      "l1j_name": "Selena",
+      "name_token": "$955",
+      "l1j_impl": "L1Merchant",
+      "classification": "inn_menu_candidate",
+      "classification_basis": "inn/Inn1 SQL stems; L1J room/hall/return/enter branches are empty here, so inn service completion is not established",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70",
+        "l1jsrc:clientpackets/C_NPCAction.java:342"
+      ],
+      "l1j_npc_ref": "l1jdb:22067",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 61122,
+          "count": 1,
+          "locx": 32596,
+          "locy": 32929,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Selena",
+          "source_ref": "l1jdb:49070",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "inn",
+        "caotic_action": "Inn1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23705",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22067 supplies L1J Selena / '$955' / gfx695. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 612/$1599/데일리 (native-dump:350). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 695,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 695,
+        "name": "ysorya",
+        "declared_type": 6,
+        "source_ref": "sprites:370",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR695 ysorya exists at sprites:370 only. Equal f2 only: 612/$1599/데일리 (native-dump:350). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:137",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70523,
+      "l1j_name": "Ladar",
+      "name_token": "$1053",
+      "l1j_impl": "L1Merchant",
+      "classification": "leather_crafter",
+      "classification_basis": "classic Korean name identifies leather craftsman; L1J sell branch returns ladar2",
+      "behavior_source_refs": [
+        "l1jsrc:clientpackets/C_NPCAction.java:251"
+      ],
+      "l1j_npc_ref": "l1jdb:22180",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87192,
+          "count": 1,
+          "locx": 32589,
+          "locy": 32957,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Ladar",
+          "source_ref": "l1jdb:49080",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "ladar1",
+        "caotic_action": "ladarC1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23812",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 300,
+          "name_token": "$1053",
+          "name_ko": "가죽 세공사^라다르",
+          "sprite_f2": 988,
+          "source_ref": "native-dump:181",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 988,
+            "name": "bauman",
+            "declared_type": 6,
+            "source_ref": "sprites:593"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 300,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 988,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 988,
+        "name": "bauman",
+        "declared_type": 6,
+        "source_ref": "sprites:593",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:174",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": 988
+    },
+    {
+      "l1j_npc_id": 70526,
+      "l1j_name": "Raidar",
+      "name_token": "$2883",
+      "l1j_impl": "L1Merchant",
+      "classification": "petfood_crafter",
+      "classification_basis": "L1J XML request petfood makes item40070",
+      "behavior_source_refs": [
+        "l1jxml:ItemMaking.xml:2002"
+      ],
+      "l1j_npc_ref": "l1jdb:22183",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87193,
+          "count": 1,
+          "locx": 32593,
+          "locy": 32931,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Raidar",
+          "source_ref": "l1jdb:49081",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "raiders1",
+        "caotic_action": "raiders1",
+        "teleport_url": "raiders3",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23815",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22183 supplies L1J Raidar / '$2883' / gfx1278. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 352/$832/잭 (native-dump:210); 544/$1518/데릭 (native-dump:305); 715/$1796/로터스 (native-dump:379); 720/$1825/로쿠 (native-dump:383). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 1278,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 1278,
+        "name": "npc wanderer",
+        "declared_type": 6,
+        "source_ref": "sprites:826",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR1278 npc wanderer exists at sprites:826 only. Equal f2 only: 352/$832/잭 (native-dump:210); 544/$1518/데릭 (native-dump:305); 715/$1796/로터스 (native-dump:379); 720/$1825/로쿠 (native-dump:383). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:220",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70524,
+      "l1j_name": "Lavienue",
+      "name_token": "$2690",
+      "l1j_impl": "L1Merchant",
+      "classification": "dialogue_service_role_unresolved",
+      "classification_basis": "Lavienue SQL name and stems; exact guide/craft role not established",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22181",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87199,
+          "count": 1,
+          "locx": 32558,
+          "locy": 32965,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Lavienue",
+          "source_ref": "l1jdb:49087",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "lavienue9",
+        "caotic_action": "lavienue9",
+        "teleport_url": "lavienue2",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23813",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22181 supplies L1J Lavienue / '$2690' / gfx1307. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 346/$865/마법 연금술사^모리아 (native-dump:204); 719/$1824/티파니 (native-dump:382). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 1307,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 1307,
+        "name": "npc alchemist",
+        "declared_type": 6,
+        "source_ref": "sprites:851",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR1307 npc alchemist exists at sprites:851 only. Equal f2 only: 346/$865/마법 연금술사^모리아 (native-dump:204); 719/$1824/티파니 (native-dump:382). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:257",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70525,
+      "l1j_name": "Lien",
+      "name_token": "$1055",
+      "l1j_impl": "L1Merchant",
+      "classification": "bone_crafter",
+      "classification_basis": "classic Korean name identifies bone craftsman; L1J sell branch returns lien2",
+      "behavior_source_refs": [
+        "l1jsrc:clientpackets/C_NPCAction.java:255"
+      ],
+      "l1j_npc_ref": "l1jdb:22182",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87201,
+          "count": 1,
+          "locx": 32575,
+          "locy": 32920,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Lien",
+          "source_ref": "l1jdb:49089",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "lien1",
+        "caotic_action": "lienC1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23814",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 302,
+          "name_token": "$1055",
+          "name_ko": "뼈 세공사^라이엔",
+          "sprite_f2": 981,
+          "source_ref": "native-dump:183",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 981,
+            "name": "brunner",
+            "declared_type": 6,
+            "source_ref": "sprites:586"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 302,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 981,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 981,
+        "name": "brunner",
+        "declared_type": 6,
+        "source_ref": "sprites:586",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:294",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": 981
+    },
+    {
+      "l1j_npc_id": 70520,
+      "l1j_name": "Alchemist",
+      "name_token": "$3480",
+      "l1j_impl": "L1Merchant",
+      "classification": "alchemist_crafter",
+      "classification_basis": "L1J XML elven-wafer and single-item crafting actions",
+      "behavior_source_refs": [
+        "l1jxml:ItemMaking.xml:1992",
+        "l1jxml:SingleItemMaking.xml:4"
+      ],
+      "l1j_npc_ref": "l1jdb:22177",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87358,
+          "count": 1,
+          "locx": 32573,
+          "locy": 32936,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Alchemist",
+          "source_ref": "l1jdb:49158",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "alchemy1",
+        "caotic_action": "alchemy1",
+        "teleport_url": "alchemy4",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23810",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22177 supplies L1J Alchemist / '$3480' / gfx2090. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 697/$1779/바뤼에스 (native-dump:362). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 2090,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 2090,
+        "name": "varyeth",
+        "declared_type": 6,
+        "source_ref": "sprites:1429",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR2090 varyeth exists at sprites:1429 only. Equal f2 only: 697/$1779/바뤼에스 (native-dump:362). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:340",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70531,
+      "l1j_name": "Jem",
+      "name_token": "$1928",
+      "l1j_impl": "L1Merchant",
+      "classification": "wizard_quest_npc",
+      "classification_basis": "L1J Wizard Lv15 quest-conditioned jem1/jem6 override",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:451"
+      ],
+      "l1j_npc_ref": "l1jdb:22188",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87501,
+          "count": 1,
+          "locx": 32587,
+          "locy": 32927,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Jem",
+          "source_ref": "l1jdb:49190",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "jem2",
+        "caotic_action": "jem2",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23820",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22188 supplies L1J Jem / '$1928' / gfx1307. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 346/$865/마법 연금술사^모리아 (native-dump:204); 719/$1824/티파니 (native-dump:382). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 1307,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 1307,
+        "name": "npc alchemist",
+        "declared_type": 6,
+        "source_ref": "sprites:851",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR1307 npc alchemist exists at sprites:851 only. Equal f2 only: 346/$865/마법 연금술사^모리아 (native-dump:204); 719/$1824/티파니 (native-dump:382). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:377",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 50111,
+      "l1j_name": "Liri",
+      "name_token": "$3318",
+      "l1j_impl": "L1Merchant",
+      "classification": "quest_dialogue_npc_disabled_spawn",
+      "classification_basis": "count0 placement; L1J talking-scroll quest-conditioned orenc override",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:2061"
+      ],
+      "l1j_npc_ref": "l1jdb:21804",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87542,
+          "count": 0,
+          "locx": 32583,
+          "locy": 32935,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Liri",
+          "source_ref": "l1jdb:49231",
+          "enabled_in_l1j": false,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "orenc14",
+        "caotic_action": "orenc14",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23472",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:21804 supplies L1J Liri / '$3318' / gfx940. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 721/$1826/타우스 (native-dump:384). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 940,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 940,
+        "name": "Teleporter",
+        "declared_type": 6,
+        "source_ref": "sprites:561",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR940 Teleporter exists at sprites:561 only. Equal f2 only: 721/$1826/타우스 (native-dump:384). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:414",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70099,
+      "l1j_name": "Kuper",
+      "name_token": "$2344",
+      "l1j_impl": "L1Merchant",
+      "classification": "quest_reward_npc",
+      "classification_basis": "L1J oilskin-mantle quest dialogue and get reward branch",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:791",
+        "l1jsrc:clientpackets/C_NPCAction.java:314"
+      ],
+      "l1j_npc_ref": "l1jdb:22154",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87552,
+          "count": 1,
+          "locx": 32600,
+          "locy": 32920,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Kuper",
+          "source_ref": "l1jdb:49241",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "kuper2",
+        "caotic_action": "kuper2",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23792",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22154 supplies L1J Kuper / '$2344' / gfx792. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 104/$480/오포 (native-dump:64); 423/$1266/알드레드 (native-dump:254). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 792,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 792,
+        "name": "Ofo",
+        "declared_type": 6,
+        "source_ref": "sprites:451",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR792 Ofo exists at sprites:451 only. Equal f2 only: 104/$480/오포 (native-dump:64); 423/$1266/알드레드 (native-dump:254). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:451",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70100,
+      "l1j_name": "Lengo",
+      "name_token": "$454",
+      "l1j_impl": "L1Merchant",
+      "classification": "roaming_dialogue_npc_role_unresolved",
+      "classification_basis": "Lengo catalog identity; exact guide function not established",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22155",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87553,
+          "count": 1,
+          "locx": 32575,
+          "locy": 32946,
+          "randomx": 25,
+          "randomy": 25,
+          "heading": 0,
+          "respawn_delay": 90,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Lengo",
+          "source_ref": "l1jdb:49242",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "lengo1",
+        "caotic_action": "lengo1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23793",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 82,
+          "name_token": "$454",
+          "name_ko": "렝고",
+          "sprite_f2": 704,
+          "source_ref": "native-dump:51",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 704,
+            "name": "lengo",
+            "declared_type": 6,
+            "source_ref": "sprites:379"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 82,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 704,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 704,
+        "name": "lengo",
+        "declared_type": 6,
+        "source_ref": "sprites:379",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:488",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": 704,
+      "placement_note": "randomx=randomy=25 in L1J; recorded locx/locy is a randomized-placement center. Does not establish a fixed classic town tile."
+    },
+    {
+      "l1j_npc_id": 70101,
+      "l1j_name": "Fiin",
+      "name_token": "$455",
+      "l1j_impl": "L1Merchant",
+      "classification": "roaming_dialogue_npc_role_unresolved",
+      "classification_basis": "Fiin catalog identity; exact guide function not established",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22156",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87554,
+          "count": 1,
+          "locx": 32575,
+          "locy": 32946,
+          "randomx": 25,
+          "randomy": 25,
+          "heading": 0,
+          "respawn_delay": 90,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Fiin",
+          "source_ref": "l1jdb:49243",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "fiin1",
+        "caotic_action": "fiin1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23794",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 83,
+          "name_token": "$455",
+          "name_ko": "휜",
+          "sprite_f2": 705,
+          "source_ref": "native-dump:52",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 705,
+            "name": "fiin",
+            "declared_type": 6,
+            "source_ref": "sprites:380"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 83,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 705,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 705,
+        "name": "fiin",
+        "declared_type": 6,
+        "source_ref": "sprites:380",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:534",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": 705,
+      "placement_note": "randomx=randomy=25 in L1J; recorded locx/locy is a randomized-placement center. Does not establish a fixed classic town tile."
+    },
+    {
+      "l1j_npc_id": 70102,
+      "l1j_name": "Judice",
+      "name_token": "$456",
+      "l1j_impl": "L1Merchant",
+      "classification": "roaming_dialogue_npc_role_unresolved",
+      "classification_basis": "Judice catalog identity; exact guide function not established",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22157",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87555,
+          "count": 1,
+          "locx": 32575,
+          "locy": 32946,
+          "randomx": 25,
+          "randomy": 25,
+          "heading": 0,
+          "respawn_delay": 90,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Judice",
+          "source_ref": "l1jdb:49244",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "judice1",
+        "caotic_action": "judice1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23795",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 84,
+          "name_token": "$456",
+          "name_ko": "쥬디스",
+          "sprite_f2": 706,
+          "source_ref": "native-dump:53",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 706,
+            "name": "judice",
+            "declared_type": 6,
+            "source_ref": "sprites:381"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 84,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 706,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 706,
+        "name": "judice",
+        "declared_type": 6,
+        "source_ref": "sprites:381",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:580",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": 706,
+      "placement_note": "randomx=randomy=25 in L1J; recorded locx/locy is a randomized-placement center. Does not establish a fixed classic town tile."
+    },
+    {
+      "l1j_npc_id": 70529,
+      "l1j_name": "Mona",
+      "name_token": "$862",
+      "l1j_impl": "L1Merchant",
+      "classification": "roaming_dialogue_npc_role_unresolved",
+      "classification_basis": "Mona catalog identity; exact guide function not established",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22186",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87556,
+          "count": 1,
+          "locx": 32575,
+          "locy": 32946,
+          "randomx": 25,
+          "randomy": 25,
+          "heading": 0,
+          "respawn_delay": 90,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Mona",
+          "source_ref": "l1jdb:49245",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "mona1",
+        "caotic_action": "mona1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23818",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 322,
+          "name_token": "$862",
+          "name_ko": "모나",
+          "sprite_f2": 234,
+          "source_ref": "native-dump:189",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 234,
+            "name": "cw maid luth",
+            "declared_type": 6,
+            "source_ref": "sprites:220"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 322,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 234,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 234,
+        "name": "cw maid luth",
+        "declared_type": 6,
+        "source_ref": "sprites:220",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:626",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": 234,
+      "placement_note": "randomx=randomy=25 in L1J; recorded locx/locy is a randomized-placement center. Does not establish a fixed classic town tile."
+    },
+    {
+      "l1j_npc_id": 50112,
+      "l1j_name": "Serian",
+      "name_token": "$3317",
+      "l1j_impl": "L1Teleporter",
+      "classification": "quest_teleporter",
+      "classification_basis": "L1Teleporter SQL impl; C_NPCAction has talking-scroll trade; Merchant quest branch cannot be assumed dispatched for L1Teleporter",
+      "behavior_source_refs": [
+        "l1jsrc:clientpackets/C_NPCAction.java:886",
+        "l1jsrc:model/Instance/L1MerchantInstance.java:2031"
+      ],
+      "l1j_npc_ref": "l1jdb:21805",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87557,
+          "count": 1,
+          "locx": 32600,
+          "locy": 32916,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Serian",
+          "source_ref": "l1jdb:49246",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "orenb1",
+        "caotic_action": "orenb1",
+        "teleport_url": "orenb0",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23473",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:21805 supplies L1J Serian / '$3317' / gfx940. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 721/$1826/타우스 (native-dump:384). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 940,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 940,
+        "name": "Teleporter",
+        "declared_type": 6,
+        "source_ref": "sprites:561",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR940 Teleporter exists at sprites:561 only. Equal f2 only: 721/$1826/타우스 (native-dump:384). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70538,
+      "l1j_name": "Blood Pledge Administrator",
+      "name_token": "$2238",
+      "l1j_impl": "L1Merchant",
+      "classification": "blood_pledge_administrator_candidate",
+      "classification_basis": "L1J name + bpledge stems and classic title; specific service actions not established",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22195",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87840,
+          "count": 1,
+          "locx": 32579,
+          "locy": 32922,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Blood Pledge Administrator",
+          "source_ref": "l1jdb:49325",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "bpledge2",
+        "caotic_action": "bpledge2",
+        "teleport_url": "bpledge1",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23827",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 984,
+          "name_token": "$2238",
+          "name_ko": "혈맹 집행인^엘도린",
+          "sprite_f2": 949,
+          "source_ref": "native-dump:536",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 949,
+            "name": "windawood lord",
+            "declared_type": 6,
+            "source_ref": "sprites:570"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 984,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 949,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 949,
+        "name": "windawood lord",
+        "declared_type": 6,
+        "source_ref": "sprites:570",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:672",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": 949,
+      "name_equivalence_note": "L1J English name is generic Blood Pledge Administrator; classic token maps to named ?? ???^???. The shared token/role/f2 supports a catalog correspondence, not proof of identical live character naming."
+    },
+    {
+      "l1j_npc_id": 70534,
+      "l1j_name": "Secratary to the Mayor",
+      "name_token": "$2170",
+      "l1j_impl": "L1Merchant",
+      "classification": "town_adviser",
+      "classification_basis": "L1J talkToTownadviser(Talking Island) with resident/leader-conditioned stem",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:1326",
+        "l1jsrc:model/Instance/L1MerchantInstance.java:3046"
+      ],
+      "l1j_npc_ref": "l1jdb:22191",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87848,
+          "count": 1,
+          "locx": 32588,
+          "locy": 32952,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Secratary to the Mayor",
+          "source_ref": "l1jdb:49333",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "secretary1",
+        "caotic_action": "secretary1",
+        "teleport_url": "secretary4",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23823",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22191 supplies L1J Secratary to the Mayor / '$2170' / gfx460. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 874/$2021/마샤 (native-dump:462). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 460,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 460,
+        "name": "ishmael",
+        "declared_type": 6,
+        "source_ref": "sprites:301",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR460 ishmael exists at sprites:301 only. Equal f2 only: 874/$2021/마샤 (native-dump:462). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:718",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70528,
+      "l1j_name": "Village Manager",
+      "name_token": "$2171",
+      "l1j_impl": "L1Merchant",
+      "classification": "village_manager",
+      "classification_basis": "L1J talkToTownmaster(Talking Island), hometown/othertown branch",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:1302",
+        "l1jsrc:model/Instance/L1MerchantInstance.java:3058"
+      ],
+      "l1j_npc_ref": "l1jdb:22185",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 87858,
+          "count": 1,
+          "locx": 32588,
+          "locy": 32953,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Village Manager",
+          "source_ref": "l1jdb:49343",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "othertown",
+        "caotic_action": "othertown",
+        "teleport_url": "othertownh",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23817",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22185 supplies L1J Village Manager / '$2171' / gfx971. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 747/$1927/제로 (native-dump:397). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 971,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 971,
+        "name": "steward",
+        "declared_type": 6,
+        "source_ref": "sprites:576",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR971 steward exists at sprites:576 only. Equal f2 only: 747/$1927/제로 (native-dump:397). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:755",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 60501,
+      "l1j_name": "Guard",
+      "name_token": "$240",
+      "l1j_impl": "L1Guard",
+      "classification": "guard_archer_candidate",
+      "classification_basis": "L1Guard and gfx335; archer identity is art-level, template variant ambiguous",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1GuardInstance.java:166"
+      ],
+      "l1j_npc_ref": "l1jdb:21989",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 89023,
+          "count": 1,
+          "locx": 32565,
+          "locy": 32930,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49592",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89026,
+          "count": 1,
+          "locx": 32596,
+          "locy": 32905,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 0,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49595",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89027,
+          "count": 1,
+          "locx": 32607,
+          "locy": 32947,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 2,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49596",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89029,
+          "count": 1,
+          "locx": 32574,
+          "locy": 32980,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49598",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89031,
+          "count": 1,
+          "locx": 32543,
+          "locy": 32962,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49600",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89091,
+          "count": 1,
+          "locx": 32619,
+          "locy": 32957,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49656",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "patguard",
+        "caotic_action": "patguard",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23657",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 10,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 51,
+          "source_ref": "native-dump:10",
+          "field_status": "confirmed_dump_fields_token_only_sprite_variant_mismatch",
+          "sprite": {
+            "sprite_id": 51,
+            "name": "guard",
+            "declared_type": 5,
+            "source_ref": "sprites:48"
+          },
+          "matches_l1j_gfxid": false
+        },
+        {
+          "id": 58,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 335,
+          "source_ref": "native-dump:37",
+          "field_status": "confirmed_dump_fields_token_name_and_sprite_candidate_not_selected_identity",
+          "sprite": {
+            "sprite_id": 335,
+            "name": "guard archer",
+            "declared_type": 5,
+            "source_ref": "sprites:265"
+          },
+          "matches_l1j_gfxid": true
+        },
+        {
+          "id": 68,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 335,
+          "source_ref": "native-dump:43",
+          "field_status": "confirmed_dump_fields_token_name_and_sprite_candidate_not_selected_identity",
+          "sprite": {
+            "sprite_id": 335,
+            "name": "guard archer",
+            "declared_type": 5,
+            "source_ref": "sprites:265"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": null,
+      "mapping_status": "ambiguous_classic_template_candidates",
+      "mapping_basis": "Candidate, not selected identity: l1jdb:21989 Guard/$240/gfx335; native-dump:37 and :43 both name $240/경비병 and f2=335, and sprites:265 calls SPR335 guard archer. Thus 58/68 share the appearance candidate. Native10/native-dump:10 shares the token but f2=51/sprites:48 guard differs. Native f23 values60/8 are not verified levels or variant selectors (docs/NPC_FIELD_SEMANTICS.md:5); no basis selects58 versus68.",
+      "l1j_gfxid": 335,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 335,
+        "name": "guard archer",
+        "declared_type": 5,
+        "source_ref": "sprites:265",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Appearance candidate narrowed to SPR335 guard archer (sprites:265), shared by native58/68 (native-dump:37/:43). Preserve all token candidates, mark native10 as a sprite variant mismatch, and keep selected template/sprite null until the intended current identity/variant is supplied. No runtime or wire f39 claim.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 60502,
+      "l1j_name": "Guard",
+      "name_token": "$240",
+      "l1j_impl": "L1Guard",
+      "classification": "guard",
+      "classification_basis": "L1Guard; classic guard token candidates have no matching f2=148",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1GuardInstance.java:166"
+      ],
+      "l1j_npc_ref": "l1jdb:21990",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 89024,
+          "count": 1,
+          "locx": 32565,
+          "locy": 32925,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49593",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89025,
+          "count": 1,
+          "locx": 32591,
+          "locy": 32905,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 0,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49594",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89028,
+          "count": 1,
+          "locx": 32607,
+          "locy": 32941,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 2,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49597",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89030,
+          "count": 1,
+          "locx": 32569,
+          "locy": 32980,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49599",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89032,
+          "count": 1,
+          "locx": 32543,
+          "locy": 32955,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49601",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        },
+        {
+          "id": 89092,
+          "count": 1,
+          "locx": 32619,
+          "locy": 32963,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49657",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "patguard",
+        "caotic_action": "patguard",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23658",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 10,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 51,
+          "source_ref": "native-dump:10",
+          "field_status": "confirmed_dump_fields_token_only_all_sprite_variants_mismatch",
+          "sprite": {
+            "sprite_id": 51,
+            "name": "guard",
+            "declared_type": 5,
+            "source_ref": "sprites:48"
+          },
+          "matches_l1j_gfxid": false
+        },
+        {
+          "id": 58,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 335,
+          "source_ref": "native-dump:37",
+          "field_status": "confirmed_dump_fields_token_only_all_sprite_variants_mismatch",
+          "sprite": {
+            "sprite_id": 335,
+            "name": "guard archer",
+            "declared_type": 5,
+            "source_ref": "sprites:265"
+          },
+          "matches_l1j_gfxid": false
+        },
+        {
+          "id": 68,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 335,
+          "source_ref": "native-dump:43",
+          "field_status": "confirmed_dump_fields_token_only_all_sprite_variants_mismatch",
+          "sprite": {
+            "sprite_id": 335,
+            "name": "guard archer",
+            "declared_type": 5,
+            "source_ref": "sprites:265"
+          },
+          "matches_l1j_gfxid": false
+        }
+      ],
+      "selected_classic_npc_id": null,
+      "mapping_status": "ambiguous_classic_template_candidates",
+      "mapping_basis": "Unresolved conflicting name/appearance: l1jdb:21990 Guard/$240/gfx148; token candidates native10/58/68 are native-dump:10/:37/:43, with f2=51/335/335. SPR148 is kent castle guard (sprites:140); its native f2 match is86/$475/근위병 (native-dump:54), not $240. Equal gfx148 does not justify replacing the L1J Guard identity with native86. Need a current name/variant-to-f2 binding.",
+      "l1j_gfxid": 148,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 148,
+        "name": "kent castle guard",
+        "declared_type": 5,
+        "source_ref": "sprites:140",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR148 kent castle guard (sprites:140) is a graphic candidate only; native86/$475/근위병 (native-dump:54) conflicts with this row $240. Keep token candidates10/58/68 and selected template/sprite null. Do not infer a template from L1J gfx148 or a wire f39 from the catalog.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 81200,
+      "l1j_name": "Unknown",
+      "name_token": "?????????",
+      "l1j_impl": "L1Merchant",
+      "classification": "special_service_identity_unresolved",
+      "classification_basis": "literal unknown name/token; c_belt override and SellOfPet branch observed in source, exact identity unresolved",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:1896",
+        "l1jsrc:clientpackets/C_NPCAction.java:3640"
+      ],
+      "l1j_npc_ref": "l1jdb:23225",
+      "scope": "village",
+      "spawns": [
+        {
+          "id": 1310376,
+          "count": 1,
+          "locx": 32590,
+          "locy": 32934,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Unknown",
+          "source_ref": "l1jdb:50725",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "nobelt",
+        "caotic_action": "nobelt",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:24432",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:23225 supplies L1J Unknown / '?????????' / gfx1768. Blank/unknown token is not an identity key. Equal f2 only: 605/$1592/대장장이^이벨빈 (native-dump:348); 1367/$2688/보석 연구가^카리프 (native-dump:551). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 1768,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 1768,
+        "name": "dwarf master",
+        "declared_type": 6,
+        "source_ref": "sprites:1131",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR1768 dwarf master exists at sprites:1131 only. Equal f2 only: 605/$1592/대장장이^이벨빈 (native-dump:348); 1367/$2688/보석 연구가^카리프 (native-dump:551). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "existing_shop_npcs_cross_reference": {
+        "source_ref": "shop_npcs:824",
+        "reason": "Existing file includes every L1Merchant even with no shop rows. Service identity is deliberately cross-referenced here; this is not an extra spawn definition for product loading."
+      },
+      "selected_classic_sprite_id": null
+    }
+  ],
+  "special_npcs": [
+    {
+      "l1j_npc_id": 81000,
+      "l1j_name": "Harbor Master",
+      "name_token": "$320",
+      "l1j_impl": "L1Monster",
+      "classification": "disabled_monster_harbor_master",
+      "classification_basis": "count0 and L1Monster; distinct from ticket merchant70011; not ordinary town service",
+      "behavior_source_refs": [],
+      "l1j_npc_ref": "l1jdb:23065",
+      "scope": "special_inside_village",
+      "spawns": [
+        {
+          "id": 89565,
+          "count": 0,
+          "locx": 32652,
+          "locy": 32953,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Harbor Master",
+          "source_ref": "l1jdb:49719",
+          "enabled_in_l1j": false,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": false,
+        "normal_action": null,
+        "caotic_action": null,
+        "teleport_url": null,
+        "teleport_urla": null,
+        "source_ref": "l1jdb:1616",
+        "absence_scope": "No INSERT row for this npcid in base DB npcaction; null is absent row, not an empty-string menu.",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:23065 supplies L1J Harbor Master / '$320' / gfx148. No matching native npc name.reference in native-dump:1-951. Equal f2 only: 86/$475/근위병 (native-dump:54). These names/tokens do not establish this L1J NPC identity. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 148,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 148,
+        "name": "kent castle guard",
+        "declared_type": 5,
+        "source_ref": "sprites:140",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR148 kent castle guard exists at sprites:140 only. Equal f2 only: 86/$475/근위병 (native-dump:54). These names/tokens do not establish this L1J NPC identity. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 80001,
+      "l1j_name": "Oasis Stuff",
+      "name_token": "",
+      "l1j_impl": "L1Npc",
+      "classification": "field_prop_identity_unresolved",
+      "classification_basis": "Oasis Stuff L1Npc with empty token; do not infer classic identity",
+      "behavior_source_refs": [],
+      "l1j_npc_ref": "l1jdb:22910",
+      "scope": "special_inside_village",
+      "spawns": [
+        {
+          "id": 130408,
+          "count": 1,
+          "locx": 32647,
+          "locy": 32950,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Oasis Stuff",
+          "source_ref": "l1jdb:50247",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": false,
+        "normal_action": null,
+        "caotic_action": null,
+        "teleport_url": null,
+        "teleport_urla": null,
+        "source_ref": "l1jdb:1616",
+        "absence_scope": "No INSERT row for this npcid in base DB npcaction; null is absent row, not an empty-string menu.",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22910 supplies L1J Oasis Stuff / '' / gfx2299. Blank/unknown token is not an identity key. No native npc f2 equals this gfxid in native-dump:1-951. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 2299,
+      "same_number_classic_sprite_candidate": null,
+      "sprite_selection_note": "No same-number SPR2299 in sprites:1-2976. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; do not use L1J gfxid as classic template or wire f39.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 80006,
+      "l1j_name": "Message Board",
+      "name_token": "$1385",
+      "l1j_impl": "L1Board",
+      "classification": "message_board",
+      "classification_basis": "L1Board; board packet path rather than npcaction HTML",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1BoardInstance.java:28",
+        "l1jsrc:model/Instance/L1BoardInstance.java:38"
+      ],
+      "l1j_npc_ref": "l1jdb:22915",
+      "scope": "special_inside_village",
+      "spawns": [
+        {
+          "id": 130863,
+          "count": 1,
+          "locx": 32578,
+          "locy": 32941,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 0,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Message Board",
+          "source_ref": "l1jdb:50268",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": false,
+        "normal_action": null,
+        "caotic_action": null,
+        "teleport_url": null,
+        "teleport_urla": null,
+        "source_ref": "l1jdb:1616",
+        "absence_scope": "No INSERT row for this npcid in base DB npcaction; null is absent row, not an empty-string menu.",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "Unresolved catalog identity. l1jdb:22915 supplies L1J Message Board / '$1385' / gfx1546. No matching native npc name.reference in native-dump:1-951. No native npc f2 equals this gfxid in native-dump:1-951. Existing NormalSpawn/static SHOP publication supplies no identity for this row (work/local_original_session/implementation-2/npc-motion-goal/normal-npc-publication-source-v1/CONTACT.md:11-15).",
+      "l1j_gfxid": 1546,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 1546,
+        "name": "board b",
+        "declared_type": 14,
+        "source_ref": "sprites:947",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "SPR1546 board b exists at sprites:947 only. No native npc f2 equals this gfxid in native-dump:1-951. A current classic NPC name/token-to-f2 record or existing source-bound identity is missing; no runtime appearance or wire f39 is selected.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    }
+  ],
+  "adjacent_npcs": [
+    {
+      "l1j_npc_id": 50018,
+      "l1j_name": "Coliseum Manager",
+      "name_token": "$1609",
+      "l1j_impl": "L1Teleporter",
+      "classification": "adjacent_coliseum_teleporter",
+      "classification_basis": "outside village rectangle, L1Teleporter + colos stems",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1TeleporterInstance.java:63"
+      ],
+      "l1j_npc_ref": "l1jdb:21737",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 50086,
+          "count": 1,
+          "locx": 32551,
+          "locy": 33006,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Coliseum Manager",
+          "source_ref": "l1jdb:48784",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "colos",
+        "caotic_action": "colos",
+        "teleport_url": "colos1",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23405",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "No native npc row with this nonempty dollar token. Equal-number SPR presence alone does not identify a classic template; blank/unknown tokens are not keys.",
+      "l1j_gfxid": 992,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 992,
+        "name": "anotte",
+        "declared_type": 6,
+        "source_ref": "sprites:597",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 50019,
+      "l1j_name": "Assistant Manager of the Coliseum",
+      "name_token": "$1902",
+      "l1j_impl": "L1Teleporter",
+      "classification": "adjacent_coliseum_assistant",
+      "classification_basis": "outside village rectangle, L1Teleporter + colusher stems",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1TeleporterInstance.java:63"
+      ],
+      "l1j_npc_ref": "l1jdb:21738",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 50201,
+          "count": 1,
+          "locx": 32546,
+          "locy": 33006,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 6,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Assistant Manager of the Coliseum",
+          "source_ref": "l1jdb:48810",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "colusher",
+        "caotic_action": "colusher",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23406",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "No native npc row with this nonempty dollar token. Equal-number SPR presence alone does not identify a classic template; blank/unknown tokens are not keys.",
+      "l1j_gfxid": 800,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 800,
+        "name": "Woodford",
+        "declared_type": 6,
+        "source_ref": "sprites:458",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70532,
+      "l1j_name": "Johnson",
+      "name_token": "$614",
+      "l1j_impl": "L1Merchant",
+      "classification": "adjacent_dialogue_npc_role_unresolved",
+      "classification_basis": "outside village rectangle; Johnson name and johnson1 stems",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22189",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 60055,
+          "count": 1,
+          "locx": 32450,
+          "locy": 32990,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Johnson",
+          "source_ref": "l1jdb:48980",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "johnson1",
+        "caotic_action": "johnson1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23821",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "No native npc row with this nonempty dollar token. Equal-number SPR presence alone does not identify a classic template; blank/unknown tokens are not keys.",
+      "l1j_gfxid": 697,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 697,
+        "name": "dunkan",
+        "declared_type": 6,
+        "source_ref": "sprites:372",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 70537,
+      "l1j_name": "Farlin",
+      "name_token": "$1054",
+      "l1j_impl": "L1Merchant",
+      "classification": "adjacent_item_crafter",
+      "classification_basis": "outside village rectangle; classic title item crafting; L1J sell refusal branch",
+      "behavior_source_refs": [
+        "l1jsrc:clientpackets/C_NPCAction.java:253"
+      ],
+      "l1j_npc_ref": "l1jdb:22194",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 87200,
+          "count": 1,
+          "locx": 32413,
+          "locy": 32983,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Farlin",
+          "source_ref": "l1jdb:49088",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "farlin1",
+        "caotic_action": "farlinC1",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23826",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 301,
+          "name_token": "$1054",
+          "name_ko": "아이템 제작^파린",
+          "sprite_f2": 983,
+          "source_ref": "native-dump:182",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 983,
+            "name": "deker",
+            "declared_type": 6,
+            "source_ref": "sprites:588"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 301,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 983,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 983,
+        "name": "deker",
+        "declared_type": 6,
+        "source_ref": "sprites:588",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": 983
+    },
+    {
+      "l1j_npc_id": 70536,
+      "l1j_name": "Touma",
+      "name_token": "$478",
+      "l1j_impl": "L1Merchant",
+      "classification": "adjacent_blacksmith",
+      "classification_basis": "outside village rectangle; classic Korean title blacksmith",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22193",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 87302,
+          "count": 1,
+          "locx": 32417,
+          "locy": 32984,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Touma",
+          "source_ref": "l1jdb:49138",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "touma1",
+        "caotic_action": "touma1",
+        "teleport_url": "touma2",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23825",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 89,
+          "name_token": "$478",
+          "name_ko": "대장장이^토마",
+          "sprite_f2": 727,
+          "source_ref": "native-dump:56",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 727,
+            "name": "touma",
+            "declared_type": 6,
+            "source_ref": "sprites:400"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 89,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 727,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 727,
+        "name": "touma",
+        "declared_type": 6,
+        "source_ref": "sprites:400",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": 727
+    },
+    {
+      "l1j_npc_id": 70009,
+      "l1j_name": "Gereng",
+      "name_token": "$374",
+      "l1j_impl": "L1Merchant",
+      "classification": "adjacent_class_quest_npc",
+      "classification_basis": "outside village rectangle; blank default stems but L1J class-conditioned gereng overrides",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:461"
+      ],
+      "l1j_npc_ref": "l1jdb:22064",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 87502,
+          "count": 1,
+          "locx": 32561,
+          "locy": 33082,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 4,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Gereng",
+          "source_ref": "l1jdb:49191",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "",
+        "caotic_action": "",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23702",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 44,
+          "name_token": "$374",
+          "name_ko": "게렝",
+          "sprite_f2": 237,
+          "source_ref": "native-dump:33",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 237,
+            "name": "gereng",
+            "declared_type": 6,
+            "source_ref": "sprites:223"
+          },
+          "matches_l1j_gfxid": true
+        }
+      ],
+      "selected_classic_npc_id": 44,
+      "mapping_status": "confirmed_catalog_correspondence_only",
+      "mapping_basis": "Unique common name token, compatible L1J name/classic Korean name or title, and classic f2 equals L1J gfxid with existing SPR record. SPR art name may be a shared-model label. Confirms data correspondence only.",
+      "l1j_gfxid": 237,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 237,
+        "name": "gereng",
+        "declared_type": 6,
+        "source_ref": "sprites:223",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": 237
+    },
+    {
+      "l1j_npc_id": 70530,
+      "l1j_name": "Goddess of Atonement",
+      "name_token": "$3126",
+      "l1j_impl": "L1Merchant",
+      "classification": "adjacent_atonement_service_candidate",
+      "classification_basis": "outside village rectangle; L1J name and restore1pk/helppk stems",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:22187",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 87831,
+          "count": 1,
+          "locx": 32634,
+          "locy": 32812,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Goddess of Atonement",
+          "source_ref": "l1jdb:49316",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "restore1pk",
+        "caotic_action": "restore1pk",
+        "teleport_url": "helppk",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23819",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "No native npc row with this nonempty dollar token. Equal-number SPR presence alone does not identify a classic template; blank/unknown tokens are not keys.",
+      "l1j_gfxid": 2141,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 2141,
+        "name": "shaman",
+        "declared_type": 6,
+        "source_ref": "sprites:1454",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 60502,
+      "l1j_name": "Guard",
+      "name_token": "$240",
+      "l1j_impl": "L1Guard",
+      "classification": "guard",
+      "classification_basis": "L1Guard; classic guard token candidates have no matching f2=148",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1GuardInstance.java:166"
+      ],
+      "l1j_npc_ref": "l1jdb:21990",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 89033,
+          "count": 1,
+          "locx": 32561,
+          "locy": 33086,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Guard",
+          "source_ref": "l1jdb:49602",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "patguard",
+        "caotic_action": "patguard",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:23658",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [
+        {
+          "id": 10,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 51,
+          "source_ref": "native-dump:10",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 51,
+            "name": "guard",
+            "declared_type": 5,
+            "source_ref": "sprites:48"
+          },
+          "matches_l1j_gfxid": false
+        },
+        {
+          "id": 58,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 335,
+          "source_ref": "native-dump:37",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 335,
+            "name": "guard archer",
+            "declared_type": 5,
+            "source_ref": "sprites:265"
+          },
+          "matches_l1j_gfxid": false
+        },
+        {
+          "id": 68,
+          "name_token": "$240",
+          "name_ko": "경비병",
+          "sprite_f2": 335,
+          "source_ref": "native-dump:43",
+          "field_status": "confirmed_dump_fields",
+          "sprite": {
+            "sprite_id": 335,
+            "name": "guard archer",
+            "declared_type": 5,
+            "source_ref": "sprites:265"
+          },
+          "matches_l1j_gfxid": false
+        }
+      ],
+      "selected_classic_npc_id": null,
+      "mapping_status": "ambiguous_classic_template_candidates",
+      "mapping_basis": "Shared name token has multiple classic templates; do not collapse variants. For gfx335, classic58 and68 both match. For gfx148, no token-matched classic f2 matches.",
+      "l1j_gfxid": 148,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 148,
+        "name": "kent castle guard",
+        "declared_type": 5,
+        "source_ref": "sprites:140",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 80128,
+      "l1j_name": "Seal Merchant",
+      "name_token": "$5449",
+      "l1j_impl": "L1Merchant",
+      "classification": "adjacent_coin_service_candidate",
+      "classification_basis": "outside village rectangle; Seal Merchant and cointrader stem; no shop rows",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1MerchantInstance.java:70"
+      ],
+      "l1j_npc_ref": "l1jdb:23036",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 89623,
+          "count": 1,
+          "locx": 32552,
+          "locy": 33004,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "",
+          "source_ref": "l1jdb:49777",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": true,
+        "normal_action": "cointrader",
+        "caotic_action": "cointrader",
+        "teleport_url": "",
+        "teleport_urla": "",
+        "source_ref": "l1jdb:24372",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "No native npc row with this nonempty dollar token. Equal-number SPR presence alone does not identify a classic template; blank/unknown tokens are not keys.",
+      "l1j_gfxid": 800,
+      "same_number_classic_sprite_candidate": {
+        "sprite_id": 800,
+        "name": "Woodford",
+        "declared_type": 6,
+        "source_ref": "sprites:458",
+        "evidence_scope": "SPR_record_fields_only_not_NPC_identity_or_runtime_wire_contract"
+      },
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    },
+    {
+      "l1j_npc_id": 80005,
+      "l1j_name": "Weather Vane",
+      "name_token": "",
+      "l1j_impl": "L1FieldObject",
+      "classification": "adjacent_weather_vane",
+      "classification_basis": "outside village rectangle; L1FieldObject; empty name token",
+      "behavior_source_refs": [
+        "l1jsrc:model/Instance/L1FieldObjectInstance.java:34"
+      ],
+      "l1j_npc_ref": "l1jdb:22914",
+      "scope": "outside_classic_village_bounds",
+      "spawns": [
+        {
+          "id": 90216,
+          "count": 1,
+          "locx": 32573,
+          "locy": 33075,
+          "randomx": 0,
+          "randomy": 0,
+          "heading": 5,
+          "respawn_delay": 0,
+          "mapid": 0,
+          "movement_distance": 0,
+          "location": "Unknown",
+          "source_ref": "l1jdb:50061",
+          "enabled_in_l1j": true,
+          "placement_status": "L1J_location_candidate_not_classic_spawn_confirmation"
+        }
+      ],
+      "shop_row_count": 0,
+      "dialogue": {
+        "npcaction_row_present": false,
+        "normal_action": null,
+        "caotic_action": null,
+        "teleport_url": null,
+        "teleport_urla": null,
+        "source_ref": "l1jdb:1616",
+        "absence_scope": "No INSERT row for this npcid in base DB npcaction; null is absent row, not an empty-string menu.",
+        "status": "L1J_source_stems_only_classic_menu_not_verified",
+        "selection_note": "Defaults only. Impl may override by class, level, quest, lawful or resident status; empty default does not prove no dialogue. No HTML/UML resource or live response is verified."
+      },
+      "classic_npc_candidates": [],
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "mapping_basis": "No native npc row with this nonempty dollar token. Equal-number SPR presence alone does not identify a classic template; blank/unknown tokens are not keys.",
+      "l1j_gfxid": 2302,
+      "same_number_classic_sprite_candidate": null,
+      "sprite_selection_note": "Use selected classic template f2 for a catalog-backed appearance candidate. Otherwise this is only a same-number SPR record, not a template or runtime appearance selection.",
+      "runtime_status": "UNRUN",
+      "python_behavior_status": "NOT_IMPLEMENTED_OR_VERIFIED_BY_THIS_DATA_TASK",
+      "selected_classic_sprite_id": null
+    }
+  ],
+  "excluded_shop_npcs": [
+    {
+      "l1j_npc_id": 70014,
+      "l1j_name": "Pandora",
+      "scope": "village",
+      "shop_row_count": 964,
+      "spawn_id": 60801,
+      "spawn_ref": "l1jdb:48986",
+      "reason": "nonempty_L1J_shop_product_rows",
+      "shop_cross_reference": "shop_npcs:26"
+    },
+    {
+      "l1j_npc_id": 70010,
+      "l1j_name": "Balsim",
+      "scope": "outside_village",
+      "shop_row_count": 16,
+      "spawn_id": 60820,
+      "spawn_ref": "l1jdb:49005",
+      "reason": "nonempty_L1J_shop_product_rows",
+      "shop_cross_reference": null
+    },
+    {
+      "l1j_npc_id": 70013,
+      "l1j_name": "Cole",
+      "scope": "village",
+      "shop_row_count": 26,
+      "spawn_id": 60956,
+      "spawn_ref": "l1jdb:49045",
+      "reason": "nonempty_L1J_shop_product_rows",
+      "shop_cross_reference": "shop_npcs:63"
+    },
+    {
+      "l1j_npc_id": 70011,
+      "l1j_name": "Harbor Master",
+      "scope": "village",
+      "shop_row_count": 1,
+      "spawn_id": 60993,
+      "spawn_ref": "l1jdb:49055",
+      "reason": "nonempty_L1J_shop_product_rows",
+      "shop_cross_reference": "shop_npcs:100"
+    },
+    {
+      "l1j_npc_id": 81110,
+      "l1j_name": "Unknown 81110",
+      "scope": "outside_village",
+      "shop_row_count": 23,
+      "spawn_id": 89536,
+      "spawn_ref": "l1jdb:49693",
+      "reason": "nonempty_L1J_shop_product_rows",
+      "shop_cross_reference": null
+    },
+    {
+      "l1j_npc_id": 81123,
+      "l1j_name": "Pumpkin Trader",
+      "scope": "village",
+      "shop_row_count": 2,
+      "spawn_id": 130852,
+      "spawn_ref": "l1jdb:50257",
+      "reason": "nonempty_L1J_shop_product_rows",
+      "shop_cross_reference": "shop_npcs:792"
+    }
+  ],
+  "summary": {
+    "village_npc_ids": 27,
+    "village_spawn_rows": 38,
+    "ordinary_village_npc_ids": 24,
+    "special_inside_village_npc_ids": 3,
+    "adjacent_npc_rows": 10,
+    "adjacent_spawn_rows": 10,
+    "village_catalog_confirmed_npc_ids": 7,
+    "adjacent_catalog_confirmed_npc_rows": 3,
+    "village_ambiguous_npc_ids": 2,
+    "village_unknown_npc_ids": 18,
+    "excluded_shop_npc_ids": 6,
+    "existing_shop_file_service_cross_references": 17
+  }
+}

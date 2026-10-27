@@ -22,9 +22,9 @@ SOURCE_PINS = {
     'work/online_equipment_buff_source/row-types.json':
         'd93ef7f6497dd57c202e6554d01cc33c4408868702d2d43b710f76cabdb3a0ab',
     'tools/local_original_session/inventory.py':
-        '92a80df4fc9fe83f173bd15171500245844b52ca29e544dc08a5877f277ecead',
+        '38a4265056d878edf673301d221dc37167f2c52b4048b4530b676577d4ff5ed2',
     'tools/local_original_session/edge.py':
-        'dfc4ae875123f3375880778f6d1d50bd36881e26ea32f8913cefe3f5cd5459c3',
+        'e758a6eb692b44d8bf5742150592ddda8814abda8d58d418c3710d0c42447d28',
 }
 
 

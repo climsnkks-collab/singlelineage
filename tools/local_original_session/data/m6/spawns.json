@@ -1,0 +1,2956 @@
+{
+  "table": "m6_spawns",
+  "version": 1,
+  "groups": [
+    {
+      "group_id": {
+        "value": "m6_7_0",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:45998"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "m6/existing template0"
+      },
+      "map_id": {
+        "value": 7,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32786,
+          "y1": 32743,
+          "x2": 32792,
+          "y2": 32749
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:45998; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:45998 original count=6",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:45998"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32773,
+          "y1": 32722,
+          "x2": 32814,
+          "y2": 32750
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:45998"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          7,
+          32773,
+          32722
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:45998"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "사막 던전 1층",
+          "은기사 지역",
+          "글루디오",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/0?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_7_29",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46002"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "m6/existing template29"
+      },
+      "map_id": {
+        "value": 7,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32778,
+          "y1": 32726,
+          "x2": 32784,
+          "y2": 32732
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46002; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46002 original count=75",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46002"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46002"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          7,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46002"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "은기사 지역",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/29?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_8_27",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46006"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "m6/existing template27"
+      },
+      "map_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32734,
+          "y1": 32774,
+          "x2": 32740,
+          "y2": 32780
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46006; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46006 original count=20",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46006"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46006"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          8,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46006"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/27?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_8_278",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46010"
+      },
+      "template_id": {
+        "value": 278,
+        "source": "client",
+        "ref": "m6/existing template278"
+      },
+      "map_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32779,
+          "y1": 32783,
+          "x2": 32785,
+          "y2": 32789
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46010; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46010 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46010"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46010"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          8,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46010"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "사막 던전 3층",
+          "글루디오 던전 2층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/278?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_9_27",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46016"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "m6/existing template27"
+      },
+      "map_id": {
+        "value": 9,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32775,
+          "y1": 32731,
+          "x2": 32781,
+          "y2": 32737
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46016; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46016 original count=18",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46016"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46016"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          9,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46016"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/27?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_9_29",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46018"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "m6/existing template29"
+      },
+      "map_id": {
+        "value": 9,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32736,
+          "y1": 32777,
+          "x2": 32742,
+          "y2": 32783
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46018; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46018 original count=35",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46018"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46018"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          9,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46018"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "은기사 지역",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/29?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_10_27",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46025"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "m6/existing template27"
+      },
+      "map_id": {
+        "value": 10,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32734,
+          "y1": 32757,
+          "x2": 32740,
+          "y2": 32763
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46025; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46025 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46025"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46025"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          10,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46025"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/27?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_10_30",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46029"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "m6/existing template30"
+      },
+      "map_id": {
+        "value": 10,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32757,
+          "y1": 32726,
+          "x2": 32763,
+          "y2": 32732
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46029; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46029 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46029"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46029"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          10,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46029"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "용의 계곡 던전 1층",
+          "기란 던전 1층",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "용의 계곡",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/30?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_11_29",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46037"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "m6/existing template29"
+      },
+      "map_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32732,
+          "y1": 32742,
+          "x2": 32738,
+          "y2": 32748
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46037; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46037 original count=20",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46037"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46037"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          11,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46037"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "은기사 지역",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/29?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_11_30",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46041"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "m6/existing template30"
+      },
+      "map_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32757,
+          "y1": 32728,
+          "x2": 32763,
+          "y2": 32734
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46041; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46041 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46041"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46041"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          11,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46041"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "용의 계곡 던전 1층",
+          "기란 던전 1층",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "용의 계곡",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/30?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_11_277",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46039"
+      },
+      "template_id": {
+        "value": 277,
+        "source": "client",
+        "ref": "m6/existing template277"
+      },
+      "map_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32728,
+          "y1": 32761,
+          "x2": 32734,
+          "y2": 32767
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46039; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46039 original count=15",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46039"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46039"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          11,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46039"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "사막 던전 3층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/277?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_12_11",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46047"
+      },
+      "template_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "m6/existing template11"
+      },
+      "map_id": {
+        "value": 12,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32744,
+          "y1": 32797,
+          "x2": 32750,
+          "y2": 32803
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46047; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46047 original count=4",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46047"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46047"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          12,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46047"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "윈다우드",
+          "아덴 대륙",
+          "글루디오 던전 6층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/11?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_12_7",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46045"
+      },
+      "template_id": {
+        "value": 7,
+        "source": "client",
+        "ref": "m6/existing template7"
+      },
+      "map_id": {
+        "value": 12,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32736,
+          "y1": 32779,
+          "x2": 32742,
+          "y2": 32785
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46045; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46045 original count=5",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46045"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46045"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          12,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46045"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "글루디오",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 6층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/7?locale=ko-KR"
+      },
+      "selection_note": "LOCAL reference bounds only: not same-NPC spawn evidence. Official region takes precedence over later L1J contaminated NPCs/map43 missing spawns."
+    },
+    {
+      "group_id": {
+        "value": "m6_12_30",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46048"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "m6/existing template30"
+      },
+      "map_id": {
+        "value": 12,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32781,
+          "y1": 32766,
+          "x2": 32787,
+          "y2": 32772
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46048; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46048 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46048"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46048"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          12,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46048"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "용의 계곡 던전 1층",
+          "기란 던전 1층",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "용의 계곡",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/30?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_13_30",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46056"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "m6/existing template30"
+      },
+      "map_id": {
+        "value": 13,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32748,
+          "y1": 32720,
+          "x2": 32754,
+          "y2": 32726
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46056; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46056 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46056"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46056"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          13,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46056"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "용의 계곡 던전 1층",
+          "기란 던전 1층",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "용의 계곡",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/30?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_19_156",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46065"
+      },
+      "template_id": {
+        "value": 156,
+        "source": "client",
+        "ref": "m6/existing template156"
+      },
+      "map_id": {
+        "value": 19,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32754,
+          "y1": 32756,
+          "x2": 32760,
+          "y2": 32762
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46065; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46065 original count=20",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46065"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46065"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          19,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46065"
+      },
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 1층",
+          "요정 숲",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/156?locale=ko-KR"
+      },
+      "selection_note": "LOCAL reference bounds only: not same-NPC spawn evidence. Official region takes precedence over later L1J contaminated NPCs/map43 missing spawns."
+    },
+    {
+      "group_id": {
+        "value": "m6_20_144",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46070"
+      },
+      "template_id": {
+        "value": 144,
+        "source": "client",
+        "ref": "m6/existing template144"
+      },
+      "map_id": {
+        "value": 20,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32748,
+          "y1": 32751,
+          "x2": 32754,
+          "y2": 32757
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46070; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46070 original count=20",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46070"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46070"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          20,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46070"
+      },
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 2층",
+          "요정숲 던전 3층",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "얼음 수정 동굴 1층",
+          "얼음 수정 동굴 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/144?locale=ko-KR"
+      },
+      "selection_note": "LOCAL reference bounds only: not same-NPC spawn evidence. Official region takes precedence over later L1J contaminated NPCs/map43 missing spawns."
+    },
+    {
+      "group_id": {
+        "value": "m6_21_144",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "template_id": {
+        "value": 144,
+        "source": "client",
+        "ref": "m6/existing template144"
+      },
+      "map_id": {
+        "value": 21,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32751,
+          "y1": 32755,
+          "x2": 32757,
+          "y2": 32761
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          21,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 2층",
+          "요정숲 던전 3층",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "얼음 수정 동굴 1층",
+          "얼음 수정 동굴 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/144?locale=ko-KR"
+      },
+      "selection_note": "LOCAL reference bounds only: not same-NPC spawn evidence. Official region takes precedence over later L1J contaminated NPCs/map43 missing spawns."
+    },
+    {
+      "group_id": {
+        "value": "m6_21_30",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "m6/existing template30"
+      },
+      "map_id": {
+        "value": 21,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32760,
+          "y1": 32745,
+          "x2": 32766,
+          "y2": 32751
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076 original count=10",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          21,
+          32767,
+          32767
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46076"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "용의 계곡 던전 1층",
+          "기란 던전 1층",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "용의 계곡",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/30?locale=ko-KR"
+      },
+      "selection_note": "LOCAL reference bounds only: not same-NPC spawn evidence. Official region takes precedence over later L1J contaminated NPCs/map43 missing spawns."
+    },
+    {
+      "group_id": {
+        "value": "m6_43_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 43,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32802,
+          "y1": 32727,
+          "x2": 32808,
+          "y2": 32733
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          44,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "LOCAL reference bounds only: not same-NPC spawn evidence. Official region takes precedence over later L1J contaminated NPCs/map43 missing spawns."
+    },
+    {
+      "group_id": {
+        "value": "m6_43_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 43,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32747,
+          "y1": 32730,
+          "x2": 32753,
+          "y2": 32736
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          44,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "LOCAL reference bounds only: not same-NPC spawn evidence. Official region takes precedence over later L1J contaminated NPCs/map43 missing spawns."
+    },
+    {
+      "group_id": {
+        "value": "m6_44_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 44,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32737,
+          "y1": 32801,
+          "x2": 32743,
+          "y2": 32807
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          44,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46175"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_44_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 44,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32738,
+          "y1": 32744,
+          "x2": 32744,
+          "y2": 32750
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          44,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46176"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_45_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46177"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 45,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32744,
+          "y1": 32772,
+          "x2": 32750,
+          "y2": 32778
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46177; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46177 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46177"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46177"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          45,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46177"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_45_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46178"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 45,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32735,
+          "y1": 32799,
+          "x2": 32741,
+          "y2": 32805
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46178; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46178 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46178"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46178"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          45,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46178"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_46_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46179"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 46,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32765,
+          "y1": 32751,
+          "x2": 32771,
+          "y2": 32757
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46179; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46179 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46179"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46179"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          46,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46179"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_46_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46180"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 46,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32762,
+          "y1": 32770,
+          "x2": 32768,
+          "y2": 32776
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46180; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46180 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46180"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46180"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          46,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46180"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_47_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46181"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 47,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32730,
+          "y1": 32798,
+          "x2": 32736,
+          "y2": 32804
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46181; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46181 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46181"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46181"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          47,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46181"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_47_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46182"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 47,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32772,
+          "y1": 32754,
+          "x2": 32778,
+          "y2": 32760
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46182; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46182 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46182"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46182"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          47,
+          32800,
+          32800
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46182"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_48_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46183"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 48,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32757,
+          "y1": 32780,
+          "x2": 32763,
+          "y2": 32786
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46183; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46183 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46183"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46183"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          48,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46183"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_48_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46184"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 48,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32740,
+          "y1": 32800,
+          "x2": 32746,
+          "y2": 32806
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46184; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46184 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46184"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46184"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          48,
+          32800,
+          32800
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46184"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_49_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46185"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 49,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32799,
+          "y1": 32745,
+          "x2": 32805,
+          "y2": 32751
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46185; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46185 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46185"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46185"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          49,
+          32738,
+          32799
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46185"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_49_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46186"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 49,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32769,
+          "y1": 32762,
+          "x2": 32775,
+          "y2": 32768
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46186; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46186 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46186"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46186"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          49,
+          32800,
+          32800
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46186"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_50_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46187"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 50,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32781,
+          "y1": 32749,
+          "x2": 32787,
+          "y2": 32755
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46187; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46187 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46187"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46187"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          50,
+          32740,
+          32802
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46187"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_50_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46188"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 50,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32774,
+          "y1": 32744,
+          "x2": 32780,
+          "y2": 32750
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46188; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46188 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46188"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32704,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32831
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46188"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          50,
+          32740,
+          32802
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46188"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_51_235",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46189"
+      },
+      "template_id": {
+        "value": 235,
+        "source": "client",
+        "ref": "m6/existing template235"
+      },
+      "map_id": {
+        "value": 51,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32777,
+          "y1": 32821,
+          "x2": 32783,
+          "y2": 32827
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46189; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46189 original count=25",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46189"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46189"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          51,
+          32764,
+          32828
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46189"
+      },
+      "official_region_names": {
+        "value": [
+          "윈다우드",
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/235?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    },
+    {
+      "group_id": {
+        "value": "m6_51_236",
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46190"
+      },
+      "template_id": {
+        "value": 236,
+        "source": "client",
+        "ref": "m6/existing template236"
+      },
+      "map_id": {
+        "value": 51,
+        "source": "client",
+        "ref": "region.jsonc _map; official regionNames"
+      },
+      "rect": {
+        "value": {
+          "x1": 32768,
+          "y1": 32812,
+          "x2": 32774,
+          "y2": 32818
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46190; current S32 mask1",
+        "note": "7x7 all standable, center >=18 from listed arrivals; nearest local separated candidate. Whole-floor reachability unverified. Original bounds retained."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46190 original count=50",
+        "note": "Single-player subset."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 local policy; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46190"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46190"
+      },
+      "l1j_reference_origin": {
+        "value": [
+          51,
+          32764,
+          32828
+        ],
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46190"
+      },
+      "official_region_names": {
+        "value": [
+          "아덴 대륙",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 1층",
+          "개미굴 던전 2층"
+        ],
+        "source": "official",
+        "ref": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/236?locale=ko-KR"
+      },
+      "selection_note": "same-map same L1J NPC row"
+    }
+  ],
+  "note": "Explicit LOCAL subset; original placement/density unverified. No ship mobs."
+}

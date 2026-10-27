@@ -10,6 +10,8 @@
 /docs/ACTIVE_TASK.md
 /docs/*HANDOFF*.md
 /docs/*.json
+/docs/INTEGRATION_QUEUE.json.lock
+/docs/INTEGRATION_QUEUE.json.*.tmp
 
 # Source dependencies of tools/local_original_session only.
 /tools/**
@@ -31,7 +33,10 @@
 !/tools/**/*.yml
 !/tools/**/*.yaml
 /tools/*
+!/tools/integration_queue.py
+!/tools/test_integration_queue.py
 !/tools/local_original_session/
+!/tools/local_original_session/data/**/*.json
 !/tools/clone_observer/
 !/tools/preserved_pack_bootstrap/
 !/tools/local_entry_server/

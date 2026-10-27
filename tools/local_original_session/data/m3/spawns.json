@@ -1,0 +1,1510 @@
+{
+  "table": "m3_spawns",
+  "version": 1,
+  "note": "M3 sourced data expansion: 11 monster templates, 14 spawn groups. Fixed client identity/sprite and stored official information take precedence; L1J stats and spawn/drop values remain LOCAL backend reference. Existing runtime policies retained; unsupported items preserve original sourced rows under unresolved. New rect_selection spawns are 7x7 all-can_stand=True rectangles. Static data checks only, no live game equivalence claim. See EXPANSION_SOURCES.md.",
+  "ref_abbrev": {
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "all-rows": "work/monster_level_comparison/analysis/all-rows.csv (공식 API 2026-10-09 저장본 대응)",
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "parsed-spr": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jcfg": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc",
+    "m1-items": "tools/local_original_session/data/m1/items.json",
+    "official-monsters": "tools/local_original_session/data/official/monsters.json",
+    "catalog-map0": "tools/local_original_session/data/catalog/map0/",
+    "drop-pairs": "work/npc_field_semantics/hypotheses/all-drop-pairs.json"
+  },
+  "policy_basis": "14 finite groups; new rectangles keep real L1J source row/original centre/rect and narrow to actual fixed-client S32 standable cells. Target density is LOCAL single-player policy. Original movement connectivity, dynamic occupancy, true spawn probability and gameplay are unverified.",
+  "maps": [
+    {
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22"
+      },
+      "name_ko": {
+        "value": "말하는 섬 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:7"
+      },
+      "classic_bounds": {
+        "value": null,
+        "source": "client",
+        "ref": "region.jsonc:7 _bounds 없음",
+        "note": "미확인. L1J 경계로 보충하지 않는다."
+      },
+      "l1j_reference_bounds": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:19192; mapids 열 :1461-1467"
+      },
+      "classic_chunks": {
+        "value": 12,
+        "source": "client",
+        "ref": "work/asset_link_audit_20261007/map/map_namespaces.tsv:3",
+        "note": "old/current 각12청크. 청크 존재가 실제 통행 증명은 아님."
+      },
+      "loaded_chunk_bounds": {
+        "value": {
+          "x1": 32576,
+          "y1": 32704,
+          "x2": 32831,
+          "y2": 32959
+        },
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/map/1/*.s32; tools/local_original_session/world_terrain.py:WorldTerrain.bounds",
+        "note": "현재 로드한 S32 청크들의 포함 경계 상자. 내부 청크 공백·막힌 셀을 포함할 수 있으며 전체 클래식 유효 경계의 확정값이 아니다."
+      }
+    },
+    {
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23"
+      },
+      "name_ko": {
+        "value": "말하는 섬 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:9"
+      },
+      "classic_bounds": {
+        "value": null,
+        "source": "client",
+        "ref": "region.jsonc:9 _bounds 없음",
+        "note": "미확인. L1J 경계로 보충하지 않는다."
+      },
+      "l1j_reference_bounds": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:19193; mapids 열 :1461-1467"
+      },
+      "classic_chunks": {
+        "value": 16,
+        "source": "client",
+        "ref": "work/asset_link_audit_20261007/map/map_namespaces.tsv:4",
+        "note": "old/current 각16청크. 청크 존재가 실제 통행 증명은 아님."
+      },
+      "loaded_chunk_bounds": {
+        "value": {
+          "x1": 32576,
+          "y1": 32704,
+          "x2": 32895,
+          "y2": 32959
+        },
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/map/2/*.s32; tools/local_original_session/world_terrain.py:WorldTerrain.bounds",
+        "note": "현재 로드한 S32 청크들의 포함 경계 상자. 내부 청크 공백·막힌 셀을 포함할 수 있으며 전체 클래식 유효 경계의 확정값이 아니다."
+      }
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m3_tic1_zombie",
+        "source": "local_policy",
+        "ref": "l1jdb:45974 spawn100001"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22; l1jdb:45974 mapid=1",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32785,
+          "x2": 32715,
+          "y2": 32815
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45974 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32800) ±15칸. 정적 S32 True=546, False=415, None=0 /961칸 (56.815817%). 전체 rect→계단도착 최소 Chebyshev=16칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45974 count=35",
+        "note": "단일 플레이어용 35→4 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45974 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45974 locx1/locy1/locx2/locy2; mapids:19192",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32800
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45974 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 6062,
+            "false": 10318,
+            "unknown": 4,
+            "total": 16384
+          },
+          "after": {
+            "true": 546,
+            "false": 415,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 16
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic1_floating_eye",
+        "source": "local_policy",
+        "ref": "l1jdb:45977 spawn100004"
+      },
+      "template_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22; l1jdb:45977 mapid=1",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32785,
+          "x2": 32715,
+          "y2": 32815
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45977 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32800) ±15칸. 정적 S32 True=546, False=415, None=0 /961칸 (56.815817%). 전체 rect→계단도착 최소 Chebyshev=16칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45977 count=15",
+        "note": "단일 플레이어용 15→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45977 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45977 locx1/locy1/locx2/locy2; mapids:19192",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32800
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45977 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 6062,
+            "false": 10318,
+            "unknown": 4,
+            "total": 16384
+          },
+          "after": {
+            "true": 546,
+            "false": 415,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 16
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic1_skeleton",
+        "source": "local_policy",
+        "ref": "l1jdb:45976 spawn100003"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22; l1jdb:45976 mapid=1",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32785,
+          "x2": 32715,
+          "y2": 32815
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45976 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32800) ±15칸. 정적 S32 True=546, False=415, None=0 /961칸 (56.815817%). 전체 rect→계단도착 최소 Chebyshev=16칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 5,
+        "source": "local_policy",
+        "ref": "l1jdb:45976 count=70",
+        "note": "단일 플레이어용 70→5 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45976 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45976 locx1/locy1/locx2/locy2; mapids:19192",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32800
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45976 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 6062,
+            "false": 10318,
+            "unknown": 4,
+            "total": 16384
+          },
+          "after": {
+            "true": 546,
+            "false": 415,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 16
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_zombie",
+        "source": "local_policy",
+        "ref": "l1jdb:45981 spawn200002"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45981 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32855,
+          "x2": 32715,
+          "y2": 32885
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45981 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32870) ±15칸. 정적 S32 True=552, False=409, None=0 /961칸 (57.440166%). 전체 rect→계단도착 최소 Chebyshev=66칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45981 count=10",
+        "note": "단일 플레이어용 10→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45981 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45981 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45981 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 552,
+            "false": 409,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 66
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_floating_eye",
+        "source": "local_policy",
+        "ref": "l1jdb:45983 spawn200004"
+      },
+      "template_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45983 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32855,
+          "x2": 32715,
+          "y2": 32885
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45983 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32870) ±15칸. 정적 S32 True=552, False=409, None=0 /961칸 (57.440166%). 전체 rect→계단도착 최소 Chebyshev=66칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45983 count=10",
+        "note": "단일 플레이어용 10→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45983 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45983 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45983 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 552,
+            "false": 409,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 66
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_skeleton",
+        "source": "local_policy",
+        "ref": "l1jdb:45984 spawn200005"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45984 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32855,
+          "x2": 32715,
+          "y2": 32885
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45984 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32870) ±15칸. 정적 S32 True=552, False=409, None=0 /961칸 (57.440166%). 전체 rect→계단도착 최소 Chebyshev=66칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 4,
+        "source": "local_policy",
+        "ref": "l1jdb:45984 count=20",
+        "note": "단일 플레이어용 20→4 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45984 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45984 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45984 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 552,
+            "false": 409,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 66
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_skeleton_archer",
+        "source": "local_policy",
+        "ref": "l1jdb:45985 spawn200006"
+      },
+      "template_id": {
+        "value": 276,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45985 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32855,
+          "x2": 32715,
+          "y2": 32885
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45985 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32870) ±15칸. 정적 S32 True=552, False=409, None=0 /961칸 (57.440166%). 전체 rect→계단도착 최소 Chebyshev=66칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 3,
+        "source": "local_policy",
+        "ref": "l1jdb:45985 count=20",
+        "note": "단일 플레이어용 20→3 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45985 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45985 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45985 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 552,
+            "false": 409,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 66
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_stone_golem",
+        "source": "local_policy",
+        "ref": "l1jdb:45988 spawn200009"
+      },
+      "template_id": {
+        "value": 6,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45988 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32855,
+          "x2": 32715,
+          "y2": 32885
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45988 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32870) ±15칸. 정적 S32 True=552, False=409, None=0 /961칸 (57.440166%). 전체 rect→계단도착 최소 Chebyshev=66칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45988 count=10",
+        "note": "단일 플레이어용 10→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45988 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45988 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45988 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 552,
+            "false": 409,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 66
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_spartoi",
+        "source": "local_policy",
+        "ref": "l1jdb:45990 spawn200011"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "monsters.json 대응 template_id"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45990 mapid=2",
+        "note": "이름으로 실재 층을 대응했다. 클래식 경계·통행 일치를 뜻하지 않는다."
+      },
+      "rect": {
+        "value": {
+          "x1": 32685,
+          "y1": 32855,
+          "x2": 32715,
+          "y2": 32885
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45990 locx/locy 중심; world_terrain.py:WorldTerrain.can_stand; world_maps.py:TRANSITIONS",
+        "note": "L1J 원 중심(32700,32870) ±15칸. 정적 S32 True=552, False=409, None=0 /961칸 (57.440166%). 전체 rect→계단도착 최소 Chebyshev=66칸; LOCAL max(8,인지13+1)=14 이상. 각 칸 실제 도달·동적 점유·자연 스폰은 미검증. 원 사각형은 l1j_reference_rect에 보존."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45990 count=20",
+        "note": "단일 플레이어용 20→2 감소. 1층은 저레벨3종 총11마리, 2층은6종 총15마리로 집중 선공을 줄인다. 실제 밀도·사냥거리 미검증."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45990 min/max_respawn_delay=0/0",
+        "note": "0/0의 L1J 실행 의미를 클래식 즉시 리젠으로 확정하지 않음. M1과 같은60~120초를 선택한 단일 플레이어 정책; 원본 리젠 증명 아님."
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45990 locx1/locy1/locx2/locy2; mapids:19193",
+        "note": "L1J 전역의 참고 후보 사각형. 클래식의 확정 경계가 아니며 각 칸 통행·도달·벽·점유는 미검증."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45990 spawnlist locx/locy",
+        "note": "해당 몬스터 자신의 원 spawn 중심. LOCAL rect의 중심으로 재사용하며 원본 클래식 스폰 좌표로 확정하지 않는다."
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 552,
+            "false": 409,
+            "unknown": 0,
+            "total": 961
+          },
+          "min_stair_arrival_distance": 66
+        },
+        "source": "local_policy",
+        "ref": "tools/local_original_session/world_m3_data_tests.py; world_terrain.py:WorldTerrain.can_stand",
+        "note": "로드된 현물 S32 mask1과 can_stand LOCAL 판정의 데이터 점검 수치. 게임 실행·Native 이동 성공·전체 던전 동등성의 증명이 아니다."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic1_elder",
+        "source": "local_policy",
+        "ref": "l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1"
+      },
+      "template_id": {
+        "value": 7,
+        "source": "client",
+        "ref": "monsters.json template_id=7"
+      },
+      "map_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "region.jsonc:7 region22; l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1"
+      },
+      "rect": {
+        "value": {
+          "x1": 32714,
+          "y1": 32789,
+          "x2": 32720,
+          "y2": 32795
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1; world_terrain.py:WorldTerrain.can_stand",
+        "note": "LOCAL all-can_stand=True rectangle radius=3, centre=(32717,32792); original L1J centre=(32700,32800) and rect retained. All cells verified on fixed S32, path connectivity/dynamic occupancy/live play UNKNOWN."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1 count=6",
+        "note": "Single player density reduction; original Classic density UNKNOWN."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1 min/max_respawn_delay=0/0",
+        "note": "LOCAL 60-120 seconds replaces unspecified zero reference delays."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32800
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1 locx/locy"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32767,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1 locx1/locy1/locx2/locy2 or centre +/- random"
+      },
+      "rect_selection": {
+        "value": {
+          "center": {
+            "x": 32717,
+            "y": 32792
+          },
+          "radius": 3,
+          "method": "all cells can_stand=True; radius 3/2/1, nearest centre within original +/-20",
+          "max_reference_center_offset": 20
+        },
+        "source": "local_policy",
+        "ref": "world_terrain.py; original centre first, bounded offsets only"
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 6062,
+            "false": 10318,
+            "unknown": 4,
+            "total": 16384
+          },
+          "after": {
+            "true": 49,
+            "false": 0,
+            "unknown": 0,
+            "total": 49
+          },
+          "min_stair_arrival_distance": 45
+        },
+        "source": "local_policy",
+        "ref": "WorldTerrain.load(map_ids=(1,2,4)); can_stand; TRANSITIONS"
+      },
+      "l1j_reference_population": {
+        "value": [
+          {
+            "id": 100006,
+            "count": 6,
+            "npc_templateid": 45215,
+            "group_id": 7,
+            "locx": 32700,
+            "locy": 32800,
+            "randomx": 0,
+            "randomy": 0,
+            "locx1": 32640,
+            "locy1": 32768,
+            "locx2": 32767,
+            "locy2": 32895,
+            "min_respawn_delay": 0,
+            "max_respawn_delay": 0,
+            "mapid": 1,
+            "movement_distance": 0,
+            "line": 45979
+          }
+        ],
+        "source": "l1j",
+        "ref": "l1jdb:45979 spawnlist id=100006 NPC45215 mapid=1",
+        "note": "Reference source row only; L1J group companion AI is metadata, not an implemented spawn contract."
+      },
+      "official_region_supported": {
+        "value": true,
+        "source": "official",
+        "ref": "official-monsters client_id=7 official.regionNames",
+        "note": "Expected named region=말하는 섬 던전 1층. Region corroborated; exact spawn still LOCAL policy."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_werewolf",
+        "source": "local_policy",
+        "ref": "l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2"
+      },
+      "template_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "monsters.json template_id=8"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2"
+      },
+      "rect": {
+        "value": {
+          "x1": 32696,
+          "y1": 32858,
+          "x2": 32702,
+          "y2": 32864
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2; world_terrain.py:WorldTerrain.can_stand",
+        "note": "LOCAL all-can_stand=True rectangle radius=3, centre=(32699,32861); original L1J centre=(32700,32870) and rect retained. All cells verified on fixed S32, path connectivity/dynamic occupancy/live play UNKNOWN."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2 count=10",
+        "note": "Single player density reduction; original Classic density UNKNOWN."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2 min/max_respawn_delay=0/0",
+        "note": "LOCAL 60-120 seconds replaces unspecified zero reference delays."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2 locx/locy"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2 locx1/locy1/locx2/locy2 or centre +/- random"
+      },
+      "rect_selection": {
+        "value": {
+          "center": {
+            "x": 32699,
+            "y": 32861
+          },
+          "radius": 3,
+          "method": "all cells can_stand=True; radius 3/2/1, nearest centre within original +/-20",
+          "max_reference_center_offset": 20
+        },
+        "source": "local_policy",
+        "ref": "world_terrain.py; original centre first, bounded offsets only"
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 49,
+            "false": 0,
+            "unknown": 0,
+            "total": 49
+          },
+          "min_stair_arrival_distance": 69
+        },
+        "source": "local_policy",
+        "ref": "WorldTerrain.load(map_ids=(1,2,4)); can_stand; TRANSITIONS"
+      },
+      "l1j_reference_population": {
+        "value": [
+          {
+            "id": 200003,
+            "count": 10,
+            "npc_templateid": 45024,
+            "group_id": 0,
+            "locx": 32700,
+            "locy": 32870,
+            "randomx": 0,
+            "randomy": 0,
+            "locx1": 32640,
+            "locy1": 32768,
+            "locx2": 32831,
+            "locy2": 32895,
+            "min_respawn_delay": 0,
+            "max_respawn_delay": 0,
+            "mapid": 2,
+            "movement_distance": 0,
+            "line": 45982
+          }
+        ],
+        "source": "l1j",
+        "ref": "l1jdb:45982 spawnlist id=200003 NPC45024 mapid=2",
+        "note": "Reference source row only; L1J group companion AI is metadata, not an implemented spawn contract."
+      },
+      "official_region_supported": {
+        "value": true,
+        "source": "official",
+        "ref": "official-monsters client_id=8 official.regionNames",
+        "note": "Expected named region=말하는 섬 던전 2층. Region corroborated; exact spawn still LOCAL policy."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_shelob",
+        "source": "local_policy",
+        "ref": "l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2"
+      },
+      "template_id": {
+        "value": 17,
+        "source": "client",
+        "ref": "monsters.json template_id=17"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2"
+      },
+      "rect": {
+        "value": {
+          "x1": 32696,
+          "y1": 32858,
+          "x2": 32702,
+          "y2": 32864
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2; world_terrain.py:WorldTerrain.can_stand",
+        "note": "LOCAL all-can_stand=True rectangle radius=3, centre=(32699,32861); original L1J centre=(32700,32870) and rect retained. All cells verified on fixed S32, path connectivity/dynamic occupancy/live play UNKNOWN."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2 count=20",
+        "note": "Single player density reduction; original Classic density UNKNOWN."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2 min/max_respawn_delay=0/0",
+        "note": "LOCAL 60-120 seconds replaces unspecified zero reference delays."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2 locx/locy"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2 locx1/locy1/locx2/locy2 or centre +/- random"
+      },
+      "rect_selection": {
+        "value": {
+          "center": {
+            "x": 32699,
+            "y": 32861
+          },
+          "radius": 3,
+          "method": "all cells can_stand=True; radius 3/2/1, nearest centre within original +/-20",
+          "max_reference_center_offset": 20
+        },
+        "source": "local_policy",
+        "ref": "world_terrain.py; original centre first, bounded offsets only"
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 49,
+            "false": 0,
+            "unknown": 0,
+            "total": 49
+          },
+          "min_stair_arrival_distance": 69
+        },
+        "source": "local_policy",
+        "ref": "WorldTerrain.load(map_ids=(1,2,4)); can_stand; TRANSITIONS"
+      },
+      "l1j_reference_population": {
+        "value": [
+          {
+            "id": 200010,
+            "count": 20,
+            "npc_templateid": 45136,
+            "group_id": 0,
+            "locx": 32700,
+            "locy": 32870,
+            "randomx": 0,
+            "randomy": 0,
+            "locx1": 32640,
+            "locy1": 32768,
+            "locx2": 32831,
+            "locy2": 32895,
+            "min_respawn_delay": 0,
+            "max_respawn_delay": 0,
+            "mapid": 2,
+            "movement_distance": 0,
+            "line": 45989
+          }
+        ],
+        "source": "l1j",
+        "ref": "l1jdb:45989 spawnlist id=200010 NPC45136 mapid=2",
+        "note": "Reference source row only; L1J group companion AI is metadata, not an implemented spawn contract."
+      },
+      "official_region_supported": {
+        "value": true,
+        "source": "official",
+        "ref": "official-monsters client_id=17 official.regionNames",
+        "note": "Expected named region=말하는 섬 던전 2층. Region corroborated; exact spawn still LOCAL policy."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_skeleton_axeman",
+        "source": "local_policy",
+        "ref": "l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2"
+      },
+      "template_id": {
+        "value": 277,
+        "source": "client",
+        "ref": "monsters.json template_id=277"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2"
+      },
+      "rect": {
+        "value": {
+          "x1": 32696,
+          "y1": 32858,
+          "x2": 32702,
+          "y2": 32864
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2; world_terrain.py:WorldTerrain.can_stand",
+        "note": "LOCAL all-can_stand=True rectangle radius=3, centre=(32699,32861); original L1J centre=(32700,32870) and rect retained. All cells verified on fixed S32, path connectivity/dynamic occupancy/live play UNKNOWN."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2 count=20",
+        "note": "Single player density reduction; original Classic density UNKNOWN."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2 min/max_respawn_delay=0/0",
+        "note": "LOCAL 60-120 seconds replaces unspecified zero reference delays."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2 locx/locy"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2 locx1/locy1/locx2/locy2 or centre +/- random"
+      },
+      "rect_selection": {
+        "value": {
+          "center": {
+            "x": 32699,
+            "y": 32861
+          },
+          "radius": 3,
+          "method": "all cells can_stand=True; radius 3/2/1, nearest centre within original +/-20",
+          "max_reference_center_offset": 20
+        },
+        "source": "local_policy",
+        "ref": "world_terrain.py; original centre first, bounded offsets only"
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 49,
+            "false": 0,
+            "unknown": 0,
+            "total": 49
+          },
+          "min_stair_arrival_distance": 69
+        },
+        "source": "local_policy",
+        "ref": "WorldTerrain.load(map_ids=(1,2,4)); can_stand; TRANSITIONS"
+      },
+      "l1j_reference_population": {
+        "value": [
+          {
+            "id": 200008,
+            "count": 20,
+            "npc_templateid": 45130,
+            "group_id": 0,
+            "locx": 32700,
+            "locy": 32870,
+            "randomx": 0,
+            "randomy": 0,
+            "locx1": 32640,
+            "locy1": 32768,
+            "locx2": 32831,
+            "locy2": 32895,
+            "min_respawn_delay": 0,
+            "max_respawn_delay": 0,
+            "mapid": 2,
+            "movement_distance": 0,
+            "line": 45987
+          }
+        ],
+        "source": "l1j",
+        "ref": "l1jdb:45987 spawnlist id=200008 NPC45130 mapid=2",
+        "note": "Reference source row only; L1J group companion AI is metadata, not an implemented spawn contract."
+      },
+      "official_region_supported": {
+        "value": true,
+        "source": "official",
+        "ref": "official-monsters client_id=277 official.regionNames",
+        "note": "Expected named region=말하는 섬 던전 2층. Region corroborated; exact spawn still LOCAL policy."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m3_tic2_skeleton_lancer",
+        "source": "local_policy",
+        "ref": "l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2"
+      },
+      "template_id": {
+        "value": 278,
+        "source": "client",
+        "ref": "monsters.json template_id=278"
+      },
+      "map_id": {
+        "value": 2,
+        "source": "client",
+        "ref": "region.jsonc:9 region23; l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2"
+      },
+      "rect": {
+        "value": {
+          "x1": 32696,
+          "y1": 32858,
+          "x2": 32702,
+          "y2": 32864
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2; world_terrain.py:WorldTerrain.can_stand",
+        "note": "LOCAL all-can_stand=True rectangle radius=3, centre=(32699,32861); original L1J centre=(32700,32870) and rect retained. All cells verified on fixed S32, path connectivity/dynamic occupancy/live play UNKNOWN."
+      },
+      "target_count": {
+        "value": 2,
+        "source": "local_policy",
+        "ref": "l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2 count=20",
+        "note": "Single player density reduction; original Classic density UNKNOWN."
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2 min/max_respawn_delay=0/0",
+        "note": "LOCAL 60-120 seconds replaces unspecified zero reference delays."
+      },
+      "l1j_reference_origin": {
+        "value": {
+          "x": 32700,
+          "y": 32870
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2 locx/locy"
+      },
+      "l1j_reference_rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32768,
+          "x2": 32831,
+          "y2": 32895
+        },
+        "source": "l1j",
+        "ref": "l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2 locx1/locy1/locx2/locy2 or centre +/- random"
+      },
+      "rect_selection": {
+        "value": {
+          "center": {
+            "x": 32699,
+            "y": 32861
+          },
+          "radius": 3,
+          "method": "all cells can_stand=True; radius 3/2/1, nearest centre within original +/-20",
+          "max_reference_center_offset": 20
+        },
+        "source": "local_policy",
+        "ref": "world_terrain.py; original centre first, bounded offsets only"
+      },
+      "terrain_check": {
+        "value": {
+          "before": {
+            "true": 10681,
+            "false": 13891,
+            "unknown": 4,
+            "total": 24576
+          },
+          "after": {
+            "true": 49,
+            "false": 0,
+            "unknown": 0,
+            "total": 49
+          },
+          "min_stair_arrival_distance": 69
+        },
+        "source": "local_policy",
+        "ref": "WorldTerrain.load(map_ids=(1,2,4)); can_stand; TRANSITIONS"
+      },
+      "l1j_reference_population": {
+        "value": [
+          {
+            "id": 200007,
+            "count": 20,
+            "npc_templateid": 45131,
+            "group_id": 0,
+            "locx": 32700,
+            "locy": 32870,
+            "randomx": 0,
+            "randomy": 0,
+            "locx1": 32640,
+            "locy1": 32768,
+            "locx2": 32831,
+            "locy2": 32895,
+            "min_respawn_delay": 0,
+            "max_respawn_delay": 0,
+            "mapid": 2,
+            "movement_distance": 0,
+            "line": 45986
+          }
+        ],
+        "source": "l1j",
+        "ref": "l1jdb:45986 spawnlist id=200007 NPC45131 mapid=2",
+        "note": "Reference source row only; L1J group companion AI is metadata, not an implemented spawn contract."
+      },
+      "official_region_supported": {
+        "value": true,
+        "source": "official",
+        "ref": "official-monsters client_id=278 official.regionNames",
+        "note": "Expected named region=말하는 섬 던전 2층. Region corroborated; exact spawn still LOCAL policy."
+      }
+    }
+  ],
+  "terrain_policy": {
+    "value": {
+      "center_radius": 15,
+      "min_standable_ratio": 0.5,
+      "max_unknown_cells": 0,
+      "min_stair_arrival_distance": 8,
+      "perception_margin": 1
+    },
+    "source": "local_policy",
+    "ref": "tools/local_original_session/world_terrain.py:WorldTerrain.can_stand; tools/local_original_session/world_interest_spawn.py:InterestSpawner._place; tools/local_original_session/world_maps.py:TRANSITIONS",
+    "note": "8칸은 원본 규칙이 아닌 LOCAL 최소 완충 거리다. 도착 직후 인지반경 안에 배치되지 않도록 전체 rect의 Chebyshev 최소 거리는 max(8, perception_range+1)을 요구한다(현재13→14). L1J 원 중심 ±15칸은 양 층 모두 unknown=0·통행>=50%·각 층 총 마릿수보다 많은 통행칸을 확보한 초기 영역이다. _place는 전체 rect의 x/y를 독립 randint로 최대8번 시도하고 실패 시5초 후 재시도하며 강제 배치는 없다. 거리 정책은 초기/리젠 배치에만 적용하고 이동 후 안전·연결성·30분 플레이를 증명하지 않는다. Expansion rows declare rect_selection centre/radius; radius may narrow to 10/5/3 when full area is obstructed. Original reference centre/rect are preserved. Existing rows unchanged. New expansion rect_selection rows require 100% can_stand=True, original rows retain their documented threshold. Static mask1 only."
+  },
+  "expansion_note": "2026-10-27 sourced table extension. Prior rows and template policy preserved; source priority client > stored official > L1J LOCAL reference. See EXPANSION_SOURCES.md. Data/static validation only, no game or packet PASS.",
+  "baseline_note": "M3 데이터 준비 전용. 실재 클래식 말하는 섬 던전 map1/2이며 가상맵을 만들지 않는다. L1J 종별 map·원 spawn 중심·참고 사각형을 보존하고, 실제 S32 can_stand로 좁힌 영역과 count·리젠은 단일 플레이어 LOCAL 정책이다. classic_bounds는 여전히 UNKNOWN이며 loaded bounds/통행 검사는 정적 mask1 기준이다. 게임·스폰 실행·실제 계단 트리거는 미검증.",
+  "baseline_policy_basis": "선정 종의 L1J 합계1층120→11마리(3그룹),2층90→15마리(6그룹). 같은 종 L1J 원 중심 주변 ±15칸을 LOCAL 스폰 영역으로 사용한다. 전체 사각형은 계단 도착에서 최소8칸 및 해당 몬스터 인지반경13 밖(14칸 이상)을 확보한다. 정적 S32 can_stand=True만 실제 소비자가 채택하며 동적 점유·이동 후 선공·벽 너머 도달 가능성·실제 사냥 밀도는 미검증."
+}

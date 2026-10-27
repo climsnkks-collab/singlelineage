@@ -31,16 +31,85 @@ def packed(result):return json.dumps(result,separators=(',',':'),ensure_ascii=Tr
 class _Stop(Exception):pass
 
 class Observation:
-    def __init__(self,reader):
+    def __init__(self,reader,*,stage="first-land"):
         source_ready()
+        observe.need(stage in ('first-land','npc-hp-feedback-drained'),'HP4EC8_STAGE_REQUIRED')
         self.reader=reader
+        self.stage=stage
+        self.trigger=None
         self.result=None
         self._query=None
         self.waiting=dict(status='WAITING_VALID_EXISTING_QUERY',bytes=0,attempted=False,
             query_bytes=None,remaining_bytes=None,required_bytes=MAX_BYTES,scope='LOCAL_PENDING_REQUEST')
+        if stage=='npc-hp-feedback-drained':self.waiting['status']='WAITING_NPC_HP_FEEDBACK_DRAINED'
+
+    def record_npc_stage(self,consumer,pending,current,intent,*,at_ns):
+        """Historical local stage only; failure cannot veto the original attack."""
+        if self.stage!='npc-hp-feedback-drained' or self.trigger is not None or self.result is not None:return
+        try:
+            from tools.local_original_session import attack_session,npc_hp,manual_move_commands as manual
+            need=observe.need
+            need(type(consumer) is manual.ManualMoveCommands and consumer.reader is self.reader
+                 and consumer._action_sample.__func__ is manual.HP4EC8_STAGE_PRODUCER
+                 and consumer._attack_current.__func__ is manual.HP4EC8_STAGE_CURRENT
+                 and consumer.pending is pending and consumer.observe_attack_feedback is True
+                 and type(current[0]) is manual.ManualMoveBinding,
+                 'HP4EC8_STAGE_CANONICAL_PRODUCER_REQUIRED')
+            checked=consumer._attack_current()
+            writer,broker,row=current[0].writer,current[0].broker,current[1]
+            session=pending['attack_session']
+            need(type(checked[0]) is manual.ManualMoveBinding
+                 and checked[0].writer is writer and checked[0].broker is broker
+                 and checked[1] is row and checked[3] is current[3]
+                 and row['operation_lock'].locked() and type(session) is attack_session.AttackSession
+                 and session is current[0].broker._attack_session
+                 and type(intent) is attack_session.AttackIntent and session._current is intent
+                 and session.current_intent() is intent and intent._bound._writer is writer
+                 and intent._bound._authority is session.targets
+                 and intent._bound.attacker is current[3]
+                 and (intent._bound.target_uid,intent._bound.map_id)==(pending['target_uid'],current[3].map_id)
+                 and intent.accepted_ordinal==session.accepted_count==pending['attack_before']+1,
+                 'HP4EC8_STAGE_CURRENT_INTENT_REQUIRED')
+            need(session.feedback_drained==pending['feedback_before']+1
+                 and session.validate_feedback(writer,session._feedback_frame,state='DRAINED') is intent,
+                 'HP4EC8_STAGE_DRAIN_REQUIRED')
+            authority=session._hp
+            need(type(authority) is npc_hp.Authority,'HP4EC8_STAGE_HP_AUTHORITY_REQUIRED')
+            entry=authority._entries.get((id(writer),pending['target_uid']))
+            result=session.last_hp_result
+            lifetime,target=session._hp_binding(writer,row,pending['target_uid'])
+            need(type(entry) is npc_hp._Entry and type(result) is npc_hp.Result
+                 and entry.writer is writer and entry.row is row and entry.lock is row['operation_lock']
+                 and entry.lock.locked() and entry.intent is intent and entry.hp is result.after
+                 and entry.target==result.target==target
+                 and len(entry.lifetime)==len(lifetime)
+                 and all(a is b for a,b in zip(entry.lifetime,lifetime))
+                 and (result.target.uid,result.target.map_id)==(pending['target_uid'],current[3].map_id)
+                 and result.accepted_ordinal==intent.accepted_ordinal,
+                 'HP4EC8_STAGE_COMMITTED_HP_REQUIRED')
+            final=consumer._attack_current()
+            need(type(final[0]) is manual.ManualMoveBinding
+                 and final[0].writer is writer and final[0].broker is broker
+                 and final[1] is row and final[3] is current[3]
+                 and consumer.pending is pending and session._current is intent
+                 and session.last_hp_result is result
+                 and authority._entries.get((id(writer),pending['target_uid'])) is entry
+                 and row['operation_lock'].locked() and session._feedback_state=='DRAINED'
+                 and type(at_ns) is int and at_ns>=0,'HP4EC8_STAGE_CHANGED')
+            self.trigger=dict(scope='HISTORICAL_LOCAL_HP_COMMIT_AND_FEEDBACK_DRAIN',at_ns=at_ns,
+                target_uid=result.target.uid,ordinal=result.accepted_ordinal,
+                hp=[result.before.current,result.after.current,result.after.maximum],
+                hit=result.hit.landed,damage=result.hit.damage)
+            self.waiting['status']='WAITING_FIT'
+            self.waiting.update(stage=self.stage,trigger=dict(self.trigger))
+        except Exception as error:
+            self.result=dict(status='STAGE_PROOF_UNKNOWN',bytes=0,attempted=False,
+                stage=self.stage,reason=observe.reason(error),scope='LOCAL_DIAGNOSTIC_FAILURE',
+                query_complete=False,owner='NOT_ESTABLISHED')
 
     def collect(self,sampler,*,total_limit,query):
         if self.result is not None:return self.result
+        if self.stage=='npc-hp-feedback-drained' and self.trigger is None:return None
         # Reserve a full recipe in an already-needed query before any read.
         # This local selection is not a game/authority gate or a retry.
         remaining=max(0,total_limit-sampler.total)
@@ -56,6 +125,7 @@ class Observation:
             module=[base,size,getattr(self.reader.owner,'image_sha',None)],
             source=list(SOURCE_PINS.values()),event=None,head=None,epoch=None,columns=COLUMNS,nodes=[],
             bytes=0,header_repeat=None,atomic=False,owner='NOT_ESTABLISHED',scope='DATED_PASSIVE_SNAPSHOT')
+        if self.trigger is not None:result.update(stage=self.stage,trigger=dict(self.trigger))
         if not (type(base) is int and base>0 and type(size) is int and size>EVENT_RVA+0x7c):
             result['status']='MODULE_BOUNDS_UNKNOWN'
             return result

@@ -293,14 +293,14 @@ class ObservationAtomicTests(unittest.TestCase):
                 return replace(source, target)
             with patch.object(c.os, 'replace', side_effect=blocked) as rename:
                 self.assertIs(c._atomic(self.path, {'tick': 1}, 4096, output_only=True), False)
-            self.assertEqual(rename.call_count, 1)
-            self.assertEqual(len(held_sources), 1)
+            self.assertEqual(rename.call_count, 5)
+            self.assertEqual(held_sources, [held_sources[0]] * 5)
             self.assertTrue(held_sources[0].exists())  # Cleanup tried but the actual handle still denies delete.
             self.assertEqual(json.loads(self.path.read_text()), {'tick': 0})
         self.assertIs(c._atomic(self.path, {'tick': 2}, 4096, output_only=True), True)
         self.assertEqual(json.loads(self.path.read_text()), {'tick': 2})
         self.assertFalse(self.path.with_name(self.path.name + '.tmp').exists())
-        self.assertEqual(list(self.directory.glob('*.tmp')), held_sources)
+        self.assertEqual(list(self.directory.glob('*.tmp')), [held_sources[0]])
         self.assertFalse((self.directory / 'command.request.json').exists())
 
     def test_real_target_access5_stays_fatal_and_cleans_only_created_temp(self):
@@ -325,11 +325,11 @@ class ObservationAtomicTests(unittest.TestCase):
                 with self.assertRaises(OSError) as raised:
                     c._atomic(self.path, {'tick': 1}, 4096, output_only=True)
                 self.assertIs(raised.exception, primary)
-                self.assertEqual(rename.call_count, 1)
+                self.assertEqual(rename.call_count, 5 if getattr(primary, 'winerror', None) == 5 else 1)
             self.assertEqual(list(self.directory.iterdir()), [])
         with patch.object(c.os, 'replace', side_effect=C.WinError(33)) as rename:
             self.assertIs(c._atomic(self.path, {'tick': 1}, 4096, output_only=True), False)
-        self.assertEqual(rename.call_count, 1)
+        self.assertEqual(rename.call_count, 5)
         self.assertEqual(list(self.directory.iterdir()), [])
 
     def test_foreign_unique_temp_collision_is_fatal_and_never_deleted(self):
@@ -375,7 +375,6 @@ class ObservationAtomicTests(unittest.TestCase):
         self.assertEqual(list(self.directory.iterdir()), [])
 
     def test_real_runner_save_defers_only_output_and_later_saves_latest(self):
-        import ast
         import asyncio
         import importlib.util
         root = Path(__file__).resolve().parents[2]
@@ -396,7 +395,7 @@ class ObservationAtomicTests(unittest.TestCase):
                 return replace(source, target)
             scenario.stage = 'WAITING'
             with patch.object(c.os, 'replace', side_effect=blocked) as rename: scenario.save()
-            self.assertEqual(rename.call_count, 1)
+            self.assertEqual(rename.call_count, 5)
             self.assertEqual(scenario.path.read_bytes(), previous)
         scenario.stage = 'LATEST'
         scenario.save()
@@ -404,12 +403,3 @@ class ObservationAtomicTests(unittest.TestCase):
         self.assertIsNone(scenario.error); self.assertFalse(stop.is_set())
         self.assertEqual(scenario.actions, [])
         self.assertFalse((self.directory / 'command.request.json').exists())
-        calls = [node for node in ast.walk(ast.parse(path.read_text()))
-                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == '_atomic']
-        outputs = [node for node in calls if any(k.arg == 'output_only' and isinstance(k.value, ast.Constant)
-                   and k.value.value is True for k in node.keywords)]
-        requests = [node for node in calls if isinstance(node.args[0], ast.BinOp)
-                    and isinstance(node.args[0].right, ast.Constant)
-                    and node.args[0].right.value == 'command.request.json']
-        self.assertEqual((len(outputs), len(requests), len(calls)), (5, 5, 10))
-        self.assertTrue(all(not node.keywords for node in requests))

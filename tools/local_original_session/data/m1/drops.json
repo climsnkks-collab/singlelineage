@@ -1,0 +1,4488 @@
+{
+  "table": "m1_drops",
+  "version": 1,
+  "note": "드롭 구성은 클라이언트 npc.bin f21 (아이템 ID, 등급) 목록을 따른다. 4종 전체의 아이템 ID·등급별 목록은 보존한 공식 사전 상세와도 같다. 공식은 확률·수량을 제공하지 않으므로 모든 roll 값·출처는 기존 L1J/local_policy 그대로 유지한다. 확률·수량은 클래식에 없어 대응 NPC의 L1J droplist 행에서 가져온 로컬 참고 정책이다. 아이템은 이름·종류·등급(bless)·무게·f5/f6(invgfx/grdgfx)을 비교하며 토큰이나 무게가 다른 예외는 각 행에 남겼다. 해당 NPC의 L1J 행이 없는 7건은 같은 일반등급·종류의 동일 아이템을 다른 NPC에서 우선 대입하고, 전체 droplist에도 없는 오크족 창은 같은 singlespear 무기를 대입하는 로컬 정책(유사 아이템 대입)으로 채웠다. 각 roll.source=local_policy와 note/ref에 정확 SQL 원문·대입 이유·공식 확률/수량 미확정을 남겼다. unresolved는 아직 로컬 정책도 선정되지 않은 항목만 담는다. 클라이언트 목록의 중복 행(아데나 등)은 한 번만 넣었다. 이 대응은 원본 확률·수량이나 실제 보상 소비·화면 동작의 증명이 아니다. 2026-10-27 신규7종은 catalog의 동일 NPC 호환 L1J roll만 재사용하고 수집된 공식 상세 rewards에 같은 클래식 item ID가 있는지 대조했다. 기존 m1/items에 등록된 아이템만 활성화하며 미등록은 deferred_roll을 포함한 unresolved에 보존. 기존4종의 승인 로컬 대입 정책은 수정하지 않았다. 신규 항목에는 타 NPC 확률 대입 없음. 기존4종도 m1/items 미등록 원roll은 item/roll/source/ref를 그대로 unresolved의 deferred_item/deferred_roll에 보존해 미지원 지급을 막았다. 이는 원드롭 구성 삭제가 아니라 활성 지급 보류다.",
+  "chance_denominator": 1000000,
+  "grade_meaning": {
+    "0": "축복",
+    "1": "일반",
+    "2": "저주"
+  },
+  "ref_abbrev": {
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "drop-pairs": "work/npc_field_semantics/hypotheses/all-drop-pairs.json (배열 i 시작 줄=2+5i)",
+    "official-orc": "work/official_monster_research/api/orc-detail.json",
+    "official-245": "work/npc_field_semantics/hypotheses/official-detail-245.json",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "all-rows": "work/monster_level_comparison/analysis/all-rows.csv",
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "spr-parsed": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jcfg": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "m1": "tools/local_original_session/data/m1/",
+    "mapping-scope": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md 3장",
+    "official": "tools/local_original_session/data/official/monsters.json (수집 2026-10-26)",
+    "map0-catalog": "tools/local_original_session/data/catalog/map0/",
+    "terrain": "tools/local_original_session/world_terrain.py; work/local_resource_provider/assets/map/0/*.s32"
+  },
+  "drops": {
+    "0": [
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:32,37; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 10,
+            "max": 30
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3942 itemId 40308 $4 (etcitem :16762)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 40,
+            "token": "$13",
+            "name_ko": "오크족 단검",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:989; drop-pairs:7; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3932 weapon 1 $13 bless1 (:63702)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 88,
+            "token": "$120",
+            "name_ko": "오크족 투구",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1026; drop-pairs:22; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3934 armor 20034 $120 bless1 (:2878)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 71,
+            "token": "$96",
+            "name_ko": "오크족 창",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1014; drop-pairs:27; official-orc; l1jdb:63792; droplist :3932-3950; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)",
+          "note": "classic71 오크족 창/$96(f45=1 무기) ↔ L1J weapon91 Orcish Spear/$96(type=singlespear, bless1). 무게 f10=30000/weight30000·아이콘 f5=100/invgfx100·바닥 f6=27/grdgfx27 일치. native f46=3의 세부 종류 의미 미확정"
+        },
+        "roll": {
+          "value": {
+            "chance": 15000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "local_policy",
+          "ref": "l1jdb:4165 원문: INSERT INTO `droplist` VALUES ('45052', 'Fatigued Ratman', '96', 'Spear', '1', '1', '15000');",
+          "note": "로컬 정책(유사 아이템 대입). 공식 확률·수량은 미확정: docs/OFFICIAL_MONSTER_DATA.md:17-21의 저장 공식 상세는 ID·이름·분류만 제공하고, docs/NPC_FIELD_SEMANTICS.md:48-51의 npc.bin f21은 ID·등급만 확인한다. L1J 오크45009에는 weapon91 행이 없고 전체 droplist에도91이 없어 같은 일반 bless1·steel·singlespear인 weapon96 Spear를 대입했다. 대상91($96, l1jdb:63792)과 대입96($25, :63797)은 종류·등급이 같지만 서로 다른 아이템이며 무게30000/80000·피해4/6 대6/8·아이콘100/98은 다르다(바닥27 일치). 대입 NPC45052 Fatigued Ratman은 Lv5(:20672), 대상 오크는 Lv2(:20631)로 NPC 레벨·확률의 동등성을 주장하지 않는다. weapon 열·bless는 :2091-2133. 클래식↔L1J 아이템 대응: classic71 오크족 창/$96(f45=1 무기) ↔ L1J weapon91 Orcish Spear/$96(type=singlespear, bless1). 무게 f10=30000/weight30000·아이콘 f5=100/invgfx100·바닥 f6=27/grdgfx27 일치. native f46=3의 세부 종류 의미 미확정 기존 items.json의 Chance/quantity remain unresolved 문구는 이번 정책 적용 전 상태이며 아이템 정의는 수정하지 않았다."
+        }
+      }
+    ],
+    "245": [
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:4607,4612; official-245; data/official/monsters.json official_id=245 rewards (work/official_data/raw/monster/245.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 10,
+            "max": 30
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3928 itemId 40308 $4"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 14,
+            "token": "$237",
+            "name_ko": "빨간 물약",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:965; drop-pairs:4597; official-245; data/official/monsters.json official_id=245 rewards (work/official_data/raw/monster/245.json)",
+          "note": "기존 items.json item14 heal_hp.note의 classic14↔L1J40010 대응을 재사용. 클래식 빨간 물약/$237(f4=51, f45=1001) ↔ L1J Lesser Healing Potion/$26(item_type=potion), 일반 bless1. 아이콘 f5=80/invgfx80·바닥 f6=45/grdgfx45 일치. 무게 f10=5859와 L1J3900, 이름토큰은 다르다. 종류·그래픽·기존 회복물약 대응을 바탕으로 L1J 확률을 참고 정책으로 사용하며 원본 동일성을 확정하지 않는다. L1J etcitem40010 원문 l1jdb:16464, 열 :716-737"
+        },
+        "roll": {
+          "value": {
+            "chance": 100000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3927 NPC45008 Goblin item40010 Lesser Healing Potion 1..1 chance100000; :16464 bless1",
+          "note": "대응 고블린 자신의 행에서 가져온 1,000,000분율 참고 정책. 무게·토큰 차이는 item.note에 보존"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 120,
+            "token": "$206",
+            "name_ko": "짧은 부츠",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1055; drop-pairs:4582; official-245; l1jdb:3057; droplist :3926-3931; data/official/monsters.json official_id=245 rewards (work/official_data/raw/monster/245.json)",
+          "note": "classic120 짧은 부츠/$206(f17=32) ↔ L1J armor20213 Low Boots/$206(type=boots, bless1). 무게 f10=10000/weight10000·아이콘 f5=65/invgfx65·바닥 f6=25/grdgfx25 일치. 기존 items.json item120 재사용, f17 세부 의미 미확정"
+        },
+        "roll": {
+          "value": {
+            "chance": 10000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "local_policy",
+          "ref": "l1jdb:3955 원문: INSERT INTO `droplist` VALUES ('45016', 'Kobold', '20213', 'Low Boots', '1', '1', '10000');",
+          "note": "로컬 정책(유사 아이템 대입). 공식 확률·수량은 미확정: docs/OFFICIAL_MONSTER_DATA.md:17-21의 저장 공식 상세는 ID·이름·분류만 제공하고, docs/NPC_FIELD_SEMANTICS.md:48-51의 npc.bin f21은 ID·등급만 확인한다. L1J 고블린45008(:3926-3931)에는20213 행이 없어 코볼트45016의 동일 armor20213 Low Boots를 대입했다. 대상과 대입은 같은 boots·일반 bless1($206, 무게10000, 아이콘65, 바닥25; :3057, armor 열 :63-104)이다. NPC만 다르므로 고블린 자신의 확률로 확정하지 않는다. 클래식↔L1J 아이템 대응: classic120 짧은 부츠/$206(f17=32) ↔ L1J armor20213 Low Boots/$206(type=boots, bless1). 무게 f10=10000/weight10000·아이콘 f5=65/invgfx65·바닥 f6=25/grdgfx25 일치. 기존 items.json item120 재사용, f17 세부 의미 미확정 기존 items.json의 Chance/quantity remain unresolved 문구는 이번 정책 적용 전 상태이며 아이템 정의는 수정하지 않았다."
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 90,
+            "token": "$128",
+            "name_ko": "투구",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1028; drop-pairs:4587; official-245; l1jdb:2887; droplist :3926-3931; data/official/monsters.json official_id=245 rewards (work/official_data/raw/monster/245.json)",
+          "note": "classic90 투구/$128(f17=1) ↔ L1J armor20043 Helmet/$128(type=helm, bless1). 무게 f10=30000/weight30000·아이콘 f5=55/invgfx55·바닥 f6=18/grdgfx18 일치. 기존 items.json item90 재사용, f17 세부 의미 미확정"
+        },
+        "roll": {
+          "value": {
+            "chance": 5000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "local_policy",
+          "ref": "l1jdb:4063 원문: INSERT INTO `droplist` VALUES ('45035', 'Escaped Black Knight', '20043', 'Helmet', '1', '1', '5000');",
+          "note": "로컬 정책(유사 아이템 대입). 공식 확률·수량은 미확정: docs/OFFICIAL_MONSTER_DATA.md:17-21의 저장 공식 상세는 ID·이름·분류만 제공하고, docs/NPC_FIELD_SEMANTICS.md:48-51의 npc.bin f21은 ID·등급만 확인한다. L1J 고블린45008(:3926-3931)에는20043 행이 없어 Escaped Black Knight45035의 동일 armor20043 Helmet을 대입했다. 대상과 대입은 같은 helm·일반 bless1($128, 무게30000, 아이콘55, 바닥18; :2887, armor 열 :63-104)이다. NPC만 다르므로 고블린 자신의 확률로 확정하지 않는다. 클래식↔L1J 아이템 대응: classic90 투구/$128(f17=1) ↔ L1J armor20043 Helmet/$128(type=helm, bless1). 무게 f10=30000/weight30000·아이콘 f5=55/invgfx55·바닥 f6=18/grdgfx18 일치. 기존 items.json item90 재사용, f17 세부 의미 미확정 기존 items.json의 Chance/quantity remain unresolved 문구는 이번 정책 적용 전 상태이며 아이템 정의는 수정하지 않았다."
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 38,
+            "token": "$69",
+            "name_ko": "몽둥이",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:987; drop-pairs:4592; official-245; l1jdb:63839; droplist :3926-3931; data/official/monsters.json official_id=245 rewards (work/official_data/raw/monster/245.json)",
+          "note": "classic38 몽둥이/$69(f45=1 무기) ↔ L1J weapon138 Club/$69(type=blunt, bless1). 무게 f10=30000/weight30000·아이콘 f5=31/invgfx31·바닥 f6=14/grdgfx14·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정"
+        },
+        "roll": {
+          "value": {
+            "chance": 5000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "local_policy",
+          "ref": "l1jdb:3954 원문: INSERT INTO `droplist` VALUES ('45016', 'Kobold', '138', 'Club', '1', '1', '5000');",
+          "note": "로컬 정책(유사 아이템 대입). 공식 확률·수량은 미확정: docs/OFFICIAL_MONSTER_DATA.md:17-21의 저장 공식 상세는 ID·이름·분류만 제공하고, docs/NPC_FIELD_SEMANTICS.md:48-51의 npc.bin f21은 ID·등급만 확인한다. L1J 고블린45008(:3926-3931)에는138 행이 없어 코볼트45016의 동일 weapon138 Club을 대입했다. 대상과 대입은 같은 blunt·일반 bless1($69, 무게30000, 아이콘31, 바닥14; :63839, weapon 열 :2091-2133)이다. NPC만 다르므로 고블린 자신의 확률로 확정하지 않는다. 클래식↔L1J 아이템 대응: classic38 몽둥이/$69(f45=1 무기) ↔ L1J weapon138 Club/$69(type=blunt, bless1). 무게 f10=30000/weight30000·아이콘 f5=31/invgfx31·바닥 f6=14/grdgfx14·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정 기존 items.json의 Chance/quantity remain unresolved 문구는 이번 정책 적용 전 상태이며 아이템 정의는 수정하지 않았다."
+        }
+      }
+    ],
+    "1": [
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:72,77; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 11,
+            "max": 32
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3986 itemId 40308 $4"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 88,
+            "token": "$120",
+            "name_ko": "오크족 투구",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1026; drop-pairs:52; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3973 armor 20034 $120 bless1"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 106,
+            "token": "$172",
+            "name_ko": "오크족 망토",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1044; drop-pairs:62; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 15000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3974 armor 20072 $172 bless1 (:2916)"
+        }
+      }
+    ],
+    "8": [
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:557-572 (4행 중복); data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 22,
+            "max": 50
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4015 itemId 40308 $4"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 98,
+            "token": "$162",
+            "name_ko": "비늘 갑옷",
+            "grade": 2
+          },
+          "source": "client",
+          "ref": "native-dump:1036; drop-pairs:502; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 25000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4016 armor 220122 $162 bless2 (:3457)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 120,
+            "token": "$206",
+            "name_ko": "짧은 부츠",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1055; drop-pairs:532; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4004 armor 20213 Low Boots $206 bless1 (:3057)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 120,
+            "token": "$206",
+            "name_ko": "짧은 부츠",
+            "grade": 2
+          },
+          "source": "client",
+          "ref": "native-dump:1055; drop-pairs:517; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4019 armor 220213 $206 bless2 (:3463)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 99,
+            "token": "$163",
+            "name_ko": "징박힌 가죽 갑옷",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1037; drop-pairs:522; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4002 armor 20147 $163 bless1 (:2991)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 99,
+            "token": "$163",
+            "name_ko": "징박힌 가죽 갑옷",
+            "grade": 2
+          },
+          "source": "client",
+          "ref": "native-dump:1037; drop-pairs:527; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4018 armor 220147 $163 bless2 (:3461)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 113,
+            "token": "$186",
+            "name_ko": "작은 방패",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1049; drop-pairs:552; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4005 armor 20239 $186 bless1 (:3083)"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 3,
+            "token": "$5",
+            "name_ko": "장검",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:954; drop-pairs:512; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)",
+          "note": "기존 items.json item3 weapon.note의 classic3↔L1J weapon31 대응 재사용. 클래식 장검/$5(f45=1 무기) ↔ L1J Long Sword/$0(type=sword), 일반 bless1. 무게 f10=40000/weight40000·아이콘 f5=2/invgfx2·바닥 f6=3/grdgfx3 일치. 이름토큰은 다르다. native f46=0의 세부 종류 의미는 미확정이며 L1J sword를 참고. L1J weapon31 원문 l1jdb:63732, 열 :2091-2133"
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4001 NPC45024 Werewolf weapon31 Long Sword 1..1 chance50000; :63732 bless1",
+          "note": "대응 늑대인간 자신의 행에서 가져온 1,000,000분율 참고 정책. 토큰 차이는 item.note에 보존"
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 8,
+            "token": "$20",
+            "name_ko": "철퇴",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:959; drop-pairs:537; l1jdb:63841; droplist :4001-4019; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)",
+          "note": "classic8 철퇴/$20(f45=1 무기) ↔ L1J weapon140 Mace/$20(type=blunt, bless1). 무게 f10=30000/weight30000·아이콘 f5=67/invgfx67·바닥 f6=60/grdgfx60·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정"
+        },
+        "roll": {
+          "value": {
+            "chance": 10000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "local_policy",
+          "ref": "l1jdb:4701 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '140', 'Mace', '1', '1', '10000');",
+          "note": "로컬 정책(유사 아이템 대입). 공식 확률·수량은 미확정: docs/OFFICIAL_MONSTER_DATA.md:17-21의 저장 공식 상세는 ID·이름·분류만 제공하고, docs/NPC_FIELD_SEMANTICS.md:48-51의 npc.bin f21은 ID·등급만 확인한다. L1J 늑대인간45024(:4001-4019)에는140 행이 없어 Stone Golem45126의 동일 weapon140 Mace를 대입했다. 대상과 대입은 같은 blunt·일반 bless1($20, 무게30000, 아이콘67, 바닥60; :63841, weapon 열 :2091-2133)이다. 세 둔기는 같은 Stone Golem의 행을 쓰며 NPC가 다르므로 늑대인간 자신의 확률로 확정하지 않는다. 클래식↔L1J 아이템 대응: classic8 철퇴/$20(f45=1 무기) ↔ L1J weapon140 Mace/$20(type=blunt, bless1). 무게 f10=30000/weight30000·아이콘 f5=67/invgfx67·바닥 f6=60/grdgfx60·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정 기존 items.json의 Chance/quantity remain unresolved 문구는 이번 정책 적용 전 상태이며 아이템 정의는 수정하지 않았다."
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 38,
+            "token": "$69",
+            "name_ko": "몽둥이",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:987; drop-pairs:542; l1jdb:63839; droplist :4001-4019; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)",
+          "note": "classic38 몽둥이/$69(f45=1 무기) ↔ L1J weapon138 Club/$69(type=blunt, bless1). 무게 f10=30000/weight30000·아이콘 f5=31/invgfx31·바닥 f6=14/grdgfx14·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정"
+        },
+        "roll": {
+          "value": {
+            "chance": 25000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "local_policy",
+          "ref": "l1jdb:4699 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '138', 'Club', '1', '1', '25000');",
+          "note": "로컬 정책(유사 아이템 대입). 공식 확률·수량은 미확정: docs/OFFICIAL_MONSTER_DATA.md:17-21의 저장 공식 상세는 ID·이름·분류만 제공하고, docs/NPC_FIELD_SEMANTICS.md:48-51의 npc.bin f21은 ID·등급만 확인한다. L1J 늑대인간45024(:4001-4019)에는138 행이 없어 Stone Golem45126의 동일 weapon138 Club을 대입했다. 대상과 대입은 같은 blunt·일반 bless1($69, 무게30000, 아이콘31, 바닥14; :63839, weapon 열 :2091-2133)이다. 세 둔기는 같은 Stone Golem의 행을 쓰며 NPC가 다르므로 늑대인간 자신의 확률로 확정하지 않는다. 클래식↔L1J 아이템 대응: classic38 몽둥이/$69(f45=1 무기) ↔ L1J weapon138 Club/$69(type=blunt, bless1). 무게 f10=30000/weight30000·아이콘 f5=31/invgfx31·바닥 f6=14/grdgfx14·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정 기존 items.json의 Chance/quantity remain unresolved 문구는 이번 정책 적용 전 상태이며 아이템 정의는 수정하지 않았다."
+        }
+      },
+      {
+        "item": {
+          "value": {
+            "id": 45,
+            "token": "$74",
+            "name_ko": "도리깨",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:994; drop-pairs:547; l1jdb:63840; droplist :4001-4019; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)",
+          "note": "classic45 도리깨/$74(f45=1 무기) ↔ L1J weapon139 Flail/$74(type=blunt, bless1). 무게 f10=15000/weight15000·아이콘 f5=42/invgfx42·바닥 f6=83/grdgfx83·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정"
+        },
+        "roll": {
+          "value": {
+            "chance": 25000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "local_policy",
+          "ref": "l1jdb:4700 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '139', 'Flail', '1', '1', '25000');",
+          "note": "로컬 정책(유사 아이템 대입). 공식 확률·수량은 미확정: docs/OFFICIAL_MONSTER_DATA.md:17-21의 저장 공식 상세는 ID·이름·분류만 제공하고, docs/NPC_FIELD_SEMANTICS.md:48-51의 npc.bin f21은 ID·등급만 확인한다. L1J 늑대인간45024(:4001-4019)에는139 행이 없어 Stone Golem45126의 동일 weapon139 Flail을 대입했다. 대상과 대입은 같은 blunt·일반 bless1($74, 무게15000, 아이콘42, 바닥83; :63840, weapon 열 :2091-2133)이다. 세 둔기는 같은 Stone Golem의 행을 쓰며 NPC가 다르므로 늑대인간 자신의 확률로 확정하지 않는다. 클래식↔L1J 아이템 대응: classic45 도리깨/$74(f45=1 무기) ↔ L1J weapon139 Flail/$74(type=blunt, bless1). 무게 f10=15000/weight15000·아이콘 f5=42/invgfx42·바닥 f6=83/grdgfx83·드롭 grade1/bless1 일치. native f46=1의 세부 종류 의미 미확정 기존 items.json의 Chance/quantity remain unresolved 문구는 이번 정책 적용 전 상태이며 아이템 정의는 수정하지 않았다."
+        }
+      }
+    ],
+    "249": [
+      {
+        "item": {
+          "value": {
+            "id": 120,
+            "token": "$206",
+            "name_ko": "짧은 부츠",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1055; drop-pairs:4882; data/official/monsters.json official_id=249 rewards; work/official_data/raw/monster/249.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 10000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3955 원문: INSERT INTO `droplist` VALUES ('45016', 'Kobold', '20213', 'Low Boots', '1', '1', '10000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "armor",
+          "classic_f45": 19,
+          "classic_f17": 32,
+          "classic_f46": null,
+          "classic_invgfx": 65,
+          "classic_grdgfx": 25,
+          "classic_weight": 10000,
+          "candidates": [
+            {
+              "item_id": "20213",
+              "name": "Low Boots",
+              "unidentified_name_id": "$206",
+              "identified_name_id": "$206",
+              "type": "boots",
+              "material": "leather",
+              "weight": "10000",
+              "invgfx": "65",
+              "grdgfx": "25",
+              "itemdesc_id": "0",
+              "ac": "-1",
+              "safenchant": "4",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "1",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "damage_reduction": "0",
+              "weight_reduction": "0",
+              "hit_modifier": "0",
+              "dmg_modifier": "0",
+              "bow_hit_modifier": "0",
+              "bow_dmg_modifier": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "defense_water": "0",
+              "defense_wind": "0",
+              "defense_fire": "0",
+              "defense_earth": "0",
+              "regist_stun": "0",
+              "regist_stone": "0",
+              "regist_sleep": "0",
+              "regist_freeze": "0",
+              "regist_sustain": "0",
+              "regist_blind": "0",
+              "grade": "-1",
+              "_line": 3057,
+              "_table": "armor",
+              "_raw_sql": "INSERT INTO `armor` VALUES ('20213', 'Low Boots', '$206', '$206', 'boots', 'leather', '10000', '65', '25', '0', '-1', '4', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 20213,
+        "l1j_npcid": 45016,
+        "l1j_drop_row": {
+          "mobId": "45016",
+          "mob_name": "Kobold",
+          "itemId": "20213",
+          "item_name": "Low Boots",
+          "min": "1",
+          "max": "1",
+          "chance": "10000"
+        },
+        "l1j_drop_ref": "l1jdb:3955"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 38,
+            "token": "$69",
+            "name_ko": "몽둥이",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:987; drop-pairs:4892; data/official/monsters.json official_id=249 rewards; work/official_data/raw/monster/249.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 5000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3954 원문: INSERT INTO `droplist` VALUES ('45016', 'Kobold', '138', 'Club', '1', '1', '5000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "weapon",
+          "classic_f45": 1,
+          "classic_f17": null,
+          "classic_f46": 1,
+          "classic_invgfx": 31,
+          "classic_grdgfx": 14,
+          "classic_weight": 30000,
+          "candidates": [
+            {
+              "item_id": "138",
+              "name": "Club",
+              "unidentified_name_id": "$69",
+              "identified_name_id": "$69",
+              "type": "blunt",
+              "material": "steel",
+              "weight": "30000",
+              "invgfx": "31",
+              "grdgfx": "14",
+              "itemdesc_id": "0",
+              "dmg_small": "6",
+              "dmg_large": "3",
+              "range": "1",
+              "safenchant": "6",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "0",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "hitmodifier": "0",
+              "dmgmodifier": "0",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "double_dmg_chance": "0",
+              "magicdmgmodifier": "0",
+              "canbedmg": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "_line": 63839,
+              "_table": "weapon",
+              "_raw_sql": "INSERT INTO `weapon` VALUES ('138', 'Club', '$69', '$69', 'blunt', 'steel', '30000', '31', '14', '0', '6', '3', '1', '6', '1', '1', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 138,
+        "l1j_npcid": 45016,
+        "l1j_drop_row": {
+          "mobId": "45016",
+          "mob_name": "Kobold",
+          "itemId": "138",
+          "item_name": "Club",
+          "min": "1",
+          "max": "1",
+          "chance": "5000"
+        },
+        "l1j_drop_ref": "l1jdb:3954"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:4902; drop-pairs:4907; data/official/monsters.json official_id=249 rewards; work/official_data/raw/monster/249.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 11,
+            "max": 32
+          },
+          "source": "l1j",
+          "ref": "l1jdb:3958 원문: INSERT INTO `droplist` VALUES ('45016', 'Kobold', '40308', 'Adena', '11', '32', '1000000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": null,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 5,
+          "classic_grdgfx": 7,
+          "classic_weight": 0,
+          "candidates": [
+            {
+              "item_id": "40308",
+              "name": "Adena",
+              "unidentified_name_id": "$4",
+              "identified_name_id": "$4",
+              "item_type": "other",
+              "use_type": "none",
+              "material": "gold",
+              "weight": "0",
+              "invgfx": "5",
+              "grdgfx": "7",
+              "itemdesc_id": "0",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "1",
+              "_line": 16762,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40308', 'Adena', '$4', '$4', 'other', 'none', 'gold', '0', '5', '7', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40308,
+        "l1j_npcid": 45016,
+        "l1j_drop_row": {
+          "mobId": "45016",
+          "mob_name": "Kobold",
+          "itemId": "40308",
+          "item_name": "Adena",
+          "min": "11",
+          "max": "32",
+          "chance": "1000000"
+        },
+        "l1j_drop_ref": "l1jdb:3958"
+      }
+    ],
+    "4": [
+      {
+        "item": {
+          "value": {
+            "id": 89,
+            "token": "$122",
+            "name_ko": "난쟁이족 철 투구",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1027; drop-pairs:147; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 20000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4124 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '20007', 'Dwarvish Iron Helm', '1', '1', '20000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "armor",
+          "classic_f45": 1005,
+          "classic_f17": 1,
+          "classic_f46": null,
+          "classic_invgfx": 52,
+          "classic_grdgfx": 18,
+          "classic_weight": 40000,
+          "candidates": [
+            {
+              "item_id": "20007",
+              "name": "Dwarvish Iron Helm",
+              "unidentified_name_id": "$122",
+              "identified_name_id": "$122",
+              "type": "helm",
+              "material": "iron",
+              "weight": "40000",
+              "invgfx": "52",
+              "grdgfx": "18",
+              "itemdesc_id": "0",
+              "ac": "-2",
+              "safenchant": "4",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "1",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "damage_reduction": "0",
+              "weight_reduction": "0",
+              "hit_modifier": "0",
+              "dmg_modifier": "0",
+              "bow_hit_modifier": "0",
+              "bow_dmg_modifier": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "defense_water": "0",
+              "defense_wind": "0",
+              "defense_fire": "0",
+              "defense_earth": "0",
+              "regist_stun": "0",
+              "regist_stone": "0",
+              "regist_sleep": "0",
+              "regist_freeze": "0",
+              "regist_sustain": "0",
+              "regist_blind": "0",
+              "grade": "-1",
+              "_line": 2851,
+              "_table": "armor",
+              "_raw_sql": "INSERT INTO `armor` VALUES ('20007', 'Dwarvish Iron Helm', '$122', '$122', 'helm', 'iron', '40000', '52', '18', '0', '-2', '4', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 20007,
+        "l1j_npcid": 45041,
+        "l1j_drop_row": {
+          "mobId": "45041",
+          "mob_name": "Dwarf",
+          "itemId": "20007",
+          "item_name": "Dwarvish Iron Helm",
+          "min": "1",
+          "max": "1",
+          "chance": "20000"
+        },
+        "l1j_drop_ref": "l1jdb:4124"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 299,
+            "token": "$971",
+            "name_ko": "변신 주문서",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1194; drop-pairs:157; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 10000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4128 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '40088', 'Scroll of Polymorph', '1', '1', '10000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": 1004,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 472,
+          "classic_grdgfx": 22,
+          "classic_weight": 625,
+          "candidates": [
+            {
+              "item_id": "40088",
+              "name": "Scroll of Polymorph",
+              "unidentified_name_id": "$971",
+              "identified_name_id": "$971",
+              "item_type": "scroll",
+              "use_type": "sosc",
+              "material": "paper",
+              "weight": "630",
+              "invgfx": "472",
+              "grdgfx": "22",
+              "itemdesc_id": "1341",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "0",
+              "_line": 16542,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40088', 'Scroll of Polymorph', '$971', '$971', 'scroll', 'sosc', 'paper', '630', '472', '22', '1341', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40088,
+        "l1j_npcid": 45041,
+        "l1j_drop_row": {
+          "mobId": "45041",
+          "mob_name": "Dwarf",
+          "itemId": "40088",
+          "item_name": "Scroll of Polymorph",
+          "min": "1",
+          "max": "1",
+          "chance": "10000"
+        },
+        "l1j_drop_ref": "l1jdb:4128"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:177; drop-pairs:182; drop-pairs:187; drop-pairs:192; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 13,
+            "max": 36
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4131 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '40308', 'Adena', '13', '36', '1000000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": null,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 5,
+          "classic_grdgfx": 7,
+          "classic_weight": 0,
+          "candidates": [
+            {
+              "item_id": "40308",
+              "name": "Adena",
+              "unidentified_name_id": "$4",
+              "identified_name_id": "$4",
+              "item_type": "other",
+              "use_type": "none",
+              "material": "gold",
+              "weight": "0",
+              "invgfx": "5",
+              "grdgfx": "7",
+              "itemdesc_id": "0",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "1",
+              "_line": 16762,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40308', 'Adena', '$4', '$4', 'other', 'none', 'gold', '0', '5', '7', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40308,
+        "l1j_npcid": 45041,
+        "l1j_drop_row": {
+          "mobId": "45041",
+          "mob_name": "Dwarf",
+          "itemId": "40308",
+          "item_name": "Adena",
+          "min": "13",
+          "max": "36",
+          "chance": "1000000"
+        },
+        "l1j_drop_ref": "l1jdb:4131"
+      }
+    ],
+    "2": [
+      {
+        "item": {
+          "value": {
+            "id": 88,
+            "token": "$120",
+            "name_ko": "오크족 투구",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1026; drop-pairs:107; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4362 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '20034', 'Orcish Helm', '1', '1', '50000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "armor",
+          "classic_f45": 1005,
+          "classic_f17": 1,
+          "classic_f46": null,
+          "classic_invgfx": 54,
+          "classic_grdgfx": 18,
+          "classic_weight": 30000,
+          "candidates": [
+            {
+              "item_id": "20034",
+              "name": "Orcish Helm",
+              "unidentified_name_id": "$120",
+              "identified_name_id": "$120",
+              "type": "helm",
+              "material": "iron",
+              "weight": "30000",
+              "invgfx": "54",
+              "grdgfx": "18",
+              "itemdesc_id": "0",
+              "ac": "-1",
+              "safenchant": "4",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "1",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "damage_reduction": "0",
+              "weight_reduction": "0",
+              "hit_modifier": "0",
+              "dmg_modifier": "0",
+              "bow_hit_modifier": "0",
+              "bow_dmg_modifier": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "defense_water": "0",
+              "defense_wind": "0",
+              "defense_fire": "0",
+              "defense_earth": "0",
+              "regist_stun": "0",
+              "regist_stone": "0",
+              "regist_sleep": "0",
+              "regist_freeze": "0",
+              "regist_sustain": "0",
+              "regist_blind": "0",
+              "grade": "-1",
+              "_line": 2878,
+              "_table": "armor",
+              "_raw_sql": "INSERT INTO `armor` VALUES ('20034', 'Orcish Helm', '$120', '$120', 'helm', 'iron', '30000', '54', '18', '0', '-1', '4', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 20034,
+        "l1j_npcid": 45082,
+        "l1j_drop_row": {
+          "mobId": "45082",
+          "mob_name": "Orc Fighter",
+          "itemId": "20034",
+          "item_name": "Orcish Helm",
+          "min": "1",
+          "max": "1",
+          "chance": "50000"
+        },
+        "l1j_drop_ref": "l1jdb:4362"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 106,
+            "token": "$172",
+            "name_ko": "오크족 망토",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1044; drop-pairs:122; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 25000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4364 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '20072', 'Orcish Cloak', '1', '1', '25000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "armor",
+          "classic_f45": 1005,
+          "classic_f17": 8,
+          "classic_f46": null,
+          "classic_invgfx": 29,
+          "classic_grdgfx": 3824,
+          "classic_weight": 10000,
+          "candidates": [
+            {
+              "item_id": "20072",
+              "name": "Orcish Cloak",
+              "unidentified_name_id": "$172",
+              "identified_name_id": "$172",
+              "type": "cloak",
+              "material": "cloth",
+              "weight": "10000",
+              "invgfx": "29",
+              "grdgfx": "3824",
+              "itemdesc_id": "0",
+              "ac": "0",
+              "safenchant": "4",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "1",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "damage_reduction": "0",
+              "weight_reduction": "0",
+              "hit_modifier": "0",
+              "dmg_modifier": "0",
+              "bow_hit_modifier": "0",
+              "bow_dmg_modifier": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "defense_water": "0",
+              "defense_wind": "0",
+              "defense_fire": "0",
+              "defense_earth": "0",
+              "regist_stun": "0",
+              "regist_stone": "0",
+              "regist_sleep": "0",
+              "regist_freeze": "0",
+              "regist_sustain": "0",
+              "regist_blind": "0",
+              "grade": "-1",
+              "_line": 2916,
+              "_table": "armor",
+              "_raw_sql": "INSERT INTO `armor` VALUES ('20072', 'Orcish Cloak', '$172', '$172', 'cloak', 'cloth', '10000', '29', '3824', '0', '0', '4', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 20072,
+        "l1j_npcid": 45082,
+        "l1j_drop_row": {
+          "mobId": "45082",
+          "mob_name": "Orc Fighter",
+          "itemId": "20072",
+          "item_name": "Orcish Cloak",
+          "min": "1",
+          "max": "1",
+          "chance": "25000"
+        },
+        "l1j_drop_ref": "l1jdb:4364"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:127; drop-pairs:132; drop-pairs:137; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 20,
+            "max": 45
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4375 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '40308', 'Adena', '20', '45', '1000000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": null,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 5,
+          "classic_grdgfx": 7,
+          "classic_weight": 0,
+          "candidates": [
+            {
+              "item_id": "40308",
+              "name": "Adena",
+              "unidentified_name_id": "$4",
+              "identified_name_id": "$4",
+              "item_type": "other",
+              "use_type": "none",
+              "material": "gold",
+              "weight": "0",
+              "invgfx": "5",
+              "grdgfx": "7",
+              "itemdesc_id": "0",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "1",
+              "_line": 16762,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40308', 'Adena', '$4', '$4', 'other', 'none', 'gold', '0', '5', '7', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40308,
+        "l1j_npcid": 45082,
+        "l1j_drop_row": {
+          "mobId": "45082",
+          "mob_name": "Orc Fighter",
+          "itemId": "40308",
+          "item_name": "Adena",
+          "min": "20",
+          "max": "45",
+          "chance": "1000000"
+        },
+        "l1j_drop_ref": "l1jdb:4375"
+      }
+    ],
+    "27": [
+      {
+        "item": {
+          "value": {
+            "id": 23,
+            "token": "$230",
+            "name_ko": "순간이동 주문서",
+            "grade": 0
+          },
+          "source": "client",
+          "ref": "native-dump:973; drop-pairs:1362; data/official/monsters.json official_id=27 rewards; work/official_data/raw/monster/27.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4244 원문: INSERT INTO `droplist` VALUES ('45065', 'Zombie', '140100', 'Scroll of Teleportation', '1', '1', '50000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": 1004,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 473,
+          "classic_grdgfx": 22,
+          "classic_weight": 625,
+          "candidates": [
+            {
+              "item_id": "140100",
+              "name": "Scroll of Teleportation",
+              "unidentified_name_id": "$230",
+              "identified_name_id": "$230",
+              "item_type": "scroll",
+              "use_type": "btele",
+              "material": "paper",
+              "weight": "630",
+              "invgfx": "473",
+              "grdgfx": "22",
+              "itemdesc_id": "23",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "0",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "0",
+              "_line": 18304,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('140100', 'Scroll of Teleportation', '$230', '$230', 'scroll', 'btele', 'paper', '630', '473', '22', '23', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 140100,
+        "l1j_npcid": 45065,
+        "l1j_drop_row": {
+          "mobId": "45065",
+          "mob_name": "Zombie",
+          "itemId": "140100",
+          "item_name": "Scroll of Teleportation",
+          "min": "1",
+          "max": "1",
+          "chance": "50000"
+        },
+        "l1j_drop_ref": "l1jdb:4244"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 28,
+            "token": "$257",
+            "name_ko": "부활 주문서",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:977; drop-pairs:1367; data/official/monsters.json official_id=27 rewards; work/official_data/raw/monster/27.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4233 원문: INSERT INTO `droplist` VALUES ('45065', 'Zombie', '40089', 'Scroll of Resurrection', '1', '1', '50000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": 1004,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 471,
+          "classic_grdgfx": 22,
+          "classic_weight": 625,
+          "candidates": [
+            {
+              "item_id": "40089",
+              "name": "Scroll of Resurrection",
+              "unidentified_name_id": "$257",
+              "identified_name_id": "$257",
+              "item_type": "scroll",
+              "use_type": "res",
+              "material": "paper",
+              "weight": "630",
+              "invgfx": "471",
+              "grdgfx": "22",
+              "itemdesc_id": "28",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "0",
+              "_line": 16543,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40089', 'Scroll of Resurrection', '$257', '$257', 'scroll', 'res', 'paper', '630', '471', '22', '28', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40089,
+        "l1j_npcid": 45065,
+        "l1j_drop_row": {
+          "mobId": "45065",
+          "mob_name": "Zombie",
+          "itemId": "40089",
+          "item_name": "Scroll of Resurrection",
+          "min": "1",
+          "max": "1",
+          "chance": "50000"
+        },
+        "l1j_drop_ref": "l1jdb:4233"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:1372; drop-pairs:1377; drop-pairs:1382; data/official/monsters.json official_id=27 rewards; work/official_data/raw/monster/27.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 15,
+            "max": 38
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4241 원문: INSERT INTO `droplist` VALUES ('45065', 'Zombie', '40308', 'Adena', '15', '38', '1000000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": null,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 5,
+          "classic_grdgfx": 7,
+          "classic_weight": 0,
+          "candidates": [
+            {
+              "item_id": "40308",
+              "name": "Adena",
+              "unidentified_name_id": "$4",
+              "identified_name_id": "$4",
+              "item_type": "other",
+              "use_type": "none",
+              "material": "gold",
+              "weight": "0",
+              "invgfx": "5",
+              "grdgfx": "7",
+              "itemdesc_id": "0",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "1",
+              "_line": 16762,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40308', 'Adena', '$4', '$4', 'other', 'none', 'gold', '0', '5', '7', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40308,
+        "l1j_npcid": 45065,
+        "l1j_drop_row": {
+          "mobId": "45065",
+          "mob_name": "Zombie",
+          "itemId": "40308",
+          "item_name": "Adena",
+          "min": "15",
+          "max": "38",
+          "chance": "1000000"
+        },
+        "l1j_drop_ref": "l1jdb:4241"
+      }
+    ],
+    "29": [
+      {
+        "item": {
+          "value": {
+            "id": 117,
+            "token": "$193",
+            "name_ko": "큰 방패",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1052; drop-pairs:1462; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 9000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4541 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '20242', 'Large Shield', '1', '1', '9000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "armor",
+          "classic_f45": 19,
+          "classic_f17": 256,
+          "classic_f46": null,
+          "classic_invgfx": 61,
+          "classic_grdgfx": 23,
+          "classic_weight": 100000,
+          "candidates": [
+            {
+              "item_id": "20242",
+              "name": "Large Shield",
+              "unidentified_name_id": "$193",
+              "identified_name_id": "$193",
+              "type": "shield",
+              "material": "iron",
+              "weight": "100000",
+              "invgfx": "61",
+              "grdgfx": "23",
+              "itemdesc_id": "0",
+              "ac": "-2",
+              "safenchant": "4",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "0",
+              "use_elf": "1",
+              "use_darkelf": "1",
+              "use_dragonknight": "1",
+              "use_illusionist": "0",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "damage_reduction": "0",
+              "weight_reduction": "0",
+              "hit_modifier": "0",
+              "dmg_modifier": "0",
+              "bow_hit_modifier": "0",
+              "bow_dmg_modifier": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "defense_water": "0",
+              "defense_wind": "0",
+              "defense_fire": "0",
+              "defense_earth": "0",
+              "regist_stun": "0",
+              "regist_stone": "0",
+              "regist_sleep": "0",
+              "regist_freeze": "0",
+              "regist_sustain": "0",
+              "regist_blind": "0",
+              "grade": "-1",
+              "_line": 3086,
+              "_table": "armor",
+              "_raw_sql": "INSERT INTO `armor` VALUES ('20242', 'Large Shield', '$193', '$193', 'shield', 'iron', '100000', '61', '23', '0', '-2', '4', '1', '1', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 20242,
+        "l1j_npcid": 45107,
+        "l1j_drop_row": {
+          "mobId": "45107",
+          "mob_name": "Skeleton",
+          "itemId": "20242",
+          "item_name": "Large Shield",
+          "min": "1",
+          "max": "1",
+          "chance": "9000"
+        },
+        "l1j_drop_ref": "l1jdb:4541"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 90,
+            "token": "$128",
+            "name_ko": "투구",
+            "grade": 2
+          },
+          "source": "client",
+          "ref": "native-dump:1028; drop-pairs:1492; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 30000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4554 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '220043', 'Helmet', '1', '1', '30000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "armor",
+          "classic_f45": 19,
+          "classic_f17": 1,
+          "classic_f46": null,
+          "classic_invgfx": 55,
+          "classic_grdgfx": 18,
+          "classic_weight": 30000,
+          "candidates": [
+            {
+              "item_id": "220043",
+              "name": "Helmet",
+              "unidentified_name_id": "$128",
+              "identified_name_id": "$128",
+              "type": "helm",
+              "material": "iron",
+              "weight": "30000",
+              "invgfx": "55",
+              "grdgfx": "18",
+              "itemdesc_id": "0",
+              "ac": "-1",
+              "safenchant": "4",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "1",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "damage_reduction": "0",
+              "weight_reduction": "0",
+              "hit_modifier": "0",
+              "dmg_modifier": "0",
+              "bow_hit_modifier": "0",
+              "bow_dmg_modifier": "0",
+              "bless": "2",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "defense_water": "0",
+              "defense_wind": "0",
+              "defense_fire": "0",
+              "defense_earth": "0",
+              "regist_stun": "0",
+              "regist_stone": "0",
+              "regist_sleep": "0",
+              "regist_freeze": "0",
+              "regist_sustain": "0",
+              "regist_blind": "0",
+              "grade": "-1",
+              "_line": 3453,
+              "_table": "armor",
+              "_raw_sql": "INSERT INTO `armor` VALUES ('220043', 'Helmet', '$128', '$128', 'helm', 'iron', '30000', '55', '18', '0', '-1', '4', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 220043,
+        "l1j_npcid": 45107,
+        "l1j_drop_row": {
+          "mobId": "45107",
+          "mob_name": "Skeleton",
+          "itemId": "220043",
+          "item_name": "Helmet",
+          "min": "1",
+          "max": "1",
+          "chance": "30000"
+        },
+        "l1j_drop_ref": "l1jdb:4554"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 90,
+            "token": "$128",
+            "name_ko": "투구",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:1028; drop-pairs:1497; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 30000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4539 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '20043', 'Helmet', '1', '1', '30000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "armor",
+          "classic_f45": 19,
+          "classic_f17": 1,
+          "classic_f46": null,
+          "classic_invgfx": 55,
+          "classic_grdgfx": 18,
+          "classic_weight": 30000,
+          "candidates": [
+            {
+              "item_id": "20043",
+              "name": "Helmet",
+              "unidentified_name_id": "$128",
+              "identified_name_id": "$128",
+              "type": "helm",
+              "material": "iron",
+              "weight": "30000",
+              "invgfx": "55",
+              "grdgfx": "18",
+              "itemdesc_id": "0",
+              "ac": "-1",
+              "safenchant": "4",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "1",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "damage_reduction": "0",
+              "weight_reduction": "0",
+              "hit_modifier": "0",
+              "dmg_modifier": "0",
+              "bow_hit_modifier": "0",
+              "bow_dmg_modifier": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "defense_water": "0",
+              "defense_wind": "0",
+              "defense_fire": "0",
+              "defense_earth": "0",
+              "regist_stun": "0",
+              "regist_stone": "0",
+              "regist_sleep": "0",
+              "regist_freeze": "0",
+              "regist_sustain": "0",
+              "regist_blind": "0",
+              "grade": "-1",
+              "_line": 2887,
+              "_table": "armor",
+              "_raw_sql": "INSERT INTO `armor` VALUES ('20043', 'Helmet', '$128', '$128', 'helm', 'iron', '30000', '55', '18', '0', '-1', '4', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 20043,
+        "l1j_npcid": 45107,
+        "l1j_drop_row": {
+          "mobId": "45107",
+          "mob_name": "Skeleton",
+          "itemId": "20043",
+          "item_name": "Helmet",
+          "min": "1",
+          "max": "1",
+          "chance": "30000"
+        },
+        "l1j_drop_ref": "l1jdb:4539"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 17,
+            "token": "$234",
+            "name_ko": "초록 물약",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:968; drop-pairs:1502; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4543 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '40013', 'Haste Potion', '1', '1', '50000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": 1000,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 77,
+          "classic_grdgfx": 42,
+          "classic_weight": 4688,
+          "candidates": [
+            {
+              "item_id": "40013",
+              "name": "Haste Potion",
+              "unidentified_name_id": "$234",
+              "identified_name_id": "$264",
+              "item_type": "potion",
+              "use_type": "normal",
+              "material": "glass",
+              "weight": "3900",
+              "invgfx": "77",
+              "grdgfx": "42",
+              "itemdesc_id": "17",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "0",
+              "_line": 16467,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40013', 'Haste Potion', '$234', '$264', 'potion', 'normal', 'glass', '3900', '77', '42', '17', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40013,
+        "l1j_npcid": 45107,
+        "l1j_drop_row": {
+          "mobId": "45107",
+          "mob_name": "Skeleton",
+          "itemId": "40013",
+          "item_name": "Haste Potion",
+          "min": "1",
+          "max": "1",
+          "chance": "50000"
+        },
+        "l1j_drop_ref": "l1jdb:4543"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:1517; drop-pairs:1522; drop-pairs:1527; drop-pairs:1532; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 25,
+            "max": 54
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4548 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '40308', 'Adena', '25', '54', '1000000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": null,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 5,
+          "classic_grdgfx": 7,
+          "classic_weight": 0,
+          "candidates": [
+            {
+              "item_id": "40308",
+              "name": "Adena",
+              "unidentified_name_id": "$4",
+              "identified_name_id": "$4",
+              "item_type": "other",
+              "use_type": "none",
+              "material": "gold",
+              "weight": "0",
+              "invgfx": "5",
+              "grdgfx": "7",
+              "itemdesc_id": "0",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "1",
+              "_line": 16762,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40308', 'Adena', '$4', '$4', 'other', 'none', 'gold', '0', '5', '7', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40308,
+        "l1j_npcid": 45107,
+        "l1j_drop_row": {
+          "mobId": "45107",
+          "mob_name": "Skeleton",
+          "itemId": "40308",
+          "item_name": "Adena",
+          "min": "25",
+          "max": "54",
+          "chance": "1000000"
+        },
+        "l1j_drop_ref": "l1jdb:4548"
+      }
+    ],
+    "5": [
+      {
+        "item": {
+          "value": {
+            "id": 38,
+            "token": "$69",
+            "name_ko": "몽둥이",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:987; drop-pairs:232; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 25000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4699 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '138', 'Club', '1', '1', '25000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "weapon",
+          "classic_f45": 1,
+          "classic_f17": null,
+          "classic_f46": 1,
+          "classic_invgfx": 31,
+          "classic_grdgfx": 14,
+          "classic_weight": 30000,
+          "candidates": [
+            {
+              "item_id": "138",
+              "name": "Club",
+              "unidentified_name_id": "$69",
+              "identified_name_id": "$69",
+              "type": "blunt",
+              "material": "steel",
+              "weight": "30000",
+              "invgfx": "31",
+              "grdgfx": "14",
+              "itemdesc_id": "0",
+              "dmg_small": "6",
+              "dmg_large": "3",
+              "range": "1",
+              "safenchant": "6",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "0",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "hitmodifier": "0",
+              "dmgmodifier": "0",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "double_dmg_chance": "0",
+              "magicdmgmodifier": "0",
+              "canbedmg": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "_line": 63839,
+              "_table": "weapon",
+              "_raw_sql": "INSERT INTO `weapon` VALUES ('138', 'Club', '$69', '$69', 'blunt', 'steel', '30000', '31', '14', '0', '6', '3', '1', '6', '1', '1', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 138,
+        "l1j_npcid": 45126,
+        "l1j_drop_row": {
+          "mobId": "45126",
+          "mob_name": "Stone Golem",
+          "itemId": "138",
+          "item_name": "Club",
+          "min": "1",
+          "max": "1",
+          "chance": "25000"
+        },
+        "l1j_drop_ref": "l1jdb:4699"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 45,
+            "token": "$74",
+            "name_ko": "도리깨",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:994; drop-pairs:237; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 25000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4700 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '139', 'Flail', '1', '1', '25000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "weapon",
+          "classic_f45": 1,
+          "classic_f17": null,
+          "classic_f46": 1,
+          "classic_invgfx": 42,
+          "classic_grdgfx": 83,
+          "classic_weight": 15000,
+          "candidates": [
+            {
+              "item_id": "139",
+              "name": "Flail",
+              "unidentified_name_id": "$74",
+              "identified_name_id": "$74",
+              "type": "blunt",
+              "material": "steel",
+              "weight": "15000",
+              "invgfx": "42",
+              "grdgfx": "83",
+              "itemdesc_id": "0",
+              "dmg_small": "6",
+              "dmg_large": "4",
+              "range": "1",
+              "safenchant": "6",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "0",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "hitmodifier": "0",
+              "dmgmodifier": "0",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "double_dmg_chance": "0",
+              "magicdmgmodifier": "0",
+              "canbedmg": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "_line": 63840,
+              "_table": "weapon",
+              "_raw_sql": "INSERT INTO `weapon` VALUES ('139', 'Flail', '$74', '$74', 'blunt', 'steel', '15000', '42', '83', '0', '6', '4', '1', '6', '1', '1', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 139,
+        "l1j_npcid": 45126,
+        "l1j_drop_row": {
+          "mobId": "45126",
+          "mob_name": "Stone Golem",
+          "itemId": "139",
+          "item_name": "Flail",
+          "min": "1",
+          "max": "1",
+          "chance": "25000"
+        },
+        "l1j_drop_ref": "l1jdb:4700"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 4,
+            "token": "$1",
+            "name_ko": "도끼",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:955; drop-pairs:247; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4697 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '136', 'Axe', '1', '1', '50000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "weapon",
+          "classic_f45": 1,
+          "classic_f17": null,
+          "classic_f46": 1,
+          "classic_invgfx": 1,
+          "classic_grdgfx": 2,
+          "classic_weight": 60000,
+          "candidates": [
+            {
+              "item_id": "136",
+              "name": "Axe",
+              "unidentified_name_id": "$1",
+              "identified_name_id": "$1",
+              "type": "blunt",
+              "material": "steel",
+              "weight": "60000",
+              "invgfx": "1",
+              "grdgfx": "2",
+              "itemdesc_id": "0",
+              "dmg_small": "3",
+              "dmg_large": "5",
+              "range": "1",
+              "safenchant": "6",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "1",
+              "use_elf": "1",
+              "use_darkelf": "0",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "hitmodifier": "0",
+              "dmgmodifier": "0",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "double_dmg_chance": "0",
+              "magicdmgmodifier": "0",
+              "canbedmg": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "_line": 63837,
+              "_table": "weapon",
+              "_raw_sql": "INSERT INTO `weapon` VALUES ('136', 'Axe', '$1', '$1', 'blunt', 'steel', '60000', '1', '2', '0', '3', '5', '1', '6', '1', '1', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 136,
+        "l1j_npcid": 45126,
+        "l1j_drop_row": {
+          "mobId": "45126",
+          "mob_name": "Stone Golem",
+          "itemId": "136",
+          "item_name": "Axe",
+          "min": "1",
+          "max": "1",
+          "chance": "50000"
+        },
+        "l1j_drop_ref": "l1jdb:4697"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 1,
+            "token": "$14",
+            "name_ko": "아탐",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:952; drop-pairs:252; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 25000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4698 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '137', 'Athame', '1', '1', '25000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "weapon",
+          "classic_f45": 1,
+          "classic_f17": null,
+          "classic_f46": 1,
+          "classic_invgfx": 8,
+          "classic_grdgfx": 14,
+          "classic_weight": 10000,
+          "candidates": [
+            {
+              "item_id": "137",
+              "name": "Athame",
+              "unidentified_name_id": "$14",
+              "identified_name_id": "$14",
+              "type": "blunt",
+              "material": "steel",
+              "weight": "10000",
+              "invgfx": "8",
+              "grdgfx": "14",
+              "itemdesc_id": "0",
+              "dmg_small": "4",
+              "dmg_large": "4",
+              "range": "1",
+              "safenchant": "6",
+              "use_royal": "1",
+              "use_knight": "1",
+              "use_mage": "0",
+              "use_elf": "1",
+              "use_darkelf": "0",
+              "use_dragonknight": "1",
+              "use_illusionist": "1",
+              "hitmodifier": "2",
+              "dmgmodifier": "0",
+              "add_str": "0",
+              "add_con": "0",
+              "add_dex": "0",
+              "add_int": "0",
+              "add_wis": "0",
+              "add_cha": "0",
+              "add_hp": "0",
+              "add_mp": "0",
+              "add_hpr": "0",
+              "add_mpr": "0",
+              "add_sp": "0",
+              "m_def": "0",
+              "haste_item": "0",
+              "double_dmg_chance": "0",
+              "magicdmgmodifier": "0",
+              "canbedmg": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "max_use_time": "0",
+              "_line": 63838,
+              "_table": "weapon",
+              "_raw_sql": "INSERT INTO `weapon` VALUES ('137', 'Athame', '$14', '$14', 'blunt', 'steel', '10000', '8', '14', '0', '4', '4', '1', '6', '1', '1', '0', '1', '0', '1', '1', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 137,
+        "l1j_npcid": 45126,
+        "l1j_drop_row": {
+          "mobId": "45126",
+          "mob_name": "Stone Golem",
+          "itemId": "137",
+          "item_name": "Athame",
+          "min": "1",
+          "max": "1",
+          "chance": "25000"
+        },
+        "l1j_drop_ref": "l1jdb:4698"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:257; drop-pairs:267; drop-pairs:272; drop-pairs:277; drop-pairs:282; drop-pairs:287; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 37,
+            "max": 72
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4713 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '40308', 'Adena', '37', '72', '1000000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": null,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 5,
+          "classic_grdgfx": 7,
+          "classic_weight": 0,
+          "candidates": [
+            {
+              "item_id": "40308",
+              "name": "Adena",
+              "unidentified_name_id": "$4",
+              "identified_name_id": "$4",
+              "item_type": "other",
+              "use_type": "none",
+              "material": "gold",
+              "weight": "0",
+              "invgfx": "5",
+              "grdgfx": "7",
+              "itemdesc_id": "0",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "1",
+              "_line": 16762,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40308', 'Adena', '$4', '$4', 'other', 'none', 'gold', '0', '5', '7', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40308,
+        "l1j_npcid": 45126,
+        "l1j_drop_row": {
+          "mobId": "45126",
+          "mob_name": "Stone Golem",
+          "itemId": "40308",
+          "item_name": "Adena",
+          "min": "37",
+          "max": "72",
+          "chance": "1000000"
+        },
+        "l1j_drop_ref": "l1jdb:4713"
+      }
+    ],
+    "17": [
+      {
+        "item": {
+          "value": {
+            "id": 23,
+            "token": "$230",
+            "name_ko": "순간이동 주문서",
+            "grade": 0
+          },
+          "source": "client",
+          "ref": "native-dump:973; drop-pairs:957; data/official/monsters.json official_id=17 rewards; work/official_data/raw/monster/17.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4817 원문: INSERT INTO `droplist` VALUES ('45136', 'Arachnevil', '140100', 'Scroll of Teleportation', '1', '1', '50000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": 1004,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 473,
+          "classic_grdgfx": 22,
+          "classic_weight": 625,
+          "candidates": [
+            {
+              "item_id": "140100",
+              "name": "Scroll of Teleportation",
+              "unidentified_name_id": "$230",
+              "identified_name_id": "$230",
+              "item_type": "scroll",
+              "use_type": "btele",
+              "material": "paper",
+              "weight": "630",
+              "invgfx": "473",
+              "grdgfx": "22",
+              "itemdesc_id": "23",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "0",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "0",
+              "_line": 18304,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('140100', 'Scroll of Teleportation', '$230', '$230', 'scroll', 'btele', 'paper', '630', '473', '22', '23', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 140100,
+        "l1j_npcid": 45136,
+        "l1j_drop_row": {
+          "mobId": "45136",
+          "mob_name": "Arachnevil",
+          "itemId": "140100",
+          "item_name": "Scroll of Teleportation",
+          "min": "1",
+          "max": "1",
+          "chance": "50000"
+        },
+        "l1j_drop_ref": "l1jdb:4817"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 17,
+            "token": "$234",
+            "name_ko": "초록 물약",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:968; drop-pairs:962; data/official/monsters.json official_id=17 rewards; work/official_data/raw/monster/17.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 50000,
+            "min": 1,
+            "max": 1
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4808 원문: INSERT INTO `droplist` VALUES ('45136', 'Arachnevil', '40013', 'Haste Potion', '1', '1', '50000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": 1000,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 77,
+          "classic_grdgfx": 42,
+          "classic_weight": 4688,
+          "candidates": [
+            {
+              "item_id": "40013",
+              "name": "Haste Potion",
+              "unidentified_name_id": "$234",
+              "identified_name_id": "$264",
+              "item_type": "potion",
+              "use_type": "normal",
+              "material": "glass",
+              "weight": "3900",
+              "invgfx": "77",
+              "grdgfx": "42",
+              "itemdesc_id": "17",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "0",
+              "_line": 16467,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40013', 'Haste Potion', '$234', '$264', 'potion', 'normal', 'glass', '3900', '77', '42', '17', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40013,
+        "l1j_npcid": 45136,
+        "l1j_drop_row": {
+          "mobId": "45136",
+          "mob_name": "Arachnevil",
+          "itemId": "40013",
+          "item_name": "Haste Potion",
+          "min": "1",
+          "max": "1",
+          "chance": "50000"
+        },
+        "l1j_drop_ref": "l1jdb:4808"
+      },
+      {
+        "item": {
+          "value": {
+            "id": 7,
+            "token": "$4",
+            "name_ko": "아데나",
+            "grade": 1
+          },
+          "source": "client",
+          "ref": "native-dump:958; drop-pairs:972; drop-pairs:977; drop-pairs:982; drop-pairs:987; drop-pairs:992; data/official/monsters.json official_id=17 rewards; work/official_data/raw/monster/17.json",
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "roll": {
+          "value": {
+            "chance": 1000000,
+            "min": 41,
+            "max": 78
+          },
+          "source": "l1j",
+          "ref": "l1jdb:4815 원문: INSERT INTO `droplist` VALUES ('45136', 'Arachnevil', '40308', 'Adena', '41', '78', '1000000');",
+          "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+        },
+        "mapping": {
+          "classic_kind": "etcitem",
+          "classic_f45": null,
+          "classic_f17": null,
+          "classic_f46": null,
+          "classic_invgfx": 5,
+          "classic_grdgfx": 7,
+          "classic_weight": 0,
+          "candidates": [
+            {
+              "item_id": "40308",
+              "name": "Adena",
+              "unidentified_name_id": "$4",
+              "identified_name_id": "$4",
+              "item_type": "other",
+              "use_type": "none",
+              "material": "gold",
+              "weight": "0",
+              "invgfx": "5",
+              "grdgfx": "7",
+              "itemdesc_id": "0",
+              "stackable": "1",
+              "max_charge_count": "0",
+              "dmg_small": "0",
+              "dmg_large": "0",
+              "min_lvl": "0",
+              "max_lvl": "0",
+              "locx": "0",
+              "locy": "0",
+              "mapid": "0",
+              "bless": "1",
+              "trade": "0",
+              "cant_delete": "0",
+              "can_seal": "0",
+              "delay_id": "0",
+              "delay_time": "0",
+              "delay_effect": "0",
+              "food_volume": "0",
+              "save_at_once": "1",
+              "_line": 16762,
+              "_table": "etcitem",
+              "_raw_sql": "INSERT INTO `etcitem` VALUES ('40308', 'Adena', '$4', '$4', 'other', 'none', 'gold', '0', '5', '7', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');"
+            }
+          ],
+          "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+        },
+        "l1j_item_id": 40308,
+        "l1j_npcid": 45136,
+        "l1j_drop_row": {
+          "mobId": "45136",
+          "mob_name": "Arachnevil",
+          "itemId": "40308",
+          "item_name": "Adena",
+          "min": "41",
+          "max": "78",
+          "chance": "1000000"
+        },
+        "l1j_drop_ref": "l1jdb:4815"
+      }
+    ]
+  },
+  "unresolved": [
+    {
+      "template_id": 249,
+      "item": {
+        "id": 332,
+        "token": "$1036",
+        "name_ko": "동물가죽",
+        "grade": 1
+      },
+      "ref": "native-dump:1217; drop-pairs:4897; data/official/monsters.json official_id=249 rewards; work/official_data/raw/monster/249.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3959 원문: INSERT INTO `droplist` VALUES ('45016', 'Kobold', '40405', 'Fur', '1', '1', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 249,
+      "l1j_npcid": 45016,
+      "item": {
+        "id": 16,
+        "token": "$239",
+        "name_ko": "불투명 물약",
+        "grade": 1
+      },
+      "ref": "native-dump:967; drop-pairs:4887",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": 1000,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 82,
+        "classic_grdgfx": 47,
+        "classic_weight": 15625,
+        "candidates": [
+          {
+            "item_id": "40025",
+            "name": "Blinding Potion",
+            "unidentified_name_id": "$239",
+            "identified_name_id": "$242",
+            "item_type": "potion",
+            "use_type": "normal",
+            "material": "glass",
+            "weight": "15600",
+            "invgfx": "82",
+            "grdgfx": "47",
+            "itemdesc_id": "16",
+            "stackable": "1",
+            "max_charge_count": "0",
+            "dmg_small": "0",
+            "dmg_large": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "locx": "0",
+            "locy": "0",
+            "mapid": "0",
+            "bless": "1",
+            "trade": "0",
+            "cant_delete": "0",
+            "can_seal": "0",
+            "delay_id": "0",
+            "delay_time": "0",
+            "delay_effect": "0",
+            "food_volume": "0",
+            "save_at_once": "0",
+            "_line": 16479,
+            "_table": "etcitem",
+            "_raw_sql": "INSERT INTO `etcitem` VALUES ('40025', 'Blinding Potion', '$239', '$242', 'potion', 'normal', 'glass', '15600', '82', '47', '16', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이템 대응 후보는 있으나 해당 NPC 자신의 호환 droplist 행 없음. 확률·수량 null; 다른 NPC/다른 아이템 확률을 전용하지 않음."
+    },
+    {
+      "template_id": 4,
+      "item": {
+        "id": 118,
+        "token": "$194",
+        "name_ko": "난쟁이족 둥근 방패",
+        "grade": 1
+      },
+      "ref": "native-dump:1053; drop-pairs:142; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 15000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4126 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '20223', 'Dwarvish Round Shield', '1', '1', '15000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 4,
+      "item": {
+        "id": 72,
+        "token": "$97",
+        "name_ko": "난쟁이족 검",
+        "grade": 1
+      },
+      "ref": "native-dump:1015; drop-pairs:152; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 15000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4123 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '26', 'Dwarvish Short Sword', '1', '1', '15000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 4,
+      "item": {
+        "id": 107,
+        "token": "$174",
+        "name_ko": "난쟁이족 망토",
+        "grade": 1
+      },
+      "ref": "native-dump:1045; drop-pairs:162; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 20000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4125 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '20052', 'Dwarvish Cloak', '1', '1', '20000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 4,
+      "item": {
+        "id": 252,
+        "token": "$767",
+        "name_ko": "미스릴",
+        "grade": 1
+      },
+      "ref": "native-dump:1155; drop-pairs:167; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4133 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '40494', 'Pure Mithril', '1', '1', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 4,
+      "item": {
+        "id": 333,
+        "token": "$1037",
+        "name_ko": "철괴",
+        "grade": 1
+      },
+      "ref": "native-dump:1218; drop-pairs:172; data/official/monsters.json official_id=4 rewards; work/official_data/raw/monster/4.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 300000,
+          "min": 1,
+          "max": 3
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4132 원문: INSERT INTO `droplist` VALUES ('45041', 'Dwarf', '40408', 'Lump of Iron', '1', '3', '300000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 2,
+      "item": {
+        "id": 101,
+        "token": "$165",
+        "name_ko": "오크족 고리 갑옷",
+        "grade": 1
+      },
+      "ref": "native-dump:1039; drop-pairs:87; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 25000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4366 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '20135', 'Orcish Ring Mail', '1', '1', '25000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 2,
+      "item": {
+        "id": 97,
+        "token": "$160",
+        "name_ko": "오크족 사슬 갑옷",
+        "grade": 1
+      },
+      "ref": "native-dump:1035; drop-pairs:92; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4367 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '20136', 'Orcish Chain Mail', '1', '1', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 2,
+      "item": {
+        "id": 115,
+        "token": "$189",
+        "name_ko": "우럭하이 방패",
+        "grade": 1
+      },
+      "ref": "native-dump:1051; drop-pairs:102; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4368 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '20237', 'Orcish Shield', '1', '1', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 2,
+      "item": {
+        "id": 115,
+        "token": "$189",
+        "name_ko": "우럭하이 방패",
+        "grade": 2
+      },
+      "ref": "native-dump:1051; drop-pairs:112; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4377 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '220237', 'Orcish Shield', '1', '1', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 2,
+      "item": {
+        "id": 5,
+        "token": "$2",
+        "name_ko": "등잔",
+        "grade": 1
+      },
+      "ref": "native-dump:956; drop-pairs:117; data/official/monsters.json official_id=2 rewards; work/official_data/raw/monster/2.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 25000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4369 원문: INSERT INTO `droplist` VALUES ('45082', 'Orc Fighter', '40001', 'Lamp', '1', '1', '25000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 2,
+      "l1j_npcid": 45082,
+      "item": {
+        "id": 167,
+        "token": "$159",
+        "name_ko": "사슬 갑옷",
+        "grade": 1
+      },
+      "ref": "native-dump:1082; drop-pairs:82",
+      "mapping": {
+        "classic_kind": "armor",
+        "classic_f45": 19,
+        "classic_f17": 2,
+        "classic_f46": null,
+        "classic_invgfx": 1201,
+        "classic_grdgfx": 30052,
+        "classic_weight": 300000,
+        "candidates": [
+          {
+            "item_id": "20125",
+            "name": "Chain Mail",
+            "unidentified_name_id": "$159",
+            "identified_name_id": "$159",
+            "type": "armor",
+            "material": "iron",
+            "weight": "300000",
+            "invgfx": "26",
+            "grdgfx": "3773",
+            "itemdesc_id": "0",
+            "ac": "-5",
+            "safenchant": "4",
+            "use_royal": "1",
+            "use_knight": "1",
+            "use_mage": "0",
+            "use_elf": "1",
+            "use_darkelf": "1",
+            "use_dragonknight": "1",
+            "use_illusionist": "1",
+            "add_str": "0",
+            "add_con": "0",
+            "add_dex": "0",
+            "add_int": "0",
+            "add_wis": "0",
+            "add_cha": "0",
+            "add_hp": "0",
+            "add_mp": "0",
+            "add_hpr": "0",
+            "add_mpr": "0",
+            "add_sp": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "m_def": "0",
+            "haste_item": "0",
+            "damage_reduction": "0",
+            "weight_reduction": "0",
+            "hit_modifier": "0",
+            "dmg_modifier": "0",
+            "bow_hit_modifier": "0",
+            "bow_dmg_modifier": "0",
+            "bless": "1",
+            "trade": "0",
+            "cant_delete": "0",
+            "max_use_time": "0",
+            "defense_water": "0",
+            "defense_wind": "0",
+            "defense_fire": "0",
+            "defense_earth": "0",
+            "regist_stun": "0",
+            "regist_stone": "0",
+            "regist_sleep": "0",
+            "regist_freeze": "0",
+            "regist_sustain": "0",
+            "regist_blind": "0",
+            "grade": "-1",
+            "_line": 2969,
+            "_table": "armor",
+            "_raw_sql": "INSERT INTO `armor` VALUES ('20125', 'Chain Mail', '$159', '$159', 'armor', 'iron', '300000', '26', '3773', '0', '-5', '4', '1', '1', '0', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이콘/바닥 그래픽 불일치 또는 복수 후보여서 item 동일성 미확정."
+    },
+    {
+      "template_id": 2,
+      "l1j_npcid": 45082,
+      "item": {
+        "id": 97,
+        "token": "$160",
+        "name_ko": "오크족 사슬 갑옷",
+        "grade": 2
+      },
+      "ref": "native-dump:1035; drop-pairs:97",
+      "mapping": {
+        "classic_kind": "armor",
+        "classic_f45": 19,
+        "classic_f17": 2,
+        "classic_f46": null,
+        "classic_invgfx": 443,
+        "classic_grdgfx": 3774,
+        "classic_weight": 300000,
+        "candidates": [
+          {
+            "item_id": "220136",
+            "name": "Orcish Chain Mail",
+            "unidentified_name_id": "$160",
+            "identified_name_id": "$160",
+            "type": "armor",
+            "material": "iron",
+            "weight": "300000",
+            "invgfx": "443",
+            "grdgfx": "3774",
+            "itemdesc_id": "0",
+            "ac": "-4",
+            "safenchant": "4",
+            "use_royal": "1",
+            "use_knight": "1",
+            "use_mage": "0",
+            "use_elf": "1",
+            "use_darkelf": "1",
+            "use_dragonknight": "0",
+            "use_illusionist": "0",
+            "add_str": "0",
+            "add_con": "0",
+            "add_dex": "0",
+            "add_int": "0",
+            "add_wis": "0",
+            "add_cha": "0",
+            "add_hp": "0",
+            "add_mp": "0",
+            "add_hpr": "0",
+            "add_mpr": "0",
+            "add_sp": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "m_def": "0",
+            "haste_item": "0",
+            "damage_reduction": "0",
+            "weight_reduction": "0",
+            "hit_modifier": "0",
+            "dmg_modifier": "0",
+            "bow_hit_modifier": "0",
+            "bow_dmg_modifier": "0",
+            "bless": "2",
+            "trade": "0",
+            "cant_delete": "0",
+            "max_use_time": "0",
+            "defense_water": "0",
+            "defense_wind": "0",
+            "defense_fire": "0",
+            "defense_earth": "0",
+            "regist_stun": "0",
+            "regist_stone": "0",
+            "regist_sleep": "0",
+            "regist_freeze": "0",
+            "regist_sustain": "0",
+            "regist_blind": "0",
+            "grade": "-1",
+            "_line": 3460,
+            "_table": "armor",
+            "_raw_sql": "INSERT INTO `armor` VALUES ('220136', 'Orcish Chain Mail', '$160', '$160', 'armor', 'iron', '300000', '443', '3774', '0', '-4', '4', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이템 대응 후보는 있으나 해당 NPC 자신의 호환 droplist 행 없음. 확률·수량 null; 다른 NPC/다른 아이템 확률을 전용하지 않음."
+    },
+    {
+      "template_id": 27,
+      "item": {
+        "id": 604,
+        "token": "$1863",
+        "name_ko": "마법서 (다크니스)",
+        "grade": 1
+      },
+      "ref": "native-dump:1373; drop-pairs:1352; data/official/monsters.json official_id=27 rewards; work/official_data/raw/monster/27.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 10000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4235 원문: INSERT INTO `droplist` VALUES ('45065', 'Zombie', '40185', 'Spellbook(Darkness)', '1', '1', '10000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 27,
+      "item": {
+        "id": 197,
+        "token": "$535",
+        "name_ko": "마법서 (뱀파이어릭 터치)",
+        "grade": 1
+      },
+      "ref": "native-dump:1112; drop-pairs:1357; data/official/monsters.json official_id=27 rewards; work/official_data/raw/monster/27.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 10000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4234 원문: INSERT INTO `droplist` VALUES ('45065', 'Zombie', '40173', 'Spellbook(VampiricTouch)', '1', '1', '10000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 29,
+      "item": {
+        "id": 195,
+        "token": "$533",
+        "name_ko": "마법서 (인챈트 덱스터리티)",
+        "grade": 1
+      },
+      "ref": "native-dump:1110; drop-pairs:1447; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 8000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4545 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '40171', 'Spellbook(EnchantDex)', '1', '1', '8000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 29,
+      "item": {
+        "id": 111,
+        "token": "$182",
+        "name_ko": "마법 망토",
+        "grade": 1
+      },
+      "ref": "native-dump:1048; drop-pairs:1457; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 9000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4540 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '20056', 'Cloak of Magic Resistance', '1', '1', '9000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 29,
+      "item": {
+        "id": 111,
+        "token": "$182",
+        "name_ko": "마법 망토",
+        "grade": 2
+      },
+      "ref": "native-dump:1048; drop-pairs:1467; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 40000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4555 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '220056', 'Cloak of Magic Resistance', '1', '1', '40000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 29,
+      "item": {
+        "id": 67,
+        "token": "$92",
+        "name_ko": "언월도",
+        "grade": 1
+      },
+      "ref": "native-dump:1010; drop-pairs:1482; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 20000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4538 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '27', 'Scimitar', '1', '1', '20000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 29,
+      "item": {
+        "id": 336,
+        "token": "$1040",
+        "name_ko": "뼈조각",
+        "grade": 1
+      },
+      "ref": "native-dump:1221; drop-pairs:1487; data/official/monsters.json official_id=29 rewards; work/official_data/raw/monster/29.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4549 원문: INSERT INTO `droplist` VALUES ('45107', 'Skeleton', '40407', 'Bone Piece', '1', '1', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 29,
+      "l1j_npcid": 45107,
+      "item": {
+        "id": 166,
+        "token": "$508",
+        "name_ko": "마력의 돌",
+        "grade": 1
+      },
+      "ref": "native-dump:1081; drop-pairs:1452",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": null,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 235,
+        "classic_grdgfx": 773,
+        "classic_weight": 2000,
+        "candidates": [
+          {
+            "item_id": "40318",
+            "name": "Magic Gem",
+            "unidentified_name_id": "$508",
+            "identified_name_id": "$508",
+            "item_type": "material",
+            "use_type": "none",
+            "material": "gemstone",
+            "weight": "2000",
+            "invgfx": "235",
+            "grdgfx": "773",
+            "itemdesc_id": "0",
+            "stackable": "1",
+            "max_charge_count": "0",
+            "dmg_small": "0",
+            "dmg_large": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "locx": "0",
+            "locy": "0",
+            "mapid": "0",
+            "bless": "1",
+            "trade": "0",
+            "cant_delete": "0",
+            "can_seal": "0",
+            "delay_id": "0",
+            "delay_time": "0",
+            "delay_effect": "0",
+            "food_volume": "0",
+            "save_at_once": "0",
+            "_line": 16772,
+            "_table": "etcitem",
+            "_raw_sql": "INSERT INTO `etcitem` VALUES ('40318', 'Magic Gem', '$508', '$508', 'material', 'none', 'gemstone', '2000', '235', '773', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이템 대응 후보는 있으나 해당 NPC 자신의 호환 droplist 행 없음. 확률·수량 null; 다른 NPC/다른 아이템 확률을 전용하지 않음."
+    },
+    {
+      "template_id": 29,
+      "l1j_npcid": 45107,
+      "item": {
+        "id": 495,
+        "token": "$15699",
+        "name_ko": "강화 초록 물약",
+        "grade": 1
+      },
+      "ref": "native-dump:1299; drop-pairs:1472",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": 1000,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 621,
+        "classic_grdgfx": 42,
+        "classic_weight": 14063,
+        "candidates": [],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "토큰·종류·등급으로 대응 아이템 후보를 확인할 수 없음."
+    },
+    {
+      "template_id": 29,
+      "l1j_npcid": 45107,
+      "item": {
+        "id": 67,
+        "token": "$92",
+        "name_ko": "언월도",
+        "grade": 2
+      },
+      "ref": "native-dump:1010; drop-pairs:1477",
+      "mapping": {
+        "classic_kind": "weapon",
+        "classic_f45": 1,
+        "classic_f17": null,
+        "classic_f46": 0,
+        "classic_invgfx": 90,
+        "classic_grdgfx": 76,
+        "classic_weight": 40000,
+        "candidates": [
+          {
+            "item_id": "200027",
+            "name": "Scimitar",
+            "unidentified_name_id": "$92",
+            "identified_name_id": "$92",
+            "type": "sword",
+            "material": "iron",
+            "weight": "40000",
+            "invgfx": "90",
+            "grdgfx": "76",
+            "itemdesc_id": "0",
+            "dmg_small": "8",
+            "dmg_large": "8",
+            "range": "1",
+            "safenchant": "6",
+            "use_royal": "1",
+            "use_knight": "1",
+            "use_mage": "1",
+            "use_elf": "1",
+            "use_darkelf": "1",
+            "use_dragonknight": "1",
+            "use_illusionist": "0",
+            "hitmodifier": "0",
+            "dmgmodifier": "0",
+            "add_str": "0",
+            "add_con": "0",
+            "add_dex": "0",
+            "add_int": "0",
+            "add_wis": "0",
+            "add_cha": "0",
+            "add_hp": "0",
+            "add_mp": "0",
+            "add_hpr": "0",
+            "add_mpr": "0",
+            "add_sp": "0",
+            "m_def": "0",
+            "haste_item": "0",
+            "double_dmg_chance": "0",
+            "magicdmgmodifier": "0",
+            "canbedmg": "1",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "bless": "2",
+            "trade": "0",
+            "cant_delete": "0",
+            "max_use_time": "0",
+            "_line": 64019,
+            "_table": "weapon",
+            "_raw_sql": "INSERT INTO `weapon` VALUES ('200027', 'Scimitar', '$92', '$92', 'sword', 'iron', '40000', '90', '76', '0', '8', '8', '1', '6', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '2', '0', '0', '0');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이템 대응 후보는 있으나 해당 NPC 자신의 호환 droplist 행 없음. 확률·수량 null; 다른 NPC/다른 아이템 확률을 전용하지 않음."
+    },
+    {
+      "template_id": 29,
+      "l1j_npcid": 45107,
+      "item": {
+        "id": 647,
+        "token": "$1919",
+        "name_ko": "해골의 두개골",
+        "grade": 1
+      },
+      "ref": "native-dump:1396; drop-pairs:1507; drop-pairs:1542",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": null,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 921,
+        "classic_grdgfx": 150,
+        "classic_weight": 0,
+        "candidates": [
+          {
+            "item_id": "40605",
+            "name": "Skeleton Skull",
+            "unidentified_name_id": "$1919",
+            "identified_name_id": "$1919",
+            "item_type": "questitem",
+            "use_type": "normal",
+            "material": "bone",
+            "weight": "3000",
+            "invgfx": "921",
+            "grdgfx": "3963",
+            "itemdesc_id": "0",
+            "stackable": "0",
+            "max_charge_count": "0",
+            "dmg_small": "0",
+            "dmg_large": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "locx": "0",
+            "locy": "0",
+            "mapid": "0",
+            "bless": "1",
+            "trade": "1",
+            "cant_delete": "0",
+            "can_seal": "0",
+            "delay_id": "0",
+            "delay_time": "0",
+            "delay_effect": "0",
+            "food_volume": "0",
+            "save_at_once": "1",
+            "_line": 17059,
+            "_table": "etcitem",
+            "_raw_sql": "INSERT INTO `etcitem` VALUES ('40605', 'Skeleton Skull', '$1919', '$1919', 'questitem', 'normal', 'bone', '3000', '921', '3963', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '1');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이콘/바닥 그래픽 불일치 또는 복수 후보여서 item 동일성 미확정."
+    },
+    {
+      "template_id": 29,
+      "l1j_npcid": 45107,
+      "item": {
+        "id": 694,
+        "token": "$2030",
+        "name_ko": "언데드의 열쇠",
+        "grade": 1
+      },
+      "ref": "native-dump:1428; drop-pairs:1512; drop-pairs:1537",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": null,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 59,
+        "classic_grdgfx": 19,
+        "classic_weight": 0,
+        "candidates": [
+          {
+            "item_id": "40581",
+            "name": "Undead Key",
+            "unidentified_name_id": "$2030",
+            "identified_name_id": "$2030",
+            "item_type": "questitem",
+            "use_type": "normal",
+            "material": "iron",
+            "weight": "3000",
+            "invgfx": "59",
+            "grdgfx": "19",
+            "itemdesc_id": "0",
+            "stackable": "0",
+            "max_charge_count": "0",
+            "dmg_small": "0",
+            "dmg_large": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "locx": "0",
+            "locy": "0",
+            "mapid": "0",
+            "bless": "1",
+            "trade": "1",
+            "cant_delete": "0",
+            "can_seal": "0",
+            "delay_id": "0",
+            "delay_time": "0",
+            "delay_effect": "0",
+            "food_volume": "0",
+            "save_at_once": "1",
+            "_line": 17035,
+            "_table": "etcitem",
+            "_raw_sql": "INSERT INTO `etcitem` VALUES ('40581', 'Undead Key', '$2030', '$2030', 'questitem', 'normal', 'iron', '3000', '59', '19', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '1');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이템 대응 후보는 있으나 해당 NPC 자신의 호환 droplist 행 없음. 확률·수량 null; 다른 NPC/다른 아이템 확률을 전용하지 않음."
+    },
+    {
+      "template_id": 5,
+      "item": {
+        "id": 246,
+        "token": "$761",
+        "name_ko": "미스릴 원석",
+        "grade": 1
+      },
+      "ref": "native-dump:1149; drop-pairs:207; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 3
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4715 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '40496', 'Rough Mithril', '1', '3', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 5,
+      "item": {
+        "id": 492,
+        "token": "$232",
+        "name_ko": "파란 물약",
+        "grade": 1
+      },
+      "ref": "native-dump:1298; drop-pairs:242; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 10000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4704 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '40015', 'Potion of Mana', '1', '1', '10000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 5,
+      "item": {
+        "id": 677,
+        "token": "$1961",
+        "name_ko": "생명의 비밀",
+        "grade": 1
+      },
+      "ref": "native-dump:1421; drop-pairs:262; drop-pairs:292; data/official/monsters.json official_id=5 rewards; work/official_data/raw/monster/5.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4716 원문: INSERT INTO `droplist` VALUES ('45126', 'Stone Golem', '40564', 'Secret of Life', '1', '1', '50000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 5,
+      "l1j_npcid": 45126,
+      "item": {
+        "id": 176,
+        "token": "$15776",
+        "name_ko": "최고급 루비",
+        "grade": 1
+      },
+      "ref": "native-dump:1091; drop-pairs:197",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": null,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 244,
+        "classic_grdgfx": 774,
+        "classic_weight": 39,
+        "candidates": [],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "토큰·종류·등급으로 대응 아이템 후보를 확인할 수 없음."
+    },
+    {
+      "template_id": 5,
+      "l1j_npcid": 45126,
+      "item": {
+        "id": 520,
+        "token": "$1586",
+        "name_ko": "마법서 (어스 재일)",
+        "grade": 1
+      },
+      "ref": "native-dump:1323; drop-pairs:202",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": 1014,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 249,
+        "classic_grdgfx": 776,
+        "classic_weight": 7000,
+        "candidates": [
+          {
+            "item_id": "40175",
+            "name": "Spellbook(EarthJail)",
+            "unidentified_name_id": "$1586",
+            "identified_name_id": "$1586",
+            "item_type": "spellbook",
+            "use_type": "normal",
+            "material": "paper",
+            "weight": "7000",
+            "invgfx": "249",
+            "grdgfx": "776",
+            "itemdesc_id": "0",
+            "stackable": "0",
+            "max_charge_count": "0",
+            "dmg_small": "0",
+            "dmg_large": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "locx": "0",
+            "locy": "0",
+            "mapid": "0",
+            "bless": "1",
+            "trade": "0",
+            "cant_delete": "0",
+            "can_seal": "0",
+            "delay_id": "3",
+            "delay_time": "3000",
+            "delay_effect": "0",
+            "food_volume": "0",
+            "save_at_once": "1",
+            "_line": 16629,
+            "_table": "etcitem",
+            "_raw_sql": "INSERT INTO `etcitem` VALUES ('40175', 'Spellbook(EarthJail)', '$1586', '$1586', 'spellbook', 'normal', 'paper', '7000', '249', '776', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '3', '3000', '0', '0', '1');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이템 대응 후보는 있으나 해당 NPC 자신의 호환 droplist 행 없음. 확률·수량 null; 다른 NPC/다른 아이템 확률을 전용하지 않음."
+    },
+    {
+      "template_id": 5,
+      "l1j_npcid": 45126,
+      "item": {
+        "id": 21,
+        "token": "$263",
+        "name_ko": "흑단 막대",
+        "grade": 1
+      },
+      "ref": "native-dump:971; drop-pairs:212; drop-pairs:217; drop-pairs:222",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": 1007,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 118,
+        "classic_grdgfx": 28,
+        "classic_weight": 55,
+        "candidates": [],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "토큰·종류·등급으로 대응 아이템 후보를 확인할 수 없음."
+    },
+    {
+      "template_id": 5,
+      "l1j_npcid": 45126,
+      "item": {
+        "id": 166,
+        "token": "$508",
+        "name_ko": "마력의 돌",
+        "grade": 1
+      },
+      "ref": "native-dump:1081; drop-pairs:227",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": null,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 235,
+        "classic_grdgfx": 773,
+        "classic_weight": 2000,
+        "candidates": [
+          {
+            "item_id": "40318",
+            "name": "Magic Gem",
+            "unidentified_name_id": "$508",
+            "identified_name_id": "$508",
+            "item_type": "material",
+            "use_type": "none",
+            "material": "gemstone",
+            "weight": "2000",
+            "invgfx": "235",
+            "grdgfx": "773",
+            "itemdesc_id": "0",
+            "stackable": "1",
+            "max_charge_count": "0",
+            "dmg_small": "0",
+            "dmg_large": "0",
+            "min_lvl": "0",
+            "max_lvl": "0",
+            "locx": "0",
+            "locy": "0",
+            "mapid": "0",
+            "bless": "1",
+            "trade": "0",
+            "cant_delete": "0",
+            "can_seal": "0",
+            "delay_id": "0",
+            "delay_time": "0",
+            "delay_effect": "0",
+            "food_volume": "0",
+            "save_at_once": "0",
+            "_line": 16772,
+            "_table": "etcitem",
+            "_raw_sql": "INSERT INTO `etcitem` VALUES ('40318', 'Magic Gem', '$508', '$508', 'material', 'none', 'gemstone', '2000', '235', '773', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0');"
+          }
+        ],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "아이템 대응 후보는 있으나 해당 NPC 자신의 호환 droplist 행 없음. 확률·수량 null; 다른 NPC/다른 아이템 확률을 전용하지 않음."
+    },
+    {
+      "template_id": 17,
+      "item": {
+        "id": 208,
+        "token": "$546",
+        "name_ko": "마법서 (이럽션)",
+        "grade": 1
+      },
+      "ref": "native-dump:1123; drop-pairs:912; data/official/monsters.json official_id=17 rewards; work/official_data/raw/monster/17.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 9000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4811 원문: INSERT INTO `droplist` VALUES ('45136', 'Arachnevil', '40190', 'Spellbook(Eruption)', '1', '1', '9000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 17,
+      "item": {
+        "id": 19,
+        "token": "$28",
+        "name_ko": "소나무 막대",
+        "grade": 1
+      },
+      "ref": "native-dump:969; drop-pairs:917; drop-pairs:922; drop-pairs:927; data/official/monsters.json official_id=17 rewards; work/official_data/raw/monster/17.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 8000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4806 원문: INSERT INTO `droplist` VALUES ('45136', 'Arachnevil', '40006', 'Pine Wand', '1', '1', '8000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 17,
+      "item": {
+        "id": 198,
+        "token": "$536",
+        "name_ko": "마법서 (슬로우)",
+        "grade": 1
+      },
+      "ref": "native-dump:1113; drop-pairs:932; data/official/monsters.json official_id=17 rewards; work/official_data/raw/monster/17.json",
+      "reason": "클라이언트/공식 목록 및 동일 NPC L1J roll 대응은 있으나 현재 m1/items 미등록. 원구성 보존, 지급/줍기/소비 불명확 아이템을 활성 roll에서 제외.",
+      "deferred_roll": {
+        "value": {
+          "chance": 12000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4810 원문: INSERT INTO `droplist` VALUES ('45136', 'Arachnevil', '40174', 'Spellbook(Slow)', '1', '1', '12000');",
+        "note": "해당 대응 NPC 자신의 droplist 및 실제 대응 item 행만 사용한 로컬 참고 정책. 원본 확률·수량 확정값이 아님."
+      }
+    },
+    {
+      "template_id": 17,
+      "l1j_npcid": 45136,
+      "item": {
+        "id": 21,
+        "token": "$263",
+        "name_ko": "흑단 막대",
+        "grade": 1
+      },
+      "ref": "native-dump:971; drop-pairs:937; drop-pairs:942; drop-pairs:947",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": 1007,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 118,
+        "classic_grdgfx": 28,
+        "classic_weight": 55,
+        "candidates": [],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "토큰·종류·등급으로 대응 아이템 후보를 확인할 수 없음."
+    },
+    {
+      "template_id": 17,
+      "l1j_npcid": 45136,
+      "item": {
+        "id": 495,
+        "token": "$15699",
+        "name_ko": "강화 초록 물약",
+        "grade": 1
+      },
+      "ref": "native-dump:1299; drop-pairs:952",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": 1000,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 621,
+        "classic_grdgfx": 42,
+        "classic_weight": 14063,
+        "candidates": [],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "토큰·종류·등급으로 대응 아이템 후보를 확인할 수 없음."
+    },
+    {
+      "template_id": 17,
+      "l1j_npcid": 45136,
+      "item": {
+        "id": 121,
+        "token": "$311",
+        "name_ko": "셸로브 발톱",
+        "grade": 1
+      },
+      "ref": "native-dump:1056; drop-pairs:967; drop-pairs:997",
+      "mapping": {
+        "classic_kind": "etcitem",
+        "classic_f45": null,
+        "classic_f17": null,
+        "classic_f46": null,
+        "classic_invgfx": 139,
+        "classic_grdgfx": 150,
+        "classic_weight": 0,
+        "candidates": [],
+        "note": "이름토큰·종류·등급/bless·아이콘/바닥 그래픽으로 대응. 무게 차이와 실제 영문명/세부 type은 원아이템 행에 보존하며 미확정 필드의 의미를 임의 확정하지 않음."
+      },
+      "roll": null,
+      "reason": "토큰·종류·등급으로 대응 아이템 후보를 확인할 수 없음."
+    },
+    {
+      "template_id": 0,
+      "item": {
+        "id": 74,
+        "token": "$99",
+        "name_ko": "오크족 검",
+        "grade": 1
+      },
+      "ref": "native-dump:1017; drop-pairs:12; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 74,
+          "token": "$99",
+          "name_ko": "오크족 검",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1017; drop-pairs:12; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3933 weapon 21 Orcish Short Sword $99 bless1 (:63722)"
+      }
+    },
+    {
+      "template_id": 0,
+      "item": {
+        "id": 101,
+        "token": "$165",
+        "name_ko": "오크족 고리 갑옷",
+        "grade": 1
+      },
+      "ref": "native-dump:1039; drop-pairs:2; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 101,
+          "token": "$165",
+          "name_ko": "오크족 고리 갑옷",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1039; drop-pairs:2; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3936 armor 20135 $165 bless1 (:2979)"
+      }
+    },
+    {
+      "template_id": 0,
+      "item": {
+        "id": 332,
+        "token": "$1036",
+        "name_ko": "동물가죽",
+        "grade": 1
+      },
+      "ref": "native-dump:1217; drop-pairs:17; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 332,
+          "token": "$1036",
+          "name_ko": "동물가죽",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1217; drop-pairs:17; official-orc; data/official/monsters.json official_id=0 rewards (work/official_data/raw/monster/0.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3943 etcitem 40405 Fur $1036 (:16859)"
+      }
+    },
+    {
+      "template_id": 245,
+      "item": {
+        "id": 35,
+        "token": "$66",
+        "name_ko": "넓은 검",
+        "grade": 1
+      },
+      "ref": "native-dump:984; drop-pairs:4602; official-245; data/official/monsters.json official_id=245 rewards (work/official_data/raw/monster/245.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 35,
+          "token": "$66",
+          "name_ko": "넓은 검",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:984; drop-pairs:4602; official-245; data/official/monsters.json official_id=245 rewards (work/official_data/raw/monster/245.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3926 weapon 23 Broad Sword $66 bless1 (:63724)"
+      }
+    },
+    {
+      "template_id": 1,
+      "item": {
+        "id": 34,
+        "token": "$65",
+        "name_ko": "오크족 활",
+        "grade": 1
+      },
+      "ref": "native-dump:983; drop-pairs:57; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 34,
+          "token": "$65",
+          "name_ko": "오크족 활",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:983; drop-pairs:57; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3972 weapon 171 $65 bless1 (:63872)"
+      }
+    },
+    {
+      "template_id": 1,
+      "item": {
+        "id": 97,
+        "token": "$160",
+        "name_ko": "오크족 사슬 갑옷",
+        "grade": 1
+      },
+      "ref": "native-dump:1035; drop-pairs:47; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 97,
+          "token": "$160",
+          "name_ko": "오크족 사슬 갑옷",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1035; drop-pairs:47; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3976 armor 20136 $160 bless1 (:2980)"
+      }
+    },
+    {
+      "template_id": 1,
+      "item": {
+        "id": 101,
+        "token": "$165",
+        "name_ko": "오크족 고리 갑옷",
+        "grade": 1
+      },
+      "ref": "native-dump:1039; drop-pairs:42; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 101,
+          "token": "$165",
+          "name_ko": "오크족 고리 갑옷",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1039; drop-pairs:42; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3975 armor 20135 $165 bless1"
+      }
+    },
+    {
+      "template_id": 1,
+      "item": {
+        "id": 332,
+        "token": "$1036",
+        "name_ko": "동물가죽",
+        "grade": 1
+      },
+      "ref": "native-dump:1217; drop-pairs:67; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 332,
+          "token": "$1036",
+          "name_ko": "동물가죽",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1217; drop-pairs:67; data/official/monsters.json official_id=1 rewards (work/official_data/raw/monster/1.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 20000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:3987 etcitem 40405 $1036"
+      }
+    },
+    {
+      "template_id": 8,
+      "item": {
+        "id": 195,
+        "token": "$533",
+        "name_ko": "마법서 (인챈트 덱스터리티)",
+        "grade": 1
+      },
+      "ref": "native-dump:1110; drop-pairs:492; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 195,
+          "token": "$533",
+          "name_ko": "마법서 (인챈트 덱스터리티)",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1110; drop-pairs:492; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4009 etcitem 40171 $533 (:16625)"
+      }
+    },
+    {
+      "template_id": 8,
+      "item": {
+        "id": 197,
+        "token": "$535",
+        "name_ko": "마법서 (뱀파이어릭 터치)",
+        "grade": 1
+      },
+      "ref": "native-dump:1112; drop-pairs:497; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 197,
+          "token": "$535",
+          "name_ko": "마법서 (뱀파이어릭 터치)",
+          "grade": 1
+        },
+        "source": "client",
+        "ref": "native-dump:1112; drop-pairs:497; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4010 etcitem 40173 $535 (:16627)"
+      }
+    },
+    {
+      "template_id": 8,
+      "item": {
+        "id": 96,
+        "token": "$159",
+        "name_ko": "사슬 갑옷",
+        "grade": 2
+      },
+      "ref": "native-dump:1034; drop-pairs:507; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)",
+      "reason": "기존 M1 원roll 보존. 현재 m1/items 미등록이므로 지급·줍기·소비 연결 전까지 활성 roll에서 제외. 원item/roll/source/ref는 deferred_item/deferred_roll에 보존.",
+      "deferred_item": {
+        "value": {
+          "id": 96,
+          "token": "$159",
+          "name_ko": "사슬 갑옷",
+          "grade": 2
+        },
+        "source": "client",
+        "ref": "native-dump:1034; drop-pairs:507; data/official/monsters.json official_id=8 rewards (work/official_data/raw/monster/8.json)"
+      },
+      "deferred_roll": {
+        "value": {
+          "chance": 50000,
+          "min": 1,
+          "max": 1
+        },
+        "source": "l1j",
+        "ref": "l1jdb:4017 armor 220125 $159 bless2 (:3458)"
+      }
+    }
+  ],
+  "l1j_only_excluded": [
+    {
+      "template_id": 0,
+      "l1j_items": [
+        20072,
+        40005,
+        40006,
+        40031,
+        40056,
+        40088,
+        40494,
+        40496,
+        40899,
+        90010,
+        200001,
+        220034,
+        220135
+      ],
+      "ref": "l1jdb:3935-3950",
+      "reason": "클라이언트·공식 오크 목록에 없음(저주 변형 포함)"
+    },
+    {
+      "template_id": 245,
+      "l1j_items": [
+        40405,
+        40899,
+        90010
+      ],
+      "ref": "l1jdb:3929-3931",
+      "reason": "클라이언트·공식 고블린 목록에 없음. 40010은 classic14 빨간 물약 대응으로 drops에 포함(토큰·무게 차이는 해당 행 보존)"
+    },
+    {
+      "template_id": 1,
+      "l1j_items": [
+        40005,
+        40010,
+        40017,
+        40056,
+        40088,
+        40234,
+        40240,
+        40260,
+        40265,
+        40743,
+        40744,
+        200171,
+        220135,
+        220136,
+        240010
+      ],
+      "ref": "l1jdb:3977-3993",
+      "reason": "클라이언트 오크 궁수 목록에 없음"
+    },
+    {
+      "template_id": 8,
+      "l1j_items": [
+        20205,
+        40025,
+        40031,
+        40056,
+        40265,
+        40267,
+        40274,
+        40307
+      ],
+      "ref": "l1jdb:4003-4014",
+      "reason": "클라이언트 늑대인간 목록에 없음"
+    }
+  ]
+}

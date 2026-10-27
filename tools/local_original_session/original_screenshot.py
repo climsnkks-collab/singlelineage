@@ -20,6 +20,8 @@ import re
 import struct
 import threading
 import time
+import math
+from dataclasses import dataclass
 
 from tools.local_original_session import commands, manual_move_commands as m, observe
 from tools.local_original_session.item_equipment_ui import ItemEquipmentUIObserver, _WINDOW
@@ -31,6 +33,7 @@ RESULT_V2='own-original-screenshot-result-v2'
 RESULT_V3='own-original-screenshot-result-v3'
 RESULT='own-original-screenshot-result-v4'
 RESULT_V5='own-original-screenshot-result-v5'
+RESULT_V6='own-original-screenshot-result-v6'
 COMMAND='OriginalScreenshot'
 MAX_FILE=64*1024*1024
 MAX_FILES=256
@@ -164,9 +167,94 @@ def _valid_protected(value):
     return True
 
 
+@dataclass(frozen=True)
+class CaptureGeometry:
+    hwnd: int
+    pid: int
+    ui_thread: int
+    window_dpi: int
+    thread_awareness: int
+    window_awareness: int
+    awareness_equal: bool
+    sample_tick_ms: int
+    raw_crop_bits: tuple
+    crop: tuple
+    client_rect: tuple
+    read_size: tuple
+    read_fbo: int
+    read_buffer: int
+    pbo: int
+    row_length: int
+    skip_rows: int
+    skip_pixels: int
+    pack_alignment: int
+
+@dataclass(frozen=True)
+class CaptureObservation:
+    pid: int
+    birth: int
+    candidate_sha256: str
+    sequence: int
+    image_path: str
+    image_sha256: str
+    width: int
+    height: int
+    file_identity: tuple
+    geometry: CaptureGeometry
+    relation: str = 'GL_CLIENT_CORRESPONDENCE_UNESTABLISHED'
+
+def _valid_capture_context(value, pid):
+    keys=set(CaptureGeometry.__dataclass_fields__)
+    if type(value) is not dict or set(value)!=keys:return False
+    def integer(x,low,high):return type(x) is int and low<=x<=high
+    if type(value['awareness_equal']) is not bool:return False
+    for key in keys-{'raw_crop_bits','crop','client_rect','read_size','awareness_equal'}:
+        low,high=(0,0x7fffffff)
+        if key in ('hwnd','sample_tick_ms'):low,high=(1 if key=='hwnd' else 0,0xffffffffffffffff)
+        elif key in ('pid','ui_thread','window_dpi'):low,high=(1,0xffffffff)
+        elif key in ('thread_awareness','window_awareness'):low,high=(0,2)
+        if not integer(value[key],low,high):return False
+    for key,count,low,high in (('raw_crop_bits',4,0,0xffffffff),('crop',4,0,0x7fffffff),
+                               ('client_rect',4,-0x80000000,0x7fffffff),('read_size',2,1,0x7fffffff)):
+        row=value[key]
+        if type(row) is not list or len(row)!=count or not all(integer(x,low,high) for x in row):return False
+    floats=struct.unpack('<ffff',struct.pack('<IIII',*value['raw_crop_bits']))
+    if not all(math.isfinite(x) and -2147483648<=x<2147483648 for x in floats):return False
+    if [int(x) for x in floats]!=value['crop']:return False
+    x,y,w,h=value['crop'];left,top,right,bottom=value['client_rect'];rw,rh=value['read_size']
+    return (value['pid']==pid and left==top==0 and right>0 and bottom>0
+            and w>0 and h>0 and w*h<=MAX_PIXELS and x+w<=rw and y+h<=rh
+            and value['read_buffer']>0 and value['pbo']==0 and value['skip_rows']==value['skip_pixels']==0
+            and value['row_length'] in (0,w) and value['pack_alignment'] in (1,2,4,8)
+            and (value['read_fbo']!=0 or (rw,rh)==(right-left,bottom-top)))
+
+def _capture_geometry(value):
+    return CaptureGeometry(**{k:tuple(v) if type(v) is list else v for k,v in value.items()})
+
+def _context_for_pending(row,pending):
+    expected={k:v for k,v in pending['request'].items() if k not in ('expected_base','expected_path')}
+    need(_valid_native_reply(row,expected),'SCREENSHOT_REPLY_IDENTITY_OR_TYPES')
+    if row['schema']!=RESULT_V6:return None
+    need(row['status']=='DIRECT_PNG_RETURNED','SCREENSHOT_CONTEXT_NOT_COMPLETE')
+    value=_capture_geometry(row['capture_context'])
+    need(value.hwnd==pending['window'] and value.ui_thread==pending['ui_thread'],
+         'SCREENSHOT_CONTEXT_WINDOW_CHANGED')
+    need(value.crop[2:]==pending['dimensions'],'SCREENSHOT_CONTEXT_DIMENSIONS_CHANGED')
+    return value
+
+def _detach_capture(context,request,image):
+    need(context.crop[2:]==(image['width'],image['height']),'SCREENSHOT_CONTEXT_PNG_MISMATCH')
+    return CaptureObservation(request['pid'],request['birth'],request['candidate_sha256'],request['seq'],
+        image['image_path'],image['image_sha256'],image['width'],image['height'],tuple(image['file_identity']),context)
+
 def _valid_native_reply(row,request_echo):
     if type(row) is not dict or type(request_echo) is not dict:return False
     schema=row.get('schema')
+    if schema==RESULT_V6:
+        if set(row)!=(set(request_echo)|{'schema','status','reason','getter_returned','invoked','normal_returned','cleanup_returned','async_completion','png_verified','getter_gate','protected_dispatch','direct_capture','direct_stage','capture_context'}):return False
+        legacy=dict(row);context=legacy.pop('capture_context');legacy['schema']=RESULT_V5
+        if not _valid_native_reply(legacy,request_echo):return False
+        return (_valid_capture_context(context,request_echo['pid']) if row['status']=='DIRECT_PNG_RETURNED' else context is None)
     if schema not in (RESULT_V2,RESULT_V3,RESULT,RESULT_V5):return False
     expected=dict(request_echo,schema=schema)
     flags={'getter_returned','invoked','normal_returned','cleanup_returned'}
@@ -415,12 +503,14 @@ def _base_and_dimensions(reader,current):
 
 
 class OriginalScreenshotObserver(ItemEquipmentUIObserver):
-    def __init__(self,manual):
-        super().__init__(manual)
+    def __init__(self,manual,*,collection_policy=None):
+        super().__init__(manual,collection_policy=collection_policy)
         self.last_result=_empty();self._attempted=False;self._files=None
         self._native_complete=False;self._last_collect_ns=None;self._deadline=None
+        self._native_context=None;self._capture_observation=None
 
     def _unknown(self,reason,*,terminal=False):
+        self._capture_observation=None;self._native_context=None
         self._terminal|=terminal;self._requested=False
         self.last_result.update(status='UNKNOWN',reason=reason,cleanup_required=terminal)
         if self._native_complete or self._pending is None:
@@ -440,6 +530,10 @@ class OriginalScreenshotObserver(ItemEquipmentUIObserver):
 
     def observation(self):
         return dict(self.last_result)
+
+    def capture_observation(self):
+        """Detached capture-time measurements only, never current point/owner authority."""
+        return self._capture_observation
 
     async def sample(self):
         c,manual=self.consumer,self.manual
@@ -476,7 +570,8 @@ class OriginalScreenshotObserver(ItemEquipmentUIObserver):
                 final,after=self._current();need(self._same(life,after) and _WINDOW(c,final)==hwnd,'SCREENSHOT_PREPOST_CHANGED')
                 self._files.ready_to_post();need(time.monotonic_ns()<self._deadline,'SCREENSHOT_PREPOST_DEADLINE')
                 self._life=life;c._readonly_pending=self
-                self._pending=dict(request=request,path=result,life=life,dimensions=dimensions,wall=started_wall)
+                self._pending=dict(request=request,path=result,life=life,dimensions=dimensions,wall=started_wall,
+                    window=hwnd,ui_thread=c.reader.owner.child.tid)
                 self.last_result=_empty('SCREENSHOT_PENDING');self.last_result.update(native_sequence=seq,
                     backup_directory=str(self._files.backup),existing_files_preserved=True)
                 owner=c.reader.owner;desktop=getattr(owner,'private_desktop',None)
@@ -521,8 +616,10 @@ class OriginalScreenshotObserver(ItemEquipmentUIObserver):
                                         direct_capture=row.get('direct_capture',False),
                                         direct_stage=row.get('direct_stage'))
                 if row['status']=='DIRECT_PNG_RETURNED':
-                    need(row['schema']==RESULT_V5 and row['direct_stage']==7,
+                    need(row['schema'] in (RESULT_V5,RESULT_V6) and row['direct_stage']==7,
                          'SCREENSHOT_DIRECT_REPLY_STAGE')
+                    if row['schema']==RESULT_V6:
+                        self._native_context=_context_for_pending(row,pending)
                     self._native_complete=True
                 elif row['status']=='DISPATCH_RETURNED':
                     need(row['schema']==RESULT and row['protected_dispatch'] is not None,
@@ -563,6 +660,8 @@ class OriginalScreenshotObserver(ItemEquipmentUIObserver):
                 raise
             if image is None:return self.observation()
             need(time.monotonic_ns()<self._deadline,'SCREENSHOT_PNG_DECODE_DEADLINE')
+            if self._native_context is not None:
+                self._capture_observation=_detach_capture(self._native_context,pending['request'],image)
             self.last_result.update(image,status='OBSERVED',reason=None,png_verified=True,
                 async_completion='CLOSED_STABLE_FRESH_PNG',cleanup_required=False)
             self._pending=None

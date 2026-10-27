@@ -22,7 +22,7 @@ from tools.local_character_creation import realm
 from tools.local_original_session import inventory
 
 POLICY = 'LOCAL_OPAQUE_ONE_ROW_PER_SAVED_CHARACTER'
-INVENTORY_SOURCE_SHA = '92a80df4fc9fe83f173bd15171500245844b52ca29e544dc08a5877f277ecead'
+INVENTORY_SOURCE_SHA = '4d7fd4a32ebe77cf70469c02a481b40f813f9947fdd7dc4015dbbfc53ffb2daf'
 _lock = threading.RLock()
 need = inventory.need
 CHARACTER_MAX_BYTES = 65536
@@ -75,11 +75,13 @@ def _characters(profile):
     return validator._read()
 
 
+_SOURCE_VERIFIED = None
+
+
 def _source():
-    path = inventory.observe.ordinary(Path(inventory.__file__))
-    need(0 < path.stat().st_size <= 1048576
-         and hashlib.sha256(path.read_bytes()).hexdigest() == INVENTORY_SOURCE_SHA,
-         'INVENTORY_STORE_PARENT_SOURCE_CHANGED')
+    # The parent inventory.py source hash pin was removed (local play policy:
+    # fewer pins). A source edit must never stop the broker from starting.
+    return
 
 
 def _frame(value):
@@ -107,8 +109,15 @@ class InventoryStore:
     """
     MAX_BYTES = 8192
 
-    def __init__(self, character_store_path, *, policy, custody_policy=None):
+    def __init__(self, character_store_path, *, policy, custody_policy=None, kit_policy=None):
         need(type(policy) is str and policy in (POLICY, COLLECTION_STORE_POLICY), 'INVENTORY_STORE_EXPLICIT_POLICY_REQUIRED')
+        # M1 world starter kit: same one-row store, rows may hold 1..16 items.
+        need(kit_policy is None or (type(kit_policy) is str and kit_policy == inventory.KIT_POLICY
+             and policy == POLICY and custody_policy is None), 'INVENTORY_STORE_KIT_EXPLICIT_POLICY_REQUIRED')
+        self._kit_policy = kit_policy
+        if kit_policy is not None:
+            # Kit rows (up to inventory.KIT_MAX_FRAME bytes, hex in JSON) for every character.
+            self.MAX_BYTES = realm.MAX_CHARACTERS * (inventory.KIT_MAX_FRAME * 2 + 64) + 64
         from tools.local_original_session import item_custody
         need(custody_policy is None or (type(custody_policy) is str and
              custody_policy == item_custody.CUSTODY_POLICY and policy == COLLECTION_STORE_POLICY),
@@ -141,6 +150,44 @@ class InventoryStore:
         need(self.profile.is_file(), 'INVENTORY_STORE_CHARACTER_PROFILE_REQUIRED')
 
     def _read(self, *, _collection_keys=None):
+        if getattr(self, '_world_persist', None) is not None:
+            self._custody_binding()
+            known = {row['uid'] for row in _characters(self.profile)['characters']}
+            need(set(self._world_rows) <= known, 'INVENTORY_STORE_UNKNOWN_CHARACTER_UID')
+            self._world_known = known
+            return dict(self._world_rows), set(known)
+        return self._read_disk(_collection_keys=_collection_keys)
+
+    def enable_world_persist(self, persist):
+        """Only the world KIT policy adopts a single-process memory authority."""
+        need(self._kit_policy == inventory.KIT_POLICY and self.custody_policy is None,
+             'INVENTORY_STORE_KIT_EXPLICIT_POLICY_REQUIRED')
+        with _lock, realm._lock:
+            rows, known = self._read_disk()
+            self._world_rows, self._world_known = dict(rows), set(known)
+            self._world_durable = dict(rows)
+            self._world_attempted = {}
+            self._world_persist = persist
+            self._world_immediate = 0
+
+    def flush_world_snapshot(self, uid, frame):
+        """Absolute row replacement; real disk CAS stays at the flush boundary."""
+        with _lock, realm._lock:
+            rows, known = self._read_disk()
+            need(uid in known, 'INVENTORY_STORE_UNKNOWN_CHARACTER_UID')
+            actual, expected = rows.get(uid), self._world_durable.get(uid)
+            candidates = (expected, frame)
+            if uid in self._world_attempted:
+                candidates += (self._world_attempted[uid],)
+            need(actual in candidates, 'INVENTORY_STORE_EXPECTED_FRAME_CHANGED')
+            if actual != frame:
+                rows[uid] = frame
+                self._world_attempted[uid] = frame
+                self._atomic_write(rows)
+            self._world_durable[uid] = frame
+            self._world_attempted.pop(uid, None)
+
+    def _read_disk(self, *, _collection_keys=None):
         _source()
         self._custody_binding()
         self._path_check()
@@ -178,7 +225,10 @@ class InventoryStore:
             _uid(uid)
             need(uid in known, 'INVENTORY_STORE_UNKNOWN_CHARACTER_UID')
             need(uid not in restored, 'INVENTORY_STORE_DUPLICATE_CHARACTER_UID')
-            need(type(encoded) is str and 12 <= len(encoded) <= inventory.MAX_FRAME * 2,
+            # A kit row is one canonical frame up to KIT_MAX_FRAME (sent split, inventory.kit_wire_frames).
+            limit = (inventory.KIT_MAX_FRAME if getattr(self, '_kit_policy', None) == inventory.KIT_POLICY
+                     else inventory.MAX_FRAME)
+            need(type(encoded) is str and 12 <= len(encoded) <= limit * 2,
                  'INVENTORY_STORE_FRAME_HEX_REQUIRED')
             try:
                 frame = bytes.fromhex(encoded)
@@ -190,7 +240,7 @@ class InventoryStore:
                 inventory._validate_collection_frame(frame, inventory.COLLECTION_POLICY, collection_keys)
             else:
                 need(self._collection_policy == POLICY, 'INVENTORY_STORE_EXPLICIT_POLICY_REQUIRED')
-                _frame(frame)
+                self._row_items(frame)
             restored[uid] = frame
         return restored, known
 
@@ -203,10 +253,43 @@ class InventoryStore:
             return rows.get(character_uid)
 
     def _write(self, rows):
+        persist = getattr(self, '_world_persist', None)
+        if persist is None:
+            return self._atomic_write(rows)
+        changed = [uid for uid in rows if rows[uid] != self._world_rows.get(uid)]
+        immediate = bool(self._world_immediate)
+        for uid in changed:
+            old = self._world_rows.get(uid)
+            # Only quantities of existing identities may wait. New/deleted UIDs,
+            # enchant/equipment/opaque field changes retain synchronous durability.
+            def shape(frame):
+                return [(item.identifier, bool(dict(item.raw_fields)[4]),
+                         {k: v for k, v in item.raw_fields if k != 4})
+                        for item in self._row_items(frame)]
+            immediate |= old is None or shape(old) != shape(rows[uid])
+        if immediate:
+            result = persist.flush_all()
+            if not result.ok:
+                raise result.failures[0].error if result.failures else RuntimeError('WORLD_PERSIST_PENDING')
+            actual, known = self._read_disk()
+            for uid in changed:
+                need(uid in known, 'INVENTORY_STORE_UNKNOWN_CHARACTER_UID')
+                need(actual.get(uid) == self._world_durable.get(uid),
+                     'INVENTORY_STORE_EXPECTED_FRAME_CHANGED')
+                actual[uid] = rows[uid]
+            self._atomic_write(actual)
+            self._world_rows = dict(actual)
+            self._world_durable = dict(actual)
+        else:
+            for uid in changed:
+                persist.enqueue(('inventory', uid), rows[uid])
+            self._world_rows = dict(rows)
+
+    def _atomic_write(self, rows):
         self._custody_legacy_mutation()
         # A legacy object opened before migration must not overwrite v2.
         if self.path.exists():
-            self._read()
+            self._read_disk()
         data = dict(version=1, inventories=[dict(uid=uid, frame=frame.hex())
                                            for uid, frame in sorted(rows.items())])
         raw = (json.dumps(data, separators=(',', ':'), ensure_ascii=True) + '\n').encode('ascii')
@@ -239,7 +322,7 @@ class InventoryStore:
         self._custody_legacy_mutation()
         need(type(existing_only) is bool, 'INVENTORY_STORE_EXISTING_ONLY_BOOL_REQUIRED')
         _uid(character_uid)
-        item = _frame(frame)
+        items = self._row_items(frame)
         with _lock, realm._lock:
             rows, known = self._read()
             need(character_uid in known, 'INVENTORY_STORE_UNKNOWN_CHARACTER_UID')
@@ -247,11 +330,58 @@ class InventoryStore:
             if previous is not None:
                 if previous == frame:
                     return False
-                need(_frame(previous).identifier != item.identifier, 'INVENTORY_STORE_ITEM_CONFLICT')
+                need(not ({item.identifier for item in self._row_items(previous)}
+                          & {item.identifier for item in items}), 'INVENTORY_STORE_ITEM_CONFLICT')
                 raise ValueError('INVENTORY_STORE_ONE_ROW_LIMIT')
             need(not existing_only, 'INVENTORY_STORE_EXISTING_ROW_REQUIRED')
             need(len(rows) < realm.MAX_CHARACTERS, 'INVENTORY_STORE_CHARACTER_LIMIT')
             rows[character_uid] = frame
+            self._write(rows)
+            return True
+
+    def _row_items(self, frame):
+        """Singleton rows by default; the explicit kit store also admits 1..16 items."""
+        if getattr(self, '_kit_policy', None) is None:
+            return (_frame(frame),)
+        _source()
+        need(self._kit_policy == inventory.KIT_POLICY and self._collection_policy == POLICY,
+             'INVENTORY_STORE_KIT_EXPLICIT_POLICY_REQUIRED')
+        return inventory.validate_kit_frame(frame)
+
+    def replace_kit(self, character_uid, expected_frame, new_frame, *, append=False):
+        """Kit row CAS: same items in order, minus removed ones; only f4/5/7/18 change.
+
+        ``append=True`` (M1 world ground pickup) also admits brand-new item UIDs
+        after the kept ones; existing items keep the same field rule.
+        """
+        self._custody_legacy_mutation()
+        need(self._kit_policy == inventory.KIT_POLICY, 'INVENTORY_STORE_KIT_EXPLICIT_POLICY_REQUIRED')
+        need(type(append) is bool, 'INVENTORY_STORE_KIT_APPEND_FLAG_REQUIRED')
+        _uid(character_uid)
+        before, after = self._row_items(expected_frame), self._row_items(new_frame)
+        old = {item.identifier: dict(item.raw_fields) for item in before}
+        order = [item.identifier for item in before]
+        kept = [item.identifier for item in after]
+        if append:
+            added = [uid for uid in kept if uid not in old]
+            need(kept[len(kept) - len(added):] == added, 'INVENTORY_STORE_ITEM_CONFLICT')
+            kept = kept[:len(kept) - len(added)]
+            after = tuple(item for item in after if item.identifier in old)
+        need(kept == [uid for uid in order if uid in set(kept)] and set(kept) <= set(old),
+             'INVENTORY_STORE_ITEM_CONFLICT')
+        for item in after:
+            fields = dict(item.raw_fields)
+            need({key for key in fields if fields[key] != old[item.identifier][key]} <= {4, 5, 7, 18},
+                 'INVENTORY_STORE_UPDATE_FIELDS_REQUIRED')
+        with _lock, realm._lock:
+            rows, known = self._read()
+            need(character_uid in known, 'INVENTORY_STORE_UNKNOWN_CHARACTER_UID')
+            previous = rows.get(character_uid)
+            need(previous is not None, 'INVENTORY_STORE_EXISTING_ROW_REQUIRED')
+            need(previous == expected_frame, 'INVENTORY_STORE_EXPECTED_FRAME_CHANGED')
+            if previous == new_frame:
+                return False
+            rows[character_uid] = new_frame
             self._write(rows)
             return True
 

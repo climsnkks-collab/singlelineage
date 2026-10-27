@@ -866,7 +866,7 @@ class RetainedWorldTests(unittest.TestCase):
             self.assertEqual(first['memory']['world']['my_player_uid'], 12345)
             self.assertNotIn('PRIVATE_', json.dumps(first))
             reader.validate.side_effect = ValueError('READONLY_DUPLICATE_JOB_CHANGED')
-            now[0] = .75
+            now[0] = monitor.STEADY_MEMORY_SECONDS
             failed = monitor.tick()
             self.assertEqual(failed['memory']['scene']['status'], 'UNKNOWN')
             self.assertEqual(failed['memory']['world']['reason'], 'READONLY_DUPLICATE_JOB_CHANGED')

@@ -1,0 +1,2519 @@
+{
+  "table": "m4_monsters",
+  "version": 1,
+  "note": "M4 sourced data expansion: 19 monster templates, 25 spawn groups. Fixed client identity/sprite and stored official information take precedence; L1J stats and spawn/drop values remain LOCAL backend reference. Existing runtime policies retained; unsupported items preserve original sourced rows under unresolved. New rect_selection spawns are 7x7 all-can_stand=True rectangles. Static data checks only, no live game equivalence claim. See EXPANSION_SOURCES.md.",
+  "ref_abbrev": {
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "all-rows": "work/monster_level_comparison/analysis/all-rows.csv (공식 API 2026-10-09 저장본 대응)",
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "parsed-spr": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jcfg": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc",
+    "m1-items": "tools/local_original_session/data/m1/items.json",
+    "official-monsters": "tools/local_original_session/data/official/monsters.json",
+    "m3-monsters": "tools/local_original_session/data/m3/monsters.json",
+    "m3-drops": "tools/local_original_session/data/m3/drops.json",
+    "catalog-map0": "tools/local_original_session/data/catalog/map0/",
+    "drop-pairs": "work/npc_field_semantics/hypotheses/all-drop-pairs.json"
+  },
+  "reused_from": [
+    "tools/local_original_session/data/m3/monsters.json (client27/29/276; source fields retained)"
+  ],
+  "monsters": [
+    {
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "native-dump:22; all-rows:39"
+      },
+      "name_token": {
+        "value": "$57",
+        "source": "client",
+        "ref": "native-dump:22 name.reference"
+      },
+      "name_ko": {
+        "value": "좀비",
+        "source": "client",
+        "ref": "native-dump:22 name.KR"
+      },
+      "sprite_id": {
+        "value": 52,
+        "source": "client",
+        "ref": "native-dump:22 f2; list.spr:352 #52 zombie; parsed-spr:49",
+        "note": "L1J gfxid=52 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45065,
+        "source": "l1j",
+        "ref": "l1jdb:20685; all-rows:39; l1jdb:38407 spawnlist id=2877 locx/locy",
+        "note": "고정 client의 한국어 이름·SPR과 기존 m3의 해당 L1J NPC 대응을 재사용하고 이번 map4 실제 spawnlist 행 존재를 확인했다. 다른 동명 변종은 합치지 않는다. L1J/공식/client는 별도 ID namespace."
+      },
+      "level": {
+        "value": 6,
+        "source": "official",
+        "ref": "official-monsters official_id=27 official.level; work/official_data/raw/monster/27.json",
+        "note": "고정 client version26.09.29.2001과 공식 수집 시점은 별개. 원본 빌드의 공식 능력치 증명으로 소급하지 않음."
+      },
+      "hp": {
+        "value": 45,
+        "source": "l1j",
+        "ref": "l1jdb:20685 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 12,
+        "source": "l1j",
+        "ref": "l1jdb:20685 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": 8,
+        "source": "l1j",
+        "ref": "l1jdb:20685 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 37,
+        "source": "l1j",
+        "ref": "l1jdb:20685 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20685 agro=1",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 2083,
+        "source": "client",
+        "ref": "list.spr:353 walk C합50/24; parsed-spr:49",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=2000ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 1083,
+        "source": "client",
+        "ref": "list.spr:354 attack C합26/24; parsed-spr:49",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=1040ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20685 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "m1/monsters.json; m3/monsters.json existing local policy",
+        "note": "단일 플레이어용 home20칸. 원본 leash·장애물 도달·안전 보장 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 8,
+          "max": 13,
+          "str": 14,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20685 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 27,
+        "source": "official",
+        "ref": "official-monsters official_id=27 client_mapping; work/official_data/raw/monster/27.json",
+        "note": "공식/고정 client는 exact_id_and_name. L1J NPC ID는 별도 namespace이며 l1j_npcid와 sprite_id의 근거로만 대응."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=27 official.regionNames; work/official_data/raw/monster/27.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "native-dump:24; all-rows:60"
+      },
+      "name_token": {
+        "value": "$7",
+        "source": "client",
+        "ref": "native-dump:24 name.reference"
+      },
+      "name_ko": {
+        "value": "해골",
+        "source": "client",
+        "ref": "native-dump:24 name.KR"
+      },
+      "sprite_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "native-dump:24 f2; list.spr:153 #30 skeleton; parsed-spr:27",
+        "note": "L1J gfxid=30 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45107,
+        "source": "l1j",
+        "ref": "l1jdb:20725; all-rows:60; l1jdb:39399 spawnlist id=4430 locx/locy",
+        "note": "고정 client의 한국어 이름·SPR과 기존 m3의 해당 L1J NPC 대응을 재사용하고 이번 map4 실제 spawnlist 행 존재를 확인했다. 다른 동명 변종은 합치지 않는다. L1J/공식/client는 별도 ID namespace."
+      },
+      "level": {
+        "value": 10,
+        "source": "official",
+        "ref": "official-monsters official_id=29 official.level; work/official_data/raw/monster/29.json",
+        "note": "고정 client version26.09.29.2001과 공식 수집 시점은 별개. 원본 빌드의 공식 능력치 증명으로 소급하지 않음."
+      },
+      "hp": {
+        "value": 80,
+        "source": "l1j",
+        "ref": "l1jdb:20725 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 30,
+        "source": "l1j",
+        "ref": "l1jdb:20725 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": 3,
+        "source": "l1j",
+        "ref": "l1jdb:20725 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 101,
+        "source": "l1j",
+        "ref": "l1jdb:20725 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20725 agro=1",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:160 walk C합16/24; parsed-spr:27",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=640ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 958,
+        "source": "client",
+        "ref": "list.spr:154 attack C합23/24; parsed-spr:27",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=920ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20725 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "m1/monsters.json; m3/monsters.json existing local policy",
+        "note": "단일 플레이어용 home20칸. 원본 leash·장애물 도달·안전 보장 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 9,
+          "max": 18,
+          "str": 16,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20725 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 29,
+        "source": "official",
+        "ref": "official-monsters official_id=29 client_mapping; work/official_data/raw/monster/29.json",
+        "note": "공식/고정 client는 exact_id_and_name. L1J NPC ID는 별도 namespace이며 l1j_npcid와 sprite_id의 근거로만 대응."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "은기사 지역",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=29 official.regionNames; work/official_data/raw/monster/29.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 276,
+        "source": "client",
+        "ref": "native-dump:160; all-rows:72"
+      },
+      "name_token": {
+        "value": "$986",
+        "source": "client",
+        "ref": "native-dump:160 name.reference"
+      },
+      "name_ko": {
+        "value": "해골궁수",
+        "source": "client",
+        "ref": "native-dump:160 name.KR"
+      },
+      "sprite_id": {
+        "value": 1096,
+        "source": "client",
+        "ref": "native-dump:160 f2; list.spr:3580 #1096 skeleton archer; parsed-spr:695",
+        "note": "L1J gfxid=1096 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "l1j_npcid": {
+        "value": 45122,
+        "source": "l1j",
+        "ref": "l1jdb:20740; all-rows:72; l1jdb:39584 spawnlist id=5553 locx/locy",
+        "note": "고정 client의 한국어 이름·SPR과 기존 m3의 해당 L1J NPC 대응을 재사용하고 이번 map4 실제 spawnlist 행 존재를 확인했다. 다른 동명 변종은 합치지 않는다. L1J/공식/client는 별도 ID namespace."
+      },
+      "level": {
+        "value": 12,
+        "source": "official",
+        "ref": "official-monsters official_id=276 official.level; work/official_data/raw/monster/276.json",
+        "note": "고정 client version26.09.29.2001과 공식 수집 시점은 별개. 원본 빌드의 공식 능력치 증명으로 소급하지 않음."
+      },
+      "hp": {
+        "value": 80,
+        "source": "l1j",
+        "ref": "l1jdb:20740 hp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "mp": {
+        "value": 25,
+        "source": "l1j",
+        "ref": "l1jdb:20740 mp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "ac": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:20740 ac; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "kill_exp": {
+        "value": 145,
+        "source": "l1j",
+        "ref": "l1jdb:20740 exp; npc 열 :1544-1610",
+        "note": "클래식 능력치 미확정의 빈칸을 채운 로컬 참고 정책. 원본 능력치 확정 아님."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20740 agro=1",
+        "note": "선공 유무 참고. 조건부 agrogfx/family·마법·특수 상태 계약은 포함하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:3581 walk bow C합20/24; parsed-spr:695",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=800ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_interval_ms": {
+        "value": 1167,
+        "source": "client",
+        "ref": "list.spr:3587 attack bow C합28/24; parsed-spr:695",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=1120ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_range": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20740 ranged; l1jsrc model/L1Character.java:378-381"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "m1/monsters.json; m3/monsters.json existing local policy",
+        "note": "단일 플레이어용 home20칸. 원본 leash·장애물 도달·안전 보장 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 9,
+          "max": 20,
+          "str": 16,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; l1jdb:20740 lvl/str",
+        "note": "PC 방어 감산 전 기본 물리값만. 괴물 눈 특수효과 등은 구현·검증하지 않음."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 276,
+        "source": "official",
+        "ref": "official-monsters official_id=276 client_mapping; work/official_data/raw/monster/276.json",
+        "note": "공식/고정 client는 exact_id_and_name. L1J NPC ID는 별도 namespace이며 l1j_npcid와 sprite_id의 근거로만 대응."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=276 official.regionNames; work/official_data/raw/monster/276.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 245,
+        "source": "client",
+        "ref": "native-dump:152; all-rows:7"
+      },
+      "name_token": {
+        "value": "$958",
+        "source": "client",
+        "ref": "native-dump:152 name.reference"
+      },
+      "name_ko": {
+        "value": "고블린",
+        "source": "client",
+        "ref": "native-dump:152 name.KR"
+      },
+      "sprite_id": {
+        "value": 1022,
+        "source": "client",
+        "ref": "all-rows:7 f2=1022; list.spr:3245 #1022 goblin",
+        "note": "L1J gfxid 1022와 같다"
+      },
+      "l1j_npcid": {
+        "value": 45008,
+        "source": "l1j",
+        "ref": "l1jdb:20630",
+        "note": "대응 키: $958 + 공식 Lv2 + 말하는 섬"
+      },
+      "level": {
+        "value": 2,
+        "source": "official",
+        "ref": "data/official/monsters.json official_id=245; work/official_data/raw/monster/245.json level"
+      },
+      "hp": {
+        "value": 3,
+        "source": "l1j",
+        "ref": "l1jdb:20630 hp",
+        "note": "L1J 원값 그대로. 오크(6)보다 낮아 의심스럽지만 고치지 않았다"
+      },
+      "mp": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20630 mp"
+      },
+      "ac": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20630 ac"
+      },
+      "kill_exp": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "l1jdb:20630 exp"
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20630 agro=0"
+      },
+      "move_interval_ms": {
+        "value": 792,
+        "source": "client",
+        "ref": "list.spr:3246 walk C합19/24",
+        "note": "L1J passispeed 760"
+      },
+      "attack_interval_ms": {
+        "value": 958,
+        "source": "client",
+        "ref": "list.spr:3248 attack C합23/24",
+        "note": "L1J atkspeed 920"
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20630 ranged=1"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143"
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "l1jdb:45899 movement_distance=0",
+        "note": "오크와 같은 정책"
+      },
+      "damage": {
+        "value": {
+          "min": 6,
+          "max": 7,
+          "str": 10,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:946; str l1jdb:20630",
+        "note": "PC 방어 감산 전"
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138"
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "글루디오",
+          "켄트",
+          "기란",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=245 official.regionNames; work/official_data/raw/monster/245.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "native-dump:1; all-rows:5"
+      },
+      "name_token": {
+        "value": "$59",
+        "source": "client",
+        "ref": "native-dump:1 name.reference"
+      },
+      "name_ko": {
+        "value": "오크",
+        "source": "client",
+        "ref": "native-dump:1 name.KR"
+      },
+      "sprite_id": {
+        "value": 56,
+        "source": "client",
+        "ref": "native-dump:1 f2=56; list.spr:390 #56 orc",
+        "note": "L1J gfxid 56과 같다"
+      },
+      "l1j_npcid": {
+        "value": 45009,
+        "source": "l1j",
+        "ref": "l1jdb:20631",
+        "note": "대응 키: 이름토큰 $59 + 공식 Lv2 + 말하는 섬 출현"
+      },
+      "level": {
+        "value": 2,
+        "source": "official",
+        "ref": "data/official/monsters.json official_id=0; work/official_data/raw/monster/0.json level"
+      },
+      "hp": {
+        "value": 6,
+        "source": "l1j",
+        "ref": "l1jdb:20631 hp"
+      },
+      "mp": {
+        "value": 4,
+        "source": "l1j",
+        "ref": "l1jdb:20631 mp"
+      },
+      "ac": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20631 ac"
+      },
+      "kill_exp": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "l1jdb:20631 exp (열 :1561)",
+        "note": "RateXp=1.0 기준 기본값. 레벨 차 보정 없음"
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20631 agro=0 (열 :1575)"
+      },
+      "move_interval_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:391 walk C합20/24",
+        "note": "SPR 명목 재생시간을 이동 간격으로 쓰는 것은 로컬 정책. L1J passispeed 800"
+      },
+      "attack_interval_ms": {
+        "value": 1375,
+        "source": "client",
+        "ref": "list.spr:392 attack C합33/24",
+        "note": "명목 재생시간. L1J atkspeed 1320"
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20631 ranged=1; l1jsrc model/L1Character.java:378 isAttackPosition"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen(13칸 이하 항상 보임)",
+        "note": "PcRecognizeRange=-1(l1jcfg server.properties:128)일 때 화면 판정. 13은 그 안쪽 확정 반경"
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "l1jdb:45911 movement_distance=0",
+        "note": "L1J는 이 스폰에 leash 없음. 혼자 사냥에서 몹이 마을까지 끌려오지 않게 home 기준 20칸"
+      },
+      "damage": {
+        "value": {
+          "min": 4,
+          "max": 5,
+          "str": 6,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:943-946 nextInt(lvl)+str/2+1; str l1jdb:20631",
+        "note": "PC 방어(AC) 감산 전 값"
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169"
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "사막 던전 1층",
+          "은기사 지역",
+          "글루디오",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=0 official.regionNames; work/official_data/raw/monster/0.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "native-dump:2; all-rows:13"
+      },
+      "name_token": {
+        "value": "$267",
+        "source": "client",
+        "ref": "native-dump:2 name.reference"
+      },
+      "name_ko": {
+        "value": "오크 궁수",
+        "source": "client",
+        "ref": "native-dump:2 name.KR"
+      },
+      "sprite_id": {
+        "value": 57,
+        "source": "client",
+        "ref": "all-rows:13 f2=57; list.spr:401 #57 orc bow",
+        "note": "L1J gfxid 3860(orc bow morph)과 다르다. 클래식 f2를 따른다"
+      },
+      "l1j_npcid": {
+        "value": 45019,
+        "source": "l1j",
+        "ref": "l1jdb:20640",
+        "note": "대응 키: $267 + 공식 Lv3 + 말하는 섬"
+      },
+      "level": {
+        "value": 3,
+        "source": "official",
+        "ref": "data/official/monsters.json official_id=1; work/official_data/raw/monster/1.json level"
+      },
+      "hp": {
+        "value": 12,
+        "source": "l1j",
+        "ref": "l1jdb:20640 hp"
+      },
+      "mp": {
+        "value": 4,
+        "source": "l1j",
+        "ref": "l1jdb:20640 mp"
+      },
+      "ac": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20640 ac"
+      },
+      "kill_exp": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20640 exp"
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20640 agro=0"
+      },
+      "move_interval_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:402 walk bow C합20/24",
+        "note": "L1J passispeed 800 (gfx 3860 기준)"
+      },
+      "attack_interval_ms": {
+        "value": 1958,
+        "source": "client",
+        "ref": "list.spr:403 attack bow C합47/24",
+        "note": "L1J atkspeed 1880"
+      },
+      "attack_range": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20640 ranged=10; l1jsrc model/L1Character.java:379-381 (7 이상은 tile 거리)"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143"
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "l1jdb:45915 movement_distance=0"
+      },
+      "damage": {
+        "value": {
+          "min": 7,
+          "max": 9,
+          "str": 12,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:946 (원거리도 같은 calcNpcPcDamage); str l1jdb:20640",
+        "note": "PC 방어 감산 전"
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138"
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "윈다우드",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=1 official.regionNames; work/official_data/raw/monster/1.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 249,
+        "source": "client",
+        "ref": "native-dump:156"
+      },
+      "name_token": {
+        "value": "$970",
+        "source": "client",
+        "ref": "native-dump:156 name.reference"
+      },
+      "name_ko": {
+        "value": "코볼트",
+        "source": "client",
+        "ref": "native-dump:156 name.KR"
+      },
+      "sprite_id": {
+        "value": 1059,
+        "source": "client",
+        "ref": "native-dump:156 f2; list.spr:3401 Kobolds",
+        "note": "L1J gfxid=1059; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "l1j_npcid": {
+        "value": 45016,
+        "source": "l1j",
+        "ref": "l1jdb:20637",
+        "note": "이름 토큰·공식 한국어 이름·말하는 섬 출현을 우선하여 템플릿 후보 선정. 외형은 클래식 f2/SPR 사용. 실제 월드 동일성 미확인."
+      },
+      "level": {
+        "value": 3,
+        "source": "official",
+        "ref": "official-monsters client_id=249 official.level; work/official_data/raw/monster/249.json"
+      },
+      "hp": {
+        "value": 7,
+        "source": "l1j",
+        "ref": "l1jdb:20637 hp"
+      },
+      "mp": {
+        "value": 15,
+        "source": "l1j",
+        "ref": "l1jdb:20637 mp"
+      },
+      "ac": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20637 ac"
+      },
+      "kill_exp": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20637 exp",
+        "note": "클래식 미확정 빈칸을 채운 로컬 참고 정책. RateXp1.0 기본값이며 PC 성장곡선과 별개."
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20637 agro",
+        "note": "클래식 f22/f26을 선공 플래그로 추정하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 1333,
+        "source": "client",
+        "ref": "list.spr:3402 walk C합32/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_interval_ms": {
+        "value": 1125,
+        "source": "client",
+        "ref": "list.spr:3403 attack C합27/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20637 ranged"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143; m1/monsters.json",
+        "note": "M1의 화면 안쪽 확정반경 정책을 카탈로그 기본값으로 재사용."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "m1/monsters.json leash_range",
+        "note": "map0 각 원스폰 movement_distance는 원행 참조. M1의 home 기준20칸 제한을 확장한 싱글 정책."
+      },
+      "damage": {
+        "value": {
+          "min": 7,
+          "max": 9,
+          "str": 12,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20637 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "L1J 원래 lvl/str로 계산한 기본 피해, PC 방어 감산 전. 공식 레벨 차이·특수 공격·마법/독/마비/변신/회복/픽업 AI 전체를 구현하거나 검증한 값이 아님."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138; m1/monsters.json"
+      },
+      "mapping_status": "candidate_region_supported",
+      "mapping_note": "이름 토큰·공식 한국어 이름·말하는 섬 출현을 우선하여 템플릿 후보 선정. 외형은 클래식 f2/SPR 사용. 실제 월드 동일성 미확인.",
+      "runtime_verified": false,
+      "l1j_mr": {
+        "value": 2,
+        "source": "l1j",
+        "ref": "l1jdb:20637 mr",
+        "note": "기존 MonsterDef는 MR을 소비하지 않음. 원행 보존용."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "글루디오",
+          "켄트",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=249 official.regionNames; work/official_data/raw/monster/249.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "native-dump:4"
+      },
+      "name_token": {
+        "value": "$58",
+        "source": "client",
+        "ref": "native-dump:4 name.reference"
+      },
+      "name_ko": {
+        "value": "난쟁이",
+        "source": "client",
+        "ref": "native-dump:4 name.KR"
+      },
+      "sprite_id": {
+        "value": 54,
+        "source": "client",
+        "ref": "native-dump:4 f2; list.spr:374 dwarf",
+        "note": "L1J gfxid=54; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "l1j_npcid": {
+        "value": 45041,
+        "source": "l1j",
+        "ref": "l1jdb:20661",
+        "note": "이름 토큰·공식 한국어 이름·말하는 섬 출현을 우선하여 템플릿 후보 선정. 외형은 클래식 f2/SPR 사용. 실제 월드 동일성 미확인."
+      },
+      "level": {
+        "value": 5,
+        "source": "official",
+        "ref": "official-monsters client_id=4 official.level; work/official_data/raw/monster/4.json"
+      },
+      "hp": {
+        "value": 30,
+        "source": "l1j",
+        "ref": "l1jdb:20661 hp"
+      },
+      "mp": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "l1jdb:20661 mp"
+      },
+      "ac": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20661 ac"
+      },
+      "kill_exp": {
+        "value": 26,
+        "source": "l1j",
+        "ref": "l1jdb:20661 exp",
+        "note": "클래식 미확정 빈칸을 채운 로컬 참고 정책. RateXp1.0 기본값이며 PC 성장곡선과 별개."
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20661 agro",
+        "note": "클래식 f22/f26을 선공 플래그로 추정하지 않음."
+      },
+      "move_interval_ms": {
+        "value": 625,
+        "source": "client",
+        "ref": "list.spr:375 walk C합15/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_interval_ms": {
+        "value": 1542,
+        "source": "client",
+        "ref": "list.spr:376 attack C합37/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20661 ranged"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143; m1/monsters.json",
+        "note": "M1의 화면 안쪽 확정반경 정책을 카탈로그 기본값으로 재사용."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "m1/monsters.json leash_range",
+        "note": "map0 각 원스폰 movement_distance는 원행 참조. M1의 home 기준20칸 제한을 확장한 싱글 정책."
+      },
+      "damage": {
+        "value": {
+          "min": 6,
+          "max": 10,
+          "str": 10,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20661 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "L1J 원래 lvl/str로 계산한 기본 피해, PC 방어 감산 전. 공식 레벨 차이·특수 공격·마법/독/마비/변신/회복/픽업 AI 전체를 구현하거나 검증한 값이 아님."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138; m1/monsters.json"
+      },
+      "mapping_status": "candidate_region_supported",
+      "mapping_note": "이름 토큰·공식 한국어 이름·말하는 섬 출현을 우선하여 템플릿 후보 선정. 외형은 클래식 f2/SPR 사용. 실제 월드 동일성 미확인.",
+      "runtime_verified": false,
+      "l1j_mr": {
+        "value": 2,
+        "source": "l1j",
+        "ref": "l1jdb:20661 mr",
+        "note": "기존 MonsterDef는 MR을 소비하지 않음. 원행 보존용."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "글루디오",
+          "켄트",
+          "용의 계곡",
+          "기란",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=4 official.regionNames; work/official_data/raw/monster/4.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "native-dump:8; all-rows:54"
+      },
+      "name_token": {
+        "value": "$18",
+        "source": "client",
+        "ref": "native-dump:8 name.reference"
+      },
+      "name_ko": {
+        "value": "늑대인간",
+        "source": "client",
+        "ref": "native-dump:8 name.KR"
+      },
+      "sprite_id": {
+        "value": 33,
+        "source": "client",
+        "ref": "all-rows:54 f2=33; list.spr:187 #33 werewolf",
+        "note": "L1J gfxid 1110과 다르다. 클래식 f2를 따른다"
+      },
+      "l1j_npcid": {
+        "value": 45024,
+        "source": "l1j",
+        "ref": "l1jdb:20645",
+        "note": "대응 키: $18 + 공식 Lv9 + 말하는 섬"
+      },
+      "level": {
+        "value": 9,
+        "source": "official",
+        "ref": "data/official/monsters.json official_id=8; work/official_data/raw/monster/8.json level"
+      },
+      "hp": {
+        "value": 50,
+        "source": "l1j",
+        "ref": "l1jdb:20645 hp"
+      },
+      "mp": {
+        "value": 20,
+        "source": "l1j",
+        "ref": "l1jdb:20645 mp"
+      },
+      "ac": {
+        "value": 4,
+        "source": "l1j",
+        "ref": "l1jdb:20645 ac"
+      },
+      "kill_exp": {
+        "value": 82,
+        "source": "l1j",
+        "ref": "l1jdb:20645 exp"
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20645 agro=0"
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:188 walk C합16/24",
+        "note": "L1J passispeed 640 (gfx 1110 기준)"
+      },
+      "attack_interval_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:189 attack axe C합24/24",
+        "note": "L1J atkspeed 840"
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20645 ranged=1"
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143"
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "l1jdb:45893 movement_distance=0"
+      },
+      "damage": {
+        "value": {
+          "min": 8,
+          "max": 16,
+          "str": 15,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jsrc model/L1Attack.java:946; str l1jdb:20645",
+        "note": "PC 방어 감산 전"
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138"
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "윈다우드",
+          "켄트",
+          "용의 계곡",
+          "기란",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=8 official.regionNames; work/official_data/raw/monster/8.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 144,
+        "source": "client",
+        "ref": "native-dump:88"
+      },
+      "name_token": {
+        "value": "$757",
+        "source": "client",
+        "ref": "native-dump:88 name.reference"
+      },
+      "name_ko": {
+        "value": "펑거스",
+        "source": "client",
+        "ref": "native-dump:88 name.KR"
+      },
+      "sprite_id": {
+        "value": 852,
+        "source": "client",
+        "ref": "native-dump:88 f2; list.spr:2584 fungus; parsed-spr:487",
+        "note": "L1J gfxid=852; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45030,
+        "source": "l1j",
+        "ref": "l1jdb:20651",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 4,
+        "source": "official",
+        "ref": "official-monsters client_id=144 official.level; work/official_data/raw/monster/144.json"
+      },
+      "hp": {
+        "value": 40,
+        "source": "l1j",
+        "ref": "l1jdb:20651 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20651 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "l1jdb:20651 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 17,
+        "source": "l1j",
+        "ref": "l1jdb:20651 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20651 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 1083,
+        "source": "client",
+        "ref": "list.spr:2585 walk Csum=26/24; parsed-spr:487",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1542,
+        "source": "client",
+        "ref": "list.spr:2586 attack Csum=37/24; parsed-spr:487",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20651 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 4,
+          "max": 7,
+          "str": 6,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20651 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 144,
+        "source": "official",
+        "ref": "official-monsters client_id=144; native-dump:88 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20651 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "요정숲 던전 2층",
+          "요정숲 던전 3층",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "얼음 수정 동굴 1층",
+          "얼음 수정 동굴 2층"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=144 official.regionNames; work/official_data/raw/monster/144.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 190,
+        "source": "client",
+        "ref": "native-dump:125"
+      },
+      "name_token": {
+        "value": "$931",
+        "source": "client",
+        "ref": "native-dump:125 name.reference"
+      },
+      "name_ko": {
+        "value": "멧돼지",
+        "source": "client",
+        "ref": "native-dump:125 name.KR"
+      },
+      "sprite_id": {
+        "value": 979,
+        "source": "client",
+        "ref": "native-dump:125 f2; list.spr:3017 wildboar; parsed-spr:584",
+        "note": "L1J gfxid=979; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45058,
+        "source": "l1j",
+        "ref": "l1jdb:20678",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 6,
+        "source": "official",
+        "ref": "official-monsters client_id=190 official.level; work/official_data/raw/monster/190.json"
+      },
+      "hp": {
+        "value": 20,
+        "source": "l1j",
+        "ref": "l1jdb:20678 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "l1jdb:20678 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": 7,
+        "source": "l1j",
+        "ref": "l1jdb:20678 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 37,
+        "source": "l1j",
+        "ref": "l1jdb:20678 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:20678 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:3018 walk Csum=16/24; parsed-spr:584",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:3020 attack Csum=20/24; parsed-spr:584",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20678 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 6,
+          "max": 11,
+          "str": 11,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20678 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 190,
+        "source": "official",
+        "ref": "official-monsters client_id=190; native-dump:125 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20678 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "윈다우드",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "해적섬 선착장"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=190 official.regionNames; work/official_data/raw/monster/190.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 94,
+        "source": "client",
+        "ref": "native-dump:61"
+      },
+      "name_token": {
+        "value": "$496",
+        "source": "client",
+        "ref": "native-dump:61 name.reference"
+      },
+      "name_ko": {
+        "value": "간디 오크",
+        "source": "client",
+        "ref": "native-dump:61 name.KR"
+      },
+      "sprite_id": {
+        "value": 784,
+        "source": "client",
+        "ref": "native-dump:61 f2; list.spr:2331 ofd; parsed-spr:443",
+        "note": "L1J gfxid=784; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45098,
+        "source": "l1j",
+        "ref": "l1jdb:20717",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 10,
+        "source": "official",
+        "ref": "official-monsters client_id=94 official.level; work/official_data/raw/monster/94.json"
+      },
+      "hp": {
+        "value": 80,
+        "source": "l1j",
+        "ref": "l1jdb:20717 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 25,
+        "source": "l1j",
+        "ref": "l1jdb:20717 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:20717 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 101,
+        "source": "l1j",
+        "ref": "l1jdb:20717 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20717 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:2332 walk Csum=16/24; parsed-spr:443",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1083,
+        "source": "client",
+        "ref": "list.spr:2336 attack Csum=26/24; parsed-spr:443",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20717 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 6,
+          "max": 15,
+          "str": 10,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20717 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 94,
+        "source": "official",
+        "ref": "official-monsters client_id=94; native-dump:61 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 15,
+        "source": "l1j",
+        "ref": "l1jdb:20717 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "오크 숲",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=94 official.regionNames; work/official_data/raw/monster/94.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 95,
+        "source": "client",
+        "ref": "native-dump:62"
+      },
+      "name_token": {
+        "value": "$497",
+        "source": "client",
+        "ref": "native-dump:62 name.reference"
+      },
+      "name_ko": {
+        "value": "로바 오크",
+        "source": "client",
+        "ref": "native-dump:62 name.KR"
+      },
+      "sprite_id": {
+        "value": 786,
+        "source": "client",
+        "ref": "native-dump:62 f2; list.spr:2344 ofs; parsed-spr:445",
+        "note": "L1J gfxid=784; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45127,
+        "source": "l1j",
+        "ref": "l1jdb:20745",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 13,
+        "source": "official",
+        "ref": "official-monsters client_id=95 official.level; work/official_data/raw/monster/95.json"
+      },
+      "hp": {
+        "value": 80,
+        "source": "l1j",
+        "ref": "l1jdb:20745 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 20,
+        "source": "l1j",
+        "ref": "l1jdb:20745 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": -2,
+        "source": "l1j",
+        "ref": "l1jdb:20745 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 170,
+        "source": "l1j",
+        "ref": "l1jdb:20745 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20745 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:2345 walk Csum=16/24; parsed-spr:445",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1083,
+        "source": "client",
+        "ref": "list.spr:2349 attack Csum=26/24; parsed-spr:445",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20745 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 7,
+          "max": 19,
+          "str": 12,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20745 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 95,
+        "source": "official",
+        "ref": "official-monsters client_id=95; native-dump:62 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 5,
+        "source": "l1j",
+        "ref": "l1jdb:20745 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "오크 숲",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=95 official.regionNames; work/official_data/raw/monster/95.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 93,
+        "source": "client",
+        "ref": "native-dump:60"
+      },
+      "name_token": {
+        "value": "$498",
+        "source": "client",
+        "ref": "native-dump:60 name.reference"
+      },
+      "name_ko": {
+        "value": "두다-마라 오크",
+        "source": "client",
+        "ref": "native-dump:60 name.KR"
+      },
+      "sprite_id": {
+        "value": 788,
+        "source": "client",
+        "ref": "native-dump:60 f2; list.spr:2357 ofsp; parsed-spr:447",
+        "note": "L1J gfxid=788; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45143,
+        "source": "l1j",
+        "ref": "l1jdb:20760",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 15,
+        "source": "official",
+        "ref": "official-monsters client_id=93 official.level; work/official_data/raw/monster/93.json"
+      },
+      "hp": {
+        "value": 100,
+        "source": "l1j",
+        "ref": "l1jdb:20760 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 50,
+        "source": "l1j",
+        "ref": "l1jdb:20760 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": -5,
+        "source": "l1j",
+        "ref": "l1jdb:20760 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 226,
+        "source": "l1j",
+        "ref": "l1jdb:20760 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20760 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:2358 walk Csum=16/24; parsed-spr:447",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1208,
+        "source": "client",
+        "ref": "list.spr:2362 attack Csum=29/24; parsed-spr:447",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 2,
+        "source": "l1j",
+        "ref": "l1jdb:20760 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 7,
+          "max": 21,
+          "str": 12,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20760 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 93,
+        "source": "official",
+        "ref": "official-monsters client_id=93; native-dump:60 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 20,
+        "source": "l1j",
+        "ref": "l1jdb:20760 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "오크 숲",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=93 official.regionNames; work/official_data/raw/monster/93.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 91,
+        "source": "client",
+        "ref": "native-dump:58"
+      },
+      "name_token": {
+        "value": "$494",
+        "source": "client",
+        "ref": "native-dump:58 name.reference"
+      },
+      "name_ko": {
+        "value": "아투바 오크",
+        "source": "client",
+        "ref": "native-dump:58 name.KR"
+      },
+      "sprite_id": {
+        "value": 786,
+        "source": "client",
+        "ref": "native-dump:58 f2; list.spr:2344 ofs; parsed-spr:445",
+        "note": "L1J gfxid=786; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45149,
+        "source": "l1j",
+        "ref": "l1jdb:20765",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 15,
+        "source": "official",
+        "ref": "official-monsters client_id=91 official.level; work/official_data/raw/monster/91.json"
+      },
+      "hp": {
+        "value": 120,
+        "source": "l1j",
+        "ref": "l1jdb:20765 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 15,
+        "source": "l1j",
+        "ref": "l1jdb:20765 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": -5,
+        "source": "l1j",
+        "ref": "l1jdb:20765 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 226,
+        "source": "l1j",
+        "ref": "l1jdb:20765 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20765 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:2345 walk Csum=16/24; parsed-spr:445",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1083,
+        "source": "client",
+        "ref": "list.spr:2349 attack Csum=26/24; parsed-spr:445",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20765 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 8,
+          "max": 22,
+          "str": 14,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20765 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 91,
+        "source": "official",
+        "ref": "official-monsters client_id=91; native-dump:58 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20765 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "오크 숲",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=91 official.regionNames; work/official_data/raw/monster/91.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 92,
+        "source": "client",
+        "ref": "native-dump:59"
+      },
+      "name_token": {
+        "value": "$495",
+        "source": "client",
+        "ref": "native-dump:59 name.reference"
+      },
+      "name_ko": {
+        "value": "네루가 오크",
+        "source": "client",
+        "ref": "native-dump:59 name.KR"
+      },
+      "sprite_id": {
+        "value": 788,
+        "source": "client",
+        "ref": "native-dump:59 f2; list.spr:2357 ofsp; parsed-spr:447",
+        "note": "L1J gfxid=788; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45171,
+        "source": "l1j",
+        "ref": "l1jdb:20787",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 17,
+        "source": "official",
+        "ref": "official-monsters client_id=92 official.level; work/official_data/raw/monster/92.json"
+      },
+      "hp": {
+        "value": 150,
+        "source": "l1j",
+        "ref": "l1jdb:20787 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 15,
+        "source": "l1j",
+        "ref": "l1jdb:20787 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": -8,
+        "source": "l1j",
+        "ref": "l1jdb:20787 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 290,
+        "source": "l1j",
+        "ref": "l1jdb:20787 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20787 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:2358 walk Csum=16/24; parsed-spr:447",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1208,
+        "source": "client",
+        "ref": "list.spr:2362 attack Csum=29/24; parsed-spr:447",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 2,
+        "source": "l1j",
+        "ref": "l1jdb:20787 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 9,
+          "max": 25,
+          "str": 17,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20787 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 92,
+        "source": "official",
+        "ref": "official-monsters client_id=92; native-dump:59 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 7,
+        "source": "l1j",
+        "ref": "l1jdb:20787 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "오크 숲",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=92 official.regionNames; work/official_data/raw/monster/92.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 274,
+        "source": "client",
+        "ref": "native-dump:159"
+      },
+      "name_token": {
+        "value": "$1110",
+        "source": "client",
+        "ref": "native-dump:159 name.reference"
+      },
+      "name_ko": {
+        "value": "오크 마법사",
+        "source": "client",
+        "ref": "native-dump:159 name.KR"
+      },
+      "sprite_id": {
+        "value": 1211,
+        "source": "client",
+        "ref": "native-dump:159 f2; list.spr:4098 orc mage; parsed-spr:776",
+        "note": "L1J gfxid=1211; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45121,
+        "source": "l1j",
+        "ref": "l1jdb:20739",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 12,
+        "source": "official",
+        "ref": "official-monsters client_id=274 official.level; work/official_data/raw/monster/274.json"
+      },
+      "hp": {
+        "value": 80,
+        "source": "l1j",
+        "ref": "l1jdb:20739 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 50,
+        "source": "l1j",
+        "ref": "l1jdb:20739 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:20739 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 145,
+        "source": "l1j",
+        "ref": "l1jdb:20739 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20739 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:4099 walk Csum=24/24; parsed-spr:776",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1292,
+        "source": "client",
+        "ref": "list.spr:4101 attack Csum=31/24; parsed-spr:776",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 1,
+        "source": "l1j",
+        "ref": "l1jdb:20739 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 4,
+          "max": 15,
+          "str": 6,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20739 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 274,
+        "source": "official",
+        "ref": "official-monsters client_id=274; native-dump:159 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 30,
+        "source": "l1j",
+        "ref": "l1jdb:20739 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "윈다우드",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=274 official.regionNames; work/official_data/raw/monster/274.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 223,
+        "source": "client",
+        "ref": "native-dump:144"
+      },
+      "name_token": {
+        "value": "$953",
+        "source": "client",
+        "ref": "native-dump:144 name.reference"
+      },
+      "name_ko": {
+        "value": "오우거",
+        "source": "client",
+        "ref": "native-dump:144 name.KR"
+      },
+      "sprite_id": {
+        "value": 1020,
+        "source": "client",
+        "ref": "native-dump:144 f2; list.spr:3231 ogre; parsed-spr:622",
+        "note": "L1J gfxid=1020; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45278,
+        "source": "l1j",
+        "ref": "l1jdb:20872",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 28,
+        "source": "official",
+        "ref": "official-monsters client_id=223 official.level; work/official_data/raw/monster/223.json"
+      },
+      "hp": {
+        "value": 500,
+        "source": "l1j",
+        "ref": "l1jdb:20872 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 20,
+        "source": "l1j",
+        "ref": "l1jdb:20872 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": -18,
+        "source": "l1j",
+        "ref": "l1jdb:20872 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 785,
+        "source": "l1j",
+        "ref": "l1jdb:20872 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20872 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:3232 walk Csum=24/24; parsed-spr:622",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 1250,
+        "source": "client",
+        "ref": "list.spr:3234 attack Csum=30/24; parsed-spr:622",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 2,
+        "source": "l1j",
+        "ref": "l1jdb:20872 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 11,
+          "max": 38,
+          "str": 20,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20872 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 223,
+        "source": "official",
+        "ref": "official-monsters client_id=223; native-dump:144 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 20,
+        "source": "l1j",
+        "ref": "l1jdb:20872 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "오크 숲",
+          "글루디오",
+          "켄트",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=223 official.regionNames; work/official_data/raw/monster/223.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    },
+    {
+      "template_id": {
+        "value": 297,
+        "source": "client",
+        "ref": "native-dump:178"
+      },
+      "name_token": {
+        "value": "$1042",
+        "source": "client",
+        "ref": "native-dump:178 name.reference"
+      },
+      "name_ko": {
+        "value": "다크 엘프",
+        "source": "client",
+        "ref": "native-dump:178 name.KR"
+      },
+      "sprite_id": {
+        "value": 1125,
+        "source": "client",
+        "ref": "native-dump:178 f2; list.spr:3785 darkelf; parsed-spr:724",
+        "note": "L1J gfxid=1125; client f2/SPR takes precedence. Native render unverified."
+      },
+      "l1j_npcid": {
+        "value": 45265,
+        "source": "l1j",
+        "ref": "l1jdb:20860",
+        "note": "Name token and official name/level/region select this LOCAL correspondence; ID namespaces remain separate."
+      },
+      "level": {
+        "value": 27,
+        "source": "official",
+        "ref": "official-monsters client_id=297 official.level; work/official_data/raw/monster/297.json"
+      },
+      "hp": {
+        "value": 350,
+        "source": "l1j",
+        "ref": "l1jdb:20860 hp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "mp": {
+        "value": 110,
+        "source": "l1j",
+        "ref": "l1jdb:20860 mp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "ac": {
+        "value": -24,
+        "source": "l1j",
+        "ref": "l1jdb:20860 ac",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "kill_exp": {
+        "value": 730,
+        "source": "l1j",
+        "ref": "l1jdb:20860 exp",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "aggressive": {
+        "value": true,
+        "source": "l1j",
+        "ref": "l1jdb:20860 agro",
+        "note": "Conditional family/gfx aggression and special AI are not implemented by this data."
+      },
+      "move_interval_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:3786 walk Csum=16/24; parsed-spr:724",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_interval_ms": {
+        "value": 2000,
+        "source": "client",
+        "ref": "list.spr:3787 attack Csum=48/24; parsed-spr:724",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_range": {
+        "value": 10,
+        "source": "l1j",
+        "ref": "l1jdb:20860 ranged",
+        "note": "LOCAL reference policy; fixed client original stat unconfirmed."
+      },
+      "perception_range": {
+        "value": 13,
+        "source": "l1j",
+        "ref": "l1jsrc types/Point.java:141-143 isInScreen; l1jcfg server.properties:128 PcRecognizeRange=-1",
+        "note": "M1과 같은 화면 안쪽 확정 반경을 사용한 로컬 참고 정책."
+      },
+      "leash_range": {
+        "value": 20,
+        "source": "local_policy",
+        "ref": "spawns.json 각 선정 L1J spawn movement_distance=0",
+        "note": "혼자 사냥에서 home으로부터20칸 범위. 던전 벽·방·경로를 확인한 거리가 아님."
+      },
+      "damage": {
+        "value": {
+          "min": 9,
+          "max": 35,
+          "str": 16,
+          "rule": "l1j_npc_melee"
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20860 lvl/str; l1jsrc model/L1Attack.java:943-946",
+        "note": "Physical base damage only; spell, poison and special attacks remain unverified."
+      },
+      "corpse_ms": {
+        "value": 50000,
+        "source": "l1j",
+        "ref": "l1jcfg altsettings.properties:138 NpcDeletionTime=50; l1jsrc model/Instance/L1NpcInstance.java:2169",
+        "note": "M1과 같은 로컬 참고 정책. 실제 사체 정리 미검증."
+      },
+      "official_id": {
+        "value": 297,
+        "source": "official",
+        "ref": "official-monsters client_id=297; native-dump:178 exact ID and Korean name"
+      },
+      "l1j_mr": {
+        "value": 30,
+        "source": "l1j",
+        "ref": "l1jdb:20860 mr",
+        "note": "Metadata only; MonsterDef does not consume MR."
+      },
+      "expansion_official_regions": {
+        "value": [
+          "기란 던전 4층",
+          "오크 숲",
+          "용의 계곡",
+          "기란",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "official-monsters client_id=297 official.regionNames; work/official_data/raw/monster/297.json",
+        "note": "Official occurrence is distinct from L1J reference placement. A missing region is retained as an occurrence mismatch, not silently asserted as Classic spawn confirmation."
+      }
+    }
+  ],
+  "unverified": [
+    "실제 원본 화면 외형·입력·공격/반격·보상·저장·수명",
+    "조건부 선공·원거리 투사체·언데드 등 종별 특수효과",
+    "첫 사냥 난이도·적정 밀도·글루딘에서의 실제 이동 경로"
+  ],
+  "expansion_note": "2026-10-27 sourced table extension. Prior rows and template policy preserved; source priority client > stored official > L1J LOCAL reference. See EXPANSION_SOURCES.md. Data/static validation only, no game or packet PASS.",
+  "baseline_note": "글루디오 전체 복원이 아닌 글루딘 동쪽 첫 사냥 구역 3종. 고정 client 식별·SPR과 저장 공식 지역/레벨 우선, 공식 미제공 능력치와 AI만 대응 NPC 자신의 L1J/local 정책을 재사용한다. 실행 연결·실제 화면·전투·보상 PASS 아님."
+}

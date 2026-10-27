@@ -1,0 +1,13 @@
+{
+  "table": "m1_pc_exp",
+  "version": 1,
+  "note": "PC 레벨별 누적 EXP. cumulative[0]=Lv1. 클래식 원본 성장표는 미확정(MAPPING_SCOPE.md 경험치 표 행)이라 L1J 배열 앞 30칸을 로컬 정책으로 채택. 필요량은 누적값 차이. L1J의 Lv50 이상 penalty는 M1 범위 밖이라 옮기지 않음.",
+  "cumulative": {
+    "value": [0, 125, 300, 500, 750, 1296, 2401, 4096, 6581, 10000,
+              14661, 20756, 28581, 38436, 50645, 65556, 83541, 104996, 130341, 160020,
+              194501, 234276, 279861, 331792, 390641, 456992, 531457, 614672, 707297, 810016],
+    "source": "local_policy",
+    "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/datatables/ExpTable.java:95-99 _expTable[0..29] (getExpByLevel :40 = _expTable[level-1])",
+    "note": "L1J 값(16진 상수를 10진으로 옮김)"
+  }
+}
