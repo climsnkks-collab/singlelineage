@@ -141,6 +141,11 @@ class ProgressStore:
         with _lock:
             return self._load().get(uid, Progress(0, 1))
 
+    def peek(self, uid: int) -> Progress | None:
+        """Return an already-loaded snapshot without another sidecar read."""
+        with _lock:
+            return None if self._rows is None else self._rows.get(uid, Progress(0, 1))
+
     def stage(self, uid: int, progress: Progress) -> None:
         """Adopt a world snapshot; the bridge owns its pending durable write."""
         from dataclasses import asdict
@@ -174,3 +179,86 @@ class ProgressStore:
                 if temporary.exists():
                     temporary.unlink()
             self._rows = rows
+
+
+class ProgressOwner:
+    """One live progression API, backed by the unchanged ProgressStore schema.
+
+    Bound PcState/status and EXP remain the live authorities. Pending immutable
+    snapshots only track writes; acknowledging an older snapshot never discards
+    a newer update. Unbound reads use the attached saved progression owner.
+    """
+    def __init__(self, world):
+        self.world = world
+        self._store = None
+        self._pending = {}
+
+    def attach_store(self, store):
+        self._store = store
+
+    def snapshot(self, uid):
+        state = self.world.combat.pcs.get(uid)
+        if state is not None:
+            return Progress(self.world.exp[uid], state.profile.level,
+                            state.max_hp, state.max_mp,
+                            state.status_fields.get(18, 500))
+        pending = self._pending.get(uid)
+        if pending is not None:
+            return pending
+        return Progress(0, 1) if self._store is None else self._store.get(uid)
+
+    def lawful_of(self, uid, fallback=500):
+        state = self.world.combat.pcs.get(uid)
+        if state is not None:
+            return state.status_fields.get(18, fallback)
+        if uid in self._pending:
+            return self._pending[uid].lawful
+        saved = None if self._store is None else self._store.peek(uid)
+        return fallback if saved is None else saved.lawful
+
+    def set_lawful(self, uid, value):
+        from dataclasses import replace
+        return self.adopt(uid, replace(self.snapshot(uid), lawful=value))
+
+    def mark(self, uid, **changes):
+        from dataclasses import replace
+        value = self.snapshot(uid)
+        if changes:
+            value = replace(value, **changes)
+        self._pending[uid] = value
+        return value
+
+    def adopt(self, uid, value, *, dirty=True):
+        from dataclasses import replace
+        state = self.world.combat.pcs.get(uid)
+        if state is not None:
+            self.world.exp[uid] = value.exp
+            state.profile = replace(state.profile, level=value.level)
+            if value.max_hp is not None:
+                state.max_hp = value.max_hp
+            if value.max_mp is not None:
+                state.status_fields[13] = value.max_mp
+            state.status_fields.update({2: value.level, 11: state.max_hp,
+                18: value.lawful})
+        if dirty:
+            self._pending[uid] = value
+        return value
+
+    @property
+    def pending_view(self):
+        from types import MappingProxyType
+        return MappingProxyType(self._pending)
+
+    def pending(self, uid):
+        return self._pending.get(uid)
+
+    def pending_items(self):
+        return tuple(self._pending.items())
+
+    def ack(self, uid, expected):
+        if self._pending.get(uid) is expected:
+            self._pending.pop(uid, None)
+
+    def clear(self, uid):
+        """An external atomic owner has durably adopted this character snapshot."""
+        self._pending.pop(uid, None)
