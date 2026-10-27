@@ -181,7 +181,8 @@ class Context(Protocol):
 def _pc(ctx: Context) -> Entity:
     pc = ctx.world.entities.get(ctx.pc_uid)
     _need(pc is not None and pc.kind is Kind.PC and pc.alive, 'CURRENT_LIVE_PC_REQUIRED')
-    _need(ctx.town.entities is ctx.world.entities, 'SAME_WORLD_TOWN_REQUIRED')
+    if ctx.town is not None:
+        _need(ctx.town.entities is ctx.world.entities, 'SAME_WORLD_TOWN_REQUIRED')
     return pc
 
 
@@ -208,6 +209,8 @@ async def _result(value):
 
 
 async def handle_click(ctx: Context, payload: bytes, now: float) -> None:
+    if ctx.town is None:
+        return False
     begin = getattr(ctx, 'begin_click', None)
     if begin is not None:
         begin()
@@ -229,6 +232,8 @@ async def handle_click(ctx: Context, payload: bytes, now: float) -> None:
 
 
 async def handle_action(ctx: Context, payload: bytes, now: float) -> None:
+    if ctx.town is None:
+        return False
     fields = ctx.wire.dialogue.decode_haction_normal(payload)
     state = ctx.state
     _need(state.interaction is not None and state.menu is not None, 'CURRENT_MENU_REQUIRED')
@@ -264,6 +269,8 @@ async def handle_action(ctx: Context, payload: bytes, now: float) -> None:
 
 
 async def handle_trade(ctx: Context, payload: bytes, now: float) -> None:
+    if ctx.town is None:
+        return False
     warehouse = getattr(ctx, 'warehouse_trade', None)
     if warehouse is not None and await _result(warehouse(payload, now)):
         return
@@ -389,13 +396,19 @@ class HostNpcSource:
 
 @dataclass(frozen=True)
 class HostBindings:
-    wire: WireBindings
-    town: TownNpcs
+    wire: WireBindings | None
+    town: TownNpcs | None
     sources: Mapping
     item_policies: Mapping
     interaction_distance: int
     allocate_uid: Callable | None
     sale_item: Callable | None
+
+
+def empty_host_bindings() -> HostBindings:
+    """Core movement/inventory context, without optional dialogue assets or I/O."""
+    return HostBindings(None, None, MappingProxyType({}), MappingProxyType({}),
+                        15, None, None)
 
 
 def _starter_fields():
@@ -428,7 +441,7 @@ def _default_item_policies(town):
                 if 10 in fields and 5 in fields:
                     native[row['id']] = (fields[10], fields[5])
     fallback = {}
-    for offer in town.data.shops.offers.values():
+    for offer in (() if town is None else town.data.shops.offers.values()):
         if offer.calculable:
             fallback.setdefault(offer.classic_item_id, (offer.weight_milli, offer.stackable))
     policies = []
@@ -687,6 +700,8 @@ class HostContext:
     """
     def __init__(self, broker, writer, row, game, operation_lock):
         self.broker, self.writer, self.row, self.game = broker, writer, row, game
+        from tools.local_original_session.world_bridge import Context as FeatureContext
+        self.extensions = FeatureContext(broker)
         self.operation_lock = operation_lock
         self.world = broker._world
         self.pc_uid = broker._world_pcs[id(writer)][1]
@@ -751,6 +766,7 @@ class HostContext:
             source.retired = True
         self.sources.clear()
         self.state.clear()
+        self.extensions.run_sync_hooks('begin_click', self)
 
     def dialogue_for(self, interaction, now):
         source = self._source(interaction, 'menu')
@@ -768,24 +784,20 @@ class HostContext:
             return False
         _need(self.current_source(menu.source) and menu.source.delivered,
               'DRAINED_CURRENT_MENU_REQUIRED')
-        self.broker._world_service_action(self, interaction, menu, fields, now)
-        return True
+        # Existing town gate belongs before every optional service consumer.
+        action, stem = fields[2].decode('utf-8'), menu.fields[2].decode('utf-8')
+        _need(action in menu.source.owner.pages.get(stem, ()), 'TOWN_SERVICE_ACTION_NOT_LISTED')
+        return self.extensions.chain_sync_hooks('service_action', self, interaction, menu, fields, now)
 
     async def use_item(self, payload, now):
         self._owned()
-        if await self.broker._world_enchant_use(self, payload, now):
-            return True
-        return self.broker._world_polymorph_use(self, payload, now)
+        return await self.extensions.chain_hooks('item_use', self, payload, now)
 
     def warehouse_trade(self, payload, now):
-        return self.broker._world_warehouse_trade(self, payload, now)
+        return self.extensions.chain_sync_hooks('warehouse_trade', self, payload, now)
 
     def warehouse_close(self, payload, now):
-        from tools.local_original_session.world_warehouse import close_body
-        close_body(payload)
-        self.row.pop('_world_warehouse_window', None)
-        self.begin_click()
-        return True
+        return self.extensions.chain_sync_hooks('warehouse_close', self, payload, now)
 
     def shop_action(self, interaction, menu, fields, now):
         source = menu.source
@@ -834,74 +846,41 @@ class HostContext:
         return self.broker._world_transition_for_handler(self.writer, self.row, self.game, destination, now, self)
 
 
-# Broker-facing features: append one module name to register an independent file.
+# Mandatory session/inventory/progression services are never optional features.
+CORE_MODULES = (
+    'world_core_session',
+    'world_core_kit',
+    'world_core_reward',
+    'world_core_life',
+    'world_core_maps',
+    'world_core_stats',
+)
+
+# Remove any entry to omit only that feature. Initializers and callbacks are
+# installed exclusively through these declarations; no bridge imports features.
 FEATURE_MODULES = (
     'world_feature_pet',
-    'world_feature_session',
-    'world_feature_kit',
     'world_feature_combat',
-    'world_feature_reward',
-    'world_feature_life',
     'world_feature_town',
     'world_feature_items',
-    'world_feature_maps',
     'world_feature_dungeons',
-    'world_feature_stats',
     'world_feature_alignment',
     'world_feature_companion',
+    'world_feature_trade',
     'world_feature_quest',
     'world_feature_magic',
     'world_feature_talkscroll',
     'world_feature_m5',
 )
 
-# Available lifecycle hooks. Empty lists are intentional extension points.
-HOOK_NAMES = ('initialize', 'runtime_started', 'runtime_stopped', 'after_request',
-              'after_enter', 'after_move', 'after_kill', 'after_death',
-              'after_leave', 'prepare_attack', 'npc_hit', 'stats_changed')
-
-
-@dataclass(frozen=True)
-class FeatureRegistry:
-    methods: Mapping
-    realm_methods: Mapping
-    frames: Mapping
-    hooks: Mapping
-    outgoing_opcodes: tuple
+# Re-export the small registry API for existing imports and new features.
+from tools.local_original_session.world_registry import (
+    FeatureRegistry, build_registry, run_hooks, run_sync_hooks,
+    chain_hooks, chain_sync_hooks, fold_hooks, fold_sync_hooks,
+    collect_hooks, collect_sync_hooks, has_hooks, prepare_attack,
+)
 
 
 @lru_cache(maxsize=1)
 def feature_registry():
-    # Import/register once, before broker construction; no request-time discovery.
-    from importlib import import_module
-    methods, realm_methods, frames = {}, {}, {}
-    hooks = {name: [] for name in HOOK_NAMES}
-    outgoing = []
-    for name in FEATURE_MODULES:
-        feature = import_module('tools.local_original_session.' + name)
-        for function in getattr(feature, 'METHODS', ()):
-            methods[function.__name__] = function
-        for function in getattr(feature, 'REALM_METHODS', ()):
-            realm_methods[function.__name__] = function
-        for opcode, names in getattr(feature, 'FRAMES', {}).items():
-            frames.setdefault(opcode, []).extend(names)
-        for hook, names in getattr(feature, 'HOOKS', {}).items():
-            hooks.setdefault(hook, []).extend(names)
-        outgoing.extend(getattr(feature, 'OUTGOING_OPCODES', ()))
-    return FeatureRegistry(MappingProxyType(methods), MappingProxyType(realm_methods),
-        MappingProxyType({op: tuple(names) for op, names in frames.items()}),
-        MappingProxyType({hook: tuple(names) for hook, names in hooks.items()}), tuple(outgoing))
-
-
-async def run_hooks(name, context, *args):
-    result = None
-    for method in feature_registry().hooks.get(name, ()):
-        result = await _result(getattr(context, method)(*args))
-    return result
-
-
-def run_sync_hooks(name, context, *args):
-    result = None
-    for method in feature_registry().hooks.get(name, ()):
-        result = getattr(context, method)(*args)
-    return result
+    return build_registry(CORE_MODULES + FEATURE_MODULES)

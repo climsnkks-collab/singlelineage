@@ -1,4 +1,4 @@
-"""World feature: reward. Existing packet/store operations, unchanged."""
+"""World core: reward. Existing packet/store operations, unchanged."""
 from __future__ import annotations
 
 from tools.local_original_session.world_bridge import need
@@ -13,15 +13,12 @@ def _world_progress_for(self, uid):
 
 
 def _world_save_progress(self, uid):
-    dirty = self._world.progress_dirty.get(uid)
+    dirty = self._world.progress.pending(uid)
     if dirty is None:
         return
     try:
-        from dataclasses import replace
-        self._world_progress.commit(uid, replace(dirty, lawful=getattr(self, '_world_lawful', {}).get(
-            uid, dirty.lawful)))
-        if self._world.progress_dirty.get(uid) is dirty:
-            self._world.progress_dirty.pop(uid, None)
+        self._world_progress.commit(uid, dirty)
+        self._world.progress.ack(uid, dirty)
     except Exception as error:  # the next kill retries with the newer value
         self._world_progress_errors = (self._world_progress_errors + [type(error).__name__])[-4:]
 
@@ -119,6 +116,15 @@ FRAMES = {0x4e3e: ('_world_pickup',)}
 def setup_progress(self, store_path):
     from tools.local_original_session import inventory_update, item_transfer_protocol, world_progress
     self._world_progress = world_progress.ProgressStore(store_path)
+    self.world.progress.attach_store(self._world_progress)
     self.realm._world_progress = self._world_progress_for
     inventory_update.source_ready()  # 0965 pickup quantity frames: contract once
     item_transfer_protocol.source_ready()  # 4E3E pickup request: contract once
+
+
+
+def _world_reward_initialize(self):
+    setup_progress(self, self.world_options['store_path'])
+
+METHODS += (_world_reward_initialize,)
+HOOKS = {'initialize': ('_world_reward_initialize',)}

@@ -11,9 +11,6 @@ def _world_service_action(self, ctx, interaction, menu, fields, now):
     from tools.local_original_session.world_maps import MapDestination
     owner, uid = menu.source.owner, ctx.pc_uid
     action, stem = fields[2].decode('utf-8'), menu.fields[2].decode('utf-8')
-    need(action in owner.pages.get(stem, ()), 'TOWN_SERVICE_ACTION_NOT_LISTED')
-    if self._world_quest_action(ctx, interaction, menu, fields, now):
-        return
     # run403 proves the four native inputs, not the fee/number-panel consumer,
     # key ownership, refund, destination or recovery contract. The separate
     # explicit LOCAL instant-rest calculator must not consume native room.
@@ -22,14 +19,14 @@ def _world_service_action(self, ctx, interaction, menu, fields, now):
     ctx.state.window = None
     if stem == 'storage':
         self._world_warehouse_open(ctx, interaction, action)
-        return
+        return True
     if interaction.npc.npc_id == 50015 and stem == 'lucas1' and action == 'teleportURL':
         next_menu = Dialogue({1: fields[1], 2: b'lucas2'}, menu.source)
         ctx.send_frame(ctx.wire.dialogue_frame(next_menu.fields))
         menu.source.delivered = False
         ctx.pending.append(menu.source)
         ctx.state.menu = next_menu
-        return
+        return True
     state = self._world.combat.pcs[uid]
     need(not state.dead and state.hp > 0, 'TOWN_SERVICE_LIVING_PC_REQUIRED')
     items = inventory.validate_kit_frame(self.inventory_frame)
@@ -58,6 +55,7 @@ def _world_service_action(self, ctx, interaction, menu, fields, now):
                                              context=ctx, same_map_correction=True):
         ctx.send_frame(frame)
     ctx.state.clear()  # successful service cannot replay the paid menu
+    return True
 
 
 def _world_warehouse_open(self, ctx, interaction, action):
@@ -67,7 +65,7 @@ def _world_warehouse_open(self, ctx, interaction, action):
     state = self._world.combat.pcs[ctx.pc_uid]
     need(state.profile.level >= self._world_services.minimum_level, 'WAREHOUSE_LEVEL_REQUIRED')
     direction = 'deposit' if action == 'deposit' else 'withdraw'
-    frame = self._world_warehouse_store.restore(ctx.pc_uid)
+    frame = self.inventory_transactions.restore_warehouse(ctx.pc_uid)
     items = () if frame is None else inventory.validate_kit_frame(frame)
     current = inventory.validate_kit_frame(self.inventory_frame)
     context = ctx.row.get('_world_warehouse_context', 0) + 1
@@ -102,7 +100,7 @@ def _world_warehouse_trade(self, ctx, payload, now):
          and window['source'].delivered, 'WAREHOUSE_DRAINED_CURRENT_LIST_REQUIRED')
     world_handlers._interaction(ctx, window['ref'])
     before = self.inventory_frame
-    warehouse_before = self._world_warehouse_store.restore(ctx.pc_uid)
+    warehouse_before = self.inventory_transactions.restore_warehouse(ctx.pc_uid)
     need(window['source'].inventory is before and window['warehouse'] == warehouse_before
          and request.context_u32 == window['context'] and request.mode == window['mode'],
          'WAREHOUSE_CURRENT_CONTEXT_REQUIRED')
@@ -179,7 +177,7 @@ def _world_warehouse_trade(self, ctx, payload, now):
     ctx.row.pop('_world_warehouse_window', None)
     window['source'].retired = True  # Ambiguous persistence never permits replay.
     ctx.commit_attempted = True
-    self._world_warehouse_store.commit(ctx.pc_uid, before, after, warehouse_before,
+    self.inventory_transactions.commit_warehouse(ctx.pc_uid, before, after, warehouse_before,
                                       warehouse_after, **equipment_change)
     self.inventory_frame = after
     if equipment_after != equipment and self._item_equipment_effect._selection is not None:
@@ -221,7 +219,7 @@ def setup_warehouse(self):
         need(len(parts) == 7 and parts[0] in (1, 2, 3)
              and all(0 <= value < 1 << 32 for value in parts), 'WAREHOUSE_EXPERIMENT_VALUES')
         self._world_warehouse_exp = parts
-    self._world_enchant_results, self._world_warehouse_results = [], []
+    self._world_warehouse_results = []
 
 
 def setup_town(self, world_handler_sources):
@@ -239,15 +237,15 @@ def setup_town(self, world_handler_sources):
         candidate_npc_ids=world_town.confirmed_npc_ids(town_data) | frozenset(
             int(value.strip()) for value in candidates.split(',')
             if value.strip() and candidates != 'all'))
-    self._world.town = world_town.TownNpcs(self._world.entities, town_data, town_config,
+    town = world_town.TownNpcs(self._world.entities, town_data, town_config,
         passable=(lambda m, x, y: m != 4 or self._world.terrain.can_stand(m, x, y)) if gludin else None)
     self._world_services = world_town_services.load_town_services(
         experimental=os.environ.get('SL_EXPERIMENT_MAP', '0') in ('1', '2', '3'))
     self._world_inn_price = self._world_services.inn_price
-    service_menus = world_town_services.load_service_menus(self._world.town,
+    service_menus = world_town_services.load_service_menus(town,
         warehouse_experiment=bool(self._world_warehouse_exp))
-    from tools.local_original_session.world_feature_quest import setup_quests
-    quest_menus = setup_quests(self, self._world.town)
+    extra_menus = tuple(source for group in self.collect_sync_hooks('menu_sources', town)
+                        for source in group)
     from dataclasses import replace
     warehouse_keys = frozenset(source.placement_key for source in service_menus
                                if source.stem == 'storage')
@@ -263,7 +261,7 @@ def setup_town(self, world_handler_sources):
                               | frozenset(source.placement_key[0] for source in service_menus))
     from tools.local_original_session import world_shop_menu
     self._world_shop_experiment = world_shop_menu.parse_experiment(os.environ.get('SL_EXPERIMENT_SHOP'))
-    menu_sources = world_shop_menu.load_menu_sources(self._world.town,
+    menu_sources = world_shop_menu.load_menu_sources(town,
         experiment=self._world_shop_experiment)
     if self._world_shop_experiment is not None:
         from dataclasses import replace
@@ -272,18 +270,61 @@ def setup_town(self, world_handler_sources):
                 source.placement_key[0] for source in menu_sources),
             shop_sprite_candidates=town_config.shop_sprite_candidates | frozenset(
                 source.placement_key for source in menu_sources))
-    self._world.town.register(town_config)
+    town.register(town_config)
     # Explicit externally prepared sources retain priority over JSON menus.
     supplied = {source.placement_key for source in world_handler_sources}
-    self._world_handler_bindings = world_handlers.prepare_host_bindings(
-        self._world.town, sources=tuple(world_handler_sources) + tuple(
-            source for source in (*menu_sources, *service_menus, *quest_menus)
-            if source.placement_key not in supplied))
-    # Quest-owned rows participate in the same inventory snapshot even at an
-    # unrelated shop. Preserve existing item policies/offers and their owners.
-    from types import MappingProxyType
-    policies = dict(self._world_handler_bindings.item_policies)
-    for policy in self._world_quest_item_policies:
-        policies.setdefault(policy.template_id, policy)
-    self._world_handler_bindings = replace(self._world_handler_bindings,
-                                           item_policies=MappingProxyType(policies))
+    sources = tuple(world_handler_sources) + tuple(
+        source for source in (*menu_sources, *service_menus, *extra_menus)
+        if source.placement_key not in supplied)
+    self.configure_town(town, sources)
+    configured = self.fold_sync_hooks('town_setup', world_town.TownSetup(
+        town, self._world_services, sources, self._world_shop_experiment))
+    self._world_services = configured.services
+    world_town.attach_view(self.world, configured.town)
+    self.configure_town(configured.town, configured.sources, refresh_policies=False)
+    for policies in self.collect_sync_hooks('item_policies'):
+        self.add_item_policies(policies)
+
+
+def _world_town_initialize(self):
+    setup_warehouse(self)
+    setup_town(self, self.world_options['world_handler_sources'])
+
+
+def _world_town_begin_click(self, host):
+    host.row.pop('_world_warehouse_window', None)
+
+
+def _world_town_inventory_changed(self, writer, row):
+    row.pop('_world_warehouse_window', None)
+
+
+def _world_town_warehouse_close(self, host, payload, now):
+    from tools.local_original_session.world_warehouse import close_body
+    close_body(payload)
+    host.row.pop('_world_warehouse_window', None)
+    host.begin_click()
+    return True
+
+
+def _world_town_report(self, result):
+    town = self.world.town
+    result.update(town_npcs=sum(1 for entity in self.world.entities
+                              if town.npc_for(entity.uid) is not None),
+        menu_sources=len(self._world_handler_bindings.sources),
+        shop_experiment=self._world_shop_experiment is not None,
+        warehouse_experiment=self._world_warehouse_exp,
+        warehouse_results=list(self._world_warehouse_results))
+
+
+METHODS += (_world_town_initialize, _world_town_begin_click,
+            _world_town_inventory_changed, _world_town_warehouse_close, _world_town_report)
+HOOKS = {'initialize': ('_world_town_initialize',),
+         'service_action': ('_world_service_action',),
+         'warehouse_trade': ('_world_warehouse_trade',),
+         'warehouse_close': ('_world_town_warehouse_close',),
+         'begin_click': ('_world_town_begin_click',),
+         'inventory_changed': ('_world_town_inventory_changed',),
+         'report': ('_world_town_report',)}
+NONCRITICAL_HOOKS = ('report',)
+SAVE_BOUNDARIES = {'_world_warehouse_trade': True}

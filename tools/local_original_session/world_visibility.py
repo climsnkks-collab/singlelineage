@@ -35,17 +35,16 @@ from collections.abc import Iterable
 from dataclasses import replace as _replace
 from functools import lru_cache
 import json
-import logging
 from pathlib import Path
 import random
 import struct
 import time
-import uuid
 
 from tools.local_original_session import npc, npc_death, npc_motion, player_life_codec, world_combat
 from tools.local_original_session import item_ground, item_ground_wire
 from tools.local_original_session.world_ground_items import GroundItem, GroundItems
-from tools.local_original_session.world_progress import Progress, exp_percent
+from tools.local_original_session.world_progress import ProgressOwner, exp_percent
+from tools.local_original_session.world_extensions import WorldEvents, RuntimeExtensions
 from tools.local_original_session.world_reward import RewardPcState, on_kill
 from tools.local_original_session.game_data import M1Data, MonsterDef, load_m1
 from tools.local_original_session.npc_ai import NpcAi, heading_to, local_line_clear
@@ -53,23 +52,13 @@ from tools.local_original_session.world_entities import Entity, EntityRegistry, 
 from tools.local_original_session.world_interest_spawn import InterestSpawner
 from tools.local_original_session.world_runtime import WorldRuntime
 from tools.local_original_session.world_terrain import WorldTerrain, default_terrain
-from tools.local_original_session.world_town import TownAppearance, TownNpcs
-from tools.local_original_session.world_companion import WorldCompanions, split_exp
-from tools.local_original_session.companion_ai import CompanionAI
 from tools.local_movement_session_route.route import authority
 from tools.local_game_session import session
 
 POLICY = 'LOCAL_M1_WORLD_INTEREST_SPAWN'
-LOG = logging.getLogger(__name__)
 ITEM_GFX_PATH = Path(__file__).resolve().parent / 'data' / 'm1' / 'item_gfx.json'
 SCREEN_ALWAYS = 13
 SCREEN_LIMIT = 17
-# LOCAL server cadence from existing client_speed_research/nominal-timings.json:
-# sprite734/1186 staff walk50 Csum16, attack51 Csum28, default24fps, no modifiers.
-# This is the member's own nominal timing, not an observed original server rate.
-COMPANION_STAFF_WALK = 16 / 24
-COMPANION_STAFF_ATTACK = 28 / 24
-
 # Non-identity Actor fields of the existing verified local Monster spawn
 # (work/local_original_session/manual-play/item-equipment-runtime-config.json,
 # npc.spawn.fields). f1 grid, f2 UID, f3 sprite, f5 heading, f9 name and f39
@@ -125,7 +114,7 @@ def remove_frame(uid: int) -> bytes:
     return npc_death.frame(npc_death.REMOVE_OPCODE, uid)
 
 
-def town_spawn_frame(entity: Entity, appearance: TownAppearance) -> bytes:
+def town_spawn_frame(entity: Entity, appearance) -> bytes:
     """Existing Actor codec/framing, with selected town catalog appearance only.
 
     Catalog identity is metadata, not evidence for wire f39. Leave that optional
@@ -184,7 +173,7 @@ class WorldView:
                  terrain: WorldTerrain | None = None, *, data: M1Data | None = None,
                  rng: random.Random | None = None):
         self.runtime, self.spawner = runtime, spawner
-        self.town: TownNpcs | None = None  # broker registers under the same world lock
+        self.town = None  # broker registers under the same world lock
         # Static S32 mask1 terrain: can_stand for spawns, can_step for NPC moves.
         self.terrain = terrain
         self.visibility = Visibility()
@@ -193,20 +182,10 @@ class WorldView:
         self.data = data if data is not None else load_m1()
         self.combat = world_combat.WorldCombat(self.data, rng)
         self.ai = NpcAi(self, rng) if terrain is not None else None
-        self.companions = WorldCompanions(runtime.entities, runtime.scheduler,
-            release_target=lambda uid, now: self.ai.release_target(uid, now) if self.ai else None)
-        self.companions.on_remove = self._companion_removed
-        self.combat.companions = self.companions
-        self.companion_profiles = {}
-        self.companion_looks = {}
-        self.companion_owner_half = {}
-        self.companion_reward_receipts = []
-        self.companion_reward_epoch = uuid.uuid4().hex
-        self.companion_save = None  # one joint absolute owner/member durable snapshot
-        self.companion_save_errors = []
-        self.companion_ai = CompanionAI(self, move_interval=COMPANION_STAFF_WALK,
-            attack_interval=COMPANION_STAFF_ATTACK, tick_interval=runtime.tick_interval,
-            attack_consumer=self.companion_attack, move_consumer=self.npc_step)
+        self.events = WorldEvents()
+        self.ai_target = lambda uid: self.events.chain('ai_target', uid)
+        self.runtime_extensions = RuntimeExtensions()
+        self.extensions = {}
         self.outbox: dict[int, list[bytes]] = {}
         self.notify = None  # callable(pc_uid), set by the broker; called under the world lock
         self.regen: dict[int, object] = {}  # pc uid -> scheduler Handle of its next recovery tick
@@ -216,7 +195,7 @@ class WorldView:
         self.ground.on_remove = self._ground_removed
         self.item_known: dict[int, set[int]] = {}  # pc uid -> ground item UIDs its client shows
         self.exp: dict[int, int] = {}  # pc uid -> saved cumulative EXP while bound
-        self.progress_dirty: dict[int, Progress] = {}  # changed by kills, persisted by the broker
+        self.progress = ProgressOwner(self)
         self.reward_errors: list[str] = []
         self.on_pc_death = None  # callable(pc_uid), before own death frame, under world lock
         self.prepare_pc_attack = None  # callable(pc_uid, target_entity, now) -> preparation or None
@@ -246,6 +225,18 @@ class WorldView:
         return cls(runtime, spawner, terrain, data=data, rng=rng)
 
     @property
+    def progress_dirty(self):
+        """Read-only compatibility inspection; mutations belong to ProgressOwner."""
+        return self.progress.pending_view
+
+    def replace_data(self, data):
+        """Publish one immutable catalog to all core consumers at startup."""
+        self.data = data
+        self.combat.data = data
+        self.ground.data = data
+        self.events.emit('catalog_changed', data)
+
+    @property
     def entities(self) -> EntityRegistry:
         return self.runtime.entities
 
@@ -256,10 +247,7 @@ class WorldView:
         drop those states here before its final save.
         """
         self.closed = True
-        for actor in tuple(self.companions.active.values()):
-            self.companions.dismiss(actor.character_id)
-        if self.town is not None:
-            self.town.close()
+        self.events.emit('close')
 
     # ---- outbox ------------------------------------------------------------
     def _queue(self, pc_uid: int, frame: bytes) -> None:
@@ -289,7 +277,7 @@ class WorldView:
                     self._queue(pc_uid, frame)
         if self.ai is not None:
             self.ai.sync(now)
-        self.companion_ai.sync(now)
+        self.events.emit('tick', now)
         self._announce()
 
     def _present(self, pc_uid: int, map_id: int, x: int, y: int) -> list[Entity]:
@@ -298,22 +286,15 @@ class WorldView:
         present = [entity for entity in self.entities.near(map_id, x, y, SCREEN_LIMIT, kind=Kind.NPC,
                                                            alive_only=False)
                    if self.spawner.visible(entity.uid) and (entity.alive or entity.uid in known)]
-        if self.town is not None:
-            present.extend(entity for entity in self.town.present(map_id, x, y, SCREEN_LIMIT)
-                           if self.town.appearance(entity.uid).sprite_id is not None)
-        present.extend(entity for actor in self.companions.active.values()
-                       if (entity := self.entities.get(actor.ref.uid)) is not None
-                       and entity.map_id == map_id and (entity.alive or entity.uid in known)
-                       and in_screen(x, y, entity.x, entity.y))
+        for entities in self.events.collect('visible_entities', pc_uid, map_id, x, y, known):
+            if entities is not None:
+                present.extend(entities)
         return present
 
     def _spawn_frame(self, entity: Entity) -> bytes:
-        companion = self.companions.retained_actor(entity.uid)
-        if companion is not None:
-            return companion_spawn_frame(entity, self.companion_looks[companion.character_id])
-        appearance = self.town.appearance(entity.uid) if self.town is not None else None
-        if appearance is not None:
-            return town_spawn_frame(entity, appearance)
+        supplied = self.events.first('spawn_frame', entity)
+        if supplied is not None:
+            return supplied
         return spawn_frame(entity, self.spawner.monster_for(entity.uid))
 
     def _refresh(self, pc_uid: int) -> list[bytes]:
@@ -387,7 +368,7 @@ class WorldView:
         entities = self.entities
         entity = entities.get(uid)
         if entity is not None and entity.map_id != map_id:
-            self.dismiss_companions(uid)
+            self.events.emit('before_map_change', uid)
         if entity is None:
             entities.add(Kind.PC, map_id, x, y, uid=uid)  # Existing profile UID.
         elif not entity.alive:
@@ -428,8 +409,7 @@ class WorldView:
 
     def leave_pc(self, uid: int) -> bool:
         """Drop the PC; True when it left dead (revived at max HP, respawn in town)."""
-        self.dismiss_companions(uid)
-        self._save_companion(uid)
+        self.events.emit('before_pc_leave', uid)
         self._stop_regen(uid)
         for key in [key for key in self.buffs if key[0] == uid]:
             self.runtime.scheduler.cancel(self.buffs.pop(key))  # buffs end with the selection
@@ -503,129 +483,19 @@ class WorldView:
         """HP 0: own SC4E39 after the HP0 status, recovery stops, monsters let go."""
         if self.on_pc_death is not None:
             self.on_pc_death(pc_uid)
-        self.dismiss_companions(pc_uid)
+        self.events.emit('pc_death', pc_uid)
         self._queue(pc_uid, player_life_codec.death(pc_uid))
         self._stop_regen(pc_uid)
         if self.ai is not None:
             self.ai.release_target(pc_uid, now)
 
     # ---- NPC actions (AI scheduler callbacks) ------------------------------
-    def _save_companion(self, uid: int, receipt=None) -> None:
-        if self.companion_save is not None:
-            try:
-                self.companion_save(uid, receipt)
-            except Exception as error:
-                # Keep the failed absolute snapshot in CompanionStore.pending.
-                # Persistence failure must not skip death/leave/map cleanup.
-                self.companion_save_errors = (self.companion_save_errors +
-                    [f'{type(error).__name__}: {error}'])[-8:]
-                LOG.exception('Companion snapshot save failed')
-
-    def _companion_removed(self, actor) -> None:
-        for uid in self.pcs:
-            known = self.visibility.known.get(uid, set())
-            if actor.ref.uid in known:
-                known.discard(actor.ref.uid)
-                self._queue(uid, remove_frame(actor.ref.uid))
-        self._save_companion(actor.owner_ref.uid)
-        self._announce()
-
-    def dismiss_companions(self, owner_uid: int) -> None:
-        for actor in tuple(self.companions.active.values()):
-            if actor.owner_ref.uid == owner_uid:
-                self.companions.dismiss(actor.character_id)
-
-    def summon_companion(self, character_id: int, owner_uid: int):
-        owner = self.entities.get(owner_uid)
-        if (owner is None or owner_uid not in self.pcs or not self.combat.can_be_attacked(owner_uid)
-                or character_id not in self.companion_profiles
-                or self.companions.records[character_id].owner_character_id != owner_uid):
-            raise ValueError('COMPANION_SELECTED_LIVING_OWNER_REQUIRED')
-        if any(rt.owner_ref.uid == owner_uid for rt in self.companions.active.values()):
-            raise ValueError('COMPANION_ONE_ACTIVE_MEMBER_REQUIRED')
-        # Same bounded terrain/occupied actor policy as existing AI. No teleport
-        # onto the owner's tile, no allocation until a lawful tile is available.
-        from tools.local_original_session.npc_ai import DELTAS
-        for heading, (dx, dy) in enumerate(DELTAS):
-            x, y = owner.x + dx, owner.y + dy
-            if (self.terrain is not None
-                    and self.terrain.can_step(owner.map_id, owner.x, owner.y, heading) is True
-                    and not any(e.kind is not Kind.ITEM for e in self.entities.near(
-                        owner.map_id, x, y, 0, alive_only=False))):
-                actor = self.companions.summon(character_id, owner_uid, owner.map_id, x, y,
-                    now=self.runtime.clock(), heading=owner.heading)
-                self.companion_ai.start(actor.ref, self.runtime.clock())
-                for watcher in self.pcs:
-                    for frame in self._refresh(watcher):
-                        self._queue(watcher, frame)
-                self._save_companion(owner_uid)
-                self._announce()
-                return actor
-        raise ValueError('COMPANION_FREE_SPAWN_TILE_REQUIRED')
-
-    def _npc_attack_companion(self, entity, monster, actor, now):
-        target = self.entities.resolve(actor.ref)
-        if (target is None or entity.map_id != target.map_id
-                or max(abs(entity.x - target.x), abs(entity.y - target.y)) > monster.attack_range
-                or not local_line_clear(self.terrain, entity.map_id, entity.x, entity.y, target.x, target.y)):
-            return
-        target_ref = target.ref
-        heading = heading_to(entity.x, entity.y, target.x, target.y)
-        self.entities.move(entity.uid, entity.map_id, entity.x, entity.y, heading)
-        swing = self.combat.npc_companion_swing(monster, target.uid,
-            self.companion_profiles[actor.character_id], now)
-        if swing is None:
-            return
-        frame = world_combat.attack_frame(entity.uid, target.uid,
-            raw_effect=1 if swing.landed else 0, direction=heading, self_action=False,
-            ranged=monster.template_id == 1 and monster.attack_range > 1,
-            arrow_id=self.arrow_id, arrow_mode=self.arrow_mode)
-        watchers = set(self._watchers(entity)) | set(self._watchers(target))
-        for uid in watchers:
-            self._queue(uid, frame)
-        if not actor.record.alive:
-            for uid in self._watchers(target):
-                self._queue(uid, world_combat.death_frame(target.uid))
-        elif swing.landed and swing.damage > 0:
-            self.companion_ai.on_hit(target_ref, entity.ref, now)
-        # Player HUD hit-ratio f3 is UNKNOWN: never fabricate 4F1A or self4E38.
-        self._save_companion(actor.owner_ref.uid)
-
-    def companion_attack(self, intent) -> None:
-        actor = self.companions.get_actor(intent.actor_ref.uid)
-        attacker, target = self.entities.resolve(intent.actor_ref), self.entities.resolve(intent.target_ref)
-        found = None if target is None else self.spawner.slot_for(target.uid)
-        if (actor is None or actor.ref != intent.actor_ref or actor.target != intent.target_ref
-                or attacker is None or target is None or not target.alive or found is None
-                or actor.record.combat_mode == 'PASSIVE' or not actor.record.alive
-                or attacker.map_id != target.map_id or self.companions.are_allies(attacker.uid, target.uid)
-                or max(abs(attacker.x - target.x), abs(attacker.y - target.y)) > 1
-                or not local_line_clear(self.terrain, attacker.map_id, attacker.x, attacker.y, target.x, target.y)):
-            return
-        group, slot = found
-        if not group.active or slot.hp <= 0:
-            return
-        profile = _replace(self.companion_profiles[actor.character_id], level=actor.record.level)
-        swing = self.combat.companion_swing(actor, profile, group.monster)
-        if swing is None:
-            return
-        heading = heading_to(attacker.x, attacker.y, target.x, target.y)
-        self.entities.move(attacker.uid, attacker.map_id, attacker.x, attacker.y, heading)
-        frame = world_combat.attack_frame(attacker.uid, target.uid,
-            raw_effect=world_combat.PC_RAW_HIT if swing.landed else 0,
-            direction=heading, self_action=False)
-        for uid in set(self._watchers(attacker)) | set(self._watchers(target)):
-            self._queue(uid, frame)
-        self._apply_monster_swing(actor.owner_ref.uid, attacker.uid, target, group.monster,
-                                  slot.hp, swing, intent.at)
-        self._announce()
-
     def _apply_monster_swing(self, owner_uid, attacker_uid, target, monster, hp, swing, now):
         if swing.landed and hp - swing.damage <= 0:
             watchers = self._watchers(target)
             if self.ai is not None:
                 self.ai.drop(target.uid)
-            self.companion_ai.release_target(target.uid, now)
+            self.events.emit('npc_died', target.uid, now)
             self.runtime.scheduler.cancel_owner(target.ref)
             self.spawner.mark_dead(target.uid, now)
             if swing.damage > 0 and self.on_npc_hit is not None:
@@ -668,9 +538,8 @@ class WorldView:
         pc = self.entities.get(pc_uid)
         if pc is None or not pc.alive or not self.combat.can_be_attacked(pc_uid):
             return
-        companion = self.companions.get_actor(pc_uid)
-        if companion is not None:
-            return self._npc_attack_companion(entity, monster, companion, now)
+        if self.events.chain('npc_target_attack', entity, monster, pc_uid, now):
+            return
         heading = heading_to(entity.x, entity.y, pc.x, pc.y)
         self.entities.move(entity.uid, entity.map_id, entity.x, entity.y, heading)
         swing, status = self.combat.npc_swing(monster, pc_uid)
@@ -686,7 +555,7 @@ class WorldView:
         if self.combat.is_dead(pc_uid):
             self._pc_died(pc_uid, now)
         elif swing.landed and swing.damage > 0:
-            self.companion_ai.on_hit(pc.ref, entity.ref, now)
+            self.events.emit('pc_hit', pc.ref, entity.ref, now)
 
     # ---- kill reward -------------------------------------------------------
     def _reward(self, pc_uid: int, corpse: Entity, monster: MonsterDef, now: float) -> None:
@@ -694,24 +563,13 @@ class WorldView:
         state = self.combat.pcs.get(pc_uid)
         if state is None or pc_uid not in self.exp:
             return
-        member = next((rt for rt in self.companions.active.values()
-            if rt.owner_ref.uid == pc_uid and self.companions.can_be_attacked(rt.ref.uid)
-            and (entity := self.entities.resolve(rt.ref)) is not None
-            and entity.map_id == corpse.map_id), None)
-        split = None if member is None else split_exp(monster.kill_exp,
-            self.companion_owner_half.get(pc_uid, 0), member.record.exp_half)
-        allocated = monster if split is None else _replace(monster, kill_exp=split.owner_exp)
+        plan = self.events.first('reward_plan', pc_uid, corpse, monster, now)
+        allocated = monster if plan is None else plan.allocated
         try:
             reward = on_kill(RewardPcState.from_combat(state, exp=self.exp[pc_uid]), allocated,
                              self.combat.rng, data=self.data)
-            if split is not None:
-                record = member.record
-                # Reuse the existing mage growth formula; template -1 has no drop
-                # rows. The original corpse's loot is rolled exactly once above.
-                profile = _replace(self.companion_profiles[record.character_id], level=record.level)
-                growth = on_kill(RewardPcState(record.exp, profile, record.max_hp, record.max_mp),
-                    _replace(monster, template_id=-1, kill_exp=split.companion_exp),
-                    self.combat.rng, data=self.data)
+            if plan is not None:
+                plan.calculate()
         except ValueError as error:
             self.reward_errors = (self.reward_errors + [str(error)])[-8:]
             return
@@ -729,24 +587,10 @@ class WorldView:
         if refresh_stats is not None:
             refresh_stats(pc_uid)
         self._queue(pc_uid, world_combat.status_frame(fields, state.hp))
-        self.progress_dirty[pc_uid] = Progress(reward.new_exp, reward.new_level, reward.max_hp,
-                                               reward.max_mp)
-        receipt = None
-        if split is not None:
-            record.exp, record.level = growth.new_exp, growth.new_level
-            record.max_hp, record.max_mp = growth.max_hp, growth.max_mp
-            record.exp_half = split.companion_half
-            self.companion_owner_half[pc_uid] = split.owner_half
-            receipt = dict(kill_id=f'{self.companion_reward_epoch}:{corpse.uid}:{corpse.generation}', target_uid=corpse.uid,
-                owner_character_id=pc_uid, member_character_id=record.character_id,
-                kill_exp=monster.kill_exp, owner_exp=split.owner_exp, member_exp=split.companion_exp,
-                owner_half=split.owner_half, member_half=split.companion_half,
-                kill_once=True, joint_commit_count=0, durable=False)
-            self.companion_reward_receipts.append(receipt)
-            del self.companion_reward_receipts[:-32]
-        # One atomic absolute snapshot contains BOTH beneficiaries, their half
-        # units and growth. The ordinary progression sidecar remains a projection.
-        self._save_companion(pc_uid, receipt)
+        self.progress.mark(pc_uid, exp=reward.new_exp, level=reward.new_level,
+                           max_hp=reward.max_hp, max_mp=reward.max_mp)
+        receipt = None if plan is None else plan.commit()
+        self.events.emit('reward_committed', pc_uid, receipt)
         if reward.drops:
             try:
                 items = self.ground.spawn_reward(corpse.ref, reward, owner_uid=pc_uid, now=now)
@@ -796,7 +640,7 @@ class WorldView:
                     pc_uid, target.uid, raw_effect=raw, direction=world_combat.PC_DIRECTION,
                     self_action=watcher == pc_uid, ranged=arrow is not None,
                     arrow_id=self.arrow_id, arrow_mode=self.arrow_mode))
-        self.companion_ai.owner_attacked(pc.ref, target.ref, now)
+        self.events.emit('pc_attack_started', pc.ref, target.ref, now)
         self._apply_monster_swing(pc_uid, pc_uid, target, group.monster, slot.hp, swing, now)
         frames = self.drain(pc_uid)
         self._announce()

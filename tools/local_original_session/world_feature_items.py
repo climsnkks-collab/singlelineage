@@ -5,6 +5,14 @@ from tools.local_native_login_local_ack_hook import ack_enter_world as ack
 from tools.local_original_session.world_bridge import need
 
 
+async def _world_items_kit_potion(ctx, base, consumer, writer, context, receipt, definition):
+    """Own the existing kit potion operation before it can debit inventory."""
+    return await consumer._consume_potion(writer, context, receipt, definition)
+
+
+WRAPS = {'_world_consume_kit_potion': _world_items_kit_potion}
+
+
 async def _world_enchant_use(self, ctx, payload, now):
     """run393 targeted 0960 -> one saved LOCAL enchant -> generic projection."""
     from dataclasses import replace
@@ -67,15 +75,15 @@ async def _world_enchant_use(self, ctx, payload, now):
                 weapon_uid=0 if equipment.weapon_uid in removed else equipment.weapon_uid,
                 slots=tuple((key, member_uid) for key, member_uid in equipment.slots if member_uid not in removed),
                 revision=equipment.revision + 1)
-    warehouse = self._world_warehouse_store.restore(ctx.pc_uid)
+    warehouse = self.inventory_transactions.restore_warehouse(ctx.pc_uid)
     ctx.commit_attempted = True
     equipment_change = (dict(equipment_store=effect.store,
         equipment_before=equipment, equipment_after=equipment_after)
         if equipment_after != equipment else {})
-    self._world_warehouse_store.commit(ctx.pc_uid, before, mutation.frame, warehouse, warehouse,
-                                      **equipment_change)
+    self.inventory_transactions.commit_warehouse(ctx.pc_uid, before, mutation.frame,
+        warehouse, warehouse, **equipment_change)
     self.inventory_frame = mutation.frame
-    ctx.row.pop('_world_warehouse_window', None)
+    self.run_sync_hooks('inventory_changed', ctx.writer, ctx.row)
     if equipment_after != equipment:
         if changes:
             from tools.local_original_session.item_equipment_effect import _receipt
@@ -253,6 +261,7 @@ async def _world_use_item(self, writer, row, game, frame, operation_lock):
         if kind in ('return_town', 'random_teleport'):
             result = self._world_item_effects.use(uid, item.template_bits, world.runtime.clock(),
                                                   position=destination)
+            result = self.fold_sync_hooks('item_destination_policy', result, destination)
             need(result.destination is not None, result.reason or 'WORLD_ITEM_DESTINATION_REQUIRED')
             need(self.realm.serves_map(result.destination.map_id)
                  and (result.destination.map_id == position.map_id or self._world_map_exp == 2)
@@ -347,6 +356,7 @@ def setup_enchant(self):
     world_enchant._policy()  # LOCAL probability table: startup, never first use.
     self._world_enchant_exp = world_enchant_inventory.parse_experiment(
         os.environ.get('SL_EXPERIMENT_ENCHANT'))
+    self._world_enchant_results = []
 
 
 def setup_polymorph(self):
@@ -357,8 +367,6 @@ def setup_polymorph(self):
     need(not self._world_poly_exp or self._world_poly_exp in self._world_poly_catalog.forms,
          'WORLD_POLY_EXPERIMENT_FORM_REQUIRED')
     self._world_polymorphs, self._world_poly_timers = {}, {}
-    self.realm._world_appearance = lambda uid, base: (
-        self._world_polymorphs[uid].current_sprite_id if uid in self._world_polymorphs else base)
 
 
 def setup_effects(self):
@@ -366,3 +374,82 @@ def setup_effects(self):
     self._world_item_effects = world_item_effects.WorldItemEffects(self._world.combat,
                                                                 self._world.terrain)
     self._world_ailments = {}
+    self._world_item_errors = []
+
+
+def _world_items_initialize(self):
+    setup_enchant(self)
+    setup_polymorph(self)
+    setup_effects(self)
+
+
+def _world_items_kit_frame(self, frame, character_class):
+    if self._world_enchant_exp is None:
+        return frame
+    from tools.local_original_session import inventory
+    rows = [dict(item.raw_fields) for item in inventory.validate_kit_frame(frame)]
+    for fields in rows:
+        if fields[2] in (25, 26) and fields.get(18):
+            fields[5] = 7
+    return inventory.build_kit_frame(rows)
+
+
+def _world_items_actor(realm, actor, position):
+    active = realm._world_context._world_polymorphs.get(position.uid)
+    if active is not None:
+        actor = dict(actor)
+        actor[3] = active.current_sprite_id
+    return actor
+
+
+def _world_items_before_leave(self, writer, uid):
+    self._world_ailments.pop(uid, None)
+    handle = self._world_poly_timers.pop(uid, None)
+    if handle is not None:
+        self.world.runtime.scheduler.cancel(handle)
+    self._world_polymorphs.pop(uid, None)
+
+
+def _world_items_cure_poison(self, uid):
+    ailments = self._world_ailments.get(uid)
+    if ailments is not None:
+        ailments.poison = None
+
+
+def _world_items_report(self, result):
+    result.update(item_errors=list(self._world_item_errors),
+        polymorph_experiment=self._world_poly_exp, active_polymorphs=len(self._world_polymorphs),
+        enchant_experiment=self._world_enchant_exp is not None,
+        enchant_results=list(self._world_enchant_results))
+
+
+def _enchant_save_boundary(owner, args):
+    # The existing boundary predicate, relocated from bridge without new checks.
+    from tools.local_original_session import inventory
+    if getattr(owner, '_inventory_kit_policy', None) != inventory.KIT_POLICY or len(args) < 2:
+        return False
+    pb = ack.realm.pb
+    try:
+        with pb.parse_message(args[1], limits=pb.WireLimits(
+                max_body=4096, max_fields=2, max_field_bytes=2048)) as parsed:
+            fields = parsed.occurrences(1)
+            if len(fields) != 1 or fields[0].wire_type != 0:
+                return False
+            uid = fields[0].value
+        return any(item.identifier == uid and item.template_bits in (25, 26)
+                   for item in inventory.validate_kit_frame(owner._inventory_current_frame))
+    except (ValueError, pb.WireError):
+        return False
+
+
+METHODS += (_world_items_initialize, _world_items_kit_frame, _world_items_before_leave,
+            _world_items_cure_poison, _world_items_report)
+HOOKS = {'initialize': ('_world_items_initialize',),
+         'item_use': ('_world_enchant_use', '_world_polymorph_use'),
+         'kit_frame': ('_world_items_kit_frame',),
+         'before_leave': ('_world_items_before_leave',),
+         'cure_poison': ('_world_items_cure_poison',),
+         'report': ('_world_items_report',)}
+REALM_HOOKS = {'actor_fields': (_world_items_actor,)}
+NONCRITICAL_HOOKS = ('before_leave', 'report')
+SAVE_BOUNDARIES = {'_world_enchant_use': _enchant_save_boundary}

@@ -335,6 +335,8 @@ class CompanionMagic:
 
 
 def _companion_initialize(ctx):
+    from tools.local_original_session.world_companion_runtime import install_companion_runtime
+    install_companion_runtime(ctx.world)
     ctx._companion_enabled = os.environ.get('SL_COMPANION') == '1'
     ctx._companion_pet_ui = ctx._companion_enabled and os.environ.get('SL_COMPANION_PET_UI') == '1'
     ctx._companion_revive_exp = os.environ.get('SL_COMPANION_REVIVE_EXP') == '1'
@@ -416,8 +418,12 @@ def _companion_started(ctx):
         ctx.world.companion_owner_half[int(uid)] = progress['exp_half']
     from tools.local_original_session import inventory
     if ctx._inventory_kit_policy == inventory.KIT_POLICY:
-        from tools.local_original_session.world_feature_trade import CompanionInventory
-        ctx._companion_inventory = CompanionInventory(ctx)
+        from tools.local_original_session.world_companion_inventory import CompanionInventory
+        ctx._companion_inventory = CompanionInventory(ctx,
+            characters=ctx._companion_rows, policy=ctx._companion_policy,
+            save=ctx._companion_save,
+            owned_actor=lambda uid, target: _companion_owned_actor(ctx, uid, target, living=True),
+            report_error=lambda error: _companion_report_give_error(ctx, error))
         for uid in ctx.world.companions.records:
             ctx._companion_inventory.initialize(uid)
         ctx.world.companion_ai.inventory = ctx._companion_inventory
@@ -453,7 +459,11 @@ def _companion_save(ctx, owner_uid, receipt=None):
         for uid in tuple(ctx._companion_pet_modes):
             if uid not in uids:
                 ctx._companion_pet_modes.pop(uid, None)
-        ctx._companion_store.commit(ctx.world, owner_uid, receipt)
+        owned = {uid: record for uid, record in ctx.world.companions.records.items()
+                 if uid in ctx._companion_rows}
+        ctx._companion_store.commit(ctx.world, owner_uid, receipt,
+            records=owned.values(), reward_receipts=(row for row in ctx.world.companion_reward_receipts
+                if row['member_character_id'] in owned))
 
 
 async def _companion_before_enter(ctx, writer, row, game, operation_lock):
@@ -475,17 +485,13 @@ async def _companion_enter(ctx, writer, row, game, operation_lock):
         saved = canonical['owners'].get(str(uid))
         if saved is not None:
             state = ctx.world.combat.pcs[uid]
-            ctx.world.exp[uid] = saved['exp']
-            state.profile = replace(state.profile, level=saved['level'])
-            state.max_hp = saved['max_hp']
             state.status_fields.update({2: saved['level'], 11: saved['max_hp'],
                 13: saved['max_mp'], 18: saved['lawful']})
-            ctx._world_lawful[uid] = saved['lawful']
             from tools.local_original_session.world_progress import Progress, exp_percent
             state.status_fields[26] = exp_percent(ctx.world.data, saved['exp'], saved['level'])
+            ctx.world.progress.adopt(uid, Progress(saved['exp'], saved['level'],
+                saved['max_hp'], saved['max_mp'], saved['lawful']))
             ctx._world_recalculate_uid(uid)
-            ctx.world.progress_dirty[uid] = Progress(saved['exp'], saved['level'],
-                saved['max_hp'], saved['max_mp'], saved['lawful'])
             from tools.local_original_session.world_status_frames import full_status_frame
             ctx.world._queue(uid, full_status_frame(state.status_fields))
         active = [rt for rt in ctx.world.companions.active.values() if rt.owner_ref.uid == uid]
@@ -554,7 +560,7 @@ def _companion_restore(ctx, uid, character_id):
 def _companion_relocate_depart(ctx, uid):
     """End old-map actor/target/timer lifetimes; preserve only saved members."""
     members = tuple(actor for actor in ctx.world.companions.active.values()
-                    if actor.owner_ref.uid == uid)
+                    if actor.owner_ref.uid == uid and actor.character_id in ctx._companion_rows)
     for actor in members:
         ctx.world.companions.dismiss(actor.character_id)
     return members
@@ -587,7 +593,7 @@ async def _companion_kit(ctx, writer, row, game, opcode, operation_lock):
         return
     effect = getattr(ctx, '_item_equipment_effect', None)
     if effect is not None:
-        from tools.local_original_session.world_feature_kit import defer_equipment_prepare
+        from tools.local_original_session.world_core_kit import defer_equipment_prepare
         if defer_equipment_prepare(ctx.broker, getattr(effect, '_selection', None)):
             return
     uid = ctx._world_pcs[id(writer)][1]
@@ -829,9 +835,70 @@ HOOKS = {'initialize': ('_companion_initialize',), 'runtime_started': ('_compani
 FRAMES = {opcode: ('_companion_frame',) for opcode in (0x0960, 0x4f13, 0x4f02)}
 OUTGOING_OPCODES = (0x4f14, 0x4ed8, 0x4f16)
 
-# Companion is already registered. Compose its bounded GIVE implementation
-# here so this worker does not write the shared FEATURE_MODULES registry.
-from tools.local_original_session import world_feature_trade as _trade
-METHODS += _trade.METHODS
-FRAMES.update(_trade.FRAMES)
-OUTGOING_OPCODES += _trade.OUTGOING_OPCODES
+
+def _companion_give_provider(ctx):
+    return ctx._companion_inventory
+
+
+def _companion_report_give_error(ctx, error):
+    ctx._companion_errors = (ctx._companion_errors + [str(error)[:96]])[-8:]
+
+
+def _companion_selected_exp(ctx, value, position):
+    member = ctx.world.companions.records.get(position.uid)
+    return value if member is None else member.exp
+
+
+def _companion_realm_status(realm, fields, position, initial):
+    provider = getattr(realm, '_world_companion_record', None)
+    member = None if not initial or provider is None else provider(position.uid)
+    if member is not None:
+        fields = dict(fields)
+        fields.update({2: member.level, 10: member.hp, 11: member.max_hp,
+                       12: member.mp, 13: member.max_mp})
+    return fields
+
+
+def _companion_relocate_keeps_self(ctx, uid):
+    return any(actor.owner_ref.uid == uid and actor.character_id in ctx._companion_rows
+               for actor in ctx.world.companions.active.values())
+
+
+def _companion_before_relocate(ctx, uid, transit):
+    if ctx._companion_enabled:
+        transit['companion'] = _companion_relocate_depart(ctx, uid)
+
+
+def _companion_after_relocate(ctx, uid, transit):
+    members = transit.get('companion', ())
+    return () if not members else _companion_relocate_arrive(ctx, uid, members)
+
+
+def _companion_joint_progress_sources(ctx, uid):
+    store = ctx._companion_store
+    if store is None:
+        return None
+    row = store.payload['owners'].get(str(uid))
+    if row is None:
+        return None
+    return dict(row), store.path.stat().st_mtime_ns if store.path.exists() else 0
+
+
+def _companion_joint_progress_adopt(ctx, uid, saved):
+    store = ctx._companion_store
+    if store is not None and str(uid) in store.payload['owners']:
+        store.payload['owners'][str(uid)] = dict(saved)
+
+
+METHODS += (_companion_give_provider, _companion_selected_exp,
+            _companion_relocate_keeps_self, _companion_before_relocate,
+            _companion_after_relocate, _companion_joint_progress_sources,
+            _companion_joint_progress_adopt)
+HOOKS.update(give_provider=('_companion_give_provider',),
+    selected_exp=('_companion_selected_exp',),
+    relocate_keeps_self=('_companion_relocate_keeps_self',),
+    before_relocate=('_companion_before_relocate',),
+    after_relocate=('_companion_after_relocate',),
+    joint_progress_sources=('_companion_joint_progress_sources',),
+    joint_progress_adopt=('_companion_joint_progress_adopt',))
+REALM_HOOKS = {'status_fields': (_companion_realm_status,)}

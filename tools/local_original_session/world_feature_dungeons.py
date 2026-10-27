@@ -48,7 +48,6 @@ class DungeonItemEffects:
 
 def _world_dungeons_initialize(self):
     self._world_dungeon_policy = None
-    self.realm._world_dungeon_maps = ()
     if self._world_map_exp != 2:
         return
     policy = load_dungeon_policy()
@@ -60,12 +59,10 @@ def _world_dungeons_initialize(self):
     additions = data.spawns[len(world.data.spawns):]
     world.spawner.groups.extend(Group(spec, data.monsters[spec.template_id],
         [Slot(index) for index in range(spec.target_count)]) for spec in additions)
-    world.data = world.combat.data = world.ground.data = data
+    world.replace_data(data)
     for map_id in policy.maps:
         world.terrain.bounds(map_id)
     self._world_dungeon_policy = policy
-    self.realm._world_dungeon_maps = policy.maps
-    self._world_item_effects = DungeonItemEffects(self._world_item_effects, policy)
 
 
 def _world_dungeons_death(self, uid):
@@ -76,9 +73,36 @@ def _world_dungeons_death(self, uid):
     destination = None if entity is None else policy.return_for(entity.map_id)
     if destination is not None:
         # The existing life owner consumes this on reselect/cleanup.
-        self._world_relocations[uid] = destination
+        self._world_set_relocation(uid, destination)
 
 
-METHODS = (_world_dungeons_initialize, _world_dungeons_death)
+def _world_dungeons_destination(self, result, position):
+    policy = self._world_dungeon_policy
+    destination = None if policy is None or position is None else policy.return_for(position.map_id)
+    if destination is not None and result.kind == 'return_town' and result.destination is not None:
+        from tools.local_original_session.world_item_effects import movement_requirements
+        return replace(result, destination=destination,
+                       requirements=movement_requirements(position.map_id, destination))
+    return result
+
+
+def _world_dungeons_transition(self, destination, map_id, x, y):
+    policy = self._world_dungeon_policy
+    if destination is None and policy is not None:
+        from tools.local_original_session.world_maps import resolve_transition
+        return resolve_transition(map_id, x, y, extra=policy.transitions)
+    return destination
+
+
+def _world_dungeons_serves_map(realm, served, map_id):
+    policy = realm._world_context._world_dungeon_policy
+    return served or policy is not None and map_id in policy.maps
+
+
+METHODS = (_world_dungeons_initialize, _world_dungeons_death, _world_dungeons_destination,
+           _world_dungeons_transition)
 HOOKS = {'initialize': ('_world_dungeons_initialize',),
-         'after_death': ('_world_dungeons_death',)}
+         'after_death': ('_world_dungeons_death',),
+         'item_destination_policy': ('_world_dungeons_destination',),
+         'map_transition': ('_world_dungeons_transition',)}
+REALM_HOOKS = {'serves_map': (_world_dungeons_serves_map,)}

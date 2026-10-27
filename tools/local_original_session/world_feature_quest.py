@@ -18,6 +18,8 @@ def setup_quests(self, town):
     self._world_quest_dialogues = {d.npc_id: d for d in world_quest.load_quest_dialogues()}
     self._world_quest_reward_items = world_quest.load_reward_items()
     self._world_quest_item_policies = world_quest.load_inventory_policies()
+    if town is None:
+        return ()
     return tuple(ServiceMenuSource(key, dialogue.initial, dialogue.pages)
         for key, npc in town.data.placements.items()
         if (dialogue := self._world_quest_dialogues.get(npc.npc_id)) is not None
@@ -26,10 +28,12 @@ def setup_quests(self, town):
 
 def _world_quest_initialize(self):
     from tools.local_original_session import inventory, world_quest_store
+    if not hasattr(self, '_world_quests'):
+        setup_quests(self, None)
     self._world_quest_store = None
     if (getattr(self, '_inventory_store', None) is not None
             and getattr(self, '_inventory_kit_policy', None) == inventory.KIT_POLICY):
-        self._world_quest_store = world_quest_store.QuestStore(self._inventory_store, self._world_progress)
+        self._world_quest_store = world_quest_store.QuestStore(self.inventory_store, self.progress_store)
 
 
 def _quest_class(pc):
@@ -116,9 +120,9 @@ def _quest_inventory_change(self, ctx, result, items, worn):
 def _quest_progress(self, uid, definition, pc):
     """Reuse M1 EXP/growth policy without dispatching a kill or creating drops."""
     from tools.local_original_session import world_progress, world_reward
-    saved = self._world_progress.get(uid)
+    saved = self.progress_store.get(uid)
     current_exp = self._world.exp[uid]
-    lawful = getattr(self, '_world_lawful', {}).get(uid, saved.lawful)
+    lawful = self.world.progress.lawful_of(uid, saved.lawful)
     proposed = world_progress.Progress(current_exp, pc.profile.level, pc.max_hp, pc.max_mp, lawful)
     if definition.experience_reward:
         # Existing exp-only carrier convention, pure calculation DATA only.
@@ -206,13 +210,12 @@ def _world_quest_action(self, ctx, interaction, menu, fields, now):
     # Settle older kill progress before opening the turn-in intent. A failed
     # quest save must not let leave/close write an older dirty projection over
     # a partly committed EXP reward. Failed settlement retains the dirty value.
-    dirty = self._world.progress_dirty.get(uid)
+    dirty = self.world.progress.pending(uid)
     if dirty is not None:
         ctx.commit_attempted = True
         menu.source.retired = True
-        self._world_progress.commit(uid, replace(dirty,
-            lawful=getattr(self, '_world_lawful', {}).get(uid, dirty.lawful)))
-        self._world.progress_dirty.pop(uid, None)
+        self.progress_store.commit(uid, dirty)
+        self.world.progress.ack(uid, dirty)
     progress_before, progress_after = _quest_progress(self, uid, definition, pc)
     next_refs = dict(refs)
     if definition.completed_reference_step is not None:
@@ -237,8 +240,8 @@ def _world_quest_action(self, ctx, interaction, menu, fields, now):
     self.inventory_frame = updated
     if equipment_after is not None and effect._selection is not None:
         effect._selection['state'] = equipment_after
-    self._world.exp[uid] = progress_after.exp
-    self._world.progress_dirty.pop(uid, None)
+    self.world.progress.adopt(uid, progress_after, dirty=False)
+    self.world.progress.clear(uid)
     if status is not None:
         pc.profile = replace(pc.profile, level=progress_after.level)
         pc.max_hp = progress_after.max_hp
@@ -278,7 +281,24 @@ async def _world_quest_after_request(self, writer, row, game, opcode, operation_
     await self._world.runtime.dispatch_now(synchronize)
 
 
-METHODS = (_world_quest_action, _world_quest_initialize, _world_quest_after_request)
+def _world_quest_menu_sources(self, town):
+    return setup_quests(self, town)
+
+
+def _world_quest_policies(self):
+    if not hasattr(self, '_world_quests'):
+        setup_quests(self, None)
+    return self._world_quest_item_policies
+
+
+METHODS = (_world_quest_action, _world_quest_initialize, _world_quest_after_request,
+           _world_quest_menu_sources, _world_quest_policies)
 HOOKS = {'initialize': ('_world_quest_initialize',),
+         'menu_sources': ('_world_quest_menu_sources',),
+         'item_policies': ('_world_quest_policies',),
+         'service_action': ('_world_quest_action',),
          'after_request': ('_world_quest_after_request',)}
 FRAMES = {}
+
+HOOK_PRIORITY = {'service_action': 0}
+SAVE_BOUNDARIES = {'_world_quest_action': True}

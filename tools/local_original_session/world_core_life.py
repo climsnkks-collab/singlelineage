@@ -1,4 +1,4 @@
-"""World feature: life. Existing packet/store operations, unchanged."""
+"""World core: life. Existing packet/store operations, unchanged."""
 from __future__ import annotations
 
 from tools.local_original_session import movement
@@ -8,15 +8,9 @@ def _world_pc_died(self, uid):
     """Death-once callback from WorldView; keep HP0/status/death wire order."""
     from dataclasses import replace
     from tools.local_original_session import world_reward, world_combat
-    from tools.local_original_session.world_progress import Progress, exp_percent
+    from tools.local_original_session.world_progress import exp_percent
     world = self._world
     state = world.combat.pcs[uid]
-    from tools.local_original_session import world_alignment
-    lawful = self._world_lawful.get(uid, state.status_fields[18])
-    self._world_death_risks = (self._world_death_risks + [dict(uid=uid, lawful=lawful,
-        chance_per_mille=world_alignment.death_drop_chance(lawful),
-        max_attempts=world_alignment.death_drop_max_attempts(lawful),
-        applied=False, reason='CALCULATION_ONLY_DEATH_CONTEXT_UNRESOLVED')])[-16:]
     try:
         penalty = world_reward.death_exp_penalty(world.exp[uid], data=world.data)
     except ValueError as error:
@@ -33,8 +27,7 @@ def _world_pc_died(self, uid):
         if int.from_bytes(frames[index][2:4], 'little') == 0x4e38:
             frames[index] = world_combat.status_frame(state.status_fields, 0)
             break
-    world.progress_dirty[uid] = Progress(penalty.new_exp, penalty.new_level,
-                                        state.max_hp, state.max_mp)
+    world.progress.mark(uid)
     self._world_save_progress(uid)
 
 
@@ -97,3 +90,10 @@ HOOKS = {'after_death': ('_world_pc_died',)}
 def realm_bind_restart(realm, game, life_broker, restart_game):
     if life_broker is None and getattr(realm, '_world_dead_restart', False) is True:
         game.routes[0x4eec] = restart_game
+
+
+def _world_set_relocation(self, uid, destination):
+    self._world_relocations[uid] = destination
+
+METHODS += (_world_set_relocation,)
+SAVE_BOUNDARIES = {'_world_pc_died': True, '_world_commit_respawn': True}

@@ -1,4 +1,4 @@
-"""World feature: session. Existing packet/store operations, unchanged."""
+"""World core: session. Existing packet/store operations, unchanged."""
 from __future__ import annotations
 
 import asyncio
@@ -35,6 +35,8 @@ def _world_bound(self, writer):
 
 async def _world_dispatch(self, writer, row, game, frame, operation_lock):
     from tools.local_original_session import world_handlers
+    if await self.chain_hooks('pre_dispatch', writer, row, game, frame, operation_lock):
+        return True
     if frame.opcode not in world_handlers.HANDLERS:
         return False
     if not self._world_bound(writer) or self._world_ready(writer, game) is None:
@@ -80,14 +82,13 @@ async def _world_after_request(self, writer, row, game, opcode, operation_lock):
         frame = self.realm.world_frames(writer)[1]  # the SC_STATUS this client just received
         status = session.world.decode_payload(0x4e38, frame[4:-2])
         saved = self._world_progress_for(position.uid)
-        self._world_lawful[position.uid] = status[18] if saved is None else saved.lawful
+        status[18] = status[18] if saved is None else saved.lawful
         await self.run_hooks('before_enter', writer, row, game, operation_lock)
-        member_for = getattr(self.realm, '_world_companion_record', None)
-        member = None if member_for is None else member_for(position.uid)
+        selected_exp = self.fold_sync_hooks('selected_exp', 0 if saved is None else saved.exp, position)
         exp_status = await self._world.runtime.dispatch_now(
             self._world.bind_pc, position.uid,
             self._world_pc_profile(writer, position, level=status[2]), status,
-            member.exp if member is not None else (0 if saved is None else saved.exp))
+            selected_exp)
         self._world_events[position.uid] = asyncio.Event()
         self._world_names[position.uid] = position.name
     elif opcode not in self.WORLD_OPCODES:
@@ -125,16 +126,12 @@ async def _world_flush(self, writer, row, game, operation_lock):
 
 
 async def _world_leave(self, writer):
-    bound = self._world_pcs.pop(id(writer), None)
+    bound = self._world_pcs.get(id(writer))
     if bound is not None and bound[0] is writer:
         self._world_save_progress(bound[1])
+        await self.run_hooks('before_leave', writer, bound[1])
+        self._world_pcs.pop(id(writer), None)
         self._world_events.pop(bound[1], None)
-        self._world_ailments.pop(bound[1], None)
-        handle = self._world_poly_timers.pop(bound[1], None)
-        if handle is not None:
-            self._world.runtime.scheduler.cancel(handle)
-        self._world_polymorphs.pop(bound[1], None)
-        self._world_lawful.pop(bound[1], None)
         row = next((row for rows in self._claims.values() for row in rows
                     if row['writer'] is writer), None)
         if row is not None:
@@ -146,6 +143,11 @@ async def _world_leave(self, writer):
         name = self._world_names.get(bound[1])
         if dead is True and name is not None:
             self._world_respawn[bound[1]] = name  # committed at reselect or writer cleanup
+    try:
+        await self.run_hooks('after_leave', writer)
+    except Exception as error:
+        self._world_progress_errors = (self._world_progress_errors + [str(error)[:96]])[-4:]
+        self._fail('WORLD_LEAVE_FAILED')
 
 
 METHODS = (
@@ -161,3 +163,41 @@ METHODS = (
 from tools.local_original_session.world_handlers import HANDLERS
 FRAMES = {opcode: ('_world_dispatch',) for opcode in HANDLERS}
 HOOKS = {'after_request': ('_world_after_request',)}
+
+
+FRAME_PRIORITY = 10
+
+def _dispatch_save_boundary(owner, args):
+    from tools.local_original_session.world_handlers import TRADE
+    return len(args) > 3 and args[3].opcode == TRADE
+
+SAVE_BOUNDARIES = {'_world_dispatch': _dispatch_save_boundary, '_world_leave': True}
+
+
+async def _world_attack(self, writer, row, game, frame, operation_lock):
+    """CS4E30 on a world monster: immediate swing. False = not ours, keep the original route."""
+    from tools.local_original_session import attack
+    bound = self._world_pcs.get(id(writer))
+    if bound is None or bound[0] is not writer or self._world_ready(writer, game) is None:
+        return False
+    try:
+        request = attack.parse_payload(frame.payload)
+    except ValueError:
+        return False
+    event = self._world_events.get(bound[1])
+    if event is not None:
+        event.clear()
+    frames = await self._world.runtime.dispatch_now(self._world.pc_attack, bound[1],
+                                                    request.target_uid)
+    if frames is None:
+        if event is not None:
+            event.set()  # queued frames stay for the next flush
+        # Not a world monster. Without the original attack route the request
+        # has no handler; answer nothing instead of failing the session.
+        return getattr(self, '_attack_session', None) is None
+    self._world_save_progress(bound[1])  # kill reward: EXP/level saved before the status is sent
+    await self._world_send(writer, row, frames, operation_lock)
+    return True
+
+METHODS += (_world_attack,)
+FRAMES[0x4e30] = ('_world_attack',)

@@ -1,4 +1,4 @@
-"""World feature: maps. Existing packet/store operations, unchanged."""
+"""World core: maps. Existing packet/store operations, unchanged."""
 from __future__ import annotations
 
 from tools.local_entry_server.codecs import Frame
@@ -35,7 +35,7 @@ def _world_maps_initialize(self):
     # Explicit preload: no deferred terrain reads during movement/requests.
     for map_id in (1, 2, 4):
         self._world.terrain.bounds(map_id)
-    self._world_item_effects = GludinItemEffects(self._world_item_effects, self._world_gludin)
+
 
 
 def _world_maps_death(self, uid):
@@ -45,7 +45,7 @@ def _world_maps_death(self, uid):
     if entity is not None and entity.map_id == 4:
         # Existing life owner saves this pending return at reselect/cleanup.
         # No living relocation, death ACK, new save format or forced revival.
-        self._world_relocations[uid] = self._world_gludin.town_return
+        self._world_set_relocation(uid, self._world_gludin.town_return)
 
 
 async def _world_enter_ship(self, writer, row, game, frame, operation_lock):
@@ -130,9 +130,8 @@ async def _world_move_for_handler(self, writer, row, game, payload, now, context
         from tools.local_original_session.world_maps import resolve_transition
 
         def stair(position, x, y):
-            policy = getattr(self, '_world_dungeon_policy', None)
-            destination = resolve_transition(position.map_id, x, y,
-                extra=None if policy is None else policy.transitions)
+            destination = self.fold_sync_hooks('map_transition',
+                resolve_transition(position.map_id, x, y), position.map_id, x, y)
             if destination is None:
                 return None
             return self._world_relocate_locked(writer, row, game, destination, context=context)
@@ -182,21 +181,21 @@ def _world_relocate_locked(self, writer, row, game, destination, *, context=None
          'WORLD_MAP_KNOWN_DESTINATION_REQUIRED')
     updated = movement.Position(position.uid, position.name, destination.map_id, destination.x, destination.y)
     world, uid = self._world, position.uid
-    from tools.local_original_session.world_feature_companion import (
-        _companion_relocate_depart, _companion_relocate_arrive)
-    companion_travel = any(actor.owner_ref.uid == uid for actor in world.companions.active.values())
+    companion_travel = self.chain_sync_hooks('relocate_keeps_self', uid)
+    transit = {}
     if destination.map_id == position.map_id and (
             self._world_map_exp == 0 or same_map_correction or companion_travel):
         # run389 same-map LOCAL sequence. Keep MyPlayer and intersection
         # actors; refresh NPC/town/ground known sets and spawn-group interest.
-        members = _companion_relocate_depart(self, uid)
+        self.run_sync_hooks('before_relocate', uid, transit)
         older = tuple(world.drain(uid))
         if context is not None:
             context.commit_attempted = True
         service.relocate(updated)
         service._actor_heading = destination.heading
         nearby = tuple(world.update_pc_and_drain(uid, updated.map_id, updated.word0, updated.word1))
-        nearby += _companion_relocate_arrive(self, uid, members)
+        nearby += tuple(wire for frames in self.collect_sync_hooks('after_relocate', uid, transit)
+                        for wire in frames)
         removals = tuple(w for w in nearby if int.from_bytes(w[2:4], 'little') == 0x4e40)
         additions = tuple(w for w in nearby if int.from_bytes(w[2:4], 'little') != 0x4e40)
         if context is not None:
@@ -215,7 +214,7 @@ def _world_relocate_locked(self, writer, row, game, destination, *, context=None
     fields[10], fields[12] = state.hp, state.mp
     frames = self.realm._frames_for(updated, status_fields=fields, heading=destination.heading)
     map_frame, self_info, self_actor = frames
-    members = _companion_relocate_depart(self, uid)
+    self.run_sync_hooks('before_relocate', uid, transit)
     old_known = set(world.visibility.known.get(uid, ())) | set(world.item_known.get(uid, ()))
     from tools.local_original_session.world_visibility import remove_frame
     removals = tuple(remove_frame(known) for known in sorted(old_known))
@@ -226,7 +225,8 @@ def _world_relocate_locked(self, writer, row, game, destination, *, context=None
     service._actor_heading = destination.heading
     self.realm._world_frames[id(writer)] = (updated, frames)
     nearby = tuple(world.update_pc_and_drain(uid, updated.map_id, updated.word0, updated.word1, reset=True))
-    nearby += _companion_relocate_arrive(self, uid, members)
+    nearby += tuple(wire for frames in self.collect_sync_hooks('after_relocate', uid, transit)
+                        for wire in frames)
     if context is not None:
         context.begin_click()
     else:
@@ -255,13 +255,15 @@ METHODS = (
     _world_relocate_locked,
 )
 
-HOOKS = {'initialize': ('_world_maps_initialize',), 'after_death': ('_world_maps_death',)}
+HOOKS = {'initialize': ('_world_maps_initialize',), 'after_death': ('_world_maps_death',),
+         'item_destination_policy': ('_world_maps_item_destination',)}
 FRAMES = {0x4ef8: ('_world_enter_ship',)}
 
 
 def realm_serves_map(realm, map_id):
-    return map_id == 0 or (getattr(realm, '_world_map_exp', 0) == 2
-        and map_id in (1, 2, 4, *getattr(realm, '_world_dungeon_maps', ())))
+    from tools.local_original_session.world_registry import fold_realm_hooks
+    served = map_id == 0 or (getattr(realm, '_world_map_exp', 0) == 2 and map_id in (1, 2, 4))
+    return fold_realm_hooks('serves_map', realm, served, map_id)
 
 
 def realm_map_frame(realm, position, encode):
@@ -280,3 +282,16 @@ async def realm_move(service, payload):
     stair = getattr(service, '_world_step_transition', None)
     return (await service.handle_CS4E2B(payload) if stair is None else
             await service.handle_CS4E2B(payload, transition=stair))
+
+
+def _world_maps_item_destination(self, result, position):
+    if (position is not None and position.map_id == 4 and self._world_gludin is not None
+            and result.kind == 'return_town' and result.destination is not None):
+        from dataclasses import replace
+        destination = self._world_gludin.town_return
+        return replace(result, destination=destination,
+            requirements=movement_requirements(position.map_id, destination))
+    return result
+
+METHODS += (_world_maps_item_destination,)
+SAVE_BOUNDARIES = {'_world_relocate_locked': True}

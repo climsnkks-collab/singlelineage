@@ -1,7 +1,6 @@
 """Talking-scroll feature; preserve the existing inventory/relocation owners.
 
-The two registered wrappers compose the existing kit and dispatch entry points.
-They do not replace equipment, movement, inventory storage or connection code.
+Registered kit and pre-dispatch hooks extend the existing core entry points.
 """
 from __future__ import annotations
 
@@ -19,6 +18,7 @@ def _talkscroll_initialize(self):
     from tools.local_original_session.game_data import ItemDef, Source
     from tools.local_original_session.world_handlers import KitItemPolicy
     from tools.local_original_session.world_talkscroll import load_catalog
+    self.prepare_dialogue()
     self._talkscroll_catalog = load_catalog()
     # Native group10 is the ordinary client-owned menu. The old NPC menu is a
     # separate explicit experiment; it only has a dungeon-entrance action.
@@ -27,7 +27,7 @@ def _talkscroll_initialize(self):
     self._talkscroll_supplies = tuple(json.loads(starter.read_text(encoding='utf-8'))[
         'kits']['test_knight'].get('talkscroll_supplies', ()))
     definitions = dict(self._world.data.items)
-    policies = dict(self._world_handler_bindings.item_policies)
+    policies = []
     for template, row in self._talkscroll_catalog.items.items():
         source = Source('client', row['ref'])
         definitions[template] = ItemDef(template, row['name_token'], row['name_ko'], 'scroll',
@@ -35,17 +35,14 @@ def _talkscroll_initialize(self):
             MappingProxyType({'identity': source,
                 'stackable': Source('local_policy', 'talkscroll.json: explicit LOCAL stacking')}),
             icon=row['icon'], weight=row['weight'])
-        policies[template] = KitItemPolicy(template, row['weight'], True)
+        policies.append(KitItemPolicy(template, row['weight'], True))
     data = replace(self._world.data, items=MappingProxyType(definitions))
-    self._world.data = self._world.combat.data = data
-    self._world_handler_bindings = replace(self._world_handler_bindings,
-        item_policies=MappingProxyType(policies))
+    self._world.replace_data(data)
+    self.add_item_policies(policies, replace_existing=True)
 
 
-def _inventory_kit_frame(self, character_class):
+def _talkscroll_kit_frame(self, frame, character_class):
     from tools.local_original_session import inventory
-    from tools.local_original_session.world_feature_kit import _inventory_kit_frame as base
-    frame = base(self, character_class)
     if character_class == 3 and getattr(self, '_talkscroll_native', False):
         # The shared mage starter already owns its one scroll. Apply the same
         # existing native menu candidate without appending another copy.
@@ -72,16 +69,13 @@ def _inventory_kit_frame(self, character_class):
     return inventory.build_kit_frame(rows)
 
 
-async def _world_dispatch(self, writer, row, game, frame, operation_lock):
-    from tools.local_original_session.world_feature_session import _world_dispatch as base
+async def _talkscroll_pre_dispatch(self, writer, row, game, frame, operation_lock):
     if (not self._world_bound(writer) or self._world_ready(writer, game) is None
             or frame.opcode not in (0x0960, 0x4ed4)):
         if frame.opcode in (0x4e43, 0x4e2b):
             row.pop('_talkscroll_selection', None)
-        return await base(self, writer, row, game, frame, operation_lock)
-    if await _talkscroll_request(self, writer, row, game, frame, operation_lock):
-        return True
-    return await base(self, writer, row, game, frame, operation_lock)
+        return False
+    return await _talkscroll_request(self, writer, row, game, frame, operation_lock)
 
 
 async def _talkscroll_request(self, writer, row, game, frame, operation_lock):
@@ -190,5 +184,7 @@ async def _talkscroll_request(self, writer, row, game, frame, operation_lock):
     return True
 
 
-METHODS = (_talkscroll_initialize, _inventory_kit_frame, _world_dispatch)
-HOOKS = {'initialize': ('_talkscroll_initialize',)}
+METHODS = (_talkscroll_initialize, _talkscroll_kit_frame, _talkscroll_pre_dispatch)
+HOOKS = {'initialize': ('_talkscroll_initialize',),
+         'kit_frame': ('_talkscroll_kit_frame',),
+         'pre_dispatch': ('_talkscroll_pre_dispatch',)}

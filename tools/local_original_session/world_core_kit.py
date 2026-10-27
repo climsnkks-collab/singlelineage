@@ -1,4 +1,4 @@
-"""World feature: kit. Existing packet/store operations, unchanged."""
+"""World core: kit. Existing packet/store operations, unchanged."""
 from __future__ import annotations
 
 from tools.local_game_session import session
@@ -23,11 +23,8 @@ def _inventory_kit_frame(self, character_class):
         if entry.grade is not None:
             from tools.local_original_session.world_enchant_inventory import scroll_name
             fields[18] = scroll_name(entry.template_id, entry.grade)
-            # run393 actual scroll raw is UNKNOWN; candidate interaction is opt-in.
-            if self._world_enchant_exp is not None:
-                fields[5] = 7
         rows.append(fields)
-    return inventory.build_kit_frame(rows)
+    return self.fold_sync_hooks('kit_frame', inventory.build_kit_frame(rows), character_class)
 
 
 def _world_consume_kit(self, writer, item_uid, count=1):
@@ -69,25 +66,29 @@ def _world_replace_kit(self, uid, before, after, *, append=False):
     effect = getattr(self, '_item_equipment_effect', None)
     removed = ({item.identifier for item in inventory.validate_kit_frame(before)}
                - {item.identifier for item in inventory.validate_kit_frame(after)})
-    warehouse_store = getattr(self, '_world_warehouse_store', None)
+    transactions = getattr(self, '_world_inventory_transactions', None)
 
     def plain():
         if append:
             return self.inventory_store.replace_kit(uid, before, after, append=True)
         return self.inventory_store.replace_kit(uid, before, after)
-    if (not removed or warehouse_store is None
+    if (not removed or transactions is None
             or type(getattr(effect, 'store', None)) is not equipment_store.EquipmentStore):
         return plain()
     equipment = effect.store.restore(uid, before)
     equipment_after = equipment_store.after_removal(equipment, before, after)
     if equipment_after is None:
         return plain()
-    warehouse = warehouse_store.restore(uid)
-    changed = warehouse_store.commit(uid, before, after, warehouse, warehouse,
+    changed = transactions.commit_inventory(uid, before, after, append=append,
         equipment_store=effect.store, equipment_before=equipment, equipment_after=equipment_after)
     if effect._selection is not None:
         effect._selection['state'] = equipment_after
     return changed
+
+
+async def _world_consume_kit_potion(self, consumer, writer, context, receipt, definition):
+    """Optional effects wrap this owner entry point before any inventory debit."""
+    return consumer._blocked(receipt, 'ITEM_USE_KIT_NO_EFFECT')
 
 
 def _world_stance_for(self, uid):
@@ -117,6 +118,7 @@ METHODS = (
     _inventory_kit_frame,
     _world_consume_kit,
     _world_replace_kit,
+    _world_consume_kit_potion,
     _world_stance_for,
     _world_refresh_stance_locked,
 )
@@ -178,3 +180,11 @@ def inventory_payload(self, wire, inventory_wire):
         frames = inventory.kit_wire_frames(wire)
         return frames[0] if len(frames) == 1 else b''.join(frames)
     return wire
+
+
+
+def _world_kit_initialize(self):
+    setup_stance(self)
+
+METHODS += (_world_kit_initialize,)
+HOOKS = {'initialize': ('_world_kit_initialize',)}

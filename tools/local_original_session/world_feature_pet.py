@@ -101,6 +101,8 @@ class PetSystem:
         if self.installed:
             return
         v, ctx = self.view, self.ctx
+        from tools.local_original_session.world_companion_runtime import install_companion_runtime
+        install_companion_runtime(v)
         # Reuse the existing atomic schema in a feature-owned directory. Turning
         # this optional feature off cannot make the ordinary roster writer drop
         # persistent pets it does not understand.
@@ -118,23 +120,22 @@ class PetSystem:
         # A newer ordinary progression/death save wins over a stale pet file,
         # including play while this feature was disabled. Only a newer joint
         # pet snapshot repairs the normal projection after a crash window.
-        progress = ctx._world_progress
-        regular = getattr(ctx, '_companion_store', None)
+        progress = ctx.progress_store
         pet_time = self.store.path.stat().st_mtime_ns if self.store.path.exists() else 0
         progress_time = progress.path.stat().st_mtime_ns if progress.path.exists() else 0
         for key, saved in self.store.payload['owners'].items():
             uid = int(key)
-            regular_time = (regular.path.stat().st_mtime_ns if regular is not None
-                and regular.path.exists() and key in regular.payload['owners'] else 0)
+            sources = tuple(value for value in ctx.collect_sync_hooks(
+                'joint_progress_sources', uid) if value is not None)
+            regular_time = max((timestamp for _row, timestamp in sources), default=0)
             if pet_time >= max(progress_time, regular_time):
                 from tools.local_original_session.world_progress import Progress
                 self.owner_restore[uid] = saved
                 progress.stage(uid, Progress(saved['exp'], saved['level'],
                     saved['max_hp'], saved['max_mp'], saved['lawful']))
                 v.companion_owner_half[uid] = saved['exp_half']
-                if regular is not None and key in regular.payload['owners']:
-                    regular.payload['owners'][key] = dict(saved)
-            elif regular is None or key not in regular.payload['owners']:
+                ctx.run_sync_hooks('joint_progress_adopt', uid, saved)
+            elif not sources:
                 v.companion_owner_half[uid] = saved['exp_half']
         self._install_data()
         self._adapt(v, '_spawn_frame', self.spawn)
@@ -144,24 +145,21 @@ class PetSystem:
         self._adapt(v, 'companion_save', self.save)
         self._adapt(v.companions, 'on_remove', self.removed)
         ai = v.companion_ai
-        self.adapters.append((ai, 'magic', ai.magic))
-        ai.magic = _PetMagic(self, ai.magic)
+        self._wrap(ai, 'magic', lambda previous: _PetMagic(self, previous))
         if getattr(ai, 'inventory', None) is not None:
-            self.adapters.append((ai, 'inventory', ai.inventory))
-            ai.inventory = _PetBags(ai.inventory)
+            self._wrap(ai, 'inventory', _PetBags)
         for name, field in (('move_interval', 'move_ms'), ('attack_interval', 'attack_ms')):
-            previous = getattr(ai, name)
-            self.adapters.append((ai, name, previous))
-            setattr(ai, name, lambda rt, old=previous, key=field: (
+            self._wrap(ai, name, lambda previous, key=field: lambda rt: (
                 self.species(rt.record)[key] / 1000 if pet_record(rt.record)
-                else old(rt) if callable(old) else old))
+                else previous(rt) if callable(previous) else previous))
         self.installed = True
         self.recover_bags()
 
     def _adapt(self, target, name, consumer):
-        previous = getattr(target, name)
-        self.adapters.append((target, name, previous))
-        setattr(target, name, lambda *a, **k: consumer(previous, *a, **k))
+        self._wrap(target, name, lambda previous: lambda *a, **k: consumer(previous, *a, **k))
+
+    def _wrap(self, target, name, factory):
+        self.adapters.append(self.view.runtime_extensions.wrap('pet', target, name, factory))
 
     def close(self):
         if not self.installed:
@@ -175,8 +173,8 @@ class PetSystem:
             for uid in tuple(self.trainers):
                 if self.view.entities.get(uid) is not None:
                     self.view.entities.remove(uid)
-            for target, name, previous in reversed(self.adapters):
-                setattr(target, name, previous)
+            for handle in reversed(self.adapters):
+                handle.close()
             self.adapters.clear()
             self.windows.clear()
             self.trainer_windows.clear()
@@ -226,7 +224,7 @@ class PetSystem:
                 stackable, 0, 0, 0, 0, 0, 0, frozenset(range(7)), src,
                 icon=icon, weight=weight))
         merged = replace(v.data, monsters=MappingProxyType(monsters), items=MappingProxyType(items))
-        v.data = v.combat.data = v.ground.data = merged
+        v.replace_data(merged)
         # Native ordinary town lookup remains untouched; feature-owned trainers
         # are published and handled only by this feature's frame routes.
         for spec in self.raw.get('trainers', ()):
@@ -319,11 +317,10 @@ class PetSystem:
         self.pending_reward, self.reward_committed, self.reward_save_attempted = receipt, False, False
         # The ordinary reward consumer receives the owner's allocated share and
         # rolls original drops once. It must not run PC/mage growth on pet EXP.
-        v.companions.active.pop(record.character_id)
         try:
-            return previous(uid, corpse, replace(monster, kill_exp=split.owner_exp), now)
+            with v.companions.without_reward_member(record.character_id):
+                return previous(uid, corpse, replace(monster, kill_exp=split.owner_exp), now)
         finally:
-            v.companions.active[record.character_id] = member
             if not self.reward_save_attempted:
                 for name in ('exp', 'level', 'hp', 'mp', 'max_hp', 'max_mp'):
                     setattr(record, name, getattr(old.record, name))
@@ -338,26 +335,16 @@ class PetSystem:
         receipt = self.pending_reward if receipt is None and self.pending_reward is not None else receipt
         for record in self.records.values():
             self.validate(record)
-        live_records, rewards = v.companions.records, v.companion_reward_receipts
-        v.companions.records = dict(self.records)
-        v.companion_reward_receipts = [r for r in rewards if r['member_character_id'] in self.records]
-        try:
-            if self.pending_reward is not None:
-                self.reward_save_attempted = True
-            self.store.commit(v, owner_uid, receipt)
-            if self.pending_reward is not None:
-                self.reward_committed = True
-        finally:
-            v.companions.records, v.companion_reward_receipts = live_records, rewards
-        regular = {key: row for key, row in live_records.items() if not pet_record(row)}
-        v.companions.records = regular
-        v.companion_reward_receipts = [r for r in rewards if r['member_character_id'] not in self.records]
-        try:
-            if previous is not None:
-                previous(owner_uid, None if receipt is not None and
-                         receipt['member_character_id'] in self.records else receipt)
-        finally:
-            v.companions.records, v.companion_reward_receipts = live_records, rewards
+        if self.pending_reward is not None:
+            self.reward_save_attempted = True
+        self.store.commit(v, owner_uid, receipt, records=self.records.values(),
+            reward_receipts=(r for r in v.companion_reward_receipts
+                             if r['member_character_id'] in self.records))
+        if self.pending_reward is not None:
+            self.reward_committed = True
+        if previous is not None:
+            previous(owner_uid, None if receipt is not None and
+                     receipt['member_character_id'] in self.records else receipt)
         self.publish_hp()
 
     def swing(self, previous, actor, profile, monster):
@@ -473,7 +460,7 @@ class PetSystem:
         before = self.ctx.inventory_frame
         after = inventory.build_kit_frame(rows)
         self.commit_started = True
-        need(self.ctx.inventory_store.replace_kit(uid, before, after, append=True) is True,
+        need(self.ctx.inventory_transactions.commit_inventory(uid, before, after, append=True) is True,
              'PET_BAG_PERSISTED_CHANGE_REQUIRED')
         self.ctx.inventory_frame = after
 
@@ -658,7 +645,8 @@ class PetSystem:
             current = self.ctx.inventory_store.restore(record.owner_character_id)
             need(current in (before, after), 'PET_TAME_BAG_RECOVERY_CONFLICT')
             if current != after:
-                self.ctx.inventory_store.replace_kit(record.owner_character_id, before, after, append=True)
+                self.ctx.inventory_transactions.commit_inventory(
+                    record.owner_character_id, before, after, append=True)
             if self.ctx.inventory_frame == before:
                 self.ctx.inventory_frame = after
             record.equipment['_pet'].pop('pending_bag')
@@ -906,6 +894,9 @@ def _pet_initialize(ctx):
     ctx._pet_system = None
     ctx._pet_enabled = os.environ.get('SL_PET', '0') == '1'
     if ctx._pet_enabled:
+        ctx.prepare_dialogue()
+        from tools.local_original_session.world_companion_runtime import install_companion_runtime
+        install_companion_runtime(ctx.world)
         raw = json.loads(DATA.read_text(encoding='utf-8'))
         ctx._pet_system = PetSystem(ctx, raw, pure.load_pets())
 
@@ -955,15 +946,11 @@ async def _pet_enter(ctx, writer, row, game, operation_lock):
             from tools.local_original_session.world_progress import Progress, exp_percent
             from tools.local_original_session.world_status_frames import full_status_frame
             state = ctx.world.combat.pcs[uid]
-            ctx.world.exp[uid] = saved['exp']
-            state.profile = replace(state.profile, level=saved['level'])
-            state.max_hp = saved['max_hp']
             state.status_fields.update({2: saved['level'], 11: saved['max_hp'],
                 13: saved['max_mp'], 18: saved['lawful'],
                 26: exp_percent(ctx.world.data, saved['exp'], saved['level'])})
-            ctx._world_lawful[uid] = saved['lawful']
-            ctx.world.progress_dirty[uid] = Progress(saved['exp'], saved['level'],
-                saved['max_hp'], saved['max_mp'], saved['lawful'])
+            ctx.world.progress.adopt(uid, Progress(saved['exp'], saved['level'],
+                saved['max_hp'], saved['max_mp'], saved['lawful']))
             ctx.world._queue(uid, full_status_frame(state.status_fields))
         owned = {r.identifier for r in inventory.validate_kit_frame(ctx.inventory_frame)
                  if r.template_bits == 361 and dict(r.raw_fields)[4] == 1}
@@ -988,11 +975,47 @@ async def _pet_leave(ctx, writer):
         ctx._pet_system.trainer_windows.pop(id(writer), None)
 
 
+def _pet_relocate_keeps_self(ctx, uid):
+    system = ctx._pet_system
+    return system is not None and any(actor.owner_ref.uid == uid
+        and actor.character_id in system.records for actor in ctx.world.companions.active.values())
+
+
+def _pet_before_relocate(ctx, uid, transit):
+    system = ctx._pet_system
+    if system is None:
+        return
+    members = tuple(actor for actor in ctx.world.companions.active.values()
+                    if actor.owner_ref.uid == uid and actor.character_id in system.records)
+    transit['pet'] = members
+    for actor in members:
+        ctx.world.companions.dismiss(actor.character_id)
+
+
+def _pet_after_relocate(ctx, uid, transit):
+    members = transit.get('pet', ())
+    if not members:
+        return ()
+    system = ctx._pet_system
+    for previous in members:
+        # Pet records survive in their own store even when the shared actor
+        # owner retires an old-map instance. Reuse the existing pet restoration.
+        actor = system.summon(system.records[previous.character_id], uid)
+        for field in ('next_move_at', 'next_attack_at', 'next_cast_at', 'shield_until'):
+            setattr(actor, field, getattr(previous, field))
+    return tuple(ctx.world.drain(uid))
+
+
 METHODS = (_pet_initialize, _pet_started, _pet_enter, _pet_stopped, _pet_leave, _pet_frame,
-           _pet_trainer_frame)
+           _pet_trainer_frame, _pet_relocate_keeps_self, _pet_before_relocate, _pet_after_relocate)
 HOOKS = {'initialize': ('_pet_initialize',), 'runtime_started': ('_pet_started',),
          'after_enter': ('_pet_enter',), 'after_leave': ('_pet_leave',),
-         'runtime_stopped': ('_pet_stopped',)}
+         'runtime_stopped': ('_pet_stopped',),
+         'relocate_keeps_self': ('_pet_relocate_keeps_self',),
+         'before_relocate': ('_pet_before_relocate',),
+         'after_relocate': ('_pet_after_relocate',)}
+NONCRITICAL_HOOKS = ('after_leave',)
 FRAMES = {opcode: ('_pet_frame',) for opcode in (0x0960, 0x4f13, 0x4f02)}
 FRAMES.update({opcode: ('_pet_trainer_frame',) for opcode in (0x4e43, 0x4ed4)})
+FRAME_PRIORITY = 0
 OUTGOING_OPCODES = (0x4f14, 0x4f1a)

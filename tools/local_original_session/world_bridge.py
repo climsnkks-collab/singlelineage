@@ -9,6 +9,7 @@ import asyncio
 from functools import wraps
 import inspect
 import os
+from types import MappingProxyType
 
 from tools.local_native_login_local_ack_hook import ack_enter_world as ack
 from tools.local_original_session import movement, npc_motion
@@ -76,13 +77,95 @@ class Context:
     async def send(self, writer, row, frames, **options):
         return await self.broker._send(writer, row, frames, **options)
 
-    async def run_hooks(self, name, *args):
-        from tools.local_original_session import world_handlers
-        return await world_handlers.run_hooks(name, self, *args)
+    @property
+    def world_options(self):
+        return self.broker._world_options
 
-    def run_sync_hooks(self, name, *args):
+    @property
+    def inventory_transactions(self):
+        return self.broker._world_inventory_transactions
+
+    @property
+    def progress_store(self):
+        return self.broker._world_progress
+
+    @property
+    def item_policies(self):
+        return self.broker._world_handler_bindings.item_policies
+
+    def add_item_policies(self, policies, *, replace_existing=False):
+        """Startup owner API: retain existing entries unless replacement is explicit."""
+        from dataclasses import replace
+        bindings = self.broker._world_handler_bindings
+        merged = dict(bindings.item_policies)
+        for policy in policies:
+            if replace_existing or policy.template_id not in merged:
+                merged[policy.template_id] = policy
+        self.broker._world_handler_bindings = replace(bindings,
+            item_policies=MappingProxyType(merged))
+
+    def configure_town(self, town, sources, *, refresh_policies=True):
+        """Startup owner API for optional town/menu catalog contributions."""
         from tools.local_original_session import world_handlers
-        return world_handlers.run_sync_hooks(name, self, *args)
+        bindings = self.broker._world_handler_bindings
+        policies = ({policy.template_id: policy
+                     for policy in world_handlers._default_item_policies(town)}
+                    if refresh_policies else {})
+        policies.update(bindings.item_policies)
+        mapped = dict(bindings.sources)
+        mapped.update((source.placement_key, source) for source in sources)
+        self.broker._world_handler_bindings = world_handlers.prepare_host_bindings(town,
+            sources=tuple(mapped.values()), item_policies=tuple(policies.values()),
+            interaction_distance=bindings.interaction_distance,
+            allocate_uid=bindings.allocate_uid, sale_item=bindings.sale_item, wire=bindings.wire)
+        self.world.town = town
+
+    def prepare_dialogue(self):
+        """Prepare optional dialogue codecs once during feature initialization."""
+        from tools.local_original_session import world_handlers
+        bindings = self.broker._world_handler_bindings
+        if bindings.wire is None:
+            self.broker._world_handler_bindings = world_handlers.prepare_host_bindings(
+                bindings.town, sources=tuple(bindings.sources.values()),
+                item_policies=tuple(bindings.item_policies.values()),
+                interaction_distance=bindings.interaction_distance,
+                allocate_uid=bindings.allocate_uid, sale_item=bindings.sale_item)
+
+    async def run_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.run_hooks(name, self, *args, **kwargs)
+
+    def run_sync_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.run_sync_hooks(name, self, *args, **kwargs)
+
+    async def chain_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.chain_hooks(name, self, *args, **kwargs)
+
+    def chain_sync_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.chain_sync_hooks(name, self, *args, **kwargs)
+
+    async def fold_hooks(self, name, value, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.fold_hooks(name, self, value, *args, **kwargs)
+
+    def fold_sync_hooks(self, name, value, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.fold_sync_hooks(name, self, value, *args, **kwargs)
+
+    async def collect_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.collect_hooks(name, self, *args, **kwargs)
+
+    def collect_sync_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.collect_sync_hooks(name, self, *args, **kwargs)
+
+    def has_hooks(self, name):
+        from tools.local_original_session import world_registry
+        return world_registry.has_hooks(name, self)
 
 
 def _adapter(function):
@@ -128,31 +211,9 @@ def _adapter(function):
 def _save_boundary(owner, name, args):
     if getattr(owner, '_world_persist', None) is None:
         return False
-    if name == '_world_dispatch':
-        from tools.local_original_session.world_handlers import TRADE
-        return len(args) > 3 and args[3].opcode == TRADE
-    if name == '_world_enchant_use':
-        # This candidate is queried for every 0960. Ordinary potions must not
-        # flush pending movement/quantity snapshots just because it returns False.
-        from tools.local_original_session import inventory
-        if getattr(owner, '_inventory_kit_policy', None) != inventory.KIT_POLICY or len(args) < 2:
-            return False
-        pb = ack.realm.pb
-        try:
-            with pb.parse_message(args[1], limits=pb.WireLimits(
-                    max_body=4096, max_fields=2, max_field_bytes=2048)) as parsed:
-                fields = parsed.occurrences(1)
-                if len(fields) != 1 or fields[0].wire_type != 0:
-                    return False
-                uid = fields[0].value
-            return any(item.identifier == uid and item.template_bits in (25, 26)
-                       for item in inventory.validate_kit_frame(owner._inventory_current_frame))
-        except (ValueError, pb.WireError):
-            return False  # Original handler retains malformed-request reporting.
-    return name in ('_world_leave', '_world_pc_died', '_world_commit_respawn',
-                    '_world_relocate_locked', '_world_quest_action',
-                    '_world_warehouse_trade',
-                    '_companion_give_frame')
+    from tools.local_original_session.world_registry import registry_for
+    boundary = registry_for(owner).save_boundaries.get(name, False)
+    return boundary(owner, args) if callable(boundary) else boundary
 
 
 def _connect_inventory(broker):
@@ -176,13 +237,10 @@ def _capture_persist(broker):
         return
     _connect_inventory(broker)
     world = broker._world
-    from dataclasses import replace
-    for uid, dirty in tuple(world.progress_dirty.items()):
-        snapshot = replace(dirty, lawful=getattr(broker, '_world_lawful', {}).get(uid, dirty.lawful))
+    for uid, snapshot in world.progress.pending_items():
         broker._world_progress.stage(uid, snapshot)
         persist.enqueue(('progress', uid), snapshot, kind='character')
-        if world.progress_dirty.get(uid) is dirty:
-            world.progress_dirty.pop(uid, None)
+        world.progress.ack(uid, snapshot)
     uids = set(world.combat.pcs) | set(world.combat.vitals)
     for uid in uids:
         hp, mp = world.combat.hp_of(uid), world.combat.mp_of(uid)
@@ -310,6 +368,8 @@ def install_feature_api(broker_type, realm_type, starter_fields):
         setattr(broker_type, name, _adapter(function))
     for name, function in registry.realm_methods.items():
         setattr(realm_type, name, function)
+    broker_type._world_registry = registry
+    realm_type._world_registry = registry
     broker_type.INVENTORY_STARTER_FIELDS = starter_fields
     broker_type.WORLD_SEND_CHUNK = WORLD_SEND_CHUNK
     broker_type.WORLD_OPCODES = WORLD_OPCODES
@@ -326,73 +386,67 @@ def kit_policy(world_policy, missing, collection, transfer, store_policy):
 
 
 def prepare_inventory(broker, world_policy):
-    broker._world_warehouse_store = None
+    broker._world_inventory_transactions = None
     if world_policy is not None and broker._inventory_kit_policy is not None:
-        from tools.local_original_session.world_warehouse import WarehouseStore
-        broker._world_warehouse_store = WarehouseStore(broker._inventory_store)
+        from tools.local_original_session.world_state_services import InventoryTransactions
+        broker._world_inventory_transactions = InventoryTransactions(broker._inventory_store)
 
 
 def initialize(broker, world_policy, world_handler_sources, world_starter_kit, restart_policy, store_path):
+    from tools.local_original_session import world_handlers, world_registry
+    from tools.local_original_session.world_core_kit import setup_starter
     self = Context(broker)
+    self._world_registry = world_handlers.feature_registry()
+    self.realm._world_registry = self._world_registry
+    self.realm._world_context = self
+    self._world_options = MappingProxyType(dict(world_policy=world_policy,
+        world_handler_sources=tuple(world_handler_sources), world_starter_kit=world_starter_kit,
+        restart_policy=restart_policy, store_path=store_path))
     self._world = None
     self._world_pcs = {}
-    if world_policy is not None:
-        from tools.local_original_session import world_visibility, world_interest_spawn
-        need(type(world_policy) is str and world_policy == world_visibility.POLICY,
-             'WORLD_EXPLICIT_POLICY_REQUIRED')
-        from tools.local_original_session.game_data import load_m1
-        self._world = world_visibility.WorldView.create(
-            data=world_interest_spawn.with_dungeon_data(load_m1()))
-        from tools.local_original_session.world_feature_items import setup_enchant
-        setup_enchant(self)
-        from tools.local_original_session.world_feature_town import setup_warehouse
-        setup_warehouse(self)
-        from tools.local_original_session.world_feature_town import setup_town
-        setup_town(self, world_handler_sources)
-        from tools.local_original_session.world_feature_items import setup_polymorph
-        setup_polymorph(self)
-        from tools.local_original_session.world_feature_alignment import setup_alignment
-        setup_alignment(self)
-        from tools.local_original_session.world_feature_combat import setup_arrow
-        setup_arrow(self)
-        from tools.local_original_session.world_feature_items import setup_effects
-        setup_effects(self)
-        self._world.prepare_pc_attack = lambda *args: self.run_sync_hooks('prepare_attack', *args)
-        self._world.on_pc_death = lambda uid: self.run_sync_hooks('after_death', uid)
-        self._world.on_npc_hit = lambda uid: self.run_sync_hooks('npc_hit', uid)
-        self._world.notify = self._world_wake  # tick -> per-PC wake event, never a send
-        self.realm.edge_fallback = self._world_edge_fallback
-        self.realm._world_hp = self._world.combat.hp_of  # SelfInfo HP from the world authority
-        self.realm._world_mp = self._world.combat.mp_of
-        self.realm._world_stats_fields = self._world_fields_for
-        self._world.on_stats_changed = lambda uid: self.run_sync_hooks('stats_changed', uid)
-        from tools.local_original_session.world_feature_kit import setup_stance
-        setup_stance(self)
-        self.realm._world_respawn_commit = self._world_commit_respawn
-        self.realm._world_unserved_return = self._world_unserved_return
-        self.realm._world_dead_restart = restart_policy is not None
-        self.realm._world_is_dead = self._world.combat.is_dead
-        from tools.local_original_session.world_feature_reward import setup_progress
-        setup_progress(self, store_path)
-    from tools.local_original_session.world_feature_kit import setup_starter
-    setup_starter(self, world_policy, world_starter_kit)
-    self._world_events = {}  # pc uid -> asyncio.Event read by that writer's _serve loop
-    self._world_names = {}  # pc uid -> selected saved name (for the town respawn commit)
-    self._world_respawn = {}  # pc uid -> name: left dead, next entry is at the town point
+    self._world_events = {}
+    self._world_names = {}
+    self._world_respawn = {}
     self._world_respawn_errors = []
     self._world_progress_errors = []
     self._world_pickups = 0
     self._world_pickup_errors = []
     self._world_handler_errors = []
-    self._world_item_errors = []
-    self._world_relocations = {}  # restart/reselect fallback
+    self._world_hook_errors = []
+    self._world_relocations = {}
     self._world_map_exp = int(os.environ.get('SL_EXPERIMENT_MAP', '0'))
     need(self._world_map_exp in (0, 1, 2, 3), 'WORLD_MAP_EXPERIMENT_REQUIRED')
-    self.realm._world_map_exp = self._world_map_exp if self._world is not None else 0
     self._world_map_transitions = 0
-    if self._world is not None:
-        self.run_sync_hooks('initialize')
-        _setup_persist(broker)
+    self.realm._world_map_exp = self._world_map_exp if world_policy is not None else 0
+    setup_starter(self, world_policy, world_starter_kit)
+    if world_policy is None:
+        return
+    from tools.local_original_session import world_visibility, world_interest_spawn
+    from tools.local_original_session.game_data import load_m1
+    need(type(world_policy) is str and world_policy == world_visibility.POLICY,
+         'WORLD_EXPLICIT_POLICY_REQUIRED')
+    self._world = world_visibility.WorldView.create(
+        data=world_interest_spawn.with_dungeon_data(load_m1()))
+    # Optional UI features prepare their own codecs/catalogs during initialize.
+    # Core movement, combat and inventory do not require dialogue resources.
+    self._world_handler_bindings = world_handlers.empty_host_bindings()
+    self._world.prepare_pc_attack = (lambda *args: world_registry.prepare_attack(self, *args)
+        ) if self.has_hooks('prepare_attack') else None
+    self._world.combat.on_kill = lambda event: self.run_sync_hooks('after_kill', event)
+    self._world.on_pc_death = lambda uid: self.run_sync_hooks('after_death', uid)
+    self._world.on_npc_hit = lambda uid: self.run_sync_hooks('npc_hit', uid)
+    self._world.notify = self._world_wake
+    self.realm.edge_fallback = self._world_edge_fallback
+    self.realm._world_hp = self._world.combat.hp_of
+    self.realm._world_mp = self._world.combat.mp_of
+    self.realm._world_stats_fields = self._world_fields_for
+    self._world.on_stats_changed = lambda uid: self.run_sync_hooks('stats_changed', uid)
+    self.realm._world_respawn_commit = self._world_commit_respawn
+    self.realm._world_unserved_return = self._world_unserved_return
+    self.realm._world_dead_restart = restart_policy is not None
+    self.realm._world_is_dead = self._world.combat.is_dead
+    self.run_sync_hooks('initialize')
+    _setup_persist(broker)
 
 
 def start(broker, loop):
@@ -421,11 +475,11 @@ def event_for(broker, writer):
 
 
 async def receive(broker, writer, row, game, frame, operation_lock):
-    from tools.local_original_session.world_handlers import feature_registry
+    from tools.local_original_session.world_registry import registry_for
     if frame.opcode in (RESTART_REQUEST, DEAD_RESTART_REQUEST, 0x4e3c):
         # Settle the current life before the existing route can acknowledge exit.
         _flush_persist(broker)
-    for name in feature_registry().frames.get(frame.opcode, ()):
+    for name in registry_for(broker).frames.get(frame.opcode, ()):
         if await getattr(broker, name)(writer, row, game, frame, operation_lock):
             return True
     return False
@@ -449,11 +503,6 @@ async def leave(broker, writer):
                 broker._world_commit_respawn(uid)
             except Exception:
                 broker._fail('WORLD_PERSIST_FAILED')
-    try:
-        await Context(broker).run_hooks('after_leave', writer)
-    except Exception as error:
-        broker._world_progress_errors = (broker._world_progress_errors + [str(error)[:96]])[-4:]
-        broker._fail('WORLD_LEAVE_FAILED')
     _cleanup_persist(broker)
 
 
@@ -517,37 +566,37 @@ def kit_outgoing_extensions(policy, extension, opcode, size):
 
 
 def actor_fields(realm, position, actor):
-    from tools.local_original_session.world_feature_stats import realm_actor
+    from tools.local_original_session.world_core_stats import realm_actor
     return realm_actor(realm, position, actor)
 
 
 def status_fields(realm, position, fields, initial):
-    from tools.local_original_session.world_feature_stats import realm_status
+    from tools.local_original_session.world_core_stats import realm_status
     return realm_status(realm, position, fields, initial)
 
 
 def serves_map(realm, map_id):
-    from tools.local_original_session.world_feature_maps import realm_serves_map
+    from tools.local_original_session.world_core_maps import realm_serves_map
     return realm_serves_map(realm, map_id)
 
 
 def map_frame(realm, position, encode):
-    from tools.local_original_session.world_feature_maps import realm_map_frame
+    from tools.local_original_session.world_core_maps import realm_map_frame
     return realm_map_frame(realm, position, encode)
 
 
 def dead_move(realm, service):
-    from tools.local_original_session.world_feature_maps import realm_dead_move
+    from tools.local_original_session.world_core_maps import realm_dead_move
     return realm_dead_move(realm, service)
 
 
 async def move(service, payload):
-    from tools.local_original_session.world_feature_maps import realm_move
+    from tools.local_original_session.world_core_maps import realm_move
     return await realm_move(service, payload)
 
 
 def bind_restart(realm, game, life_broker, restart_game):
-    from tools.local_original_session.world_feature_life import realm_bind_restart
+    from tools.local_original_session.world_core_life import realm_bind_restart
     realm_bind_restart(realm, game, life_broker, restart_game)
 
 
@@ -570,44 +619,39 @@ def report(broker, result):
             pickups=self._world_pickups, pickup_errors=list(self._world_pickup_errors),
             reward_errors=list(world.reward_errors), progress_errors=list(self._world_progress_errors),
             respawn_errors=list(self._world_respawn_errors), pending_respawn=len(self._world_respawn),
-            handler_errors=list(self._world_handler_errors), item_errors=list(self._world_item_errors),
-            town_npcs=(0 if world.town is None else sum(1 for entity in world.entities
-                        if world.town.npc_for(entity.uid) is not None)),
-            menu_sources=len(self._world_handler_bindings.sources),
-            shop_experiment=self._world_shop_experiment is not None,
-            polymorph_experiment=self._world_poly_exp, active_polymorphs=len(self._world_polymorphs),
-            alignment_changes=list(self._world_alignment_changes), death_drop_risks=list(self._world_death_risks),
-            enchant_experiment=self._world_enchant_exp is not None,
-            enchant_results=list(self._world_enchant_results),
-            warehouse_experiment=self._world_warehouse_exp,
-            warehouse_results=list(self._world_warehouse_results),
+            handler_errors=list(self._world_handler_errors),
             relocation_policy=('LOCAL_SAME_MAP_REMOVE_4EE0_SPAWN' if self._world_map_exp == 0
                                else 'LOCAL_MAP_EXPERIMENT'),
             map_transition='NATIVE_PUBLICATION_UNKNOWN',
             map_experiment=self._world_map_exp, experimental_transitions=self._world_map_transitions)
+        self.run_sync_hooks('report', result['world'])
+        errors = getattr(self, '_world_hook_errors', ())
+        if errors:
+            result['world']['hook_errors'] = list(errors)
 
 
 
 def defer_equipment_prepare(broker, life):
-    from tools.local_original_session.world_feature_kit import defer_equipment_prepare as defer
+    from tools.local_original_session.world_core_kit import defer_equipment_prepare as defer
     return defer(broker, life)
 
 
 def inventory_items(broker, frame):
-    from tools.local_original_session.world_feature_kit import inventory_items as items
+    from tools.local_original_session.world_core_kit import inventory_items as items
     return items(Context(broker), frame)
 
 
 def starter_frame(broker, name, fallback):
-    from tools.local_original_session.world_feature_kit import starter_frame as starter
+    from tools.local_original_session.world_core_kit import starter_frame as starter
     return starter(Context(broker), name, fallback)
 
 
 def first_grant_valid(broker, frame):
-    from tools.local_original_session.world_feature_kit import first_grant_valid as valid
+    from tools.local_original_session.world_core_kit import first_grant_valid as valid
     return valid(Context(broker), frame)
 
 
 def inventory_payload(broker, wire, inventory_wire):
-    from tools.local_original_session.world_feature_kit import inventory_payload as payload
+    from tools.local_original_session.world_core_kit import inventory_payload as payload
     return payload(Context(broker), wire, inventory_wire)
+

@@ -232,6 +232,10 @@ class TownNpcs:
         self.passable = passable
         self._owned: dict[int, tuple[EntityRef, TownNpc, int]] = {}
 
+    def adopt_registration(self, previous):
+        """Transfer this catalog owner's already-issued actors during startup."""
+        self._owned, previous._owned = previous._owned, {}
+
     def _entity(self, uid: int) -> Entity | None:
         owned = self._owned.get(uid)
         entity = self.entities.resolve(owned[0]) if owned is not None else None
@@ -365,3 +369,33 @@ class TownNpcs:
             if self.entities.get(uid) is not None:
                 self.entities.remove(uid)
         self._owned.clear()
+
+
+@dataclass(frozen=True)
+class TownSetup:
+    """Startup contribution passed through the registered town_setup fold."""
+    town: TownNpcs
+    services: object
+    sources: tuple
+    shop_experiment: object
+
+
+def attach_view(view, town):
+    """Register town visibility/lifetime without making WorldView own this feature."""
+    from tools.local_original_session.world_visibility import SCREEN_LIMIT, town_spawn_frame
+    view.town = town
+    if 'town' in view.extensions:
+        return
+    view.extensions['town'] = True
+
+    def present(pc_uid, map_id, x, y, known):
+        return tuple(entity for entity in view.town.present(map_id, x, y, SCREEN_LIMIT)
+                     if view.town.appearance(entity.uid).sprite_id is not None)
+
+    def spawn(entity):
+        appearance = view.town.appearance(entity.uid)
+        return None if appearance is None else town_spawn_frame(entity, appearance)
+
+    view.events.add('town', 'visible_entities', present, priority=10)
+    view.events.add('town', 'spawn_frame', spawn)
+    view.events.add('town', 'close', lambda: view.town.close())

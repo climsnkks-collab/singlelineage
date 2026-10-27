@@ -381,7 +381,8 @@ class ItemEquipmentEffect:
         item=context['item'];definition=self._defs.get(item.template_bits)
         if definition is None:return self._blocked(receipt,'ITEM_USE_KIT_UNKNOWN_TEMPLATE')
         if not self._kit_params_raw0(intent):return self._blocked(receipt,'ITEM_USE_KIT_REVIEWED_RAW0_PARAMS_REQUIRED')
-        if definition.kind=='potion':return await self._consume_potion(writer,context,receipt,definition)
+        if definition.kind=='potion':
+            return await self.broker._world_consume_kit_potion(self,writer,context,receipt,definition)
         if not definition.equippable:return self._blocked(receipt,'ITEM_USE_KIT_NO_EFFECT')
         if context['selected_class'] not in definition.classes:return self._blocked(receipt,'ITEM_USE_KIT_CLASS_NOT_ALLOWED')
         try:

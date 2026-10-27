@@ -139,7 +139,7 @@ def potion_heal(base: int, rng: random.Random) -> int:
     return max(0, int(base * (rng.gauss(0.0, 1.0) / POTION_GAUSS_DIVISOR + 1.0)))
 
 
-def companion_magic_damage(parameters, intelligence, rng, *, mr=0, weak_attr=0):
+def magic_damage(parameters, intelligence, rng, *, mr=0, weak_attr=0):
     """LOCAL L1J PC->ordinary NPC, mage_spells formula_policies.
 
     Explicit baseline: extraSP/weapon/original magic bonuses=0, leverage=10.
@@ -157,7 +157,7 @@ def companion_magic_damage(parameters, intelligence, rng, *, mr=0, weak_attr=0):
     return max(0, int(damage * ((1 if mr <= 100 else .6) - .01 * quotient)))
 
 
-def companion_magic_heal(parameters, intelligence, lawful, bonus_table, rng):
+def magic_heal(parameters, intelligence, lawful, bonus_table, rng):
     """LOCAL L1J calcHealing; independent dice, lawful, no potion Gaussian."""
     bonus = bonus_table[max(0, intelligence)] if intelligence <= 50 else intelligence - 25
     dice = parameters['heal_base_dice_count_from_damage_value'] + min(10, bonus)
@@ -166,7 +166,7 @@ def companion_magic_heal(parameters, intelligence, lawful, bonus_table, rng):
     return int(amount * (1 + max(0, lawful) / 32768))
 
 
-def apply_companion_heal(combat, uid, amount):
+def apply_heal(combat, uid, amount):
     """Use the bound owner's sole HP writer and its existing full SC4E38."""
     state = combat.pcs.get(uid)
     if state is None or state.dead or state.hp <= 0:
@@ -370,10 +370,14 @@ class WorldCombat:
         self.vitals: dict[int, int] = {}
         self.mana: dict[int, int] = {}  # same for current MP (SC4E38 field12)
         self.regen = data.town.regen
-        # Bound by WorldView to its existing manager. CompanionRecord remains
-        # the sole companion HP ledger; no companion entry belongs in pcs.
-        self.companions = None
-        self.magic_profile = lambda uid, profile, now, **kwargs: profile
+        from tools.local_original_session.world_extensions import WorldEvents
+        self.events = WorldEvents()
+        self.profile_modifiers = []
+
+    def modify_profile(self, uid, profile, now, **kwargs):
+        for modifier in tuple(self.profile_modifiers):
+            profile = modifier(uid, profile, now, **kwargs)
+        return profile
 
     def bind_pc(self, uid: int, profile: PcProfile, status_fields: dict) -> PcState:
         fields = dict(status_fields)
@@ -462,7 +466,7 @@ class WorldCombat:
         state = self.pcs.get(uid)
         if state is not None:
             return not state.dead and state.hp > 0
-        return self.companions is not None and self.companions.can_be_attacked(uid)
+        return self.events.chain('can_be_attacked', uid)
 
     def note_activity(self, uid: int, points: int) -> None:
         """L1J setRegenState: the running tick keeps the lowest state points seen."""
@@ -520,7 +524,7 @@ class WorldCombat:
             return None
         state.next_attack_at = now + state.profile.attack_interval_s(self.data) * self.speed_factor(uid, now)
         state.regen_state = min(state.regen_state, self.regen.attack_points)
-        return pc_hits_npc(self.magic_profile(uid, state.profile, now, ranged=arrow is not None),
+        return pc_hits_npc(self.modify_profile(uid, state.profile, now, ranged=arrow is not None),
                            monster, self.rng, arrow=arrow)
 
     def npc_swing(self, monster: MonsterDef, pc_uid: int) -> tuple[Swing, bytes | None]:
@@ -537,51 +541,13 @@ class WorldCombat:
             state.dead = True
         return swing, status_frame(state.status_fields, state.hp)
 
-    def companion_swing(self, runtime, profile: PcProfile, monster: MonsterDef) -> Swing | None:
-        """One admitted basic intent, using the saved member's own combat inputs.
-
-        CompanionAI owns next_attack_at. The WorldView consumer validates the
-        intent's current target, map, range and LOS before calling this method,
-        and applies this swing through its normal monster HP/death path.
-        """
-        manager = self.companions
-        if (manager is None or manager.get_actor(runtime.ref.uid) is not runtime
-                or not manager.can_be_attacked(runtime.ref.uid)
-                or not self.can_be_attacked(runtime.owner_ref.uid)):
-            return None
-        bags = getattr(self, 'companion_inventory', None)
-        if bags is not None and bags.calculated(runtime.character_id)[0].weight.attack_blocked:
-            return None
-        return pc_hits_npc(profile, monster, self.rng)
-
-    def npc_companion_swing(self, monster: MonsterDef, uid: int, profile: PcProfile,
-                            now: float) -> Swing | None:
-        """Debit only CompanionRecord HP; lethal damage cancels its whole life.
-
-        The caller admits the NPC's current target/range/LOS and publishes the
-        attack, companion HP and death frames. No own-player SC_STATUS is made.
-        """
-        manager = self.companions
-        if manager is None or not manager.can_be_attacked(uid):
-            return None
-        runtime = manager.get_actor(uid)
-        if runtime is None or not self.can_be_attacked(runtime.owner_ref.uid):
-            return None
-        # Shield is caster-only. Its expiry uses the shared monotonic clock;
-        # checking the deadline here also handles a late expiry callback.
-        if runtime.shield_until > now:
-            from dataclasses import replace
-            profile = replace(profile, ac=profile.ac - 2)
-        swing = npc_hits_pc(monster, profile, self.rng)
-        if swing.landed and swing.damage > 0:
-            record = runtime.record
-            record.hp = max(0, record.hp - swing.damage)
-            if record.hp == 0:
-                manager.die(record.character_id, now)
-        return swing
-
     def record_kill(self, event: KillEvent) -> None:
         self.kills.append(event)
         del self.kills[:-32]
         if self.on_kill is not None:
             self.on_kill(event)
+
+# Historical pure-formula names; both PC and follower callers share these functions.
+companion_magic_damage = magic_damage
+companion_magic_heal = magic_heal
+apply_companion_heal = apply_heal

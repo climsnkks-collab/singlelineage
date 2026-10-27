@@ -115,9 +115,7 @@ def _m5_initialize(ctx):
     ctx._world_m5=None
     if os.environ.get('SL_EXPERIMENT_M5','0')!='1' or ctx._world_map_exp!=2:
         return
-    from tools.local_original_session import world_handlers, world_town_services
     from tools.local_original_session.world_interest_spawn import InterestSpawner
-    from tools.local_original_session.world_shop_menu import MenuSource
     world=ctx.world
     policy=load_m5_policy()
     world.terrain.bounds(4) # explicit startup preload
@@ -127,15 +125,24 @@ def _m5_initialize(ctx):
     extra_spawner=InterestSpawner(world.entities,addition,passable=world.spawner.passable,
                                  rng=world.spawner.rng)
     world.spawner.groups.extend(extra_spawner.groups)
-    world.data=world.combat.data=world.ground.data=data
+    world.replace_data(data)
+    ctx._world_m5=policy
 
-    old=world.town
+
+
+def _m5_town_setup(ctx, setup):
+    if os.environ.get('SL_EXPERIMENT_M5', '0') != '1' or ctx._world_map_exp != 2:
+        return setup
+    from tools.local_original_session import world_town_services
+    from tools.local_original_session.world_shop_menu import MenuSource
+    world = ctx.world
+    old=setup.town
     town_data=load_m5_town(old.data)
     raw_services=_read(M5_DATA_DIR,'town_services.json')
     resources=_read(M5_DATA_DIR,'npc_menus.json')['resources']
     routes=world_town_services.load_town_services(M5_DATA_DIR)
-    current=ctx._world_services
-    ctx._world_services=replace(current,
+    current=setup.services
+    services=replace(current,
         teleports=MappingProxyType(dict(current.teleports)|dict(routes.teleports)),
         teleporter_ids=current.teleporter_ids|routes.teleporter_ids,
         inn_ids=current.inn_ids|routes.inn_ids)
@@ -143,8 +150,7 @@ def _m5_initialize(ctx):
     bank_ids={r['l1j_npc_id'] for r in raw_services['warehouse']['npcs']}
     inn_ids=routes.inn_ids
     sources=[];visuals={};enabled=set(old.config.candidate_npc_ids)
-    existing_bindings=ctx._world_handler_bindings
-    source_keys=set(existing_bindings.sources)
+    source_keys={source.placement_key for source in setup.sources}
     for key,npc in town_data.placements.items():
         if npc.spawn['count']<=0 or npc.spawn['mapid']!=4:
             continue
@@ -171,7 +177,7 @@ def _m5_initialize(ctx):
             resource=resources.get(stem,{})
             if not {'buy','sell'}<=set(resource.get('actions',())):
                 continue
-            sources.append(MenuSource(key,stem,tuple(resource['actions']),ctx._world_shop_experiment))
+            sources.append(MenuSource(key,stem,tuple(resource['actions']),setup.shop_experiment))
             candidate=npc.row.get('same_number_classic_sprite_candidate')
             visual=candidate['sprite_id'] if candidate else None
         else:
@@ -189,17 +195,10 @@ def _m5_initialize(ctx):
     # Startup ownership transfer preserves already-issued actors and explicit
     # HostNpcSource UID bindings. Register only reconciles/adds this owner's
     # placements; the detached former owner must no longer remove them.
-    town._owned=old._owned
-    old._owned={}
-    world.town=town
+    town.adopt_registration(old)
     town.register()
-    # HostBindings is immutable. Keep the exact existing transport, policies,
-    # custom UID allocator, seller callback, distance and externally supplied
-    # resources, adding only new placement-key sources and the replacement town.
-    ctx._world_handler_bindings=replace(existing_bindings,town=town,
-        sources=MappingProxyType(dict(existing_bindings.sources)|{s.placement_key:s for s in sources}))
-    ctx._world_m5=policy
-    ctx._world_item_effects=MainlandItemEffects(ctx._world_item_effects,policy)
+    return replace(setup, town=town, services=services,
+                   sources=setup.sources + tuple(sources))
 
 
 def _m5_after_death(ctx,uid):
@@ -209,8 +208,19 @@ def _m5_after_death(ctx,uid):
     if entity is not None:
         destination=policy.return_for(entity.map_id,entity.x,entity.y)
         if destination is not None:
-            ctx._world_relocations[uid]=destination
+            ctx._world_set_relocation(uid, destination)
 
 
-METHODS=(_m5_initialize,_m5_after_death)
-HOOKS={'initialize':('_m5_initialize',),'after_death':('_m5_after_death',)}
+def _m5_destination(ctx, result, position):
+    policy = ctx._world_m5
+    if policy is not None and position is not None and result.kind == 'return_town' and result.destination is not None:
+        destination = policy.return_for(position.map_id, position.x, position.y)
+        if destination is not None:
+            return replace(result, destination=destination,
+                requirements=movement_requirements(position.map_id, destination))
+    return result
+
+
+METHODS=(_m5_initialize,_m5_after_death,_m5_town_setup,_m5_destination)
+HOOKS={'initialize':('_m5_initialize',),'after_death':('_m5_after_death',),
+       'town_setup':('_m5_town_setup',),'item_destination_policy':('_m5_destination',)}

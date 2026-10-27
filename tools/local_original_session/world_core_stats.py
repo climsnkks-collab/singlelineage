@@ -1,4 +1,4 @@
-"""World feature: stats. Existing packet/store operations, unchanged."""
+"""World core: stats. Existing packet/store operations, unchanged."""
 from __future__ import annotations
 
 
@@ -23,7 +23,26 @@ def _world_stats_for(self, position, *, level=None):
                         enchant=world_enchant_inventory.enchant_level(item, definition)))
     base = world_stats.CharacterStats(level, info[3], world_stats.Attributes(
         info[11], info[12], info[13], info[14], info[15], info[16]))
-    return world_stats.calculate_stats(base, worn), tuple(worn), info
+    from dataclasses import replace
+    from tools.local_original_session import world_weight
+    calculated, worn, info = self.fold_sync_hooks('stats_modifiers',
+        (world_stats.calculate_stats(base, worn), tuple(worn), info), position, level=level)
+    carried = 0
+    if effect is not None:
+        _, frame = effect.store.peek(position.uid)
+        if frame is not None:
+            def raw_weight(template):
+                definition = self.world.data.items.get(template)
+                return (definition.weight if definition is not None else
+                        self.fold_sync_hooks('item_weight', 0, template))
+            carried = sum(world_weight.stack_weight(raw_weight(item.template_bits),
+                dict(item.raw_fields)[4]) for item in inventory.validate_kit_frame(frame)
+                if dict(item.raw_fields)[4] > 0)
+    capacity = world_weight.maximum_weight(calculated.attributes.strength, calculated.attributes.con)
+    capacity = self.fold_sync_hooks('weight_capacity', capacity, calculated, position)
+    calculated = replace(calculated, max_weight=capacity,
+                         weight=world_weight.weight_state(carried, capacity))
+    return calculated, worn, info
 
 
 def _world_fields_for(self, position, existing):
@@ -36,7 +55,7 @@ def _world_fields_for(self, position, existing):
     fields = world_stats.self_info_fields(fields, calculated)
     if state is not None:
         fields[10], fields[12] = state.hp, state.mp
-    fields[18] = self._world_lawful.get(position.uid, fields[18])
+    fields[18] = self.world.progress.lawful_of(position.uid, fields[18])
     return fields
 
 
@@ -120,9 +139,8 @@ def realm_actor(self, position, actor):
             actor[3] = sprite
         # Equipment is read from the saved row, never the clicked inventory item.
         actor[4] = self._world_stance(position.uid)
-        appearance = getattr(self, '_world_appearance', None)
-        if appearance is not None:
-            actor[3] = appearance(position.uid, actor[3])
+        from tools.local_original_session.world_registry import fold_realm_hooks
+        actor = fold_realm_hooks('actor_fields', self, actor, position)
         import os
         experiment = os.environ.get('SL_EXPERIMENT_ACTOR_F4')
         if experiment is not None and experiment != '':
@@ -157,14 +175,10 @@ def realm_status(self, position, fields, initial):
         _, stats = self._world_look(position.name)
         fields = dict(fields)
         fields.update(stats)
-        member_for = getattr(self, '_world_companion_record', None)
-        member = None if member_for is None else member_for(position.uid)
-        if member is not None:
-            # The joint companion save owns this real character's resources
-            # and growth before the first selected status or combat binding.
-            fields.update({2: member.level, 10: member.hp, 11: member.max_hp,
-                           12: member.mp, 13: member.max_mp})
+        from tools.local_original_session.world_registry import fold_realm_hooks
+        fields = fold_realm_hooks('status_fields', self, fields, position, initial)
     stats_fields = getattr(self, '_world_stats_fields', None)
     if stats_fields is not None:
         fields = stats_fields(position, fields)
     return fields
+

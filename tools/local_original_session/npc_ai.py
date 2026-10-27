@@ -24,11 +24,10 @@ distance > leash_range), target loss (logout, off screen, other map) or the
 target PC's death (release_target, also can_be_attacked) end the chase with
 RETURN, then IDLE at home.
 Runs inside scheduler callbacks / tick hooks under the world lock: never calls
-WorldRuntime.dispatch_now. Registered living companions are eligible targets via
-view.companions, independently of the existing PC combat predicate. The future
-WorldView.npc_attack(entity, monster, target_uid, now) consumer must branch for
-companions and debit their record HP; its current PC-only implementation is not
-that consumer. Target selection / fake-view callbacks alone prove no damage.
+WorldRuntime.dispatch_now. Optional actor services nominate non-PC targets through
+view.ai_target, independently of the existing PC combat predicate. Their matching
+WorldView npc_target_attack consumer owns damage and record HP updates. Empty
+registrations retain ordinary PC targeting; target selection alone proves no damage.
 """
 from __future__ import annotations
 
@@ -288,10 +287,8 @@ class NpcAi:
             return False
         if pc.kind is Kind.PC:
             return pc_uid in self.view.pcs and self.view.combat.can_be_attacked(pc_uid)
-        companions = getattr(self.view, 'companions', None)
-        return (pc.kind is Kind.NPC and companions is not None
-                and companions.get_actor(pc_uid) is not None
-                and companions.can_be_attacked(pc_uid))
+        ai_target = getattr(self.view, 'ai_target', None)
+        return pc.kind is Kind.NPC and ai_target is not None and ai_target(pc_uid)
 
     def _perceive(self, brain: Brain, entity: Entity, now: float) -> None:
         if distance(entity.x, entity.y, *brain.home) > brain.monster.leash_range:

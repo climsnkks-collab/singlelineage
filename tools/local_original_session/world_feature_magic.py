@@ -138,11 +138,7 @@ def _world_magic_consumers(ctx):
 
     def install(owner, name, wrapper):
         if hasattr(owner, name):
-            previous = getattr(owner, name)
-            own = name in vars(owner)
-            current = wrapper(previous)
-            installed.append((owner, name, previous, own, current))
-            setattr(owner, name, current)
+            installed.append(view.runtime_extensions.wrap('magic', owner, name, wrapper))
 
     def current_effects(uid, now):
         if uid in engine.states:
@@ -153,12 +149,10 @@ def _world_magic_consumers(ctx):
             return {}
         return row['effects']
 
-    install(view.combat, 'magic_profile', lambda previous: ctx._world_magic_combat_profile)
-
-    previous_status = getattr(view, 'magic_status', None)
-    own_status = 'magic_status' in vars(view)
-    view.magic_status = lambda uid, now: magic_status.ai_status(current_effects(uid, now), now)
-    installed.append((view, 'magic_status', previous_status, own_status, view.magic_status))
+    ctx._world_magic_profile_modifier = ctx._world_magic_combat_profile
+    view.combat.profile_modifiers.append(ctx._world_magic_profile_modifier)
+    installed.append(view.runtime_extensions.wrap('magic', view, 'magic_status',
+        lambda previous: lambda uid, now: magic_status.ai_status(current_effects(uid, now), now)))
 
     def ready(base):
         return lambda uid, now: (engine.status(uid, 'paralyze', now) is None and base(uid, now))
@@ -373,46 +367,32 @@ def _world_magic_sync_icons(ctx, uid, now):
         ctx.world._queue(uid, buff_icon_frame(key, instance, until - now))
 
 
-def _world_stats_for(ctx, position, *, level=None):
-    """Recompute from the ordinary base/equipment; no cumulative AC subtraction."""
-    from tools.local_original_session.world_feature_stats import _world_stats_for as base_stats
-    calculated, worn, info = base_stats(ctx, position, level=level)
-    magic = getattr(ctx, '_world_magic', None)
+def _world_magic_stats(ctx, value, position, *, level=None):
+    """Add only this feature's modifiers to the core base/equipment result."""
+    calculated, worn, info = value
+    magic = ctx._world_magic
     now = ctx.world.runtime.clock()
-    bonus = 0 if magic is None else magic.ac_bonus(position.uid, now,
+    bonus = magic.ac_bonus(position.uid, now,
         armor_uid=_world_magic_armor_uid(ctx, position.uid))
-    dexterity = 0 if magic is None else magic.dexterity_bonus(position.uid, now)
+    dexterity = magic.dexterity_bonus(position.uid, now)
     if dexterity:
-        # Reuse the existing modifier arithmetic. Buff DEX changes real
-        # melee/ranged inputs and SelfInfo, while base DEX still owns base AC.
         from tools.local_original_session import world_stats
         base = world_stats.CharacterStats(calculated.level, info[3],
             world_stats.Attributes(info[11], info[12], info[13], info[14], info[15], info[16]))
         calculated = world_stats.calculate_stats(base, worn,
             buffs=(world_stats.StatModifiers(dexterity=dexterity),))
-    # Feed Decrease Weight into the shared weight arithmetic. The selected kit
-    # is the existing inventory owner; no item/equipment persistence is changed.
-    from tools.local_original_session import inventory, world_weight
-    carried = 0
-    effect = getattr(ctx, '_item_equipment_effect', None)
-    if effect is not None:
-        _, frame = effect.store.peek(position.uid)
-        if frame is not None:
-            def raw_weight(template):
-                definition = ctx.world.data.items.get(template)
-                if definition is not None:
-                    return definition.weight
-                # Retained spellbook and catalyst rows supply only their
-                # source-backed weights, without generic item definitions.
-                return magic.item_raw_weight(template)
-            carried = sum(world_weight.stack_weight(raw_weight(item.template_bits),
-                dict(item.raw_fields)[4]) for item in inventory.validate_kit_frame(frame)
-                if dict(item.raw_fields)[4] > 0)
-    capacity = world_weight.maximum_weight(calculated.attributes.strength,
-        calculated.attributes.con, decrease_weight=magic is not None
-        and magic.active(position.uid, 'weight', ctx.world.runtime.clock()))
-    return replace(calculated, ac=calculated.ac + bonus, max_weight=capacity,
-                   weight=world_weight.weight_state(carried, capacity)), worn, info
+    return replace(calculated, ac=calculated.ac + bonus), worn, info
+
+
+def _world_magic_weight_capacity(ctx, capacity, calculated, position):
+    from tools.local_original_session import world_weight
+    return world_weight.maximum_weight(calculated.attributes.strength,
+        calculated.attributes.con, decrease_weight=ctx._world_magic.active(
+            position.uid, 'weight', ctx.world.runtime.clock()))
+
+
+def _world_magic_item_weight(ctx, current, template_id):
+    return ctx._world_magic.item_raw_weight(template_id) or current
 
 
 def _world_magic_weapon_uid(ctx, uid):
@@ -607,13 +587,12 @@ def _world_magic_stopped(ctx):
     ctx._world_magic.npc_poison.clear()
     ctx._world_magic.npc_invisible.clear()
     ctx._world_magic.npc_statuses.clear()
-    for owner, name, previous, own, current in reversed(getattr(ctx, '_world_magic_adapters', ())):
-        if getattr(owner, name, None) is current:
-            if own:
-                setattr(owner, name, previous)
-            else:
-                delattr(owner, name)
+    for handle in reversed(getattr(ctx, '_world_magic_adapters', ())):
+        handle.close()
     ctx._world_magic_adapters = []
+    modifier = getattr(ctx, '_world_magic_profile_modifier', None)
+    if modifier in ctx.world.combat.profile_modifiers:
+        ctx.world.combat.profile_modifiers.remove(modifier)
 
 
 def _world_magic_died(ctx, uid):
@@ -710,11 +689,11 @@ def _world_magic_cast(ctx, uid, key, target_uid, now, *, row=None, game=None):
                 if (candidate_slot is None or not candidate_slot[0].active
                         or candidate_slot[1].hp <= 0):
                     continue
-                rolled = world_combat.companion_magic_damage(spell.raw['formula']['parameters'],
+                rolled = world_combat.magic_damage(spell.raw['formula']['parameters'],
                                                              intelligence, view.combat.rng)
                 victims.append((candidate.ref, rolled))
         elif spell.kind != 'poison':
-            amount = world_combat.companion_magic_damage(spell.raw['formula']['parameters'],
+            amount = world_combat.magic_damage(spell.raw['formula']['parameters'],
                                                         intelligence, view.combat.rng)
     elif spell.kind in HOSTILE | {'weak_elemental'}:
         found = view.spawner.slot_for(target_uid)
@@ -741,8 +720,8 @@ def _world_magic_cast(ctx, uid, key, target_uid, now, *, row=None, game=None):
         healed = view.combat.pcs.get(target_uid)
         need(healed is not None and not healed.dead and healed.hp > 0,
              'MAGIC_LIVING_PC_HEAL_TARGET_REQUIRED')
-        amount = world_combat.companion_magic_heal(spell.raw['formula']['parameters'], intelligence,
-            ctx._world_lawful.get(uid, state.status_fields.get(18, 0)),
+        amount = world_combat.magic_heal(spell.raw['formula']['parameters'], intelligence,
+            view.progress.lawful_of(uid, state.status_fields.get(18, 0)),
             engine.catalog['formula_policies']['l1j_healing']['magic_bonus_by_int_0_to_50'],
             view.combat.rng)
     elif spell.kind in ('cure_poison', 'remove_curse'):
@@ -877,9 +856,7 @@ def _world_magic_cast(ctx, uid, key, target_uid, now, *, row=None, game=None):
         if target_uid in view.combat.pcs:
             poisoned = engine.state(target_uid).poison is not None
             engine.state(target_uid).poison = None
-            ailments = getattr(ctx, '_world_ailments', {}).get(target_uid)
-            if ailments is not None:
-                ailments.poison = None
+            ctx.run_sync_hooks('cure_poison', target_uid)
             ctx._world_magic_save(target_uid)
             ctx._world_magic_sync_icons(target_uid, now)
         else:
@@ -907,7 +884,7 @@ def _world_magic_cast(ctx, uid, key, target_uid, now, *, row=None, game=None):
                                  world_combat.Swing(True, amount), now)
         if spell.kind == 'drain':
             # Heal from HP actually removed, including overkill and maxHP clamp.
-            healed, wire = world_combat.apply_companion_heal(view.combat, uid,
+            healed, wire = world_combat.apply_heal(view.combat, uid,
                 int(amount * spell.raw['player_policy'].get('drain_ratio', 1.0)))
             view._queue(uid, wire)
     elif spell.kind == 'poison':
@@ -917,9 +894,7 @@ def _world_magic_cast(ctx, uid, key, target_uid, now, *, row=None, game=None):
     elif spell.kind == 'cure_poison':
         if target_uid in view.combat.pcs:
             engine.state(target_uid).poison = None
-            ailments = getattr(ctx, '_world_ailments', {}).get(target_uid)
-            if ailments is not None:
-                ailments.poison = None
+            ctx.run_sync_hooks('cure_poison', target_uid)
             ctx._world_magic_save(target_uid)
         else:
             engine.npc_poison.pop(target_uid, None)
@@ -943,7 +918,7 @@ def _world_magic_cast(ctx, uid, key, target_uid, now, *, row=None, game=None):
                                                same_map_correction=True):
             view._queue(uid, wire)
     elif spell.kind == 'heal':
-        amount, wire = world_combat.apply_companion_heal(view.combat, target_uid, amount)
+        amount, wire = world_combat.apply_heal(view.combat, target_uid, amount)
         view._queue(target_uid, wire)
     else:
         ctx._world_recalculate_uid(uid)
@@ -1047,14 +1022,17 @@ async def _world_magic_frame(ctx, writer, row, game, frame, operation_lock):
 
 
 METHODS = (_world_magic_initialize, _world_magic_started, _world_magic_save,
-    _world_magic_tick, _world_stats_for, _world_magic_enter, _world_magic_detach,
+    _world_magic_tick, _world_magic_stats, _world_magic_weight_capacity,
+    _world_magic_item_weight, _world_magic_enter, _world_magic_detach,
     _world_magic_weapon_uid, _world_magic_armor_uid,
     _world_magic_combat_profile, _world_magic_apply_poison,
     _world_magic_set_invisible, _world_magic_poison_tick,
     _world_magic_sync_icons,
     _world_magic_after_request, _world_magic_after_leave, _world_magic_stopped,
     _world_magic_died, _world_magic_display, _world_magic_cast, _world_magic_frame)
-HOOKS = {'initialize': ('_world_magic_initialize',), 'runtime_started': ('_world_magic_started',),
+HOOKS = {'stats_modifiers': ('_world_magic_stats',),
+    'weight_capacity': ('_world_magic_weight_capacity',), 'item_weight': ('_world_magic_item_weight',),
+    'initialize': ('_world_magic_initialize',), 'runtime_started': ('_world_magic_started',),
     'after_enter': ('_world_magic_enter',), 'after_request': ('_world_magic_after_request',),
     'after_leave': ('_world_magic_after_leave',), 'after_death': ('_world_magic_died',),
     'runtime_stopped': ('_world_magic_stopped',)}

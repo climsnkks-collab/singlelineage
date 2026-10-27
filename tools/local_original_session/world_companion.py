@@ -31,6 +31,7 @@ All methods run under the existing single world-thread/runtime lock.
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
+from contextlib import contextmanager
 from copy import deepcopy
 from dataclasses import asdict, dataclass, field
 import json
@@ -38,6 +39,7 @@ import math
 import os
 from pathlib import Path
 import tempfile
+from types import MappingProxyType
 from typing import NamedTuple, Protocol
 
 from tools.local_original_session.world_entities import EntityRef, EntityRegistry, Kind
@@ -176,7 +178,8 @@ class WorldCompanions:
         self.scheduler = scheduler
         self.release_target = release_target
         self.records: dict[int, CompanionRecord] = {}
-        self.active: dict[int, CompanionRuntime] = {}
+        self._active: dict[int, CompanionRuntime] = {}
+        self.active: Mapping[int, CompanionRuntime] = MappingProxyType(self._active)
         self._actors: dict[int, CompanionRuntime] = {}
         self.on_remove = None  # WorldView publication, not a second lifetime owner.
 
@@ -230,7 +233,7 @@ class WorldCompanions:
                                  action=record.movement_mode,
                                  next_move_at=started_at, next_attack_at=started_at,
                                  next_cast_at=started_at)
-        self.active[character_id] = actor
+        self._active[character_id] = actor
         self._actors[entity.uid] = actor
         if not record.alive:
             actor.action = 'DEAD'
@@ -244,6 +247,19 @@ class WorldCompanions:
     def retained_actor(self, uid: int) -> CompanionRuntime | None:
         """Includes a dead same-map corpse whose original reference is invalid."""
         return self._actors.get(uid)
+
+    @contextmanager
+    def without_reward_member(self, character_id: int):
+        """Allocate a feature-owned reward while the ordinary splitter skips it.
+
+        The actor remains published and attackable. Only reward enumeration is
+        suspended, and the original pop/reinsert order is retained on failure.
+        """
+        actor = self._active.pop(character_id)
+        try:
+            yield actor
+        finally:
+            self._active[character_id] = actor
 
     def can_be_attacked(self, uid: int) -> bool:
         actor = self.get_actor(uid)
@@ -337,7 +353,7 @@ class WorldCompanions:
 
     def dismiss(self, character_id: int, now: float | None = None) -> CompanionRuntime | None:
         now = self._now(now)
-        actor = self.active.pop(character_id, None)
+        actor = self._active.pop(character_id, None)
         if actor is None:
             return None
         self._stop(actor)
@@ -505,14 +521,18 @@ class CompanionStore:
                     raise ValueError('COMPANION_INVALID_EXP_HALF')
             self.payload = payload
 
-    def commit(self, world, owner_uid: int, receipt=None) -> None:
-        records = [asdict(record) for record in world.companions.records.values()]
-        for record in world.companions.records.values():
+    def commit(self, world, owner_uid: int, receipt=None, *, records=None,
+               reward_receipts=None) -> None:
+        # Each feature submits its owned projection; never swap the live roster
+        # or receipt ledger merely to call the unchanged joint-file serializer.
+        owned = tuple(world.companions.records.values() if records is None else records)
+        records = [asdict(record) for record in owned]
+        for record in owned:
             record.validate()
         previous = self.payload if self.pending is None else self.pending
         owners = deepcopy(previous['owners'])
         for uid, state in world.combat.pcs.items():
-            if any(record.owner_character_id == uid for record in world.companions.records.values()):
+            if any(record.owner_character_id == uid for record in owned):
                 owners[str(uid)] = dict(exp=world.exp[uid], level=state.profile.level,
                     max_hp=state.max_hp, max_mp=state.max_mp,
                     lawful=state.status_fields.get(18, 500),
@@ -520,7 +540,8 @@ class CompanionStore:
         # Preserve an earlier failed absolute save on the next ordinary commit;
         # never recompute or replay its kill reward to recover a lost response.
         by_kill = {row['kill_id']: deepcopy(row) for row in previous['rewards']}
-        for row in world.companion_reward_receipts:
+        submitted_receipts = tuple(world.companion_reward_receipts if reward_receipts is None else reward_receipts)
+        for row in submitted_receipts:
             by_kill[row['kill_id']] = {**row, 'joint_commit_count': 1, 'durable': True}
         rewards = list(by_kill.values())[-32:]
         payload = dict(schema=1, owners=owners, records=records, rewards=rewards)
@@ -537,7 +558,7 @@ class CompanionStore:
             os.replace(temporary, self.path)
             self.payload = payload
             self.pending = None
-            for row in world.companion_reward_receipts:
+            for row in submitted_receipts:
                 row.update(joint_commit_count=1, durable=True)
         finally:
             if temporary is not None and temporary.exists():
