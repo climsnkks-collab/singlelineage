@@ -250,5 +250,3 @@ class CompanionInventory:
         del self.events[:-32]
         self.save(rt.owner_ref.uid)
         return True
-
-

@@ -310,5 +310,3 @@ def npc_companion_swing(self, monster: MonsterDef, uid: int, profile: PcProfile,
         if record.hp == 0:
             manager.die(record.character_id, now)
     return swing
-
-

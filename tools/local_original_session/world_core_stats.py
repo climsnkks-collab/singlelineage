@@ -181,4 +181,3 @@ def realm_status(self, position, fields, initial):
     if stats_fields is not None:
         fields = stats_fields(position, fields)
     return fields
-

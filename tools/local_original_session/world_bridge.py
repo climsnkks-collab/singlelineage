@@ -654,4 +654,3 @@ def first_grant_valid(broker, frame):
 def inventory_payload(broker, wire, inventory_wire):
     from tools.local_original_session.world_core_kit import inventory_payload as payload
     return payload(Context(broker), wire, inventory_wire)
-
