@@ -55,7 +55,7 @@ def remember_loaded_sources():
             'world_bridge', 'world_core_inventory', 'world_core_lifecycle'}
     for name, module in tuple(sys.modules.items()):
         leaf = name.rsplit('.', 1)[-1]
-        if not name.startswith('tools.local_original_session.') or not (leaf in core or leaf.startswith('world_feature_')):
+        if not name.startswith('tools.local_original_session.') or not (leaf in core or leaf.startswith(('world_feature_', 'world_core_'))):
             continue
         filename = getattr(module, '__file__', None)
         if filename and name not in SOURCE_SHA256:
