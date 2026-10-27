@@ -79,19 +79,42 @@ class _WrapperHandle:
             self.closed = True
 
 
+class _PreparedWrapper:
+    """Reserve once at startup, then install once at the owner's activation point."""
+    def __init__(self, registry, owner, target, name):
+        self.registry, self.owner = registry, owner
+        self.target, self.name = target, name
+
+    def install(self, wrapper):
+        return self.registry._install(self.owner, self.target, self.name, wrapper)
+
+
 class RuntimeExtensions:
-    """Startup-installed explicit wrappers, removable in any owner order."""
+    """Startup-reserved explicit wrappers, removable in any owner order."""
     def __init__(self):
         self._methods = {}
+        self._reservations = {}
+
+    def reserve(self, owner, target, name):
+        """Validate an owner's slot without reading or replacing its current base."""
+        key = (id(target), name)
+        owners = self._reservations.setdefault(key, set())
+        if owner in owners:
+            raise ValueError(f'DUPLICATE_WORLD_WRAPPER:{owner}:{name}')
+        owners.add(owner)
+        return _PreparedWrapper(self, owner, target, name)
 
     def wrap(self, owner, target, name, wrapper):
+        return self.reserve(owner, target, name).install(wrapper)
+
+    def _install(self, owner, target, name, wrapper):
+        # The site was reserved at startup. Capture the actual preceding owner
+        # now: another feature may have supplied the base after reservation.
         key = (id(target), name)
         if key not in self._methods:
             self._methods[key] = [target, name, name in vars(target),
                                   getattr(target, name, None), []]
         row = self._methods[key]
-        if any(existing == owner for existing, _ in row[4]):
-            raise ValueError(f'DUPLICATE_WORLD_WRAPPER:{owner}:{name}')
         row[4].append((owner, wrapper))
         self._apply(row)
         return _WrapperHandle(self, key, owner)
@@ -115,3 +138,6 @@ class RuntimeExtensions:
         self._apply(row)
         if not row[4]:
             del self._methods[key]
+        self._reservations[key].remove(owner)
+        if not self._reservations[key]:
+            del self._reservations[key]

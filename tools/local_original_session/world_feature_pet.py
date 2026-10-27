@@ -92,6 +92,14 @@ class PetSystem:
         self.installed = False
         self.store = None
         self.adapters = []
+        v, ai = self.view, self.view.companion_ai
+        self._adapter_sites = {(id(target), name): v.runtime_extensions.reserve('pet', target, name)
+            for target, names in (
+                (v, ('_spawn_frame', '_present', '_reward', 'companion_save')),
+                (v.combat, ('companion_swing',)),
+                (v.companions, ('on_remove',)),
+                (ai, ('magic', 'inventory', 'move_interval', 'attack_interval')))
+            for name in names}
 
     @property
     def records(self):
@@ -101,8 +109,6 @@ class PetSystem:
         if self.installed:
             return
         v, ctx = self.view, self.ctx
-        from tools.local_original_session.world_companion_runtime import install_companion_runtime
-        install_companion_runtime(v)
         # Reuse the existing atomic schema in a feature-owned directory. Turning
         # this optional feature off cannot make the ordinary roster writer drop
         # persistent pets it does not understand.
@@ -159,7 +165,7 @@ class PetSystem:
         self._wrap(target, name, lambda previous: lambda *a, **k: consumer(previous, *a, **k))
 
     def _wrap(self, target, name, factory):
-        self.adapters.append(self.view.runtime_extensions.wrap('pet', target, name, factory))
+        self.adapters.append(self._adapter_sites[(id(target), name)].install(factory))
 
     def close(self):
         if not self.installed:

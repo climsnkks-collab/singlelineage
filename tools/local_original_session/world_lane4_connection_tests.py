@@ -229,7 +229,7 @@ class Connection:
         restored = {i.identifier: dict(i.raw_fields) for i in inventory.validate_kit_frame(fresh.restore(1))}
         self.check('fresh_store_persistence', restored[item.identifier][4] == quantity
             and restored[coins.identifier][4] == cash - 30
-            and WarehouseStore(fresh).restore(1) is None,
+            and InventoryTransactions(fresh).restore_warehouse(1) is None,
             saved_cash=restored[coins.identifier][4])
 
 

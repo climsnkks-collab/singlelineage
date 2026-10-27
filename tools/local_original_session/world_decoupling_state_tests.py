@@ -101,6 +101,19 @@ class ExtensionContracts(unittest.TestCase):
             extensions.wrap('owner', target, 'value', lambda base: lambda: 99)
         self.assertEqual(target.value(), 4)
 
+    def test_reserved_wrapper_validates_early_and_captures_base_at_activation(self):
+        target, extensions = SimpleNamespace(value=None), RuntimeExtensions()
+        prepared = extensions.reserve('pet', target, 'value')
+        with self.assertRaisesRegex(ValueError, 'DUPLICATE_WORLD_WRAPPER'):
+            extensions.reserve('pet', target, 'value')
+        self.assertIsNone(target.value)
+        supplied_later = lambda x: x + 7
+        target.value = supplied_later
+        handle = prepared.install(lambda base: lambda x: base(x) * 2)
+        self.assertEqual(target.value(3), 20)
+        handle.close()
+        self.assertIs(target.value, supplied_later)
+
 
 @dataclass(frozen=True)
 class Profile:
