@@ -51,6 +51,7 @@ class CompanionAiTests(unittest.TestCase):
         self.manager = WorldCompanions(self.entities, self.runtime.scheduler,
                                        release_target=self.npc_ai.release_target)
         self.view.companions = self.manager
+        self.view.ai_target = self.manager.can_be_attacked
         self.record = CompanionRecord(2, 1, 'account', hp=20, max_hp=20, mp=10, max_mp=10)
         roster = {1: {'account_id': 'account', 'class_id': 0},
                   2: {'account_id': 'account', 'class_id': 3}}

@@ -31,7 +31,7 @@ from tools.local_original_session.world_maps import TRANSITIONS
 from tools.local_original_session.world_m1_reward_tests import enable_world_kit, status_values
 from tools.local_original_session.world_progress import exp_percent
 from tools.local_original_session.world_runtime import WorldRuntime
-from tools.local_original_session.world_town import TownNpcs, confirmed_npc_ids, load_town
+from tools.local_original_session.world_town import TownNpcs, attach_view, confirmed_npc_ids, load_town
 
 
 def opcode(frame):
@@ -70,7 +70,7 @@ class InjectedBrokerTests(unittest.IsolatedAsyncioTestCase):
         self.world = visibility.WorldView(runtime,
             InterestSpawner(runtime.entities, data, passable=lambda *_: True), Terrain(),
             data=data, rng=random.Random(7))
-        self.world.town = TownNpcs(self.world.entities, load_town())
+        attach_view(self.world, TownNpcs(self.world.entities, load_town()))
         fields = {1: 1, 2: 10, 4: 13, 5: 13, 6: 10, 7: 15, 8: 12, 9: 10,
                   10: 30, 11: 30, 12: 2, 13: 10, 14: -10,
                   15: 0, 16: 0, 17: 0, 18: 0, 20: 0}
@@ -91,7 +91,7 @@ class InjectedBrokerTests(unittest.IsolatedAsyncioTestCase):
             wire=SimpleNamespace(), interaction_distance=3, sources={})
         host._world_handler_errors, host._world_item_errors = [], []
         host._world_progress_errors, host._world_ailments = [], {}
-        host._world_lawful, host._world_death_risks = {}, []
+        host._world_death_risks = []
         host._world_respawn_errors = []
         host._world_respawn, host._world_relocations = {}, {}
         host._world_map_exp = 0

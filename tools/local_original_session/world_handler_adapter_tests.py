@@ -65,7 +65,7 @@ class HostAdapterTests(unittest.IsolatedAsyncioTestCase):
         effect = SimpleNamespace(_defs=definitions,
             store=SimpleNamespace(restore=lambda uid, frame: equipment))
         self.broker = SimpleNamespace(_world=SimpleNamespace(entities=self.entities),
-            _world_warehouse_trade=lambda *_: False,
+            _world_registry=h.build_registry(()),
             _world_pcs={id(self.writer): (self.writer, 1)},
             _world_handler_bindings=self.bindings, _inventory_current_frame=initial,
             _inventory_store=self.store, _item_equipment_effect=effect,

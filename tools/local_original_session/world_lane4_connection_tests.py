@@ -21,7 +21,7 @@ from tools.local_original_session import hunt_bot as hb, hunt_bot_scenarios as h
 from tools.local_original_session import inventory, world_enchant_inventory as enchant, test_ports
 from tools.local_original_session import broker as host
 from tools.local_original_session.item_equipment_effect import ItemEquipmentEffect
-from tools.local_original_session.world_warehouse import WarehouseStore
+from tools.local_original_session.world_state_services import InventoryTransactions
 
 
 class Connection:
@@ -69,7 +69,7 @@ class Connection:
         after = inventory.build_kit_frame(rows)
         self.store.replace_kit(1, before, after, append=True)
         broker._inventory_current_frame = after
-        broker._world_warehouse_store = WarehouseStore(self.store)
+        broker._world_inventory_transactions = InventoryTransactions(self.store)
         if warehouse:
             from tools.local_original_session import movement
             from tools.local_original_session.world_progress import Progress
@@ -198,7 +198,7 @@ class Connection:
         opened = await self.bank_window('deposit')
         batch = await self.bank_trade(hb.scalar(opened, 4), 1, item.identifier, 2)
         saved = inventory.validate_kit_frame(self.store.restore(1))
-        bank = inventory.validate_kit_frame(broker._world_warehouse_store.restore(1))
+        bank = inventory.validate_kit_frame(broker._world_inventory_transactions.restore_warehouse(1))
         self.check('deposit_saved_and_received', len(bank) == 1
             and bank[0].template_bits == 14 and dict(bank[0].raw_fields)[4] == 2
             and bot.inventory[item.identifier][4] == quantity - 2,
@@ -216,7 +216,7 @@ class Connection:
         self.check('withdraw_received_fee_and_inventory',
             bot.inventory[item.identifier][4] == quantity
             and bot.inventory[coins.identifier][4] == cash - 30
-            and broker._world_warehouse_store.restore(1) is None,
+            and broker._world_inventory_transactions.restore_warehouse(1) is None,
             quantity=bot.inventory[item.identifier][4], cash_before=cash,
             cash_after=bot.inventory[coins.identifier][4])
         await bot.peer.request(0x097b, alive=True,

@@ -10,7 +10,7 @@ from unittest.mock import Mock, patch
 from tools.local_original_session import inventory, inventory_store, equipment_store
 from tools.local_original_session.game_data import load_stances
 from tools.local_original_session import world_companion_integration_tests as fixtures
-from tools.local_original_session.world_feature_trade import CompanionInventory
+from tools.local_original_session.world_companion_inventory import CompanionInventory
 from tools.local_original_session.world_enchant_inventory import enchanted_name
 from tools.local_native_login_local_ack_hook import ack_enter_world as ack
 
@@ -45,11 +45,18 @@ class CompanionEquipmentTests(unittest.TestCase):
                                              'mp': {'recover_fraction': .4}}},
             _inventory_kit_frame=lambda _: inventory.build_kit_frame([
                 item(50, 41), item(51, 103), item(52, 14, 0), item(53, 7, 100)]))
-        self.bags = CompanionInventory(self.ctx)
+        self.bags = self.new_bags()
         self.bags.equipment.initialize_kit(1, owner_frame,
             initialization=equipment_store.FIRST_ENABLE_EMPTY, weapon_uid=0, slots=())
         self.bags.initialize(2)
         self.record, self.actor = self.fixture.record, self.fixture.actor
+
+    def new_bags(self):
+        from tools.local_original_session.world_feature_companion import _companion_owned_actor
+        return CompanionInventory(self.ctx, characters=self.ctx._companion_rows,
+            policy=self.ctx._companion_policy, save=self.ctx._companion_save,
+            owned_actor=lambda uid, actor_uid: _companion_owned_actor(self.ctx, uid, actor_uid),
+            report_error=Mock())
 
     def give(self, source, count=1):
         return self.bags.give(1, self.actor, source, count, self.ctx.inventory_frame)
@@ -89,7 +96,7 @@ class CompanionEquipmentTests(unittest.TestCase):
                 self.give(11)
         self.assertTrue(self.bags.intent_path.exists())
         self.assertNotIn(11, [r.identifier for r in inventory.validate_kit_frame(self.store.restore(1))])
-        recovered = CompanionInventory(self.ctx)
+        recovered = self.new_bags()
         recovered.initialize(2)
         self.assertFalse(recovered.intent_path.exists())
         rows = inventory.validate_kit_frame(self.store.restore(2))
@@ -97,7 +104,7 @@ class CompanionEquipmentTests(unittest.TestCase):
         self.assertEqual(len(staff), 1)
         self.assertEqual(recovered.states[2].weapon_uid, staff[0].identifier)
         self.assertEqual(self.ctx.inventory_frame, self.store.restore(1))
-        again = CompanionInventory(self.ctx)
+        again = self.new_bags()
         again.initialize(2)
         self.assertEqual(again.frames[2], recovered.frames[2])
 
@@ -132,7 +139,7 @@ class CompanionEquipmentTests(unittest.TestCase):
         self.assertGreater(self.record.equipment['blue_expires_unix'], 0)
         self.assertEqual(self.store.restore(1), owner)
         frame = self.store.restore(2)
-        reopened = CompanionInventory(self.ctx)
+        reopened = self.new_bags()
         reopened.initialize(2)
         self.assertEqual(reopened.frames[2], frame)
         self.assertGreater(reopened.blue_until[2], self.ctx.world.runtime.clock())

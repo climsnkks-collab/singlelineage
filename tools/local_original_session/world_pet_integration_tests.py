@@ -138,10 +138,15 @@ class PetPersistenceDevelopmentTests(unittest.TestCase):
         self.view.terrain.can_stand = self.view.terrain.passable
         self.view.companions.dismiss(2)
         self.regular = CompanionStore(Path(self.directory.name) / 'characters.json')
-        self.view.companion_save = lambda uid, receipt=None: self.regular.commit(self.view, uid, receipt)
+        self.view.companion_save = lambda uid, receipt=None: self.regular.commit(self.view, uid, receipt,
+            records=(record for record in self.view.companions.records.values()
+                     if not product.pet_record(record)),
+            reward_receipts=(row for row in self.view.companion_reward_receipts
+                             if row['member_character_id'] == 2))
         ctx = SimpleNamespace(world=self.view,
             realm=SimpleNamespace(store=SimpleNamespace(path=Path(self.directory.name) / 'characters.json')),
-            _world_progress=ProgressStore(Path(self.directory.name) / 'characters.json'),
+            progress_store=ProgressStore(Path(self.directory.name) / 'characters.json'),
+            collect_sync_hooks=lambda *_: (), run_sync_hooks=lambda *_: None,
             _world_names={1: 'FixtureKnight'})
         raw = json.loads(product.DATA.read_text(encoding='utf-8'))
         self.system = product.PetSystem(ctx, raw, load_pets())

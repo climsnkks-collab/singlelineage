@@ -199,7 +199,7 @@ class MagicScenario(hs.Scenario):
             nearby = next(spec for spec in data.spawns if spec.group_id == 'm1_orc')
             declared = dataclasses.replace(original, group_id='test_magic_undead29',
                 rect=nearby.rect, target_count=1)
-            self.world.data = dataclasses.replace(data, spawns=data.spawns + (declared,))
+            self.world.replace_data(dataclasses.replace(data, spawns=data.spawns + (declared,)))
             self.world.spawner.groups.append(Group(declared, data.monsters[29], [Slot(0)]))
             spawn_fixture = dict(group_id=declared.group_id, template_id=29,
                 l1j_npcid=data.monsters[29].l1j_npcid, original_group=original.group_id,
@@ -225,13 +225,13 @@ class MagicScenario(hs.Scenario):
         # to move a removed anchor atomically; no native preparation is claimed.
         from tools.local_original_session import inventory
         from tools.local_original_session.item_equipment_effect import ItemEquipmentEffect
-        from tools.local_original_session.world_warehouse import WarehouseStore
+        from tools.local_original_session.world_state_services import InventoryTransactions
         effect = object.__new__(ItemEquipmentEffect)
         effect.store, effect._defs = self.equipment, self.broker._world.data.items
         effect._kit_policy, effect._collection_policy = inventory.KIT_POLICY, None
         effect._selection, effect._last = None, dict(status='FIXTURE_SAVED_EQUIPMENT_ONLY')
         self.broker._item_equipment_effect = effect
-        self.broker._world_warehouse_store = WarehouseStore(self.store)
+        self.broker._world_inventory_transactions = InventoryTransactions(self.store)
         # Read-only observation of the product's actual swing. Clone the RNG
         # state for a base-profile comparison, without advancing its owner or
         # changing admission, RNG, returned damage, HP or downstream handling.
@@ -502,7 +502,7 @@ class MagicScenario(hs.Scenario):
 
     def effective_weapon(self):
         state = self.world.combat.pcs[self.bot.self_uid]
-        return self.world.combat.magic_profile(self.bot.self_uid, state.profile,
+        return self.world.combat.modify_profile(self.bot.self_uid, state.profile,
                                                self.world.runtime.clock()).weapon
 
     async def melee(self, label, *, damage_bonus=0, target=None):
@@ -1049,10 +1049,10 @@ async def run(args):
     source_paths = ['hunt_bot_magic.py', 'hunt_bot.py', 'hunt_bot_scenarios.py', 'hunt_bot_loopback.py',
                     'world_magic.py', 'world_feature_magic.py', 'world_magic_status.py',
                     'npc_ai.py', 'world_combat.py',
-                    'world_weight.py', 'world_stats.py', 'world_feature_stats.py',
+                    'world_weight.py', 'world_stats.py', 'world_core_stats.py',
                     'world_item_effects.py', 'world_handlers.py', 'broker.py',
                     'inventory.py', 'inventory_store.py', 'equipment_store.py', 'world_bridge.py',
-                    'world_feature_kit.py', 'world_warehouse.py',
+                    'world_core_kit.py', 'world_warehouse.py', 'world_state_services.py',
                     'item_equipment_effect.py', 'world_lane4_connection_tests.py',
                     'data/m3/player_spells.json']
     def sources():

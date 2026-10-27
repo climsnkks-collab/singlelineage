@@ -1,6 +1,6 @@
 """Development unit checks only; these are not native-client/UI PASS claims."""
 from dataclasses import replace
-from types import SimpleNamespace, MappingProxyType
+from types import MethodType, SimpleNamespace, MappingProxyType
 import unittest
 from unittest.mock import patch
 
@@ -57,25 +57,38 @@ class PolicyTests(unittest.TestCase):
 
 class KitTests(unittest.TestCase):
     def test_supply_preserves_old_rows_and_only_applies_named_knight(self):
-        from tools.local_original_session.world_feature_kit import _inventory_kit_frame as base
+        from tools.local_original_session.world_core_kit import _inventory_kit_frame
+        from tools.local_original_session.world_bridge import Context
+        from tools.local_original_session.world_extensions import WorldEvents
+        from tools.local_original_session.world_registry import build_registry
+        from tools.local_original_session.world_visibility import WorldView
         from tools.local_original_session.world_handlers import _starter_fields
         data = game_data.load_m1()
-        host = SimpleNamespace(_world=SimpleNamespace(data=data, combat=SimpleNamespace(data=data)),
+        world = SimpleNamespace(data=data, combat=SimpleNamespace(data=data),
+            ground=SimpleNamespace(data=data), events=WorldEvents())
+        world.replace_data = MethodType(WorldView.replace_data, world)
+        host = SimpleNamespace(_world=world,
             _world_handler_bindings=SimpleNamespace(item_policies=MappingProxyType({})),
-            _world_starter_kit='test_knight', starter_fields=_starter_fields(), _world_enchant_exp=None)
+            _world_starter_kit='test_knight', INVENTORY_STARTER_FIELDS=_starter_fields(),
+            _world_registry=build_registry((feature,)))
+        plain = SimpleNamespace(_world_starter_kit='test_knight',
+            starter_fields=host.INVENTORY_STARTER_FIELDS,
+            fold_sync_hooks=lambda name, value, *args: value)
+        ctx = Context(host)
+        host._talkscroll_kit_frame = MethodType(feature._talkscroll_kit_frame, ctx)
         # The real host bindings dataclass is required by replace; use its normal factory.
         from tools.local_original_session.world_handlers import HostBindings
-        host._world_handler_bindings = HostBindings(None, None, MappingProxyType({}),
+        host._world_handler_bindings = HostBindings(None, object(), MappingProxyType({}),
                                                    MappingProxyType({}), 0, None, None)
-        feature._talkscroll_initialize(host)
-        old = inventory.validate_kit_frame(base(host, 1))
-        new = inventory.validate_kit_frame(feature._inventory_kit_frame(host, 1))
+        feature._talkscroll_initialize(ctx)
+        old = inventory.validate_kit_frame(_inventory_kit_frame(plain, 1))
+        new = inventory.validate_kit_frame(_inventory_kit_frame(ctx, 1))
         self.assertEqual(new[:-1], old)
         self.assertEqual((new[-1].template_bits, dict(new[-1].raw_fields)[4],
                           dict(new[-1].raw_fields)[7]), (12273, 1, 20256))
-        self.assertEqual(feature._inventory_kit_frame(host, 0), base(host, 0))
-        host._world_starter_kit = None
-        self.assertEqual(feature._inventory_kit_frame(host, 1), base(host, 1))
+        self.assertEqual(_inventory_kit_frame(ctx, 0), _inventory_kit_frame(plain, 0))
+        host._world_starter_kit = plain._world_starter_kit = None
+        self.assertEqual(_inventory_kit_frame(ctx, 1), _inventory_kit_frame(plain, 1))
 
 
 class NativeRequestTests(unittest.IsolatedAsyncioTestCase):

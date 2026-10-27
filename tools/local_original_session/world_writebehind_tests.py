@@ -11,7 +11,7 @@ from tools.local_character_creation.realm import CharacterStore, Creation
 from tools.local_original_session import inventory, inventory_store, movement, world_bridge
 from tools.local_original_session.world_core_inventory import INVENTORY_STARTER_FIELDS
 from tools.local_original_session.world_persist import WorldPersist
-from tools.local_original_session.world_progress import Progress, ProgressStore
+from tools.local_original_session.world_progress import Progress, ProgressOwner, ProgressStore
 from tools.local_original_session.world_scheduler import Scheduler
 
 
@@ -232,8 +232,10 @@ class WorldWritebehindTests(unittest.TestCase):
 
     def test_trade_wrapper_flushes_quantity_before_return_and_leave_stays_open(self):
         store, persist, initial = self.inventory()
+        world = SimpleNamespace(exp={}, combat=SimpleNamespace(pcs={}, vitals={}))
+        world.progress = ProgressOwner(world)
         broker = SimpleNamespace(_world_persist=persist, _inventory_store=store,
-            _world=SimpleNamespace(progress_dirty={}, combat=SimpleNamespace(pcs={}, vitals={})),
+            _world=world,
             _world_vital_snapshots={})
         def _world_quest_action(context):
             context._inventory_store.replace_kit(1, initial, self.kit(19))
@@ -249,8 +251,10 @@ class WorldWritebehindTests(unittest.TestCase):
             raise OSError('disk unavailable')
         persist = WorldPersist(self.scheduler, unavailable)
         persist.enqueue(('inventory', 1), b'latest')
+        world = SimpleNamespace(exp={}, combat=SimpleNamespace(pcs={}, vitals={}))
+        world.progress = ProgressOwner(world)
         broker = SimpleNamespace(_world_persist=persist, _inventory_store=None,
-            _world=SimpleNamespace(progress_dirty={}, combat=SimpleNamespace(pcs={}, vitals={})),
+            _world=world,
             _world_vital_snapshots={}, _fail=failures.append)
         async def _world_leave(context, writer):
             left.append(writer)

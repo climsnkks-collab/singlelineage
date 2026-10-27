@@ -52,7 +52,7 @@ class M5Scenario(matrix.Matrix):
         return bag_counts(self.store.restore(self.bot.self_uid))
 
     def bank_counts(self):
-        return bag_counts(self.broker._world_warehouse_store.restore(self.bot.self_uid))
+        return bag_counts(self.broker._world_inventory_transactions.restore_warehouse(self.bot.self_uid))
 
     async def navigate(self, goal, *, radius=0, predicate=None):
         bot, deadline = self.bot, time.monotonic() + self.args.navigation_timeout

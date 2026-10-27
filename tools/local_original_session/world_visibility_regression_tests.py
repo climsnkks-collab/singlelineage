@@ -15,7 +15,7 @@ from tools.local_original_session.world_ammo import AttackPreparation, L1J_ARROW
 from tools.local_original_session.world_entities import Kind
 from tools.local_original_session.world_interest_spawn import Group, InterestSpawner, Slot, SlotState
 from tools.local_original_session.world_runtime import WorldRuntime
-from tools.local_original_session.world_town import TownConfig, TownNpcs, confirmed_npc_ids, load_town
+from tools.local_original_session.world_town import TownConfig, TownNpcs, attach_view, confirmed_npc_ids, load_town
 from tools.local_original_session.world_visibility import WorldView
 
 
@@ -72,7 +72,7 @@ class WorldVisibilityRegressionTests(unittest.TestCase):
 
     def test_town_enter_exit_reset_disable_reuses_actor_remove_codecs(self):
         view = self.make()
-        view.town = self.product_town(view)
+        attach_view(view, self.product_town(view))
         entities = view.town.register()
         radars = [e for e in entities if view.town.npc_for(e.uid).npc_id == 70523]
         radar, = radars
@@ -100,7 +100,7 @@ class WorldVisibilityRegressionTests(unittest.TestCase):
 
     def test_unknown_sprite_optin_does_not_invent_actor(self):
         view = self.make()
-        view.town = TownNpcs(view.entities, load_town(), TownConfig(enable_candidates=True))
+        attach_view(view, TownNpcs(view.entities, load_town(), TownConfig(enable_candidates=True)))
         view.town.register()
         pandora = next(e for e in view.entities if view.town.npc_for(e.uid).npc_id == 70014)
         frames = self.bind(view, pandora.x, pandora.y)

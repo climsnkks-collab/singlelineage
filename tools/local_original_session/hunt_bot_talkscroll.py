@@ -237,7 +237,7 @@ async def run(args):
     directory = Path(tempfile.mkdtemp(prefix='hunt-talkscroll-', dir=root))
     source_paths = ('hunt_bot_talkscroll.py', 'hunt_bot.py', 'hunt_bot_scenarios.py',
         'hunt_bot_loopback.py', 'world_feature_talkscroll.py', 'world_talkscroll.py',
-        'world_handlers.py', 'world_bridge.py', 'world_feature_kit.py', 'world_feature_maps.py',
+        'world_handlers.py', 'world_bridge.py', 'world_core_kit.py', 'world_core_maps.py',
         'world_feature_items.py', 'broker.py', 'inventory.py', 'inventory_store.py',
         'equipment_store.py', 'world_maps.py', 'npc.py', 'data/m1/starter.json',
         'data/m2/talkscroll.json')

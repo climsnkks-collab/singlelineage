@@ -114,7 +114,7 @@ class M4DataTests(unittest.TestCase):
 
     def test_map4_is_only_served_by_mapexp2(self):
         from types import SimpleNamespace
-        from tools.local_original_session.world_feature_maps import realm_serves_map
+        from tools.local_original_session.world_core_maps import realm_serves_map
         for mode in (0, 1, 2, 3):
             self.assertEqual(realm_serves_map(SimpleNamespace(_world_map_exp=mode), 4), mode == 2)
 

@@ -1,13 +1,14 @@
 """Development relocation/re-entry checks; socket scenarios live in hunt_bot_companion."""
 from dataclasses import asdict
-from types import SimpleNamespace
+from types import MethodType, SimpleNamespace
 import unittest
 
 from tools.local_original_session import movement
 from tools.local_original_session import world_companion_integration_tests as fixtures
 from tools.local_original_session.world_feature_companion import (
     _companion_restore, _companion_show_corpses, _companion_revive)
-from tools.local_original_session.world_feature_maps import _world_relocate_locked
+from tools.local_original_session.world_core_maps import _world_relocate_locked
+from tools.local_original_session import world_registry, world_feature_companion
 from tools.local_original_session.world_maps import MapDestination
 
 
@@ -25,10 +26,18 @@ class CompanionMovementTests(unittest.TestCase):
         self.ctx = SimpleNamespace(world=self.view, _world=self.view, _world_map_exp=0,
             _world_map_transitions=0, owner_current=lambda *_: True,
             _companion_save=lambda *_: None, _companion_revive_exp=False,
+            _companion_enabled=True, _companion_rows={self.record.character_id: {}},
             realm=SimpleNamespace(service=lambda _: self.service, serves_map=lambda _: True,
                 registry=SimpleNamespace(resolve=lambda _: self.game), _world_frames={},
                 _frames_for=lambda *a, **k: (b'\x06\x00\x95\x4e\0\0',
                     b'\x06\x00\x38\x4e\0\0', b'\x06\x00\x96\x4e\0\0')))
+        self.ctx._world_registry = world_registry.build_registry((world_feature_companion,))
+        for hook in ('relocate_keeps_self', 'before_relocate', 'after_relocate'):
+            for name in self.ctx._world_registry.hooks[hook]:
+                setattr(self.ctx, name, MethodType(self.ctx._world_registry.methods[name], self.ctx))
+        self.ctx.run_sync_hooks = lambda name, *args: world_registry.run_sync_hooks(name, self.ctx, *args)
+        self.ctx.chain_sync_hooks = lambda name, *args: world_registry.chain_sync_hooks(name, self.ctx, *args)
+        self.ctx.collect_sync_hooks = lambda name, *args: world_registry.collect_sync_hooks(name, self.ctx, *args)
         self.row = {'operation_lock': SimpleNamespace(locked=lambda: True)}
 
     def relocate(self, position):

@@ -3,7 +3,7 @@ from dataclasses import replace
 from pathlib import Path
 import random
 import tempfile
-from types import SimpleNamespace as NS
+from types import MethodType, SimpleNamespace as NS
 import unittest
 from unittest.mock import patch
 
@@ -262,11 +262,15 @@ class _QuestFixture:
         self.npc, = town.register()
         entities.add(Kind.PC, self.npc.map_id, self.npc.x, self.npc.y, uid=1)
         world = NS(entities=entities, town=town, combat=NS(pcs={1: pc}, rng=random.Random(7)),
-                   data=data, exp={1: self.initial_exp}, progress_dirty={}, drain=lambda uid: (),
+                   data=data, exp={1: self.initial_exp}, drain=lambda uid: (),
                    runtime=WorldRuntime(clock=lambda: 0.0))
+        world.progress = world_progress.ProgressOwner(world)
+        world.progress.attach_store(self.progress)
+        world.progress.adopt(1, self.progress.get(1), dirty=False)
+        world.progress_dirty = world.progress.pending_view
         self.host = NS(_world=world, _inventory_store=self.inv,
             _inventory_kit_policy=inventory.KIT_POLICY, _inventory_current_frame=frame,
-            _world_progress=self.progress, _world_lawful={1: 500}, _item_equipment_effect=None)
+            _world_progress=self.progress, _item_equipment_effect=None)
         self.adapter = Context(self.host)
         self.sources = self.feature.setup_quests(self.adapter, town)
         self.feature._world_quest_initialize(self.adapter)
@@ -303,6 +307,7 @@ class _QuestFixture:
         self.progress = self.progress_module.ProgressStore(self.profile)
         self.host._inventory_store = self.inv
         self.host._world_progress = self.progress
+        self.host._world.progress.attach_store(self.progress)
         self.host._world_quest_store = QuestStore(self.inv, self.progress)
         self.adapter.inventory_frame = self.inv.restore(1)
 
@@ -328,12 +333,19 @@ class QuestFeatureTests(unittest.TestCase):
         self.f = _QuestFixture(self)
 
     def test_town_setup_keeps_quest_rows_readable_by_other_shop_snapshots(self):
-        from tools.local_original_session import world_feature_town, world_handlers, world_combat
+        from tools.local_original_session import world_feature_town, world_handlers, world_combat, world_feature_quest
         from tools.local_original_session.world_bridge import Context
         from tools.local_original_session.world_entities import EntityRegistry
+        from tools.local_original_session.world_extensions import WorldEvents
         f = self.f
-        host = NS(_world=NS(entities=EntityRegistry()), _world_warehouse_exp=False)
-        world_feature_town.setup_town(Context(host), ())
+        host = NS(_world=NS(entities=EntityRegistry(), events=WorldEvents(), extensions={}),
+                  _world_warehouse_exp=False,
+                  _world_registry=world_handlers.build_registry((world_feature_quest,)),
+                  _world_handler_bindings=world_handlers.prepare_host_bindings(None))
+        adapter = Context(host)
+        for name, function in host._world_registry.methods.items():
+            setattr(host, name, MethodType(function, adapter))
+        world_feature_town.setup_town(adapter, ())
         fields = [_item_fields(200 + i, template) for i, template in enumerate((644, 645, 647, 648, 649))]
         fields.append(_item_fields(300, 7, 50))
         host._inventory_current_frame = f.inventory.build_kit_frame(fields)
@@ -533,7 +545,7 @@ class QuestFeatureTests(unittest.TestCase):
         self.assertEqual(f.progress.get(1), saved)
 
     def test_interrupted_exp_turn_in_settles_kill_dirty_before_close_and_recovers_once(self):
-        from tools.local_original_session.world_feature_reward import _world_save_progress
+        from tools.local_original_session.world_core_reward import _world_save_progress
         f = self.f
         f.call('jem1', 'queststart')
         # Explicit synthetic LOCAL EXP policy; the live kill projection is
@@ -543,8 +555,7 @@ class QuestFeatureTests(unittest.TestCase):
         definition = f.host._world_quests[FIRST_QUEST]
         f.host._world_quests[FIRST_QUEST] = replace(definition, experience_reward=gained)
         dirty = replace(f.progress.get(1), exp=current_exp)
-        f.host._world.exp[1] = current_exp
-        f.host._world.progress_dirty[1] = dirty
+        f.host._world.progress.adopt(1, dirty)
         expected_exp = current_exp + gained
         with patch.object(f.progress, 'commit', wraps=f.progress.commit) as commits, \
                 patch.object(f.store, '_write_rows', side_effect=OSError('TEST_QUEST_ROW_SAVE')):

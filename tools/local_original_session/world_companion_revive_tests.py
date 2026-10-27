@@ -168,7 +168,7 @@ class CompanionScrollRequestTests(unittest.IsolatedAsyncioTestCase):
         from tools.local_original_session import inventory
         from tools.local_original_session.world_core_inventory import INVENTORY_STARTER_FIELDS
         from tools.local_original_session.world_item_effects import load_effects
-        from tools.local_original_session.world_feature_kit import _world_consume_kit
+        from tools.local_original_session.world_core_kit import _world_consume_kit
         self.fixture = CompanionReviveTests()
         self.fixture.setUp()
         self.addCleanup(self.fixture.doCleanups)

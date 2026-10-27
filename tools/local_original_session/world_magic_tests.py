@@ -445,6 +445,7 @@ class SaveTests(unittest.TestCase):
 class WorldConsumerTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         from tools.local_original_session.world_companion_integration_tests import CompanionWorldViewTests
+        from tools.local_original_session import world_registry
         self.fixture = CompanionWorldViewTests()
         self.fixture.setUp()
         self.addCleanup(self.fixture.tearDown)
@@ -461,10 +462,16 @@ class WorldConsumerTests(unittest.IsolatedAsyncioTestCase):
             _world_magic_events=[], _world_magic_errors=[], _world_magic_store=SimpleNamespace(
                 save=lambda row: self.saved.append(row)), _world_magic_writers={},
             _world_magic_buff_ui=False, _world_magic_icons={}, _world_magic_next_icon=0x31000000,
-            _world_pcs={id(self.writer): (self.writer, 1)}, _world_lawful={1: 500},
-            realm=SimpleNamespace(service=lambda w: SimpleNamespace(snapshot=lambda: SimpleNamespace(uid=1))))
+            _world_pcs={id(self.writer): (self.writer, 1)},
+            _world_registry=world_registry.build_registry((f,)),
+            realm=SimpleNamespace(service=lambda w: SimpleNamespace(
+                snapshot=lambda: SimpleNamespace(uid=1, name='MagicMage'))))
         for fn in f.METHODS:
             setattr(self.ctx, fn.__name__, MethodType(fn, self.ctx))
+        self.ctx.run_sync_hooks = lambda name, *args, **kwargs: world_registry.run_sync_hooks(
+            name, self.ctx, *args, **kwargs)
+        self.ctx.fold_sync_hooks = lambda name, value, *args, **kwargs: world_registry.fold_sync_hooks(
+            name, self.ctx, value, *args, **kwargs)
         self.ctx._world_stats_for = lambda *args, **kw: (SimpleNamespace(
             attributes=SimpleNamespace(intelligence=18),
             weight=SimpleNamespace(normal_skill_blocked=False)), (), {})
@@ -472,6 +479,17 @@ class WorldConsumerTests(unittest.IsolatedAsyncioTestCase):
             replace(self.state.profile, ac=10 + self.magic.ac_bonus(uid, self.fixture.now)))
         self.ctx._world_bound = lambda writer: id(writer) in self.ctx._world_pcs
         self.view.drain(1)
+
+    def use_core_stats(self, calculated, info=None):
+        from tools.local_original_session.world_core_stats import _world_stats_for
+        attributes = calculated.attributes
+        values = {3: self.state.profile.character_class, 10: calculated.level,
+            11: attributes.strength, 12: attributes.dexterity, 13: attributes.con,
+            14: attributes.wis, 15: attributes.charisma, 16: attributes.intelligence}
+        values.update(info or {})
+        self.ctx.realm.store = SimpleNamespace(select=lambda name: (1, values))
+        self.ctx._world_progress_for = lambda uid: None
+        self.ctx._world_stats_for = MethodType(_world_stats_for, self.ctx)
 
     def enemy(self):
         target, _ = self.fixture.monster()
@@ -682,7 +700,7 @@ class WorldConsumerTests(unittest.IsolatedAsyncioTestCase):
         import random
         from tools.local_original_session import world_combat
         self.ctx._world_magic_weapon_uid = lambda uid: 123
-        self.view.combat.magic_profile = self.ctx._world_magic_combat_profile
+        self.view.combat.profile_modifiers.append(self.ctx._world_magic_combat_profile)
         base = self.state.profile
         monster = replace(self.fixture.data.monsters[245], ac=-50)
         self.ctx._world_magic_cast(1, 7, 1, self.fixture.now)
@@ -834,9 +852,8 @@ class WorldConsumerTests(unittest.IsolatedAsyncioTestCase):
             peek=lambda uid: (None, frame)))
         base = world_stats.calculate_stats(world_stats.CharacterStats(30, 3,
             world_stats.Attributes(8, 7, 16, 18, 8, 18)))
-        with patch('tools.local_original_session.world_feature_stats._world_stats_for',
-                   return_value=(base, (), {})):
-            actual, _, _ = f._world_stats_for(self.ctx, SimpleNamespace(uid=1))
+        self.use_core_stats(base)
+        actual, _, _ = self.ctx._world_stats_for(SimpleNamespace(uid=1, name='MagicMage'))
         self.assertEqual(actual.weight, world_weight.weight_state(100, actual.max_weight))
         self.assertGreater(actual.weight.gauge, 0)
 
@@ -931,19 +948,17 @@ class WorldConsumerTests(unittest.IsolatedAsyncioTestCase):
         calculated = stats.calculate_stats(base)
         info = {3: 3, 11: 8, 12: 7, 13: 16, 14: 18, 15: 8, 16: 18}
         original = self.ctx._world_stats_for
-        self.ctx._world_stats_for = MethodType(f._world_stats_for, self.ctx)
-        with patch('tools.local_original_session.world_feature_stats._world_stats_for',
-                   return_value=(calculated, (), info)):
-            for now in (100, 102):
-                self.fixture.now = now
-                self.ctx._world_magic_cast(1, 25, 1, now)
-                buffed = self.ctx._world_stats_for(SimpleNamespace(uid=1))[0]
-                self.assertEqual(buffed.attributes.dexterity, 12)
-                self.assertEqual(stats.self_info_fields({}, buffed)[5], 12)
-                self.assertEqual(base.attributes.dexterity, 7)
-            self.fixture.now = 113
-            expired = self.ctx._world_stats_for(SimpleNamespace(uid=1))[0]
-            self.assertEqual(expired.attributes.dexterity, 7)
+        self.use_core_stats(calculated, info)
+        for now in (100, 102):
+            self.fixture.now = now
+            self.ctx._world_magic_cast(1, 25, 1, now)
+            buffed = self.ctx._world_stats_for(SimpleNamespace(uid=1, name='MagicMage'))[0]
+            self.assertEqual(buffed.attributes.dexterity, 12)
+            self.assertEqual(stats.self_info_fields({}, buffed)[5], 12)
+            self.assertEqual(base.attributes.dexterity, 7)
+        self.fixture.now = 113
+        expired = self.ctx._world_stats_for(SimpleNamespace(uid=1, name='MagicMage'))[0]
+        self.assertEqual(expired.attributes.dexterity, 7)
         self.ctx._world_stats_for = original
 
 

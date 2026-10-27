@@ -12,7 +12,7 @@ from tools.local_original_session import game_data as gd
 from tools.local_original_session import world_feature_dungeons as feature
 from tools.local_original_session import world_maps as maps
 from tools.local_original_session.world_entities import Kind
-from tools.local_original_session.world_feature_maps import realm_serves_map
+from tools.local_original_session.world_core_maps import realm_serves_map
 from tools.local_original_session.world_interest_spawn import with_dungeon_data
 from tools.local_original_session.world_item_effects import ItemEffectResult, WorldItemEffects
 from tools.local_original_session.world_terrain import WorldTerrain, DELTAS

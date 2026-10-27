@@ -1046,6 +1046,8 @@ class WorldProfileTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(b.session.world.decode_payload(0x4e38, frames[2][4:-2])[1], 1)
 
     async def test_mage_first_status_uses_joint_growth_vitals_and_stored_appearance(self):
+        from tools.local_original_session import world_feature_companion, world_registry
+        from tools.local_original_session.world_bridge import Context
         from tools.local_original_session.world_companion import CompanionRecord
         from tools.local_original_session.world_progress import Progress
         with tempfile.TemporaryDirectory() as directory:
@@ -1054,6 +1056,8 @@ class WorldProfileTests(unittest.IsolatedAsyncioTestCase):
             realm.store.create(b.ack.realm.Creation('SoloMage', 3, 0, (8, 7, 16, 18, 8, 18)))
             member = CompanionRecord(2, 1, 'development-fixture', level=5, exp=100,
                 hp=17, max_hp=55, mp=9, max_mp=40)
+            realm._world_registry = world_registry.build_registry((world_feature_companion,))
+            realm._world_context = Context(types.SimpleNamespace(_world=types.SimpleNamespace()))
             realm._world_companion_record = lambda uid: member if uid == 2 else None
             realm._world_progress = lambda uid: Progress(0, 1, 20, 10)
             realm._world_hp, realm._world_mp = lambda uid: 20, lambda uid: 10

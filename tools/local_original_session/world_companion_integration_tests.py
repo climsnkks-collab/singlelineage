@@ -41,6 +41,7 @@ class CompanionWorldViewTests(unittest.TestCase):
         from tools.local_original_session.world_interest_spawn import InterestSpawner
         from tools.local_original_session.world_runtime import WorldRuntime
         from tools.local_original_session.world_visibility import WorldView
+        from tools.local_original_session.world_companion_runtime import install_companion_runtime
         from tools.local_native_login_self_actor_hook import hook as actor_hook
         self.now = 10.0
         self.data = load_m1()
@@ -50,6 +51,7 @@ class CompanionWorldViewTests(unittest.TestCase):
                                   rng=random.Random(7))
         self.view = WorldView(runtime, spawner, _OpenTerrain(), data=data,
                               rng=random.Random(7))
+        install_companion_runtime(self.view)
         self.view.update_pc(1, 0, 100, 100)
         status = dict(actor_hook.profiles()[0].fields)
         status.update({1: 1, 2: 1, 10: 100, 11: 100, 12: 20, 13: 20, 18: 500})
