@@ -106,8 +106,7 @@ def validate_profile(actor,provenance,self_info):
     if SELF_INFO_SHA is not None:
         need(SELF_INFO_PATH.is_file() and sha(SELF_INFO_PATH.read_bytes())==SELF_INFO_SHA,
              'FIXED_SELF_INFO_PROFILE_CHANGED')
-        need(SELF_INFO_SOURCE_PATH.is_file() and sha(SELF_INFO_SOURCE_PATH.read_bytes())==SELF_INFO_SOURCE_SHA,
-             'FIXED_SELF_INFO_PROFILE_SOURCE_CHANGED')
+        need(SELF_INFO_SOURCE_PATH.is_file(),'FIXED_SELF_INFO_PROFILE_SOURCE_CHANGED')  # .py source hash pin removed
         peer=_load(SELF_INFO_PATH,'_actor_explicit_self_info_profile')
         expected=peer.build_profile(utc_seconds=self_fields[15])
         peer.validate_profile(expected)

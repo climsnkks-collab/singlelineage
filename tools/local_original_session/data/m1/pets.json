@@ -1,0 +1,1022 @@
+{
+  "table": "m1_pets",
+  "version": 1,
+  "scope": "Pure backend proposals only, no Classic packet/client/server integration or formal gameplay PASS.",
+  "mapping_method": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md section3: exact token -> name/variant -> Classic f2/SPR; item token+kind+icon. Preserve every duplicate; unknown is not numeric equivalence.",
+  "reference_root": "D:\\SingleLineageRef\\l1j-en-classic",
+  "reuse": {
+    "existing": "implementation-companion/companion-4f14-response-source-v1/HANDOFF.md:8-22; npc_ai.State; world_entities.EntityRef",
+    "boundary": "No reusable direct pet taming/collar producer found in shared-api/implementation/integration API/HANDOFF. Old companion wire enums are not these backend modes."
+  },
+  "species": [
+    {
+      "key": "shepherd",
+      "l1j_npc_id": 45034,
+      "l1j_name": "Shepherd",
+      "name_token": "$907",
+      "l1j_sprite_id": 936,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 179,
+            "name_ko": "세퍼드",
+            "name_token": "$907",
+            "sprite_id": 936,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:116"
+          },
+          {
+            "template_id": 184,
+            "name_ko": "세퍼드",
+            "name_token": "$907",
+            "sprite_id": 936,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:120"
+          },
+          {
+            "template_id": 228,
+            "name_ko": "세퍼드",
+            "name_token": "$907",
+            "sprite_id": 936,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:148"
+          },
+          {
+            "template_id": 10075,
+            "name_ko": "세퍼드",
+            "name_token": "$907",
+            "sprite_id": 936,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:697"
+          },
+          {
+            "template_id": 10156,
+            "name_ko": "세퍼드",
+            "name_token": "$907",
+            "sprite_id": 936,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:777"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24544",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20654"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          5,
+          8
+        ],
+        "mp_growth_inclusive": [
+          1,
+          2
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "cat",
+      "l1j_npc_id": 45039,
+      "l1j_name": "Cat",
+      "name_token": "$2701",
+      "l1j_sprite_id": 3134,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 1388,
+            "name_ko": "고양이",
+            "name_token": "$2701",
+            "sprite_id": 3134,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:554"
+          },
+          {
+            "template_id": 1398,
+            "name_ko": "고양이",
+            "name_token": "$2701",
+            "sprite_id": 3134,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:556"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24545",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20659"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          3,
+          6
+        ],
+        "mp_growth_inclusive": [
+          3,
+          5
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "bear",
+      "l1j_npc_id": 45040,
+      "l1j_name": "Bear",
+      "name_token": "$1495",
+      "l1j_sprite_id": 1642,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 516,
+            "name_ko": "곰",
+            "name_token": "$1495",
+            "sprite_id": 1642,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:292"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24546",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20660"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          8,
+          14
+        ],
+        "mp_growth_inclusive": [
+          1,
+          2
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "doberman",
+      "l1j_npc_id": 45042,
+      "l1j_name": "Doberman",
+      "name_token": "$905",
+      "l1j_sprite_id": 931,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 177,
+            "name_ko": "도베르만",
+            "name_token": "$905",
+            "sprite_id": 931,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:114"
+          },
+          {
+            "template_id": 183,
+            "name_ko": "도베르만",
+            "name_token": "$905",
+            "sprite_id": 931,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:119"
+          },
+          {
+            "template_id": 226,
+            "name_ko": "도베르만",
+            "name_token": "$905",
+            "sprite_id": 931,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:146"
+          },
+          {
+            "template_id": 10062,
+            "name_ko": "도베르만",
+            "name_token": "$905",
+            "sprite_id": 931,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:684"
+          },
+          {
+            "template_id": 10155,
+            "name_ko": "도베르만",
+            "name_token": "$905",
+            "sprite_id": 931,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:776"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24547",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20662"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          3,
+          6
+        ],
+        "mp_growth_inclusive": [
+          1,
+          2
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "wolf",
+      "l1j_npc_id": 45043,
+      "l1j_name": "Wolf",
+      "name_token": "$268",
+      "l1j_sprite_id": 96,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 9,
+            "name_ko": "늑대",
+            "name_token": "$268",
+            "sprite_id": 96,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:9"
+          },
+          {
+            "template_id": 124,
+            "name_ko": "늑대",
+            "name_token": "$268",
+            "sprite_id": 96,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:78"
+          },
+          {
+            "template_id": 126,
+            "name_ko": "늑대",
+            "name_token": "$268",
+            "sprite_id": 96,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:79"
+          },
+          {
+            "template_id": 155,
+            "name_ko": "늑대",
+            "name_token": "$268",
+            "sprite_id": 96,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:99"
+          },
+          {
+            "template_id": 10039,
+            "name_ko": "늑대",
+            "name_token": "$268",
+            "sprite_id": 96,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:661"
+          },
+          {
+            "template_id": 10077,
+            "name_ko": "늑대",
+            "name_token": "$268",
+            "sprite_id": 96,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:699"
+          },
+          {
+            "template_id": 10148,
+            "name_ko": "늑대",
+            "name_token": "$268",
+            "sprite_id": 96,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:770"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24548",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20663"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          3,
+          9
+        ],
+        "mp_growth_inclusive": [
+          1,
+          2
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "raccoon",
+      "l1j_npc_id": 45044,
+      "l1j_name": "Raccoon",
+      "name_token": "$3508",
+      "l1j_sprite_id": 4038,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 2214,
+            "name_ko": "라쿤",
+            "name_token": "$3508",
+            "sprite_id": 4038,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:575"
+          },
+          {
+            "template_id": 2215,
+            "name_ko": "라쿤",
+            "name_token": "$3508",
+            "sprite_id": 4038,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:576"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24549",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20664"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          3,
+          9
+        ],
+        "mp_growth_inclusive": [
+          2,
+          4
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": true,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "beagle",
+      "l1j_npc_id": 45046,
+      "l1j_name": "Beagle",
+      "name_token": "$908",
+      "l1j_sprite_id": 938,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 180,
+            "name_ko": "비글",
+            "name_token": "$908",
+            "sprite_id": 938,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:117"
+          },
+          {
+            "template_id": 229,
+            "name_ko": "비글",
+            "name_token": "$908",
+            "sprite_id": 938,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:149"
+          },
+          {
+            "template_id": 328,
+            "name_ko": "비글",
+            "name_token": "$908",
+            "sprite_id": 938,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:194"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24550",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20666"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          4,
+          8
+        ],
+        "mp_growth_inclusive": [
+          2,
+          4
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "saint_bernard",
+      "l1j_npc_id": 45047,
+      "l1j_name": "Saint Bernard",
+      "name_token": "$904",
+      "l1j_sprite_id": 929,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 176,
+            "name_ko": "세인트버나드",
+            "name_token": "$904",
+            "sprite_id": 929,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:113"
+          },
+          {
+            "template_id": 225,
+            "name_ko": "세인트버나드",
+            "name_token": "$904",
+            "sprite_id": 929,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:145"
+          },
+          {
+            "template_id": 725,
+            "name_ko": "세인트버나드",
+            "name_token": "$904",
+            "sprite_id": 929,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:388"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24551",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20667"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          6,
+          10
+        ],
+        "mp_growth_inclusive": [
+          2,
+          4
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "fox",
+      "l1j_npc_id": 45048,
+      "l1j_name": "Fox",
+      "name_token": "$1397",
+      "l1j_sprite_id": 1540,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 465,
+            "name_ko": "여우",
+            "name_token": "$1397",
+            "sprite_id": 1540,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:267"
+          },
+          {
+            "template_id": 1397,
+            "name_ko": "여우",
+            "name_token": "$1397",
+            "sprite_id": 1540,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:555"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24552",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20668"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          3,
+          9
+        ],
+        "mp_growth_inclusive": [
+          2,
+          3
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "rabbit",
+      "l1j_npc_id": 45049,
+      "l1j_name": "Killer Rabbit",
+      "name_token": "$2563",
+      "l1j_sprite_id": 3783,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 1387,
+            "name_ko": "열혈토끼",
+            "name_token": "$2563",
+            "sprite_id": 2734,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:553"
+          },
+          {
+            "template_id": 1399,
+            "name_ko": "열혈토끼",
+            "name_token": "$2563",
+            "sprite_id": 2734,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:557"
+          },
+          {
+            "template_id": 10253,
+            "name_ko": "열혈토끼",
+            "name_token": "$2563",
+            "sprite_id": 2734,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:864"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection. Classic f2=2734 differs from L1J gfx3783."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24553",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20669"
+        ],
+        "food_l1j_item_id": 40060,
+        "hp_growth_inclusive": [
+          3,
+          8
+        ],
+        "mp_growth_inclusive": [
+          3,
+          5
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "husky",
+      "l1j_npc_id": 45053,
+      "l1j_name": "Husky",
+      "name_token": "$1788",
+      "l1j_sprite_id": 2145,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 706,
+            "name_ko": "허스키",
+            "name_token": "$1788",
+            "sprite_id": 2145,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:370"
+          },
+          {
+            "template_id": 724,
+            "name_ko": "허스키",
+            "name_token": "$1788",
+            "sprite_id": 2145,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:387"
+          },
+          {
+            "template_id": 742,
+            "name_ko": "허스키",
+            "name_token": "$1788",
+            "sprite_id": 2145,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:396"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24554",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20673"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          8,
+          13
+        ],
+        "mp_growth_inclusive": [
+          1,
+          2
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "collie",
+      "l1j_npc_id": 45054,
+      "l1j_name": "Collie",
+      "name_token": "$906",
+      "l1j_sprite_id": 934,
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 178,
+            "name_ko": "콜리",
+            "name_token": "$906",
+            "sprite_id": 934,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:115"
+          },
+          {
+            "template_id": 227,
+            "name_ko": "콜리",
+            "name_token": "$906",
+            "sprite_id": 934,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:147"
+          }
+        ],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24555",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20674"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          8,
+          11
+        ],
+        "mp_growth_inclusive": [
+          3,
+          4
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": false,
+        "tiger_roll_denominator": null
+      }
+    },
+    {
+      "key": "tiger",
+      "l1j_npc_id": 45313,
+      "l1j_name": "Tiger",
+      "name_token": "$3041",
+      "l1j_sprite_id": 4542,
+      "classic_mapping": {
+        "status": "unknown",
+        "candidates": [],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24556",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20907"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          8,
+          14
+        ],
+        "mp_growth_inclusive": [
+          3,
+          5
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": true,
+        "tiger_roll_denominator": 16
+      }
+    },
+    {
+      "key": "jindo_puppy",
+      "l1j_npc_id": 45711,
+      "l1j_name": "Jindo Puppy",
+      "name_token": "$4072",
+      "l1j_sprite_id": 5065,
+      "classic_mapping": {
+        "status": "unknown",
+        "candidates": [],
+        "note": "All exact token candidates retained; wild/pet/trainer/variant roles and Classic tameability unverified. No automatic selection."
+      },
+      "backend_policy": {
+        "source": "local_policy",
+        "refs": [
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:24570",
+          "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21267"
+        ],
+        "food_l1j_item_id": 40057,
+        "hp_growth_inclusive": [
+          3,
+          6
+        ],
+        "mp_growth_inclusive": [
+          3,
+          5
+        ],
+        "initial_template_level": 5,
+        "initial_exp": 750,
+        "pet_cost": 6,
+        "forbid_resurrected": true,
+        "tiger_roll_denominator": null
+      }
+    }
+  ],
+  "items": [
+    {
+      "key": "meat",
+      "l1j_item_id": 40056,
+      "name_token": "$23",
+      "l1j_name": "Meat",
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 10,
+            "name_ko": "고기",
+            "name_token": "$23",
+            "icon_id": 124,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:961",
+            "inventory_sprite_id": 36,
+            "kind_value": 4
+          }
+        ],
+        "note": "Item token/name/kind/inventory-sprite candidate only; Classic use/input unverified."
+      },
+      "source": {
+        "kind": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510"
+      }
+    },
+    {
+      "key": "floating_eye_meat",
+      "l1j_item_id": 40057,
+      "name_token": "$6 $23",
+      "l1j_name": "Floating Eye Meat",
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 9,
+            "name_ko": "괴물 눈 고기",
+            "name_token": "$15654",
+            "icon_id": 124,
+            "inventory_sprite_id": 3176,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:960",
+            "evidence": "Changed name token L1J $6 $23 -> Classic $15654; KR/TW Floating Eye Meat identity, item kind f9=4, inventory sprite f6=3176 and weight f10=10000 match. No numeric equivalence or actual use proof."
+          }
+        ],
+        "note": "Name/type/inventory-sprite candidate. Ordinary meat10 is a different item and must not substitute."
+      },
+      "source": {
+        "kind": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16511"
+      }
+    },
+    {
+      "key": "carrot",
+      "l1j_item_id": 40060,
+      "name_token": "$68",
+      "l1j_name": "Carrot",
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 37,
+            "name_ko": "당근",
+            "name_token": "$68",
+            "icon_id": 25,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:986",
+            "inventory_sprite_id": 67,
+            "kind_value": 3
+          }
+        ],
+        "note": "Item token/name/kind/inventory-sprite candidate only; Classic use/input unverified."
+      },
+      "source": {
+        "kind": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16514"
+      }
+    },
+    {
+      "key": "pet_collar",
+      "l1j_item_id": 40314,
+      "name_token": "$1173",
+      "l1j_name": "Pet Collar",
+      "classic_mapping": {
+        "status": "candidate",
+        "candidates": [
+          {
+            "template_id": 361,
+            "name_ko": "펫 목걸이",
+            "name_token": "$1173",
+            "icon_id": 487,
+            "ref": "work/source_game_data/native-dump-v1.jsonl:1231",
+            "inventory_sprite_id": 1317,
+            "kind_value": 11
+          }
+        ],
+        "note": "Item token/name/kind/inventory-sprite candidate only; Classic use/input unverified."
+      },
+      "source": {
+        "kind": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16768"
+      }
+    }
+  ],
+  "experience": {
+    "source": "local_policy",
+    "ref": "D:\\SingleLineageRef\\l1j-en-classic/src/l1j/server/server/datatables/ExpTable.java:30-31,39-40,62-73,95-116",
+    "cumulative": [
+      0,
+      125,
+      300,
+      500,
+      750,
+      1296,
+      2401,
+      4096,
+      6581,
+      10000,
+      14661,
+      20756,
+      28581,
+      38436,
+      50645,
+      65556,
+      83541,
+      104996,
+      130341,
+      160020,
+      194501,
+      234276,
+      279861,
+      331792,
+      390641,
+      456992,
+      531457,
+      614672,
+      707297,
+      810016,
+      923537,
+      1048592,
+      1185937,
+      1336352,
+      1500641,
+      1679632,
+      1874177,
+      2085152,
+      2313457,
+      2560016,
+      2825777,
+      3111713,
+      3418818,
+      3748113,
+      4100642,
+      4830002,
+      6338418,
+      9833681,
+      19745870,
+      55810962,
+      91876054,
+      127941146,
+      164006238,
+      200071330,
+      236136422,
+      272201514,
+      308266606,
+      344331698,
+      380396790,
+      416461882,
+      452526974,
+      488592066,
+      524657158,
+      560722250,
+      596787342,
+      632852434,
+      668917526,
+      704982618,
+      741047710,
+      777112802,
+      813177894,
+      849242986,
+      885308078,
+      921373170,
+      957438262,
+      993503354,
+      1029568446,
+      1065633538,
+      1101698630,
+      1137763722,
+      1173828814,
+      1209893906,
+      1245958998,
+      1282024090,
+      1318089182,
+      1354154274,
+      1390219366,
+      1426284458,
+      1462349550,
+      1498414642,
+      1534479734,
+      1570544826,
+      1606609918,
+      1642675010,
+      1678740102,
+      1714805194,
+      1750870286,
+      1786935378,
+      1823000470,
+      1859065562
+    ],
+    "max_level": 99,
+    "max_exp": 1859065562
+  },
+  "rules": {
+    "source": "local_policy",
+    "taming": {
+      "refs": [
+        "src/l1j/server/server/clientpackets/C_GiveItem.java:154-187",
+        "src/l1j/server/server/clientpackets/C_GiveItem.java:252-289",
+        "src/l1j/server/server/clientpackets/C_GiveItem.java:318-338"
+      ],
+      "formula": "Giver->target transfer precedes one taming attempt, even on failure. currentHP < floor(maxHP/3); residual CHA=CHA+class_bonus-used_pet_cost >=6; inventory slots after transfer <180. Tiger roll[0,15]==15; resurrected Tiger/Raccoon/Jindo Puppy cannot tame.",
+      "class_bonus": {
+        "crown": 6,
+        "knight": 0,
+        "elf": 12,
+        "wizard": 6,
+        "darkelf": 6,
+        "dragon_knight": 6,
+        "illusionist": 6
+      },
+      "food_semantics": "transfer_count leaves giver, is not destruction; onGetItem may consume food separately, not modeled. Stack quantity does not multiply attempts.",
+      "initialization": "L1PetInstance.java:161-194 and PetTable.java:87-99 set EXP750 but copy template level, not getLevelByExp. Reviewed14 base NPC rows are all Lv5. Retain explicit template level; reject inconsistent growth/save input."
+    },
+    "commands": {
+      "refs": [
+        "src/l1j/server/server/model/Instance/L1PetInstance.java:42-119",
+        "src/l1j/server/server/model/Instance/L1PetInstance.java:329-353",
+        "src/l1j/server/server/model/Instance/L1PetInstance.java:429-445",
+        "src/l1j/server/server/model/Instance/L1PetInstance.java:512-538",
+        "src/l1j/server/server/model/Instance/L1PetInstance.java:568-585",
+        "src/l1j/server/server/model/Instance/L1PetInstance.java:619-634"
+      ],
+      "attack": "L1J1 aggressive: master target + retaliation; no-target follows beyond2.",
+      "defend": "L1J2 defensive: retaliation, no master attack target; no-target follows beyond2.",
+      "stay": "L1J3 stay: no movement/targets.",
+      "follow": "LOCAL continuous follow with targets cleared. Not L1J7 come (within1/failure -> stay3), nor Classic4F02 enum5 guard.",
+      "dismiss": "L1J6 liberate: wild replacement, remove collar, delete pet record when caller commits."
+    },
+    "experience": {
+      "refs": [
+        "src/l1j/server/server/utils/CalcExp.java:563-600",
+        "src/l1j/server/server/utils/IntRange.java:88-89",
+        "config/rates.properties:49"
+      ],
+      "formula": "newEXP=min(MAX_EXP,oldEXP+floor(allocated_share*numerator/denominator)); level=min(99,bisect_right(cumulative,newEXP)); independent inclusive HP/MP draw per gained level; full HP/MP refill only on level gain. MAX_EXP cap is explicit LOCAL policy.",
+      "default_rate": [
+        1,
+        1
+      ],
+      "share_owner": "Caller owns kill-once and approved50:50 half-unit share ledger; this module accepts already allocated integer share and never splits a kill."
+    },
+    "collar": {
+      "refs": [
+        "db/l1jdb_m10.sql:1674-1691",
+        "src/l1j/server/server/datatables/PetTable.java:55-76",
+        "src/l1j/server/server/datatables/PetTable.java:87-139",
+        "src/l1j/server/server/model/Instance/L1PetInstance.java:124-158"
+      ],
+      "local_schema": "Version1 durable pet_id+collar_uid+owner_uid+species/name/EXP/level/HP/MP/mode. Active actor generation and target never serialized. LOCAL restore preserves current HP/MP and preference, unlike L1J full refill/stay3. No L1J SQL compatibility claim. Released pets cannot serialize."
+    }
+  }
+}

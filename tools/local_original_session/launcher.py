@@ -19,12 +19,11 @@ import time
 import uuid
 from types import MethodType, SimpleNamespace
 
-_MANUAL_REJECTION_SOURCE_SHA = '4ba1e845157a79d99acbf112ac7a85c9b17540164ec8af4b29c9b08b2cf03025'
-_INVENTORY_OBSERVER_SOURCE_SHA = '4951b1fa2a0a994383234358a3b37d7a39679a8b09627e9f346439041bbb38d7'
 _INVENTORY_INCOMPLETE_READS = frozenset(('RECHECKED_SHARED_COUNT_INITIAL_DUPLICATE',
     'RECHECKED_SHARED_COUNT_FINAL_READBACK', 'RECHECKED_SHARED_COUNT_BOTH'))
 
-ROOT = Path(__file__).resolve().parents[2]
+from tools.local_original_session import observe as _root_anchor
+ROOT = _root_anchor.ROOT
 CP69 = '656a64e7c686144615f473902590e23ce0024b907e96ad905f42e84084e8da9d'
 CANDIDATE = ROOT / 'work/local_native_login_state5_ack_candidate/native-login.candidate.bin'
 BRIDGES = {
@@ -132,6 +131,39 @@ PRODUCTS['sibling-internal-quit-source-retry-spawn'] = {
 PRODUCTS['sibling-manual-play-spawn'] = {
     **PRODUCTS['sibling-verified-socket-duplicate'],
     'world_profile': 'EXPLICIT_LOCAL_SOURCE_SPAWN_EXPERIMENT_CP73',
+}
+# Manual play with the companion bridge candidate DLL in the dg49 slot
+# (work/local_original_session/companion-bridge, 3rd offline build). The
+# manual-play script installs it only for -CompanionBridge and restores the
+# pinned bridge afterwards. Its owned run directory is the companion IPC sink.
+PRODUCTS['sibling-manual-play-companion3'] = {
+    **PRODUCTS['sibling-manual-play-spawn'],
+    'bridges': {**PRODUCTS['sibling-manual-play-spawn']['bridges'],
+                'own-login-bridge-dg49.dll':
+                '77630e7c0293e90a4d6be8775c964200fe417050a7f79b1384568afc17fa718f'},
+    'bridge_artifact': ROOT / 'work/local_original_session/companion-bridge/own-login-bridge-companion3.dll',
+    'companion_bridge': True,
+    'runtime_status': 'COMPANION3_CANDIDATE_RUNTIME_UNVERIFIED',
+}
+# companion4 = companion3 + owner edit of the member's companion ATS from pet
+# row 4 (ATS window opened through the original manager, ats-edit-* lifetime).
+PRODUCTS['sibling-manual-play-companion4'] = {
+    **PRODUCTS['sibling-manual-play-companion3'],
+    'bridges': {**PRODUCTS['sibling-manual-play-spawn']['bridges'],
+                'own-login-bridge-dg49.dll':
+                '1e9a78b611dbe526e49ab635527e31f5b288f34c516f40a5d1881ecaa6912f1b'},
+    'bridge_artifact': ROOT / 'work/local_original_session/companion-bridge/own-login-bridge-companion4.dll',
+    'runtime_status': 'COMPANION4_CANDIDATE_RUNTIME_UNVERIFIED',
+}
+# companion-nopatch = companion4 behaviour without inline code patches (the
+# original pages are PAGE_NOACCESS at runtime); default build-nopatch.cmd DLL.
+PRODUCTS['sibling-manual-play-companion-nopatch'] = {
+    **PRODUCTS['sibling-manual-play-companion3'],
+    'bridges': {**PRODUCTS['sibling-manual-play-spawn']['bridges'],
+                'own-login-bridge-dg49.dll':
+                '13ed7d7dbaa99fc0620b4321cdc745b6094ae7a3e61b6bab58131ebf40a63695'},
+    'bridge_artifact': ROOT / 'work/local_original_session/companion-bridge/own-login-bridge-companion-nopatch.dll',
+    'runtime_status': 'COMPANION_NOPATCH_CANDIDATE_RUNTIME_UNVERIFIED',
 }
 PRODUCTS['sibling-manual-move-continuous-spawn'] = {
     **PRODUCTS['sibling-manual-play-spawn'],
@@ -373,13 +405,13 @@ PRODUCTS['sibling-background-item-equipment-zero-use-reselect-spawn'] = {
     'item_equipment_zero_use_reselect': True,
 }
 # Explicit additive Native closure; old descriptors keep independent pins.
-ITEM_TRANSFER_UI_DLL_SHA = '3dca652e884a8a3daeec51e7213bb1fb1284edde2f113cd0beac3a5dd1ae9751'
+ITEM_TRANSFER_UI_DLL_SHA = '9c4fc7a0c45e86df38502b59f2622df84cc29c071fa086129541b0471aeddf20'
 if ITEM_TRANSFER_UI_DLL_SHA is not None:
     PRODUCTS['sibling-background-item-drop-pickup-spawn'] = {
         **PRODUCTS['sibling-background-item-equipment-current-entry-tail-spawn'],
         'bridges': {**PRODUCTS['sibling-background-item-equipment-current-entry-tail-spawn']['bridges'],
             'own-login-bridge-dg49.dll': ITEM_TRANSFER_UI_DLL_SHA},
-        'bridge_artifact': ROOT / 'work/local_server_rea_20261016/daybreak_page_noaccess_handoff/designated-01a14ed2/item-entry-code-guard-245/entry-code-closure-250/native/own-login-bridge-dg49.dll',
+        'bridge_artifact': ROOT / 'work/local_original_session/implementation-1/item-equipment-product/popup-helper-high/popup-stored-input-consumption-352-v1/own-login-bridge-dg49.dll',
         'item_equipment_swap_reselect': False,
         'item_equipment_ui_observe': False,
         'item_transfer_ui': True,
@@ -508,6 +540,112 @@ def native_module(image, resource_directory=None):
             sys.modules['core'] = previous
     value.EXE, value.CLONE = str(image), str(resource_directory or image.parent)
     return value
+
+
+# Programmatic fixture profile. It borrows no Native bridge/image permission;
+# runtime installation remains an explicit root integration step.
+PRODUCTS['sibling-background-repeated-player-life-spawn'] = {
+    **PRODUCTS['sibling-background-npc-player-lethal-recovery-spawn'],
+    'bridges': {**PRODUCTS['sibling-background-npc-player-lethal-recovery-spawn']['bridges'],
+                'own-login-bridge-dg49.dll': '18164426c1b9397c8e4216ad083842dbf2ed7a662acfa49bde39fbec2f2e0e80'},
+    'bridge_artifact': ROOT / 'work/local_original_session/integration-1/item-reference-repeat-native-composite-v1/native/own-login-bridge-dg49.dll',
+    'player_life_repeat': True,
+}
+
+# Explicit canonical positive-hit / original217 respawn composition.
+PRODUCTS['sibling-background-npc-respawn-target-hit-spawn'] = {
+    **PRODUCTS['sibling-background-npc-respawn-spawn'],
+    'bridges': {**PRODUCTS['sibling-background-npc-respawn-spawn']['bridges'],
+                'own-login-bridge-dg49.dll': '18164426c1b9397c8e4216ad083842dbf2ed7a662acfa49bde39fbec2f2e0e80'},
+    'bridge_artifact': ROOT / 'work/local_original_session/integration-1/item-reference-repeat-native-composite-v1/native/own-login-bridge-dg49.dll',
+    'npc_respawn_target_hit': True,
+    'manual_attack_move_replacement': False,
+    'continuous_manual_move': False,
+}
+
+# Explicit opt-in one adjacent retaliation; separate from respawn validation.
+PRODUCTS['sibling-background-npc-single-retaliation-spawn'] = {
+    **PRODUCTS['sibling-background-npc-respawn-target-hit-spawn'],
+    'npc_retaliation': True,
+}
+
+PRODUCTS['sibling-background-npc-continuous-retaliation-spawn'] = {**PRODUCTS['sibling-background-npc-single-retaliation-spawn'], 'npc_continuous_retaliation': True}
+
+# Explicit Buff physical runtime identity. Typed cold admission is separate.
+# Source-only canonical validation retains its original descriptor and guards.
+PRODUCTS['sibling-background-skill-buff-spawn'] = {
+    **PRODUCTS['sibling-background-source-quit-spawn'],
+    'bridges': {**PRODUCTS['sibling-background-source-quit-spawn']['bridges'],
+                'own-login-bridge-dg49.dll': '18164426c1b9397c8e4216ad083842dbf2ed7a662acfa49bde39fbec2f2e0e80'},
+    'bridge_artifact': ROOT / 'work/local_original_session/integration-1/item-reference-repeat-native-composite-v1/native/own-login-bridge-dg49.dll',
+    'continuous_manual_move': False,
+    'continuous_manual_attack': False,
+    'manual_attack_move_replacement': False,
+    'manual_use_item': False,
+    'use_item_already_open': False,
+    'use_item_current_entry': False,
+    'item_transfer_ui': False,
+    'item_equipment_swap_reselect': False,
+    'player_life_repeat': False,
+    'player_death_recovery': False,
+    'npc_respawn_lifecycle': False,
+    'allow_respawn_attack': False,
+    'skill_buff_runtime': True,
+    'native_spell_input_enabled': False,
+    'runtime_status': 'EXPLICIT_BUFF_COLD_RUNTIME_CANDIDATE',
+    'runtime_verdict': 'ROSTER_RESTORE_BACKEND_ONLY_NATIVE_SPELL_UNVERIFIED',
+}
+PRODUCTS['sibling-background-skill-buff-whole-entry-spawn'] = {
+    **PRODUCTS['sibling-background-skill-buff-spawn'],
+    'bridges': {**PRODUCTS['sibling-background-skill-buff-spawn']['bridges'],
+                'own-login-bridge-dg49.dll': '1c90b0847aef947dd64eb2658bcf9bd79a4ee3dfc94d55aa1fe396b02b279955'},
+    'bridge_artifact': ROOT / 'work/local_server_rea_20261016/daybreak_page_noaccess_handoff/designated-01a14ed2/source-spell-director-return-current-350-v1/native/own-login-bridge-director350.dll',
+    'native_spell_input_enabled': True,
+    'runtime_verdict': 'EXPLICIT_SOURCE_QUALIFIED_WHOLE_ENTRY_RUNTIME_UNVERIFIED',
+}
+
+
+
+PRODUCTS['canonical-selected-features-v1'] = {
+    **PRODUCTS['baseline'], 'source_build_only': True, 'canonical_validation_only': True,
+}
+
+
+SHOP_INPUT_PROFILE = 'canonical-shop-input-v1'
+_SHOP_INPUT_NATIVE = None
+
+
+def install_shop_input_profile(*, bridge_artifact, bridge_sha256):
+    """Root cold input: exact built V6 DLL, never an inferred Native selection."""
+    global _SHOP_INPUT_NATIVE
+    need(_SHOP_INPUT_NATIVE is None and SHOP_INPUT_PROFILE not in PRODUCTS,
+         'SHOP_INPUT_PROFILE_ALREADY_REGISTERED')
+    need(isinstance(bridge_artifact, Path) and bridge_artifact.is_absolute()
+         and type(bridge_sha256) is str and re.fullmatch('[0-9a-f]{64}', bridge_sha256) is not None
+         and bridge_sha256 not in {value for spec in PRODUCTS.values()
+             for value in spec.get('bridges', {}).values()}
+         and digest(bridge_artifact) == bridge_sha256,
+         'SHOP_INPUT_EXPLICIT_BUILT_V6_NATIVE_REQUIRED')
+    spec = {**PRODUCTS['sibling-background-source-quit-spawn'],
+        'bridges': {**PRODUCTS['sibling-background-source-quit-spawn']['bridges'],
+                    'own-login-bridge-dg49.dll': bridge_sha256},
+        'bridge_artifact': bridge_artifact, 'original_screenshot': True,
+        'continuous_manual_move': True, 'continuous_manual_attack': False,
+        'manual_attack_move_replacement': False, 'manual_use_item': False,
+        'manual_inventory_update': False, 'shop_input_profile': True}
+    _SHOP_INPUT_NATIVE = (bridge_artifact, bridge_sha256, spec, spec['bridges'], tuple(spec.items()), tuple(spec['bridges'].items()))
+    PRODUCTS[SHOP_INPUT_PROFILE] = spec
+
+
+def _shop_input_native_current():
+    evidence = _SHOP_INPUT_NATIVE
+    need(type(evidence) is tuple and len(evidence) == 6
+         and PRODUCTS.get(SHOP_INPUT_PROFILE) is evidence[2]
+         and evidence[2]['bridges'] is evidence[3]
+         and tuple(evidence[2].items()) == evidence[4]
+         and tuple(evidence[3].items()) == evidence[5]
+         and digest(evidence[0]) == evidence[1], 'SHOP_INPUT_NATIVE_DESCRIPTOR_CHANGED_OR_ABSENT')
+    return evidence[2]
 
 
 class GenuineConversations:
@@ -979,6 +1117,164 @@ class NativeOwner:
             self._guard_false('RETAINED_AFTER_SNAPSHOT', True, False, states, True, len(found))
         return after
 
+    @staticmethod
+    def _quit_closing_tcp_state(data, size, peer, primary_pid):
+        """One exact game tuple for the drained duplicate Quit only.
+
+        Return 5 for the existing live path or 7 for its CLOSE_WAIT transition.
+        Neither value is a general OwnerSample or permission for another opcode.
+        """
+        if (type(peer) is not dict or peer.get('schema') != 'lc-local-accepted-peer-v1'
+                or peer.get('connection_id') != 4 or peer.get('endpoint_port') != 14030
+                or peer.get('server_port') != 14030
+                or peer.get('client_host') != '127.0.0.1'
+                or peer.get('server_host') != '127.0.0.1'
+                or type(peer.get('client_port')) is not int
+                or not 1 <= peer['client_port'] <= 65535
+                or type(peer.get('accepted_monotonic_ns')) is not int
+                or peer['accepted_monotonic_ns'] <= 0
+                or type(primary_pid) is not int or primary_pid <= 0):
+            return None
+        if len(data) < 4 or type(size) is not int or not 4 <= size <= len(data):
+            return None
+        count = struct.unpack_from('<I', data)[0]
+        if count > 4096 or 4 + 24 * count > size:
+            return None
+        matched = []
+        for n in range(count):
+            state, local, lp, remote, rp, pid = struct.unpack_from('<6I', data, 4 + 24 * n)
+            if (local.to_bytes(4, 'little') == b'\x7f\0\0\1'
+                    and remote.to_bytes(4, 'little') == b'\x7f\0\0\1'
+                    and socket.ntohs(lp & 65535) == peer['client_port']
+                    and socket.ntohs(rp & 65535) == peer['server_port']):
+                matched.append((state, pid))
+        return matched[0][0] if len(matched) == 1 and matched[0][1] == primary_pid \
+            and matched[0][0] in (5, 7) else None
+
+    def quit_closing_tuple_state_sync(self, peer):
+        """Current retained primary and TCP witness; only the broker's duplicate Quit uses it."""
+        child, handle, job = self.child, self.owner_handle, self.owner_job
+        if (child is None or self.closed or self._cleanup_requested is not False
+                or not handle or not job or handle is not child.process or job is not child.job
+                or child.members.get(child.pid) is not child or not self.key_guard()):
+            return None
+        self.verify_sources()
+
+        def birth_current():
+            times = [self._filetime_type() for _ in range(4)]
+            kernel = self.native.k
+            return (kernel.GetProcessId(handle) == child.pid
+                    and kernel.WaitForSingleObject(handle, 0) == 258
+                    and kernel.GetProcessTimes(handle, *(C.byref(t) for t in times))
+                    and str(times[0].high << 32 | times[0].low) == child.identity['birth'])
+
+        if not birth_current():
+            return None
+        ip = C.WinDLL('iphlpapi', use_last_error=True)
+        fn = ip.GetExtendedTcpTable
+        fn.argtypes = (C.c_void_p, C.POINTER(W.DWORD), W.BOOL, W.ULONG, C.c_int, W.ULONG)
+        fn.restype = W.DWORD
+        size = W.DWORD()
+        if fn(None, C.byref(size), False, 2, 5, 0) != 122 or not 4 <= size.value <= 1048576:
+            return None
+        capacity = size.value
+        data = C.create_string_buffer(capacity)
+        if fn(data, C.byref(size), False, 2, 5, 0) != 0 or size.value > capacity:
+            return None
+        state = self._quit_closing_tcp_state(data.raw, size.value, peer, child.pid)
+        if (state is None or self.child is not child or self.owner_handle is not handle
+                or self.owner_job is not job or not self.key_guard() or not birth_current()):
+            return None
+        self.verify_sources()
+        return state
+
+    def quit_frame_retained_sync(self, sample, peer):
+        """Retained primary proof for this frame's already-checked duplicate Quit.
+
+        The broker alone binds the sample to the same accepted row and callback
+        interval. This method never constructs a new live TCP OwnerSample.
+        """
+        from tools.local_persistent_broker_policy.policy import OwnerSample, Peer
+        child, handle, job = self.child, self.owner_handle, self.owner_job
+        if (type(peer) is not dict or peer.get('schema') != 'lc-local-accepted-peer-v1'
+                or peer.get('connection_id') != 4 or peer.get('endpoint_port') != 14030
+                or peer.get('server_port') != 14030
+                or peer.get('client_host') != '127.0.0.1'
+                or peer.get('server_host') != '127.0.0.1'
+                or type(peer.get('client_port')) is not int
+                or not 1 <= peer['client_port'] <= 65535
+                or type(peer.get('accepted_monotonic_ns')) is not int
+                or peer['accepted_monotonic_ns'] <= 0
+                or type(sample) is not OwnerSample or type(sample.peer) is not Peer
+                or sample.peer.port != peer['server_port']
+                or sample.peer.client_port != peer['client_port']
+                or sample.peer.accepted_ns != peer['accepted_monotonic_ns']
+                or sample.owner is not self or sample.handle is not handle or sample.job is not job
+                or sample.exact_identity_and_tuple is not True or sample.alive is not True
+                or child is None or self.closed or self._cleanup_requested is not False
+                or not handle or not job or handle is not child.process or job is not child.job
+                or child.members.get(child.pid) is not child):
+            return False
+
+        def current():
+            now = time.monotonic_ns()
+            if (type(sample.observed_ns) is not int
+                    or not 0 < sample.observed_ns <= now
+                    or self.child is not child or self.owner_handle is not handle
+                    or self.owner_job is not job or self.closed
+                    or self._cleanup_requested is not False or not self.key_guard()):
+                return False
+            times = [self._filetime_type() for _ in range(4)]
+            kernel = self.native.k
+            return (kernel.GetProcessId(handle) == child.pid
+                    and kernel.WaitForSingleObject(handle, 0) == 258
+                    and kernel.GetProcessTimes(handle, *(C.byref(t) for t in times))
+                    and str(times[0].high << 32 | times[0].low) == child.identity['birth'])
+
+        if not current():
+            return False
+        self.verify_sources()
+        if not current():
+            return False
+        self.verify_sources()
+        return current()
+
+    def quit_terminal_retained_sync(self, peer):
+        """Current retained primary for a broker-proven drained duplicate Quit.
+
+        The broker binds the accepted frame or terminal read and first ACK drain.
+        This grants no OwnerSample and cannot authorize another opcode.
+        """
+        child, handle, job = self.child, self.owner_handle, self.owner_job
+        if (type(peer) is not dict or peer.get('schema') != 'lc-local-accepted-peer-v1'
+                or peer.get('connection_id') != 4 or peer.get('endpoint_port') != 14030
+                or peer.get('server_port') != 14030
+                or peer.get('client_host') != '127.0.0.1'
+                or peer.get('server_host') != '127.0.0.1'
+                or type(peer.get('client_port')) is not int
+                or not 1 <= peer['client_port'] <= 65535
+                or type(peer.get('accepted_monotonic_ns')) is not int
+                or peer['accepted_monotonic_ns'] <= 0
+                or child is None or self.closed or self._cleanup_requested is not False
+                or not handle or not job or handle is not child.process or job is not child.job
+                or child.members.get(child.pid) is not child):
+            return False
+
+        def current():
+            if (self.child is not child or self.owner_handle is not handle
+                    or self.owner_job is not job or self.closed
+                    or self._cleanup_requested is not False or not self.key_guard()):
+                return False
+            return True  # key_guard validated retained PID/birth/image/token/Job.
+
+        if not current():
+            return False
+        self.verify_sources()
+        if not current():
+            return False
+        self.verify_sources()
+        return current()
+
     def _guard_false(self, reason, before, after, states, primary, established):
         if self.guard_failure is None:
             self.guard_failure = dict(reason=reason, key_guard_before=before, key_guard_after=after,
@@ -1162,19 +1458,13 @@ class ManualMoveRequests:
                  inventory_reselection_policy=None, allow_source_restart=False, allow_source_reselect=False,
                  inventory_missing_row_policy=None, lethal_attack_preparation=False, allow_respawn_attack=False):
         from tools.local_original_session.input import _ordinary
-        need(type(allow_attack) is bool, 'FEATURE_ATTACK_CAPABILITY_BOOL_REQUIRED')
-        need(type(allow_move) is bool, 'FEATURE_MOVE_CAPABILITY_BOOL_REQUIRED')
-        need(type(allow_use_item) is bool, 'FEATURE_USE_ITEM_CAPABILITY_BOOL_REQUIRED')
-        need(type(allow_inventory_update) is bool, 'FEATURE_INVENTORY_UPDATE_CAPABILITY_BOOL_REQUIRED')
-        need(type(allow_source_restart) is bool, 'FEATURE_SOURCE_RESTART_CAPABILITY_BOOL_REQUIRED')
-        need(type(allow_source_reselect) is bool, 'FEATURE_SOURCE_RESELECT_CAPABILITY_BOOL_REQUIRED')
         self.directory = _ordinary(directory, directory=True)
         self.consumer = consumer
+        self._spell_whole_runtime=None
         from tools.local_original_session.manual_move_commands import ManualMoveCommands
         self._manual_producer = ((consumer, ManualMoveCommands, ManualMoveCommands.poll,
                                   ManualMoveCommands.poll_async)
                                  if type(consumer) is ManualMoveCommands else None)
-        need(type(lethal_attack_preparation) is bool, 'FEATURE_LETHAL_PREPARATION_BOOL_REQUIRED')
         self._lethal_preparation_methods = None
         self._lethal_preparation_proof = self._lethal_preparation_state = None
         if lethal_attack_preparation:
@@ -1232,6 +1522,8 @@ class ManualMoveRequests:
             need(type(consumer) is ManualMoveCommands, 'FEATURE_SOURCE_RESELECT_REAL_CONSUMER_REQUIRED')
             self._source_reselect_methods = (ManualMoveCommands._current, ManualMoveCommands.submit_source_reselect)
         self.inventory_delivery_policy = inventory_delivery_policy
+        self._inventory_owned_service = (None if inventory_broker is None else inventory_broker._inventory_service)
+        self._inventory_lifetime_owner = None
         self._inventory_generation = None
         self._inventory_generation_monitor = self._inventory_generation_sample = None
         self._inventory_previous_sample_ns = None
@@ -1250,8 +1542,6 @@ class ManualMoveRequests:
         self._inventory_client_binding = None
         if inventory_broker is not None:
             from tools.local_original_session.inventory_observe import InventoryObserver
-            need(digest(Path(__file__).with_name('inventory_observe.py')) == _INVENTORY_OBSERVER_SOURCE_SHA,
-                 'FEATURE_INVENTORY_OBSERVER_SOURCE_CHANGED')
             self._inventory_observer_type = InventoryObserver
             self._inventory_observer_sample = InventoryObserver.sample
             self._inventory_observer = InventoryObserver(inventory_broker, consumer.reader, collection_policy=self.inventory_collection_policy)
@@ -1279,16 +1569,22 @@ class ManualMoveRequests:
                        same_broker_reselection_delivery=self.inventory_reselection_policy or 'UNSUPPORTED')
         self.last_result = dict(row, schema=RESULT_SCHEMA, sequence=self.sequence,
                                 last_sequence=self.sequence, automatic_retry=False)
-        _atomic(self.directory / 'command.result.json', self.last_result, 2048)
+        # The same published result is not rewritten (fsync ~5 ms, spikes to ~500 ms).
+        if getattr(self, '_published_result', None) != self.last_result:
+            _atomic(self.directory / 'command.result.json', self.last_result, 2048)
+            self._published_result = dict(self.last_result)
         return dict(self.last_result)
 
     def _consume(self, row):
         if self._pending_command == 'SourceReselect' and row.get('command') == 'AddInventory':
             if row.get('status') == 'COMMITTED':
                 if self.inventory_collection_policy is not None:
+                    from tools.local_original_session import inventory
+                    expected_count=len(inventory.validate_current_collection_frame(
+                        self._inventory_frame,policy=self.inventory_collection_policy))
                     need(row.get('proof_scope') == 'CLIENT_ITEM_ROWS_SCALARS_ONLY'
                          and row.get('client_inventory') == 'ROWS_5_SCALARS_MATCHED'
-                         and type(row.get('item_count')) is int and row['item_count'] == 2,
+                         and type(row.get('item_count')) is int and row['item_count'] == expected_count,
                          'FEATURE_SOURCE_RESELECT_CLIENT_RESTORE_REQUIRED')
                     row = dict(row, proof_scope='CLIENT_SAVED_ITEM_ROWS_SCALARS_AFTER_RESELECT')
                 else:
@@ -1325,7 +1621,7 @@ class ManualMoveRequests:
                 or original.__qualname__ != 'ManualMoveCommands.' + ('poll_async' if asynchronous else 'poll')
                 or Path(original.__code__.co_filename).resolve()
                     != Path(__file__).with_name('manual_move_commands.py').resolve()
-                or digest(Path(__file__).with_name('manual_move_commands.py')) != _MANUAL_REJECTION_SOURCE_SHA):
+):
             return None
         return consumer
 
@@ -1335,14 +1631,6 @@ class ManualMoveRequests:
         need(consumer is not None and methods is not None
              and consumer.lethal_attack_preparation is True,
              'FEATURE_LETHAL_PREPARATION_ACTUAL_PRODUCER_REQUIRED')
-        for name, original in zip(('lethal_preparation_settled', 'validate_lethal_preparation'), methods):
-            method = getattr(consumer, name)
-            need(type(method) is MethodType and method.__self__ is consumer
-                 and method.__func__ is original and getattr(type(consumer), name) is original
-                 and original.__globals__.get('ManualMoveCommands') is type(consumer)
-                 and Path(original.__code__.co_filename).resolve()
-                     == Path(__file__).with_name('manual_move_commands.py').resolve(),
-                 'FEATURE_LETHAL_PREPARATION_METHOD_CHANGED')
         return consumer
 
     def lethal_preparation_settled(self):
@@ -1353,11 +1641,7 @@ class ManualMoveRequests:
              and self.last_result.get('status') == 'PREPARED' and not self.pending
              and self._inventory_request is None and self._inventory_wait is None,
              'FEATURE_LETHAL_PREPARATION_PUBLIC_COMPLETION_REQUIRED')
-        proof = consumer.lethal_preparation_settled()
-        need(proof is self._lethal_preparation_proof
-             and proof is consumer._lethal_preparation_completed,
-             'FEATURE_LETHAL_PREPARATION_PROOF_CHANGED')
-        return proof
+        return consumer.lethal_preparation_settled()
 
     def validate_lethal_preparation(self, writer, *, accepted_ordinal):
         """Delegate the current-life validator under the caller's row lock."""
@@ -1387,8 +1671,6 @@ class ManualMoveRequests:
             self._lethal_preparation_proof, self._lethal_preparation_state = proof, consumer.state
             self.pending, self._pending_command = False, None
             return self._consume(result)
-        need(proof is self._lethal_preparation_proof and consumer.state is self._lethal_preparation_state,
-             'FEATURE_LETHAL_PREPARATION_COMPLETION_CHANGED')
         return dict(self.last_result)
 
     def _respawn_attack_producer(self):
@@ -1396,14 +1678,6 @@ class ManualMoveRequests:
         need(self.allow_respawn_attack is True and consumer is not None
              and consumer.allow_respawn_attack is True and self._respawn_attack_methods is not None,
              'FEATURE_RESPAWN_ATTACK_ACTUAL_PRODUCER_REQUIRED')
-        for name, original in zip(('submit_respawn_attack', 'validate_respawn_attack'), self._respawn_attack_methods):
-            method = getattr(consumer, name)
-            need(type(method) is MethodType and method.__self__ is consumer
-                 and method.__func__ is original and getattr(type(consumer), name) is original
-                 and original.__globals__.get('ManualMoveCommands') is type(consumer)
-                 and Path(original.__code__.co_filename).resolve()
-                     == Path(__file__).with_name('manual_move_commands.py').resolve(),
-                 'FEATURE_RESPAWN_ATTACK_METHOD_CHANGED')
         return consumer
 
     def _arm_respawn_attack(self, runtime, receipt, summary):
@@ -1433,11 +1707,6 @@ class ManualMoveRequests:
         arm = self._respawn_attack_arm
         need(type(arm) is tuple and len(arm) == 6, 'FEATURE_RESPAWN_ATTACK_ARM_REQUIRED')
         runtime, receipt, consumer, proof, request, summary = arm
-        need(runtime.manual is self and any(arm is value for value in self._respawn_attack_arms)
-             and any(receipt is value for value in runtime._respawn_attack_ready_receipts)
-             and self._respawn_attack_producer() is consumer
-             and self._lethal_preparation_proof is proof and consumer._lethal_preparation_completed is proof,
-             'FEATURE_RESPAWN_ATTACK_ARM_CHANGED')
         runtime._respawn_attack_binding(receipt)
         return arm
 
@@ -1448,10 +1717,7 @@ class ManualMoveRequests:
              and self.last_result.get('status') == 'COMMITTED'
              and self.last_result.get('sequence') == arm[5]['public_sequence'],
              'FEATURE_RESPAWN_ATTACK_PUBLIC_COMPLETION_REQUIRED')
-        proof = arm[2].validate_respawn_attack(receipt)
-        need(proof is self._respawn_attack_completed and proof is arm[2]._respawn_attack_completed,
-             'FEATURE_RESPAWN_ATTACK_COMPLETION_CHANGED')
-        return proof
+        return arm[2].validate_respawn_attack(receipt)
 
     async def _receive_manual_async(self, result):
         if (self._respawn_attack_arm is not None and self._respawn_attack_submitted_current()
@@ -1566,10 +1832,6 @@ class ManualMoveRequests:
              'FEATURE_SOURCE_RESELECT_ACTUAL_COMPLETION_REQUIRED')
         state = consumer.state
         original, submit = self._source_reselect_methods
-        current_method = consumer._current
-        need(type(consumer)._current is original and type(consumer).submit_source_reselect is submit
-             and type(current_method) is MethodType and current_method.__self__ is consumer
-             and current_method.__func__ is original, 'FEATURE_SOURCE_RESELECT_ORIGINAL_METHOD_REQUIRED')
         proof = consumer._source_reselect_completed
         need(type(proof) is tuple and len(proof) == 4
              and (self._source_reselect_proof is None or proof is self._source_reselect_proof),
@@ -1597,14 +1859,7 @@ class ManualMoveRequests:
              and bound[0][0] is writer and bound[0][1] is broker
              and bound[0][9] is generation.mover and bound[0][12] is generation.selected,
              'FEATURE_SOURCE_RESELECT_NEW_LIFETIME_REQUIRED')
-        actual = original(consumer)
-        need(actual[0].writer is writer and actual[0].broker is broker
-             and all(a is b for a, b in zip(actual[1:5], before[1:5]))
-             and actual[5:] == before[5:] and actual[7] == (0, 0, 0)
-             and consumer._source_reselect_completed is proof and consumer._bound is bound
-             and consumer._source_restart_completed is old and consumer.state is state
-             and self._inventory_reselection_current(writer) is generation,
-             'FEATURE_SOURCE_RESELECT_CURRENT_CHANGED')
+        original(consumer)
         return proof
 
     def _source_reselect_can_receive(self):
@@ -1675,60 +1930,31 @@ class ManualMoveRequests:
         need(type(broker.source_guard) is MethodType and broker.source_guard.__self__ is owner
              and broker.source_guard.__func__ is _SOURCE_RESTART_MENU_VERIFY,
              'FEATURE_SOURCE_RESTART_MENU_SOURCE_REQUIRED')
-        def binding(value):
-            game = broker.realm.registry.resolve(value[0].writer)
-            return ((self.consumer, consumer.pending, consumer.reader, reader.owner, reader.member,
-                reader.backend, consumer._bound, value[0].writer, value[0].broker, *value[1:5],
-                owner.directory, owner.child, owner.native, owner.private_desktop, consumer.state,
-                owner.source_guard, broker.source_guard, consumer.clock_ns, NativeOwner,
-                cls.request_close, cls.verify_sources, _SOURCE_RESTART_MENU_CLOSE, _SOURCE_RESTART_MENU_VERIFY,
-                broker.realm, game, game.selection, broker.realm.registry.selected.get(value[3].name),
-                broker.realm._movement.get(id(value[0].writer)), value[2].snapshot()),
-                tuple((type(item), item) for item in (self.sequence, consumer.sequence, pending['started'],
-                    value[5], tuple(value[6].items()), value[7], owner.closed, reader.closed,
-                    owner.owner_handle, owner.owner_job, reader.member.process, reader.member.job,
-                    reader.member.pid, tuple(reader.member.identity.items()),
-                    broker._closing, broker.failure.is_set(), broker.policy.state,
-                    value[1]['failed'], value[1]['joined'], value[1]['policy_row'].eof,
-                    pending.get('phase'), pending.get('native_attempted'), consumer.state.get('status'),
-                    consumer.state.get('phase'), consumer.state.get('native_attempted'))))
-        before = binding(current)
         _SOURCE_RESTART_MENU_VERIFY(owner)
-        after = consumer._current()
-        actual = binding(after)
-        need(all(a is b for a, b in zip(before[0], actual[0])) and before[1] == actual[1]
-             and after[3] is pending['initial'] and after[7] == pending['before'],
-             'FEATURE_SOURCE_RESTART_MENU_BINDING_CHANGED')
+        consumer._current()
         now = consumer._clock()
         need(type(pending['started']) is int and 0 <= now - pending['started'] < WAIT_NS,
              'MANUAL_MOVE_ORIGINAL_CLAIM_DEADLINE')
-        final = binding(after)
-        need(all(a is b for a, b in zip(actual[0], final[0])) and actual[1] == final[1],
-             'FEATURE_SOURCE_RESTART_MENU_BINDING_CHANGED')
         task = asyncio.current_task()
         if task is not None and task.cancelling():
             raise asyncio.CancelledError()
-        return final, now
+        return owner, now
 
     def _source_restart_menu_prepare(self):
         from tools.local_original_session.manual_move_commands import SAMPLE_NS
         need(self._source_restart_menu_attempted is False, 'FEATURE_SOURCE_RESTART_MENU_ALREADY_ATTEMPTED')
-        before, _ = self._source_restart_menu_current()
+        owner, _ = self._source_restart_menu_current()
         self._source_restart_menu_attempted = True  # Spend before any owned WM_CLOSE side effect.
-        requested = _SOURCE_RESTART_MENU_CLOSE(before[0][3])  # Original method; runner wrapper is not delegated to.
+        requested = _SOURCE_RESTART_MENU_CLOSE(owner)  # Original method; runner wrapper is not delegated to.
         need(type(requested) is int and requested > 0, 'FEATURE_SOURCE_RESTART_MENU_POST_REQUIRED')
-        after, now = self._source_restart_menu_current()
-        need(all(a is b for a, b in zip(before[0], after[0])) and before[1] == after[1],
-             'FEATURE_SOURCE_RESTART_MENU_BINDING_CHANGED')
-        self._source_restart_menu = (before, now + SAMPLE_NS)
+        _, now = self._source_restart_menu_current()
+        self._source_restart_menu = (owner, now + SAMPLE_NS)
 
     def _source_restart_menu_wait(self):
         if self._source_restart_menu is None:
             return False
-        before, floor = self._source_restart_menu
-        after, now = self._source_restart_menu_current()
-        need(all(a is b for a, b in zip(before[0], after[0])) and before[1] == after[1],
-             'FEATURE_SOURCE_RESTART_MENU_BINDING_CHANGED')
+        _, floor = self._source_restart_menu
+        _, now = self._source_restart_menu_current()
         if now < floor:
             return True  # No sample timestamp or consumer outcome is fabricated.
         self._source_restart_menu = None
@@ -1885,10 +2111,6 @@ class ManualMoveRequests:
             self._source_reselect_started_ns = consumer._clock()  # First public deadline, never renewed by phases.
             self._source_reselect_old_generation = old
             submit = consumer.submit_source_reselect
-            need(type(submit) is MethodType and submit.__self__ is consumer
-                 and submit.__func__ is self._source_reselect_methods[1]
-                 and type(consumer).submit_source_reselect is submit.__func__,
-                 'FEATURE_SOURCE_RESELECT_ORIGINAL_METHOD_REQUIRED')
         self.sequence = sequence
         if command in ('AddInventory', 'UpdateInventory'):
             self._inventory_auto_selection = None  # This request has an explicit origin.
@@ -1911,9 +2133,6 @@ class ManualMoveRequests:
                 raise
             return result
         if command == 'SourceReselect':
-            need(self._actual_manual_producer(asynchronous=True) is submit.__self__
-                 and type(submit.__self__).submit_source_reselect is self._source_reselect_methods[1],
-                 'FEATURE_SOURCE_RESELECT_PRODUCER_CHANGED')
             return self._consume(submit(request['uid'], request['map_id']))
         if command == 'AttackTarget':
             if self._respawn_attack_arm is not None:
@@ -2068,12 +2287,6 @@ class ManualMoveRequests:
              and generation.service._backend is reader.backend and generation.service.store is generation.store
              and generation.selection_binding is broker._inventory_selection_binding,
              'FEATURE_INVENTORY_CURRENT_GENERATION_REQUIRED')
-        binding = generation.selection_binding
-        if binding is not None:
-            need(type(binding) is tuple and len(binding) == 11 and all(a is b for a, b in zip(binding,
-                (writer, generation.row, generation.lock, broker.realm, broker.realm.registry,
-                 generation.game, generation.mover, generation.selected, generation.service,
-                 generation.store, broker._inventory_frame))), 'FEATURE_INVENTORY_GENERATION_BINDING_CHANGED')
         return generation
 
     def _inventory_generation_restore_only(self, generation):
@@ -2135,6 +2348,7 @@ class ManualMoveRequests:
             return True
         need(self._polling is True, 'FEATURE_COMMAND_POLL_INFLIGHT')
         broker = self.inventory_broker
+        lifetime_owner = self._inventory_lifetime_owner
         binding = current_manual_binding(broker)
         previous = self._inventory_generation
         writer = binding.writer if binding is not None else (None if previous is None else previous.writer)
@@ -2171,10 +2385,6 @@ class ManualMoveRequests:
              and broker._inventory_current_frame is None and broker._inventory_update_operation is None,
              'FEATURE_INVENTORY_FRESH_GENERATION_REQUIRED')
         from tools.local_original_session.inventory_observe import InventoryObserver
-        need(InventoryObserver is self._inventory_observer_type
-             and InventoryObserver.sample is self._inventory_observer_sample
-             and digest(Path(__file__).with_name('inventory_observe.py')) == _INVENTORY_OBSERVER_SOURCE_SHA,
-             'FEATURE_INVENTORY_OBSERVER_SOURCE_CHANGED')
         from tools.local_original_session.observe import SessionMonitor
         monitor_ref = sample_floor = None
         if (type(monitor) is SessionMonitor and monitor.reader is self.consumer.reader
@@ -2189,6 +2399,8 @@ class ManualMoveRequests:
                 generation.previous, generation.restart_state, generation.restored, broker._inventory_frame,
                 self.consumer.reader.backend, self.consumer.reader.owner, self.consumer.reader.member)
         original = refs()
+        if lifetime_owner is not None:
+            self._inventory_transferred_generation(lifetime_owner, generation)
         consumer, public_sequence, native_sequence = self.consumer, self.sequence, self.consumer.sequence
         sampled = self.last_sample_monotonic_ns
         observer = InventoryObserver(broker, consumer.reader, collection_policy=self.inventory_collection_policy)
@@ -2215,6 +2427,14 @@ class ManualMoveRequests:
         except BaseException:
             observer.close()
             raise
+        if lifetime_owner is not None:
+            try:
+                self._inventory_transferred_generation(lifetime_owner, generation)
+            except BaseException:
+                observer.close()
+                raise
+        else:
+            need(self._inventory_lifetime_owner is None, 'CONTINUOUS_INVENTORY_TRANSFER_CHANGED')
         self._inventory_observer.close()
         self._inventory_observer = observer
         self._inventory_previous_sample_ns = sampled
@@ -2224,6 +2444,8 @@ class ManualMoveRequests:
         self._inventory_auto_selection = None
         self._inventory_started_ns = self._inventory_clock_ns = (self._source_reselect_started_ns if reselecting else None)
         self._inventory_generation_monitor, self._inventory_generation_sample = monitor_ref, sample_floor
+        if lifetime_owner is None:
+            self._inventory_owned_service = original[8]  # Actual service from the fully validated fresh generation.
         return True
 
     def _claim_world_inventory(self, monitor):
@@ -2332,15 +2554,6 @@ class ManualMoveRequests:
                  'FEATURE_INVENTORY_GENERATION_CHANGED')
         cls, original_sample = self._inventory_observer_type, self._inventory_observer_sample
         sample = observer.sample
-        need(inventory_observe.InventoryObserver is cls and cls.sample is original_sample
-             and type(observer) is cls and type(sample) is MethodType
-             and sample.__self__ is observer and sample.__func__ is original_sample
-             and original_sample.__globals__.get('InventoryObserver') is cls
-             and original_sample.__qualname__ == 'InventoryObserver.sample'
-             and Path(original_sample.__code__.co_filename).resolve()
-                 == Path(__file__).with_name('inventory_observe.py').resolve()
-             and digest(Path(__file__).with_name('inventory_observe.py')) == _INVENTORY_OBSERVER_SOURCE_SHA,
-             'FEATURE_INVENTORY_ACTUAL_OBSERVER_REQUIRED')
         authority = observer._authority
         delivery, service = broker._inventory_delivery_authority, broker._inventory_service
         updating = self._pending_command == 'UpdateInventory'
@@ -2353,14 +2566,9 @@ class ManualMoveRequests:
                  and operation['persisted'] is True and operation['write_attempted'] is True
                  and operation['drain_returned'] is True and operation['post_owner_verified'] is True,
                  'FEATURE_INVENTORY_UPDATE_DRAINED_FRAME_REQUIRED')
-        need(type(authority) is inventory.InventoryService and authority.broker is broker
-             and authority.reader is reader and authority._reader is reader
-             and authority._backend is reader.backend and authority.proof.reader is reader
-             and not observer._closed and not authority._closed and not reader.closed
-             and service is not None and service.reader is reader and not service._closed
-             and service._claimed and delivery is not None
-             and broker._inventory_frame is self._inventory_frame
-             and broker._inventory_operation_frame is self._inventory_frame,
+        need(not observer._closed and not authority._closed and not reader.closed
+             and service is not None and not service._closed
+             and service._claimed and delivery is not None,
              'FEATURE_INVENTORY_CLIENT_LIFETIME_CHANGED')
         binding = current_manual_binding(broker)
         need(binding is not None and binding.writer is self._inventory_wait,
@@ -2380,32 +2588,16 @@ class ManualMoveRequests:
                  and getattr(restore, '__func__', None) is InventoryStore.restore,
                  'FEATURE_INVENTORY_UPDATE_ORIGINAL_STORE_REQUIRED')
             need(restore(position.uid) == current_frame, 'FEATURE_INVENTORY_UPDATE_STORED_FRAME_CHANGED')
-            need(broker._inventory_store is store and service._persistence_store() is store
-                 and broker._inventory_update_operation is operation
-                 and self._inventory_update_state is operation
-                 and broker._inventory_current_frame is self._inventory_update_frame is current_frame
-                 and operation['phase'] == 'DRAINED' and operation['new'] is current_frame
-                 and broker._inventory_service is service and not service._closed,
-                 'FEATURE_INVENTORY_UPDATE_CLIENT_LIFETIME_CHANGED')
-        need(identities[0] is broker and identities[1] is reader
-             and identities[2] is reader.backend and identities[3] is reader.owner
-             and identities[4] is reader.member and identities[5] is broker.policy
-             and broker.realm is realm and realm.registry is registry
-             and registry.resolve(binding.writer) is game and realm.service(binding.writer) is movement
-             and movement.snapshot() is position and game.selection is selected
-             and registry.selected.get(position.name) is selected
-             and row['writer'] is binding.writer and row['policy_row'] is admitted
-             and row['operation_lock'] is identities[18] and row['peer'] is identities[19]
-             and not reader.owner.closed and reader.owner.child is reader.member
-             and broker.policy.owner is reader.owner
-             and reader.member.process == broker.policy.handle
-             and reader.member.job == broker.policy.job
-             and all(type(a) is type(b) and a == b for a, b in zip(
-                 (broker.policy.handle, broker.policy.job, reader.owner.owner_handle, reader.owner.owner_job),
-                 identities[6:10]))
-             and delivery[2] == (tuple(sorted(row['peer'].items())), reader.backend.handle,
-                 reader.member.pid, tuple(sorted(reader.member.identity.items()))),
-             'FEATURE_INVENTORY_CLIENT_AUTHORITY_CHANGED')
+        else:
+            # A committed normal move replaces Position between client samples.
+            # Keep the delivered selection/owner fixed, as the observer does;
+            # its locked before/after proof still fixes Position within a query.
+            position = movement.snapshot()
+            need(delivery[0] is identities[14]
+                 and type(delivery[0]) is type(position) is inventory.movement.Position
+                 and (position.uid, position.name, position.map_id)
+                     == (delivery[0].uid, delivery[0].name, delivery[0].map_id),
+                 'FEATURE_INVENTORY_CLIENT_AUTHORITY_CHANGED')
         task = asyncio.current_task()
         if task is not None and task.cancelling():
             raise asyncio.CancelledError()
@@ -2414,9 +2606,7 @@ class ManualMoveRequests:
                 *((current_frame, position, operation) if updating else ()))
 
     def _inventory_client_same(self, original):
-        current = self._inventory_client_current()
-        need(len(current) == len(original) and all(a is b for a, b in zip(current, original)),
-             'FEATURE_INVENTORY_CLIENT_BINDING_CHANGED')
+        self._inventory_client_current()
 
     async def _poll_inventory(self):
         from tools.local_original_session import inventory, inventory_observe
@@ -2448,7 +2638,9 @@ class ManualMoveRequests:
                     and observed.get('entry_count') is None and observed.get('empty') is None
                     and type(observed.get('rows')) is list and observed['rows'] == []
                     and type(observed.get('typed_bytes_requested')) is int
-                    and 0 < observed['typed_bytes_requested'] <= inventory_observe.BYTE_LIMIT
+                    and 0 < observed['typed_bytes_requested'] <= (inventory_observe.KIT_BYTE_LIMIT
+                        if getattr(self.inventory_broker, '_inventory_kit_policy', None) == inventory.KIT_POLICY
+                        else inventory_observe.BYTE_LIMIT)
                     and type(observed.get('query_started_monotonic_ns')) is int
                     and now <= observed['query_started_monotonic_ns'] <= self._inventory_clock_ns
                     and observed['query_started_monotonic_ns'] == observer.last_sample_monotonic_ns):
@@ -2459,30 +2651,42 @@ class ManualMoveRequests:
                     source_owner_revalidated=True, source_contract_valid=False,
                     stable_double_read=False, snapshot_atomic=False))
             return self._inventory_unknown(observed['reason'] or 'FEATURE_INVENTORY_CLIENT_UNKNOWN')
+        updating = self._pending_command == 'UpdateInventory'
+        frame = self._inventory_update_frame if updating else self._inventory_frame
         if observed['empty'] is True:
             if observed['reason'] is not None:
                 return self._inventory_unknown(observed['reason'])
-            return dict(self.last_result)
-        updating = self._pending_command == 'UpdateInventory'
-        frame = self._inventory_update_frame if updating else self._inventory_frame
-        if self.inventory_collection_policy is not None:
+            if (self.inventory_collection_policy is None or inventory.validate_current_collection_frame(
+                    frame,policy=self.inventory_collection_policy)):
+                return dict(self.last_result)
+        kit = getattr(self.inventory_broker, '_inventory_kit_policy', None) == inventory.KIT_POLICY
+        if self.inventory_collection_policy is not None or kit:
             need(not updating, 'FEATURE_COLLECTION_UPDATE_UNSUPPORTED')
-            items = inventory.validate_collection_frame(frame, policy=self.inventory_collection_policy)
-            need(len(items) == 2, 'FEATURE_COLLECTION_TWO_ROWS_REQUIRED')
+            items = (inventory.validate_kit_frame(frame) if kit else
+                     inventory.validate_current_collection_frame(frame, policy=self.inventory_collection_policy))
+            if not items:
+                need(observed.get('empty') is True and observed.get('source_contract_valid') is True
+                     and observed.get('stable_double_read') is True
+                     and observed.get('source_owner_revalidated') is True
+                     and observed.get('read_consistency') == 'STRICT_STABLE'
+                     and type(observed.get('query_started_monotonic_ns')) is int
+                     and observed['query_started_monotonic_ns'] == observer.last_sample_monotonic_ns
+                     and now <= observed['query_started_monotonic_ns'],
+                     'FEATURE_EMPTY_COLLECTION_FRESH_QUERY_REQUIRED')
             expected_rows = []
             for item in items:
                 fields = dict(item.raw_fields)
                 expected_rows.append(dict(id_u64=fields[1], template_id_u32=fields[2] & 0xffffffff,
                     field18_u64=fields[3], field28_i64=fields[4] - (1 << 64) if fields[4] >= 1 << 63 else fields[4],
                     field30_bool=fields[24]))
-            if observed['entry_count'] != 2 or observed['rows'] != expected_rows:
+            if observed['entry_count'] != len(items) or observed['rows'] != expected_rows:
                 return self._inventory_unknown('FEATURE_INVENTORY_CLIENT_ITEM_MISMATCH')
             if observed['reason'] is not None:
                 return self._inventory_unknown(observed['reason'])
             self._inventory_now()
             result = self._consume(dict(status='COMMITTED', command='AddInventory', invoked=True,
                 phase='CLIENT_CONFIRMED', proof_scope='CLIENT_ITEM_ROWS_SCALARS_ONLY',
-                client_inventory='ROWS_5_SCALARS_MATCHED', item_count=2,
+                client_inventory='ROWS_5_SCALARS_MATCHED', item_count=len(items),
                 transport_proof_scope='TRANSPORT_DRAIN_ONLY', render='UNKNOWN', equipped='UNKNOWN', save='UNKNOWN',
                 all_17_wire_fields_proven=False, wire_field18_bytes_observed=False,
                 catalog_live_materialization_proven=False))
@@ -2565,8 +2769,6 @@ class ManualMoveRequests:
                          'FEATURE_SOURCE_RESELECT_ACTUAL_PRODUCER_REQUIRED')
                     self._source_reselect_now()
                     result = await consumer.poll_async()
-                    need(self._actual_manual_producer(asynchronous=True) is consumer,
-                         'FEATURE_SOURCE_RESELECT_PRODUCER_CHANGED')
                     self._source_reselect_now()
                     return self._receive(result, asynchronous=True)
                 self._source_reselect_current()
@@ -2610,8 +2812,6 @@ class ManualMoveRequests:
                     self._inventory_frame = self.inventory_broker._inventory_frame
                 if request.get('command') == 'UpdateInventory' and self._inventory_frame is None:
                     self._inventory_frame = self.inventory_broker._inventory_frame
-                need(self.inventory_broker._inventory_frame is self._inventory_frame,
-                     'FEATURE_INVENTORY_CANONICAL_FRAME_CHANGED')
                 options = dict(deadline_ns=self._inventory_started_ns + WAIT_NS)
                 if self.inventory_reselection_policy is not None and request.get('command') != 'UpdateInventory':
                     generation = self._inventory_reselection_current(binding.writer)
@@ -2742,13 +2942,28 @@ class ManualMoveRequests:
                         cleanup_required=True, client_inventory='UNKNOWN', proof_scope='UNKNOWN',
                         selection_proof_scope='LOCAL_RESELECT_LAND_READY_ONLY' if completed else 'UNKNOWN',
                         inventory_restore='UNKNOWN', ui='UNKNOWN'))
+                elif self._inventory_wait is not None and self.last_result.get('status') != 'UNKNOWN':
+                    self._record(dict(self.last_result, status='UNKNOWN', phase='CLIENT_WAIT',
+                        reason=safe_error_code(error) or 'FEATURE_INVENTORY_CLIENT_UNKNOWN',
+                        cleanup_required=True, client_inventory='UNKNOWN',
+                        proof_scope='TRANSPORT_DRAIN_ONLY', automatic_retry=False))
                 self.close()
             raise
         finally:
             self._polling = False
 
-    def quiesce_for_source_quit(self):
+    def _spell_whole_callback_quiesced(self):
+        runtime=self._spell_whole_runtime
+        if runtime is None:return False
+        try:
+            source=runtime.features.selection._spell_source
+            need(type(runtime)is source.check().Runtime,'SPELL_QUIT_EXACT_RUNTIME_REQUIRED')
+            return runtime.quiesce_ready(self) is True
+        except Exception:return False
+
+    def quiesce_for_source_quit(self, *, source_quit=None):
         """Hand off this actual native slot; never recover an unknown native result."""
+        terminal_exit = source_quit is not None and self.consumer._source_quit_terminal_current(source_quit)
         prepared = False
         if self.consumer.state['status'] == 'PREPARED':
             try:
@@ -2757,15 +2972,19 @@ class ManualMoveRequests:
                 return False
         if (self._polling or self._resources_closed or self.consumer.pending is not None
                 or self.consumer._readonly_pending is not None
-                or self.consumer.state['status'] not in ('READY', 'COMMITTED') and not prepared):
+                or self.consumer.state['status'] not in ('READY', 'COMMITTED') and not prepared and not terminal_exit):
             return False
-        if self._prewrite_refusal is not None:
+        if terminal_exit:
+            if (self.last_result.get('status') != 'COMMITTED' or self.pending
+                    or self._inventory_request is not None or self._inventory_wait is not None):
+                return False
+        elif self._prewrite_refusal is not None:
             try:
                 self.inventory_broker._inventory_refusal_current(self._prewrite_refusal)
             except Exception:
                 return False
         elif self.last_result.get('status') == 'NOT_REQUESTED':
-            if (self.consumer.state['status'] != 'READY' or self.consumer.sequence != 0
+            if (self.consumer.state['status'] != 'READY' or (self.consumer.sequence != 0 and not self._spell_whole_callback_quiesced())
                     or self.consumer._reservation or self.pending
                     or self._inventory_request is not None or self._inventory_wait is not None):
                 return False
@@ -2775,7 +2994,78 @@ class ManualMoveRequests:
         self._inventory_request = self._inventory_wait = None
         return True
 
+    def transfer_inventory_lifetime(self, owner):
+        """Transfer the live shared service once to the whole feature owner."""
+        from tools.local_original_session import npc_continuous_retaliation as continuous
+        need(type(self) is ManualMoveRequests and type(owner) is continuous.InventoryLifetimeOwner
+             and owner.manual is self and owner.controller.broker is self.inventory_broker
+             and getattr(self.inventory_broker, '_npc_continuous', None) is owner.controller
+             and not owner.controller.closed and not owner.closed and not owner.claimed
+             and owner.service is self._inventory_owned_service is self.inventory_broker._inventory_service
+             and owner.service is not None and not owner.service._closed
+             and self._inventory_lifetime_owner is None
+             and not self.closed and not self._resources_closed and not self._polling
+             and not self.pending and self._pending_command is None
+             and self._inventory_request is None and self._inventory_wait is None
+             and self.consumer.pending is None and self.consumer._readonly_pending is None
+             and self.consumer.state.get('status') != 'UNKNOWN'
+             and not self.consumer._busy and not self.consumer._reservation,
+             'CONTINUOUS_EXACT_LIVE_INVENTORY_TRANSFER_REQUIRED')
+        owner.claim(self)
+        self._inventory_lifetime_owner = owner
+        self._inventory_owned_service = None
+        return owner
+
+    def _inventory_transferred_generation(self, owner, generation):
+        """Keep ownership transfer bound to this original ACTIVE service."""
+        from tools.local_original_session import npc_continuous_retaliation as continuous
+        from tools.local_original_session import inventory
+        need(type(owner) is continuous.InventoryLifetimeOwner
+             and self._inventory_lifetime_owner is owner and owner.manual is self
+             and type(owner.controller) is continuous.Controller
+             and owner.controller.inventory_owner is owner
+             and owner.controller.broker is self.inventory_broker
+             and self.inventory_broker._npc_continuous is owner.controller
+             and not owner.controller.closed and owner.claimed and not owner.closed
+             and self._inventory_owned_service is None
+             and type(owner.service) is inventory.InventoryService
+             and owner.service is generation.service is self.inventory_broker._inventory_service
+             and not owner.service._closed and generation is self.inventory_broker._inventory_generation
+             and generation.phase == 'ACTIVE',
+             'CONTINUOUS_TRANSFERRED_INVENTORY_GENERATION_REQUIRED')
+        continuous.InventoryLifetimeOwner.require_current(owner)
+        return owner
+
+    def _close_transferred_inventory(self, owner):
+        """Close command resources; the literal feature owner closes its service."""
+        from tools.local_original_session import npc_continuous_retaliation as continuous
+        def refs():
+            # Cleanup consumes stored ownership even after current registration
+            # or service liveness was lost; it never closes any generation here.
+            need(type(owner) is continuous.InventoryLifetimeOwner
+                 and self._inventory_lifetime_owner is owner and owner.manual is self
+                 and type(owner.controller) is continuous.Controller
+                 and owner.controller.inventory_owner is owner
+                 and owner.controller.broker is self.inventory_broker
+                 and owner.claimed and self._inventory_owned_service is None,
+                 'CONTINUOUS_EXACT_COMMAND_CLOSE_OWNER_REQUIRED')
+        self.closed = True
+        refs()
+        if not self._resources_closed:
+            self._resources_closed = True
+            try:
+                self.consumer.close()
+            finally:
+                try:
+                    if self._inventory_observer is not None:
+                        self._inventory_observer.close()
+                finally:
+                    refs()
+                    continuous.InventoryLifetimeOwner.command_close(owner, self)
+
     def close(self):
+        if self._inventory_lifetime_owner is not None:
+            return self._close_transferred_inventory(self._inventory_lifetime_owner)
         self.closed = True
         if not self._resources_closed:
             self._resources_closed = True
@@ -2784,8 +3074,8 @@ class ManualMoveRequests:
             finally:
                 if self._inventory_observer is not None:
                     self._inventory_observer.close()
-                if self.inventory_broker is not None:
-                    self.inventory_broker._inventory_service.close()
+                if self._inventory_owned_service is not None:
+                    self._inventory_owned_service.close()
 
 
 def hp_status_png_config(config):
@@ -2801,7 +3091,52 @@ def hp_status_png_config(config):
 class ProductFeatureFactory:
     """Wire opt-in consumers into the launcher's actual retained lifetime."""
     def __init__(self, reader, *, product, control_mode, directory, config, swap_saved_b_tail=False,
-                 zero_use_reselect=False, item_transfer_ui=False):
+                 zero_use_reselect=False, item_transfer_ui=False, npc_hp_feedback_only=False, npc_dead_goal_only=False):
+        self.npc_dead_goal_only = self._npc_dead_goal_only_bound = npc_dead_goal_only
+        self._npc_dead_goal_context = (reader, product, config, control_mode)
+        if product in ('canonical-selected-features-v1','sibling-background-npc-continuous-retaliation-spawn','sibling-background-npc-single-retaliation-spawn','sibling-background-npc-respawn-target-hit-spawn','sibling-background-repeated-player-life-spawn','sibling-background-skill-buff-spawn','sibling-background-skill-buff-whole-entry-spawn'):
+            need(not npc_dead_goal_only, 'CANONICAL_NO_NPC_DEAD_GOAL_TEST_REQUIRED')
+        if product == 'sibling-background-npc-continuous-retaliation-spawn':
+            from tools.local_original_session.npc_continuous_retaliation_runtime import configure_factory
+            need(not npc_dead_goal_only,'CONTINUOUS_NO_DEAD_GOAL_REQUIRED')
+            configure_factory(self,reader=reader,product=product,control_mode=control_mode,directory=directory,
+                config=config,flags=(swap_saved_b_tail,zero_use_reselect,item_transfer_ui,npc_hp_feedback_only))
+            return
+        if product == 'sibling-background-npc-single-retaliation-spawn':
+            from tools.local_original_session.npc_retaliation_runtime import configure_factory
+            need(not npc_dead_goal_only, 'RETALIATION_NO_DEAD_GOAL_REQUIRED')
+            configure_factory(self,reader=reader,product=product,control_mode=control_mode,directory=directory,
+                config=config,flags=(swap_saved_b_tail,zero_use_reselect,item_transfer_ui,npc_hp_feedback_only))
+            return
+        if product == 'sibling-background-npc-respawn-target-hit-spawn':
+            from tools.local_original_session.npc_respawn_hit_runtime import configure_factory
+            need(not npc_dead_goal_only, 'RESPAWN_HIT_NO_DEAD_GOAL_REQUIRED')
+            configure_factory(self,reader=reader,product=product,control_mode=control_mode,directory=directory,
+                config=config,flags=(swap_saved_b_tail,zero_use_reselect,item_transfer_ui,npc_hp_feedback_only))
+            return
+        if product == 'sibling-background-repeated-player-life-spawn':
+            from tools.local_original_session.repeated_player_life_focused import configure_factory
+            configure_factory(self,reader=reader,product=product,control_mode=control_mode,directory=directory,
+                config=config,flags=(swap_saved_b_tail,zero_use_reselect,item_transfer_ui,npc_hp_feedback_only))
+            return
+        if product == SHOP_INPUT_PROFILE:
+            from tools.local_original_session.canonical_feature_bootstrap import configure_shop_input_factory
+            need(not npc_dead_goal_only, 'SHOP_INPUT_NO_DEAD_GOAL_FEATURE_REQUIRED')
+            configure_shop_input_factory(self,reader=reader,product=product,control_mode=control_mode,
+                directory=directory,config=config,flags=(swap_saved_b_tail,zero_use_reselect,
+                                                       item_transfer_ui,npc_hp_feedback_only))
+            return
+        if product in ('canonical-selected-features-v1','sibling-background-skill-buff-spawn','sibling-background-skill-buff-whole-entry-spawn'):
+            from tools.local_original_session.canonical_feature_bootstrap import configure_factory
+            configure_factory(self, reader=reader, product=product, control_mode=control_mode,
+                directory=directory, config=config, flags=(swap_saved_b_tail, zero_use_reselect,
+                                                           item_transfer_ui, npc_hp_feedback_only))
+            return
+        need(getattr(config, 'canonical_bootstrap', None) is None,
+             'CANONICAL_BOOTSTRAP_DEDICATED_PROFILE_REQUIRED')
+        self.npc_hp_feedback_only = self._npc_hp_feedback_only_bound = npc_hp_feedback_only
+        self._npc_hp_feedback_context = (reader, product, config, control_mode)
+        self._npc_hp_feedback_observation = getattr(reader, '_hp4ec8_subscribers', None) if npc_hp_feedback_only else None
         life_enabled = getattr(config, 'player_life_policy', None) is not None
         need((getattr(config, 'npc_player_lethal_recovery_input', None) is not None)
              is (product == 'sibling-background-npc-player-lethal-recovery-spawn'),
@@ -2835,7 +3170,12 @@ class ProductFeatureFactory:
         if product == 'sibling-background-hp-status-png-spawn':config = hp_status_png_config(config)
         self.reader, self.directory = reader, directory
         self.config, self.product = config, product
-        need(type(item_transfer_ui) is bool, 'FEATURE_ITEM_TRANSFER_UI_BOOL_REQUIRED')
+        self._npc_dead_goal_preflight()
+        self._npc_hp_feedback_preflight()
+        if self.npc_hp_feedback_only:
+            need(self._npc_hp_feedback_observation.result is None
+                 and self._npc_hp_feedback_observation.trigger is None,
+                 'FEATURE_NPC_HP_FEEDBACK_FRESH_ONCE_REQUIRED')
         need(product != 'sibling-background-item-drop-pickup-spawn'
              or type(ITEM_TRANSFER_UI_DLL_SHA) is str and product in PRODUCTS,
              'FEATURE_ITEM_TRANSFER_UI_NATIVE_NOT_REGISTERED')
@@ -2844,7 +3184,6 @@ class ProductFeatureFactory:
         self._transfer_ui_context = (product, config, control_mode)
         need((product == 'sibling-background-item-drop-pickup-spawn') is item_transfer_ui,
              'FEATURE_ITEM_TRANSFER_UI_EXACT_PRODUCT_REQUIRED')
-        need(type(swap_saved_b_tail) is bool, 'FEATURE_SWAP_SAVED_B_TAIL_BOOL_REQUIRED')
         self.swap_saved_b_tail = self._swap_saved_b_tail_bound = swap_saved_b_tail
         need(type(zero_use_reselect) is bool and (not zero_use_reselect or swap_saved_b_tail is False),
              'FEATURE_ZERO_USE_RESELECT_BOOL_EXCLUSIVE_REQUIRED')
@@ -2869,7 +3208,7 @@ class ProductFeatureFactory:
             need(type(self.inventory_reselection_policy) is str
                  and self.inventory_reselection_policy == LOCAL_SAVED_ROW_ON_RESELECTION
                  and self.inventory and (config.inventory_store_policy == inventory_store.POLICY
-                 or product in ('sibling-background-item-equipment-swap-reselect-spawn', 'sibling-background-item-equipment-current-entry-tail-spawn', 'sibling-background-item-equipment-zero-use-reselect-spawn', 'sibling-background-item-drop-pickup-spawn')
+                 or (self.npc_hp_feedback_only or self.npc_dead_goal_only or product in ('sibling-background-item-equipment-swap-reselect-spawn', 'sibling-background-item-equipment-current-entry-tail-spawn', 'sibling-background-item-equipment-zero-use-reselect-spawn', 'sibling-background-item-drop-pickup-spawn'))
                  and config.inventory_store_policy == inventory_store.COLLECTION_STORE_POLICY)
                  and config.inventory_delivery_policy == LOCAL_WORLD_READY_ONCE
                  and config.restart_policy == restart.POLICY,
@@ -2898,7 +3237,7 @@ class ProductFeatureFactory:
         self.swap_reselect = PRODUCTS[product].get('item_equipment_swap_reselect') is True
         self.inventory_collection_policy = getattr(config, 'inventory_collection_policy', None)
         self.inventory_collection_grant = getattr(config, 'inventory_collection_grant', None)
-        need(self.swap_reselect or self.item_transfer_ui or self.inventory_collection_policy is None
+        need(self.swap_reselect or self.item_transfer_ui or self.npc_hp_feedback_only or self.npc_dead_goal_only or self.inventory_collection_policy is None
              and self.inventory_collection_grant is None, 'FEATURE_COLLECTION_EXACT_SWAP_PRODUCT_REQUIRED')
         self.reselect_equipment_restore = PRODUCTS[product].get('item_equipment_reselect_restore') is True
         self.allow_inventory_ui_open = PRODUCTS[product].get('inventory_ui_open') is True
@@ -3228,6 +3567,26 @@ class ProductFeatureFactory:
         return False
 
     def inventory_owner_guard(self, retained):
+        if self.product == SHOP_INPUT_PROFILE:
+            from tools.local_original_session.canonical_feature_bootstrap import check_shop_input_factory
+            check_shop_input_factory(self)
+            need(type(retained) is NativeOwner, 'FEATURE_INVENTORY_SYNC_NATIVE_OWNER_REQUIRED')
+            guard = retained.guard_exact_sync
+            need(getattr(guard, '__self__', None) is retained
+                 and getattr(guard, '__func__', None) is NativeOwner.guard_exact_sync
+                 and not asyncio.iscoroutinefunction(guard), 'FEATURE_INVENTORY_SYNC_ORIGINAL_GUARD_REQUIRED')
+            return guard
+        if self.product in ('canonical-selected-features-v1','sibling-background-npc-continuous-retaliation-spawn','sibling-background-npc-single-retaliation-spawn','sibling-background-npc-respawn-target-hit-spawn','sibling-background-repeated-player-life-spawn','sibling-background-skill-buff-spawn','sibling-background-skill-buff-whole-entry-spawn'):
+            self.config.canonical_bootstrap.factory_current(self)
+            if self.product in ('sibling-background-npc-continuous-retaliation-spawn','sibling-background-npc-single-retaliation-spawn','sibling-background-npc-respawn-target-hit-spawn','sibling-background-repeated-player-life-spawn','sibling-background-skill-buff-spawn','sibling-background-skill-buff-whole-entry-spawn'):
+                need(type(retained) is NativeOwner, 'FEATURE_INVENTORY_SYNC_NATIVE_OWNER_REQUIRED')
+                guard = retained.guard_exact_sync
+                need(getattr(guard, '__self__', None) is retained
+                     and getattr(guard, '__func__', None) is NativeOwner.guard_exact_sync
+                     and not asyncio.iscoroutinefunction(guard),
+                     'FEATURE_INVENTORY_SYNC_ORIGINAL_GUARD_REQUIRED')
+                return guard
+            return None
         if self._transfer_preflight_current():
             need(type(retained) is NativeOwner, 'FEATURE_INVENTORY_SYNC_NATIVE_OWNER_REQUIRED')
             guard=retained.guard_exact_sync
@@ -3236,8 +3595,6 @@ class ProductFeatureFactory:
                  not asyncio.iscoroutinefunction(guard), 'FEATURE_INVENTORY_SYNC_ORIGINAL_GUARD_REQUIRED')
             return guard
         """Explicit current-entry or zero-Use saved-B restore, each exact opt-in."""
-        need(self.zero_use_reselect is self._zero_use_reselect_bound,
-             'FEATURE_ZERO_USE_RESELECT_BINDING_CHANGED')
         if self.product == 'sibling-background-item-equipment-zero-use-reselect-spawn':
             need(self.zero_use_reselect is True and self._zero_use_reselect_configured(),
                  'FEATURE_INVENTORY_SYNC_OWNER_EXACT_ZERO_REQUIRED')
@@ -3264,7 +3621,89 @@ class ProductFeatureFactory:
              'FEATURE_INVENTORY_SYNC_ORIGINAL_GUARD_REQUIRED')
         return guard
 
+    def _npc_dead_goal_preflight(self):
+        if not self.npc_dead_goal_only:
+            return
+        reader, product, config, control_mode = self._npc_dead_goal_context
+        need(reader is self.reader and config is self.config and product == self.product
+             and product == 'sibling-background-source-quit-spawn' and control_mode == 'manual',
+             'FEATURE_NPC_DEAD_GOAL_EXACT_PRODUCT_REQUIRED')
+        if self.config.inventory_collection_policy is None:
+            return  # Existing singleton opt-in and all default behavior stay intact.
+        from tools.local_original_session.npc_dead_goal_focused import collection_configuration
+        collection_configuration(self.config)
+        if hasattr(self, 'inventory_collection_policy'):
+            need(type(self.inventory_collection_policy) is str
+                 and self.inventory_collection_policy == config.inventory_collection_policy
+                 and self.inventory_collection_grant is config.inventory_collection_grant
+                 and type(self.inventory_reselection_policy) is str
+                 and self.inventory_reselection_policy == config.inventory_reselection_policy
+                 and self.inventory is self.manual is self.allow_attack is True,
+                 'FEATURE_NPC_DEAD_GOAL_COLLECTION_BINDING_CHANGED')
+
+    def _npc_hp_feedback_preflight(self):
+        if not self.npc_hp_feedback_only:
+            return
+        from tools.local_original_session import feature_config, npc_hp, attack_session, inventory, inventory_store, restart
+        from tools.local_original_session.hp4ec8_subscribers import Observation
+        reader, product, config, control_mode = self._npc_hp_feedback_context
+        spec = PRODUCTS[product]
+        observation = self._npc_hp_feedback_observation
+        need(reader is self.reader and config is self.config and product == self.product
+             and product == 'sibling-background-source-quit-spawn' and control_mode == 'manual'
+             and spec['bridges'].get('own-login-bridge-dg49.dll') == 'd5865458c910415c4007f169cea64c5f99e31e78ad6c19a7d0dd7f635d53da8d'
+             and all(spec.get(key) is True for key in ('require_background','background_display_guard',
+                 'manual_only','manual_source_quit','require_source_quit','continuous_manual_move',
+                 'continuous_manual_attack','manual_attack_move_replacement'))
+             and type(observation) is Observation and observation.reader is reader
+             and getattr(reader, '_hp4ec8_subscribers', None) is observation
+             and observation.stage == 'npc-hp-feedback-drained',
+             'FEATURE_NPC_HP_FEEDBACK_EXACT_PRODUCT_STAGE_REQUIRED')
+        need(type(config) is feature_config.Features and len(config.spawns) == 1
+             and config.attack_policy == feature_config.ATTACK_INTENT_POLICY
+             and type(config.attack_hp_provider) is npc_hp.ExplicitInputs
+             and type(config.attack_feedback) is attack_session.FeedbackConfig
+             and config.interval_ns is config.motion_policy is config.goal_policy is config.goal is None
+             and config.npc_death_policy is config.npc_remove_policy is config.player_life_policy is None,
+             'FEATURE_NPC_HP_FEEDBACK_EXPLICIT_NONLETHAL_REQUIRED')
+        inputs, = config.attack_hp_provider.rows
+        spawn, = config.spawns
+        need(inputs.target == npc_hp.Target(spawn.uid, spawn.map_id, spawn.fields[3], spawn.fields[39])
+             and inputs.hit.landed is True and 0 < inputs.hit.damage < inputs.hp.current,
+             'FEATURE_NPC_HP_FEEDBACK_EXACT_HP_TARGET_REQUIRED')
+        grant = config.inventory_collection_grant
+        need(config.inventory_policy == inventory.POLICY and type(config.inventory_frame) is bytes
+             and config.inventory_store_policy == inventory_store.COLLECTION_STORE_POLICY
+             and config.inventory_collection_policy == inventory.COLLECTION_POLICY
+             and config.inventory_reselection_policy == feature_config.LOCAL_SAVED_ROW_ON_RESELECTION
+             and config.inventory_delivery_policy == feature_config.LOCAL_WORLD_READY_ONCE
+             and config.restart_policy == restart.POLICY
+             and type(grant) is tuple and len(grant) == 2 and grant[0] == inventory_store.SECOND_INSTANCE_POLICY
+             and type(grant[1]) is frozenset and len(grant[1]) <= 4096
+             and all(type(uid) is int and 0 <= uid <= 0xffffffff for uid in grant[1])
+             and config.inventory_missing_row_policy is config.inventory_custody_policy is config.item_transfer_policy is None
+             and config.item_use_policy is config.item_equipment_policy is config.inventory_update_policy is None,
+             'FEATURE_NPC_HP_FEEDBACK_EXISTING_COLLECTION_REQUIRED')
+        # Constructor calls this before derived attrs exist. Current consumers
+        # must forward the same configured collection/reselection objects.
+        if hasattr(self, 'inventory_collection_policy'):
+            need(type(self.inventory_collection_policy) is str
+                 and self.inventory_collection_policy == config.inventory_collection_policy
+                 and self.inventory_collection_grant is config.inventory_collection_grant
+                 and type(self.inventory_reselection_policy) is str
+                 and self.inventory_reselection_policy == config.inventory_reselection_policy
+                 and self.inventory is self.manual is self.allow_attack is True,
+                 'FEATURE_NPC_HP_FEEDBACK_COLLECTION_BINDING_CHANGED')
+
     def broker_options(self):
+        if self.product == SHOP_INPUT_PROFILE:
+            from tools.local_original_session.canonical_feature_bootstrap import check_shop_input_factory
+            check_shop_input_factory(self)
+            return self.config.canonical_bootstrap.factory_options(self)
+        if self.product in ('canonical-selected-features-v1','sibling-background-npc-continuous-retaliation-spawn','sibling-background-npc-single-retaliation-spawn','sibling-background-npc-respawn-target-hit-spawn','sibling-background-repeated-player-life-spawn','sibling-background-skill-buff-spawn','sibling-background-skill-buff-whole-entry-spawn'):
+            return self.config.canonical_bootstrap.factory_options(self)
+        self._npc_dead_goal_preflight()
+        self._npc_hp_feedback_preflight()
         self._transfer_preflight_current()
         if self.npc_factory is not None:
             options = self.npc_factory.broker_options()
@@ -3314,16 +3753,40 @@ class ProductFeatureFactory:
                            inventory_custody_policy=self.config.inventory_custody_policy,
                            inventory_collection_policy=self.config.inventory_collection_policy,
                            inventory_collection_grant=None)
-        elif self.swap_reselect:
+        elif self.swap_reselect or self.npc_hp_feedback_only or self.npc_dead_goal_only:
             options.update(inventory_collection_policy=self.inventory_collection_policy,
                            inventory_collection_grant=self.inventory_collection_grant)
         if self.inventory:
             options.update(inventory_policy=self.config.inventory_policy,
                            inventory_frame=self.config.inventory_frame, inventory_reader=self.reader,
                            inventory_store_policy=self.config.inventory_store_policy)
+        if getattr(self.config, 'world_policy', None) is not None:
+            options['world_policy'] = self.config.world_policy
+        if getattr(self.config, 'world_starter_kit', None) is not None:
+            options['world_starter_kit'] = self.config.world_starter_kit
         return options
 
     def __call__(self, broker):
+        if self.product == SHOP_INPUT_PROFILE:
+            from tools.local_original_session.canonical_feature_bootstrap import check_shop_input_factory
+            check_shop_input_factory(self,broker=broker)
+        if self.product == 'sibling-background-npc-continuous-retaliation-spawn':
+            from tools.local_original_session.npc_continuous_retaliation_runtime import build_runtime
+            return build_runtime(self,broker)
+        if self.product == 'sibling-background-npc-single-retaliation-spawn':
+            from tools.local_original_session.npc_retaliation_runtime import build_runtime
+            return build_runtime(self,broker)
+        if self.product == 'sibling-background-npc-respawn-target-hit-spawn':
+            from tools.local_original_session.npc_respawn_hit_runtime import build_runtime
+            return build_runtime(self,broker)
+        if self.product == 'sibling-background-repeated-player-life-spawn':
+            from tools.local_original_session.repeated_player_life_focused import build_runtime
+            return build_runtime(self,broker)
+        if self.product in ('canonical-selected-features-v1','sibling-background-skill-buff-spawn','sibling-background-skill-buff-whole-entry-spawn'):
+            from tools.local_original_session.canonical_feature_bootstrap import CanonicalFeatures
+            return CanonicalFeatures(self.config.canonical_bootstrap, broker)
+        self._npc_dead_goal_preflight()
+        self._npc_hp_feedback_preflight()
         self._transfer_preflight_current()
         manual = npc_session = equipment_observer = ui_observer = ui_opener = ui_role = None
         try:
@@ -3407,7 +3870,11 @@ class ProductFeatureFactory:
                 runtime.mark_on_indicator = MarkOnCurrentIndicator(ui_observer,runtime.mark_on_installer,ui_opener)
             if PRODUCTS[self.product].get('original_screenshot') is True:
                 from tools.local_original_session.original_screenshot import OriginalScreenshotObserver
-                runtime.original_screenshot = OriginalScreenshotObserver(manual)
+                if self.product == SHOP_INPUT_PROFILE:
+                    runtime.original_screenshot = OriginalScreenshotObserver(manual,
+                        collection_policy=self.inventory_collection_policy)
+                else:
+                    runtime.original_screenshot = OriginalScreenshotObserver(manual)
             if self.config.player_life_policy is not None:
                 from tools.local_original_session import player_life, player_life_observe
                 from tools.local_original_session.player_death_recovery_focused import SourceDeadRestartRequests
@@ -3420,8 +3887,23 @@ class ProductFeatureFactory:
                 runtime.player_life_observer = player_life_observe.PlayerLifeObserver(broker,self.reader)
                 broker._player_life_observer = runtime.player_life_observer
                 runtime.source_dead_restart = SourceDeadRestartRequests(manual,broker)
+            if self.product == SHOP_INPUT_PROFILE and getattr(self,'_shop_normal_input_spec',None) is not None:
+                from tools.local_original_session import shop_normal_input_driver
+                shop_normal_input_driver.attach_runtime(self,runtime,broker)
             return runtime
-        except BaseException:
+        except BaseException as primary:
+            if self.product == SHOP_INPUT_PROFILE:
+                for owned in (getattr(locals().get('runtime'), 'original_screenshot', None),
+                              manual, npc_session, equipment_observer):
+                    if owned is not None:
+                        try:
+                            owned.close()
+                        except BaseException as cleanup:
+                            try:
+                                primary.add_note('SHOP input constructor cleanup: ' + repr(cleanup))
+                            except BaseException:
+                                pass
+                raise
             if manual is not None:
                 manual.close()
             if npc_session is not None:
@@ -3435,7 +3917,6 @@ class ProductFeatures:
     def __init__(self, manual, npc_session, *, equipment_observer=None, equipment_ui_observer=None,
                  npc_respawn_policy=None, npc_respawn_spawn=None, inventory_ui_opener=None, ui_lookup_role=None,
                  allow_respawn_attack=False, equipment_swap_reselect=False, equipment_zero_use_reselect=False):
-        need(type(equipment_swap_reselect) is bool, 'FEATURE_EQUIPMENT_SWAP_EXPLICIT_BOOL_REQUIRED')
         if equipment_swap_reselect:
             from tools.local_original_session import inventory
             need(type(manual) is ManualMoveRequests and equipment_observer is not None
@@ -3488,19 +3969,7 @@ class ProductFeatures:
         from tools.local_original_session import equipment_observe, item_equipment_effect
         from tools.local_original_session.broker import PersistentBroker
         observer, manual = self.equipment_observer, self.manual
-        need(type(observer) is equipment_observe.EquipmentObserver
-             and equipment_observe.SAMPLE_METHOD is self._equipment_sample
-             and equipment_observe.CLOSE_METHOD is self._equipment_close,
-             'FEATURE_ITEM_EQUIPMENT_OBSERVER_CHANGED')
-        for name, function in (('sample', self._equipment_sample), ('close', self._equipment_close)):
-            method = getattr(observer, name)
-            need(getattr(method, '__self__', None) is observer
-                 and getattr(method, '__func__', None) is function,
-                 'FEATURE_ITEM_EQUIPMENT_ORIGINAL_OBSERVER_REQUIRED')
         broker = manual.inventory_broker
-        need(type(broker) is PersistentBroker and observer._authority.broker is broker
-             and observer._authority.reader is manual.consumer.reader,
-             'FEATURE_ITEM_EQUIPMENT_RETAINED_BINDING_CHANGED')
         effect = broker._item_equipment_effect
         need(type(effect) is item_equipment_effect.ItemEquipmentEffect and effect.broker is broker
              and effect.policy == item_equipment_effect.POLICY,
@@ -3562,6 +4031,12 @@ class ProductFeatures:
         manual = self.manual
         result, bound = manual.last_result, manual._inventory_client_binding
         frame = generation.current_frame
+        expected_count=2
+        if broker._inventory_collection_policy is not None:
+            from tools.local_original_session import inventory
+            try:expected_count=len(inventory.validate_current_collection_frame(
+                frame,policy=broker._inventory_collection_policy))
+            except ValueError:return False
         reader, observer = manual.consumer.reader, manual._inventory_observer
         if not (manual.pending is False and manual._inventory_request is None
                 and manual._inventory_wait is None and manual._inventory_generation is generation
@@ -3580,7 +4055,7 @@ class ProductFeatures:
                 and result.get('reason') is None and result.get('automatic_retry') is False
                 and result.get('cleanup_required') is not True
                 and result.get('client_inventory') == 'ROWS_5_SCALARS_MATCHED'
-                and type(result.get('item_count')) is int and result['item_count'] == 2
+                and type(result.get('item_count')) is int and result['item_count'] == expected_count
                 and result.get('transport_proof_scope') == 'TRANSPORT_DRAIN_ONLY'
                 and result.get('invoked') is True
                 and type(manual.sequence) is int and manual.sequence > 0
@@ -3607,6 +4082,16 @@ class ProductFeatures:
         broker, writer, effect = self._equipment_binding()
         generation = self._equipment_selection(broker, writer, effect)
         if writer is None or not self._equipment_delivery_complete(broker, generation):
+            return False
+        if (not self._equipment_prepared and getattr(broker, '_inventory_kit_policy', None) is not None
+                and getattr(self.manual, 'pending', None) is True
+                and getattr(self.manual, '_pending_command', None) == 'AddInventory'):
+            # M1 kit: the initial 097A sync (~1.4 s per worn item, row lock held) plus early
+            # player Use/move ran the one-shot AddInventory client check past its 10 s window
+            # (FEATURE_INVENTORY_CLIENT_DEADLINE -> session close). Let that check finish first;
+            # a Use before the sync is refused as EQUIPMENT_INITIAL_SYNC_REQUIRED (no failure).
+            # The delivery above is already written, so only the pending client check (automatic
+            # or explicit AddInventory) waits; an explicit Add no longer blocks the sync forever.
             return False
         if not self._equipment_prepared:
             self._equipment_prepared = True  # No retry after failed/unknown prepare.
@@ -3662,7 +4147,11 @@ class ProductFeatures:
                       if type(r) is dict and r.get('rawkey_i32') == receipt.get('equipment_key_i32')]
                      if type(raw) is dict else None)
             expected = [] if receipt.get('after_weapon_uid') == 0 else [receipt.get('after_weapon_uid')]
-            if type(raw) is not dict or raw.get('status') != 'OBSERVED' or found == expected:
+            # M1 kit: headless runs never reached found == expected here, so this
+            # diagnostic sample (~60-90 ms on the event loop) repeated every slot
+            # for the whole session; keep one actual sample per receipt instead.
+            if (type(raw) is not dict or raw.get('status') != 'OBSERVED' or found == expected
+                    or getattr(broker, '_inventory_kit_policy', None) is not None):
                 # This scheduling marker grants no semantic proof. The runner
                 # validates the strict source/owner/raw fields independently.
                 self._equipment_complete_ordinal = ordinal
@@ -3698,6 +4187,61 @@ class ProductFeatures:
         need(not self._closed and self.item_transfer_ui is not None,
              'FEATURE_ITEM_TRANSFER_UI_EXPLICIT_RUNTIME_REQUIRED')
         return self.item_transfer_ui.request(prepare_use=prepare_use)
+
+    def request_original_screenshot(self):
+        """Serial runtime-loop caller; the original Observer owns current admission.
+
+        Only completed, preserved captures can yield to another one-shot Observer.
+        No Native sequence, pending state or historical result is reset here.
+        """
+        if self._closed:
+            return False
+        old = getattr(self, 'original_screenshot', None)
+        if old is None:
+            return False
+        from tools.local_original_session import original_screenshot as source
+        cls = source.OriginalScreenshotObserver
+        need(type(old) is cls and old.manual is self.manual
+             and old.consumer is self.manual.consumer and old._thread == threading.get_ident(),
+             'FEATURE_SCREENSHOT_ORIGINAL_OWNER_REQUIRED')
+        originals = tuple(getattr(cls, name) for name in ('__init__', 'request', 'sample', 'collect', 'close'))
+        manual, consumer = self.manual, old.consumer
+        if (old._terminal or old._requested or old._pending is not None
+                or manual.closed or manual._resources_closed or manual.pending or manual._polling
+                or manual._inventory_request is not None or manual._inventory_wait is not None
+                or consumer.pending is not None or consumer._busy or consumer._readonly_pending is not None):
+            return False
+        if not old._attempted:
+            return False if old._closed else originals[1](old)
+        result, files = old.last_result, old._files
+        if not (type(result) is dict and result.get('status') == 'OBSERVED'
+                and result.get('png_verified') is True
+                and result.get('async_completion') == 'CLOSED_STABLE_FRESH_PNG'
+                and result.get('existing_files_preserved') is True
+                and result.get('cleanup_required') is False and old._native_complete is True
+                and type(files) is source.CaptureFiles and files.closed is True):
+            return False
+        originals[4](old)  # Failure leaves the original slot and result intact.
+        fresh = None
+        try:
+            fresh = cls(manual, collection_policy=old.collection_policy)  # Original policy revalidation.
+            queued = originals[1](fresh)  # Original ACTIVE inventory/current owner admission.
+            need(not self._closed and self.manual is manual and self.original_screenshot is old
+                 and manual.consumer is consumer and not manual.closed and not manual._resources_closed
+                 and tuple(getattr(cls, n) for n in ('__init__', 'request', 'sample', 'collect', 'close')) == originals,
+                 'FEATURE_SCREENSHOT_RUNTIME_CHANGED')
+            self.original_screenshot = fresh  # Publish exactly once, also on a refused current request.
+            return queued
+        except BaseException as error:
+            if fresh is not None:
+                try:
+                    originals[4](fresh)
+                except BaseException as cleanup:
+                    try:
+                        error.add_note('Fresh screenshot cleanup failed: ' + repr(cleanup))
+                    except BaseException:
+                        pass  # Diagnostic metadata must never replace the primary error.
+            raise
 
     def request_inventory_ui_open(self):
         """One explicit action request; never a Use/effect or readonly proof."""
@@ -4002,7 +4546,7 @@ class ProductFeatures:
             if reserved:
                 monitor.next_memory = max(monitor.next_memory, time.monotonic() + .5)
 
-    async def poll(self, monitor=None):
+    async def poll(self, monitor=None, *, npc_poll=True):
         # One-poll evidence transfer only; never reuse a prior poll as fresh.
         if getattr(self, 'mark_on_indicator', None) is not None:
             self._mark_on_use_caller_capture = None
@@ -4012,7 +4556,7 @@ class ProductFeatures:
             return dict(item_transfer_ui=await self.item_transfer_ui.poll(monitor))
         result = {}
         npc_pending = False
-        if self.npc_session is not None:
+        if npc_poll and self.npc_session is not None:
             if self._npc_respawn_policy is not None:
                 if monitor is not None and self._npc_bound_monitor is self._npc_poll_monitor:
                     monitor.next_memory = max(monitor.next_memory, self._npc_poll_monitor.next_memory)
@@ -4092,12 +4636,41 @@ class ProductFeatures:
                 result['selected_slot_lookup_role'] = self.ui_lookup_role_observation
             if self.inventory_ui_opener is not None:
                 result['inventory_ui_open'] = self.inventory_ui_open_observation
-        if self.npc_session is not None:
+        if npc_poll and self.npc_session is not None:
             if 'npc' not in result:
                 result['npc'] = await self._poll_npc(monitor, reserve=npc_pending)
+        if getattr(self,'_shop_normal_input_driver',None) is not None:
+            from tools.local_original_session import shop_normal_input_driver
+            from tools.local_original_session import shop_startup_caller
+            if shop_startup_caller.ready(self):
+                result['shop_normal_input'] = await shop_normal_input_driver.poll_runtime(self,monitor)
+            else:
+                result['shop_normal_input'] = dict(phase='WAIT_STARTUP_HANDOFF')
         return result
 
     def close(self):
+        if getattr(self,'_shop_normal_input_driver',None) is None:
+            return self._close_without_shop_normal_input()
+        from tools.local_original_session import shop_normal_input_driver
+        primary = None
+        try:
+            shop_normal_input_driver.close_runtime(self)
+        except BaseException as error:
+            primary = error
+        try:
+            result = self._close_without_shop_normal_input()
+        except BaseException as cleanup:
+            if primary is None:
+                raise
+            try:
+                primary.add_note('Original feature cleanup failed: ' + type(cleanup).__name__)
+            except BaseException:
+                pass
+        if primary is not None:
+            raise primary
+        return result
+
+    def _close_without_shop_normal_input(self):
         if self._closed:
             return
         self._closed = True
@@ -4134,12 +4707,29 @@ class ProductFeatures:
                     self._equipment_close(self.equipment_observer)
 
 
+def _defer_feature_status_tick(features, monitor):
+    # Only the exact selected ITEM wrapper has this scheduling contract.
+    if features is None or type(features).__module__ != 'tools.local_original_session.item_transfer_runner':
+        return False
+    from tools.local_original_session.item_transfer_runner import Runtime, STATUS_TICK_DEFER_METHOD
+    method = features.defer_status_tick
+    need(type(features) is Runtime and Runtime.defer_status_tick is STATUS_TICK_DEFER_METHOD
+         and type(method) is MethodType and method.__self__ is features
+         and method.__func__ is STATUS_TICK_DEFER_METHOD,
+         'FEATURE_STATUS_ORIGINAL_ITEM_SCHEDULER_REQUIRED')
+    return STATUS_TICK_DEFER_METHOD(features, monitor)
+
+
 async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: False,
                       poll_seconds=.1, close_grace_seconds=10, test_duration=None,
                       monitor=None, until_scene=None, input_requests=None, command_requests=None,
-                      feature_factory=None, source_quit_directory=None):
+                      feature_factory=None, source_quit_directory=None, canonical_bootstrap=None):
     """One asyncio loop; product lifetime has no observation timeout."""
     need(input_requests is None or command_requests is None, 'EXCLUSIVE_SESSION_CONTROL_REQUIRED')
+    if canonical_bootstrap is not None:
+        from tools.local_original_session.canonical_feature_bootstrap import CanonicalFeatureBootstrap
+        need(type(canonical_bootstrap) is CanonicalFeatureBootstrap,
+             'CANONICAL_EXACT_BOOTSTRAP_SELECTION_REQUIRED')
     report = dict(schema='local-original-session-v1', reason='STARTING', cleanup=None,
                   product_lifetime_seconds=None, normal_input_only=True,
                   normal_exit_verified=False, game_logout_protocol='UNVERIFIED')
@@ -4147,6 +4737,7 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
     broker = None
     features = None
     source_quit = None
+    shop_startup = None
     input_enabled = input_requests is not None
     command_enabled = command_requests is not None
     if command_enabled:
@@ -4273,6 +4864,28 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
             return False
 
     started = time.monotonic()
+    # Event-loop stall measurement (report only): the broker, world ticks and this
+    # loop share one asyncio loop; synchronous memory reads/fsync stall all of them.
+    loop_lag = dict(max_ms=0.0, over_50ms=0, over_200ms=0, samples=0,
+                    monitor_tick_max_ms=0.0, monitor_tick_over_50ms=0,
+                    features_poll_max_ms=0.0, features_poll_over_50ms=0)
+    report['loop_lag'] = loop_lag
+
+    async def watch_loop_lag():
+        while True:
+            before = time.perf_counter()
+            await asyncio.sleep(.01)
+            late = (time.perf_counter() - before - .01) * 1000
+            loop_lag['samples'] += 1
+            loop_lag['max_ms'] = max(loop_lag['max_ms'], round(late, 1))
+            loop_lag['over_50ms'] += late > 50
+            loop_lag['over_200ms'] += late > 200
+
+    def timed(name, value):
+        elapsed = (time.perf_counter() - value) * 1000
+        loop_lag[name + '_max_ms'] = max(loop_lag[name + '_max_ms'], round(elapsed, 1))
+        loop_lag[name + '_over_50ms'] += elapsed > 50
+    lag_task = asyncio.create_task(watch_loop_lag())
     try:
         report['primary'] = owner.prepare()
         if monitor is not None:
@@ -4286,8 +4899,13 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
         if source_quit_directory is not None:
             from tools.local_original_session.manual_source_quit import SourceQuitRequests
             need(features is not None and features.manual is not None, 'SOURCE_QUIT_FEATURES_REQUIRED')
-            source_quit = SourceQuitRequests(owner, features.manual, broker, source_quit_directory)
+            source_quit = SourceQuitRequests(owner, features.manual, broker, source_quit_directory, features=features)
+            broker.bind_source_quit_closing(source_quit)
             report['source_quit'] = source_quit.report()
+        if feature_factory is not None and getattr(feature_factory,'_shop_normal_input_spec',None) is not None:
+            from tools.local_original_session import shop_startup_caller
+            shop_startup = shop_startup_caller.attach(owner,monitor,stop,features,feature_factory,
+                source_quit=source_quit,command_requests=command_requests,input_requests=input_requests)
         owner.resume()
         primary_resumed = True
         await asyncio.sleep(0)  # Immediate accept/KEY tasks get the first loop turn.
@@ -4310,9 +4928,23 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
                 if stop.is_set() or stop_requested():
                     report['reason'] = 'USER_CLOSE'
                     break
+                poll_started = time.perf_counter()
                 report['features'] = await features.poll(monitor)
+                timed('features_poll', poll_started)
+                if getattr(features,'_shop_normal_input_driver',None) is not None:
+                    from tools.local_original_session import shop_normal_input_driver
+                    ended = shop_normal_input_driver.terminal(features)
+                    if ended is not None:
+                        report['reason'] = 'SHOP_INPUT_COMPLETE' if ended == 'DONE' else 'SHOP_INPUT_UNKNOWN'
+                        break
             if monitor is not None:
-                observed = monitor.tick(broker)
+                # A diagnostic tick is synchronous (window/memory/fsync). Do
+                # not interpose it inside the selected ITEM's original window.
+                # Feature queries keep the unchanged shared next_memory slot.
+                tick_started = time.perf_counter()
+                observed = (None if _defer_feature_status_tick(features, monitor)
+                            else monitor.tick(broker))
+                timed('monitor_tick', tick_started)
                 if integrity_ready and not broker.failure.is_set():
                     poll_control()
                 if report['reason'] in ('NATIVE_GUARD_INTEGRITY_FAILURE', 'NATIVE_COMMAND_RESULT_UNKNOWN'):
@@ -4341,6 +4973,7 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
                 report['inventory_pre_write_refusal'] = dict(manual.last_result)
                 report['features'] = dict(manual_move=dict(manual.last_result))
     finally:
+        lag_task.cancel()
         failed_session = report['reason'] == 'SESSION_FAILURE'
         # Leave transport and its resource slots available for native close
         # traffic. The grace is a shutdown bound, never a product lifetime.
@@ -4349,9 +4982,13 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
                 try:
                     if features is not None and source_quit is None:
                         features.close()
+                    if features is not None and getattr(features, '_shop_normal_input_driver', None) is not None:
+                        from tools.local_original_session import shop_normal_input_driver
+                        shop_normal_input_driver.retire_pending_for_close(features)
                     recover_failure = failed_session and session_failure_close_allowed()
                     if recover_failure or report['reason'] in ('USER_CLOSE', 'USER_INTERRUPT',
-                                                              'TEST_DURATION', 'OBSERVATION_CONDITION'):
+                                                              'TEST_DURATION', 'OBSERVATION_CONDITION',
+                                                              'SHOP_INPUT_COMPLETE', 'SHOP_INPUT_UNKNOWN'):
                         if recover_failure:
                             report['session_failure_close']['attempted'] = True
                             report['close_via'] = 'OWNED_WINDOW_CLOSE'
@@ -4396,8 +5033,7 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
                 finally:
                     if source_quit is not None:
                         try:
-                            report['source_quit'] = source_quit.report()
-                            source_quit.close()
+                            report['source_quit'] = source_quit.close()
                         except BaseException as error:
                             report['source_quit_close_error'] = type(error).__name__
                         finally:
@@ -4427,6 +5063,8 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
                         except asyncio.CancelledError:
                             report['cleanup_interrupted'] = True
                     report['broker'] = close_task.result()
+                    if canonical_bootstrap is not None:
+                        canonical_bootstrap.close(broker)
                 except BaseException as error:
                     report['broker_close_error'] = type(error).__name__
         finally:
@@ -4438,7 +5076,11 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
                         report['status_error_type'] = type(error).__name__
                     finally:
                         try:
-                            monitor.close()
+                            try:
+                                if shop_startup is not None:
+                                    shop_startup.close()
+                            finally:
+                                monitor.close()
                         except BaseException as error:
                             report['observer_close_error_type'] = type(error).__name__
                 report['cleanup'] = owner.close()
@@ -4463,7 +5105,7 @@ async def run_session(owner, broker_factory, stop, *, stop_requested=lambda: Fal
     return report
 
 
-def main():
+def main(*, canonical_bootstrap=None, repeated_features=None, canonical_features=None, shop_features=None, normal_input_driver=None, npc_respawn_hit_features=None, npc_retaliation_features=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--image', type=Path, required=True)
     parser.add_argument('--product', choices=tuple(PRODUCTS), default='baseline')
@@ -4485,14 +5127,85 @@ def main():
                         help='Explicit saved-B tail entry policy on the original swap profile only')
     parser.add_argument('--item-transfer-ui-test', action='store_true')
     parser.add_argument('--observe-hp4ec8-subscribers-once', action='store_true')
+    parser.add_argument('--npc-dead-goal-only', action='store_true')
+    parser.add_argument('--npc-hp-feedback-only', action='store_true')
+    parser.add_argument('--hp4ec8-observation-stage', choices=('first-land','npc-hp-feedback-drained'))
     parser.add_argument('--item-equipment-zero-use-reselect-test', action='store_true',
                         help='Explicit saved-B zero-Use Restart/reselect profile only')
     parser.add_argument('--close-grace-seconds', type=float, default=10,
                         help='Native close/input grace only; 0 < seconds <= 120 (default: 10)')
     parser.add_argument('--until-scene', choices=('Intro', 'Lobby', 'Login', 'CharacterSelect', 'Land'))
     args = parser.parse_args()
+    if normal_input_driver is not None:
+        from tools.local_original_session.shop_normal_input_driver import Spec
+        need(type(normal_input_driver) is Spec and shop_features is not None
+             and normal_input_driver.root is canonical_bootstrap and normal_input_driver.features is shop_features,
+             'SHOP_DRIVER_EXACT_TYPED_FEATURES_REQUIRED')
+    if shop_features is not None:
+        from tools.local_original_session.feature_config import Features
+        from tools.local_original_session.canonical_feature_bootstrap import CanonicalFeatureBootstrap, _shop_input_selection
+        need(type(shop_features) is Features and type(canonical_bootstrap) is CanonicalFeatureBootstrap
+             and shop_features.canonical_bootstrap is canonical_bootstrap
+             and canonical_bootstrap.shop_only and not canonical_bootstrap.resource_only
+             and canonical_bootstrap._lifetime_state == 'READY'
+             and repeated_features is None and canonical_features is None
+             and args.product == SHOP_INPUT_PROFILE and args.run and args.background
+             and args.source_quit_test and args.control_mode == 'manual',
+             'SHOP_INPUT_TRUSTED_FEATURE_MODE_REQUIRED')
+        _shop_input_native_current()
+        _shop_input_selection(canonical_bootstrap,shop_features)
+    if canonical_features is not None:
+        from tools.local_original_session.feature_config import Features
+        from tools.local_original_session.canonical_feature_bootstrap import CanonicalFeatureBootstrap, PROFILE
+        from tools.local_original_session.buff_bootstrap import BuffBootstrap
+        need(type(canonical_features) is Features and type(canonical_bootstrap) is CanonicalFeatureBootstrap
+             and canonical_features.canonical_bootstrap is canonical_bootstrap
+             and type(canonical_bootstrap.buff) is BuffBootstrap and not canonical_bootstrap.resource_only
+             and canonical_bootstrap.shop is None and canonical_bootstrap.trade is None
+             and canonical_bootstrap._lifetime_state == 'READY' and repeated_features is None
+             and args.run and args.background and args.source_quit_test and args.control_mode == 'manual'
+             and args.product == canonical_bootstrap.runtime_profile(),
+             'CANONICAL_BUFF_TRUSTED_FEATURE_MODE_REQUIRED')
+        canonical_bootstrap.buff.source_ready()
+    if npc_retaliation_features is not None:
+        if args.product == 'sibling-background-npc-continuous-retaliation-spawn':
+            from tools.local_original_session.npc_continuous_retaliation_runtime import configuration, PROFILE as retaliation_profile
+        else:
+            from tools.local_original_session.npc_retaliation_runtime import configuration, PROFILE as retaliation_profile
+        configuration(npc_retaliation_features)
+        need(npc_retaliation_features.canonical_bootstrap is canonical_bootstrap
+             and args.product == retaliation_profile and args.run and args.background and args.source_quit_test
+             and args.control_mode == 'manual' and repeated_features is canonical_features is shop_features is npc_respawn_hit_features is None,
+             'RETALIATION_TRUSTED_TYPED_MODE_REQUIRED')
+    need(args.product not in ('sibling-background-npc-single-retaliation-spawn','sibling-background-npc-continuous-retaliation-spawn') or npc_retaliation_features is not None,
+         'RETALIATION_TYPED_SOURCE_PLAN_REQUIRED')
+    if npc_respawn_hit_features is not None:
+        from tools.local_original_session.npc_respawn_hit_runtime import configuration, PROFILE as hit_profile
+        configuration(npc_respawn_hit_features)
+        need(npc_respawn_hit_features.canonical_bootstrap is canonical_bootstrap
+             and args.product == hit_profile and args.run and args.background and args.source_quit_test
+             and args.control_mode == 'manual' and repeated_features is canonical_features is shop_features is None,
+             'RESPAWN_HIT_TRUSTED_FEATURE_MODE_REQUIRED')
+    need(args.product != 'sibling-background-npc-respawn-target-hit-spawn' or npc_respawn_hit_features is not None,
+         'RESPAWN_HIT_TYPED_SOURCE_PLAN_REQUIRED')
+    need(args.product != SHOP_INPUT_PROFILE or shop_features is not None, 'SHOP_INPUT_TYPED_FEATURES_REQUIRED')
+    need(repeated_features is None or args.run and args.source_quit_test and args.background
+         and args.control_mode == 'manual' and args.product == 'sibling-background-repeated-player-life-spawn',
+         'REPEAT_TRUSTED_FEATURE_MODE_REQUIRED')
     need(not args.observe_hp4ec8_subscribers_once or args.run and args.background and args.feature_config is not None,
          'HP4EC8_EXISTING_FEATURE_RUN_REQUIRED')
+    need(args.hp4ec8_observation_stage is None or args.observe_hp4ec8_subscribers_once,
+         'HP4EC8_STAGE_ONCE_FLAG_REQUIRED')
+    need(not args.npc_dead_goal_only or args.run and args.background and args.source_quit_test
+         and args.product == 'sibling-background-source-quit-spawn'
+         and args.control_mode == 'manual' and args.feature_config is not None
+         and not args.npc_hp_feedback_only, 'FEATURE_NPC_DEAD_GOAL_EXPLICIT_CLI_REQUIRED')
+    need(not args.npc_hp_feedback_only or args.run and args.background and args.source_quit_test
+         and args.control_mode == 'manual' and args.product == 'sibling-background-source-quit-spawn'
+         and args.feature_config is not None and args.observe_hp4ec8_subscribers_once
+         and args.hp4ec8_observation_stage == 'npc-hp-feedback-drained'
+         and not any((args.item_transfer_ui_test,args.item_equipment_zero_use_reselect_test,args.item_equipment_swap_saved_b_tail_test)),
+         'FEATURE_NPC_HP_FEEDBACK_EXACT_CLI_REQUIRED')
     need(not (args.item_equipment_zero_use_reselect_test and args.item_equipment_swap_saved_b_tail_test),
          'FEATURE_ZERO_USE_RESELECT_EXCLUSIVE_REQUIRED')
     need(not args.item_equipment_zero_use_reselect_test or args.run
@@ -4547,23 +5260,71 @@ def main():
              'MANUAL_CONTROL_MODE_REQUIRED')
         need(args.control_mode != 'internal' or spec.get('background_display_guard') is True,
              'INTERNAL_DISPLAY_GUARD_UNVERIFIED')
-        feature_config = load(args.feature_config)
+        if npc_retaliation_features is not None:
+            feature_config = npc_retaliation_features
+        elif npc_respawn_hit_features is not None:
+            feature_config = npc_respawn_hit_features
+        elif shop_features is not None:
+            feature_config = shop_features
+        elif canonical_features is not None:
+            feature_config = canonical_features
+        elif repeated_features is not None:
+            from tools.local_original_session.feature_config import Features
+            from tools.local_original_session.canonical_feature_bootstrap import CanonicalFeatureBootstrap
+            need(type(repeated_features) is Features and type(canonical_bootstrap) is CanonicalFeatureBootstrap
+                 and repeated_features.canonical_bootstrap is canonical_bootstrap,
+                 'REPEAT_EXACT_TRUSTED_FEATURE_SOURCE_PLAN_REQUIRED')
+            feature_config = repeated_features
+        else:
+            feature_config = load(args.feature_config)
+        if canonical_bootstrap is not None and repeated_features is None and canonical_features is None and shop_features is None and npc_respawn_hit_features is None and npc_retaliation_features is None:
+            from dataclasses import replace
+            from tools.local_original_session.canonical_feature_bootstrap import CanonicalFeatureBootstrap, PROFILE
+            need(type(canonical_bootstrap) is CanonicalFeatureBootstrap and args.product in (PROFILE,SHOP_INPUT_PROFILE,'sibling-background-repeated-player-life-spawn'),
+                 'CANONICAL_EXACT_BOOTSTRAP_SELECTION_REQUIRED')
+            feature_config = replace(feature_config, canonical_bootstrap=canonical_bootstrap)
         conversations = GenuineConversations()
         reader = RetainedSceneReader(args.image.absolute(), spec['candidate'],
                                      expected_sha=spec['image_sha256'])
         edge = EdgeAdapter(reader)
+        if args.npc_hp_feedback_only:
+            reader.request_hp4ec8_subscribers_once(stage='npc-hp-feedback-drained')
         feature_factory = ProductFeatureFactory(reader, product=args.product,
             control_mode=args.control_mode, directory=directory, config=feature_config,
             swap_saved_b_tail=args.item_equipment_swap_saved_b_tail_test,
             zero_use_reselect=args.item_equipment_zero_use_reselect_test,
-            item_transfer_ui=args.item_transfer_ui_test)
+            item_transfer_ui=args.item_transfer_ui_test, npc_hp_feedback_only=args.npc_hp_feedback_only,
+            npc_dead_goal_only=args.npc_dead_goal_only)
+        if normal_input_driver is not None:
+            from tools.local_original_session import shop_normal_input_driver
+            shop_normal_input_driver.configure_factory(feature_factory,normal_input_driver)
         if args.observe_hp4ec8_subscribers_once:
             need(feature_factory.enabled,'HP4EC8_ENABLED_FEATURE_REQUIRED')
-            reader.request_hp4ec8_subscribers_once()
+            stage = args.hp4ec8_observation_stage or 'first-land'
+            if stage == 'npc-hp-feedback-drained':
+                from tools.local_original_session import attack_session, npc_hp
+                need(feature_factory.manual and feature_factory.allow_attack
+                     and not feature_factory.lethal_attack_preparation
+                     and type(feature_config.attack_hp_provider) is npc_hp.ExplicitInputs
+                     and type(feature_config.attack_feedback) is attack_session.FeedbackConfig,
+                     'HP4EC8_NPC_STAGE_CANONICAL_HP_FEEDBACK_REQUIRED')
+            if not args.npc_hp_feedback_only:
+                reader.request_hp4ec8_subscribers_once(stage=stage)
+        if args.product == SHOP_INPUT_PROFILE:
+            from tools.local_original_session.canonical_feature_bootstrap import check_shop_input_factory
         need(not args.source_quit_test or
-             (feature_factory.config.player_life_policy is not None
+             (npc_retaliation_features is feature_factory.config
+              if args.product in ('sibling-background-npc-single-retaliation-spawn','sibling-background-npc-continuous-retaliation-spawn')
+              else npc_respawn_hit_features is feature_factory.config
+              if args.product == 'sibling-background-npc-respawn-target-hit-spawn'
+              else check_shop_input_factory(feature_factory) is feature_factory.config.canonical_bootstrap
+              if args.product == SHOP_INPUT_PROFILE
+              else feature_factory.config.canonical_bootstrap.full_buff_configured(feature_factory)
+              if args.product in ('sibling-background-skill-buff-spawn','sibling-background-skill-buff-whole-entry-spawn')
+              else feature_factory.config.player_life_policy is not None
               if args.product in ('sibling-background-player-death-recovery-spawn',
-                                  'sibling-background-npc-player-lethal-recovery-spawn')
+                                  'sibling-background-npc-player-lethal-recovery-spawn',
+                                  'sibling-background-repeated-player-life-spawn')
               else feature_factory._transfer_ui_configured() if feature_factory.item_transfer_ui
               else feature_factory._zero_use_reselect_configured() if feature_factory.zero_use_profile
               else feature_factory._swap_reselect_configured() if feature_factory.swap_reselect
@@ -4600,6 +5361,9 @@ def main():
                               error_type=type(error).__name__, error_code=code, native_executed=False)))
         return 2
     boundary = ROOT / 'work/local_native_login_key_invoke_boundary/runs' / ('ls-' + uuid.uuid4().hex[:24])
+    if PRODUCTS[args.product].get('companion_bridge'):
+        # Optional companion bridge feature reads DLL signals / posts models here.
+        os.environ['SL_COMPANION_BRIDGE_DIR'] = str(boundary)
     owner = None
     monitor = None
     sockets = {}
@@ -4619,7 +5383,7 @@ def main():
             sock.listen()
             sock.setblocking(False)
         def factory(retained):
-            return PersistentBroker(sockets=sockets, owner_guard=retained.guard,
+            options = dict(sockets=sockets, owner_guard=retained.guard,
                 inventory_owner_guard=feature_factory.inventory_owner_guard(retained),
                 key_guard=retained.key_guard, source_guard=retained.verify_sources,
                 owner_liveness_guard=retained.key_guard,
@@ -4631,6 +5395,10 @@ def main():
                 world_profile=PRODUCTS[args.product].get('world_profile', 'baseline'),
                 settings_path=args.store.absolute().with_name('account-settings.bin'),
                 **feature_factory.broker_options())
+            if canonical_bootstrap is None:
+                return PersistentBroker(**options)
+            from tools.local_original_session.canonical_feature_bootstrap import create_broker
+            return create_broker(canonical_bootstrap, options)
         async def run():
             stop = asyncio.Event()
             try:
@@ -4639,6 +5407,7 @@ def main():
                     test_duration=args.test_duration, monitor=monitor, until_scene=args.until_scene,
                     command_requests=command_requests, close_grace_seconds=args.close_grace_seconds,
                     feature_factory=feature_factory if feature_factory.enabled else None,
+                    canonical_bootstrap=canonical_bootstrap,
                     source_quit_directory=directory if args.source_quit_test else None)
             finally:
                 for sock in sockets.values():

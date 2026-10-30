@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "source": "LOCAL adoption of candidate Classic IDs from pets.json. NPC numeric baseline: D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20654,20663; pet growth:24544,24548. REA396/400 wire evidence: work/local_original_session/game-core-prep/PET_EVIDENCE.md. No official tameability, movement duration or targeted-food input assertion.",
+  "local_policy": {
+    "food": "Classic meat10 and floating-eye meat9 remain distinct. The requested wolf/shepherd/doberman accept both. Meat10 support explicitly overrides the L1J40057-only backend rule; it is not an item10-to-item9 mapping or a recovered official tame-input contract.",
+    "consumption": "One food item is actually eaten per admitted offering, including HP/CHA failure. On successful tame an exhausted non-anchor food row frees a collar slot; the first equipment-anchor row is retained. Collar361 is a durable unique instance, never consumed by store/summon/death/revive.",
+    "positions": "Nearby dog/wolf groups and two trainer coordinates are LOCAL terrain-admitted placements for this product, not official spawns. Trainer sprite1515 is the L1J Rick70544 candidate only, with no confirmed Classic NPC identity.",
+    "commands": "2 owner assist/follow,3 defend/follow,4 rest/hold,5 alert/hold with radius8 hostile scan,6 collect radius8 via actual pet range1 and owner inventory,7 scatter radius4/defend. Modes use verified UI numbers and LOCAL backend decisions.",
+    "trainer": "Original dick1.uml action depositpet/retrievepet; dick2/dick3 are original result resources. Native selection-list producer remains unknown. Retrieve uses the one retained/owned collar when unique and refuses ambiguity; explicit LOCAL direct retrieval fee50 from original dialogue text, not an inferred wire selection list.",
+    "taming": "HP below floor(maxHP/3), CHA residual>=6 and available collar slot reuse L1J backend policy. Active-cap1 reuses existing core family/adjudication limit. Nominal movement/attack intervals use separate per-species L1J baseline480/1000 and560/960ms, not mage or owner speed.",
+    "revival": "Official item28 permits pet resurrection; targeted0960 recipe is a LOCAL adapter to run393 targeted-item schema. Retained corpse keeps actor UID and obtains fresh generation, HP=max(1,maxHP//4), current MP preserved. No login auto-revival."
+  },
+  "species": {
+    "shepherd": {
+      "template": 179,
+      "l1j": 45034,
+      "token": "$907",
+      "name": "세퍼드",
+      "sprite": 936,
+      "wild_level": 5,
+      "wild_level_source": "official data/official/monsters.json id179 level5; both requested regions present",
+      "hp": 30,
+      "mp": 5,
+      "ac": 9,
+      "str": 15,
+      "dex": 12,
+      "damage": 5,
+      "exp": 26,
+      "move_ms": 560,
+      "attack_ms": 960,
+      "spawns": [
+        [
+          0,
+          32585,
+          32928
+        ],
+        [
+          4,
+          32610,
+          32719
+        ]
+      ],
+      "regeneration": {
+        "hp_interval_ms": 5000,
+        "hp": 5,
+        "mp_interval_ms": 0,
+        "mp": 0,
+        "source": "local_policy: D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20654 npc45034 hprinterval5000/hpr5/mprinterval0/mpr0; L1PetInstance.java:589-616 setCurrentHp/Mp start L1NpcInstance.java:849-958 fixed-rate Hpr/MprTimer. MP0 means no L1J MP regeneration for this template."
+      }
+    },
+    "wolf": {
+      "template": 9,
+      "l1j": 45043,
+      "token": "$268",
+      "name": "늑대",
+      "sprite": 96,
+      "wild_level": 6,
+      "wild_level_source": "official data/official/monsters.json id9 level6; tame pet initial Lv5/EXP750 remains separate L1J LOCAL initialization",
+      "hp": 30,
+      "mp": 5,
+      "ac": 18,
+      "str": 13,
+      "dex": 13,
+      "damage": 5,
+      "exp": 37,
+      "move_ms": 480,
+      "attack_ms": 1000,
+      "spawns": [
+        [
+          0,
+          32591,
+          32926
+        ],
+        [
+          4,
+          32620,
+          32718
+        ]
+      ],
+      "regeneration": {
+        "hp_interval_ms": 5000,
+        "hp": 5,
+        "mp_interval_ms": 0,
+        "mp": 0,
+        "source": "local_policy: D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20663 npc45043 hprinterval5000/hpr5/mprinterval0/mpr0; L1PetInstance.java:589-616 setCurrentHp/Mp start L1NpcInstance.java:849-958 fixed-rate Hpr/MprTimer. MP0 means no L1J MP regeneration for this template."
+      }
+    },
+    "doberman": {
+      "template": 177,
+      "l1j": 45042,
+      "token": "$905",
+      "name": "도베르만",
+      "sprite": 931,
+      "wild_level": 6,
+      "wild_level_source": "official data/official/monsters.json id177 exact_id_and_name level6; native-dump line114 token905 SPR931; only existing selected wild template177 is admitted, other duplicate candidates remain unselected",
+      "hp": 20,
+      "mp": 5,
+      "ac": 25,
+      "str": 16,
+      "dex": 10,
+      "damage": 5,
+      "exp": 37,
+      "move_ms": 560,
+      "attack_ms": 960,
+      "spawns": [],
+      "source": "LOCAL pet profile: L1J db/l1jdb_m10.sql:20662 npc45042 baseline and :24547 growth; initial Lv5/EXP750 from pets.json. Damage5 follows the existing LOCAL pet attack policy. No additional wild placement; existing world catalog template177/spawn is reused.",
+      "regeneration": {
+        "hp_interval_ms": 5000,
+        "hp": 5,
+        "mp_interval_ms": 0,
+        "mp": 0,
+        "source": "local_policy: D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20662 npc45042 hprinterval5000/hpr5/mprinterval0/mpr0; L1PetInstance.java:589-616 setCurrentHp/Mp start L1NpcInstance.java:849-958 fixed-rate Hpr/MprTimer. MP0 means no L1J MP regeneration for this template."
+      }
+    }
+  },
+  "trainers": [
+    {
+      "template": 70544,
+      "name": "펫 보관인",
+      "sprite": 1515,
+      "position": [
+        0,
+        32578,
+        32948
+      ],
+      "source": "LOCAL location and candidate L1J Rick appearance. Actual original dick1 resource/action strings, no official same-NPC mapping."
+    },
+    {
+      "template": 70544,
+      "name": "펫 보관인",
+      "sprite": 1515,
+      "position": [
+        4,
+        32612,
+        32740
+      ],
+      "source": "LOCAL location and candidate L1J Rick appearance. Actual original dick1 resource/action strings, no official same-NPC mapping."
+    }
+  ]
+}

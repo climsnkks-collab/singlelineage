@@ -1,0 +1,445 @@
+{
+  "table": "m1_item_gfx_weapons_ext",
+  "version": 1,
+  "note": "기존 item_gfx.json의 id→icon,ground,name_ko,ref 구조. f5/f6 원값이며 실제 렌더링 검증 아님.",
+  "items": {
+    "2": {
+      "icon": 58,
+      "ground": 26,
+      "name_ko": "일본도",
+      "ref": "native-dump:953"
+    },
+    "13": {
+      "icon": 9,
+      "ground": 58,
+      "name_ko": "전투 도끼",
+      "ref": "native-dump:964"
+    },
+    "31": {
+      "icon": 11,
+      "ground": 5,
+      "name_ko": "바르디쉐",
+      "ref": "native-dump:980"
+    },
+    "32": {
+      "icon": 13,
+      "ground": 5,
+      "name_ko": "빌귀사름",
+      "ref": "native-dump:981"
+    },
+    "33": {
+      "icon": 18,
+      "ground": 12,
+      "name_ko": "요정족 활",
+      "ref": "native-dump:982"
+    },
+    "34": {
+      "icon": 19,
+      "ground": 12,
+      "name_ko": "오크족 활",
+      "ref": "native-dump:983"
+    },
+    "35": {
+      "icon": 21,
+      "ground": 82,
+      "name_ko": "넓은 검",
+      "ref": "native-dump:984"
+    },
+    "42": {
+      "icon": 38,
+      "ground": 5,
+      "name_ko": "벡드코빈",
+      "ref": "native-dump:991"
+    },
+    "44": {
+      "icon": 41,
+      "ground": 5,
+      "name_ko": "포챠드",
+      "ref": "native-dump:993"
+    },
+    "46": {
+      "icon": 45,
+      "ground": 27,
+      "name_ko": "넓은 창",
+      "ref": "native-dump:995"
+    },
+    "47": {
+      "icon": 48,
+      "ground": 5,
+      "name_ko": "귀사름",
+      "ref": "native-dump:996"
+    },
+    "48": {
+      "icon": 50,
+      "ground": 5,
+      "name_ko": "미늘창",
+      "ref": "native-dump:997"
+    },
+    "54": {
+      "icon": 60,
+      "ground": 71,
+      "name_ko": "기병창",
+      "ref": "native-dump:1000"
+    },
+    "56": {
+      "icon": 66,
+      "ground": 5,
+      "name_ko": "루선해머",
+      "ref": "native-dump:1002"
+    },
+    "57": {
+      "icon": 119,
+      "ground": 60,
+      "name_ko": "워해머",
+      "ref": "native-dump:1003"
+    },
+    "58": {
+      "icon": 68,
+      "ground": 60,
+      "name_ko": "모닝스타",
+      "ref": "native-dump:1004"
+    },
+    "61": {
+      "icon": 72,
+      "ground": 5,
+      "name_ko": "파르티잔",
+      "ref": "native-dump:1007"
+    },
+    "67": {
+      "icon": 90,
+      "ground": 76,
+      "name_ko": "언월도",
+      "ref": "native-dump:1010"
+    },
+    "69": {
+      "icon": 172,
+      "ground": 358,
+      "name_ko": "난쟁이족 도끼",
+      "ref": "native-dump:1012"
+    },
+    "70": {
+      "icon": 99,
+      "ground": 27,
+      "name_ko": "요정족 창",
+      "ref": "native-dump:1013"
+    },
+    "72": {
+      "icon": 103,
+      "ground": 26,
+      "name_ko": "난쟁이족 검",
+      "ref": "native-dump:1015"
+    },
+    "73": {
+      "icon": 325,
+      "ground": 26,
+      "name_ko": "요정족 검",
+      "ref": "native-dump:1016"
+    },
+    "74": {
+      "icon": 105,
+      "ground": 26,
+      "name_ko": "오크족 검",
+      "ref": "native-dump:1017"
+    },
+    "75": {
+      "icon": 106,
+      "ground": 26,
+      "name_ko": "짧은 검",
+      "ref": "native-dump:1018"
+    },
+    "77": {
+      "icon": 111,
+      "ground": 77,
+      "name_ko": "삼지창",
+      "ref": "native-dump:1019"
+    },
+    "78": {
+      "icon": 112,
+      "ground": 30026,
+      "name_ko": "싸울아비 장검",
+      "ref": "native-dump:1020"
+    },
+    "81": {
+      "icon": 123,
+      "ground": 12,
+      "name_ko": "장궁",
+      "ref": "native-dump:1021"
+    },
+    "123": {
+      "icon": 441,
+      "ground": 3,
+      "name_ko": "붉은 기사의 검",
+      "ref": "native-dump:1057"
+    },
+    "138": {
+      "icon": 171,
+      "ground": 358,
+      "name_ko": "대형 도끼",
+      "ref": "native-dump:1066"
+    },
+    "141": {
+      "icon": 151,
+      "ground": 355,
+      "name_ko": "그라디우스",
+      "ref": "native-dump:1068"
+    },
+    "142": {
+      "icon": 144,
+      "ground": 354,
+      "name_ko": "악운의 단검",
+      "ref": "native-dump:1069"
+    },
+    "144": {
+      "icon": 439,
+      "ground": 358,
+      "name_ko": "광전사의 도끼",
+      "ref": "native-dump:1070"
+    },
+    "231": {
+      "icon": 297,
+      "ground": 75,
+      "name_ko": "마법사의 지팡이",
+      "ref": "native-dump:1140"
+    },
+    "232": {
+      "icon": 292,
+      "ground": 75,
+      "name_ko": "마력의 지팡이",
+      "ref": "native-dump:1141"
+    },
+    "233": {
+      "icon": 293,
+      "ground": 75,
+      "name_ko": "힘의 지팡이",
+      "ref": "native-dump:1142"
+    },
+    "235": {
+      "icon": 298,
+      "ground": 3,
+      "name_ko": "다마스커스 검",
+      "ref": "native-dump:1144"
+    },
+    "244": {
+      "icon": 20,
+      "ground": 12,
+      "name_ko": "작은 활",
+      "ref": "native-dump:1147"
+    },
+    "268": {
+      "icon": 317,
+      "ground": 887,
+      "name_ko": "판의 뿔",
+      "ref": "native-dump:1171"
+    },
+    "269": {
+      "icon": 305,
+      "ground": 12,
+      "name_ko": "크로스 보우",
+      "ref": "native-dump:1172"
+    },
+    "270": {
+      "icon": 322,
+      "ground": 890,
+      "name_ko": "단검신",
+      "ref": "native-dump:1173"
+    },
+    "271": {
+      "icon": 321,
+      "ground": 890,
+      "name_ko": "장검신",
+      "ref": "native-dump:1174"
+    },
+    "272": {
+      "icon": 321,
+      "ground": 890,
+      "name_ko": "오리하루콘 검신",
+      "ref": "native-dump:1175"
+    },
+    "274": {
+      "icon": 104,
+      "ground": 3,
+      "name_ko": "레이피어",
+      "ref": "native-dump:1177"
+    },
+    "276": {
+      "icon": 315,
+      "ground": 887,
+      "name_ko": "미스릴 도금 뿔",
+      "ref": "native-dump:1179"
+    },
+    "277": {
+      "icon": 316,
+      "ground": 887,
+      "name_ko": "오리하루콘 도금 뿔",
+      "ref": "native-dump:1180"
+    },
+    "278": {
+      "icon": 276,
+      "ground": 26,
+      "name_ko": "메일 브레이커",
+      "ref": "native-dump:1181"
+    },
+    "337": {
+      "icon": 463,
+      "ground": 59,
+      "name_ko": "대검",
+      "ref": "native-dump:1222"
+    },
+    "342": {
+      "icon": 293,
+      "ground": 30068,
+      "name_ko": "마나의 지팡이",
+      "ref": "native-dump:1223"
+    },
+    "358": {
+      "icon": 163,
+      "ground": 26,
+      "name_ko": "은장검",
+      "ref": "native-dump:1228"
+    },
+    "359": {
+      "icon": 156,
+      "ground": 26,
+      "name_ko": "은검",
+      "ref": "native-dump:1229"
+    },
+    "360": {
+      "icon": 173,
+      "ground": 358,
+      "name_ko": "은도끼",
+      "ref": "native-dump:1230"
+    },
+    "388": {
+      "icon": 279,
+      "ground": 12,
+      "name_ko": "사냥꾼 활",
+      "ref": "native-dump:1244"
+    },
+    "568": {
+      "icon": 705,
+      "ground": 30452,
+      "name_ko": "사이하의 활",
+      "ref": "native-dump:1339"
+    },
+    "659": {
+      "icon": 90,
+      "ground": 30055,
+      "name_ko": "잊혀진 대검",
+      "ref": "native-dump:1407"
+    },
+    "660": {
+      "icon": 103,
+      "ground": 30056,
+      "name_ko": "잊혀진 검",
+      "ref": "native-dump:1408"
+    },
+    "661": {
+      "icon": 20,
+      "ground": 30054,
+      "name_ko": "잊혀진 보우건",
+      "ref": "native-dump:1409"
+    },
+    "671": {
+      "icon": 897,
+      "ground": 30041,
+      "name_ko": "고대의 대검",
+      "ref": "native-dump:1415"
+    },
+    "672": {
+      "icon": 902,
+      "ground": 30046,
+      "name_ko": "고대의 검",
+      "ref": "native-dump:1416"
+    },
+    "673": {
+      "icon": 896,
+      "ground": 30040,
+      "name_ko": "고대의 보우건",
+      "ref": "native-dump:1417"
+    },
+    "711": {
+      "icon": 939,
+      "ground": 75,
+      "name_ko": "수정 지팡이",
+      "ref": "native-dump:1436"
+    },
+    "787": {
+      "icon": 1016,
+      "ground": 30463,
+      "name_ko": "데스 블레이드",
+      "ref": "native-dump:1470"
+    },
+    "789": {
+      "icon": 1018,
+      "ground": 30464,
+      "name_ko": "화염의 활",
+      "ref": "native-dump:1472"
+    },
+    "790": {
+      "icon": 1019,
+      "ground": 30465,
+      "name_ko": "화염의 검",
+      "ref": "native-dump:1473"
+    },
+    "791": {
+      "icon": 1020,
+      "ground": 30470,
+      "name_ko": "황금 지휘봉",
+      "ref": "native-dump:1474"
+    },
+    "1094": {
+      "icon": 1239,
+      "ground": 3262,
+      "name_ko": "얼음 여왕의 지팡이",
+      "ref": "native-dump:1498"
+    },
+    "1095": {
+      "icon": 1240,
+      "ground": 3310,
+      "name_ko": "데몬의 지팡이",
+      "ref": "native-dump:1499"
+    },
+    "1096": {
+      "icon": 1255,
+      "ground": 3264,
+      "name_ko": "바포메트의 지팡이",
+      "ref": "native-dump:1500"
+    },
+    "1097": {
+      "icon": 1257,
+      "ground": 3265,
+      "name_ko": "베레스의 지팡이",
+      "ref": "native-dump:1501"
+    },
+    "1285": {
+      "icon": 38,
+      "ground": 4119,
+      "name_ko": "크림슨 랜스",
+      "ref": "native-dump:1503"
+    },
+    "2072": {
+      "icon": 2168,
+      "ground": 12,
+      "name_ko": "달의 장궁",
+      "ref": "native-dump:1522"
+    },
+    "3018": {
+      "icon": 2915,
+      "ground": 6737,
+      "name_ko": "천사의 지팡이",
+      "ref": "native-dump:1526"
+    },
+    "3019": {
+      "icon": 2919,
+      "ground": 30454,
+      "name_ko": "혹한의 창",
+      "ref": "native-dump:1527"
+    },
+    "3020": {
+      "icon": 2911,
+      "ground": 30451,
+      "name_ko": "뇌신검",
+      "ref": "native-dump:1528"
+    }
+  }
+}

@@ -1,0 +1,2118 @@
+{
+  "version": 1,
+  "status": "LOCAL_POLICY_SOURCE_STATIC_CHECKED_RUNTIME_UNRUN",
+  "reference_paths": {
+    "l1jdb": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql",
+    "native_dump": "work/source_game_data/native-dump-v1.jsonl",
+    "region": "work/local_resource_provider/assets/data/region.jsonc"
+  },
+  "scope": "five map4 village unions; count0/ambiguous/blocked rows preserved",
+  "npc_centres": [
+    {
+      "kind": "npc",
+      "npc_id": 50020,
+      "spawn_id": 50021,
+      "x": 33050,
+      "y": 32783,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50022,
+      "spawn_id": 50071,
+      "x": 33060,
+      "y": 32756,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60003,
+      "spawn_id": 60012,
+      "x": 33073,
+      "y": 32799,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70544,
+      "spawn_id": 60053,
+      "x": 33039,
+      "y": 32746,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70018,
+      "spawn_id": 60823,
+      "x": 33065,
+      "y": 32733,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70016,
+      "spawn_id": 60907,
+      "x": 33070,
+      "y": 32754,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70015,
+      "spawn_id": 60957,
+      "x": 33057,
+      "y": 32768,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70520,
+      "spawn_id": 87360,
+      "x": 33057,
+      "y": 32782,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70554,
+      "spawn_id": 87516,
+      "x": 33048,
+      "y": 32755,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70545,
+      "spawn_id": 87520,
+      "x": 33079,
+      "y": 32764,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50117,
+      "spawn_id": 87541,
+      "x": 33069,
+      "y": 32790,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70560,
+      "spawn_id": 87841,
+      "x": 33066,
+      "y": 32747,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70556,
+      "spawn_id": 87850,
+      "x": 33050,
+      "y": 32745,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70546,
+      "spawn_id": 87860,
+      "x": 33049,
+      "y": 32745,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60508,
+      "spawn_id": 89021,
+      "x": 33030,
+      "y": 32771,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60509,
+      "spawn_id": 89022,
+      "x": 33030,
+      "y": 32763,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81123,
+      "spawn_id": 130856,
+      "x": 33076,
+      "y": 32795,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 80006,
+      "spawn_id": 130868,
+      "x": 33051,
+      "y": 32756,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81200,
+      "spawn_id": 1310371,
+      "x": 33066,
+      "y": 32744,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50054,
+      "spawn_id": 50018,
+      "x": 32640,
+      "y": 33204,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50053,
+      "spawn_id": 50072,
+      "x": 32626,
+      "y": 33182,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60023,
+      "spawn_id": 60003,
+      "x": 32610,
+      "y": 33184,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70773,
+      "spawn_id": 60058,
+      "x": 32604,
+      "y": 33200,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70072,
+      "spawn_id": 60824,
+      "x": 32632,
+      "y": 33194,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70069,
+      "spawn_id": 60958,
+      "x": 32623,
+      "y": 33201,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70070,
+      "spawn_id": 61125,
+      "x": 32618,
+      "y": 33166,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70520,
+      "spawn_id": 87361,
+      "x": 32615,
+      "y": 33174,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70783,
+      "spawn_id": 87517,
+      "x": 32647,
+      "y": 33204,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70776,
+      "spawn_id": 87521,
+      "x": 32646,
+      "y": 33217,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50119,
+      "spawn_id": 87540,
+      "x": 32615,
+      "y": 33194,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70790,
+      "spawn_id": 87842,
+      "x": 32639,
+      "y": 33182,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70788,
+      "spawn_id": 87851,
+      "x": 32618,
+      "y": 33175,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70774,
+      "spawn_id": 87861,
+      "x": 32617,
+      "y": 33175,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60510,
+      "spawn_id": 89013,
+      "x": 32582,
+      "y": 33191,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60517,
+      "spawn_id": 89014,
+      "x": 32582,
+      "y": 33197,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60510,
+      "spawn_id": 89015,
+      "x": 32610,
+      "y": 33152,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60517,
+      "spawn_id": 89016,
+      "x": 32619,
+      "y": 33152,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60510,
+      "spawn_id": 89017,
+      "x": 32645,
+      "y": 33168,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60517,
+      "spawn_id": 89018,
+      "x": 32645,
+      "y": 33175,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60510,
+      "spawn_id": 89019,
+      "x": 32645,
+      "y": 33220,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60517,
+      "spawn_id": 89020,
+      "x": 32638,
+      "y": 33222,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81123,
+      "spawn_id": 130854,
+      "x": 32613,
+      "y": 33184,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 80006,
+      "spawn_id": 130866,
+      "x": 32615,
+      "y": 33190,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81200,
+      "spawn_id": 1310378,
+      "x": 32613,
+      "y": 33189,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 90013,
+      "spawn_id": 1900003,
+      "x": 32629,
+      "y": 33194,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50036,
+      "spawn_id": 50028,
+      "x": 33437,
+      "y": 32795,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50034,
+      "spawn_id": 50043,
+      "x": 33438,
+      "y": 32809,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50034,
+      "spawn_id": 50044,
+      "x": 33510,
+      "y": 32766,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50037,
+      "spawn_id": 50082,
+      "x": 33505,
+      "y": 32762,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50038,
+      "spawn_id": 50083,
+      "x": 33497,
+      "y": 32761,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50501,
+      "spawn_id": 50301,
+      "x": 33352,
+      "y": 32776,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50502,
+      "spawn_id": 50302,
+      "x": 33400,
+      "y": 32861,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50503,
+      "spawn_id": 50303,
+      "x": 33359,
+      "y": 32790,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50504,
+      "spawn_id": 50304,
+      "x": 33345,
+      "y": 32674,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50505,
+      "spawn_id": 50305,
+      "x": 33385,
+      "y": 32656,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50506,
+      "spawn_id": 50306,
+      "x": 33414,
+      "y": 32852,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50507,
+      "spawn_id": 50307,
+      "x": 33460,
+      "y": 32841,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50508,
+      "spawn_id": 50308,
+      "x": 33371,
+      "y": 32791,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50509,
+      "spawn_id": 50309,
+      "x": 33425,
+      "y": 32692,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50510,
+      "spawn_id": 50310,
+      "x": 33342,
+      "y": 32662,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50511,
+      "spawn_id": 50311,
+      "x": 33367,
+      "y": 32762,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50512,
+      "spawn_id": 50312,
+      "x": 33361,
+      "y": 32671,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50513,
+      "spawn_id": 50313,
+      "x": 33405,
+      "y": 32740,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50514,
+      "spawn_id": 50314,
+      "x": 33383,
+      "y": 32775,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50515,
+      "spawn_id": 50315,
+      "x": 33380,
+      "y": 32714,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50516,
+      "spawn_id": 50316,
+      "x": 33476,
+      "y": 32667,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50517,
+      "spawn_id": 50317,
+      "x": 33398,
+      "y": 32812,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50518,
+      "spawn_id": 50318,
+      "x": 33458,
+      "y": 32699,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50519,
+      "spawn_id": 50319,
+      "x": 33397,
+      "y": 32657,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50520,
+      "spawn_id": 50320,
+      "x": 33419,
+      "y": 32708,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50521,
+      "spawn_id": 50321,
+      "x": 33378,
+      "y": 32829,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50522,
+      "spawn_id": 50322,
+      "x": 33376,
+      "y": 32874,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50523,
+      "spawn_id": 50323,
+      "x": 33444,
+      "y": 32871,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50524,
+      "spawn_id": 50324,
+      "x": 33498,
+      "y": 32803,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50525,
+      "spawn_id": 50325,
+      "x": 33342,
+      "y": 32711,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50526,
+      "spawn_id": 50326,
+      "x": 33362,
+      "y": 32683,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50527,
+      "spawn_id": 50327,
+      "x": 33373,
+      "y": 32656,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50528,
+      "spawn_id": 50328,
+      "x": 33425,
+      "y": 32719,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50529,
+      "spawn_id": 50329,
+      "x": 33458,
+      "y": 32655,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50530,
+      "spawn_id": 50330,
+      "x": 33390,
+      "y": 32850,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50531,
+      "spawn_id": 50331,
+      "x": 33440,
+      "y": 32667,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50532,
+      "spawn_id": 50332,
+      "x": 33402,
+      "y": 32793,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50533,
+      "spawn_id": 50333,
+      "x": 33448,
+      "y": 32731,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50534,
+      "spawn_id": 50334,
+      "x": 33354,
+      "y": 32733,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50535,
+      "spawn_id": 50335,
+      "x": 33383,
+      "y": 32805,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50536,
+      "spawn_id": 50336,
+      "x": 33410,
+      "y": 32676,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50537,
+      "spawn_id": 50337,
+      "x": 33398,
+      "y": 32823,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50538,
+      "spawn_id": 50338,
+      "x": 33472,
+      "y": 32680,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50539,
+      "spawn_id": 50339,
+      "x": 33436,
+      "y": 32843,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50540,
+      "spawn_id": 50340,
+      "x": 33367,
+      "y": 32715,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50541,
+      "spawn_id": 50341,
+      "x": 33429,
+      "y": 32872,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50542,
+      "spawn_id": 50342,
+      "x": 33404,
+      "y": 32756,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50543,
+      "spawn_id": 50343,
+      "x": 33376,
+      "y": 32699,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50544,
+      "spawn_id": 50344,
+      "x": 33484,
+      "y": 32793,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50545,
+      "spawn_id": 50345,
+      "x": 33427,
+      "y": 32658,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60008,
+      "spawn_id": 60002,
+      "x": 33431,
+      "y": 32816,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60009,
+      "spawn_id": 60015,
+      "x": 33422,
+      "y": 32812,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70632,
+      "spawn_id": 60056,
+      "x": 33492,
+      "y": 32688,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70617,
+      "spawn_id": 60057,
+      "x": 33340,
+      "y": 32724,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70033,
+      "spawn_id": 60804,
+      "x": 33383,
+      "y": 32730,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70028,
+      "spawn_id": 60805,
+      "x": 33488,
+      "y": 32777,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70030,
+      "spawn_id": 60806,
+      "x": 33455,
+      "y": 32820,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70039,
+      "spawn_id": 60902,
+      "x": 33398,
+      "y": 32669,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70032,
+      "spawn_id": 60909,
+      "x": 33436,
+      "y": 32751,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70026,
+      "spawn_id": 60911,
+      "x": 33496,
+      "y": 32777,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70036,
+      "spawn_id": 60953,
+      "x": 33476,
+      "y": 32734,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70027,
+      "spawn_id": 61001,
+      "x": 33453,
+      "y": 32805,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70043,
+      "spawn_id": 61002,
+      "x": 33451,
+      "y": 32756,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70038,
+      "spawn_id": 61003,
+      "x": 33416,
+      "y": 32771,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70029,
+      "spawn_id": 61007,
+      "x": 33451,
+      "y": 32751,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70040,
+      "spawn_id": 61008,
+      "x": 33452,
+      "y": 32764,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70042,
+      "spawn_id": 61009,
+      "x": 33528,
+      "y": 32873,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70035,
+      "spawn_id": 61010,
+      "x": 33525,
+      "y": 32851,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70041,
+      "spawn_id": 61011,
+      "x": 33516,
+      "y": 32857,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70031,
+      "spawn_id": 61127,
+      "x": 33431,
+      "y": 32785,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70642,
+      "spawn_id": 87191,
+      "x": 33471,
+      "y": 32775,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70034,
+      "spawn_id": 87205,
+      "x": 33480,
+      "y": 32777,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70598,
+      "spawn_id": 87206,
+      "x": 33404,
+      "y": 32834,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70641,
+      "spawn_id": 87229,
+      "x": 33503,
+      "y": 32777,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70607,
+      "spawn_id": 87348,
+      "x": 33403,
+      "y": 32833,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70605,
+      "spawn_id": 87352,
+      "x": 33538,
+      "y": 32847,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70520,
+      "spawn_id": 87354,
+      "x": 33429,
+      "y": 32812,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70644,
+      "spawn_id": 87837,
+      "x": 33425,
+      "y": 32795,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70631,
+      "spawn_id": 87845,
+      "x": 33450,
+      "y": 32793,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70594,
+      "spawn_id": 87855,
+      "x": 33451,
+      "y": 32794,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60525,
+      "spawn_id": 89074,
+      "x": 33513,
+      "y": 32784,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60524,
+      "spawn_id": 89075,
+      "x": 33512,
+      "y": 32791,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60525,
+      "spawn_id": 89076,
+      "x": 33362,
+      "y": 32886,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60524,
+      "spawn_id": 89077,
+      "x": 33365,
+      "y": 32890,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60525,
+      "spawn_id": 89078,
+      "x": 33346,
+      "y": 32825,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60524,
+      "spawn_id": 89079,
+      "x": 33344,
+      "y": 32835,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60525,
+      "spawn_id": 89080,
+      "x": 33338,
+      "y": 32742,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60524,
+      "spawn_id": 89081,
+      "x": 33339,
+      "y": 32751,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60525,
+      "spawn_id": 89082,
+      "x": 33332,
+      "y": 32689,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60524,
+      "spawn_id": 89083,
+      "x": 33332,
+      "y": 32698,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60525,
+      "spawn_id": 89084,
+      "x": 33358,
+      "y": 32642,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60524,
+      "spawn_id": 89085,
+      "x": 33366,
+      "y": 32643,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60525,
+      "spawn_id": 89086,
+      "x": 33407,
+      "y": 32635,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60524,
+      "spawn_id": 89087,
+      "x": 33416,
+      "y": 32636,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70614,
+      "spawn_id": 89552,
+      "x": 33447,
+      "y": 32743,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 80057,
+      "spawn_id": 89572,
+      "x": 33453,
+      "y": 32848,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 80128,
+      "spawn_id": 89627,
+      "x": 33513,
+      "y": 32761,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81123,
+      "spawn_id": 130857,
+      "x": 33421,
+      "y": 32809,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81124,
+      "spawn_id": 130862,
+      "x": 33421,
+      "y": 32804,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 80006,
+      "spawn_id": 130865,
+      "x": 33421,
+      "y": 32806,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81160,
+      "spawn_id": 130875,
+      "x": 33430,
+      "y": 32805,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81160,
+      "spawn_id": 130876,
+      "x": 33429,
+      "y": 32822,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81161,
+      "spawn_id": 130877,
+      "x": 33421,
+      "y": 32823,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70577,
+      "spawn_id": 130878,
+      "x": 33423,
+      "y": 32823,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81200,
+      "spawn_id": 1310370,
+      "x": 33443,
+      "y": 32809,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 90013,
+      "spawn_id": 1900006,
+      "x": 33454,
+      "y": 32823,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81287,
+      "spawn_id": 1900014,
+      "x": 33429,
+      "y": 32824,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71180,
+      "spawn_id": 1900015,
+      "x": 33454,
+      "y": 32824,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71181,
+      "spawn_id": 1900016,
+      "x": 33493,
+      "y": 32683,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50051,
+      "spawn_id": 50026,
+      "x": 34063,
+      "y": 32278,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50050,
+      "spawn_id": 50041,
+      "x": 34061,
+      "y": 32305,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50050,
+      "spawn_id": 50042,
+      "x": 34062,
+      "y": 32273,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60021,
+      "spawn_id": 60008,
+      "x": 34054,
+      "y": 32287,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70749,
+      "spawn_id": 60059,
+      "x": 34079,
+      "y": 32296,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70063,
+      "spawn_id": 60812,
+      "x": 34065,
+      "y": 32289,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70061,
+      "spawn_id": 60904,
+      "x": 34068,
+      "y": 32295,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70068,
+      "spawn_id": 60981,
+      "x": 34017,
+      "y": 32262,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70065,
+      "spawn_id": 61128,
+      "x": 34062,
+      "y": 32252,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70520,
+      "spawn_id": 87356,
+      "x": 34056,
+      "y": 32291,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70740,
+      "spawn_id": 87515,
+      "x": 34043,
+      "y": 32234,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70751,
+      "spawn_id": 87522,
+      "x": 34071,
+      "y": 32312,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70758,
+      "spawn_id": 87523,
+      "x": 34071,
+      "y": 32310,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70744,
+      "spawn_id": 87531,
+      "x": 34036,
+      "y": 32259,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50125,
+      "spawn_id": 87550,
+      "x": 34053,
+      "y": 32271,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70761,
+      "spawn_id": 87847,
+      "x": 34063,
+      "y": 32268,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70748,
+      "spawn_id": 87857,
+      "x": 34062,
+      "y": 32268,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60523,
+      "spawn_id": 89060,
+      "x": 34029,
+      "y": 32276,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60522,
+      "spawn_id": 89061,
+      "x": 34029,
+      "y": 32288,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81123,
+      "spawn_id": 130860,
+      "x": 34053,
+      "y": 32282,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81130,
+      "spawn_id": 130870,
+      "x": 34063,
+      "y": 32275,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81200,
+      "spawn_id": 1310368,
+      "x": 34053,
+      "y": 32264,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81246,
+      "spawn_id": 1310416,
+      "x": 34052,
+      "y": 32262,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 80192,
+      "spawn_id": 1310457,
+      "x": 34059,
+      "y": 32288,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 90013,
+      "spawn_id": 1900008,
+      "x": 34062,
+      "y": 32290,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81150,
+      "spawn_id": 1900021,
+      "x": 34053,
+      "y": 32277,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50066,
+      "spawn_id": 50022,
+      "x": 33613,
+      "y": 33257,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50614,
+      "spawn_id": 50414,
+      "x": 33582,
+      "y": 33339,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50615,
+      "spawn_id": 50415,
+      "x": 33626,
+      "y": 33446,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50616,
+      "spawn_id": 50416,
+      "x": 33625,
+      "y": 33397,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50617,
+      "spawn_id": 50417,
+      "x": 33583,
+      "y": 33305,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50618,
+      "spawn_id": 50418,
+      "x": 33619,
+      "y": 33380,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50619,
+      "spawn_id": 50419,
+      "x": 33626,
+      "y": 33225,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50620,
+      "spawn_id": 50420,
+      "x": 33610,
+      "y": 33218,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50621,
+      "spawn_id": 50421,
+      "x": 33632,
+      "y": 33247,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50622,
+      "spawn_id": 50422,
+      "x": 33618,
+      "y": 33266,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50623,
+      "spawn_id": 50423,
+      "x": 33629,
+      "y": 33209,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50624,
+      "spawn_id": 50424,
+      "x": 33576,
+      "y": 33233,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 60030,
+      "spawn_id": 60007,
+      "x": 33601,
+      "y": 33235,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70873,
+      "spawn_id": 60054,
+      "x": 33649,
+      "y": 33410,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70082,
+      "spawn_id": 60809,
+      "x": 33641,
+      "y": 33286,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70083,
+      "spawn_id": 60903,
+      "x": 33624,
+      "y": 33283,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70085,
+      "spawn_id": 60954,
+      "x": 33618,
+      "y": 33238,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70084,
+      "spawn_id": 61124,
+      "x": 33599,
+      "y": 33273,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70520,
+      "spawn_id": 87355,
+      "x": 33603,
+      "y": 33240,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 50123,
+      "spawn_id": 87545,
+      "x": 33619,
+      "y": 33247,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70884,
+      "spawn_id": 87838,
+      "x": 33604,
+      "y": 33225,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70876,
+      "spawn_id": 87846,
+      "x": 33613,
+      "y": 33229,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70860,
+      "spawn_id": 87856,
+      "x": 33611,
+      "y": 33229,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70857,
+      "spawn_id": 89054,
+      "x": 33613,
+      "y": 33323,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70857,
+      "spawn_id": 89055,
+      "x": 33613,
+      "y": 33330,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70857,
+      "spawn_id": 89056,
+      "x": 33647,
+      "y": 33436,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70857,
+      "spawn_id": 89057,
+      "x": 33604,
+      "y": 33445,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70857,
+      "spawn_id": 89058,
+      "x": 33558,
+      "y": 33237,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70857,
+      "spawn_id": 89059,
+      "x": 33558,
+      "y": 33244,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71098,
+      "spawn_id": 90158,
+      "x": 33609,
+      "y": 33237,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71097,
+      "spawn_id": 90159,
+      "x": 33601,
+      "y": 33245,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71099,
+      "spawn_id": 90160,
+      "x": 33607,
+      "y": 33253,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71100,
+      "spawn_id": 90161,
+      "x": 33594,
+      "y": 33252,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71101,
+      "spawn_id": 90162,
+      "x": 33593,
+      "y": 33239,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71102,
+      "spawn_id": 90163,
+      "x": 33584,
+      "y": 33252,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71103,
+      "spawn_id": 90164,
+      "x": 33619,
+      "y": 33237,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71103,
+      "spawn_id": 90165,
+      "x": 33595,
+      "y": 33229,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71103,
+      "spawn_id": 90166,
+      "x": 33580,
+      "y": 33271,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71102,
+      "spawn_id": 90170,
+      "x": 33611,
+      "y": 33290,
+      "can_stand": false
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71198,
+      "spawn_id": 90192,
+      "x": 33592,
+      "y": 33229,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71199,
+      "spawn_id": 90193,
+      "x": 33590,
+      "y": 33280,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71212,
+      "spawn_id": 90234,
+      "x": 33583,
+      "y": 33357,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90235,
+      "x": 33560,
+      "y": 33200,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90236,
+      "x": 33558,
+      "y": 33209,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90237,
+      "x": 33557,
+      "y": 33213,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90238,
+      "x": 33556,
+      "y": 33220,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90239,
+      "x": 33558,
+      "y": 33227,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90240,
+      "x": 33559,
+      "y": 33231,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90248,
+      "x": 33586,
+      "y": 33369,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90249,
+      "x": 33583,
+      "y": 33367,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90250,
+      "x": 33578,
+      "y": 33355,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90251,
+      "x": 33573,
+      "y": 33351,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71214,
+      "spawn_id": 90252,
+      "x": 33571,
+      "y": 33349,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81123,
+      "spawn_id": 130858,
+      "x": 33607,
+      "y": 33229,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 80006,
+      "spawn_id": 130869,
+      "x": 33584,
+      "y": 33266,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81161,
+      "spawn_id": 130879,
+      "x": 33585,
+      "y": 33235,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 71197,
+      "spawn_id": 1310144,
+      "x": 33609,
+      "y": 33249,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 81200,
+      "spawn_id": 1310377,
+      "x": 33614,
+      "y": 33244,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 90013,
+      "spawn_id": 1900005,
+      "x": 33642,
+      "y": 33290,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 90014,
+      "spawn_id": 1900009,
+      "x": 33604,
+      "y": 33253,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 90015,
+      "spawn_id": 1900010,
+      "x": 33593,
+      "y": 33242,
+      "can_stand": true
+    },
+    {
+      "kind": "npc",
+      "npc_id": 70870,
+      "spawn_id": 1900011,
+      "x": 33593,
+      "y": 33247,
+      "can_stand": true
+    }
+  ],
+  "return_points": [
+    {
+      "town_id": "kent",
+      "map_id": 4,
+      "x": 33050,
+      "y": 32782,
+      "heading": 5,
+      "can_stand": true
+    },
+    {
+      "town_id": "windawood",
+      "map_id": 4,
+      "x": 32640,
+      "y": 33203,
+      "heading": 5,
+      "can_stand": true
+    },
+    {
+      "town_id": "giran",
+      "map_id": 4,
+      "x": 33438,
+      "y": 32796,
+      "heading": 5,
+      "can_stand": true
+    },
+    {
+      "town_id": "oren",
+      "map_id": 4,
+      "x": 34062,
+      "y": 32278,
+      "heading": 5,
+      "can_stand": true
+    },
+    {
+      "town_id": "heine",
+      "map_id": 4,
+      "x": 33612,
+      "y": 33257,
+      "heading": 5,
+      "can_stand": true
+    }
+  ],
+  "spawn_rects": [
+    {
+      "group_id": "m5_kent_8",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_kent_4",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_kent_17",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_kent_223",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_windawood_0",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_windawood_1",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_windawood_2",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_windawood_274",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_giran_4",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_giran_17",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_giran_8",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_giran_297",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_oren_4",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_oren_27",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_heine_17",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_heine_297",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_heine_245",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    },
+    {
+      "group_id": "m5_heine_0",
+      "cells": 49,
+      "passable": 49,
+      "false": 0,
+      "unknown": 0
+    }
+  ]
+}

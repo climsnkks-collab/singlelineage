@@ -116,3 +116,43 @@ class SettingsStore:
         return dict(policy='LOCAL_ACCOUNT_OPAQUE_LAST_REQUEST', committed=self.committed,
                     failed=self.failed, last=dict(self.last) if self.last is not None else None,
                     values_logged=False)
+
+    def saved_raw(self):
+        """The last saved 4ED6 body for this account, or None (never a default)."""
+        with _lock:
+            record = self._load()
+        return None if record is None else record.raw
+
+
+NOTI_OPCODE = 0x4ed7
+
+
+def _loadable(codec, wrapper):
+    """ATS item slots the native loader resolves again; any other blob as saved."""
+    try:
+        return codec.loadable_ats(wrapper)
+    except ValueError:
+        return wrapper
+
+
+def noti_frame(raw):
+    """4ED7 for a saved 4ED6 body: hex(f1) and hex(f2), always together.
+
+    Uses the last occurrence of each field, as the client's own save does.
+    Returns None when f2 is absent or either wrapper is malformed.
+    """
+    if raw is None:
+        return None
+    from tools.local_original_session import ats_config_codec as codec
+    try:
+        with pb.parse_message(raw, schema={1: 2, 2: 2}, limits=LIMITS) as message:
+            first, second = message.occurrences(1), message.occurrences(2)
+            if not first or not second:
+                return None
+            f1, f2 = bytes(first[-1].value), bytes(second[-1].value)
+        body = pb.encode_bytes(1, codec.noti_field(f1)) + pb.encode_bytes(2, codec.noti_field(_loadable(codec, f2)))
+    except (ValueError, pb.WireError):
+        return None
+    if len(body) + 6 > 0xffff:
+        return None
+    return struct.pack('<HH', len(body) + 6, NOTI_OPCODE) + body + b'\0\0'

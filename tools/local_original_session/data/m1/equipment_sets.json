@@ -1,0 +1,893 @@
+{
+  "table": "classic_equipment_sets",
+  "version": 1,
+  "scope": "고정 client 대응 loaded item으로 구성된 공식 클래식 세트만. 세트 이름·구성·보너스를 L1J/기억으로 추정하지 않음.",
+  "source": "data/official/items.json / work/official_data/raw/item/*.json",
+  "note": "공식 degree에 필요한 서로 다른 착용 template 수를 만족하면 숫자 보너스를 세트당 한 번 가산. 같은 반지 template 2개는 구성 1종으로 계산. 아이템 기본 AC/옵션과 추가 세트 보너스는 별도. 변신과 서술 특수효과 미지원.",
+  "sets": [
+    {
+      "id": {
+        "value": "classic_88_101_106_115_4",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=88; work/official_data/raw/item/88.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/88?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          88,
+          101,
+          106,
+          115
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=88; work/official_data/raw/item/88.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/88?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 4,
+        "source": "official",
+        "ref": "data/official/items.json official_id=88; work/official_data/raw/item/88.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/88?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -3
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=88; work/official_data/raw/item/88.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/88?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 88,
+            "name": "오크족 투구"
+          },
+          {
+            "id": 101,
+            "name": "오크족 고리 갑옷"
+          },
+          {
+            "id": 106,
+            "name": "오크족 망토"
+          },
+          {
+            "id": 115,
+            "name": "우럭하이 방패"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 4,
+            "options": [
+              "방어력 -3"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_89_107_118_3",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=89; work/official_data/raw/item/89.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/89?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          89,
+          107,
+          118
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=89; work/official_data/raw/item/89.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/89?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 3,
+        "source": "official",
+        "ref": "data/official/items.json official_id=89; work/official_data/raw/item/89.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/89?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -1,
+          "max_hp": 5
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=89; work/official_data/raw/item/89.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/89?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 89,
+            "name": "난쟁이족 철 투구"
+          },
+          {
+            "id": 107,
+            "name": "난쟁이족 망토"
+          },
+          {
+            "id": 118,
+            "name": "난쟁이족 둥근 방패"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 3,
+            "options": [
+              "방어력 -1",
+              "최대 HP +5"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_317_321_324_327_4",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=317; work/official_data/raw/item/317.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/317?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          317,
+          321,
+          324,
+          327
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=317; work/official_data/raw/item/317.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/317?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 4,
+        "source": "official",
+        "ref": "data/official/items.json official_id=317; work/official_data/raw/item/317.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/317?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -3
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=317; work/official_data/raw/item/317.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/317?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 317,
+            "name": "가죽모자"
+          },
+          {
+            "id": 321,
+            "name": "가죽샌달"
+          },
+          {
+            "id": 324,
+            "name": "가죽방패"
+          },
+          {
+            "id": 327,
+            "name": "가죽조끼"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 4,
+            "options": [
+              "방어력 -3"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_318_322_325_329_4",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=318; work/official_data/raw/item/318.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/318?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          318,
+          322,
+          325,
+          329
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=318; work/official_data/raw/item/318.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/318?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 4,
+        "source": "official",
+        "ref": "data/official/items.json official_id=318; work/official_data/raw/item/318.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/318?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -3
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=318; work/official_data/raw/item/318.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/318?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 318,
+            "name": "징박은 가죽모자"
+          },
+          {
+            "id": 322,
+            "name": "징박은 가죽샌달"
+          },
+          {
+            "id": 325,
+            "name": "징박은 가죽방패"
+          },
+          {
+            "id": 329,
+            "name": "징박은 가죽조끼"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 4,
+            "options": [
+              "방어력 -3"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_320_326_331_3",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=320; work/official_data/raw/item/320.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/320?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          320,
+          326,
+          331
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=320; work/official_data/raw/item/320.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/320?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 3,
+        "source": "official",
+        "ref": "data/official/items.json official_id=320; work/official_data/raw/item/320.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/320?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -2,
+          "max_hp": 10
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=320; work/official_data/raw/item/320.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/320?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 320,
+            "name": "해골투구"
+          },
+          {
+            "id": 326,
+            "name": "골각방패"
+          },
+          {
+            "id": 331,
+            "name": "뼈갑옷"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 3,
+            "options": [
+              "방어력 -2",
+              "최대 HP +10"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_365_366_367_368_369_5",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=365; work/official_data/raw/item/365.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/365?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          365,
+          366,
+          367,
+          368,
+          369
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=365; work/official_data/raw/item/365.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/365?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 5,
+        "source": "official",
+        "ref": "data/official/items.json official_id=365; work/official_data/raw/item/365.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/365?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -3
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=365; work/official_data/raw/item/365.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/365?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 365,
+            "name": "강철 장갑"
+          },
+          {
+            "id": 366,
+            "name": "강철 면갑"
+          },
+          {
+            "id": 367,
+            "name": "강철 방패"
+          },
+          {
+            "id": 368,
+            "name": "강철 부츠"
+          },
+          {
+            "id": 369,
+            "name": "강철 판금 갑옷"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 5,
+            "options": [
+              "방어력 -3"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_385_386_2",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=385; work/official_data/raw/item/385.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/385?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          385,
+          386
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=385; work/official_data/raw/item/385.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/385?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 2,
+        "source": "official",
+        "ref": "data/official/items.json official_id=385; work/official_data/raw/item/385.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/385?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "mp_regen": 1,
+          "max_mp": 50
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=385; work/official_data/raw/item/385.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/385?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 385,
+            "name": "마법사 모자"
+          },
+          {
+            "id": 386,
+            "name": "마법사 옷"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 2,
+            "options": [
+              "MP회복 +1",
+              "최대 MP +50"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_496_12286_12287_3",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=496; work/official_data/raw/item/496.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/496?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          496,
+          12286,
+          12287
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=496; work/official_data/raw/item/496.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/496?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 3,
+        "source": "official",
+        "ref": "data/official/items.json official_id=496; work/official_data/raw/item/496.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/496?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "mr": 5
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=496; work/official_data/raw/item/496.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/496?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 496,
+            "name": "항마의 반지"
+          },
+          {
+            "id": 12286,
+            "name": "항마의 목걸이"
+          },
+          {
+            "id": 12287,
+            "name": "항마의 벨트"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 3,
+            "options": [
+              "MR +5"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_497_15090_15091_3",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=497; work/official_data/raw/item/497.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/497?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          497,
+          15090,
+          15091
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=497; work/official_data/raw/item/497.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/497?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 3,
+        "source": "official",
+        "ref": "data/official/items.json official_id=497; work/official_data/raw/item/497.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/497?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "mr": 10
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=497; work/official_data/raw/item/497.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/497?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 497,
+            "name": "멸마의 반지"
+          },
+          {
+            "id": 15090,
+            "name": "멸마의 목걸이"
+          },
+          {
+            "id": 15091,
+            "name": "멸마의 벨트"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 3,
+            "options": [
+              "MR +10"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    },
+    {
+      "id": {
+        "value": "classic_556_557_558_559_4",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=556; work/official_data/raw/item/556.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/556?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          556,
+          557,
+          558,
+          559
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=556; work/official_data/raw/item/556.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/556?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 4,
+        "source": "official",
+        "ref": "data/official/items.json official_id=556; work/official_data/raw/item/556.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/556?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -4
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=556; work/official_data/raw/item/556.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/556?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 556,
+            "name": "데스나이트의 장갑"
+          },
+          {
+            "id": 557,
+            "name": "데스나이트의 갑옷"
+          },
+          {
+            "id": 558,
+            "name": "데스나이트의 부츠"
+          },
+          {
+            "id": 559,
+            "name": "데스나이트의 투구"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 4,
+            "options": [
+              "방어력 -4"
+            ],
+            "polymorph": {
+              "name": "데스나이트"
+            }
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": {
+          "name": "데스나이트"
+        }
+      }
+    },
+    {
+      "id": {
+        "value": "classic_722_723_724_725_4",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=722; work/official_data/raw/item/722.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/722?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          722,
+          723,
+          724,
+          725
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=722; work/official_data/raw/item/722.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/722?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 4,
+        "source": "official",
+        "ref": "data/official/items.json official_id=722; work/official_data/raw/item/722.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/722?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "hp_regen": 7,
+          "ac": -3
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=722; work/official_data/raw/item/722.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/722?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 722,
+            "name": "반왕의 갑옷"
+          },
+          {
+            "id": 723,
+            "name": "반왕의 부츠"
+          },
+          {
+            "id": 724,
+            "name": "반왕의 건틀릿"
+          },
+          {
+            "id": 725,
+            "name": "반왕의 투구"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 4,
+            "options": [
+              "HP회복 +7",
+              "방어력 -3"
+            ],
+            "polymorph": {
+              "name": "켄 라우헬"
+            }
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": {
+          "name": "켄 라우헬"
+        }
+      }
+    },
+    {
+      "id": {
+        "value": "classic_727_732_734_735_4",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=727; work/official_data/raw/item/727.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/727?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          727,
+          732,
+          734,
+          735
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=727; work/official_data/raw/item/727.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/727?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 4,
+        "source": "official",
+        "ref": "data/official/items.json official_id=727; work/official_data/raw/item/727.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/727?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "mp_regen": 12,
+          "ac": -2,
+          "max_mp": 100
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=727; work/official_data/raw/item/727.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/727?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 727,
+            "name": "케레니스의 부츠"
+          },
+          {
+            "id": 732,
+            "name": "케레니스의 서클릿"
+          },
+          {
+            "id": 734,
+            "name": "케레니스의 장갑"
+          },
+          {
+            "id": 735,
+            "name": "케레니스의 로브"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 4,
+            "options": [
+              "MP회복 +12",
+              "방어력 -2",
+              "최대 MP +100"
+            ],
+            "polymorph": {
+              "name": "케레니스"
+            }
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": {
+          "name": "케레니스"
+        }
+      }
+    },
+    {
+      "id": {
+        "value": "classic_1007_1008_1009_1010_4",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=1007; work/official_data/raw/item/1007.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/1007?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          1007,
+          1008,
+          1009,
+          1010
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=1007; work/official_data/raw/item/1007.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/1007?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 4,
+        "source": "official",
+        "ref": "data/official/items.json official_id=1007; work/official_data/raw/item/1007.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/1007?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -4
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=1007; work/official_data/raw/item/1007.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/1007?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 1007,
+            "name": "커츠의 장갑"
+          },
+          {
+            "id": 1008,
+            "name": "커츠의 갑옷"
+          },
+          {
+            "id": 1009,
+            "name": "커츠의 부츠"
+          },
+          {
+            "id": 1010,
+            "name": "커츠의 투구"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 4,
+            "options": [
+              "방어력 -4"
+            ],
+            "polymorph": {
+              "name": "커츠"
+            }
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": {
+          "name": "커츠"
+        }
+      }
+    },
+    {
+      "id": {
+        "value": "classic_12149_12170_12209_3",
+        "source": "local_policy",
+        "ref": "data/official/items.json official_id=12149; work/official_data/raw/item/12149.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/12149?locale=ko-KR",
+        "note": "공식 set ID가 없는 응답에서 member IDs와 degree로 만든 backend 식별자. 세트 구성·보너스 자체는 공식 원문."
+      },
+      "members": {
+        "value": [
+          12149,
+          12170,
+          12209
+        ],
+        "source": "official",
+        "ref": "data/official/items.json official_id=12149; work/official_data/raw/item/12149.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/12149?locale=ko-KR set.items[].id"
+      },
+      "degree": {
+        "value": 3,
+        "source": "official",
+        "ref": "data/official/items.json official_id=12149; work/official_data/raw/item/12149.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/12149?locale=ko-KR set.bonuses[].degree"
+      },
+      "modifiers": {
+        "value": {
+          "ac": -1
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=12149; work/official_data/raw/item/12149.json set; https://api-goats.plaync.com/linclassic/v2.0/game/item/12149?locale=ko-KR set.bonuses[].options",
+        "note": "숫자 옵션만 적용. 변신/서술 효과는 아래 original에 보존하며 미지원."
+      },
+      "original": {
+        "items": [
+          {
+            "id": 12149,
+            "name": "수호의 반지"
+          },
+          {
+            "id": 12170,
+            "name": "수호의 목걸이"
+          },
+          {
+            "id": 12209,
+            "name": "수호의 벨트"
+          }
+        ],
+        "bonuses": [
+          {
+            "degree": 3,
+            "options": [
+              "방어력 -1"
+            ]
+          }
+        ]
+      },
+      "unsupported": {
+        "options": [],
+        "polymorph": null
+      }
+    }
+  ]
+}

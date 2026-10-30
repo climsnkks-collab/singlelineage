@@ -1,0 +1,3068 @@
+{
+  "table": "m6_map_expansion5",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 59,
+        "source": "client",
+        "ref": "region.jsonc:69 _map"
+      },
+      "region_id": {
+        "value": 59,
+        "source": "client",
+        "ref": "region.jsonc:69 _id"
+      },
+      "name_ko": {
+        "value": "에바왕국 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:68 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1410506
+    },
+    {
+      "map_id": {
+        "value": 60,
+        "source": "client",
+        "ref": "region.jsonc:71 _map"
+      },
+      "region_id": {
+        "value": 60,
+        "source": "client",
+        "ref": "region.jsonc:71 _id"
+      },
+      "name_ko": {
+        "value": "에바왕국 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:70 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1439783
+    },
+    {
+      "map_id": {
+        "value": 61,
+        "source": "client",
+        "ref": "region.jsonc:73 _map"
+      },
+      "region_id": {
+        "value": 61,
+        "source": "client",
+        "ref": "region.jsonc:73 _id"
+      },
+      "name_ko": {
+        "value": "에바왕국 던전 3층",
+        "source": "client",
+        "ref": "region.jsonc:72 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1361829
+    },
+    {
+      "map_id": {
+        "value": 62,
+        "source": "client",
+        "ref": "region.jsonc:75 _map"
+      },
+      "region_id": {
+        "value": 62,
+        "source": "client",
+        "ref": "region.jsonc:75 _id"
+      },
+      "name_ko": {
+        "value": "에바의 성지",
+        "source": "client",
+        "ref": "region.jsonc:74 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32640,
+        32768,
+        32831,
+        32895
+      ],
+      "chunks": 6,
+      "bytes": 735276
+    },
+    {
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "region_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _id"
+      },
+      "name_ko": {
+        "value": "에바왕국",
+        "source": "client",
+        "ref": "region.jsonc:76 comment"
+      },
+      "hunting": true,
+      "representative_template": 535,
+      "terrain_bounds": [
+        32576,
+        32640,
+        32895,
+        32959
+      ],
+      "chunks": 25,
+      "bytes": 4249392
+    },
+    {
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "region_id": {
+        "value": 220,
+        "source": "client",
+        "ref": "region.jsonc:307 _id"
+      },
+      "name_ko": {
+        "value": "몽환의 섬",
+        "source": "client",
+        "ref": "region.jsonc:306 comment"
+      },
+      "hunting": true,
+      "representative_template": 10257,
+      "terrain_bounds": [
+        32512,
+        32512,
+        32959,
+        32959
+      ],
+      "chunks": 35,
+      "bytes": 3601508
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m6_exp5_63_535",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 535,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:302"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32796,
+          "y1": 32869,
+          "x2": 32798,
+          "y2": 32871
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/535.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/535.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46266",
+        "raw": [
+          "6300001",
+          "Sea Anemone",
+          "60",
+          "45006",
+          "0",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_536",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 536,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:303"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32796,
+          "y1": 32874,
+          "x2": 32798,
+          "y2": 32876
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/536.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/536.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46266",
+        "raw": [
+          "6300001",
+          "Sea Anemone",
+          "60",
+          "45006",
+          "0",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_521",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 521,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:296"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32801,
+          "y1": 32876,
+          "x2": 32803,
+          "y2": 32878
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/521.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/521.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_522",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 522,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:297"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32795,
+          "y1": 32859,
+          "x2": 32797,
+          "y2": 32861
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/522.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/522.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_523",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 523,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:298"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32816,
+          "y1": 32877,
+          "x2": 32818,
+          "y2": 32879
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/523.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/523.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_524",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 524,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:299"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32793,
+          "y1": 32879,
+          "x2": 32795,
+          "y2": 32881
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/524.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/524.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_525",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 525,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:300"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32792,
+          "y1": 32854,
+          "x2": 32794,
+          "y2": 32856
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/525.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/525.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_512",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 512,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:288"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32818,
+          "y1": 32866,
+          "x2": 32820,
+          "y2": 32868
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/512.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/512.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46269",
+        "raw": [
+          "6300004",
+          "Coelacanth",
+          "60",
+          "45089",
+          "0",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_514",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 514,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:290"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32818,
+          "y1": 32871,
+          "x2": 32820,
+          "y2": 32873
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/514.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/514.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46267",
+        "raw": [
+          "6300002",
+          "Acaleph",
+          "100",
+          "45097",
+          "0",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_515",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 515,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:291"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32791,
+          "y1": 32869,
+          "x2": 32793,
+          "y2": 32871
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/515.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/515.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_504",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 504,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:281"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32802,
+          "y1": 32881,
+          "x2": 32804,
+          "y2": 32883
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/504.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "지하 수로 2층",
+          "지하 수로 3층",
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/504.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46270",
+        "raw": [
+          "6300005",
+          "Crabman",
+          "100",
+          "45164",
+          "0",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_511",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 511,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:287"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32816,
+          "y1": 32853,
+          "x2": 32818,
+          "y2": 32855
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/511.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/511.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46273",
+        "raw": [
+          "6300008",
+          "Merman",
+          "60",
+          "45159",
+          "12",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_518",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 518,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:293"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32807,
+          "y1": 32852,
+          "x2": 32809,
+          "y2": 32854
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/518.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/518.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46271",
+        "raw": [
+          "6300006",
+          "Shark",
+          "120",
+          "45160",
+          "0",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_519",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 519,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:294"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32821,
+          "y1": 32851,
+          "x2": 32823,
+          "y2": 32853
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/519.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/519.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46272",
+        "raw": [
+          "6300007",
+          "Aste",
+          "100",
+          "45195",
+          "0",
+          "32804",
+          "32869",
+          "0",
+          "0",
+          "32576",
+          "32640",
+          "32895",
+          "32959",
+          "5",
+          "0",
+          "0",
+          "63",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_503",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 503,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:280"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32821,
+          "y1": 32856,
+          "x2": 32823,
+          "y2": 32858
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/503.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/503.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_507",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 507,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:284"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32821,
+          "y1": 32876,
+          "x2": 32823,
+          "y2": 32878
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/507.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/507.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_63_513",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 513,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:289"
+      },
+      "map_id": {
+        "value": 63,
+        "source": "client",
+        "ref": "region.jsonc:77 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32788,
+          "y1": 32878,
+          "x2": 32790,
+          "y2": 32880
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/513.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "에바왕국"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/513.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10257",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10257,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:868"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32625,
+          "y1": 32816,
+          "x2": 32627,
+          "y2": 32818
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10257.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10257.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:45866",
+        "raw": [
+          "61018",
+          "Fungus",
+          "15",
+          "45551",
+          "0",
+          "32657",
+          "32841",
+          "0",
+          "0",
+          "32589",
+          "32805",
+          "32725",
+          "32877",
+          "4",
+          "60",
+          "120",
+          "303",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10258",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10258,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:869"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32625,
+          "y1": 32821,
+          "x2": 32627,
+          "y2": 32823
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10258.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10258.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:45891",
+        "raw": [
+          "61043",
+          "Will O\\ Wisp'",
+          "15",
+          "45558",
+          "0",
+          "32734",
+          "32735",
+          "0",
+          "0",
+          "32589",
+          "32592",
+          "32879",
+          "32878",
+          "4",
+          "60",
+          "120",
+          "303",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10245",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10245,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:856"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32629,
+          "y1": 32807,
+          "x2": 32631,
+          "y2": 32809
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10245.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10245.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10247",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10247,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:858"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32631,
+          "y1": 32825,
+          "x2": 32633,
+          "y2": 32827
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10247.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10247.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10250",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10250,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:861"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32635,
+          "y1": 32807,
+          "x2": 32637,
+          "y2": 32809
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10250.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10250.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:45848",
+        "raw": [
+          "61000",
+          "Killer Bee",
+          "30",
+          "45554",
+          "0",
+          "32624",
+          "32749",
+          "0",
+          "0",
+          "32589",
+          "32695",
+          "32659",
+          "32804",
+          "4",
+          "60",
+          "120",
+          "303",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10253",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10253,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:864"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32636,
+          "y1": 32825,
+          "x2": 32638,
+          "y2": 32827
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10253.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10253.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10244",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10244,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:855"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32640,
+          "y1": 32807,
+          "x2": 32642,
+          "y2": 32809
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10244.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10244.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10248",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10248,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:859"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32641,
+          "y1": 32825,
+          "x2": 32643,
+          "y2": 32827
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10248.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10248.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10251",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10251,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:862"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32643,
+          "y1": 32812,
+          "x2": 32645,
+          "y2": 32814
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10251.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10251.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:45852",
+        "raw": [
+          "61004",
+          "Ball Lightning",
+          "30",
+          "45549",
+          "0",
+          "32624",
+          "32750",
+          "0",
+          "0",
+          "32589",
+          "32695",
+          "32659",
+          "32805",
+          "4",
+          "60",
+          "120",
+          "303",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10254",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10254,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:865"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32644,
+          "y1": 32817,
+          "x2": 32646,
+          "y2": 32819
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10254.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10254.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10259",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10259,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:870"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32645,
+          "y1": 32805,
+          "x2": 32647,
+          "y2": 32807
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10259.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10259.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:45891",
+        "raw": [
+          "61043",
+          "Will O\\ Wisp'",
+          "15",
+          "45558",
+          "0",
+          "32734",
+          "32735",
+          "0",
+          "0",
+          "32589",
+          "32592",
+          "32879",
+          "32878",
+          "4",
+          "60",
+          "120",
+          "303",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10243",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10243,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:854"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32621,
+          "y1": 32805,
+          "x2": 32623,
+          "y2": 32807
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10243.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10243.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10246",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10246,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:857"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32621,
+          "y1": 32826,
+          "x2": 32623,
+          "y2": 32828
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10246.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10246.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10249",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10249,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:860"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32620,
+          "y1": 32814,
+          "x2": 32622,
+          "y2": 32816
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10249.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10249.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10252",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10252,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:863"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32620,
+          "y1": 32819,
+          "x2": 32622,
+          "y2": 32821
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10252.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10252.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp5_303_10256",
+        "source": "local_policy",
+        "ref": "MapExp5"
+      },
+      "template_id": {
+        "value": 10256,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:867"
+      },
+      "map_id": {
+        "value": 303,
+        "source": "client",
+        "ref": "region.jsonc:307 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32629,
+          "y1": 32830,
+          "x2": 32631,
+          "y2": 32832
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10256.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "몽환의 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/10256.json"
+      },
+      "l1j_spawn_reference": null
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "map59",
+      "map_id": 59,
+      "name_ko": "에바왕국 던전 1층",
+      "entry": {
+        "origin": [
+          4,
+          33627,
+          33502
+        ],
+        "destination": [
+          59,
+          32709,
+          32789,
+          5
+        ],
+        "name": "to59b",
+        "payload_offset": 107045,
+        "raw_hex": "361e3b008aff1500",
+        "ref": "work/local_resource_provider/assets/map/4/800d800b.s32:byte107045",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          4,
+          33627,
+          33502
+        ],
+        "reference_destination": [
+          59,
+          32709,
+          32789,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map60",
+      "map_id": 60,
+      "name_ko": "에바왕국 던전 2층",
+      "entry": {
+        "origin": [
+          59,
+          32663,
+          32867
+        ],
+        "destination": [
+          60,
+          32745,
+          32857,
+          5
+        ],
+        "name": "to60a",
+        "payload_offset": 220696,
+        "raw_hex": "2e233c00d2ff5900",
+        "ref": "work/local_resource_provider/assets/map/59/7ffe8001.s32:byte220696",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          59,
+          32663,
+          32867
+        ],
+        "reference_destination": [
+          60,
+          32745,
+          32857,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map61",
+      "map_id": 61,
+      "name_ko": "에바왕국 던전 3층",
+      "entry": {
+        "origin": [
+          60,
+          32706,
+          32809
+        ],
+        "destination": [
+          61,
+          32728,
+          32807,
+          5
+        ],
+        "name": "to61a",
+        "payload_offset": 219116,
+        "raw_hex": "04293d00b0ff2700",
+        "ref": "work/local_resource_provider/assets/map/60/7fff8000.s32:byte219116",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          60,
+          32706,
+          32809
+        ],
+        "reference_destination": [
+          61,
+          32728,
+          32807,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map62",
+      "map_id": 62,
+      "name_ko": "에바의 성지",
+      "entry": {
+        "origin": [
+          59,
+          32747,
+          32851
+        ],
+        "destination": [
+          62,
+          32744,
+          32838,
+          5
+        ],
+        "name": "to62",
+        "payload_offset": 206525,
+        "raw_hex": "56133e00d0ff4600",
+        "ref": "work/local_resource_provider/assets/map/59/7fff8001.s32:byte206525",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          59,
+          32747,
+          32851
+        ],
+        "reference_destination": [
+          62,
+          32744,
+          32838,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map63",
+      "map_id": 63,
+      "name_ko": "에바왕국",
+      "entry": {
+        "origin": [
+          61,
+          32695,
+          32824
+        ],
+        "destination": [
+          63,
+          32806,
+          32868,
+          5
+        ],
+        "name": "to63",
+        "payload_offset": 211683,
+        "raw_hex": "6e383f004c006400",
+        "ref": "work/local_resource_provider/assets/map/61/7ffe8000.s32:byte211683",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          61,
+          32695,
+          32824
+        ],
+        "reference_destination": [
+          63,
+          32806,
+          32868,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_exp5_63_535"
+    },
+    {
+      "case_id": "map303",
+      "map_id": 303,
+      "name_ko": "몽환의 섬",
+      "entry": {
+        "origin": [
+          4,
+          33978,
+          32923
+        ],
+        "destination": [
+          303,
+          32635,
+          32817,
+          5
+        ],
+        "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/NpcActions/Teleporter.xml:1047-1048",
+        "source": "local_policy/l1j_paid_teleport",
+        "native_trigger_status": "UNKNOWN"
+      },
+      "combat": true,
+      "group_id": "m6_exp5_303_10257",
+      "teleport": {
+        "npc_id": 50045,
+        "placement_id": 50064,
+        "position": [
+          4,
+          33978,
+          32923
+        ],
+        "name": "Eldin",
+        "name_token": "$2497",
+        "sprite": 940,
+        "appearance_policy": "LOCAL existing teleporter role sprite940; native NPC identity/sprite UNKNOWN",
+        "stem": "phantasmisland",
+        "action": "phantasm-island",
+        "destination": [
+          303,
+          32635,
+          32817,
+          5
+        ],
+        "price": 1000,
+        "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/NpcActions/Teleporter.xml:1047-1048",
+        "npc_ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:21764",
+        "spawn_ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:48762",
+        "menu_ref": "work/local_resource_provider/assets/data/uml/phantasmisland.uml:8"
+      },
+      "start": [
+        4,
+        33977,
+        32923
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        4,
+        33627,
+        33502
+      ],
+      "destination": [
+        59,
+        32709,
+        32789,
+        5
+      ],
+      "name": "to59b",
+      "payload_offset": 107045,
+      "raw_hex": "361e3b008aff1500",
+      "ref": "work/local_resource_provider/assets/map/4/800d800b.s32:byte107045",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        4,
+        33627,
+        33502
+      ],
+      "reference_destination": [
+        59,
+        32709,
+        32789,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        59,
+        32663,
+        32867
+      ],
+      "destination": [
+        60,
+        32745,
+        32857,
+        5
+      ],
+      "name": "to60a",
+      "payload_offset": 220696,
+      "raw_hex": "2e233c00d2ff5900",
+      "ref": "work/local_resource_provider/assets/map/59/7ffe8001.s32:byte220696",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        59,
+        32663,
+        32867
+      ],
+      "reference_destination": [
+        60,
+        32745,
+        32857,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        59,
+        32709,
+        32788
+      ],
+      "destination": [
+        4,
+        33627,
+        33503,
+        5
+      ],
+      "name": "to4heine",
+      "payload_offset": 247967,
+      "raw_hex": "0a140400b606df02",
+      "ref": "work/local_resource_provider/assets/map/59/7fff8000.s32:byte247967",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        59,
+        32709,
+        32788
+      ],
+      "reference_destination": [
+        4,
+        33627,
+        33503,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        59,
+        32747,
+        32851
+      ],
+      "destination": [
+        62,
+        32744,
+        32838,
+        5
+      ],
+      "name": "to62",
+      "payload_offset": 206525,
+      "raw_hex": "56133e00d0ff4600",
+      "ref": "work/local_resource_provider/assets/map/59/7fff8001.s32:byte206525",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        59,
+        32747,
+        32851
+      ],
+      "reference_destination": [
+        62,
+        32744,
+        32838,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        60,
+        32706,
+        32809
+      ],
+      "destination": [
+        61,
+        32728,
+        32807,
+        5
+      ],
+      "name": "to61a",
+      "payload_offset": 219116,
+      "raw_hex": "04293d00b0ff2700",
+      "ref": "work/local_resource_provider/assets/map/60/7fff8000.s32:byte219116",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        60,
+        32706,
+        32809
+      ],
+      "reference_destination": [
+        61,
+        32728,
+        32807,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        60,
+        32746,
+        32857
+      ],
+      "destination": [
+        59,
+        32664,
+        32867,
+        5
+      ],
+      "name": "to59a",
+      "payload_offset": 238284,
+      "raw_hex": "54193b0030ff6300",
+      "ref": "work/local_resource_provider/assets/map/60/7fff8001.s32:byte238284",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        60,
+        32746,
+        32857
+      ],
+      "reference_destination": [
+        59,
+        32664,
+        32867,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        61,
+        32695,
+        32824
+      ],
+      "destination": [
+        63,
+        32806,
+        32868,
+        5
+      ],
+      "name": "to63",
+      "payload_offset": 211683,
+      "raw_hex": "6e383f004c006400",
+      "ref": "work/local_resource_provider/assets/map/61/7ffe8000.s32:byte211683",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        61,
+        32695,
+        32824
+      ],
+      "reference_destination": [
+        63,
+        32806,
+        32868,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        61,
+        32728,
+        32806
+      ],
+      "destination": [
+        60,
+        32705,
+        32809,
+        5
+      ],
+      "name": "to60",
+      "payload_offset": 202599,
+      "raw_hex": "30263c0082ff2900",
+      "ref": "work/local_resource_provider/assets/map/61/7fff8000.s32:byte202599",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        61,
+        32728,
+        32806
+      ],
+      "reference_destination": [
+        60,
+        32705,
+        32809,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        62,
+        32744,
+        32839
+      ],
+      "destination": [
+        59,
+        32746,
+        32851,
+        5
+      ],
+      "name": "to59c",
+      "payload_offset": 165176,
+      "raw_hex": "50073b00d4ff5300",
+      "ref": "work/local_resource_provider/assets/map/62/7fff8001.s32:byte165176",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        62,
+        32744,
+        32839
+      ],
+      "reference_destination": [
+        59,
+        32746,
+        32851,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        63,
+        32807,
+        32868
+      ],
+      "destination": [
+        61,
+        32695,
+        32825,
+        5
+      ],
+      "name": "to61",
+      "payload_offset": 156536,
+      "raw_hex": "4e243d006eff3900",
+      "ref": "work/local_resource_provider/assets/map/63/80008001.s32:byte156536",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        63,
+        32807,
+        32868
+      ],
+      "reference_destination": [
+        61,
+        32695,
+        32825,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    }
+  ],
+  "returns": [
+    {
+      "map_id": 59,
+      "destination": [
+        4,
+        33614,
+        33243,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18374",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point, or source default for map303; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 60,
+      "destination": [
+        4,
+        33614,
+        33243,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18375",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point, or source default for map303; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 61,
+      "destination": [
+        4,
+        33614,
+        33243,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18376",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point, or source default for map303; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 62,
+      "destination": [
+        4,
+        33604,
+        33237,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18377",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point, or source default for map303; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 63,
+      "destination": [
+        4,
+        33604,
+        33237,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18378",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point, or source default for map303; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 303,
+      "destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/Getback.java:150-155",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point, or source default for map303; native random/class/underwater rules UNKNOWN."
+    }
+  ],
+  "teleporters": [
+    {
+      "npc_id": 50045,
+      "placement_id": 50064,
+      "position": [
+        4,
+        33978,
+        32923
+      ],
+      "name": "Eldin",
+      "name_token": "$2497",
+      "sprite": 940,
+      "appearance_policy": "LOCAL existing teleporter role sprite940; native NPC identity/sprite UNKNOWN",
+      "stem": "phantasmisland",
+      "action": "phantasm-island",
+      "destination": [
+        303,
+        32635,
+        32817,
+        5
+      ],
+      "price": 1000,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/NpcActions/Teleporter.xml:1047-1048",
+      "npc_ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:21764",
+      "spawn_ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:48762",
+      "menu_ref": "work/local_resource_provider/assets/data/uml/phantasmisland.uml:8"
+    }
+  ],
+  "pending_before_ids": [
+    499,
+    500,
+    501,
+    502,
+    503,
+    504,
+    505,
+    506,
+    507,
+    511,
+    512,
+    513,
+    514,
+    515,
+    518,
+    519,
+    521,
+    522,
+    523,
+    524,
+    525,
+    535,
+    536,
+    567,
+    621,
+    710,
+    723,
+    753,
+    754,
+    755,
+    756,
+    757,
+    758,
+    759,
+    760,
+    761,
+    762,
+    763,
+    764,
+    765,
+    766,
+    767,
+    768,
+    769,
+    770,
+    771,
+    772,
+    773,
+    774,
+    775,
+    776,
+    777,
+    827,
+    889,
+    895,
+    899,
+    900,
+    902,
+    971,
+    972,
+    975,
+    1027,
+    1028,
+    1039,
+    1041,
+    1410,
+    2381,
+    2388,
+    2389,
+    2390,
+    2391,
+    2392,
+    2393,
+    2394,
+    2395,
+    2396,
+    2397,
+    2398,
+    2399,
+    2400,
+    2401,
+    2402,
+    2403,
+    2782,
+    2783,
+    2784,
+    2785,
+    2786,
+    2787,
+    10204,
+    10205,
+    10206,
+    10207,
+    10208,
+    10209,
+    10243,
+    10244,
+    10245,
+    10246,
+    10247,
+    10248,
+    10249,
+    10250,
+    10251,
+    10252,
+    10253,
+    10254,
+    10255,
+    10256,
+    10257,
+    10258,
+    10259,
+    12179,
+    12180,
+    12182,
+    12183,
+    12187,
+    12188
+  ],
+  "newly_placed_ids": [
+    503,
+    504,
+    507,
+    511,
+    512,
+    513,
+    514,
+    515,
+    518,
+    519,
+    521,
+    522,
+    523,
+    524,
+    525,
+    535,
+    536,
+    10243,
+    10244,
+    10245,
+    10246,
+    10247,
+    10248,
+    10249,
+    10250,
+    10251,
+    10252,
+    10253,
+    10254,
+    10256,
+    10257,
+    10258,
+    10259
+  ],
+  "priority": [
+    {
+      "region": "잊혀진 섬",
+      "pending_species": 26
+    },
+    {
+      "region": "에바왕국",
+      "pending_species": 17
+    },
+    {
+      "region": "오염된 축복의 땅",
+      "pending_species": 17
+    },
+    {
+      "region": "몽환의 섬",
+      "pending_species": 16
+    }
+  ],
+  "unresolved": [
+    {
+      "map_id": 70,
+      "reason": "No external S32 link. L1J C_Ship needs40300/40301; current product item mapping/menu/boarding consumption absent. Ship timing/interior unimplemented; no free walking substitute."
+    },
+    {
+      "map_id": 244,
+      "reason": "L1J71039 teleport orcfcd costs10000 and has destination32982,32808. Required current native orcfbuwoo1/orcfcd menu/action absent in catalog; retained internal S32 links do not establish external entry."
+    },
+    {
+      "template_ids": [
+        500,
+        501,
+        502,
+        505,
+        506
+      ],
+      "reason": "Official underground-waterway names differ from current client Eva dungeon59..62. S32 links establish map travel, not official region synonymy. No forced mapping."
+    },
+    {
+      "map_id": 63,
+      "reason": "Static travel/spawn only. Underwater breath environment damage and original graphics/input UNKNOWN; existing breath buff environment consumer remains unconnected."
+    }
+  ],
+  "placement_policy": "Official exact region only; LOCAL connected standable3x3/one target/60-120sec. Existing monster/drop/combat definitions unchanged.",
+  "source_survey": "work/local_original_session/runs/map-expansion5-survey.json"
+}

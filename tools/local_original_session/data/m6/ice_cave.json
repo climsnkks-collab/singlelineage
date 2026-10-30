@@ -1,0 +1,2010 @@
+{
+  "table": "m6_ice_cave_connections",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 72,
+        "source": "client",
+        "ref": "region.jsonc:271 _map"
+      },
+      "region_id": {
+        "value": 199,
+        "source": "client",
+        "ref": "region.jsonc:271 _id"
+      },
+      "name_ko": {
+        "value": "얼음 수정 동굴 1층",
+        "source": "client",
+        "ref": "region.jsonc:270 comment"
+      },
+      "hunting": false,
+      "terrain_bounds": [
+        32640,
+        32704,
+        32895,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1281322,
+      "representative_template": null,
+      "combat_status": "not claimed by connection data"
+    },
+    {
+      "map_id": {
+        "value": 73,
+        "source": "client",
+        "ref": "region.jsonc:273 _map"
+      },
+      "region_id": {
+        "value": 200,
+        "source": "client",
+        "ref": "region.jsonc:273 _id"
+      },
+      "name_ko": {
+        "value": "얼음 수정 동굴 2층",
+        "source": "client",
+        "ref": "region.jsonc:272 comment"
+      },
+      "hunting": false,
+      "terrain_bounds": [
+        32640,
+        32704,
+        32895,
+        32959
+      ],
+      "chunks": 10,
+      "bytes": 1207187,
+      "representative_template": null,
+      "combat_status": "not claimed by connection data"
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        4,
+        33969,
+        32337
+      ],
+      "destination": [
+        73,
+        32725,
+        32845,
+        5
+      ],
+      "reference_origin": [
+        4,
+        33969,
+        32337
+      ],
+      "reference_destination": [
+        73,
+        32725,
+        32845,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/4/80127ff9.s32:byte83453",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "out of ice lake_1",
+        "record_offset": 83435,
+        "payload_offset": 83453,
+        "raw_hex": "62114900aaff4d00",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        4,
+        33969,
+        32338
+      ],
+      "destination": [
+        73,
+        32725,
+        32846,
+        5
+      ],
+      "reference_origin": [
+        4,
+        33969,
+        32338
+      ],
+      "reference_destination": [
+        73,
+        32725,
+        32846,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/4/80127ff9.s32:byte83479",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "out of ice lake_2",
+        "record_offset": 83461,
+        "payload_offset": 83479,
+        "raw_hex": "62124900aaff4e00",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        4,
+        34178,
+        32182
+      ],
+      "destination": [
+        72,
+        32747,
+        32787,
+        5
+      ],
+      "reference_origin": [
+        4,
+        34178,
+        32182
+      ],
+      "reference_destination": [
+        72,
+        32747,
+        32787,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/4/80167ff6.s32:byte109230",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon 1f_in",
+        "record_offset": 109212,
+        "payload_offset": 109230,
+        "raw_hex": "04364800d6ff1300",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        4,
+        34177,
+        32182
+      ],
+      "destination": [
+        72,
+        32746,
+        32787,
+        5
+      ],
+      "reference_origin": [
+        4,
+        34177,
+        32182
+      ],
+      "reference_destination": [
+        72,
+        32746,
+        32787,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/4/80167ff6.s32:byte109258",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon 1f_in_2",
+        "record_offset": 109238,
+        "payload_offset": 109258,
+        "raw_hex": "02364800d4ff1300",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        4,
+        34214,
+        32248
+      ],
+      "destination": [
+        72,
+        32814,
+        32803,
+        5
+      ],
+      "reference_origin": [
+        4,
+        34214,
+        32248
+      ],
+      "reference_destination": [
+        72,
+        32814,
+        32803,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/4/80167ff7.s32:byte163232",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon 1f in_L",
+        "record_offset": 163212,
+        "payload_offset": 163232,
+        "raw_hex": "4c3848005c002300",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "origin": [
+        4,
+        34214,
+        32249
+      ],
+      "destination": [
+        72,
+        32814,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        4,
+        34214,
+        32249
+      ],
+      "reference_destination": [
+        72,
+        32814,
+        32804,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/4/80167ff7.s32:byte163253",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice in 1f_L2",
+        "record_offset": 163240,
+        "payload_offset": 163253,
+        "raw_hex": "4c3948005c002400",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "origin": [
+        72,
+        32747,
+        32786
+      ],
+      "destination": [
+        4,
+        34178,
+        32183,
+        5
+      ],
+      "reference_origin": [
+        72,
+        32747,
+        32786
+      ],
+      "reference_destination": [
+        4,
+        34178,
+        32183,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/72/7fff8000.s32:byte178313",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon exit",
+        "record_offset": 178296,
+        "payload_offset": 178313,
+        "raw_hex": "56120400040bb7fd",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        72,
+        32746,
+        32786
+      ],
+      "destination": [
+        4,
+        34177,
+        32183,
+        5
+      ],
+      "reference_origin": [
+        72,
+        32746,
+        32786
+      ],
+      "reference_destination": [
+        4,
+        34177,
+        32183,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/72/7fff8000.s32:byte178336",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "dungeon exit_2",
+        "record_offset": 178321,
+        "payload_offset": 178336,
+        "raw_hex": "54120400020bb7fd",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        72,
+        32726,
+        32861
+      ],
+      "destination": [
+        73,
+        32755,
+        32870,
+        5
+      ],
+      "reference_origin": [
+        72,
+        32726,
+        32861
+      ],
+      "reference_destination": [
+        73,
+        32755,
+        32870,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/72/7fff8001.s32:byte163931",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon down",
+        "record_offset": 163914,
+        "payload_offset": 163931,
+        "raw_hex": "2c1d4900e6ff6600",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        72,
+        32726,
+        32862
+      ],
+      "destination": [
+        73,
+        32755,
+        32871,
+        5
+      ],
+      "reference_origin": [
+        72,
+        32726,
+        32862
+      ],
+      "reference_destination": [
+        73,
+        32755,
+        32871,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/72/7fff8001.s32:byte163958",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon down_2",
+        "record_offset": 163939,
+        "payload_offset": 163958,
+        "raw_hex": "2c1e4900e6ff6700",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        72,
+        32815,
+        32803
+      ],
+      "destination": [
+        4,
+        34213,
+        32248,
+        5
+      ],
+      "reference_origin": [
+        72,
+        32815,
+        32803
+      ],
+      "reference_destination": [
+        4,
+        34213,
+        32248,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/72/80008000.s32:byte171383",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice exit_L",
+        "record_offset": 171372,
+        "payload_offset": 171383,
+        "raw_hex": "5e2304004a0bf8fd",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "origin": [
+        72,
+        32815,
+        32804
+      ],
+      "destination": [
+        4,
+        34213,
+        32249,
+        5
+      ],
+      "reference_origin": [
+        72,
+        32815,
+        32804
+      ],
+      "reference_destination": [
+        4,
+        34213,
+        32249,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/72/80008000.s32:byte171405",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice exit _ L2",
+        "record_offset": 171391,
+        "payload_offset": 171405,
+        "raw_hex": "5e2404004a0bf9fd",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "origin": [
+        73,
+        32756,
+        32870
+      ],
+      "destination": [
+        72,
+        32727,
+        32861,
+        5
+      ],
+      "reference_origin": [
+        73,
+        32756,
+        32870
+      ],
+      "reference_destination": [
+        72,
+        32727,
+        32861,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200007",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon up",
+        "record_offset": 199992,
+        "payload_offset": 200007,
+        "raw_hex": "68264800aeff5d00",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "origin": [
+        73,
+        32756,
+        32871
+      ],
+      "destination": [
+        72,
+        32727,
+        32862,
+        5
+      ],
+      "reference_origin": [
+        73,
+        32756,
+        32871
+      ],
+      "reference_destination": [
+        72,
+        32727,
+        32862,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200032",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "ice dungeon up_2",
+        "record_offset": 200015,
+        "payload_offset": 200032,
+        "raw_hex": "68274800aeff5e00",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "origin": [
+        73,
+        32725,
+        32845
+      ],
+      "destination": [
+        4,
+        33969,
+        32337,
+        5
+      ],
+      "reference_origin": [
+        73,
+        32725,
+        32845
+      ],
+      "reference_destination": [
+        4,
+        33969,
+        32337,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200058",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "out of ice lake_1",
+        "record_offset": 200040,
+        "payload_offset": 200058,
+        "raw_hex": "2a0d0400620951fe",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          0,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "origin": [
+        73,
+        32725,
+        32846
+      ],
+      "destination": [
+        4,
+        33969,
+        32338,
+        5
+      ],
+      "reference_origin": [
+        73,
+        32725,
+        32846
+      ],
+      "reference_destination": [
+        4,
+        33969,
+        32338,
+        5
+      ],
+      "source": "local_policy/client_s32",
+      "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200084",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+      "client_record": {
+        "name": "out of ice lake_2",
+        "record_offset": 200066,
+        "payload_offset": 200084,
+        "raw_hex": "2a0e0400620952fe",
+        "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+      },
+      "static_observation": {
+        "origin_stand": true,
+        "destination_stand": true,
+        "incoming_headings": [
+          4,
+          5,
+          6
+        ]
+      }
+    }
+  ],
+  "returns": [
+    {
+      "map_id": 72,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18387",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; current S32 standable, no coordinate adjustment. Native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 73,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18388",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; current S32 standable, no coordinate adjustment. Native random/class policy UNKNOWN."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "ice_link01",
+      "map_id": 73,
+      "name_ko": "out of ice lake_1",
+      "entry": {
+        "origin": [
+          4,
+          33969,
+          32337
+        ],
+        "destination": [
+          73,
+          32725,
+          32845,
+          5
+        ],
+        "reference_origin": [
+          4,
+          33969,
+          32337
+        ],
+        "reference_destination": [
+          73,
+          32725,
+          32845,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/4/80127ff9.s32:byte83453",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "out of ice lake_1",
+          "record_offset": 83435,
+          "payload_offset": 83453,
+          "raw_hex": "62114900aaff4d00",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link02",
+      "map_id": 73,
+      "name_ko": "out of ice lake_2",
+      "entry": {
+        "origin": [
+          4,
+          33969,
+          32338
+        ],
+        "destination": [
+          73,
+          32725,
+          32846,
+          5
+        ],
+        "reference_origin": [
+          4,
+          33969,
+          32338
+        ],
+        "reference_destination": [
+          73,
+          32725,
+          32846,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/4/80127ff9.s32:byte83479",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "out of ice lake_2",
+          "record_offset": 83461,
+          "payload_offset": 83479,
+          "raw_hex": "62124900aaff4e00",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link03",
+      "map_id": 72,
+      "name_ko": "ice dungeon 1f_in",
+      "entry": {
+        "origin": [
+          4,
+          34178,
+          32182
+        ],
+        "destination": [
+          72,
+          32747,
+          32787,
+          5
+        ],
+        "reference_origin": [
+          4,
+          34178,
+          32182
+        ],
+        "reference_destination": [
+          72,
+          32747,
+          32787,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/4/80167ff6.s32:byte109230",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon 1f_in",
+          "record_offset": 109212,
+          "payload_offset": 109230,
+          "raw_hex": "04364800d6ff1300",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link04",
+      "map_id": 72,
+      "name_ko": "ice dungeon 1f_in_2",
+      "entry": {
+        "origin": [
+          4,
+          34177,
+          32182
+        ],
+        "destination": [
+          72,
+          32746,
+          32787,
+          5
+        ],
+        "reference_origin": [
+          4,
+          34177,
+          32182
+        ],
+        "reference_destination": [
+          72,
+          32746,
+          32787,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/4/80167ff6.s32:byte109258",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon 1f_in_2",
+          "record_offset": 109238,
+          "payload_offset": 109258,
+          "raw_hex": "02364800d4ff1300",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            6,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link05",
+      "map_id": 72,
+      "name_ko": "ice dungeon 1f in_L",
+      "entry": {
+        "origin": [
+          4,
+          34214,
+          32248
+        ],
+        "destination": [
+          72,
+          32814,
+          32803,
+          5
+        ],
+        "reference_origin": [
+          4,
+          34214,
+          32248
+        ],
+        "reference_destination": [
+          72,
+          32814,
+          32803,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/4/80167ff7.s32:byte163232",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon 1f in_L",
+          "record_offset": 163212,
+          "payload_offset": 163232,
+          "raw_hex": "4c3848005c002300",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link06",
+      "map_id": 72,
+      "name_ko": "ice in 1f_L2",
+      "entry": {
+        "origin": [
+          4,
+          34214,
+          32249
+        ],
+        "destination": [
+          72,
+          32814,
+          32804,
+          5
+        ],
+        "reference_origin": [
+          4,
+          34214,
+          32249
+        ],
+        "reference_destination": [
+          72,
+          32814,
+          32804,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/4/80167ff7.s32:byte163253",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice in 1f_L2",
+          "record_offset": 163240,
+          "payload_offset": 163253,
+          "raw_hex": "4c3948005c002400",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link07",
+      "map_id": 4,
+      "name_ko": "ice dungeon exit",
+      "entry": {
+        "origin": [
+          72,
+          32747,
+          32786
+        ],
+        "destination": [
+          4,
+          34178,
+          32183,
+          5
+        ],
+        "reference_origin": [
+          72,
+          32747,
+          32786
+        ],
+        "reference_destination": [
+          4,
+          34178,
+          32183,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/72/7fff8000.s32:byte178313",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon exit",
+          "record_offset": 178296,
+          "payload_offset": 178313,
+          "raw_hex": "56120400040bb7fd",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link08",
+      "map_id": 4,
+      "name_ko": "dungeon exit_2",
+      "entry": {
+        "origin": [
+          72,
+          32746,
+          32786
+        ],
+        "destination": [
+          4,
+          34177,
+          32183,
+          5
+        ],
+        "reference_origin": [
+          72,
+          32746,
+          32786
+        ],
+        "reference_destination": [
+          4,
+          34177,
+          32183,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/72/7fff8000.s32:byte178336",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "dungeon exit_2",
+          "record_offset": 178321,
+          "payload_offset": 178336,
+          "raw_hex": "54120400020bb7fd",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            6,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link09",
+      "map_id": 73,
+      "name_ko": "ice dungeon down",
+      "entry": {
+        "origin": [
+          72,
+          32726,
+          32861
+        ],
+        "destination": [
+          73,
+          32755,
+          32870,
+          5
+        ],
+        "reference_origin": [
+          72,
+          32726,
+          32861
+        ],
+        "reference_destination": [
+          73,
+          32755,
+          32870,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/72/7fff8001.s32:byte163931",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon down",
+          "record_offset": 163914,
+          "payload_offset": 163931,
+          "raw_hex": "2c1d4900e6ff6600",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link10",
+      "map_id": 73,
+      "name_ko": "ice dungeon down_2",
+      "entry": {
+        "origin": [
+          72,
+          32726,
+          32862
+        ],
+        "destination": [
+          73,
+          32755,
+          32871,
+          5
+        ],
+        "reference_origin": [
+          72,
+          32726,
+          32862
+        ],
+        "reference_destination": [
+          73,
+          32755,
+          32871,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/72/7fff8001.s32:byte163958",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon down_2",
+          "record_offset": 163939,
+          "payload_offset": 163958,
+          "raw_hex": "2c1e4900e6ff6700",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            4,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link11",
+      "map_id": 4,
+      "name_ko": "ice exit_L",
+      "entry": {
+        "origin": [
+          72,
+          32815,
+          32803
+        ],
+        "destination": [
+          4,
+          34213,
+          32248,
+          5
+        ],
+        "reference_origin": [
+          72,
+          32815,
+          32803
+        ],
+        "reference_destination": [
+          4,
+          34213,
+          32248,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/72/80008000.s32:byte171383",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice exit_L",
+          "record_offset": 171372,
+          "payload_offset": 171383,
+          "raw_hex": "5e2304004a0bf8fd",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link12",
+      "map_id": 4,
+      "name_ko": "ice exit _ L2",
+      "entry": {
+        "origin": [
+          72,
+          32815,
+          32804
+        ],
+        "destination": [
+          4,
+          34213,
+          32249,
+          5
+        ],
+        "reference_origin": [
+          72,
+          32815,
+          32804
+        ],
+        "reference_destination": [
+          4,
+          34213,
+          32249,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/72/80008000.s32:byte171405",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice exit _ L2",
+          "record_offset": 171391,
+          "payload_offset": 171405,
+          "raw_hex": "5e2404004a0bf9fd",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link13",
+      "map_id": 72,
+      "name_ko": "ice dungeon up",
+      "entry": {
+        "origin": [
+          73,
+          32756,
+          32870
+        ],
+        "destination": [
+          72,
+          32727,
+          32861,
+          5
+        ],
+        "reference_origin": [
+          73,
+          32756,
+          32870
+        ],
+        "reference_destination": [
+          72,
+          32727,
+          32861,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200007",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon up",
+          "record_offset": 199992,
+          "payload_offset": 200007,
+          "raw_hex": "68264800aeff5d00",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link14",
+      "map_id": 72,
+      "name_ko": "ice dungeon up_2",
+      "entry": {
+        "origin": [
+          73,
+          32756,
+          32871
+        ],
+        "destination": [
+          72,
+          32727,
+          32862,
+          5
+        ],
+        "reference_origin": [
+          73,
+          32756,
+          32871
+        ],
+        "reference_destination": [
+          72,
+          32727,
+          32862,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200032",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "ice dungeon up_2",
+          "record_offset": 200015,
+          "payload_offset": 200032,
+          "raw_hex": "68274800aeff5e00",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            2,
+            3,
+            4
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link15",
+      "map_id": 4,
+      "name_ko": "out of ice lake_1",
+      "entry": {
+        "origin": [
+          73,
+          32725,
+          32845
+        ],
+        "destination": [
+          4,
+          33969,
+          32337,
+          5
+        ],
+        "reference_origin": [
+          73,
+          32725,
+          32845
+        ],
+        "reference_destination": [
+          4,
+          33969,
+          32337,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200058",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "out of ice lake_1",
+          "record_offset": 200040,
+          "payload_offset": 200058,
+          "raw_hex": "2a0d0400620951fe",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            0,
+            5,
+            6,
+            7
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "ice_link16",
+      "map_id": 4,
+      "name_ko": "out of ice lake_2",
+      "entry": {
+        "origin": [
+          73,
+          32725,
+          32846
+        ],
+        "destination": [
+          4,
+          33969,
+          32338,
+          5
+        ],
+        "reference_origin": [
+          73,
+          32725,
+          32846
+        ],
+        "reference_destination": [
+          4,
+          33969,
+          32338,
+          5
+        ],
+        "source": "local_policy/client_s32",
+        "ref": "work/local_resource_provider/assets/map/73/7fff8001.s32:byte200084",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+        "client_record": {
+          "name": "out of ice lake_2",
+          "record_offset": 200066,
+          "payload_offset": 200084,
+          "raw_hex": "2a0e0400620952fe",
+          "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+        },
+        "static_observation": {
+          "origin_stand": true,
+          "destination_stand": true,
+          "incoming_headings": [
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      "group_id": null,
+      "combat": false
+    }
+  ],
+  "groups": [],
+  "scope": "Current-client named map-link coordinates for maps72/73; LOCAL backend consumption. No monster/spawn/combat/native rendering claim.",
+  "unresolved": [
+    {
+      "map_id": 74,
+      "reason": "Named current-client links discovered but outside this72/73 service change; no map74 serving/spawning or native execution claim.",
+      "client_links": [
+        {
+          "origin": [
+            73,
+            32797,
+            32808
+          ],
+          "destination": [
+            74,
+            32733,
+            32853,
+            5
+          ],
+          "reference_origin": [
+            73,
+            32797,
+            32808
+          ],
+          "reference_destination": [
+            74,
+            32733,
+            32853,
+            5
+          ],
+          "source": "local_policy/client_s32",
+          "ref": "work/local_resource_provider/assets/map/73/80008000.s32:byte188582",
+          "native_trigger_status": "UNKNOWN",
+          "source_adjusted": false,
+          "destination_adjusted": false,
+          "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+          "client_record": {
+            "name": "ice dungeon 3f",
+            "record_offset": 188567,
+            "payload_offset": 188582,
+            "raw_hex": "3a284a00baff5500",
+            "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+          },
+          "static_observation": {
+            "origin_stand": true,
+            "destination_stand": true,
+            "incoming_headings": [
+              0,
+              5,
+              6,
+              7
+            ]
+          }
+        },
+        {
+          "origin": [
+            73,
+            32797,
+            32809
+          ],
+          "destination": [
+            74,
+            32732,
+            32853,
+            5
+          ],
+          "reference_origin": [
+            73,
+            32797,
+            32809
+          ],
+          "reference_destination": [
+            74,
+            32732,
+            32853,
+            5
+          ],
+          "source": "local_policy/client_s32",
+          "ref": "work/local_resource_provider/assets/map/73/80008000.s32:byte188607",
+          "native_trigger_status": "UNKNOWN",
+          "source_adjusted": false,
+          "destination_adjusted": false,
+          "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+          "client_record": {
+            "name": "ice dungeon 3f_2",
+            "record_offset": 188590,
+            "payload_offset": 188607,
+            "raw_hex": "3a294a00b8ff5500",
+            "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+          },
+          "static_observation": {
+            "origin_stand": true,
+            "destination_stand": true,
+            "incoming_headings": [
+              4,
+              5,
+              6,
+              7
+            ]
+          }
+        },
+        {
+          "origin": [
+            74,
+            32733,
+            32852
+          ],
+          "destination": [
+            73,
+            32798,
+            32808,
+            5
+          ],
+          "reference_origin": [
+            74,
+            32733,
+            32852
+          ],
+          "reference_destination": [
+            73,
+            32798,
+            32808,
+            5
+          ],
+          "source": "local_policy/client_s32",
+          "ref": "work/local_resource_provider/assets/map/74/7fff8001.s32:byte162005",
+          "native_trigger_status": "UNKNOWN",
+          "source_adjusted": false,
+          "destination_adjusted": false,
+          "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+          "client_record": {
+            "name": "ice dungeon 2f up",
+            "record_offset": 161987,
+            "payload_offset": 162005,
+            "raw_hex": "3a1449003c002800",
+            "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+          },
+          "static_observation": {
+            "origin_stand": true,
+            "destination_stand": true,
+            "incoming_headings": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "origin": [
+            74,
+            32732,
+            32852
+          ],
+          "destination": [
+            73,
+            32798,
+            32809,
+            5
+          ],
+          "reference_origin": [
+            74,
+            32732,
+            32852
+          ],
+          "reference_destination": [
+            73,
+            32798,
+            32809,
+            5
+          ],
+          "source": "local_policy/client_s32",
+          "ref": "work/local_resource_provider/assets/map/74/7fff8001.s32:byte162033",
+          "native_trigger_status": "UNKNOWN",
+          "source_adjusted": false,
+          "destination_adjusted": false,
+          "local_basis": "Current client S32 named link record; exact half-coordinate decode, no nearest-cell relocation. Heading5 is LOCAL because the record has no heading. Native reader/trigger execution unobserved.",
+          "client_record": {
+            "name": "ice dungeon 2f up_2",
+            "record_offset": 162013,
+            "payload_offset": 162033,
+            "raw_hex": "381449003c002900",
+            "layout": "u8 origin_halfx,u8 origin_y,u16 destination_map,i16 destination_halfx_relative32768,i16 destination_y_relative32768"
+          },
+          "static_observation": {
+            "origin_stand": true,
+            "destination_stand": true,
+            "incoming_headings": [
+              0,
+              1,
+              6,
+              7
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "reason": "Native named-link reader, movement trigger, camera/rendering and heading unobserved. Existing S32 parser source establishes section offsets; map1/2 known transitions corroborate coordinate decode."
+    }
+  ],
+  "local_spawn_anchors": [
+    {
+      "map_id": 72,
+      "arrival": [
+        32747,
+        32787
+      ],
+      "center": [
+        32747,
+        32796
+      ],
+      "rect": {
+        "x1": 32746,
+        "y1": 32795,
+        "x2": 32748,
+        "y2": 32797
+      },
+      "connected_cell_count": 3557,
+      "source": "local_policy/client_s32",
+      "ref": "cases/2 entry.destination; current S32 mask1 BFS can_step",
+      "scope": "Arrival-connected standable3x3 candidate only; not official spawn coordinates/density."
+    },
+    {
+      "map_id": 73,
+      "arrival": [
+        32755,
+        32870
+      ],
+      "center": [
+        32746,
+        32870
+      ],
+      "rect": {
+        "x1": 32745,
+        "y1": 32869,
+        "x2": 32747,
+        "y2": 32871
+      },
+      "connected_cell_count": 3252,
+      "source": "local_policy/client_s32",
+      "ref": "cases/8 entry.destination; current S32 mask1 BFS can_step",
+      "scope": "Arrival-connected standable3x3 candidate only; not official spawn coordinates/density."
+    }
+  ],
+  "coordinate_decode_controls": [
+    {
+      "ref": "work/local_resource_provider/assets/map/1/7fff8001.s32:byte219784",
+      "name": "to2",
+      "raw_hex": "422d020032ff1500",
+      "origin": [
+        1,
+        32737,
+        32877
+      ],
+      "destination": [
+        2,
+        32665,
+        32789
+      ],
+      "comparison": "Matches existing world_maps.TRANSITIONS source and destination; existing heading4 is absent from record."
+    },
+    {
+      "ref": "work/local_resource_provider/assets/map/2/7ffe8000.s32:byte170399",
+      "name": "to1",
+      "raw_hex": "32140100c2ff6d00",
+      "origin": [
+        2,
+        32665,
+        32788
+      ],
+      "destination": [
+        1,
+        32737,
+        32877
+      ],
+      "comparison": "Source and destination map/y match existing world_maps.TRANSITIONS. Existing L1J LOCAL arrival x32738 differs by1 from client x32737; out of scope, retained unchanged. No runtime observation."
+    }
+  ]
+}

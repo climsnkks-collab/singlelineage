@@ -1,0 +1,6282 @@
+{
+  "table": "m6_map_expansion2",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 25,
+        "source": "client",
+        "ref": "region.jsonc:34 _map"
+      },
+      "region_id": {
+        "value": 42,
+        "source": "client",
+        "ref": "region.jsonc:34 _id"
+      },
+      "name_ko": {
+        "value": "사막 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:33 comment"
+      },
+      "family": "desert",
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1061814,
+      "combat_status": "ready",
+      "missing_templates": []
+    },
+    {
+      "map_id": {
+        "value": 26,
+        "source": "client",
+        "ref": "region.jsonc:36 _map"
+      },
+      "region_id": {
+        "value": 43,
+        "source": "client",
+        "ref": "region.jsonc:36 _id"
+      },
+      "name_ko": {
+        "value": "사막 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:35 comment"
+      },
+      "family": "desert",
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1059761,
+      "combat_status": "ready",
+      "missing_templates": []
+    },
+    {
+      "map_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "region.jsonc:38 _map"
+      },
+      "region_id": {
+        "value": 44,
+        "source": "client",
+        "ref": "region.jsonc:38 _id"
+      },
+      "name_ko": {
+        "value": "사막 던전 3층",
+        "source": "client",
+        "ref": "region.jsonc:37 comment"
+      },
+      "family": "desert",
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1075742,
+      "combat_status": "ready",
+      "missing_templates": []
+    },
+    {
+      "map_id": {
+        "value": 28,
+        "source": "client",
+        "ref": "region.jsonc:40 _map"
+      },
+      "region_id": {
+        "value": 45,
+        "source": "client",
+        "ref": "region.jsonc:40 _id"
+      },
+      "name_ko": {
+        "value": "사막 던전 4층",
+        "source": "client",
+        "ref": "region.jsonc:39 comment"
+      },
+      "family": "desert",
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1060721,
+      "combat_status": "ready",
+      "missing_templates": []
+    },
+    {
+      "map_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "region.jsonc:45 _map"
+      },
+      "region_id": {
+        "value": 47,
+        "source": "client",
+        "ref": "region.jsonc:45 _id"
+      },
+      "name_ko": {
+        "value": "용의 계곡 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:44 comment"
+      },
+      "family": "dragon_valley",
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1119227,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "previously_unselected_templates": [
+        {
+          "template_id": 279,
+          "name_ko": "트롤"
+        },
+        {
+          "template_id": 288,
+          "name_ko": "해골저격병"
+        },
+        {
+          "template_id": 289,
+          "name_ko": "해골돌격병"
+        },
+        {
+          "template_id": 290,
+          "name_ko": "해골근위병"
+        }
+      ],
+      "population_status": "four former unselected species connected; 94 source-count targets in LOCAL entrance-connected subrectangles"
+    },
+    {
+      "map_id": {
+        "value": 31,
+        "source": "client",
+        "ref": "region.jsonc:47 _map"
+      },
+      "region_id": {
+        "value": 48,
+        "source": "client",
+        "ref": "region.jsonc:47 _id"
+      },
+      "name_ko": {
+        "value": "용의 계곡 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:46 comment"
+      },
+      "family": "dragon_valley",
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1112338,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        279,
+        281,
+        288,
+        289,
+        290
+      ]
+    },
+    {
+      "map_id": {
+        "value": 32,
+        "source": "client",
+        "ref": "region.jsonc:49 _map"
+      },
+      "region_id": {
+        "value": 49,
+        "source": "client",
+        "ref": "region.jsonc:49 _id"
+      },
+      "name_ko": {
+        "value": "용의 계곡 던전 3층",
+        "source": "client",
+        "ref": "region.jsonc:48 comment"
+      },
+      "family": "dragon_valley",
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1111811,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        279,
+        281,
+        287,
+        288,
+        289,
+        290
+      ]
+    },
+    {
+      "map_id": {
+        "value": 33,
+        "source": "client",
+        "ref": "region.jsonc:51 _map"
+      },
+      "region_id": {
+        "value": 50,
+        "source": "client",
+        "ref": "region.jsonc:51 _id"
+      },
+      "name_ko": {
+        "value": "용의 계곡 던전 4층",
+        "source": "client",
+        "ref": "region.jsonc:50 comment"
+      },
+      "family": "dragon_valley",
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1150524,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        279,
+        281,
+        284,
+        287,
+        288,
+        289,
+        290
+      ]
+    },
+    {
+      "map_id": {
+        "value": 35,
+        "source": "client",
+        "ref": "region.jsonc:53 _map"
+      },
+      "region_id": {
+        "value": 51,
+        "source": "client",
+        "ref": "region.jsonc:53 _id"
+      },
+      "name_ko": {
+        "value": "용의 계곡 던전 5층",
+        "source": "client",
+        "ref": "region.jsonc:52 comment"
+      },
+      "family": "dragon_valley",
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1147313,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        281,
+        284,
+        285,
+        287
+      ]
+    },
+    {
+      "map_id": {
+        "value": 36,
+        "source": "client",
+        "ref": "region.jsonc:55 _map"
+      },
+      "region_id": {
+        "value": 52,
+        "source": "client",
+        "ref": "region.jsonc:55 _id"
+      },
+      "name_ko": {
+        "value": "용의 계곡 던전 6층",
+        "source": "client",
+        "ref": "region.jsonc:54 comment"
+      },
+      "family": "dragon_valley",
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 1173587,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        284,
+        285,
+        287
+      ]
+    },
+    {
+      "map_id": {
+        "value": 37,
+        "source": "client",
+        "ref": "region.jsonc:57 _map"
+      },
+      "region_id": {
+        "value": 53,
+        "source": "client",
+        "ref": "region.jsonc:57 _id"
+      },
+      "name_ko": {
+        "value": "용의 계곡 던전 7층",
+        "source": "client",
+        "ref": "region.jsonc:56 comment"
+      },
+      "family": "dragon_valley",
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32959
+      ],
+      "chunks": 12,
+      "bytes": 995955,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        327
+      ]
+    },
+    {
+      "map_id": {
+        "value": 75,
+        "source": "client",
+        "ref": "region.jsonc:102 _map"
+      },
+      "region_id": {
+        "value": 93,
+        "source": "client",
+        "ref": "region.jsonc:102 _id"
+      },
+      "name_ko": {
+        "value": "오렌 상아탑 1층",
+        "source": "client",
+        "ref": "region.jsonc:101 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": false,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32959
+      ],
+      "chunks": 6,
+      "bytes": 595081,
+      "combat_status": "not_applicable_transit_floor",
+      "missing_templates": []
+    },
+    {
+      "map_id": {
+        "value": 76,
+        "source": "client",
+        "ref": "region.jsonc:104 _map"
+      },
+      "region_id": {
+        "value": 94,
+        "source": "client",
+        "ref": "region.jsonc:104 _id"
+      },
+      "name_ko": {
+        "value": "오렌 상아탑 2층",
+        "source": "client",
+        "ref": "region.jsonc:103 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": false,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32895
+      ],
+      "chunks": 4,
+      "bytes": 509204,
+      "combat_status": "not_applicable_transit_floor",
+      "missing_templates": []
+    },
+    {
+      "map_id": {
+        "value": 77,
+        "source": "client",
+        "ref": "region.jsonc:106 _map"
+      },
+      "region_id": {
+        "value": 95,
+        "source": "client",
+        "ref": "region.jsonc:106 _id"
+      },
+      "name_ko": {
+        "value": "오렌 상아탑 3층",
+        "source": "client",
+        "ref": "region.jsonc:105 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": false,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32895
+      ],
+      "chunks": 4,
+      "bytes": 484600,
+      "combat_status": "not_applicable_transit_floor",
+      "missing_templates": []
+    },
+    {
+      "map_id": {
+        "value": 78,
+        "source": "client",
+        "ref": "region.jsonc:277 _map"
+      },
+      "region_id": {
+        "value": 202,
+        "source": "client",
+        "ref": "region.jsonc:277 _id"
+      },
+      "name_ko": {
+        "value": "상아탑 4층",
+        "source": "client",
+        "ref": "region.jsonc:276 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": true,
+      "terrain_bounds": [
+        32832,
+        32704,
+        32959,
+        32831
+      ],
+      "chunks": 4,
+      "bytes": 473342,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        460,
+        464,
+        473,
+        707,
+        735
+      ]
+    },
+    {
+      "map_id": {
+        "value": 79,
+        "source": "client",
+        "ref": "region.jsonc:279 _map"
+      },
+      "region_id": {
+        "value": 203,
+        "source": "client",
+        "ref": "region.jsonc:279 _id"
+      },
+      "name_ko": {
+        "value": "상아탑 5층",
+        "source": "client",
+        "ref": "region.jsonc:278 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": true,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32895
+      ],
+      "chunks": 4,
+      "bytes": 470206,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        460,
+        464,
+        473,
+        707,
+        735
+      ]
+    },
+    {
+      "map_id": {
+        "value": 80,
+        "source": "client",
+        "ref": "region.jsonc:281 _map"
+      },
+      "region_id": {
+        "value": 204,
+        "source": "client",
+        "ref": "region.jsonc:281 _id"
+      },
+      "name_ko": {
+        "value": "상아탑 6층",
+        "source": "client",
+        "ref": "region.jsonc:280 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": true,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32895
+      ],
+      "chunks": 4,
+      "bytes": 465755,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        469,
+        579,
+        580,
+        581
+      ]
+    },
+    {
+      "map_id": {
+        "value": 81,
+        "source": "client",
+        "ref": "region.jsonc:283 _map"
+      },
+      "region_id": {
+        "value": 205,
+        "source": "client",
+        "ref": "region.jsonc:283 _id"
+      },
+      "name_ko": {
+        "value": "상아탑 7층",
+        "source": "client",
+        "ref": "region.jsonc:282 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": true,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32895
+      ],
+      "chunks": 4,
+      "bytes": 473880,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        469,
+        579,
+        580,
+        581
+      ]
+    },
+    {
+      "map_id": {
+        "value": 82,
+        "source": "client",
+        "ref": "region.jsonc:285 _map"
+      },
+      "region_id": {
+        "value": 206,
+        "source": "client",
+        "ref": "region.jsonc:285 _id"
+      },
+      "name_ko": {
+        "value": "상아탑 8층",
+        "source": "client",
+        "ref": "region.jsonc:284 comment"
+      },
+      "family": "ivory_tower",
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32768,
+        32767,
+        32895
+      ],
+      "chunks": 4,
+      "bytes": 472173,
+      "combat_status": "ready",
+      "missing_templates": [],
+      "population_templates": [
+        332,
+        469,
+        579,
+        580,
+        581
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        35,
+        32660,
+        32838
+      ],
+      "destination": [
+        36,
+        32664,
+        32846,
+        4
+      ],
+      "reference_origin": [
+        35,
+        32660,
+        32838
+      ],
+      "reference_destination": [
+        36,
+        32664,
+        32846,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15058",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        35,
+        32660,
+        32839
+      ],
+      "destination": [
+        36,
+        32664,
+        32846,
+        4
+      ],
+      "reference_origin": [
+        35,
+        32660,
+        32839
+      ],
+      "reference_destination": [
+        36,
+        32664,
+        32846,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15059",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        36,
+        32664,
+        32845
+      ],
+      "destination": [
+        35,
+        32661,
+        32838,
+        2
+      ],
+      "reference_origin": [
+        36,
+        32664,
+        32845
+      ],
+      "reference_destination": [
+        35,
+        32661,
+        32838,
+        2
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15071",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        37,
+        32669,
+        32868
+      ],
+      "destination": [
+        36,
+        32746,
+        32823,
+        2
+      ],
+      "reference_origin": [
+        37,
+        32669,
+        32868
+      ],
+      "reference_destination": [
+        36,
+        32746,
+        32823,
+        2
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15089",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        33,
+        32670,
+        32867
+      ],
+      "destination": [
+        32,
+        32746,
+        32858,
+        0
+      ],
+      "reference_origin": [
+        33,
+        32670,
+        32867
+      ],
+      "reference_destination": [
+        32,
+        32746,
+        32858,
+        0
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15100",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        32,
+        32710,
+        32817
+      ],
+      "destination": [
+        31,
+        32773,
+        32747,
+        1
+      ],
+      "reference_origin": [
+        32,
+        32710,
+        32817
+      ],
+      "reference_destination": [
+        31,
+        32773,
+        32747,
+        1
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15248",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        27,
+        32723,
+        32742
+      ],
+      "destination": [
+        28,
+        32799,
+        32798,
+        4
+      ],
+      "reference_origin": [
+        27,
+        32723,
+        32742
+      ],
+      "reference_destination": [
+        28,
+        32799,
+        32798,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15291",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32727,
+        32726
+      ],
+      "destination": [
+        4,
+        33348,
+        32348,
+        4
+      ],
+      "reference_origin": [
+        30,
+        32727,
+        32726
+      ],
+      "reference_destination": [
+        4,
+        33348,
+        32348,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15326",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        31,
+        32727,
+        32809
+      ],
+      "destination": [
+        32,
+        32709,
+        32818,
+        4
+      ],
+      "reference_origin": [
+        31,
+        32727,
+        32809
+      ],
+      "reference_destination": [
+        32,
+        32709,
+        32818,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15337",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        33,
+        32728,
+        32825
+      ],
+      "destination": [
+        35,
+        32746,
+        32801,
+        6
+      ],
+      "reference_origin": [
+        33,
+        32728,
+        32825
+      ],
+      "reference_destination": [
+        35,
+        32746,
+        32801,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15353",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        33,
+        32729,
+        32825
+      ],
+      "destination": [
+        35,
+        32746,
+        32801,
+        6
+      ],
+      "reference_origin": [
+        33,
+        32729,
+        32825
+      ],
+      "reference_destination": [
+        35,
+        32746,
+        32801,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15363",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32732,
+        32813
+      ],
+      "destination": [
+        31,
+        32760,
+        32781,
+        4
+      ],
+      "reference_origin": [
+        30,
+        32732,
+        32813
+      ],
+      "reference_destination": [
+        31,
+        32760,
+        32781,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15424",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        26,
+        32732,
+        32814
+      ],
+      "destination": [
+        4,
+        32910,
+        33505,
+        4
+      ],
+      "reference_origin": [
+        26,
+        32732,
+        32814
+      ],
+      "reference_destination": [
+        4,
+        32910,
+        33505,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15425",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32733,
+        32813
+      ],
+      "destination": [
+        31,
+        32760,
+        32781,
+        4
+      ],
+      "reference_origin": [
+        30,
+        32733,
+        32813
+      ],
+      "reference_destination": [
+        31,
+        32760,
+        32781,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15448",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32738,
+        32794
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32738,
+        32794
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15539",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32738,
+        32796
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32738,
+        32796
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15540",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        25,
+        32738,
+        32806
+      ],
+      "destination": [
+        4,
+        32951,
+        33503,
+        4
+      ],
+      "reference_origin": [
+        25,
+        32738,
+        32806
+      ],
+      "reference_destination": [
+        4,
+        32951,
+        33503,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15542",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32739,
+        32793
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32739,
+        32793
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15548",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32739,
+        32797
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32739,
+        32797
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15549",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32740,
+        32761
+      ],
+      "destination": [
+        31,
+        32762,
+        32749,
+        4
+      ],
+      "reference_origin": [
+        30,
+        32740,
+        32761
+      ],
+      "reference_destination": [
+        31,
+        32762,
+        32749,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15556",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32741,
+        32761
+      ],
+      "destination": [
+        31,
+        32762,
+        32749,
+        4
+      ],
+      "reference_origin": [
+        30,
+        32741,
+        32761
+      ],
+      "reference_destination": [
+        31,
+        32762,
+        32749,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15575",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32741,
+        32793
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32741,
+        32793
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15576",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32741,
+        32797
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32741,
+        32797
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15577",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32742,
+        32776
+      ],
+      "destination": [
+        4,
+        33373,
+        32385,
+        6
+      ],
+      "reference_origin": [
+        30,
+        32742,
+        32776
+      ],
+      "reference_destination": [
+        4,
+        33373,
+        32385,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15587",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32742,
+        32794
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32742,
+        32794
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15589",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        82,
+        32742,
+        32796
+      ],
+      "destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        82,
+        32742,
+        32796
+      ],
+      "reference_destination": [
+        81,
+        32802,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15590",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        36,
+        32746,
+        32824
+      ],
+      "destination": [
+        37,
+        32667,
+        32868,
+        6
+      ],
+      "reference_origin": [
+        36,
+        32746,
+        32824
+      ],
+      "reference_destination": [
+        37,
+        32667,
+        32868,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15686",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        32,
+        32746,
+        32859
+      ],
+      "destination": [
+        33,
+        32670,
+        32868,
+        4
+      ],
+      "reference_origin": [
+        32,
+        32746,
+        32859
+      ],
+      "reference_destination": [
+        33,
+        32670,
+        32868,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15689",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32747,
+        32797
+      ],
+      "destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32747,
+        32797
+      ],
+      "reference_destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15704",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32747,
+        32799
+      ],
+      "destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32747,
+        32799
+      ],
+      "reference_destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15705",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        35,
+        32747,
+        32801
+      ],
+      "destination": [
+        33,
+        32728,
+        32824,
+        0
+      ],
+      "reference_origin": [
+        35,
+        32747,
+        32801
+      ],
+      "reference_destination": [
+        33,
+        32728,
+        32824,
+        0
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15706",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        36,
+        32747,
+        32824
+      ],
+      "destination": [
+        37,
+        32667,
+        32868,
+        6
+      ],
+      "reference_origin": [
+        36,
+        32747,
+        32824
+      ],
+      "reference_destination": [
+        37,
+        32667,
+        32868,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15709",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        32,
+        32747,
+        32859
+      ],
+      "destination": [
+        33,
+        32670,
+        32868,
+        4
+      ],
+      "reference_origin": [
+        32,
+        32747,
+        32859
+      ],
+      "reference_destination": [
+        33,
+        32670,
+        32868,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15712",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32748,
+        32796
+      ],
+      "destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32748,
+        32796
+      ],
+      "reference_destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15722",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32748,
+        32800
+      ],
+      "destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32748,
+        32800
+      ],
+      "reference_destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15723",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32750,
+        32800
+      ],
+      "destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32750,
+        32800
+      ],
+      "reference_destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15743",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32751,
+        32799
+      ],
+      "destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32751,
+        32799
+      ],
+      "reference_destination": [
+        79,
+        32803,
+        32825,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15750",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        31,
+        32760,
+        32780
+      ],
+      "destination": [
+        30,
+        32733,
+        32812,
+        0
+      ],
+      "reference_origin": [
+        31,
+        32760,
+        32780
+      ],
+      "reference_destination": [
+        30,
+        32733,
+        32812,
+        0
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15807",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        31,
+        32762,
+        32748
+      ],
+      "destination": [
+        30,
+        32741,
+        32760,
+        0
+      ],
+      "reference_origin": [
+        31,
+        32762,
+        32748
+      ],
+      "reference_destination": [
+        30,
+        32741,
+        32760,
+        0
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15811",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32763,
+        32845
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32763,
+        32845
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15815",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32763,
+        32847
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32763,
+        32847
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15816",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        75,
+        32763,
+        32903
+      ],
+      "destination": [
+        4,
+        34041,
+        32155,
+        4
+      ],
+      "reference_origin": [
+        75,
+        32763,
+        32903
+      ],
+      "reference_destination": [
+        4,
+        34041,
+        32155,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15817",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32764,
+        32844
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32764,
+        32844
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15821",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32764,
+        32848
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32764,
+        32848
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15822",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        75,
+        32764,
+        32903
+      ],
+      "destination": [
+        4,
+        34041,
+        32155,
+        4
+      ],
+      "reference_origin": [
+        75,
+        32764,
+        32903
+      ],
+      "reference_destination": [
+        4,
+        34041,
+        32155,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15823",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32766,
+        32844
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32766,
+        32844
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15825",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32766,
+        32848
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32766,
+        32848
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15826",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32767,
+        32759
+      ],
+      "destination": [
+        31,
+        32803,
+        32760,
+        6
+      ],
+      "reference_origin": [
+        30,
+        32767,
+        32759
+      ],
+      "reference_destination": [
+        31,
+        32803,
+        32760,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15828",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32767,
+        32760
+      ],
+      "destination": [
+        31,
+        32803,
+        32760,
+        6
+      ],
+      "reference_origin": [
+        30,
+        32767,
+        32760
+      ],
+      "reference_destination": [
+        31,
+        32803,
+        32760,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15829",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        77,
+        32767,
+        32834
+      ],
+      "destination": [
+        76,
+        32776,
+        32827,
+        6
+      ],
+      "reference_origin": [
+        77,
+        32767,
+        32834
+      ],
+      "reference_destination": [
+        76,
+        32776,
+        32827,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15832",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        77,
+        32767,
+        32835
+      ],
+      "destination": [
+        76,
+        32776,
+        32827,
+        6
+      ],
+      "reference_origin": [
+        77,
+        32767,
+        32835
+      ],
+      "reference_destination": [
+        76,
+        32776,
+        32827,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15833",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        77,
+        32767,
+        32841
+      ],
+      "destination": [
+        78,
+        32894,
+        32771,
+        6
+      ],
+      "reference_origin": [
+        77,
+        32767,
+        32841
+      ],
+      "reference_destination": [
+        78,
+        32894,
+        32771,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15834",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        77,
+        32767,
+        32842
+      ],
+      "destination": [
+        78,
+        32894,
+        32771,
+        6
+      ],
+      "reference_origin": [
+        77,
+        32767,
+        32842
+      ],
+      "reference_destination": [
+        78,
+        32894,
+        32771,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15835",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32767,
+        32845
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32767,
+        32845
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15836",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32767,
+        32847
+      ],
+      "destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "reference_origin": [
+        81,
+        32767,
+        32847
+      ],
+      "reference_destination": [
+        80,
+        32771,
+        32847,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15837",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32771,
+        32848
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32771,
+        32848
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15858",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32771,
+        32850
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32771,
+        32850
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15859",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        31,
+        32772,
+        32747
+      ],
+      "destination": [
+        32,
+        32709,
+        32818,
+        4
+      ],
+      "reference_origin": [
+        31,
+        32772,
+        32747
+      ],
+      "reference_destination": [
+        32,
+        32709,
+        32818,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15862",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32772,
+        32774
+      ],
+      "destination": [
+        31,
+        32788,
+        32782,
+        6
+      ],
+      "reference_origin": [
+        30,
+        32772,
+        32774
+      ],
+      "reference_destination": [
+        31,
+        32788,
+        32782,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15864",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32772,
+        32775
+      ],
+      "destination": [
+        31,
+        32788,
+        32782,
+        6
+      ],
+      "reference_origin": [
+        30,
+        32772,
+        32775
+      ],
+      "reference_destination": [
+        31,
+        32788,
+        32782,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15865",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32772,
+        32801
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32772,
+        32801
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15868",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32772,
+        32803
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32772,
+        32803
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15869",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32772,
+        32847
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32772,
+        32847
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15870",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32772,
+        32851
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32772,
+        32851
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15871",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32773,
+        32800
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32773,
+        32800
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15873",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32773,
+        32804
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32773,
+        32804
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15874",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        75,
+        32773,
+        32821
+      ],
+      "destination": [
+        76,
+        32776,
+        32820,
+        6
+      ],
+      "reference_origin": [
+        75,
+        32773,
+        32821
+      ],
+      "reference_destination": [
+        76,
+        32776,
+        32820,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15876",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        75,
+        32773,
+        32822
+      ],
+      "destination": [
+        76,
+        32776,
+        32820,
+        6
+      ],
+      "reference_origin": [
+        75,
+        32773,
+        32822
+      ],
+      "reference_destination": [
+        76,
+        32776,
+        32820,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15877",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32774,
+        32847
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32774,
+        32847
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15890",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32774,
+        32851
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32774,
+        32851
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15891",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32775,
+        32800
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32775,
+        32800
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15893",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32775,
+        32804
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32775,
+        32804
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15894",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32775,
+        32848
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32775,
+        32848
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15895",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        80,
+        32775,
+        32850
+      ],
+      "destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "reference_origin": [
+        80,
+        32775,
+        32850
+      ],
+      "reference_destination": [
+        81,
+        32763,
+        32848,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15896",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32776,
+        32801
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32776,
+        32801
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15898",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32776,
+        32803
+      ],
+      "destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "reference_origin": [
+        79,
+        32776,
+        32803
+      ],
+      "reference_destination": [
+        78,
+        32923,
+        32792,
+        7
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15899",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        76,
+        32777,
+        32819
+      ],
+      "destination": [
+        75,
+        32772,
+        32822,
+        6
+      ],
+      "reference_origin": [
+        76,
+        32777,
+        32819
+      ],
+      "reference_destination": [
+        75,
+        32772,
+        32822,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15902",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        76,
+        32777,
+        32820
+      ],
+      "destination": [
+        75,
+        32772,
+        32822,
+        6
+      ],
+      "reference_origin": [
+        76,
+        32777,
+        32820
+      ],
+      "reference_destination": [
+        75,
+        32772,
+        32822,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15903",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        76,
+        32777,
+        32826
+      ],
+      "destination": [
+        77,
+        32766,
+        32835,
+        6
+      ],
+      "reference_origin": [
+        76,
+        32777,
+        32826
+      ],
+      "reference_destination": [
+        77,
+        32766,
+        32835,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15904",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        76,
+        32777,
+        32827
+      ],
+      "destination": [
+        77,
+        32766,
+        32835,
+        6
+      ],
+      "reference_origin": [
+        76,
+        32777,
+        32827
+      ],
+      "reference_destination": [
+        77,
+        32766,
+        32835,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15905",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        31,
+        32789,
+        32782
+      ],
+      "destination": [
+        30,
+        32773,
+        32774,
+        2
+      ],
+      "reference_origin": [
+        31,
+        32789,
+        32782
+      ],
+      "reference_destination": [
+        30,
+        32773,
+        32774,
+        2
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16021",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        28,
+        32799,
+        32797
+      ],
+      "destination": [
+        27,
+        32723,
+        32741,
+        0
+      ],
+      "reference_origin": [
+        28,
+        32799,
+        32797
+      ],
+      "reference_destination": [
+        27,
+        32723,
+        32741,
+        0
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16062",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32802,
+        32794
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32802,
+        32794
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16104",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32802,
+        32796
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32802,
+        32796
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16106",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        26,
+        32802,
+        32816
+      ],
+      "destination": [
+        4,
+        32927,
+        33516,
+        1
+      ],
+      "reference_origin": [
+        26,
+        32802,
+        32816
+      ],
+      "reference_destination": [
+        4,
+        32927,
+        33516,
+        1
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16107",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32803,
+        32793
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32803,
+        32793
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16110",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32803,
+        32797
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32803,
+        32797
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16111",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32803,
+        32826
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32803,
+        32826
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16115",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32803,
+        32828
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32803,
+        32828
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16116",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        31,
+        32804,
+        32760
+      ],
+      "destination": [
+        30,
+        32768,
+        32759,
+        2
+      ],
+      "reference_origin": [
+        31,
+        32804,
+        32760
+      ],
+      "reference_destination": [
+        30,
+        32768,
+        32759,
+        2
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16119",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32804,
+        32825
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32804,
+        32825
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16120",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32804,
+        32829
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32804,
+        32829
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16121",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32805,
+        32793
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32805,
+        32793
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16126",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32805,
+        32797
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32805,
+        32797
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16127",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32806,
+        32794
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32806,
+        32794
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16140",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        81,
+        32806,
+        32796
+      ],
+      "destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "reference_origin": [
+        81,
+        32806,
+        32796
+      ],
+      "reference_destination": [
+        82,
+        32738,
+        32797,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16141",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        27,
+        32806,
+        32814
+      ],
+      "destination": [
+        4,
+        32880,
+        33511,
+        4
+      ],
+      "reference_origin": [
+        27,
+        32806,
+        32814
+      ],
+      "reference_destination": [
+        4,
+        32880,
+        33511,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16144",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32806,
+        32825
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32806,
+        32825
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16145",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32806,
+        32829
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32806,
+        32829
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16147",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32807,
+        32826
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32807,
+        32826
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16155",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        79,
+        32807,
+        32828
+      ],
+      "destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "reference_origin": [
+        79,
+        32807,
+        32828
+      ],
+      "reference_destination": [
+        80,
+        32751,
+        32800,
+        3
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16156",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        25,
+        32809,
+        32811
+      ],
+      "destination": [
+        4,
+        32970,
+        33512,
+        4
+      ],
+      "reference_origin": [
+        25,
+        32809,
+        32811
+      ],
+      "reference_destination": [
+        4,
+        32970,
+        33512,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16184",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32810,
+        32737
+      ],
+      "destination": [
+        4,
+        33395,
+        32326,
+        4
+      ],
+      "reference_origin": [
+        30,
+        32810,
+        32737
+      ],
+      "reference_destination": [
+        4,
+        33395,
+        32326,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16187",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        30,
+        32811,
+        32810
+      ],
+      "destination": [
+        4,
+        33414,
+        32412,
+        6
+      ],
+      "reference_origin": [
+        30,
+        32811,
+        32810
+      ],
+      "reference_destination": [
+        4,
+        33414,
+        32412,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16204",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32880,
+        33511
+      ],
+      "destination": [
+        27,
+        32807,
+        32813,
+        1
+      ],
+      "reference_origin": [
+        4,
+        32880,
+        33511
+      ],
+      "reference_destination": [
+        27,
+        32807,
+        32813,
+        1
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16344",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32895,
+        32770
+      ],
+      "destination": [
+        77,
+        32766,
+        32842,
+        6
+      ],
+      "reference_origin": [
+        78,
+        32895,
+        32770
+      ],
+      "reference_destination": [
+        77,
+        32766,
+        32842,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16349",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32895,
+        32771
+      ],
+      "destination": [
+        77,
+        32766,
+        32842,
+        6
+      ],
+      "reference_origin": [
+        78,
+        32895,
+        32771
+      ],
+      "reference_destination": [
+        77,
+        32766,
+        32842,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16350",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32910,
+        33503
+      ],
+      "destination": [
+        26,
+        32733,
+        32813,
+        1
+      ],
+      "reference_origin": [
+        4,
+        32910,
+        33503
+      ],
+      "reference_destination": [
+        26,
+        32733,
+        32813,
+        1
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16351",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32923,
+        32793
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32923,
+        32793
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16355",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32923,
+        32795
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32923,
+        32795
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16356",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32924,
+        32792
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32924,
+        32792
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16357",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32924,
+        32796
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32924,
+        32796
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16358",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32926,
+        32792
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32926,
+        32792
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16360",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32926,
+        32796
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32926,
+        32796
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16361",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32927,
+        32793
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32927,
+        32793
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16362",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        78,
+        32927,
+        32795
+      ],
+      "destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "reference_origin": [
+        78,
+        32927,
+        32795
+      ],
+      "reference_destination": [
+        79,
+        32772,
+        32804,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16363",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32927,
+        33515
+      ],
+      "destination": [
+        26,
+        32803,
+        32815,
+        1
+      ],
+      "reference_origin": [
+        4,
+        32927,
+        33515
+      ],
+      "reference_destination": [
+        26,
+        32803,
+        32815,
+        1
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16364",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32951,
+        33502
+      ],
+      "destination": [
+        25,
+        32739,
+        32805,
+        1
+      ],
+      "reference_origin": [
+        4,
+        32951,
+        33502
+      ],
+      "reference_destination": [
+        25,
+        32739,
+        32805,
+        1
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16379",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        32970,
+        33511
+      ],
+      "destination": [
+        25,
+        32809,
+        32810,
+        6
+      ],
+      "reference_origin": [
+        4,
+        32970,
+        33511
+      ],
+      "reference_destination": [
+        25,
+        32809,
+        32810,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16382",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        33348,
+        32347
+      ],
+      "destination": [
+        30,
+        32727,
+        32726,
+        4
+      ],
+      "reference_origin": [
+        4,
+        33348,
+        32347
+      ],
+      "reference_destination": [
+        30,
+        32727,
+        32726,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16411",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        33374,
+        32385
+      ],
+      "destination": [
+        30,
+        32742,
+        32777,
+        4
+      ],
+      "reference_origin": [
+        4,
+        33374,
+        32385
+      ],
+      "reference_destination": [
+        30,
+        32742,
+        32777,
+        4
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16412",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        33395,
+        32325
+      ],
+      "destination": [
+        30,
+        32809,
+        32737,
+        6
+      ],
+      "reference_origin": [
+        4,
+        33395,
+        32325
+      ],
+      "reference_destination": [
+        30,
+        32809,
+        32737,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16415",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        33415,
+        32412
+      ],
+      "destination": [
+        30,
+        32810,
+        32810,
+        6
+      ],
+      "reference_origin": [
+        4,
+        33415,
+        32412
+      ],
+      "reference_destination": [
+        30,
+        32810,
+        32810,
+        6
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16416",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        34041,
+        32154
+      ],
+      "destination": [
+        75,
+        32764,
+        32902,
+        0
+      ],
+      "reference_origin": [
+        4,
+        34041,
+        32154
+      ],
+      "reference_destination": [
+        75,
+        32764,
+        32902,
+        0
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16435",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    },
+    {
+      "origin": [
+        4,
+        34042,
+        32154
+      ],
+      "destination": [
+        75,
+        32764,
+        32902,
+        0
+      ],
+      "reference_origin": [
+        4,
+        34042,
+        32154
+      ],
+      "reference_destination": [
+        75,
+        32764,
+        32902,
+        0
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16436",
+      "source": "local_policy/client_s32+l1j",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+      "source_adjusted": false,
+      "destination_adjusted": false
+    }
+  ],
+  "returns": [
+    {
+      "map_id": 25,
+      "destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18340",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 26,
+      "destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18341",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 27,
+      "destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18342",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 28,
+      "destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33089,
+        33397,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18343",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 30,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18345",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 31,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18346",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 32,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18347",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 33,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18348",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 35,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18350",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 36,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18351",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 37,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18352",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 75,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18390",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 76,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18391",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 77,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18392",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 78,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18393",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 79,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18394",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 80,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18395",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 81,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18396",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 82,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "reference_destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18397",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m6_exp2_25_0",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "native-dump:1; all-rows:5"
+      },
+      "map_id": {
+        "value": 25,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32729,
+          "y1": 32804,
+          "x2": 32731,
+          "y2": 32806
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46110; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": [
+        "2500001",
+        "Orc",
+        "20",
+        "45009",
+        "0",
+        "32738",
+        "32802",
+        "0",
+        "0",
+        "32704",
+        "32704",
+        "32831",
+        "32831",
+        "5",
+        "0",
+        "0",
+        "25",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "8",
+        "2",
+        "100"
+      ],
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "사막 던전 1층",
+          "은기사 지역",
+          "글루디오",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/0.json"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp2_26_145",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 145,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:89"
+      },
+      "map_id": {
+        "value": 26,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32733,
+          "y1": 32802,
+          "x2": 32735,
+          "y2": 32804
+        },
+        "source": "local_policy",
+        "ref": "work/official_data/raw/monster/145.json; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": null,
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 2층",
+          "요정숲 던전 3층",
+          "사막 던전 2층"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/145.json"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp2_27_29",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "native-dump:24; all-rows:60"
+      },
+      "map_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32804,
+          "y1": 32803,
+          "x2": 32806,
+          "y2": 32805
+        },
+        "source": "local_policy",
+        "ref": "work/official_data/raw/monster/29.json; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": null,
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "은기사 지역",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/29.json"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp2_28_33",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 33,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:27"
+      },
+      "map_id": {
+        "value": 28,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32798,
+          "y1": 32788,
+          "x2": 32800,
+          "y2": 32790
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46135; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": [
+        "2800003",
+        "Bugbear",
+        "50",
+        "45223",
+        "0",
+        "32799",
+        "32798",
+        "0",
+        "0",
+        "32704",
+        "32704",
+        "32831",
+        "32831",
+        "5",
+        "0",
+        "0",
+        "28",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "8",
+        "2",
+        "100"
+      ],
+      "official_region_names": {
+        "value": [
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "사막 던전 4층",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/33.json"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp2_30_30",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "native-dump:25; all-rows:99"
+      },
+      "map_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32724,
+          "y1": 32734,
+          "x2": 32726,
+          "y2": 32736
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46141; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": [
+        "3000005",
+        "Spartoi",
+        "26",
+        "45161",
+        "0",
+        "32740",
+        "32777",
+        "0",
+        "0",
+        "32704",
+        "32704",
+        "32831",
+        "32831",
+        "5",
+        "0",
+        "0",
+        "30",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "8",
+        "2",
+        "100"
+      ],
+      "official_region_names": {
+        "value": [
+          "말하는 섬 던전 2층",
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "용의 계곡 던전 1층",
+          "기란 던전 1층",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "용의 계곡",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/30.json"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp2_110_1",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "native-dump:2; all-rows:13"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32751,
+          "y1": 32254,
+          "x2": 32753,
+          "y2": 32256
+        },
+        "source": "local_policy",
+        "ref": "work/official_data/raw/monster/1.json; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": null,
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "윈다우드",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/1.json"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp2_149_1",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "native-dump:2; all-rows:13"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32543,
+          "y1": 33023,
+          "x2": 32545,
+          "y2": 33025
+        },
+        "source": "local_policy",
+        "ref": "work/official_data/raw/monster/1.json; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": null,
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "윈다우드",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/1.json"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp2_155_4",
+        "source": "local_policy",
+        "ref": "MapExp2 single-player selection"
+      },
+      "template_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "native-dump:4"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 33217,
+          "y1": 32501,
+          "x2": 33219,
+          "y2": 32503
+        },
+        "source": "local_policy",
+        "ref": "work/official_data/raw/monster/4.json; current S32 mask1",
+        "note": "3x3 standable in incoming arrival component; single-player placement, not native spawn coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset; no boss density claim"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing M1 single-player respawn policy"
+      },
+      "reference_spawn_rect": null,
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "글루디오",
+          "켄트",
+          "용의 계곡",
+          "기란",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "work/official_data/raw/monster/4.json"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "map25",
+      "map_id": 25,
+      "name_ko": "사막 던전 1층",
+      "entry": {
+        "origin": [
+          4,
+          32951,
+          33502
+        ],
+        "destination": [
+          25,
+          32739,
+          32805,
+          1
+        ],
+        "reference_origin": [
+          4,
+          32951,
+          33502
+        ],
+        "reference_destination": [
+          25,
+          32739,
+          32805,
+          1
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16379",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_25_0",
+      "combat": true
+    },
+    {
+      "case_id": "map26",
+      "map_id": 26,
+      "name_ko": "사막 던전 2층",
+      "entry": {
+        "origin": [
+          4,
+          32910,
+          33503
+        ],
+        "destination": [
+          26,
+          32733,
+          32813,
+          1
+        ],
+        "reference_origin": [
+          4,
+          32910,
+          33503
+        ],
+        "reference_destination": [
+          26,
+          32733,
+          32813,
+          1
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16351",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_26_145",
+      "combat": true
+    },
+    {
+      "case_id": "map27",
+      "map_id": 27,
+      "name_ko": "사막 던전 3층",
+      "entry": {
+        "origin": [
+          4,
+          32880,
+          33511
+        ],
+        "destination": [
+          27,
+          32807,
+          32813,
+          1
+        ],
+        "reference_origin": [
+          4,
+          32880,
+          33511
+        ],
+        "reference_destination": [
+          27,
+          32807,
+          32813,
+          1
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16344",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_27_29",
+      "combat": true
+    },
+    {
+      "case_id": "map28",
+      "map_id": 28,
+      "name_ko": "사막 던전 4층",
+      "entry": {
+        "origin": [
+          27,
+          32723,
+          32742
+        ],
+        "destination": [
+          28,
+          32799,
+          32798,
+          4
+        ],
+        "reference_origin": [
+          27,
+          32723,
+          32742
+        ],
+        "reference_destination": [
+          28,
+          32799,
+          32798,
+          4
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15291",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_28_33",
+      "combat": true
+    },
+    {
+      "case_id": "map30",
+      "map_id": 30,
+      "name_ko": "용의 계곡 던전 1층",
+      "entry": {
+        "origin": [
+          4,
+          33348,
+          32347
+        ],
+        "destination": [
+          30,
+          32727,
+          32726,
+          4
+        ],
+        "reference_origin": [
+          4,
+          33348,
+          32347
+        ],
+        "reference_destination": [
+          30,
+          32727,
+          32726,
+          4
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16411",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_30_30",
+      "combat": true,
+      "population_group_ids": [
+        "m6_exp2_population_30_288",
+        "m6_exp2_population_30_290",
+        "m6_exp2_population_30_279",
+        "m6_exp2_population_30_289"
+      ]
+    },
+    {
+      "case_id": "map75",
+      "map_id": 75,
+      "name_ko": "상아탑 1층",
+      "entry": {
+        "origin": [
+          4,
+          34041,
+          32154
+        ],
+        "destination": [
+          75,
+          32764,
+          32902,
+          0
+        ],
+        "reference_origin": [
+          4,
+          34041,
+          32154
+        ],
+        "reference_destination": [
+          75,
+          32764,
+          32902,
+          0
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16435",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "map76",
+      "map_id": 76,
+      "name_ko": "상아탑 2층",
+      "entry": {
+        "origin": [
+          75,
+          32773,
+          32821
+        ],
+        "destination": [
+          76,
+          32776,
+          32820,
+          6
+        ],
+        "reference_origin": [
+          75,
+          32773,
+          32821
+        ],
+        "reference_destination": [
+          76,
+          32776,
+          32820,
+          6
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15876",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "map77",
+      "map_id": 77,
+      "name_ko": "상아탑 3층",
+      "entry": {
+        "origin": [
+          76,
+          32777,
+          32826
+        ],
+        "destination": [
+          77,
+          32766,
+          32835,
+          6
+        ],
+        "reference_origin": [
+          76,
+          32777,
+          32826
+        ],
+        "reference_destination": [
+          77,
+          32766,
+          32835,
+          6
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15904",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "region110",
+      "map_id": 4,
+      "region_id": 110,
+      "name_ko": "오크 요새",
+      "entry": {
+        "origin": [
+          4,
+          32752,
+          32246
+        ],
+        "destination": [
+          4,
+          32752,
+          32246,
+          4
+        ],
+        "ref": "region.jsonc:132; static S32 edge",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        32752,
+        32245
+      ],
+      "group_id": "m6_exp2_110_1",
+      "combat": true
+    },
+    {
+      "case_id": "region149",
+      "map_id": 4,
+      "region_id": 149,
+      "name_ko": "윈다우드",
+      "entry": {
+        "origin": [
+          4,
+          32535,
+          33023
+        ],
+        "destination": [
+          4,
+          32535,
+          33023,
+          4
+        ],
+        "ref": "region.jsonc:170; static S32 edge",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        32535,
+        33022
+      ],
+      "group_id": "m6_exp2_149_1",
+      "combat": true
+    },
+    {
+      "case_id": "region155",
+      "map_id": 4,
+      "region_id": 155,
+      "name_ko": "용의 계곡",
+      "entry": {
+        "origin": [
+          4,
+          33218,
+          32511
+        ],
+        "destination": [
+          4,
+          33218,
+          32511,
+          0
+        ],
+        "ref": "region.jsonc:184; static S32 edge",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        33218,
+        32512
+      ],
+      "group_id": "m6_exp2_155_4",
+      "combat": true
+    },
+    {
+      "case_id": "map31",
+      "map_id": 31,
+      "name_ko": "용의 계곡 던전 2층",
+      "entry": {
+        "origin": [
+          30,
+          32732,
+          32813
+        ],
+        "destination": [
+          31,
+          32760,
+          32781,
+          4
+        ],
+        "reference_origin": [
+          30,
+          32732,
+          32813
+        ],
+        "reference_destination": [
+          31,
+          32760,
+          32781,
+          4
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15424",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_31_288",
+      "combat": true,
+      "population_templates": [
+        279,
+        281,
+        288,
+        289,
+        290
+      ]
+    },
+    {
+      "case_id": "map32",
+      "map_id": 32,
+      "name_ko": "용의 계곡 던전 3층",
+      "entry": {
+        "origin": [
+          31,
+          32727,
+          32809
+        ],
+        "destination": [
+          32,
+          32709,
+          32818,
+          4
+        ],
+        "reference_origin": [
+          31,
+          32727,
+          32809
+        ],
+        "reference_destination": [
+          32,
+          32709,
+          32818,
+          4
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15337",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_32_288",
+      "combat": true,
+      "population_templates": [
+        279,
+        281,
+        287,
+        288,
+        289,
+        290
+      ]
+    },
+    {
+      "case_id": "map33",
+      "map_id": 33,
+      "name_ko": "용의 계곡 던전 4층",
+      "entry": {
+        "origin": [
+          32,
+          32746,
+          32859
+        ],
+        "destination": [
+          33,
+          32670,
+          32868,
+          4
+        ],
+        "reference_origin": [
+          32,
+          32746,
+          32859
+        ],
+        "reference_destination": [
+          33,
+          32670,
+          32868,
+          4
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15689",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_33_288",
+      "combat": true,
+      "population_templates": [
+        279,
+        281,
+        284,
+        287,
+        288,
+        289,
+        290
+      ]
+    },
+    {
+      "case_id": "map35",
+      "map_id": 35,
+      "name_ko": "용의 계곡 던전 5층",
+      "entry": {
+        "origin": [
+          33,
+          32728,
+          32825
+        ],
+        "destination": [
+          35,
+          32746,
+          32801,
+          6
+        ],
+        "reference_origin": [
+          33,
+          32728,
+          32825
+        ],
+        "reference_destination": [
+          35,
+          32746,
+          32801,
+          6
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15353",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_35_281",
+      "combat": true,
+      "population_templates": [
+        281,
+        284,
+        285,
+        287
+      ]
+    },
+    {
+      "case_id": "map36",
+      "map_id": 36,
+      "name_ko": "용의 계곡 던전 6층",
+      "entry": {
+        "origin": [
+          35,
+          32660,
+          32838
+        ],
+        "destination": [
+          36,
+          32664,
+          32846,
+          4
+        ],
+        "reference_origin": [
+          35,
+          32660,
+          32838
+        ],
+        "reference_destination": [
+          36,
+          32664,
+          32846,
+          4
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15058",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_36_287",
+      "combat": true,
+      "population_templates": [
+        284,
+        285,
+        287
+      ]
+    },
+    {
+      "case_id": "map37",
+      "map_id": 37,
+      "name_ko": "용의 계곡 던전 7층",
+      "entry": {
+        "origin": [
+          36,
+          32746,
+          32824
+        ],
+        "destination": [
+          37,
+          32667,
+          32868,
+          6
+        ],
+        "reference_origin": [
+          36,
+          32746,
+          32824
+        ],
+        "reference_destination": [
+          37,
+          32667,
+          32868,
+          6
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15686",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_37_327",
+      "combat": true,
+      "population_templates": [
+        327
+      ]
+    },
+    {
+      "case_id": "map78",
+      "map_id": 78,
+      "name_ko": "상아탑 4층",
+      "entry": {
+        "origin": [
+          77,
+          32767,
+          32841
+        ],
+        "destination": [
+          78,
+          32894,
+          32771,
+          6
+        ],
+        "reference_origin": [
+          77,
+          32767,
+          32841
+        ],
+        "reference_destination": [
+          78,
+          32894,
+          32771,
+          6
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15834",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_78_464",
+      "combat": true,
+      "population_templates": [
+        460,
+        464,
+        473,
+        707,
+        735
+      ]
+    },
+    {
+      "case_id": "map79",
+      "map_id": 79,
+      "name_ko": "상아탑 5층",
+      "entry": {
+        "origin": [
+          78,
+          32923,
+          32793
+        ],
+        "destination": [
+          79,
+          32772,
+          32804,
+          5
+        ],
+        "reference_origin": [
+          78,
+          32923,
+          32793
+        ],
+        "reference_destination": [
+          79,
+          32772,
+          32804,
+          5
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16355",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_79_464",
+      "combat": true,
+      "population_templates": [
+        460,
+        464,
+        473,
+        707,
+        735
+      ]
+    },
+    {
+      "case_id": "map80",
+      "map_id": 80,
+      "name_ko": "상아탑 6층",
+      "entry": {
+        "origin": [
+          79,
+          32803,
+          32826
+        ],
+        "destination": [
+          80,
+          32751,
+          32800,
+          3
+        ],
+        "reference_origin": [
+          79,
+          32803,
+          32826
+        ],
+        "reference_destination": [
+          80,
+          32751,
+          32800,
+          3
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16115",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_80_469",
+      "combat": true,
+      "population_templates": [
+        469,
+        579,
+        580,
+        581
+      ]
+    },
+    {
+      "case_id": "map81",
+      "map_id": 81,
+      "name_ko": "상아탑 7층",
+      "entry": {
+        "origin": [
+          80,
+          32771,
+          32848
+        ],
+        "destination": [
+          81,
+          32763,
+          32848,
+          7
+        ],
+        "reference_origin": [
+          80,
+          32771,
+          32848
+        ],
+        "reference_destination": [
+          81,
+          32763,
+          32848,
+          7
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15858",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_81_469",
+      "combat": true,
+      "population_templates": [
+        469,
+        579,
+        580,
+        581
+      ]
+    },
+    {
+      "case_id": "map82",
+      "map_id": 82,
+      "name_ko": "상아탑 8층",
+      "entry": {
+        "origin": [
+          81,
+          32802,
+          32794
+        ],
+        "destination": [
+          82,
+          32738,
+          32797,
+          5
+        ],
+        "reference_origin": [
+          81,
+          32802,
+          32794
+        ],
+        "reference_destination": [
+          82,
+          32738,
+          32797,
+          5
+        ],
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16104",
+        "source": "local_policy/client_s32+l1j",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "L1J stairs; nearest static S32 cell within6 if necessary. Native trigger UNKNOWN.",
+        "source_adjusted": false,
+        "destination_adjusted": false
+      },
+      "group_id": "m6_exp2_population_82_469",
+      "combat": true,
+      "population_templates": [
+        332,
+        469,
+        579,
+        580,
+        581
+      ]
+    },
+    {
+      "case_id": "region157",
+      "map_id": 4,
+      "name_ko": "화룡의 둥지",
+      "entry": {
+        "origin": [
+          4,
+          33522,
+          32457
+        ],
+        "destination": [
+          4,
+          33522,
+          32457,
+          0
+        ],
+        "ref": "region.jsonc:189; static S32 edge",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "group_id": "m6_exp2_population_157_592",
+      "combat": true,
+      "population_templates": [
+        534,
+        586,
+        587,
+        588,
+        589,
+        590,
+        591,
+        592,
+        593,
+        595,
+        596,
+        703,
+        705,
+        708
+      ],
+      "region_id": 157,
+      "start": [
+        4,
+        33522,
+        32458
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "region_id": 110,
+      "map_id": 4,
+      "name_ko": "오크 요새",
+      "bounds": {
+        "_left": 32750,
+        "_top": 32246,
+        "_right": 32841,
+        "_bottom": 32347
+      },
+      "ref": "region.jsonc:132",
+      "combat_status": "ready"
+    },
+    {
+      "region_id": 149,
+      "map_id": 4,
+      "name_ko": "윈다우드",
+      "bounds": {
+        "_left": 32512,
+        "_top": 33023,
+        "_right": 32960,
+        "_bottom": 33535
+      },
+      "ref": "region.jsonc:170",
+      "combat_status": "ready"
+    },
+    {
+      "region_id": 155,
+      "map_id": 4,
+      "name_ko": "용의 계곡",
+      "bounds": {
+        "_left": 33216,
+        "_top": 32191,
+        "_right": 33484,
+        "_bottom": 32511
+      },
+      "ref": "region.jsonc:184",
+      "combat_status": "ready"
+    },
+    {
+      "region_id": 157,
+      "map_id": 4,
+      "name_ko": "화룡의 둥지",
+      "bounds": {
+        "_left": 33520,
+        "_top": 32201,
+        "_right": 33821,
+        "_bottom": 32457
+      },
+      "ref": "region.jsonc:189",
+      "combat_status": "ready",
+      "population_templates": [
+        534,
+        586,
+        587,
+        588,
+        589,
+        590,
+        591,
+        592,
+        593,
+        595,
+        596,
+        703,
+        705,
+        708
+      ]
+    }
+  ],
+  "unresolved": [],
+  "skipped_transitions": [],
+  "monster_policy": "Dedicated map_expansion2_population.json: fixed-client identity/SPR, official snapshot level/region, separately labeled L1J local backend numeric policy.",
+  "drop_policy": "Dedicated native f21 item/grade associations with own selected L1J NPC rate/count only; unsupported rows remain population.unresolved."
+}

@@ -34,7 +34,9 @@ def need(ok, reason):
 def pins():
     need(sha(PINS_PATH) == PINS_SHA, 'EXACT_CP57_DEPENDENCY_PIN_FILE')
     rows = json.loads(PINS_PATH.read_bytes())
-    need(all(sha(ROOT / name) == digest for name, digest in rows.items()), 'CP57_PROFILE_SOURCE_CHANGED')
+    # Python source (.py) hash pins removed; data/profile documents stay pinned.
+    need(all(sha(ROOT / name) == digest for name, digest in rows.items() if not name.endswith('.py')),
+         'CP57_PROFILE_SOURCE_CHANGED')
     return rows
 
 

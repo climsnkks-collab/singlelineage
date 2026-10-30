@@ -138,14 +138,19 @@ class CharacterStore:
             data = json.loads(raw)
         except (ValueError, UnicodeError):
             raise Refused('CREATE_STORE_JSON') from None
-        need(type(data) is dict and set(data) == {'schema', 'next_uid', 'characters'}
+        need(type(data) is dict and {'schema', 'next_uid', 'characters'} <= set(data)
+             and set(data) <= {'schema', 'next_uid', 'characters', 'pledges'}
              and data['schema'] == SCHEMA and type(data['next_uid']) is int
              and 1 <= data['next_uid'] <= 1 << 32 and type(data['characters']) is list
              and len(data['characters']) <= MAX_CHARACTERS, 'CREATE_STORE_SCHEMA')
         names, uids = set(), set()
         for row in data['characters']:
-            need(type(row) is dict and set(row) == {'uid', 'name', 'class', 'gender', 'attributes'},
+            need(type(row) is dict and {'uid', 'name', 'class', 'gender', 'attributes'} <= set(row)
+                 and set(row) <= {'uid', 'name', 'class', 'gender', 'attributes', 'bookmarks'},
                  'CREATE_STORE_ROW')
+            if 'bookmarks' in row:
+                from tools.local_original_session.world_bookmark import validate
+                validate(row['bookmarks'])
             need(type(row['uid']) is int and 1 <= row['uid'] < data['next_uid']
                  and _valid_name(row['name']) and type(row['class']) is int
                  and type(row['gender']) is int and type(row['attributes']) is list
@@ -158,6 +163,17 @@ class CharacterStore:
             wire.validate_fields('INFO', _record_info(row))
             names.add(row['name'].casefold())
             uids.add(row['uid'])
+        if 'pledges' in data:
+            from tools.local_original_session.world_pledge import validate, Refused as PledgeRefused
+            try:
+                value = validate(data['pledges'])
+            except PledgeRefused as error:
+                # A corrupt persisted profile is not a request policy refusal.
+                raise Refused(str(error)) from error
+            pledge_uids = {uid for clan in value['clans'] for uid in clan['members']}
+            if value['pending_creation'] is not None:
+                pledge_uids.update(value['pending_creation']['clan']['members'])
+            need(pledge_uids <= uids, 'PLEDGE_SAVED_CHARACTER_REQUIRED')
         return data
 
     def _write(self, data):
@@ -213,6 +229,31 @@ class CharacterStore:
             need(row is not None, 'SELECT_UNKNOWN_LOCAL_CHARACTER')
             return row['uid'], _record_info(row)
 
+    def bookmarks(self, uid):
+        """Optional per-character remembered places; old profiles stay unchanged."""
+        from tools.local_original_session.world_bookmark import empty, validate
+        with _lock:
+            row = next((r for r in self._read()['characters'] if r['uid'] == uid), None)
+            need(row is not None, 'BOOKMARK_SAVED_CHARACTER_REQUIRED')
+            return validate(row.get('bookmarks', empty()))
+
+    def update_bookmarks(self, uid, transform):
+        """Read latest profile and change this character's optional field only.
+
+        Existing character creation and this operation use the same store lock
+        and atomic replacement. No acknowledgement precedes a successful write.
+        """
+        from tools.local_original_session.world_bookmark import empty, validate
+        with _lock:
+            data = self._read()
+            row = next((r for r in data['characters'] if r['uid'] == uid), None)
+            need(row is not None, 'BOOKMARK_SAVED_CHARACTER_REQUIRED')
+            before = validate(row.get('bookmarks', empty()))
+            updated = validate(transform(before))
+            row['bookmarks'] = updated
+            self._write(data)
+            return validate(updated)
+
     def snapshot(self):
         with _lock:
             data = self._read()
@@ -221,3 +262,37 @@ class CharacterStore:
                     display_slots=MAX_CHARACTERS, rows=rows, existing_rows=(),
                     mode='initial', allow_expected_growth=False)
             return roster, frozenset(row[1] for row in rows)
+
+    def pledge_characters(self):
+        """The saved characters of this one LOCAL account, including offline PCs."""
+        with _lock:
+            return tuple((row['uid'], _record_info(row)) for row in self._read()['characters'])
+
+    def pledges(self):
+        from tools.local_original_session.world_pledge import empty, validate
+        with _lock:
+            return validate(self._read().get('pledges', empty()))
+
+    def update_pledges(self, transform):
+        """Optional pledge field only; preserve roster, bookmarks and UID lineage."""
+        from tools.local_original_session.world_pledge import empty, validate
+        with _lock:
+            data = self._read()
+            value = validate(transform(validate(data.get('pledges', empty()))))
+            uids = {row['uid'] for row in data['characters']}
+            members = {uid for clan in value['clans'] for uid in clan['members']}
+            if value['pending_creation'] is not None:
+                members.update(value['pending_creation']['clan']['members'])
+            need(members <= uids, 'PLEDGE_SAVED_CHARACTER_REQUIRED')
+            data['pledges'] = value
+            self._write(data)
+            return validate(value)
+
+    def pledge_enroll_character(self, leader_uid, character_uid):
+        """Pledge-only same-account enrollment, including an offline companion.
+
+        This API changes no companion runtime, actor, equipment or inventory.
+        The caller supplies the current leader; both UIDs must be saved here.
+        """
+        from tools.local_original_session.world_pledge import join
+        return self.update_pledges(lambda value: join(value, leader_uid, character_uid))

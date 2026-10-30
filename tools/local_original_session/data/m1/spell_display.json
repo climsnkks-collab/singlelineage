@@ -1,0 +1,3132 @@
+{
+  "table": "m1_spell_display",
+  "policy": "L1J content mapping adopted by user; not official modern server protocol or visual equivalence",
+  "sources": {
+    "sql": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "sql_columns": {
+      "action_id": 1798,
+      "castgfx": 1799,
+      "castgfx2": 1800
+    },
+    "client_version": "26.09.29.2001",
+    "spr": "work/local_resource_provider/assets/data/list.spr",
+    "spr_sha256": "a3e184ed84af2b1e7d429461c555b281aaf9d8858cdced22b9dd0d708921fa44",
+    "parsed_spr": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "catalog": "work/asset_data_analysis/current/catalog.tsv",
+    "inventory_scope": "Current catalog presence/size/hash and parsed SPR references; SPX payload decoding and render unverified"
+  },
+  "packet_policy": {
+    "action": "Existing 4E31 f1/action_id,f2/caster,f3/target,f4/0,f5/heading,f13/true",
+    "effect": "Existing 4ED8 target UID32 + castgfx; target-position display only, including projectile SPR content",
+    "projectile": "No f6/f7 UID/gfx or raw f9..12 invented; flight/linked effect/cleanup requires headless verification",
+    "secondary": "castgfx2=0 for all supported rows; no alternate-selection or duplicate-effect rule invented"
+  },
+  "spells": [
+    {
+      "key": 0,
+      "name": "heal",
+      "skill_id": 1,
+      "sql_name": "LesserHeal",
+      "source_line": 35621,
+      "action_id": 19,
+      "castgfx": 744,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 744,
+          "status": "PRESENT",
+          "sprite_name": "heal",
+          "file_id": 744,
+          "spr_line": 2198,
+          "parsed_line": 407,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2199,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2200,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2201,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/744-0.spx",
+              "size": 20447,
+              "sha256": "74eacf0d2c60504ea16911e309cc7c8d2f5666c36ee99b25ecf32e5b0e088b6e"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 1,
+      "name": "light",
+      "skill_id": 2,
+      "sql_name": "Light",
+      "source_line": 35622,
+      "action_id": 19,
+      "castgfx": 2510,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2510,
+          "status": "PRESENT",
+          "sprite_name": "maigc light no sound",
+          "file_id": 149,
+          "spr_line": 8438,
+          "parsed_line": 1676,
+          "commands": [
+            {
+              "id": 0,
+              "line": 8439,
+              "name": "walk"
+            },
+            {
+              "id": 3,
+              "line": 8440,
+              "name": "breath"
+            },
+            {
+              "id": 1002,
+              "line": 8441,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/149-0.spx",
+              "size": 25,
+              "sha256": "81e7517e7964116d49d0b98d9568ae7e4a70f16bdbc2aee903aa9819b92f7a4d"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 2,
+      "name": "shield",
+      "skill_id": 3,
+      "sql_name": "Shield",
+      "source_line": 35623,
+      "action_id": 19,
+      "castgfx": 221,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 221,
+          "status": "PRESENT",
+          "sprite_name": "shield",
+          "file_id": 221,
+          "spr_line": 1168,
+          "parsed_line": 207,
+          "commands": [
+            {
+              "id": 0,
+              "line": 1169,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 1170,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 1171,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/221-0.spx",
+              "size": 25873,
+              "sha256": "aac8feddeac451d5c75318a3d975848c3d267c57585ecbdcd5d9ee826401fa38"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 3,
+      "name": "energy_bolt",
+      "skill_id": 4,
+      "sql_name": "EBolt",
+      "source_line": 35624,
+      "action_id": 18,
+      "castgfx": 167,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 167,
+          "status": "PRESENT",
+          "sprite_name": "energy bolt",
+          "file_id": 167,
+          "spr_line": 921,
+          "parsed_line": 156,
+          "commands": [
+            {
+              "id": 0,
+              "line": 922,
+              "name": "fly"
+            },
+            {
+              "id": 1004,
+              "line": 923,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 924,
+              "name": "type"
+            },
+            {
+              "id": 1009,
+              "line": 925,
+              "name": "effect"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/167-0.spx",
+              "size": 20066,
+              "sha256": "3724c8cfd2595159f1d42e4db14d016eaa4b2a69a2cd1b218e0d69e37abeacb8"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 4,
+      "name": "teleport",
+      "skill_id": 5,
+      "sql_name": "Teleport",
+      "source_line": 35625,
+      "action_id": 19,
+      "castgfx": 169,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 169,
+          "status": "PRESENT",
+          "sprite_name": "teleport",
+          "file_id": 169,
+          "spr_line": 931,
+          "parsed_line": 158,
+          "commands": [
+            {
+              "id": 0,
+              "line": 932,
+              "name": "fire"
+            },
+            {
+              "id": 1002,
+              "line": 933,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 934,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/169-0.spx",
+              "size": 281142,
+              "sha256": "c92f541f92f29c895f05d636bf10c521a81c64e93fd980e9ab95af24c1ed1f3c"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 5,
+      "name": "ice_dagger",
+      "skill_id": 6,
+      "sql_name": "IceDagger",
+      "source_line": 35626,
+      "action_id": 18,
+      "castgfx": 1797,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 1797,
+          "status": "PRESENT",
+          "sprite_name": "icedagger shooting",
+          "file_id": 1797,
+          "spr_line": 5901,
+          "parsed_line": 1159,
+          "commands": [
+            {
+              "id": 0,
+              "line": 5902,
+              "name": "fly"
+            },
+            {
+              "id": 1004,
+              "line": 5903,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 5904,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 5905,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/1000/1797-0.spx",
+              "size": 6890,
+              "sha256": "627687c7768452da1f4657a8522d8160c67feb081bf84f718dcc1695407d7a4c"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 6,
+      "name": "wind_cutter",
+      "skill_id": 7,
+      "sql_name": "WindShuriken",
+      "source_line": 35627,
+      "action_id": 18,
+      "castgfx": 1799,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 1799,
+          "status": "PRESENT",
+          "sprite_name": "windcutter shooting",
+          "file_id": 1799,
+          "spr_line": 5910,
+          "parsed_line": 1161,
+          "commands": [
+            {
+              "id": 0,
+              "line": 5911,
+              "name": "fly"
+            },
+            {
+              "id": 1004,
+              "line": 5912,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 5913,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 5914,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/1000/1799-0.spx",
+              "size": 16732,
+              "sha256": "f979957a515da90747003864668c83b9ddf700d080b988865228f4d23148d66f"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 7,
+      "name": "holy_weapon",
+      "skill_id": 8,
+      "sql_name": "HolyWeapon",
+      "source_line": 35628,
+      "action_id": 19,
+      "castgfx": 2165,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2165,
+          "status": "PRESENT",
+          "sprite_name": "holy weapon e",
+          "file_id": 2165,
+          "spr_line": 7103,
+          "parsed_line": 1474,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7104,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7105,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7106,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2165-0.spx",
+              "size": 44460,
+              "sha256": "943a6a5a573c8a4aaeb25dfeeff90bcb2650945b5bc934c33673c157beccca50"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 8,
+      "name": "cure_poison",
+      "skill_id": 9,
+      "sql_name": "CurePoison",
+      "source_line": 35629,
+      "action_id": 19,
+      "castgfx": 871,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 871,
+          "status": "PRESENT",
+          "sprite_name": "cure poison",
+          "file_id": 192,
+          "spr_line": 2670,
+          "parsed_line": 506,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2671,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2672,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2673,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/192-0.spx",
+              "size": 243361,
+              "sha256": "436012edd95b74e2391b38e8087a3132b1fc84b246ed23505b80f978603bbe04"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 9,
+      "name": "chill_touch",
+      "skill_id": 10,
+      "sql_name": "ChillTouch",
+      "source_line": 35630,
+      "action_id": 18,
+      "castgfx": 252,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 252,
+          "status": "PRESENT",
+          "sprite_name": "chill touch",
+          "file_id": 252,
+          "spr_line": 1310,
+          "parsed_line": 238,
+          "commands": [
+            {
+              "id": 0,
+              "line": 1311,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 1312,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 1313,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 1314,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/252-0.spx",
+              "size": 60188,
+              "sha256": "3b2f70967c488680d23db2d439bbc7c7869054de00a6f400e776bb173fba9bd4"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 10,
+      "name": "curse_poison",
+      "skill_id": 11,
+      "sql_name": "Poison",
+      "source_line": 35631,
+      "action_id": 19,
+      "castgfx": 745,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 745,
+          "status": "PRESENT",
+          "sprite_name": "curse poison",
+          "file_id": 745,
+          "spr_line": 2202,
+          "parsed_line": 408,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2203,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2204,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2205,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/745-0.spx",
+              "size": 25583,
+              "sha256": "9b8e1d0caf3c35ca7301721b972bd836cf5ac8a9b3680a557242d0ccb9acb560"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 11,
+      "name": "enchant_weapon",
+      "skill_id": 12,
+      "sql_name": "EnchantWeapon",
+      "source_line": 35632,
+      "action_id": 19,
+      "castgfx": 747,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 747,
+          "status": "PRESENT",
+          "sprite_name": "enchant weapon",
+          "file_id": 747,
+          "spr_line": 2210,
+          "parsed_line": 410,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2211,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2212,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2213,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/747-0.spx",
+              "size": 153918,
+              "sha256": "c0fe92602b08881706cbaec4ef01398f8499bb4230695cdb30f749beb4fc6735"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 12,
+      "name": "detection",
+      "skill_id": 13,
+      "sql_name": "Detection",
+      "source_line": 35633,
+      "action_id": 19,
+      "castgfx": 749,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 749,
+          "status": "PRESENT",
+          "sprite_name": "detection",
+          "file_id": 749,
+          "spr_line": 2218,
+          "parsed_line": 412,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2219,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2220,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2221,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/749-0.spx",
+              "size": 581887,
+              "sha256": "585835816e720ca4975d2b66af824ed72889f2c19fa4ca71ac928e1e1310e2b5"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 13,
+      "name": "decrease_weight",
+      "skill_id": 14,
+      "sql_name": "DecreaseWeight",
+      "source_line": 35634,
+      "action_id": 19,
+      "castgfx": 2170,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2170,
+          "status": "PRESENT",
+          "sprite_name": "decrease weight e",
+          "file_id": 2170,
+          "spr_line": 7123,
+          "parsed_line": 1479,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7124,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7125,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7126,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2170-0.spx",
+              "size": 80786,
+              "sha256": "706693ba6ec878416a506b8fe93f398f5fdb55ee846382b45a5ebe7b064d6400"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 14,
+      "name": "fire_arrow",
+      "skill_id": 15,
+      "sql_name": "FireArrow",
+      "source_line": 35635,
+      "action_id": 18,
+      "castgfx": 1583,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 1583,
+          "status": "PRESENT",
+          "sprite_name": "fire bolt",
+          "file_id": 1583,
+          "spr_line": 5028,
+          "parsed_line": 972,
+          "commands": [
+            {
+              "id": 0,
+              "line": 5029,
+              "name": "fly"
+            },
+            {
+              "id": 1004,
+              "line": 5030,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 5031,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 5032,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/1000/1583-0.spx",
+              "size": 20066,
+              "sha256": "a73a7f66b4447f8eb1d1e29bc769cc966e830ee18215db8755f43637eef284db"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 15,
+      "name": "stalac",
+      "skill_id": 16,
+      "sql_name": "Stalac",
+      "source_line": 35636,
+      "action_id": 18,
+      "castgfx": 1801,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 1801,
+          "status": "PRESENT",
+          "sprite_name": "stalac",
+          "file_id": 1801,
+          "spr_line": 5919,
+          "parsed_line": 1163,
+          "commands": [
+            {
+              "id": 0,
+              "line": 5920,
+              "name": "fire"
+            },
+            {
+              "id": 1001,
+              "line": 5921,
+              "name": "shadow"
+            },
+            {
+              "id": 1005,
+              "line": 5922,
+              "name": "clothes"
+            },
+            {
+              "id": 1009,
+              "line": 5923,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 5924,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/1000/1801-0.spx",
+              "size": 13136,
+              "sha256": "086f848cf17e5101fb9eb9282b1f9b297c3824fc53cf8254c5ed12ca82ba65c7"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 16,
+      "name": "lightning",
+      "skill_id": 17,
+      "sql_name": "Lightning",
+      "source_line": 35637,
+      "action_id": 18,
+      "castgfx": 170,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 170,
+          "status": "PRESENT",
+          "sprite_name": "lightning bolt",
+          "file_id": 170,
+          "spr_line": 935,
+          "parsed_line": 159,
+          "commands": [
+            {
+              "id": 0,
+              "line": 936,
+              "name": "lightning"
+            },
+            {
+              "id": 1004,
+              "line": 937,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 938,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/170-0.spx",
+              "size": 372061,
+              "sha256": "c4d5b176485bd289a6d8fe3715af51f75021d480b91f7d6488852bc96ad19dbf"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 17,
+      "name": "turn_undead",
+      "skill_id": 18,
+      "sql_name": "TurnUndead",
+      "source_line": 35638,
+      "action_id": 19,
+      "castgfx": 754,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 754,
+          "status": "PRESENT",
+          "sprite_name": "turn undead",
+          "file_id": 754,
+          "spr_line": 2236,
+          "parsed_line": 417,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2237,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2238,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2239,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/754-0.spx",
+              "size": 667400,
+              "sha256": "36b4b55d7e8ff8b1bdd8938f83d263720f8e83091b3254e135529e571145c111"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 18,
+      "name": "extra_heal",
+      "skill_id": 19,
+      "sql_name": "Heal",
+      "source_line": 35639,
+      "action_id": 19,
+      "castgfx": 829,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 829,
+          "status": "PRESENT",
+          "sprite_name": "extra heal",
+          "file_id": 744,
+          "spr_line": 2515,
+          "parsed_line": 471,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2516,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2517,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2518,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/744-0.spx",
+              "size": 20447,
+              "sha256": "74eacf0d2c60504ea16911e309cc7c8d2f5666c36ee99b25ecf32e5b0e088b6e"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 19,
+      "name": "curse_blind",
+      "skill_id": 20,
+      "sql_name": "Blind",
+      "source_line": 35640,
+      "action_id": 19,
+      "castgfx": 746,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 746,
+          "status": "PRESENT",
+          "sprite_name": "curse blind",
+          "file_id": 746,
+          "spr_line": 2206,
+          "parsed_line": 409,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2207,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2208,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2209,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/746-0.spx",
+              "size": 25936,
+              "sha256": "04b3791f5f0be4f72d344ad87805380217eb8b7f8df9ebd3d0427a13bf4f67aa"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 20,
+      "name": "blessed_armor",
+      "skill_id": 21,
+      "sql_name": "EnchantArmor",
+      "source_line": 35641,
+      "action_id": 19,
+      "castgfx": 748,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 748,
+          "status": "PRESENT",
+          "sprite_name": "blessed armor",
+          "file_id": 748,
+          "spr_line": 2214,
+          "parsed_line": 411,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2215,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2216,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2217,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/748-0.spx",
+              "size": 179552,
+              "sha256": "05478bef3faad498b60d60dd3eda47fde60c008e309dc3b2fe0e0cdf45be70f7"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 21,
+      "name": "frozen_cloud",
+      "skill_id": 22,
+      "sql_name": "FrostCloud",
+      "source_line": 35642,
+      "action_id": 18,
+      "castgfx": 1804,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 1804,
+          "status": "PRESENT",
+          "sprite_name": "frozen cloud",
+          "file_id": 1804,
+          "spr_line": 5930,
+          "parsed_line": 1166,
+          "commands": [
+            {
+              "id": 0,
+              "line": 5931,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 5932,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 5933,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 5934,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/1000/1804-0.spx",
+              "size": 766267,
+              "sha256": "f964d07878a932d464074f00884826bc0bbea84458fb0140094634bed4ccb80c"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 22,
+      "name": "weak_elemental",
+      "skill_id": 23,
+      "sql_name": "WeakElemental",
+      "source_line": 35643,
+      "action_id": 19,
+      "castgfx": 2510,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2510,
+          "status": "PRESENT",
+          "sprite_name": "maigc light no sound",
+          "file_id": 149,
+          "spr_line": 8438,
+          "parsed_line": 1676,
+          "commands": [
+            {
+              "id": 0,
+              "line": 8439,
+              "name": "walk"
+            },
+            {
+              "id": 3,
+              "line": 8440,
+              "name": "breath"
+            },
+            {
+              "id": 1002,
+              "line": 8441,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/149-0.spx",
+              "size": 25,
+              "sha256": "81e7517e7964116d49d0b98d9568ae7e4a70f16bdbc2aee903aa9819b92f7a4d"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 24,
+      "name": "fireball",
+      "skill_id": 25,
+      "sql_name": "Fireball",
+      "source_line": 35645,
+      "action_id": 18,
+      "castgfx": 171,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 171,
+          "status": "PRESENT",
+          "sprite_name": "fireball",
+          "file_id": 171,
+          "spr_line": 939,
+          "parsed_line": 160,
+          "commands": [
+            {
+              "id": 0,
+              "line": 940,
+              "name": "fly"
+            },
+            {
+              "id": 1004,
+              "line": 941,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 942,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 943,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/171-0.spx",
+              "size": 50637,
+              "sha256": "89312178d018b8cdf1c92d77bd5c46429b52420b82f963ed6b1a5519120686a6"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 25,
+      "name": "enchant_dexterity",
+      "skill_id": 26,
+      "sql_name": "EnchantDex",
+      "source_line": 35646,
+      "action_id": 19,
+      "castgfx": 750,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 750,
+          "status": "PRESENT",
+          "sprite_name": "strength",
+          "file_id": 750,
+          "spr_line": 2222,
+          "parsed_line": 413,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2223,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2224,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2225,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/750-0.spx",
+              "size": 102267,
+              "sha256": "5c898ecafbc6ddbe67ef580cb1848e69d281f1180c329627be1628f8a82fa078"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 26,
+      "name": "weapon_break",
+      "skill_id": 27,
+      "sql_name": "WeaponBreak",
+      "source_line": 35647,
+      "action_id": 19,
+      "castgfx": 172,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 172,
+          "status": "PRESENT",
+          "sprite_name": "weapon break",
+          "file_id": 172,
+          "spr_line": 944,
+          "parsed_line": 161,
+          "commands": [
+            {
+              "id": 0,
+              "line": 945,
+              "name": "Action"
+            },
+            {
+              "id": 1004,
+              "line": 946,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 947,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/172-0.spx",
+              "size": 512960,
+              "sha256": "1b946921afc6abad42da982689b59d510a3e2a1078767d07040e83c0709f63a9"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 27,
+      "name": "vampiric_touch",
+      "skill_id": 28,
+      "sql_name": "VampiricTouch",
+      "source_line": 35648,
+      "action_id": 18,
+      "castgfx": 236,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 236,
+          "status": "PRESENT",
+          "sprite_name": "vampiric touch",
+          "file_id": 236,
+          "spr_line": 1231,
+          "parsed_line": 222,
+          "commands": [
+            {
+              "id": 0,
+              "line": 1232,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 1233,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 1234,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 1235,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/236-0.spx",
+              "size": 60204,
+              "sha256": "0dfe388a581dd808b5144cd22f8d91a65b139cfc27398a96c86391164118e04f"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 28,
+      "name": "slow",
+      "skill_id": 29,
+      "sql_name": "Slow",
+      "source_line": 35649,
+      "action_id": 19,
+      "castgfx": 752,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 752,
+          "status": "PRESENT",
+          "sprite_name": "slow",
+          "file_id": 752,
+          "spr_line": 2230,
+          "parsed_line": 415,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2231,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2232,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2233,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/752-0.spx",
+              "size": 130892,
+              "sha256": "2a7f9774163079dced5f8eaf70ab7d32ac3af3203bf190ed3f7f802c09416e1d"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 29,
+      "name": "earth_jail",
+      "skill_id": 30,
+      "sql_name": "EarthJail",
+      "source_line": 35650,
+      "action_id": 18,
+      "castgfx": 1805,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 1805,
+          "status": "PRESENT",
+          "sprite_name": "earthjail",
+          "file_id": 1805,
+          "spr_line": 5935,
+          "parsed_line": 1167,
+          "commands": [
+            {
+              "id": 0,
+              "line": 5936,
+              "name": "fire"
+            },
+            {
+              "id": 1001,
+              "line": 5937,
+              "name": "shadow"
+            },
+            {
+              "id": 1005,
+              "line": 5938,
+              "name": "clothes"
+            },
+            {
+              "id": 1009,
+              "line": 5939,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 5940,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/1000/1805-0.spx",
+              "size": 92160,
+              "sha256": "965a785efa73494660173fd49e12566ea5aee2bb19c2f63f8d7b7d4de21c1a55"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 30,
+      "name": "counter_magic",
+      "skill_id": 31,
+      "sql_name": "CounterMagic",
+      "source_line": 35651,
+      "action_id": 19,
+      "castgfx": 2174,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2174,
+          "status": "PRESENT",
+          "sprite_name": "counter magic e",
+          "file_id": 2174,
+          "spr_line": 7139,
+          "parsed_line": 1483,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7140,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7141,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7142,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2174-0.spx",
+              "size": 246991,
+              "sha256": "21234f3c7850fbabcf953be11529abefacf3d3782e0c1b998ccf81435f1a6000"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 31,
+      "name": "meditation",
+      "skill_id": 32,
+      "sql_name": "Meditate",
+      "source_line": 35652,
+      "action_id": 19,
+      "castgfx": 2173,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2173,
+          "status": "PRESENT",
+          "sprite_name": "meditation e",
+          "file_id": 2173,
+          "spr_line": 7135,
+          "parsed_line": 1482,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7136,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7137,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7138,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2173-0.spx",
+              "size": 233587,
+              "sha256": "39ccbf91528c09da81c4ec1aea174856b4a5e7f0d74d904680527654a61dc586"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 32,
+      "name": "curse_paralyze",
+      "skill_id": 33,
+      "sql_name": "Paralyze",
+      "source_line": 35653,
+      "action_id": 19,
+      "castgfx": 746,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 746,
+          "status": "PRESENT",
+          "sprite_name": "curse blind",
+          "file_id": 746,
+          "spr_line": 2206,
+          "parsed_line": 409,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2207,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2208,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2209,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/746-0.spx",
+              "size": 25936,
+              "sha256": "04b3791f5f0be4f72d344ad87805380217eb8b7f8df9ebd3d0427a13bf4f67aa"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 33,
+      "name": "call_lightning",
+      "skill_id": 34,
+      "sql_name": "CallLightning",
+      "source_line": 35654,
+      "action_id": 18,
+      "castgfx": 10,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 10,
+          "status": "PRESENT",
+          "sprite_name": "lightning",
+          "file_id": 10,
+          "spr_line": 110,
+          "parsed_line": 11,
+          "commands": [
+            {
+              "id": 0,
+              "line": 111,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 112,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 113,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 114,
+              "name": "effect"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/10-0.spx",
+              "size": 405618,
+              "sha256": "369ccbd38693d2cb839adf05c8c8593886ca333f83f051e0b85368eb9759cfbb"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 34,
+      "name": "greater_heal",
+      "skill_id": 35,
+      "sql_name": "GreaterHeal",
+      "source_line": 35655,
+      "action_id": 19,
+      "castgfx": 830,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 830,
+          "status": "PRESENT",
+          "sprite_name": "greater heal",
+          "file_id": 744,
+          "spr_line": 2519,
+          "parsed_line": 472,
+          "commands": [
+            {
+              "id": 0,
+              "line": 2520,
+              "name": "fire"
+            },
+            {
+              "id": 1004,
+              "line": 2521,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 2522,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/744-0.spx",
+              "size": 20447,
+              "sha256": "74eacf0d2c60504ea16911e309cc7c8d2f5666c36ee99b25ecf32e5b0e088b6e"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 36,
+      "name": "remove_curse",
+      "skill_id": 37,
+      "sql_name": "RemoveCurse",
+      "source_line": 35657,
+      "action_id": 19,
+      "castgfx": 227,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 227,
+          "status": "PRESENT",
+          "sprite_name": "lfs bgrn r curse",
+          "file_id": 227,
+          "spr_line": 1191,
+          "parsed_line": 213,
+          "commands": [
+            {
+              "id": 0,
+              "line": 1192,
+              "name": "Breath"
+            },
+            {
+              "id": 1004,
+              "line": 1193,
+              "name": "attr"
+            },
+            {
+              "id": 1002,
+              "line": 1194,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/0/227-0.spx",
+              "size": 351994,
+              "sha256": "6dad939100100c1d7b72820031643c9206405224cacb135e44366d478aebc96f"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 37,
+      "name": "cone_of_cold",
+      "skill_id": 38,
+      "sql_name": "ConeOfCold",
+      "source_line": 35658,
+      "action_id": 18,
+      "castgfx": 1809,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 1809,
+          "status": "PRESENT",
+          "sprite_name": "coneofcold shooting",
+          "file_id": 1809,
+          "spr_line": 5946,
+          "parsed_line": 1170,
+          "commands": [
+            {
+              "id": 0,
+              "line": 5947,
+              "name": "fly"
+            },
+            {
+              "id": 1004,
+              "line": 5948,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 5949,
+              "name": "effect"
+            },
+            {
+              "id": 1002,
+              "line": 5950,
+              "name": "type"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/1000/1809-0.spx",
+              "size": 26760,
+              "sha256": "640faf7e0e69e89bb0051e8d7b6dfcb9dcf819caf117197ea265298bac50e2d1"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 38,
+      "name": "mana_drain",
+      "skill_id": 39,
+      "sql_name": "ManaDrain",
+      "source_line": 35659,
+      "action_id": 19,
+      "castgfx": 2171,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2171,
+          "status": "PRESENT",
+          "sprite_name": "mana drain take e",
+          "file_id": 2171,
+          "spr_line": 7127,
+          "parsed_line": 1480,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7128,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7129,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7130,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2171-0.spx",
+              "size": 88180,
+              "sha256": "6428b942bc307c1ed8e9d6e4a841515169d829e7ffb23a43460b47b9e6718b7e"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 39,
+      "name": "darkness",
+      "skill_id": 40,
+      "sql_name": "Darkness",
+      "source_line": 35660,
+      "action_id": 19,
+      "castgfx": 2175,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2175,
+          "status": "PRESENT",
+          "sprite_name": "darkness m",
+          "file_id": 2175,
+          "spr_line": 7143,
+          "parsed_line": 1484,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7144,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7145,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7146,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2175-0.spx",
+              "size": 82969,
+              "sha256": "3a18874cd2cd29b133522c22b52da4d5c1568cf97b66f4f493a5c46645208f74"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 86,
+      "name": "classic_86",
+      "skill_id": 87,
+      "sql_name": "ShockStun",
+      "source_line": 35707,
+      "action_id": 19,
+      "castgfx": 4434,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 4434,
+          "status": "PRESENT",
+          "sprite_name": "shock sturn",
+          "file_id": 4434,
+          "spr_line": 12898,
+          "parsed_line": 2281,
+          "commands": [
+            {
+              "id": 0,
+              "line": 12899,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 12900,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 12901,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 12902,
+              "name": "effect"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/4000/4434-0.spx",
+              "size": 80468,
+              "sha256": "c3c32665869be09e76556d01a95ea215d740c5a8d6783205f256775c1e676e64"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 87,
+      "name": "classic_87",
+      "skill_id": 88,
+      "sql_name": "ReductionArmor",
+      "source_line": 35708,
+      "action_id": 19,
+      "castgfx": 4824,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 4824,
+          "status": "PRESENT",
+          "sprite_name": "knight reduction armor effect",
+          "file_id": 4824,
+          "spr_line": 13702,
+          "parsed_line": 2394,
+          "commands": [
+            {
+              "id": 0,
+              "line": 13703,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 13704,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 13705,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 13706,
+              "name": "effect"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/4000/4824-0.spx",
+              "size": 77054,
+              "sha256": "a61099ca0467bd8ccdb0d08b431c23cd588941eb1a8acf54970b07e811a886c0"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 88,
+      "name": "classic_88",
+      "skill_id": 89,
+      "sql_name": "BounceAttack",
+      "source_line": 35709,
+      "action_id": 19,
+      "castgfx": 4648,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 4648,
+          "status": "PRESENT",
+          "sprite_name": "knight bounce attack effect",
+          "file_id": 4648,
+          "spr_line": 13254,
+          "parsed_line": 2353,
+          "commands": [
+            {
+              "id": 0,
+              "line": 13255,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 13256,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 13257,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 13258,
+              "name": "effect"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/4000/4648-0.spx",
+              "size": 55813,
+              "sha256": "fa6f6241a6f366b8cb89d582cd42f58731ed1fa293be6ed766c10b40ed18dfa8"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 128,
+      "name": "classic_128",
+      "skill_id": 129,
+      "sql_name": "ResistMagic",
+      "source_line": 35748,
+      "action_id": 19,
+      "castgfx": 2186,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2186,
+          "status": "PRESENT",
+          "sprite_name": "resist magic e",
+          "file_id": 2186,
+          "spr_line": 7187,
+          "parsed_line": 1495,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7188,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7189,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7190,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2186-0.spx",
+              "size": 27997,
+              "sha256": "507823dfb03fb66ba1fc2098af3b36b6589c588b71c3286b9316100965d50dfa"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 129,
+      "name": "classic_129",
+      "skill_id": 130,
+      "sql_name": "BodytoMind",
+      "source_line": 35749,
+      "action_id": 19,
+      "castgfx": 2179,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2179,
+          "status": "PRESENT",
+          "sprite_name": "body to mind e",
+          "file_id": 2179,
+          "spr_line": 7159,
+          "parsed_line": 1488,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7160,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7161,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7162,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2179-0.spx",
+              "size": 55085,
+              "sha256": "0a816fbfc2d3e267e1d74f3fbc47c3fb9d86d902426012bf98016b41d40e7ee4"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 136,
+      "name": "classic_136",
+      "skill_id": 137,
+      "sql_name": "ClearMind",
+      "source_line": 35756,
+      "action_id": 19,
+      "castgfx": 2180,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2180,
+          "status": "PRESENT",
+          "sprite_name": "clear mind e",
+          "file_id": 2180,
+          "spr_line": 7163,
+          "parsed_line": 1489,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7164,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7165,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7166,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2180-0.spx",
+              "size": 124165,
+              "sha256": "bebeed385e91f229b82b207faa6dab254c1509a1d1786143a6816aabd91af572"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 137,
+      "name": "classic_137",
+      "skill_id": 138,
+      "sql_name": "ResistElemental",
+      "source_line": 35757,
+      "action_id": 19,
+      "castgfx": 2184,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2184,
+          "status": "PRESENT",
+          "sprite_name": "resist element e",
+          "file_id": 2184,
+          "spr_line": 7179,
+          "parsed_line": 1493,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7180,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7181,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7182,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2184-0.spx",
+              "size": 80927,
+              "sha256": "b2cbe696b6ab9a965560671823559f2e0d6e5f089fdcb33a89849cb7375f6f3a"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 145,
+      "name": "classic_145",
+      "skill_id": 146,
+      "sql_name": "BloodtoSoul",
+      "source_line": 35765,
+      "action_id": 19,
+      "castgfx": 2178,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2178,
+          "status": "PRESENT",
+          "sprite_name": "blood to soul e",
+          "file_id": 2178,
+          "spr_line": 7155,
+          "parsed_line": 1487,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7156,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7157,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7158,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2178-0.spx",
+              "size": 94017,
+              "sha256": "dcc1e3b11777bd785f4fb850650fc2ad9ddde70bfa61719578df01507e00ea02"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 146,
+      "name": "classic_146",
+      "skill_id": 147,
+      "sql_name": "ProtectionFromElemental",
+      "source_line": 35766,
+      "action_id": 19,
+      "castgfx": 2285,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2285,
+          "status": "PRESENT",
+          "sprite_name": "protect from element",
+          "file_id": 2285,
+          "spr_line": 7533,
+          "parsed_line": 1562,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7534,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7535,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7536,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2285-0.spx",
+              "size": 80927,
+              "sha256": "b2cbe696b6ab9a965560671823559f2e0d6e5f089fdcb33a89849cb7375f6f3a"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 147,
+      "name": "classic_147",
+      "skill_id": 148,
+      "sql_name": "FireWeapon",
+      "source_line": 35767,
+      "action_id": 19,
+      "castgfx": 2182,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2182,
+          "status": "PRESENT",
+          "sprite_name": "fire weapon e",
+          "file_id": 2182,
+          "spr_line": 7171,
+          "parsed_line": 1491,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7172,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7173,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7174,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2182-0.spx",
+              "size": 190804,
+              "sha256": "bb741d6bb0164939b4a17b2bb7c5a596a254c8c1abfd76b9722086b7d3f8fbee"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 148,
+      "name": "classic_148",
+      "skill_id": 149,
+      "sql_name": "WindShot",
+      "source_line": 35768,
+      "action_id": 19,
+      "castgfx": 2246,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2246,
+          "status": "PRESENT",
+          "sprite_name": "wind shot e",
+          "file_id": 2246,
+          "spr_line": 7389,
+          "parsed_line": 1541,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7390,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7391,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7392,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2246-0.spx",
+              "size": 63130,
+              "sha256": "7bfbca6ce0fc59646d50a4612cb7c40236f67d570e3088a4b5e90e6e259d9c92"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 150,
+      "name": "classic_150",
+      "skill_id": 151,
+      "sql_name": "EarthSkin",
+      "source_line": 35770,
+      "action_id": 19,
+      "castgfx": 2249,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2249,
+          "status": "PRESENT",
+          "sprite_name": "earth skin e",
+          "file_id": 2249,
+          "spr_line": 7401,
+          "parsed_line": 1544,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7402,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7403,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7404,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2249-0.spx",
+              "size": 106409,
+              "sha256": "00cc3605e45ffb2a934ada42e32324c07098d80e278b22bf875bfd6a6cb63bd7"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 151,
+      "name": "classic_151",
+      "skill_id": 152,
+      "sql_name": "Entangle",
+      "source_line": 35771,
+      "action_id": 19,
+      "castgfx": 2250,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2250,
+          "status": "PRESENT",
+          "sprite_name": "entangle e",
+          "file_id": 2250,
+          "spr_line": 7405,
+          "parsed_line": 1545,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7406,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7407,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7408,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2250-0.spx",
+              "size": 106695,
+              "sha256": "75bf3d30364b0948e36a515eb32bcfbbaac61edd7359fdcd2ce3cbf5d0053888"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 152,
+      "name": "classic_152",
+      "skill_id": 153,
+      "sql_name": "EraseMagic",
+      "source_line": 35772,
+      "action_id": 19,
+      "castgfx": 2181,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2181,
+          "status": "PRESENT",
+          "sprite_name": "erase magic e",
+          "file_id": 2181,
+          "spr_line": 7167,
+          "parsed_line": 1490,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7168,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7169,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7170,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2181-0.spx",
+              "size": 82437,
+              "sha256": "e0a28a477224dbbbf83180b2f46c5518956166d9d19feb57b66ccac2449216a1"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 162,
+      "name": "classic_162",
+      "skill_id": 163,
+      "sql_name": "BurningWeapon",
+      "source_line": 35782,
+      "action_id": 19,
+      "castgfx": 2242,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2242,
+          "status": "PRESENT",
+          "sprite_name": "burning weapon e",
+          "file_id": 2242,
+          "spr_line": 7373,
+          "parsed_line": 1537,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7374,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7375,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7376,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2242-0.spx",
+              "size": 433666,
+              "sha256": "5744c2a5f5506d23048f987570039677869b2d74c0f2056577abe0bf01b01e02"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 165,
+      "name": "classic_165",
+      "skill_id": 166,
+      "sql_name": "StormShot",
+      "source_line": 35785,
+      "action_id": 19,
+      "castgfx": 2248,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2248,
+          "status": "PRESENT",
+          "sprite_name": "storm shot e",
+          "file_id": 2248,
+          "spr_line": 7397,
+          "parsed_line": 1543,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7398,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7399,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7400,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2248-0.spx",
+              "size": 209957,
+              "sha256": "98f3ec9cc4c9c5f76e06728615210b9500cf91e2b285d262e1c2ca80e7069ba9"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 167,
+      "name": "classic_167",
+      "skill_id": 168,
+      "sql_name": "IronSkin",
+      "source_line": 35787,
+      "action_id": 19,
+      "castgfx": 2252,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 2252,
+          "status": "PRESENT",
+          "sprite_name": "iron skin e",
+          "file_id": 2252,
+          "spr_line": 7413,
+          "parsed_line": 1547,
+          "commands": [
+            {
+              "id": 0,
+              "line": 7414,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 7415,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 7416,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/2000/2252-0.spx",
+              "size": 195783,
+              "sha256": "f1f84e0965ec8f668dd4306dd59077068915186fd1754a39f7d4ca8489429597"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 169,
+      "name": "classic_169",
+      "skill_id": 170,
+      "sql_name": "WaterLife",
+      "source_line": 35789,
+      "action_id": 19,
+      "castgfx": 4401,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 4401,
+          "status": "PRESENT",
+          "sprite_name": "water life",
+          "file_id": 4401,
+          "spr_line": 12760,
+          "parsed_line": 2257,
+          "commands": [
+            {
+              "id": 0,
+              "line": 12761,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 12762,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 12763,
+              "name": "attr"
+            },
+            {
+              "id": 1009,
+              "line": 12764,
+              "name": "effect"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/4000/4401-0.spx",
+              "size": 262455,
+              "sha256": "0c0d2c60bcfa4b7778b93a91f8901480289a4bcbc3612c7e1512a578d0468489"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 89,
+      "name": "solid_carriage",
+      "skill_id": 90,
+      "sql_name": "SolidCarriage",
+      "source_line": 35710,
+      "action_id": 19,
+      "castgfx": 5831,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 5831,
+          "status": "PRESENT",
+          "sprite_name": "solid carriage",
+          "file_id": 5831,
+          "spr_line": 13931,
+          "parsed_line": 2437,
+          "commands": [
+            {
+              "id": 0,
+              "line": 13932,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 13933,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 13934,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/5000/5831-0.spx",
+              "size": 73814,
+              "sha256": "f40277cbede1620bf5943a0c0cc0175681eb81e3588271bb270ec5f58ebc6c1d"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    },
+    {
+      "key": 90,
+      "name": "counter_barrier",
+      "skill_id": 91,
+      "sql_name": "CounterBarrier",
+      "source_line": 35711,
+      "action_id": 19,
+      "castgfx": 5832,
+      "castgfx2": 0,
+      "graphics": [
+        {
+          "field": "castgfx",
+          "gfx": 5832,
+          "status": "PRESENT",
+          "sprite_name": "counter barrier",
+          "file_id": 5832,
+          "spr_line": 13935,
+          "parsed_line": 2438,
+          "commands": [
+            {
+              "id": 0,
+              "line": 13936,
+              "name": "animation"
+            },
+            {
+              "id": 1002,
+              "line": 13937,
+              "name": "type"
+            },
+            {
+              "id": 1004,
+              "line": 13938,
+              "name": "attr"
+            }
+          ],
+          "catalog_files": [
+            {
+              "path": "sprite/5000/5832-0.spx",
+              "size": 94131,
+              "sha256": "4d05bb5c7c6747d7129363aa908b779ca410fea39d29b59ab27e3e33cd7244a3"
+            }
+          ],
+          "missing_catalog_files": []
+        },
+        {
+          "field": "castgfx2",
+          "gfx": 0,
+          "status": "ZERO_NO_GRAPHIC",
+          "reason": "SQL zero is absent secondary graphic, not a missing client resource"
+        }
+      ]
+    }
+  ]
+}

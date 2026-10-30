@@ -1,0 +1,183 @@
+{
+  "table": "m1_item_gfx_consumables_ext",
+  "version": 1,
+  "note": "고정 client item.bin f5 인벤 아이콘 및 f6 바닥 그래픽 raw. 기존 item_gfx.json을 덮어쓰지 않는다. 신규 ID의 실제 바닥 렌더링은 미검증이며 기존 item_gfx 소비 경로를 재사용한다.",
+  "source": "work/source_game_data/native-dump-v1.jsonl; tools/local_original_session/data/catalog/items_all.json client_original",
+  "items": {
+    "9": {
+      "icon": 124,
+      "ground": 3176,
+      "name_ko": "괴물 눈 고기",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:960 item.bin f5/f6"
+    },
+    "10": {
+      "icon": 124,
+      "ground": 36,
+      "name_ko": "고기",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:961 item.bin f5/f6"
+    },
+    "15": {
+      "icon": 78,
+      "ground": 43,
+      "name_ko": "주홍 물약",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:966 item.bin f5/f6"
+    },
+    "16": {
+      "icon": 82,
+      "ground": 47,
+      "name_ko": "불투명 물약",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:967 item.bin f5/f6"
+    },
+    "22": {
+      "icon": 475,
+      "ground": 22,
+      "name_ko": "확인 주문서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:972 item.bin f5/f6"
+    },
+    "24": {
+      "icon": 470,
+      "ground": 22,
+      "name_ko": "저주 풀기 주문서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:974 item.bin f5/f6"
+    },
+    "37": {
+      "icon": 25,
+      "ground": 67,
+      "name_ko": "당근",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:986 item.bin f5/f6"
+    },
+    "43": {
+      "icon": 40,
+      "ground": 69,
+      "name_ko": "달걀",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:992 item.bin f5/f6"
+    },
+    "55": {
+      "icon": 63,
+      "ground": 72,
+      "name_ko": "레몬",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1001 item.bin f5/f6"
+    },
+    "59": {
+      "icon": 71,
+      "ground": 73,
+      "name_ko": "오렌지",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1005 item.bin f5/f6"
+    },
+    "60": {
+      "icon": 125,
+      "ground": 74,
+      "name_ko": "팬케익",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1006 item.bin f5/f6"
+    },
+    "68": {
+      "icon": 96,
+      "ground": 66,
+      "name_ko": "은 화살",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1011 item.bin f5/f6"
+    },
+    "82": {
+      "icon": 995,
+      "ground": 2723,
+      "name_ko": "사과",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1022 item.bin f5/f6"
+    },
+    "83": {
+      "icon": 127,
+      "ground": 80,
+      "name_ko": "바나나",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1023 item.bin f5/f6"
+    },
+    "86": {
+      "icon": 130,
+      "ground": 81,
+      "name_ko": "엘븐 와퍼",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1024 item.bin f5/f6"
+    },
+    "126": {
+      "icon": 76,
+      "ground": 41,
+      "name_ko": "비취 물약",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1060 item.bin f5/f6"
+    },
+    "130": {
+      "icon": 81,
+      "ground": 46,
+      "name_ko": "맑은 물약",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1064 item.bin f5/f6"
+    },
+    "248": {
+      "icon": 309,
+      "ground": 881,
+      "name_ko": "엔트의 줄기",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1151 item.bin f5/f6"
+    },
+    "258": {
+      "icon": 96,
+      "ground": 66,
+      "name_ko": "미스릴 화살",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1161 item.bin f5/f6"
+    },
+    "279": {
+      "icon": 126,
+      "ground": 79,
+      "name_ko": "엔트의 열매",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1182 item.bin f5/f6"
+    },
+    "297": {
+      "icon": 1529,
+      "ground": 3836,
+      "name_ko": "지혜의 물약",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1193 item.bin f5/f6"
+    },
+    "362": {
+      "icon": 488,
+      "ground": 73,
+      "name_ko": "사탕",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1232 item.bin f5/f6"
+    },
+    "417": {
+      "icon": 557,
+      "ground": 1733,
+      "name_ko": "에바의 축복",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1254 item.bin f5/f6"
+    },
+    "418": {
+      "icon": 556,
+      "ground": 1732,
+      "name_ko": "인어의 비늘",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1255 item.bin f5/f6"
+    },
+    "495": {
+      "icon": 621,
+      "ground": 42,
+      "name_ko": "강화 초록 물약",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1299 item.bin f5/f6"
+    },
+    "806": {
+      "icon": 474,
+      "ground": 22,
+      "name_ko": "혈맹 귀환 주문서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1475 item.bin f5/f6"
+    },
+    "1408": {
+      "icon": 20029,
+      "ground": 4338,
+      "name_ko": "악마의 피",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1507 item.bin f5/f6"
+    },
+    "15400": {
+      "icon": 20535,
+      "ground": 2878,
+      "name_ko": "오만의 탑 1층 이동 주문서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:2155 item.bin f5/f6"
+    },
+    "15410": {
+      "icon": 20566,
+      "ground": 2878,
+      "name_ko": "오만의 탑 11층 이동 주문서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:2165 item.bin f5/f6"
+    }
+  }
+}
+

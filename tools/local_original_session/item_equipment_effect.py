@@ -8,7 +8,7 @@ import copy
 import hashlib
 from tools.local_original_session import inventory,item_use_session,observe
 from tools.local_original_session.athame_policy import plan_athame_use,plan_athame_collection_use,COLLECTION_POLICY as OWNED_POLICY
-from tools.local_original_session.equipment_store import EquipmentStore,POLICY as STORE_POLICY,FIRST_ENABLE_EMPTY
+from tools.local_original_session.equipment_store import EquipmentStore,POLICY as STORE_POLICY,FIRST_ENABLE_EMPTY,kit_equip_plan
 from tools.local_original_session import equipment_change
 
 POLICY='EXPLICIT_LOCAL_ATHAME_EQUIPMENT_EFFECT'
@@ -36,7 +36,16 @@ class ItemEquipmentEffect:
         self._collection_policy=getattr(broker,'_inventory_collection_policy',None)
         need(self._collection_policy is None or (type(self._collection_policy) is str and
              self._collection_policy==inventory.COLLECTION_POLICY),'EQUIPMENT_COLLECTION_POLICY_REQUIRED')
-        if self._collection_policy is None:
+        self._kit_policy=getattr(broker,'_inventory_kit_policy',None)
+        self._defs=self._starter=None
+        if self._kit_policy is not None:
+            from tools.local_original_session.game_data import load_m1
+            need(self._collection_policy is None and self._kit_policy==inventory.KIT_POLICY,
+                 'EQUIPMENT_KIT_POLICY_REQUIRED')
+            data=load_m1();self._defs,self._starter=data.items,data.starter
+            self.store=EquipmentStore(broker._inventory_store,policy=STORE_POLICY,
+                                      kit_policy=self._kit_policy,item_defs=self._defs)
+        elif self._collection_policy is None:
             self.store=EquipmentStore(broker._inventory_store,policy=STORE_POLICY)
         else:
             self.store=EquipmentStore(broker._inventory_store,policy=STORE_POLICY,collection_policy=OWNED_POLICY)
@@ -89,7 +98,7 @@ class ItemEquipmentEffect:
         mode=getattr(broker,'_inventory_collection_policy',None)
         need(type(mode) is type(self._collection_policy) and mode==self._collection_policy,
              'EQUIPMENT_COLLECTION_POLICY_CHANGED')
-        if self._collection_policy is None:
+        if self._collection_policy is None and self._kit_policy is None:
             projection=item_use_session.ItemUseSession._project(service,writer,equipment_operation=operation)
         else:
             if operation is not None:item_identifier=operation['context']['item'].identifier
@@ -103,11 +112,15 @@ class ItemEquipmentEffect:
         need(uid==position.uid and info[1]==position.name and game.selection is not None and
              game.selection.reference==position.name and self.realm.store.path==self.store.profile,
              'EQUIPMENT_CURRENT_SELECTED_CHARACTER_REQUIRED')
-        need(self.realm.world_profile==self._profile_policy and self.realm._actor_fields is self._actor and
-             self.realm._actor_fields[3]==self._appearance and self.realm.profile_uid==uid==self._profile_uid,
+        actor=self.realm._actor_fields
+        selected_profile=(self._kit_policy==inventory.KIT_POLICY and broker._world is not None)
+        need(self.realm.world_profile==self._profile_policy and
+             (selected_profile and actor[2]==uid and actor[9]==position.name
+              or not selected_profile and actor is self._actor and actor[3]==self._appearance
+                 and uid==self._profile_uid) and self.realm.profile_uid==uid,
              'EQUIPMENT_CURRENT_BASE_PROFILE_REQUIRED')
-        identity=(writer,broker._inventory_generation,game,game.selection,broker._inventory_service,service,self._actor)
-        items=((projection[6],) if self._collection_policy is None else
+        identity=(writer,broker._inventory_generation,game,game.selection,broker._inventory_service,service,actor)
+        items=((projection[6],) if self._collection_policy is None and self._kit_policy is None else
                self.store.owned_items(uid,projection[2]))
         need(any(inventory._same_static(item.raw_fields,projection[6].raw_fields) for item in items),
              'EQUIPMENT_SELECTED_OWNED_ITEM_REQUIRED')
@@ -162,6 +175,7 @@ class ItemEquipmentEffect:
 
     def validate_reply(self,writer,wire):
         op=self._operation
+        if self._kit_policy is not None:return self._validate_kit_reply(writer,wire,op)
         if self._collection_policy is not None:return self._validate_collection_reply(writer,wire,op)
         need(op is not None and wire is op['wire'] and op['context']['writer'] is writer,'EQUIPMENT_EXACT_WIRE_REQUIRED')
         parsed=equipment_change.validate_change(wire)
@@ -176,7 +190,7 @@ class ItemEquipmentEffect:
         need(op is self.validate_reply(writer,op['wire']) and op['context']['row'] is row and
              op['phase']=='RESERVING' and not op['receipt']['write_attempted'],'EQUIPMENT_SINGLE_WRITE_REQUIRED')
         op['phase']='WRITE_ATTEMPTED';op['receipt'].update(phase='WRITE_ATTEMPTED',write_attempted=True)
-        if self._collection_policy is not None:
+        if self._collection_policy is not None or self._kit_policy is not None:
             aggregate=op['batch']['receipt']
             aggregate['write_attempted']=True
             aggregate['notifications_attempted']+=1
@@ -206,13 +220,42 @@ class ItemEquipmentEffect:
     def _failed(self,receipt,error):
         receipt.update(status='UNKNOWN',phase='TERMINAL',reason=observe.reason(error))
         if self._operation is not None:self._operation['phase']='TERMINAL'
-        if self._collection_policy is not None and self._collection_batch is not None:
-            self._collection_batch['phase']='TERMINAL' 
+        if (self._collection_policy is not None or self._kit_policy is not None) and self._collection_batch is not None:
+            self._collection_batch['phase']='TERMINAL'
         if receipt['persist_attempted'] or receipt['write_attempted']:
-            self.broker._fail('EQUIPMENT_EFFECT_OUTCOME_UNKNOWN')
+            if getattr(self.broker,'_world',None) is None:
+                self.broker._fail('EQUIPMENT_EFFECT_OUTCOME_UNKNOWN')
         # No retry/rollback or invented client state after ambiguous persistence/send.
 
-    async def prepare_locked(self,writer):
+    def _raise_request_failure(self,error):
+        # The broker's existing request-only world safety net accepts ValueError.
+        # Keep the actual exception as the cause; legacy/cancellation stay exact.
+        if (getattr(self.broker,'_world',None) is not None and isinstance(error,Exception)
+                and not isinstance(error,ValueError)):
+            raise ValueError('EQUIPMENT_WORLD_REQUEST_FAILED') from error
+        raise error
+
+    async def _resync_world(self,writer,receipt):
+        if getattr(self.broker,'_world',None) is None:return
+        # Re-read the current save and reuse initial synchronization. Never
+        # replay the accepted use or roll back a possibly committed CAS.
+        self._selection=None
+        try:
+            touched=[]
+            before=receipt.get('before_weapon_uid')
+            if before:touched.append((before,self._key()))
+            touched.extend((uid,int(key)) for key,uid in receipt.get('before_slots',{}).items())
+            if receipt.get('equipment_key_i32') is not None:
+                touched.append((receipt['item_uid'],receipt['equipment_key_i32']))
+            synchronized=await self.prepare_locked(writer,resync_items=tuple(dict.fromkeys(touched)),
+                                                   restore_only=True)
+            receipt['resync_status']=synchronized['status']
+        except Exception as error:
+            receipt.update(resync_status='UNKNOWN',resync_reason=observe.reason(error))
+        finally:
+            self._last=receipt
+
+    async def prepare_locked(self,writer,*,resync_items=(),restore_only=False):
         context=self._context(writer)
         life=self._selection
         if life is not None and all(a is b for a,b in zip(life['identity'],context['identity'])):
@@ -238,22 +281,40 @@ class ItemEquipmentEffect:
             await self.broker._checkpoint(writer,context['row']);self._same(context,self._context(writer))
             state=self.store.restore(context['character_uid'],context['frame'])
             if state is None:
-                if not self.first_enable:return self._blocked(receipt,'EQUIPMENT_EXPLICIT_FIRST_ENABLE_REQUIRED')
+                if restore_only or not self.first_enable:
+                    return self._blocked(receipt,'EQUIPMENT_EXPLICIT_FIRST_ENABLE_REQUIRED')
                 receipt.update(persist_attempted=True,initialization_source='LOCAL_FIRST_ENABLE_EMPTY')
-                state=self.store.initialize_empty(context['character_uid'],context['frame'],initialization=FIRST_ENABLE_EMPTY)
+                if self._kit_policy is not None:
+                    weapon,slots=self._kit_starter_equipment(context)
+                    if weapon or slots:receipt['initialization_source']='LOCAL_M1_STARTER_KIT_EQUIPPED'
+                    state=self.store.initialize_kit(context['character_uid'],context['frame'],
+                        initialization=FIRST_ENABLE_EMPTY,weapon_uid=weapon,slots=slots)
+                else:
+                    state=self.store.initialize_empty(context['character_uid'],context['frame'],initialization=FIRST_ENABLE_EMPTY)
                 receipt['persisted']=True
             else:receipt.update(before_weapon_uid=state.weapon_uid,before_revision=state.revision,initialization_source='RESTORED_EQUIPMENT_SIDECAR')
             receipt.update(after_weapon_uid=state.weapon_uid,after_revision=state.revision)
-            await self._notify_selected(context,state,receipt)
+            if self._kit_policy is not None:receipt['after_slots']=dict(state.slots)
+            if resync_items and self._kit_policy is not None:
+                current={(state.weapon_uid,self._key()),*((uid,key) for key,uid in state.slots)}
+                changes=tuple((uid,key,False) for uid,key in resync_items if (uid,key) not in current)
+                changes+=self._kit_sync_changes(context,state)
+                await self._notify_kit(context,state,receipt,changes)
+            else:await self._notify_selected(context,state,receipt)
             life['state']=state;life['synced']=True;receipt.update(status='SYNCHRONIZED',reason=None)
+            life['sync_receipt']=copy.deepcopy(receipt)
+            await self.broker._world_refresh_pc(writer)
+            await self._refresh_stance(context,receipt)
             life['sync_receipt']=copy.deepcopy(receipt)
             return copy.deepcopy(receipt)
         except BaseException as error:
-            self._failed(receipt,error);raise
+            self._failed(receipt,error)
+            if isinstance(error,Exception) and not restore_only:await self._resync_world(writer,receipt)
+            self._raise_request_failure(error)
 
     async def consume_locked(self,writer,*,accepted_ordinal,expected_intent):
         selected=None
-        if self._collection_policy is not None:
+        if self._collection_policy is not None or self._kit_policy is not None:
             current=self.broker._item_use_session._current
             if type(current) is item_use_session._Intent:selected=current.request.identifier
         context=self._context(writer,item_identifier=selected);service=context['service'];intent=service._current
@@ -271,6 +332,8 @@ class ItemEquipmentEffect:
         life=self._selection
         if life is None or not life['synced'] or not all(a is b for a,b in zip(life['identity'],context['identity'])):
             return self._blocked(receipt,'EQUIPMENT_INITIAL_SYNC_REQUIRED')
+        if self._kit_policy is not None:
+            return await self._consume_kit(writer,context,intent,receipt,life)
         try:
             old=self.store.restore(context['character_uid'],context['frame'])
             need(old==life['state'],'EQUIPMENT_CURRENT_EQUIPMENT_CHANGED')
@@ -283,12 +346,16 @@ class ItemEquipmentEffect:
             receipt.update(persisted=True,after_weapon_uid=new.weapon_uid,after_revision=new.revision)
             await self._notify_selected(context,new,receipt)
             life['state']=new;receipt.update(status='COMMITTED',reason=None)
+            await self._refresh_stance(context,receipt)
             return copy.deepcopy(receipt)
         except ValueError as error:
             if not receipt['persist_attempted'] and not receipt['write_attempted']:
                 return self._blocked(receipt,observe.reason(error))
-            self._failed(receipt,error);raise
-        except BaseException as error:self._failed(receipt,error);raise
+            self._failed(receipt,error);await self._resync_world(writer,receipt);raise
+        except BaseException as error:
+            self._failed(receipt,error)
+            if isinstance(error,Exception):await self._resync_world(writer,receipt)
+            self._raise_request_failure(error)
 
     def _plan(self,context,intent,old,life):
         kwargs=dict(selected_character_uid=context['character_uid'],selected_class=context['selected_class'],
@@ -299,8 +366,224 @@ class ItemEquipmentEffect:
         return plan_athame_collection_use(intent.request,context['items'],policy=OWNED_POLICY,**kwargs)
 
     async def _notify_selected(self,context,state,receipt):
+        if self._kit_policy is not None:
+            return await self._notify_kit(context,state,receipt,self._kit_sync_changes(context,state))
         if self._collection_policy is None:return await self._notify(context,state,receipt)
         return await self._notify_collection(context,state,receipt)
+
+    async def _refresh_stance(self,context,receipt):
+        stance=await self.broker._world_refresh_stance_locked(context['writer'],context['row'])
+        if stance is not None:
+            receipt.update(stance_notification_opcode=0x4e96,stance_notification_sent=True,stance_f4=stance)
+
+    # ---- M1 starter kit (world mode): weapon key9 + armour slot keys + potions ----
+    def _kit_starter_equipment(self,context):
+        """FIRST_GRANT only: starter.json equipped entries matched to kit items by template."""
+        generation=self.broker._inventory_generation
+        if getattr(generation,'mode',None)!='FIRST_GRANT' or self._starter is None:return 0,()
+        entries=self._starter.entries(context['selected_class'],getattr(self.broker,'_world_starter_kit',None))
+        free=list(context['items']);weapon=0;slots=[]
+        for entry in entries:
+            if not entry.equipped:continue
+            match=next((item for item in free if item.template_bits==entry.template_id),None)
+            if match is None:continue
+            free.remove(match);item=self._defs[entry.template_id]
+            if item.kind=='weapon':weapon=match.identifier
+            else:
+                occupied={key for key,_ in slots}
+                key=next((key for key in (getattr(item,'slot_keys',()) or (item.slot_key,))
+                          if key not in occupied),None)
+                if key is not None:slots.append((key,match.identifier))
+        return weapon,tuple(sorted(slots))
+
+    def _kit_sync_changes(self,context,state):
+        changes=(() if not state.weapon_uid else ((state.weapon_uid,self._key(),True),))
+        changes+=tuple((uid,key,True) for key,uid in state.slots)
+        return changes or ((state.item_uid,self._key(),False),)  # Empty: false(anchor), as singleton.
+
+    def combat_inputs(self,character_uid):
+        """(weapon ItemDef or None, armour AC sum) from the saved equipment row; no authority."""
+        from tools.local_original_session.game_data import load_items
+        defs=self._defs if self._defs is not None else load_items()
+        state,frame=self.store.peek(character_uid)
+        if state is None or type(frame) is not bytes:return None,0
+        if self._kit_policy is not None:items=inventory.validate_kit_frame(frame)
+        elif self._collection_policy is not None:
+            items=inventory.validate_collection_frame(frame,policy=inventory.COLLECTION_POLICY)
+        else:items=(inventory.validate_frame(frame),)
+        template={item.identifier:item.template_bits for item in items}
+        weapon=defs.get(template.get(state.weapon_uid)) if state.weapon_uid else None
+        ac=sum(getattr(defs.get(template.get(uid)),'ac',0) for _,uid in state.slots)
+        return (weapon if weapon is not None and weapon.kind=='weapon' else None),ac
+
+    def _kit_params_raw0(self,intent):
+        params=intent.request.params;expected={1:1,15:0,16:0}
+        return (params.present_fields==expected.keys() and len(params.fields)==3 and
+                all(p.kind=='int32' and type(p.value) is int and p.value==expected[p.number] for p in params.fields))
+
+    async def _consume_kit(self,writer,context,intent,receipt,life):
+        item=context['item'];definition=self._defs.get(item.template_bits)
+        if definition is None:return self._blocked(receipt,'ITEM_USE_KIT_UNKNOWN_TEMPLATE')
+        if not self._kit_params_raw0(intent):return self._blocked(receipt,'ITEM_USE_KIT_REVIEWED_RAW0_PARAMS_REQUIRED')
+        if definition.kind=='potion':
+            return await self.broker._world_consume_kit_potion(self,writer,context,receipt,definition)
+        if not definition.equippable:return self._blocked(receipt,'ITEM_USE_KIT_NO_EFFECT')
+        if context['selected_class'] not in definition.classes:return self._blocked(receipt,'ITEM_USE_KIT_CLASS_NOT_ALLOWED')
+        try:
+            old=self.store.restore(context['character_uid'],context['frame'])
+            need(old==life['state'],'EQUIPMENT_CURRENT_EQUIPMENT_CHANGED')
+            uid=item.identifier
+            key,current,weapon,slots,changes=kit_equip_plan(old,context['items'],self._defs,
+                uid,context['selected_class'],class_error='ITEM_USE_KIT_CLASS_NOT_ALLOWED')
+            # Both toggling off and replacing a worn item remove that item.
+            # The optional owner contributes policy without private-state access.
+            world_context=getattr(getattr(self.broker,'realm',None),'_world_context',None)
+            if current and world_context is not None and world_context.chain_sync_hooks(
+                    'equipment_remove_blocked', context['character_uid'], current, context['items']):
+                return self._blocked(receipt,'ITEM_USE_CURSED_EQUIPMENT_CANNOT_REMOVE')
+            receipt.update(before_weapon_uid=old.weapon_uid,before_revision=old.revision,
+                           before_slots=dict(old.slots),equipment_key_i32=key)
+            await self.broker._checkpoint(writer,context['row'])
+            self._same(context,self._context(writer,item_identifier=uid))
+            receipt['persist_attempted']=True
+            new=self.store.compare_and_swap_kit(context['character_uid'],context['frame'],old,
+                                                weapon_uid=weapon,slots=slots)
+            receipt.update(persisted=True,after_weapon_uid=new.weapon_uid,after_revision=new.revision,
+                           after_slots=dict(new.slots))
+            await self._notify_kit(context,new,receipt,changes)
+            life['state']=new;receipt.update(status='COMMITTED',reason=None)
+            await self.broker._world_refresh_pc(writer)
+            if definition.kind=='weapon':await self._refresh_stance(context,receipt)
+            return copy.deepcopy(receipt)
+        except ValueError as error:
+            if not receipt['persist_attempted'] and not receipt['write_attempted']:
+                return self._blocked(receipt,observe.reason(error))
+            self._failed(receipt,error);await self._resync_world(writer,receipt);raise
+        except BaseException as error:
+            self._failed(receipt,error)
+            if isinstance(error,Exception):await self._resync_world(writer,receipt)
+            self._raise_request_failure(error)
+
+    async def _consume_potion(self,writer,context,receipt,definition):
+        """One potion: saved kit row quantity-1 (SC0965) or removal at 0 (SC0978), then world HP."""
+        from tools.local_original_session import inventory_update
+        broker=self.broker;item=context['item'];frame=context['frame']
+        if not broker._world_bound(writer):return self._blocked(receipt,'ITEM_USE_POTION_REQUIRES_WORLD_PC')
+        world_uid=broker._world_pcs[id(writer)][1]
+        if broker._world.combat.is_dead(world_uid):return self._blocked(receipt,'ITEM_USE_POTION_PLAYER_DEAD')
+        items=inventory.validate_kit_frame(frame);quantity=dict(item.raw_fields)[4]
+        if quantity<1:return self._blocked(receipt,'ITEM_USE_POTION_EMPTY')
+        rows=[];remove=quantity==1 and len(items)>1
+        for member in items:
+            fields=dict(member.raw_fields)
+            if member.identifier==item.identifier:
+                if remove:continue
+                fields[4]=quantity-1
+            rows.append(fields)
+        try:
+            new_frame=inventory.build_kit_frame(rows)
+            if remove:
+                from tools.local_original_session import item_transfer_protocol
+                wire=item_transfer_protocol.build_remove(uid=item.identifier)
+            else:
+                wire=inventory_update.build_update({1:item.identifier,4:quantity-1})
+                inventory_update.validate_frame(wire)
+            receipt.update(effect='POTION',heal_base=definition.heal_hp,quantity_after=0 if remove else quantity-1,
+                           notification_opcode=int.from_bytes(wire[2:4],'little'))
+            await broker._checkpoint(writer,context['row'])
+            self._same(context,self._context(writer,item_identifier=item.identifier))
+            if broker._world.combat.is_dead(world_uid):  # died during the checkpoint await: nothing saved
+                return self._blocked(receipt,'ITEM_USE_POTION_PLAYER_DEAD')
+            receipt['persist_attempted']=True
+            # A removed equipment anchor row moves with the save (world kit owner).
+            need(broker._world_replace_kit(context['character_uid'],frame,new_frame) is True,
+                 'ITEM_USE_POTION_PERSISTED_CHANGE_REQUIRED')
+            broker._inventory_current_frame=new_frame
+            receipt.update(persisted=True,inventory_frame_changed=True,write_attempted=True)
+            if definition.buff is not None:  # speed potion: timed buff + SC4E5B instead of heal
+                healed=await broker._world_buff_locked(writer,context['row'],wire,definition.buff,
+                                                        template_id=item.template_bits)
+            else:
+                healed=await broker._world_potion_locked(writer,context['row'],wire,item.template_bits)
+            receipt.update(status='COMMITTED',reason=None,phase='DRAINED',drain_returned=True,**healed)
+            return copy.deepcopy(receipt)
+        except ValueError as error:
+            if not receipt['persist_attempted']:return self._blocked(receipt,observe.reason(error))
+            self._failed(receipt,error);await self._resync_potion(writer,context,receipt);raise
+        except BaseException as error:
+            self._failed(receipt,error)
+            if isinstance(error,Exception):await self._resync_potion(writer,context,receipt)
+            self._raise_request_failure(error)
+
+    async def _resync_potion(self,writer,context,receipt):
+        """Publish the current saved quantity and live resources, never use again."""
+        broker=self.broker
+        if getattr(broker,'_world',None) is None:return
+        try:
+            from tools.local_original_session import inventory_update,item_transfer_protocol,world_combat
+            from tools.local_original_session.world_status_frames import full_status_frame
+            saved=broker._inventory_store.restore(context['character_uid'])
+            members=inventory.validate_kit_frame(saved)
+            selected=next((item for item in members if item.identifier==receipt['item_uid']),None)
+            quantity=0 if selected is None else dict(selected.raw_fields)[4]
+            wire=(item_transfer_protocol.build_remove(uid=receipt['item_uid']) if selected is None else
+                  inventory_update.build_update({1:receipt['item_uid'],4:quantity}))
+            broker._inventory_current_frame=saved
+            state=self.store.restore(context['character_uid'],saved)
+            if self._selection is not None:self._selection['state']=state
+            uid=broker._world_pcs[id(writer)][1];world=broker._world
+            def snapshot():
+                state=world.combat.pcs[uid]
+                fields=dict(state.status_fields);fields[10],fields[12]=state.hp,state.mp
+                return tuple(world.drain(uid))+(wire,full_status_frame(fields),
+                    world_combat.speed_frame(uid,world.combat.speed_factor(uid,world.runtime.clock())))
+            frames=await world.runtime.dispatch_now(snapshot)
+            await broker._world_send(writer,context['row'],frames,context['row']['operation_lock'])
+            receipt.update(resync_status='SYNCHRONIZED',resync_quantity=quantity)
+        except Exception as error:
+            receipt.update(resync_status='UNKNOWN',resync_reason=observe.reason(error))
+
+    def _validate_kit_reply(self,writer,wire,op):
+        batch=self._collection_batch
+        need(op is not None and op is self._operation and batch is not None and op.get('batch') is batch and
+             batch['phase']=='PERSISTED' and op['index']==batch['next'] and
+             op['context'] is batch['context'] and op['state'] is batch['state'] and
+             op['receipt'] is batch['receipt']['notification_records'][op['index']] and
+             wire is op['wire'] and op['context']['writer'] is writer,'EQUIPMENT_EXACT_COLLECTION_WIRE_REQUIRED')
+        uid,key,equipped=batch['changes'][op['index']];parsed=equipment_change.validate_change(wire)
+        need(parsed.key==key and parsed.uid==uid and parsed.equipped is equipped,
+             'EQUIPMENT_EXACT_COLLECTION_CHANGE_REQUIRED')
+        self._same(op['context'],self._context(writer,op))
+        need(self.store.restore(op['state'].character_uid,op['context']['frame'])==op['state'],
+             'EQUIPMENT_CURRENT_PERSISTED_STATE_REQUIRED')
+        return op
+
+    async def _notify_kit(self,context,state,receipt,changes):
+        need(type(changes) is tuple and 1<=len(changes)<=16,'EQUIPMENT_COLLECTION_NOTIFICATION_BOUND')
+        receipt.update(phase='PERSISTED',notification_count=len(changes),
+                       notifications_attempted=0,notifications_drained=0,notification_records=[])
+        batch=dict(context=context,state=state,receipt=receipt,changes=changes,next=0,phase='PERSISTED')
+        self._collection_batch=batch
+        for index,(uid,key,equipped) in enumerate(changes):
+            wire=equipment_change.build_change(uid=uid,key=key,equipped=equipped)
+            record=_receipt(receipt['operation'],receipt['accepted_ordinal'])
+            record.update(item_uid=uid,notification_uid=uid,notification_equipped=equipped,equipment_key_i32=key,
+                          phase='PERSISTED',notification_size=len(wire),notification_sha256=hashlib.sha256(wire).hexdigest())
+            receipt['notification_records'].append(record)
+            op=dict(context=context,state=state,receipt=record,wire=wire,lock=context['row']['operation_lock'],
+                    phase='PERSISTED',sent_before=context['row']['policy_row'].sent,
+                    intent=context['service']._current if receipt['operation']=='ITEM_USE_EFFECT' else None,
+                    batch=batch,index=index)
+            self._operation=op
+            await self.broker._send(context['writer'],context['row'],(wire,),game=True,
+                                    operation_lock=op['lock'],equipment_operation=op)
+            self._same(context,self._context(context['writer'],op))
+            need(all(record[k] is True for k in ('write_attempted','drain_returned','post_owner_verified')),
+                 'EQUIPMENT_DRAINED_NOTIFICATION_REQUIRED')
+            record.update(status='DRAINED',phase='DRAINED');op['phase']='DRAINED';batch['next']+=1
+            receipt['notifications_drained']=batch['next']
+        batch['phase']='DRAINED'
+        receipt.update(phase='DRAINED',drain_returned=True,post_owner_verified=True)
 
     def _collection_changes(self,context,state,receipt):
         owned=tuple(item.identifier for item in context['items'] if item.template_bits==1)

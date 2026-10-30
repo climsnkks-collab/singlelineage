@@ -1,0 +1,933 @@
+{
+  "version": 1,
+  "status": "SOURCE_DATA_ONLY_UNRUN",
+  "loaded_by_product": false,
+  "reference_paths": {
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "sprites": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "region": "work/local_resource_provider/assets/data/region.jsonc:160",
+    "official_items": "tools/local_original_session/data/official/items.json",
+    "boat_evidence": "work/local_original_session/game-core-prep/BOAT_EVIDENCE.md",
+    "map_evidence": "work/local_original_session/game-core-prep/MAP_TRANSITION_EVIDENCE.md",
+    "menu_evidence": "work/local_original_session/game-core-prep/M2_NPC_MENUS.md",
+    "l1jxml": "D:/SingleLineageRef/l1j-en-classic/data/xml/NpcActions/Teleporter.xml",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/"
+  },
+  "official_comparison": {
+    "status": "PARTIAL_OFFICIAL_ITEM_CHECK_NPC_AND_SHOP_UNKNOWN",
+    "checked_at_utc": "2026-10-27T02:16:28.944059+00:00",
+    "existing_official_tables": [
+      "items",
+      "monsters",
+      "spells"
+    ],
+    "npc_table_present": false,
+    "search_queries": [
+      "site:lineageclassic.plaync.com \"룻\"",
+      "site:lineageclassic.plaync.com \"케티\"",
+      "site:lineageclassic.plaync.com \"글루딘 마을\" 상점",
+      "site:lineageclassic.plaync.com \"루카스\""
+    ],
+    "result": "Repeated four searches with the actual site:lineageclassic.plaync.com operator. Only a free-board community post surfaced, with no usable NPC-specific official dictionary/shop list. This bounded result does not establish official-source absence.",
+    "attempted_urls": [
+      {
+        "url": "https://api-goats.plaync.com/linclassic/v2.0/game/npc/126?locale=ko-KR",
+        "result": "HTTP404",
+        "limit": "Guessed, undocumented endpoint"
+      },
+      {
+        "url": "https://api-goats.plaync.com/linclassic/v2.0/dict/search/npc?searchKeyword=&page=1&size=50&locale=ko-KR",
+        "result": "HTTP404",
+        "limit": "Guessed, undocumented endpoint"
+      },
+      {
+        "url": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%A7%88%EC%9D%84",
+        "result": "WEB_TOOL_ACCESS_ERROR",
+        "limit": "Guide text not retrieved"
+      }
+    ],
+    "excluded_result": {
+      "url": "https://lounge.plaync.com/feed/57639",
+      "reason": "NCER explicitly marks AI-generated information and requests official verification; not adopted as confirmed evidence"
+    },
+    "ticket_official_ids": [
+      124,
+      125
+    ],
+    "official_npc_id": null,
+    "official_position": null,
+    "official_shop_inventory": null,
+    "official_price": null,
+    "limit": "Official item details confirm names/dock descriptions only; no NPC inventory/prices in collected item fields. NPC identity, placement, assortment, amount and fees remain L1J reference/LOCAL policy candidates.",
+    "initial_queries_without_site_operator": [
+      "site.lineageclassic.plaync.com \"룻\"",
+      "site.lineageclassic.plaync.com \"케티\"",
+      "site.lineageclassic.plaync.com \"글루딘 마을\" 상점",
+      "site.lineageclassic.plaync.com \"루카스\""
+    ],
+    "excluded_community_result": {
+      "url": "https://lineageclassic.plaync.com/ko-kr/board/free/view?articleId=699470b18dbc8462fd834d76&translate=false",
+      "reason": "User community free-board result, not official NPC/shop documentation"
+    }
+  },
+  "scope": "M4 data-only Talking Island <-> Gludin boat and Lucas island-gludin destination candidates. No code, broker, game, server, port, saved state or commit executed.",
+  "table": "m4_travel_candidates",
+  "teleporters": [
+    {
+      "l1j_npc_id": 50015,
+      "name": "Lucas",
+      "name_token": "$829",
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "npc_ref": "l1jdb:21734",
+      "npcaction": {
+        "normal_action": "teleisland1",
+        "caotic_action": "teleisland1",
+        "teleport_url": "teleisland2",
+        "source_ref": "l1jdb:23402"
+      },
+      "spawn_candidate": {
+        "map_id": 0,
+        "x": 32583,
+        "y": 32922,
+        "count": 1,
+        "source_ref": "l1jdb:48732"
+      },
+      "destinations": [
+        {
+          "action": "teleport island-gludin",
+          "name": "글루딘 (L1J Gludin)",
+          "map_id": 4,
+          "x": 32608,
+          "y": 32734,
+          "heading": 5,
+          "price": 1500,
+          "max_level_exclusive": null,
+          "source_ref": "l1jxml:126-127",
+          "menu_price_ref": "l1jsrc:model/Instance/L1TeleporterInstance.java:210-212",
+          "mapping_status": "L1J_destination_candidate_classic_unverified",
+          "source_kind": "l1j_reference",
+          "price_status": "L1J_1500_ADENA_LOCAL_POLICY_CANDIDATE_NOT_OFFICIAL_FEE",
+          "classic_arrival_verified": false,
+          "terrain_status": "SEE_M4_TERRAIN_VALIDATION_NOT_IMPLIED_BY_COORDINATES"
+        }
+      ],
+      "unavailable": [],
+      "reused_from": "tools/local_original_session/data/m2/town_services.json:teleporters[l1j_npc_id=50015]",
+      "classic_menu": {
+        "stem": "lucas1",
+        "actions": [
+          "teleportURL",
+          "asknpctax"
+        ],
+        "destination_stem": "lucas2",
+        "destination_action": "island-gludin",
+        "source_ref": "work/local_original_session/game-core-prep/M2_NPC_MENUS.md:run403 service NPC section",
+        "price": null,
+        "limit": "UML literal and speaker text only; actual NPC50015 identity/menu issuance and official price unknown. Do not prefix native action with L1J teleport literal."
+      }
+    }
+  ],
+  "boat_routes": [
+    {
+      "route_id": "talking_island_to_gludin",
+      "source_map_id": 0,
+      "destination_map_id_candidate": 4,
+      "ship_map_id_candidate": 5,
+      "map_namespace_status": "Classic ShipInfo f2/f3 runtime map comparisons support harbor/ship map identities only; general raw/resolved map alias equivalence not established",
+      "ticket": {
+        "classic_item_id": 124,
+        "l1j_item_id": 40299,
+        "name_ko": "글루디오 영지행 배표",
+        "official_description": "말하는 섬 선착장에서 배를 타기 위해 필요한 표입니다.",
+        "official_source_url": "https://api-goats.plaync.com/linclassic/v2.0/game/item/124?locale=ko-KR",
+        "official_raw_path": "work/official_data/raw/item/124.json",
+        "official_raw_sha256": "8e884db8c880efb19b879bde9065459b6bd3e5246be7f26ab1ed1b6a4fa81692",
+        "official_item_to_client_status": "exact_id_and_name",
+        "official_price": null,
+        "official_consume_timing": null,
+        "l1j_price": 300,
+        "l1j_buyback_price": 150,
+        "l1j_price_status": "L1J_DB_BASE_LOCAL_POLICY_CANDIDATE",
+        "l1j_shop_ref": "l1jdb:25361",
+        "local_resource_price_text": 300,
+        "local_resource_price_status": "Dialogue resource text only; not normal-server transaction observation"
+      },
+      "merchant": {
+        "l1j_npc_id": 70011,
+        "selected_classic_npc_id": null,
+        "classic_menu_stem_candidate": "ShipEvM3",
+        "classic_menu_actions": [
+          "buy",
+          "sell"
+        ],
+        "schedule_link": "ShipEvM4",
+        "menu_limit": "Dock/destination dialogue correspondence only; live NPC identity and menu issuance unknown"
+      },
+      "confirmed_player_arrival": null,
+      "confirmed_player_arrival_status": "UNKNOWN_classic_player_arrival_consumer_not_closed",
+      "destination_candidates": [
+        {
+          "source_kind": "classic_static_raw",
+          "map_id": 4,
+          "x": 32569,
+          "y": 32726,
+          "radius_raw": 5,
+          "source_ref": "work/local_server_rea_20261016/run397_boat_travel/client_asset_rows.json:shipinfo.wrapper_key=1.f8/f9",
+          "status": "ShipInfo_f9_RandomPoint_raw_candidate_native_consumption_unknown",
+          "limit": "Not a confirmed final player landing cell. RandomPoint radius/selection semantics unknown."
+        },
+        {
+          "source_kind": "l1j_reference",
+          "map_id": 4,
+          "x": 32565,
+          "y": 32726,
+          "source_ref": "l1jdb:18320",
+          "status": "GetBack_anchor_only_C_Ship_uses_actual_request_xy_within_plus_minus20",
+          "limit": "Not a unique final arrival tile or Classic official coordinate."
+        }
+      ],
+      "classic_static": {
+        "shipinfo_key": 1,
+        "shipinfo_raw_fields": {
+          "1": [
+            1
+          ],
+          "2": [
+            0
+          ],
+          "3": [
+            5
+          ],
+          "4": [
+            124
+          ],
+          "5": [
+            1
+          ],
+          "6": [
+            {
+              "1": [
+                32625
+              ],
+              "2": [
+                32976
+              ],
+              "3": [
+                32636
+              ],
+              "4": [
+                32985
+              ]
+            }
+          ],
+          "7": [
+            {
+              "1": [
+                32735
+              ],
+              "2": [
+                32797
+              ]
+            }
+          ],
+          "8": [
+            4
+          ],
+          "9": [
+            {
+              "1": [
+                32569
+              ],
+              "2": [
+                32726
+              ],
+              "3": [
+                5
+              ]
+            }
+          ],
+          "11": [
+            0
+          ],
+          "12": [
+            {
+              "1": [
+                32631
+              ],
+              "2": [
+                32966
+              ]
+            }
+          ],
+          "13": [
+            {
+              "1": [
+                "1111111"
+              ],
+              "2": [
+                {
+                  "1": [
+                    1
+                  ],
+                  "2": [
+                    30
+                  ]
+                },
+                {
+                  "1": [
+                    4
+                  ],
+                  "2": [
+                    30
+                  ]
+                },
+                {
+                  "1": [
+                    7
+                  ],
+                  "2": [
+                    30
+                  ]
+                },
+                {
+                  "1": [
+                    10
+                  ],
+                  "2": [
+                    30
+                  ]
+                },
+                {
+                  "1": [
+                    13
+                  ],
+                  "2": [
+                    30
+                  ]
+                },
+                {
+                  "1": [
+                    16
+                  ],
+                  "2": [
+                    30
+                  ]
+                },
+                {
+                  "1": [
+                    19
+                  ],
+                  "2": [
+                    30
+                  ]
+                },
+                {
+                  "1": [
+                    22
+                  ],
+                  "2": [
+                    30
+                  ]
+                }
+              ],
+              "3": [
+                60
+              ],
+              "4": [
+                5
+              ]
+            }
+          ]
+        },
+        "f6_box_raw": {
+          "1": [
+            32625
+          ],
+          "2": [
+            32976
+          ],
+          "3": [
+            32636
+          ],
+          "4": [
+            32985
+          ]
+        },
+        "f7_ship_point_raw": {
+          "x": 32735,
+          "y": 32797
+        },
+        "f12_point_raw": {
+          "x": 32631,
+          "y": 32966
+        },
+        "field_limit": "Preserved static field numbers; f12 and ship_data.wharf coordinates are not substituted for player landing. Box inclusion, RandomPoint consumer, f11/f12 purpose and real voyage schedule remain unknown.",
+        "source_ref": "work/local_server_rea_20261016/run397_boat_travel/client_asset_rows.json",
+        "source_version": "26.09.29.2001"
+      },
+      "l1j_reference": {
+        "boarding_rows": [
+          {
+            "src_x": "32630",
+            "src_y": "32983",
+            "src_mapid": "0",
+            "src_loc_name": "Talking Island",
+            "new_x": "32733",
+            "new_y": "32797",
+            "new_mapid": "5",
+            "new_loc_name": "Traveler`s Ship - Gludio",
+            "new_heading": "4",
+            "source_ref": "l1jdb:15012"
+          },
+          {
+            "src_x": "32631",
+            "src_y": "32983",
+            "src_mapid": "0",
+            "src_loc_name": "Talking Island",
+            "new_x": "32733",
+            "new_y": "32797",
+            "new_mapid": "5",
+            "new_loc_name": "Traveler`s Ship - Gludio",
+            "new_heading": "4",
+            "source_ref": "l1jdb:15013"
+          },
+          {
+            "src_x": "32632",
+            "src_y": "32983",
+            "src_mapid": "0",
+            "src_loc_name": "Talking Island",
+            "new_x": "32733",
+            "new_y": "32797",
+            "new_mapid": "5",
+            "new_loc_name": "Traveler`s Ship - Gludio",
+            "new_heading": "4",
+            "source_ref": "l1jdb:15018"
+          }
+        ],
+        "return_to_origin_rows": [
+          {
+            "src_x": "32733",
+            "src_y": "32796",
+            "src_mapid": "5",
+            "src_loc_name": "Traveler`s Ship - Gludio",
+            "new_x": "32631",
+            "new_y": "32982",
+            "new_mapid": "0",
+            "new_loc_name": "Talking Island",
+            "new_heading": "0",
+            "source_ref": "l1jdb:15444"
+          },
+          {
+            "src_x": "32734",
+            "src_y": "32796",
+            "src_mapid": "5",
+            "src_loc_name": "Traveler`s Ship - Gludio",
+            "new_x": "32631",
+            "new_y": "32982",
+            "new_mapid": "0",
+            "new_loc_name": "Talking Island",
+            "new_heading": "0",
+            "source_ref": "l1jdb:15471"
+          }
+        ],
+        "getback_rows": [
+          {
+            "area_x1": "0",
+            "area_y1": "0",
+            "area_x2": "0",
+            "area_y2": "0",
+            "area_mapid": "5",
+            "getback_x1": "32565",
+            "getback_y1": "32726",
+            "getback_x2": "32565",
+            "getback_y2": "32726",
+            "getback_x3": "32565",
+            "getback_y3": "32726",
+            "getback_mapid": "4",
+            "getback_townid": "1",
+            "getback_townid_elf": "0",
+            "getback_townid_darkelf": "0",
+            "scrollescape": "1",
+            "note": "Ship talking island to aden world",
+            "source_ref": "l1jdb:18320"
+          }
+        ],
+        "boarding_ticket_policy": "Dungeon.dg checks possession/time; does not consume ticket",
+        "arrival_ticket_policy": "C_Ship map5 consumes40299/map6 consumes40298 one ticket. Final x/y comes from actual request, with GetBack X/Y +/-20 check; current-map-based GetBack selects target map. No arrival-time check in C_Ship.",
+        "source_refs": [
+          "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/Dungeon.java:144-207",
+          "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_Ship.java:36-92",
+          "work/local_server_rea_20261016/run397_boat_travel/l1j_source_excerpts.md"
+        ],
+        "java_sql_boundary": "Java trigger coordinate branches and SQL transitions are not identical; exact SQL rows are retained, not expanded to implied Java coordinates."
+      },
+      "runtime_status": "UNRUN"
+    },
+    {
+      "route_id": "gludin_to_talking_island",
+      "source_map_id": 4,
+      "destination_map_id_candidate": 0,
+      "ship_map_id_candidate": 6,
+      "map_namespace_status": "Classic ShipInfo f2/f3 runtime map comparisons support harbor/ship map identities only; general raw/resolved map alias equivalence not established",
+      "ticket": {
+        "classic_item_id": 125,
+        "l1j_item_id": 40298,
+        "name_ko": "말하는 섬행 배표",
+        "official_description": "글루딘 마을 선착장에서 배를 타기 위해 필요한 표입니다.",
+        "official_source_url": "https://api-goats.plaync.com/linclassic/v2.0/game/item/125?locale=ko-KR",
+        "official_raw_path": "work/official_data/raw/item/125.json",
+        "official_raw_sha256": "20002412abc4f27f504d3dbe178a3cf00174ebb557576b2ed01f4cac208a7f92",
+        "official_item_to_client_status": "exact_id_and_name",
+        "official_price": null,
+        "official_consume_timing": null,
+        "l1j_price": 300,
+        "l1j_buyback_price": 150,
+        "l1j_price_status": "L1J_DB_BASE_LOCAL_POLICY_CANDIDATE",
+        "l1j_shop_ref": "l1jdb:28358",
+        "local_resource_price_text": 300,
+        "local_resource_price_status": "Dialogue resource text only; not normal-server transaction observation"
+      },
+      "merchant": {
+        "l1j_npc_id": 70022,
+        "selected_classic_npc_id": null,
+        "classic_menu_stem_candidate": "ShipEvM1",
+        "classic_menu_actions": [
+          "buy",
+          "sell"
+        ],
+        "schedule_link": "ShipEvM2",
+        "menu_limit": "Dock/destination dialogue correspondence only; live NPC identity and menu issuance unknown"
+      },
+      "confirmed_player_arrival": null,
+      "confirmed_player_arrival_status": "UNKNOWN_classic_player_arrival_consumer_not_closed",
+      "destination_candidates": [
+        {
+          "source_kind": "classic_static_raw",
+          "map_id": 0,
+          "x": 32632,
+          "y": 32963,
+          "radius_raw": 5,
+          "source_ref": "work/local_server_rea_20261016/run397_boat_travel/client_asset_rows.json:shipinfo.wrapper_key=2.f8/f9",
+          "status": "ShipInfo_f9_RandomPoint_raw_candidate_native_consumption_unknown",
+          "limit": "Not a confirmed final player landing cell. RandomPoint radius/selection semantics unknown."
+        },
+        {
+          "source_kind": "l1j_reference",
+          "map_id": 0,
+          "x": 32632,
+          "y": 32973,
+          "source_ref": "l1jdb:18321",
+          "status": "GetBack_anchor_only_C_Ship_uses_actual_request_xy_within_plus_minus20",
+          "limit": "Not a unique final arrival tile or Classic official coordinate.",
+          "terrain_status": "SOURCE_ANCHOR_BLOCKED_CLASSIC_CAN_STAND_FALSE",
+          "terrain_note": "Original L1J GetBack anchor preserved. Classic terrain can_stand=False; C_Ship permits actual request coordinates within +/-20 so anchor is not a required actual landing cell. No arrival coordinate substituted. See terrain_validation.json."
+        }
+      ],
+      "classic_static": {
+        "shipinfo_key": 2,
+        "shipinfo_raw_fields": {
+          "1": [
+            2
+          ],
+          "2": [
+            4
+          ],
+          "3": [
+            6
+          ],
+          "4": [
+            125
+          ],
+          "5": [
+            1
+          ],
+          "6": [
+            {
+              "1": [
+                32535
+              ],
+              "2": [
+                32721
+              ],
+              "3": [
+                32550
+              ],
+              "4": [
+                32735
+              ]
+            }
+          ],
+          "7": [
+            {
+              "1": [
+                32735
+              ],
+              "2": [
+                32797
+              ]
+            }
+          ],
+          "8": [
+            0
+          ],
+          "9": [
+            {
+              "1": [
+                32632
+              ],
+              "2": [
+                32963
+              ],
+              "3": [
+                5
+              ]
+            }
+          ],
+          "11": [
+            4
+          ],
+          "12": [
+            {
+              "1": [
+                32572
+              ],
+              "2": [
+                32724
+              ]
+            }
+          ],
+          "13": [
+            {
+              "1": [
+                "1111111"
+              ],
+              "2": [
+                {
+                  "1": [
+                    0
+                  ],
+                  "2": [
+                    0
+                  ]
+                },
+                {
+                  "1": [
+                    3
+                  ],
+                  "2": [
+                    0
+                  ]
+                },
+                {
+                  "1": [
+                    6
+                  ],
+                  "2": [
+                    0
+                  ]
+                },
+                {
+                  "1": [
+                    9
+                  ],
+                  "2": [
+                    0
+                  ]
+                },
+                {
+                  "1": [
+                    12
+                  ],
+                  "2": [
+                    0
+                  ]
+                },
+                {
+                  "1": [
+                    15
+                  ],
+                  "2": [
+                    0
+                  ]
+                },
+                {
+                  "1": [
+                    18
+                  ],
+                  "2": [
+                    0
+                  ]
+                },
+                {
+                  "1": [
+                    21
+                  ],
+                  "2": [
+                    0
+                  ]
+                }
+              ],
+              "3": [
+                60
+              ],
+              "4": [
+                5
+              ]
+            }
+          ]
+        },
+        "f6_box_raw": {
+          "1": [
+            32535
+          ],
+          "2": [
+            32721
+          ],
+          "3": [
+            32550
+          ],
+          "4": [
+            32735
+          ]
+        },
+        "f7_ship_point_raw": {
+          "x": 32735,
+          "y": 32797
+        },
+        "f12_point_raw": {
+          "x": 32572,
+          "y": 32724
+        },
+        "field_limit": "Preserved static field numbers; f12 and ship_data.wharf coordinates are not substituted for player landing. Box inclusion, RandomPoint consumer, f11/f12 purpose and real voyage schedule remain unknown.",
+        "source_ref": "work/local_server_rea_20261016/run397_boat_travel/client_asset_rows.json",
+        "source_version": "26.09.29.2001"
+      },
+      "l1j_reference": {
+        "boarding_rows": [
+          {
+            "src_x": "32540",
+            "src_y": "32728",
+            "src_mapid": "4",
+            "src_loc_name": "Mainland of Aden",
+            "new_x": "32735",
+            "new_y": "32795",
+            "new_mapid": "6",
+            "new_loc_name": "Traveler`s Ship - Talking Island",
+            "new_heading": "4",
+            "source_ref": "l1jdb:14946"
+          },
+          {
+            "src_x": "32542",
+            "src_y": "32728",
+            "src_mapid": "4",
+            "src_loc_name": "Mainland of Aden",
+            "new_x": "32735",
+            "new_y": "32795",
+            "new_mapid": "6",
+            "new_loc_name": "Traveler`s Ship - Talking Island",
+            "new_heading": "4",
+            "source_ref": "l1jdb:14947"
+          },
+          {
+            "src_x": "32543",
+            "src_y": "32728",
+            "src_mapid": "4",
+            "src_loc_name": "Mainland of Aden",
+            "new_x": "32735",
+            "new_y": "32795",
+            "new_mapid": "6",
+            "new_loc_name": "Traveler`s Ship - Talking Island",
+            "new_heading": "4",
+            "source_ref": "l1jdb:14948"
+          },
+          {
+            "src_x": "32544",
+            "src_y": "32728",
+            "src_mapid": "4",
+            "src_loc_name": "Mainland of Aden",
+            "new_x": "32735",
+            "new_y": "32795",
+            "new_mapid": "6",
+            "new_loc_name": "Traveler`s Ship - Talking Island",
+            "new_heading": "4",
+            "source_ref": "l1jdb:14950"
+          }
+        ],
+        "return_to_origin_rows": [
+          {
+            "src_x": "32734",
+            "src_y": "32794",
+            "src_mapid": "6",
+            "src_loc_name": "Traveler`s Ship - Talking Island",
+            "new_x": "32544",
+            "new_y": "32727",
+            "new_mapid": "4",
+            "new_loc_name": "Mainland of Aden",
+            "new_heading": "0",
+            "source_ref": "l1jdb:15469"
+          },
+          {
+            "src_x": "32735",
+            "src_y": "32794",
+            "src_mapid": "6",
+            "src_loc_name": "Traveler`s Ship - Talking Island",
+            "new_x": "32544",
+            "new_y": "32727",
+            "new_mapid": "4",
+            "new_loc_name": "Mainland of Aden",
+            "new_heading": "0",
+            "source_ref": "l1jdb:15497"
+          },
+          {
+            "src_x": "32736",
+            "src_y": "32794",
+            "src_mapid": "6",
+            "src_loc_name": "Traveler`s Ship - Talking Island",
+            "new_x": "32544",
+            "new_y": "32727",
+            "new_mapid": "4",
+            "new_loc_name": "Mainland of Aden",
+            "new_heading": "0",
+            "source_ref": "l1jdb:15512"
+          }
+        ],
+        "getback_rows": [
+          {
+            "area_x1": "0",
+            "area_y1": "0",
+            "area_x2": "0",
+            "area_y2": "0",
+            "area_mapid": "6",
+            "getback_x1": "32632",
+            "getback_y1": "32973",
+            "getback_x2": "32632",
+            "getback_y2": "32973",
+            "getback_x3": "32632",
+            "getback_y3": "32973",
+            "getback_mapid": "0",
+            "getback_townid": "3",
+            "getback_townid_elf": "0",
+            "getback_townid_darkelf": "0",
+            "scrollescape": "1",
+            "note": "Ship aden world to talking island",
+            "source_ref": "l1jdb:18321"
+          }
+        ],
+        "boarding_ticket_policy": "Dungeon.dg checks possession/time; does not consume ticket",
+        "arrival_ticket_policy": "C_Ship map5 consumes40299/map6 consumes40298 one ticket. Final x/y comes from actual request, with GetBack X/Y +/-20 check; current-map-based GetBack selects target map. No arrival-time check in C_Ship.",
+        "source_refs": [
+          "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/Dungeon.java:144-207",
+          "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_Ship.java:36-92",
+          "work/local_server_rea_20261016/run397_boat_travel/l1j_source_excerpts.md"
+        ],
+        "java_sql_boundary": "Java trigger coordinate branches and SQL transitions are not identical; exact SQL rows are retained, not expanded to implied Java coordinates."
+      },
+      "runtime_status": "UNRUN"
+    }
+  ],
+  "classic_ship_presentation": {
+    "source_ref": "work/local_resource_provider/assets/data/ship_data.jsonc:5-28",
+    "rows": [
+      {
+        "id": 1,
+        "ship": {
+          "arrival": {
+            "sprite": 30001,
+            "x": -1,
+            "y": 0
+          },
+          "departure": {
+            "sprite": 30003,
+            "x": 1,
+            "y": 0
+          },
+          "port": {
+            "x": 32631,
+            "y": 32985
+          },
+          "transparent_range": 4
+        },
+        "wharf": {
+          "departure": {
+            "sprite": 30005,
+            "world": 5,
+            "x": 32732,
+            "y": 32793
+          },
+          "arrival": {
+            "sprite": 30006,
+            "world": 6,
+            "x": 32735,
+            "y": 32793
+          }
+        }
+      },
+      {
+        "id": 2,
+        "ship": {
+          "arrival": {
+            "sprite": 30003,
+            "x": 1,
+            "y": 0
+          },
+          "departure": {
+            "sprite": 30001,
+            "x": -1,
+            "y": 0
+          },
+          "port": {
+            "x": 32543,
+            "y": 32731
+          },
+          "transparent_range": 4
+        },
+        "wharf": {
+          "departure": {
+            "sprite": 30006,
+            "world": 6,
+            "x": 32744,
+            "y": 32791
+          },
+          "arrival": {
+            "sprite": 30005,
+            "world": 5,
+            "x": 32740,
+            "y": 32791
+          }
+        }
+      }
+    ],
+    "limit": "ship.port and wharf world/coordinates describe client boat/wharf presentation. Do not reinterpret them as mainland/Talking Island player landing cells."
+  },
+  "protocol_boundary": {
+    "enter_ship_opcode": "0x4EF8",
+    "enter_ship_name": "CS_ENTER_SHIP_REQ",
+    "enter_ship_required_f1": null,
+    "enter_ship_f1_status": "UNKNOWN_producer_rectangle_node_plus1C_to_ShipPortal_plus70_exists_but_identity_not_connected_to_ShipInfo_key_ticket_or_map",
+    "start_notice_opcode": "0x4F0E",
+    "start_notice_name": "SC_SHIP_START_NOTI",
+    "start_notice_f1": null,
+    "player_arrival_opcode": null,
+    "source_ref": "work/local_original_session/game-core-prep/BOAT_EVIDENCE.md",
+    "limit": "Static protocol facts only. No made-up ShipInfo key/ticket/map ID in request, no packet transmission or official arrival response inferred."
+  },
+  "schedule_boundary": {
+    "source_ref": "work/local_original_session/game-core-prep/BOAT_EVIDENCE.md",
+    "raw_in": "boat_routes[].classic_static.shipinfo_raw_fields.13",
+    "client_static_window": "ScheduleTime timepair + f3(60 minutes), then f4(5 minutes) window in reviewed consumer; not proven official departure/arrival times",
+    "official_schedule": null,
+    "time_zone": null,
+    "limit": "Korean/Taiwanese dialogue timetable differs by one hour; no merged official timetable or runtime clock semantics adopted."
+  },
+  "local_policy": {
+    "enabled": false,
+    "boat_schedule": null,
+    "boat_arrival_xy": null,
+    "boat_ticket_consume_timing": null,
+    "lucas_fee_candidate": 1500,
+    "limit": "Prices/fees attributed L1J/local-resource candidates; no new economy, stock, ticket minting, teleport or map transition behavior enabled."
+  },
+  "town_services_omission": "No town_services.json added: existing loader assumes inns[0] and full warehouse policy. Gludin inn price and service contracts remain unknown, so no fields invented to satisfy that unrelated loader. Lucas destination is preserved here."
+}

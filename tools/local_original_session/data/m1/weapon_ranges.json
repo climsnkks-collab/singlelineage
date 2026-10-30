@@ -1,0 +1,454 @@
+{
+  "policy": "LOCAL_L1J_WEAPON_TILE_CAP",
+  "evidence": {
+    "native": "work/source_game_data/native-dump-v1.jsonl:963/980/981: f46=3 f47=0 f48=1; field-to-range meaning UNKNOWN. f14 meleeDmg is damage, not distance.",
+    "official": "work/official_data_refresh_20261028/raw/item/{12,31,32}.json: categoryName=?; no numerical distance supplied.",
+    "scope": "Non-bow templates with an existing L1J row mapping. Bows retain world_ammo; unarmed and missing references (3018) retain the existing 1-tile baseline. NPCs retain their own MonsterDef.attack_range."
+  },
+  "ranges": {
+    "1": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63838 weapon 137 Athame type=blunt; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "2": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63742 weapon 41 Katana; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "3": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63732 weapon 31 type=sword; native f46=0 type semantics unresolved; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "4": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63837 weapon 136 Axe type=blunt; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "6": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63753 weapon 52 Two Handed Sword type=tohandsword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "8": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63841 weapon140 Mace type=blunt; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "12": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63797 weapon 96 Spear type=singlespear; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "13": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63844 weapon 143 Battle Axe; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "31": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63791 weapon 90 Bardiche; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "32": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63793 weapon 92 Bill-guisarme; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "35": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63724 weapon 23 Broad Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "38": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63839 weapon138 Club type=blunt; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "39": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63706 weapon 5 type=dagger; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "40": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63702 weapon 1 type=dagger; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "41": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63705 weapon 4 type=dagger; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "42": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63807 weapon 106 Bec de Corbin; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "44": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63805 weapon 104 Fauchard; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "45": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63840 weapon139 Flail type=blunt; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "46": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63799 weapon 98 Glaive; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "47": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63798 weapon 97 Guisarme; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "48": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63804 weapon 103 Halbred; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "54": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63796 weapon 95 Lance; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "56": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63803 weapon 102 Lucern Hammer; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "57": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63842 weapon 141 War Hammer; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "58": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63847 weapon 146 Morning Star; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "61": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63795 weapon 94 Partisan; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "67": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63728 weapon 27 Scimitar; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "69": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63845 weapon 144 Dwarvish Axe; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "70": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63800 weapon 99 Elven Spear; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "71": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63792 weapon91 Orcish Spear type=singlespear; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "72": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63727 weapon 26 Dwarvish Short Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "73": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63729 weapon 28 Elven Short Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "74": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63722 weapon 21 Orcish Short Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "75": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63725 weapon 24 Short Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "77": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63794 weapon 93 Trident; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "78": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63758 weapon 57 Tsurugi; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "123": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63731 weapon 30 Sword of the Red Knight; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "138": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63849 weapon 148 Great Axe; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "141": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63733 weapon 32 Gradius; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "142": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63703 weapon 2 Dice Dagger; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "144": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63846 weapon 145 Berserker Axe; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "230": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63829 weapon 128 Oak Staff type=staff; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "231": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63830 weapon 129 Wizard's Staff; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "232": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63826 weapon 125 Staff of Sorcery; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "233": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63832 weapon 131 Staff of Strength; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "235": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63738 weapon 37 Damascus Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "268": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63789 weapon 88 Pan's Horn; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "270": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63704 weapon 3 Body of Shortsword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "271": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63720 weapon 19 Body of Long Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "272": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63721 weapon 20 Body of Oriharukon Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "274": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63743 weapon 42 Rapier; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "276": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63790 weapon 89 Mithril-coated Horn; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "277": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63801 weapon 100 Oriharukon-coated Horn; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "278": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63723 weapon 22 Mail Breaker; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "337": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63765 weapon 64 Great Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "342": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63827 weapon 126 Staff of Mana; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "358": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63730 weapon 29 Long Silver Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "359": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63726 weapon 25 Silver Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "360": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63843 weapon 142 Silver Axe; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "659": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63718 weapon 17 Sealed Forgotten Great Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "660": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63719 weapon 18 Sealed Forgotten Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "671": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63768 weapon 67 Ancient Great Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "672": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63769 weapon 68 Ancient Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "711": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63816 weapon 115 Crystal Staff; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "787": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63757 weapon 56 Death Blade; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "790": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63751 weapon 50 Sword of Flames; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "791": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63752 weapon 51 Gold Scepter; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "1094": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63822 weapon 121 Staff of Ice Queen; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "1095": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63820 weapon 119 Staff of Demon; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "1096": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63825 weapon 124 Staff of Baphomet; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "1097": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63824 weapon 123 Staff of Beleth; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "1285": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63808 weapon 107 Crimson Lance; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "3019": {
+      "value": 2,
+      "source": "local_policy",
+      "ref": "l1jdb:63959 weapon 263 Spear of Intense Winter; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    },
+    "3020": {
+      "value": 1,
+      "source": "local_policy",
+      "ref": "l1jdb:63960 weapon 264 Thunder God`s Sword; D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql weapon.range",
+      "note": "Existing catalog identity mapping. LOCAL tile cap uses SQL range directly (no L1Attack.java range+1 grace); not a verified Classic client range."
+    }
+  }
+}

@@ -166,11 +166,11 @@ class ObservationTests(unittest.IsolatedAsyncioTestCase):
         saved, selected = dict(self.memory.data), dict(self.realm.registry.selected)
         authority, proof = self.observer._authority, self.observer._authority.proof
         original_broker, original_process = authority.broker, self.reader.member.process
-        original_frame, source_pin = self.producer._inventory_frame, n.COUNT_BUDGET_SOURCE_SHA
+        original_frame = self.producer._inventory_frame
         contract, _, core = inventory._source()
         code_at = self.memory.base + contract['owners']['Inventory']['rva']
         cases = ('uid', 'pointer', 'image', 'selection', 'owner', 'frame', 'operation_frame',
-                 'proof', 'authority', 'broker', 'source', 'scalar_drift', 'physical')
+                 'proof', 'authority', 'broker', 'scalar_drift', 'physical')
         for case in cases:
             hits, scalar_hits = [0], [0]
             def fault(at, size, raw):
@@ -187,7 +187,6 @@ class ObservationTests(unittest.IsolatedAsyncioTestCase):
                         elif case == 'proof': authority.proof = type(proof)(self.reader)
                         elif case == 'authority': self.observer._authority = inventory.InventoryService(self.producer, self.reader, policy=inventory.POLICY)
                         elif case == 'broker': authority.broker = object()
-                        elif case == 'source': n.COUNT_BUDGET_SOURCE_SHA = '0' * 64
                         return struct.pack('<i', 5)
                 if case == 'scalar_drift' and at == self.item + 24:
                     scalar_hits[0] += 1
@@ -211,7 +210,6 @@ class ObservationTests(unittest.IsolatedAsyncioTestCase):
                 self.reader.member.process = original_process
                 self.observer._authority, authority.proof, authority.broker = authority, proof, original_broker
                 self.producer._inventory_frame = self.producer._inventory_operation_frame = original_frame
-                n.COUNT_BUDGET_SOURCE_SHA = source_pin
                 self.memory.fault = None
         for changed in (0, -1, None):
             hits = [0]
@@ -466,8 +464,9 @@ class ObservationTests(unittest.IsolatedAsyncioTestCase):
         self.memory.s.route = lambda: ()
         self.assertEqual((await self.sample())['status'], 'UNKNOWN')
         del self.memory.s.route
-        with patch.object(n, 'INVENTORY_SOURCE_SHA', '0' * 64):
-            self.assertEqual((await self.sample())['reason'], 'INVENTORY_OBSERVE_PARENT_SOURCE_CHANGED')
+        # Python source hash pins were removed; a changed parent inventory.py
+        # no longer refuses observation.
+        self.assertFalse(hasattr(n, 'INVENTORY_SOURCE_SHA') or hasattr(n, 'COUNT_BUDGET_SOURCE_SHA'))
         self.assertEqual((await self.sample())['status'], 'OBSERVED')
 
     async def test_cadence_and_close_are_read_only_and_do_not_close_caller_resources(self):

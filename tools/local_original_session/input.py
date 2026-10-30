@@ -1,23 +1,32 @@
-"""Explicit client mouse input for the runner's retained primary only.
+"""Explicit private message and opt-in native helper input for the retained primary.
 
-Queued WindowProc messages prove POSTED only; resulting UI/movement is UNKNOWN.
-No attach, engine call, packet sender or global button input. An explicit mouse
-action may request foreground once and synchronize the physical cursor once to
-the validated retained window's client point; neither operation is retried.
+Queued messages prove POSTED only; resulting UI/movement is UNKNOWN.
+PrivateInput uses only the owned non-input desktop helper. OwnedMouse retains
+its separate interactive-desktop cursor/focus behavior and is not used by it.
+GLFW_CALLBACK_INJECTION awaits native input helpers; resulting UI stays UNKNOWN.
 """
 from __future__ import annotations
 
 import ctypes as C
 from ctypes import wintypes as W
+import asyncio
 import hashlib
+import inspect
 import json
+import math
 import os
 from pathlib import Path
 import stat
+import time
+
+from .desktop import normalize_click_options
 
 REQUEST_SCHEMA = 'local-original-input-request-v1'
 RESULT_SCHEMA = 'local-original-input-result-v1'
 MAX_SEQUENCE = (1 << 53) - 1
+GLFW_INPUT_SCHEMA = 'companion-glfw-input-v1'
+GLFW_INPUT_ROUTE = 'GLFW_CALLBACK_INJECTION'
+GLFW_MAX_SEQUENCE = (1 << 31) - 1
 
 
 def need(value, reason):
@@ -28,6 +37,53 @@ def need(value, reason):
 def reason(error):
     text = error.args[0] if len(error.args) == 1 else None
     return text if isinstance(text, str) and text.startswith('INPUT_') else 'INPUT_OPERATION_FAILED'
+
+
+def capture_to_client(request, capture, current):
+    """Convert top-left PNG pixels from a same-run GL crop; never DPI-scale.
+
+    Capture must describe the read drawable in native client pixels. A nonzero
+    FBO has no established presentation transform and is refused. Legacy v5
+    host observations explicitly retain their inferred drawable relation.
+    """
+    need(type(capture) is dict and type(current) is dict, 'INPUT_CAPTURE_REQUIRED')
+    for key in ('pid', 'birth', 'candidate_sha256', 'hwnd', 'ui_thread',
+                'client_rect', 'window_dpi', 'window_awareness'):
+        need(capture.get(key) is not None and capture[key] == current.get(key),
+             'INPUT_CAPTURE_GEOMETRY_CHANGED')
+    need(current.get('awareness_equal') is True and current['window_awareness'] == 2,
+         'INPUT_CAPTURE_NATIVE_PIXELS_REQUIRED')
+    need(capture.get('read_fbo') == 0 or (capture.get('read_fbo') is None
+         and capture.get('relation') == 'INFERRED_DEFAULT_CLIENT_DRAWABLE_V5'),
+         'INPUT_CAPTURE_FBO_RELATION_UNKNOWN')
+    rect = capture['client_rect']
+    need(rect[:2] == [0, 0] and capture.get('read_size') == rect[2:],
+         'INPUT_CAPTURE_DRAWABLE_MISMATCH')
+    cx, cy, width, height = capture['crop']
+    need(all(type(n) is int for n in (cx, cy, width, height))
+         and cx >= 0 and cy >= 0 and width > 0 and height > 0
+         and cx + width <= rect[2] and cy + height <= rect[3]
+         and capture.get('png_size') == [width, height], 'INPUT_CAPTURE_CROP_MISMATCH')
+    offset = [cx, rect[3] - cy - height]
+    def point(value):
+        need(type(value) in (list, tuple) and len(value) == 2
+             and all(type(n) is int for n in value)
+             and 0 <= value[0] < width and 0 <= value[1] < height,
+             'INPUT_CAPTURE_POINT_OUTSIDE_PNG')
+        answer = [value[0] + offset[0], value[1] + offset[1]]
+        need(all(0 <= n <= 32767 for n in answer), 'INPUT_CAPTURE_POINT_BOUND')
+        return answer
+    converted = dict(request)
+    if request.get('action') == 'left_drag':
+        need(type(request.get('points')) is list and len(request['points']) >= 2,
+             'INPUT_CAPTURE_DRAG_POINTS_REQUIRED')
+        converted['points'] = [point(p) for p in request['points']]
+    elif request.get('action') in ('left_click', 'left_double_click', 'mouse_move', 'mouse_wheel'):
+        converted['x'], converted['y'] = point([request.get('x'), request.get('y')])
+    else:
+        need(request.get('action') in ('key_press', 'type_text'), 'INPUT_ACTION_UNAVAILABLE')
+    return converted, dict(scale=[1, 1], offset=offset, png_request=request,
+                          client_request=converted, capture=capture)
 
 
 class RECT(C.Structure):
@@ -302,6 +358,288 @@ class OwnedMouse:
         return result
 
 
+class PrivateInput:
+    """Message adapter for the retained private desktop; no global input.
+
+    observation_target returns fresh {identity, hwnd, ui_thread}. Coordinates
+    are native client pixels in the target window's DPI context. Scene reads
+    remain observations and never directly invoke an original UI callback.
+    click_options configure only click/double-click: activate posts focus
+    messages, while move_settle_ms/down_hold_ms are wall-clock pacing only.
+    """
+    def __init__(self, owner, *, observation_scene, observation_target, click_options=None):
+        need(callable(observation_scene) and callable(observation_target),
+             'INPUT_OBSERVATION_CALLBACK_REQUIRED')
+        self.owner = owner
+        self.observation_scene = observation_scene
+        self.observation_target = observation_target
+        self.click_options = normalize_click_options(click_options)
+
+    def _scene(self, expected):
+        need(type(expected) is str
+             and expected in ('Intro', 'Lobby', 'Login', 'CharacterSelect', 'Land'),
+             'INPUT_EXPECTED_SCENE_REQUIRED')
+        scene = self.observation_scene()
+        need(type(scene) is dict and scene.get('status') == 'OBSERVED'
+             and scene.get('current') == expected and scene.get('pending') == 'none'
+             and scene.get('root_ready') is True, 'INPUT_SCENE_MISMATCH')
+
+    def _post(self, action, expected_scene, **parameters):
+        result = dict(status='REFUSED', ui_result='UNKNOWN', queued_messages=0,
+                      release_posted=False, automatic_retry=False,
+                      input_route='PRIVATE_DESKTOP_MESSAGES')
+        native_result = None
+        if action in ('left_click', 'left_double_click'):
+            parameters['click_options'] = dict(self.click_options)
+            result.update(click_options=dict(self.click_options),
+                          click_timing='WALL_CLOCK_ONLY_NO_FRAME_PROOF')
+        try:
+            self._scene(expected_scene)
+            target = self.observation_target()
+            need(type(target) is dict, 'INPUT_TARGET_OBSERVATION_REQUIRED')
+            desktop = self.owner.private_desktop
+            need(desktop is not None, 'INPUT_PRIVATE_DESKTOP_REQUIRED')
+            native_result = desktop.post_client_input(self.owner, target['identity'],
+                target['hwnd'], target['ui_thread'], action,
+                check_scene=lambda: self._scene(expected_scene),
+                **({'expected_geometry': target['expected_geometry']}
+                   if 'expected_geometry' in target else {}), **parameters)
+            result.update(status='POSTED', hwnd=target['hwnd'], ui_thread=target['ui_thread'],
+                          expected_scene=expected_scene)
+        except Exception as error:
+            result['reason'] = reason(error)
+            if str(error).startswith(('CLIENT_', 'PRIVATE_')):
+                result['native_reason'] = str(error)
+            native_result = getattr(error, 'client_click_result', None)
+            if native_result is not None and native_result.queued:
+                result['status'] = 'PARTIAL'
+        if native_result is not None:
+            result.update(queued_messages=len(native_result.queued),
+                          release_posted=bool(native_result.queued
+                              and native_result.queued[-1] in (0x202, 0x101)),
+                          cleanup_up=native_result.cleanup_up,
+                          cleanup_errors=list(native_result.cleanup_errors))
+            if native_result.desktop_thread_check is not None:
+                result['desktop_thread_check'] = native_result.desktop_thread_check
+        return result
+
+    def left_click(self, x, y, expected_scene):
+        return self._post('left_click', expected_scene, x=x, y=y)
+
+    def mouse_move(self, x, y, expected_scene):
+        return self._post('mouse_move', expected_scene, x=x, y=y)
+
+    def left_double_click(self, x, y, expected_scene):
+        return self._post('left_double_click', expected_scene, x=x, y=y)
+
+    def left_drag(self, points, expected_scene):
+        return self._post('left_drag', expected_scene, points=points)
+
+    def mouse_wheel(self, x, y, delta, expected_scene):
+        return self._post('mouse_wheel', expected_scene, x=x, y=y, delta=delta)
+
+    def key_press(self, key, expected_scene):
+        return self._post('key_press', expected_scene, key=key)
+
+
+class GlfwCallbackInput(PrivateInput):
+    """Opt-in diagnostic file transport; await native input helper completion.
+
+    Uses the same owned private target and client-pixel geometry observations as
+    PrivateInput. No OS input, focus, cursor or retry is performed. Full event
+    evidence stays in glfw-input.result.json; helper completion is not UI proof.
+    """
+    def __init__(self, owner, directory, *, observation_scene, observation_target,
+                 enabled=False, click_options=None, timeout=30):
+        super().__init__(owner, observation_scene=observation_scene,
+                         observation_target=observation_target, click_options=click_options)
+        need(enabled is True, 'INPUT_GLFW_OPT_IN_REQUIRED')
+        need(type(timeout) in (int, float) and math.isfinite(timeout) and 0 < timeout <= 120,
+             'INPUT_GLFW_TIMEOUT_REQUIRED')
+        self.directory = _ordinary(Path(directory).absolute(), directory=True)
+        self.request = self.directory / 'glfw-input.request.json'
+        self.result = self.directory / 'glfw-input.result.json'
+        self.temporary = self.directory / 'glfw-input.request.tmp'
+        self.timeout = timeout
+        self.inflight = False
+
+    def _target(self):
+        target = self.observation_target()
+        need(type(target) is dict, 'INPUT_TARGET_OBSERVATION_REQUIRED')
+        desktop = self.owner.private_desktop
+        need(desktop is not None, 'INPUT_PRIVATE_DESKTOP_REQUIRED')
+        geometry = desktop.observe_client_geometry(self.owner, target['identity'],
+                                                   target['hwnd'], target['ui_thread'])
+        need(type(geometry) is dict and geometry.get('status') == 'OBSERVED'
+             and geometry.get('awareness_equal') is True
+             and geometry.get('window_awareness') == 2, 'INPUT_CAPTURE_NATIVE_PIXELS_REQUIRED')
+        expected = target.get('expected_geometry')
+        keys = ('pid', 'birth', 'candidate_sha256', 'hwnd', 'ui_thread',
+                'client_rect', 'window_dpi', 'window_awareness')
+        if expected is not None:
+            need(all(geometry.get(k) == expected.get(k) for k in keys),
+                 'INPUT_CAPTURE_GEOMETRY_CHANGED')
+        return target, {k: geometry[k] for k in keys}
+
+    def _events(self, action, geometry, parameters):
+        rect = geometry['client_rect']
+        def point(xy):
+            need(type(xy) in (list, tuple) and len(xy) == 2
+                 and all(type(n) is int for n in xy)
+                 and rect[0] <= xy[0] < rect[2] and rect[1] <= xy[1] < rect[3],
+                 'INPUT_GLFW_POINT_OUTSIDE_CLIENT')
+            return dict(type='cursor', x=xy[0], y=xy[1], delay_ms=0)
+        def button(action, delay=0):
+            return dict(type='button', button=0, action=action, mods=0, delay_ms=delay)
+        if action in ('left_click', 'left_double_click'):
+            need(not self.click_options['activate'], 'INPUT_GLFW_ACTIVATION_UNSUPPORTED')
+            move_delay, hold_delay = (self.click_options[k] for k in ('move_settle_ms', 'down_hold_ms'))
+            events = [point((parameters['x'], parameters['y'])), button(1, move_delay), button(0, hold_delay)]
+            if action == 'left_double_click':
+                events.extend((button(1), button(0, hold_delay)))
+        elif action == 'mouse_move':
+            events = [point((parameters['x'], parameters['y']))]
+        elif action == 'left_drag':
+            path = parameters['points']
+            need(type(path) in (list, tuple) and 2 <= len(path) <= 254,
+                 'INPUT_GLFW_DRAG_POINTS_REQUIRED')
+            moves = [point(xy) for xy in path]
+            events = [moves[0], button(1), *moves[1:], button(0)]
+        elif action == 'mouse_wheel':
+            delta = parameters['delta']
+            need(type(delta) is int and -32768 <= delta <= 32767 and delta != 0,
+                 'INPUT_GLFW_WHEEL_DELTA_REQUIRED')
+            events = [point((parameters['x'], parameters['y'])),
+                      dict(type='wheel', xoff=0, yoff=delta / 120, delay_ms=0)]
+        elif action == 'key_press':
+            key = parameters['key']
+            keys = {'Enter': (257, 0x1c), 'Escape': (256, 0x01),
+                    'Tab': (258, 0x0f), 'Backspace': (259, 0x0e),
+                    'Delete': (261, 0x153), 'Left': (263, 0x14b), 'Right': (262, 0x14d)}
+            keys.update({str(n): (48+n, 0x0b if n == 0 else n+1) for n in range(10)})
+            need(type(key) is str and key in keys, 'INPUT_GLFW_KEY_REQUIRED')
+            code, scan = keys[key]
+            down = dict(type='key', key=code, scancode=scan, action=1, mods=0, delay_ms=0)
+            events = [down]
+            if key in '0123456789':
+                # There is no TranslateMessage on this callback route.
+                events.append(dict(type='char', codepoint=ord(key), mods=0, plain=1, delay_ms=0))
+            events.append(dict(down, action=0))
+        elif action == 'type_text':
+            text = parameters['text']
+            need(type(text) is str and 1 <= len(text) <= 256
+                 and all(not 0xd800 <= ord(c) <= 0xdfff and ord(c) > 0 for c in text),
+                 'INPUT_GLFW_TEXT_REQUIRED')
+            events = [dict(type='char', codepoint=ord(c), mods=0, plain=1, delay_ms=0) for c in text]
+        else:
+            raise ValueError('INPUT_ACTION_UNAVAILABLE')
+        need(1 <= len(events) <= 256, 'INPUT_GLFW_EVENT_BOUND')
+        return events
+
+    def _native_file(self, path):
+        try:
+            row = json.loads(_read(path, 196608 if path == self.result else 65536,
+                                   shared_snapshot=path == self.result), object_pairs_hook=_unique_object)
+        except FileNotFoundError:
+            return None
+        need(type(row) is dict and row.get('schema') == GLFW_INPUT_SCHEMA
+             and type(row.get('sequence')) is int and 1 <= row['sequence'] <= GLFW_MAX_SEQUENCE,
+             'INPUT_GLFW_PRIOR_FILE_INVALID')
+        return row
+
+    async def _post(self, action, expected_scene, **parameters):
+        outcome = dict(status='REFUSED', ui_result='UNKNOWN', automatic_retry=False,
+                       input_route=GLFW_INPUT_ROUTE, frame_count='UNKNOWN', completed_events=0)
+        sequence = None
+        claimed = False
+        published = False
+        try:
+            need(not self.inflight, 'INPUT_GLFW_ALREADY_INFLIGHT')
+            self.inflight = claimed = True
+            self._scene(expected_scene)
+            target, geometry = self._target()
+            events = self._events(action, geometry, parameters)
+            prior_request, prior_result = self._native_file(self.request), self._native_file(self.result)
+            terminal = ('COMPLETED', 'FAILED', 'REFUSED')
+            if prior_result is not None:
+                need(prior_result.get('status') in terminal, 'INPUT_GLFW_REQUEST_PENDING')
+            if prior_request is not None:
+                need(prior_result is not None and prior_result['sequence'] >= prior_request['sequence'],
+                     'INPUT_GLFW_REQUEST_PENDING')
+            sequence = max((row['sequence'] for row in (prior_request, prior_result) if row), default=0) + 1
+            need(sequence <= GLFW_MAX_SEQUENCE, 'INPUT_SEQUENCE_REQUIRED')
+            raw = json.dumps(dict(schema=GLFW_INPUT_SCHEMA, sequence=sequence, events=events),
+                             separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
+            need(len(raw) <= 65536, 'INPUT_GLFW_REQUEST_BYTE_BOUND')
+            self._scene(expected_scene)
+            fresh_target, fresh_geometry = self._target()
+            need(geometry == fresh_geometry and all(target[k] == fresh_target[k]
+                 for k in ('identity', 'hwnd', 'ui_thread')), 'INPUT_CAPTURE_GEOMETRY_CHANGED')
+            _ordinary(self.request, absent=True)
+            _ordinary(self.temporary, absent=True)
+            with self.temporary.open('xb') as stream:
+                stream.write(raw)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(self.temporary, self.request)
+            published = True
+            outcome.update(native_sequence=sequence, native_result_path=str(self.result),
+                           hwnd=target['hwnd'], ui_thread=target['ui_thread'],
+                           expected_scene=expected_scene, event_count=len(events))
+            deadline = time.monotonic() + self.timeout
+            while True:
+                result = self._native_file(self.result)
+                if result is not None and result['sequence'] == sequence:
+                    need(result.get('input_route') == GLFW_INPUT_ROUTE
+                         and result.get('status') in ('RUNNING', *terminal), 'INPUT_GLFW_RESULT_INVALID')
+                    count = result.get('completed_events')
+                    need(type(count) is int and 0 <= count <= len(events), 'INPUT_GLFW_RESULT_INVALID')
+                    outcome.update(native_status=result['status'], completed_events=count)
+                    if result['status'] in terminal:
+                        records = result.get('events')
+                        need(type(records) is list and len(records) <= len(events)
+                             and all(type(row) is dict for row in records), 'INPUT_GLFW_RESULT_INVALID')
+                        outcome['native_event_count'] = len(records)
+                        # Full records remain in the native result file (v1 outer result is bounded).
+                        outcome['thread_ids'] = sorted({row['thread_id'] for row in records
+                                                       if type(row.get('thread_id')) is int})[:8]
+                        outcome['host_left_button_90'] = [row.get('host_left_button_90') for row in records[:8]]
+                        failures = [row for row in records if row.get('exception_code')]
+                        if failures:
+                            outcome['exception_code'] = failures[0]['exception_code']
+                        if result['status'] == 'COMPLETED':
+                            need(count == len(events) and len(records) == len(events)
+                                 and all(row.get('index') == index and row.get('type') == events[index]['type']
+                                     and row.get('status') == 'RETURNED' and row.get('helper_returned') is True
+                                     for index, row in enumerate(records)), 'INPUT_GLFW_RESULT_INCOMPLETE')
+                            outcome['status'] = 'POSTED'
+                            outcome['callback_invocation'] = 'NATIVE_HELPER_CONTROLS'
+                        else:
+                            outcome.update(status='PARTIAL' if count else result['status'],
+                                           reason='INPUT_GLFW_NATIVE_' + result['status'])
+                            if type(result.get('reason')) is str:
+                                outcome['native_reason'] = result['reason'][:160]
+                        return outcome
+                if time.monotonic() >= deadline:
+                    outcome.update(status='UNKNOWN', reason='INPUT_GLFW_COMPLETION_TIMEOUT',
+                                   native_status=outcome.get('native_status', 'UNKNOWN'))
+                    return outcome
+                await asyncio.sleep(0.05)
+        except Exception as error:
+            outcome['reason'] = reason(error)
+            if published:
+                outcome['status'] = 'UNKNOWN'
+            if str(error).startswith(('CLIENT_', 'PRIVATE_')):
+                outcome['native_reason'] = str(error)
+            return outcome
+        finally:
+            if claimed:
+                self.inflight = False
+
+    def type_text(self, text, expected_scene):
+        return self._post('type_text', expected_scene, text=text)
+
+
 def _ordinary(path, *, directory=False, absent=False):
     """Reject reparse/symlink ancestors and multiple-linked request/result files."""
     path = Path(path).absolute()
@@ -321,13 +659,15 @@ def _ordinary(path, *, directory=False, absent=False):
     return path
 
 
-def _read(path, limit):
+def _read(path, limit, *, shared_snapshot=False):
     _ordinary(path)
     before = path.lstat()
     flags = os.O_RDONLY | getattr(os, 'O_BINARY', 0) | getattr(os, 'O_NOFOLLOW', 0)
     if os.name == 'nt':
         # OPEN_REPARSE_POINT inspects the named file itself, including a link
-        # introduced after lstat. Deny write/delete while consuming its bytes.
+        # introduced after lstat. Ordinary requests deny write/delete while read.
+        # Native results are immutable snapshots replaced atomically; allow the
+        # producer to rename the next snapshot while this handle reads the old.
         import msvcrt
         kernel = C.WinDLL('kernel32', use_last_error=True)
         create = kernel.CreateFileW
@@ -337,7 +677,7 @@ def _read(path, limit):
         kernel.GetFileInformationByHandle.restype = W.BOOL
         kernel.CloseHandle.argtypes = (W.HANDLE,)
         kernel.CloseHandle.restype = W.BOOL
-        handle = create(str(path), 0x80000000, 1, None, 3, 0x00200000, None)
+        handle = create(str(path), 0x80000000, 5 if shared_snapshot else 1, None, 3, 0x00200000, None)
         if not (handle and handle != C.c_void_p(-1).value):
             winerror = C.get_last_error()  # First ctypes operation after failed CreateFileW.
             error = ValueError('INPUT_REQUEST_OPEN_FAILED')
@@ -356,13 +696,14 @@ def _read(path, limit):
         descriptor = os.open(path, flags)
     try:
         opened = os.fstat(descriptor)
-        need((opened.st_dev, opened.st_ino) == (before.st_dev, before.st_ino)
+        need(stat.S_ISREG(opened.st_mode) and opened.st_nlink == 1
+             and (shared_snapshot or (opened.st_dev, opened.st_ino) == (before.st_dev, before.st_ino))
              and not getattr(opened, 'st_file_attributes', 0) & 0x400,
              'INPUT_REQUEST_CHANGED')
         need(0 <= opened.st_size <= limit, 'INPUT_REQUEST_BYTE_BOUND')
         raw = os.read(descriptor, limit + 1)
-        after = _ordinary(path).lstat()
-        if ((after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
+        after = None if shared_snapshot else _ordinary(path).lstat()
+        if not shared_snapshot and ((after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns)
                 != (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)):
             error = ValueError('INPUT_REQUEST_CHANGED')
             # Both ordinary checks and the opened identity/reparse check passed.
@@ -424,7 +765,7 @@ class InputRequests:
         _ordinary(self.result, absent=True)
         os.replace(self.temporary, self.result)
 
-    def poll(self):
+    def _begin(self):
         if self.disabled:
             return dict(status='REFUSED', reason='INPUT_HANDLER_DISABLED', ui_result='UNKNOWN')
         sequence, fingerprint = None, None
@@ -442,25 +783,37 @@ class InputRequests:
             need(sequence is not None, 'INPUT_SEQUENCE_REQUIRED')
             need(sequence > self.last_sequence, 'INPUT_SEQUENCE_ALREADY_CONSUMED')
             self.last_sequence = sequence
-            need(set(request) == {'schema', 'action', 'x', 'y', 'expected_scene', 'sequence'}
-                 and request['schema'] == REQUEST_SCHEMA
-                 and request['action'] in ('left_click', 'mouse_move'),
+            fields = {
+                'left_click': ('x', 'y'), 'mouse_move': ('x', 'y'),
+                'left_double_click': ('x', 'y'), 'left_drag': ('points',),
+                'mouse_wheel': ('x', 'y', 'delta'), 'key_press': ('key',),
+                'type_text': ('text',),
+            }
+            action_name = request.get('action')
+            need(type(action_name) is str and action_name in fields
+                 and set(request) == {'schema', 'action', 'expected_scene', 'sequence',
+                                      *fields.get(action_name, ())}
+                 and request['schema'] == REQUEST_SCHEMA,
                  'INPUT_REQUEST_SCHEMA_REQUIRED')
             row = dict(schema=RESULT_SCHEMA, sequence=sequence, last_sequence=self.last_sequence,
                        request_sha256=fingerprint, status='REFUSED', reason='INPUT_CLAIMED_NO_RETRY',
                        ui_result='UNKNOWN', automatic_retry=False)
             self._write(row)
-            action = self.mouse.left_click if request['action'] == 'left_click' else self.mouse.mouse_move
-            outcome = action(request['x'], request['y'], request['expected_scene'])
-            row.update(outcome)
-            if outcome['status'] == 'POSTED':
-                row.pop('reason', None)
+            action = getattr(self.mouse, action_name, None)
+            need(callable(action), 'INPUT_ACTION_UNAVAILABLE')
+            parameters = {field: request[field] for field in fields[action_name]}
+            return row, action, parameters, request['expected_scene']
         except FileNotFoundError:
             return None
         except Exception as error:
             row = dict(schema=RESULT_SCHEMA, sequence=sequence, last_sequence=self.last_sequence,
                        request_sha256=fingerprint, status='REFUSED', reason=reason(error),
                        ui_result='UNKNOWN', automatic_retry=False)
+        return row
+
+    def _end(self, row):
+        if row is None or self.disabled:
+            return row
         if row == self.last_result:
             return None
         try:
@@ -470,3 +823,39 @@ class InputRequests:
             row['result_write_failed'] = True
         self.last_result = row
         return row
+
+    def _outcome(self, row, outcome):
+        row.update(outcome)
+        if outcome['status'] == 'POSTED':
+            row.pop('reason', None)
+
+    def poll(self):
+        work = self._begin()
+        if type(work) is tuple:
+            row, action, parameters, scene = work
+            try:
+                # Callback transport must use poll_async; never leave a coroutine
+                # unawaited or claim POSTED before the diagnostic drain consumes it.
+                if inspect.iscoroutinefunction(getattr(self.mouse, '_post', None)):
+                    raise ValueError('INPUT_ASYNC_DISPATCH_REQUIRED')
+                self._outcome(row, action(**parameters, expected_scene=scene))
+            except Exception as error:
+                row.update(status='REFUSED', reason=reason(error))
+        else:
+            row = work
+        return self._end(row)
+
+    async def poll_async(self):
+        work = self._begin()
+        if type(work) is tuple:
+            row, action, parameters, scene = work
+            try:
+                outcome = action(**parameters, expected_scene=scene)
+                if inspect.isawaitable(outcome):
+                    outcome = await outcome
+                self._outcome(row, outcome)
+            except Exception as error:
+                row.update(status='REFUSED', reason=reason(error))
+        else:
+            row = work
+        return self._end(row)

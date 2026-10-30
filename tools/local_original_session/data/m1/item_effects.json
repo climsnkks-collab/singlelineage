@@ -1,0 +1,886 @@
+{
+  "table": "m1_item_effects",
+  "version": 1,
+  "note": "Classic IDs only. Healing uses official inclusive ranges with a local uniform integer draw and existing SC4E38 encoding. Speed reuses WorldCombat. No inventory/save ownership changes.",
+  "use_gfx_source": "SC_EFFECT_NOTI 4ED8 gfx per L1J C_ItemUSe S_SkillSound (work/local_original_session/implementation-1/item-use-effect/provenance/l1j-C_ItemUSe.java: UseHealingPotion 189/194/197, useGreenPotion 191, useBravePotion 751, useBluePotion 190, useWisdomPotion 750, cure poison 192); list.spr gfx IDs.",
+  "mapping_scope": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md section 3 (mapping methodology)",
+  "reuse": [
+    "tools/local_original_session/world_combat.py:WorldCombat.heal/apply_buff",
+    "tools/local_original_session/data/m1/items.json",
+    "tools/local_original_session/data/m1/town.json:respawn_point",
+    "work/local_original_session/consumables/facts-v1/API.md (old exact-f8-only subset; latest dump/shop candidates 15/130/126 explicitly added as local mappings)"
+  ],
+  "policy_limits": [
+    "Healing amount is a uniform integer within the official inclusive range. The official source supplies endpoints only, not a probability distribution; legacy WorldCombat.heal callers retain Gaussian policy.",
+    "DECAY_POTION, POLLUTE_WATER, absolute barriers, potion cooldown/admission, equipped haste and other skill interactions are caller-owned or unsupported M1 effects.",
+    "Cure126 is native jade potion ($233), mapped to L1J40017 cure poison. No existing M1 poison ticker or native display wire.",
+    "Return162 uses existing town respawn point; clan-return806 and anonymous10014 are distinct and unsupported.",
+    "Random teleport uses same-map radius200 square, uniform known can_stand cells; current cell excluded, no bookmarks/doors/occupancy/map restriction policy.",
+    "Movement outputs proposals only. Native teleport wire/order UNKNOWN; 4E2C walking and 4EE0 correction are not asserted as teleport.",
+    "Speed expiry uses existing combat.expire_buff scheduler; leave clears combat buffs as before.",
+    "Blue492 adds max(WIS,11)-5 only to an observed existing natural MP recovery, with the same activity threshold. Tick hook is detached at runtime stop; bound PcState identity limits lifetime. No native blue icon is asserted.",
+    "Blind16 and poison cures reuse the optional PlayerMagic state owner and its saved statuses; no cross-feature method calls or replacement of combat methods.",
+    "Rows with dispatch_owner=unsupported are data registration only. The independent raw0 frame handler refuses their actual current inventory UID before the legacy generic potion fallback can spend it.",
+    "Second-wave owner consumables: foods restore LOCAL fullness and add1HP at an observed natural HP threshold. Wisdom297 and breath417/418 persist official state/duration with query APIs; spell-damage/environment consumers remain unconnected. Identify22 publishes display-only0965 labels while preserving canonical saved names. Curse24 clears LOCAL equipped-item curse state. Clan806/tower15400/sealed15457 refuse without consumption. Tower15410/15430 use explicit LOCAL backend policy and remembered-book destination mapping, not verified Classic server rules."
+  ],
+  "wire_sources": {
+    "hp": "tools/local_original_session/world_combat.py:status_frame SC4E38",
+    "speed": "tools/local_original_session/world_combat.py:speed_frame SC4E5B",
+    "movement": "work/local_server_rea_20261016/run273_map_transition_contract/source/receive/contract.md; run287_temple4_77_return_map0_contract/source/contract.md; run314_sc4e2c_player_position_commit/contract.md; self_response_findings.md"
+  },
+  "excluded_shop_effects": [
+    "clan-return806/tower15400/sealed15457 (registered unsupported)",
+    "event/blessed/cursed/anonymous variants"
+  ],
+  "effects": [
+    {
+      "template_id": 14,
+      "name_ko": "빨간 물약",
+      "name_token": "$237",
+      "kind": "heal",
+      "l1j_item_id": 40010,
+      "use_gfx": 189,
+      "heal_hp": 15,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:965",
+        "f4": 51,
+        "icon_f5": 80,
+        "ground_f6": 45,
+        "kind_f45": 1001
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_name_and_graphics_token_changed",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16464",
+        "l1j_tokens": {
+          "identified": "$26",
+          "unidentified": "$26"
+        }
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=14; work/official_data/raw/item/14.json options[회복량].origin/originMax",
+        "status": "OFFICIAL_INCLUSIVE_RANGE_LOCAL_UNIFORM_DISTRIBUTION"
+      },
+      "heal_hp_range": {
+        "min": 6,
+        "max": 27
+      },
+      "legacy_heal_hp_note": "heal_hp는 이전 가우스 경로의 호환 기준값이며 이 모듈은 공식 heal_hp_range를 사용한다."
+    },
+    {
+      "template_id": 15,
+      "name_ko": "주홍 물약",
+      "name_token": "$235",
+      "kind": "heal",
+      "l1j_item_id": 40011,
+      "use_gfx": 194,
+      "heal_hp": 45,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:966",
+        "f4": 51,
+        "icon_f5": 78,
+        "ground_f6": 43,
+        "kind_f45": 1001
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16465",
+        "l1j_tokens": {
+          "identified": "$235",
+          "unidentified": "$235"
+        }
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=15; work/official_data/raw/item/15.json options[회복량].origin/originMax",
+        "status": "OFFICIAL_INCLUSIVE_RANGE_LOCAL_UNIFORM_DISTRIBUTION"
+      },
+      "heal_hp_range": {
+        "min": 26,
+        "max": 68
+      },
+      "legacy_heal_hp_note": "heal_hp는 이전 가우스 경로의 호환 기준값이며 이 모듈은 공식 heal_hp_range를 사용한다."
+    },
+    {
+      "template_id": 130,
+      "name_ko": "맑은 물약",
+      "name_token": "$238",
+      "kind": "heal",
+      "l1j_item_id": 40012,
+      "use_gfx": 197,
+      "heal_hp": 75,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1064",
+        "f4": 51,
+        "icon_f5": 81,
+        "ground_f6": 46,
+        "kind_f45": 1001
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16466",
+        "l1j_tokens": {
+          "identified": "$238",
+          "unidentified": "$238"
+        }
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=130; work/official_data/raw/item/130.json options[회복량].origin/originMax",
+        "status": "OFFICIAL_INCLUSIVE_RANGE_LOCAL_UNIFORM_DISTRIBUTION"
+      },
+      "heal_hp_range": {
+        "min": 44,
+        "max": 107
+      },
+      "legacy_heal_hp_note": "heal_hp는 이전 가우스 경로의 호환 기준값이며 이 모듈은 공식 heal_hp_range를 사용한다."
+    },
+    {
+      "template_id": 17,
+      "name_ko": "초록 물약",
+      "name_token": "$234",
+      "kind": "speed",
+      "l1j_item_id": 40013,
+      "use_gfx": 191,
+      "buff_template_id": 17,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:968",
+        "f4": 51,
+        "icon_f5": 77,
+        "ground_f6": 42,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16467",
+        "l1j_tokens": {
+          "identified": "$264",
+          "unidentified": "$234"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:486-491,2711-2800",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 296,
+      "name_ko": "용기의 물약",
+      "name_token": "$943",
+      "kind": "speed",
+      "l1j_item_id": 40014,
+      "use_gfx": 751,
+      "buff_template_id": 296,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1192",
+        "f4": 51,
+        "icon_f5": 79,
+        "ground_f6": 44,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m1/items.json:296",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded."
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:492-500,2803-2931",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 495,
+      "name_ko": "강화 초록 물약",
+      "name_token": "$15699",
+      "kind": "speed",
+      "l1j_item_id": 40018,
+      "use_gfx": 191,
+      "buff_template_id": 17,
+      "buff_add_s": 1800,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1299",
+        "f4": 51,
+        "icon_f5": 621,
+        "ground_f6": 42,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_name_and_graphics_token_changed",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16472",
+        "l1j_tokens": {
+          "identified": "$1652 $264",
+          "unidentified": "$1652 $234"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:486-491,2726-2727,2793-2794",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 126,
+      "name_ko": "비취 물약",
+      "name_token": "$233",
+      "kind": "cure_poison",
+      "l1j_item_id": 40017,
+      "use_gfx": 192,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1060",
+        "f4": 51,
+        "icon_f5": 76,
+        "ground_f6": 41,
+        "kind_f45": 1000
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16471",
+        "l1j_tokens": {
+          "identified": "$233",
+          "unidentified": "$233"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:473-485",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 162,
+      "name_ko": "귀환 주문서",
+      "name_token": "$505",
+      "kind": "return_town",
+      "l1j_item_id": 40079,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:1079",
+        "f4": 9,
+        "icon_f5": 474,
+        "ground_f6": 22,
+        "kind_f45": 1002
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16533",
+        "l1j_tokens": {
+          "identified": "$505",
+          "unidentified": "$505"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1123-1135",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 23,
+      "name_ko": "순간이동 주문서",
+      "name_token": "$230",
+      "kind": "random_teleport",
+      "l1j_item_id": 40100,
+      "teleport_radius": 200,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:973",
+        "f4": 6,
+        "icon_f5": 473,
+        "ground_f6": 22,
+        "kind_f45": 1004
+      },
+      "mapping_source": {
+        "source": "local_policy",
+        "ref": "tools/local_original_session/data/m2/shop_sales.json",
+        "status": "candidate_token_kind_icon",
+        "note": "Explicit local cross-version mapping; blessing/anonymous and event variants excluded.",
+        "l1j_item_ref": "l1jdb:16554",
+        "l1j_tokens": {
+          "identified": "$230",
+          "unidentified": "$230"
+        }
+      },
+      "effect_source": {
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1188-1240",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 28,
+      "name_ko": "부활 주문서",
+      "name_token": "$257",
+      "kind": "companion_resurrection",
+      "dispatch_owner": "companion",
+      "l1j_item_id": 40089,
+      "revive_hp_divisor": 4,
+      "identity_source": {
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:977; data/official/items.json official_id=28 exact_id_and_name",
+        "icon_f5": 471
+      },
+      "effect_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1016-1019",
+        "note": "Normal40089 NPC/pet maxHP/4, blessed140089 fullHP. Adopt normal rule max(1,maxHP//4) for autonomous companion; MP unchanged. Only visible current dead owned companion accepted. Reject others without cost. Official classic HP formula UNKNOWN; not PC Y/N resurrection or blessed variant."
+      },
+      "wire_source": "work/local_original_session/game-core-prep/ENCHANT_USE_EVIDENCE.md run393 outerf1 useUID, nestedf2 int64 targetUID; COMPANION_DISPLAY_EVIDENCE.md section5 run404 default sameUID4E96 replacement, optional4F16 experiment"
+    },
+    {
+      "template_id": 492,
+      "name_ko": "파란 물약",
+      "kind": "mana_regen",
+      "l1j_item_id": 40015,
+      "use_gfx": 190,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=492; work/official_data/raw/item/492.json; work/source_game_data/native-dump-v1.jsonl:1298"
+      },
+      "duration_s": 600,
+      "duration_cap_s": 1200,
+      "effect_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:2933-2956; model/MpRegeneration.java:54-67",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA",
+        "note": "600 seconds per use, remaining+600 capped1200; bonus max(WIS,11)-5 at the existing natural MP threshold. Classic official numeric recovery/duration absent. Session lifetime like existing speed potions; no offline recovery."
+      }
+    },
+    {
+      "template_id": 16,
+      "name_ko": "불투명 물약",
+      "kind": "blind",
+      "l1j_item_id": 40025,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=16; work/official_data/raw/item/16.json; work/source_game_data/native-dump-v1.jsonl:967"
+      },
+      "duration_s": 16,
+      "effect_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:3011-3021",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA",
+        "note": "Replaces darkness with16-second self blind. Uses existing PlayerMagic blind sight consumer. Native screen overlay UNKNOWN."
+      }
+    },
+    {
+      "template_id": 248,
+      "name_ko": "엔트의 줄기",
+      "kind": "cure_poison",
+      "l1j_item_id": 40507,
+      "use_gfx": 192,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=248; work/official_data/raw/item/248.json; work/source_game_data/native-dump-v1.jsonl:1151"
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=248; work/official_data/raw/item/248.json options[].origin/originMax"
+      }
+    },
+    {
+      "template_id": 279,
+      "name_ko": "엔트의 열매",
+      "kind": "heal",
+      "l1j_item_id": 40506,
+      "use_gfx": 197,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=279; work/official_data/raw/item/279.json; work/source_game_data/native-dump-v1.jsonl:1182"
+      },
+      "heal_hp_range": {
+        "min": 44,
+        "max": 107
+      },
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=279; work/official_data/raw/item/279.json options[].origin/originMax"
+      }
+    },
+    {
+      "template_id": 86,
+      "name_ko": "엘븐 와퍼",
+      "kind": "speed",
+      "l1j_item_id": 40068,
+      "use_gfx": 751,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=86; work/official_data/raw/item/86.json; work/source_game_data/native-dump-v1.jsonl:1024"
+      },
+      "buff_template_id": 296,
+      "buff_add_s": 480,
+      "buff_classes": [
+        2
+      ],
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=86; work/official_data/raw/item/86.json options[].origin/originMax"
+      },
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:2803-2931",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA",
+        "note": "Existing brave rate0.745/cap1800 reused as explicit LOCAL policy; official duration480 and elf-only eligibility."
+      }
+    },
+    {
+      "template_id": 1408,
+      "name_ko": "악마의 피",
+      "kind": "speed",
+      "l1j_item_id": 40031,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=1408; work/official_data/raw/item/1408.json; work/source_game_data/native-dump-v1.jsonl:1507"
+      },
+      "buff_template_id": 296,
+      "buff_add_s": 600,
+      "buff_classes": [
+        0
+      ],
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=1408; work/official_data/raw/item/1408.json options[].origin/originMax"
+      },
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:2803-2931",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA",
+        "note": "Existing brave rate0.745/cap1800 reused as explicit LOCAL policy; official duration600 and royal-only eligibility."
+      }
+    },
+    {
+      "template_id": 297,
+      "name_ko": "지혜의 물약",
+      "kind": "wisdom",
+      "l1j_item_id": 40016,
+      "use_gfx": 750,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=297; work/official_data/raw/item/297.json; work/source_game_data/native-dump-v1.jsonl:1193"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=297; work/official_data/raw/item/297.json options[].origin/originMax"
+      },
+      "implementation_note": "Official SP+2,300seconds,mage-only; state/query persists. Existing magic damage consumer still extraSP0; no damage formula replacement.",
+      "duration_s": 300
+    },
+    {
+      "template_id": 22,
+      "name_ko": "확인 주문서",
+      "kind": "identify",
+      "l1j_item_id": 40126,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=22; work/official_data/raw/item/22.json; work/source_game_data/native-dump-v1.jsonl:972"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=22; work/official_data/raw/item/22.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL explicit identified label on owned target or all positive owned rows for raw0. Display-only0965 f18 and after_enter re-projection preserve canonical stored/enchantment names. Existing inventory has no unidentified model; no hidden-stat discovery claimed."
+    },
+    {
+      "template_id": 24,
+      "name_ko": "저주 풀기 주문서",
+      "kind": "remove_curse",
+      "l1j_item_id": 40119,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=24; work/official_data/raw/item/24.json; work/source_game_data/native-dump-v1.jsonl:974"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=24; work/official_data/raw/item/24.json options[].origin/originMax"
+      },
+      "implementation_note": "Removes LOCAL curse authority from equipped owned items only; can_unequip query becomes true. Canonical names preserved. Existing equipment has no native curse flag or lock."
+    },
+    {
+      "template_id": 806,
+      "name_ko": "혈맹 귀환 주문서",
+      "kind": "clan_return",
+      "l1j_item_id": 40124,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=806; work/official_data/raw/item/806.json; work/source_game_data/native-dump-v1.jsonl:1475"
+      },
+      "dispatch_owner": "unsupported",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=806; work/official_data/raw/item/806.json options[].origin/originMax"
+      },
+      "unsupported_reason": "Clan membership and castle/hall destination authority are absent."
+    },
+    {
+      "template_id": 417,
+      "name_ko": "에바의 축복",
+      "kind": "underwater_breath",
+      "l1j_item_id": 40032,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=417; work/official_data/raw/item/417.json; work/source_game_data/native-dump-v1.jsonl:1254"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=417; work/official_data/raw/item/417.json options[].origin/originMax"
+      },
+      "implementation_note": "Official duration; persistent breath state/query via environment_breathing hook. Optional environment feature consumes it at natural HP recovery thresholds on maps63/65. LOCAL max(existing deadline,now+duration) refresh; see underwater_policy.json for reference-policy boundaries.",
+      "duration_s": 1800
+    },
+    {
+      "template_id": 418,
+      "name_ko": "인어의 비늘",
+      "kind": "underwater_breath",
+      "l1j_item_id": 40041,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=418; work/official_data/raw/item/418.json; work/source_game_data/native-dump-v1.jsonl:1255"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=418; work/official_data/raw/item/418.json options[].origin/originMax"
+      },
+      "implementation_note": "Official duration; persistent breath state/query via environment_breathing hook. Optional environment feature consumes it at natural HP recovery thresholds on maps63/65. LOCAL max(existing deadline,now+duration) refresh; see underwater_policy.json for reference-policy boundaries.",
+      "duration_s": 600
+    },
+    {
+      "template_id": 15400,
+      "name_ko": "오만의 탑 1층 이동 주문서",
+      "kind": "tower_teleport",
+      "l1j_item_id": 0,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=15400; work/official_data/raw/item/15400.json; work/source_game_data/native-dump-v1.jsonl:2155"
+      },
+      "dispatch_owner": "unsupported",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=15400; work/official_data/raw/item/15400.json options[].origin/originMax"
+      },
+      "unsupported_reason": "Destination coordinates and use/map eligibility contract absent."
+    },
+    {
+      "template_id": 15410,
+      "name_ko": "오만의 탑 11층 이동 주문서",
+      "kind": "tower_teleport",
+      "l1j_item_id": 40104,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=15410; work/official_data/raw/item/15410.json; work/source_game_data/native-dump-v1.jsonl:2165"
+      },
+      "dispatch_owner": "items",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=15410; work/official_data/raw/item/15410.json options[].origin/originMax"
+      },
+      "consume_count": 1,
+      "destination": [111, 32669, 32814],
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1245-1254; db/l1jdb_m10.sql:19289-19308; world_bookmark.location_allowed",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_RULE",
+        "rule": "Escapable departure only, consume one on admitted use. Unknown departure policy refuses without cost. No inferred level requirement."
+      },
+      "destination_source": {
+        "source": "local_policy",
+        "ref": "work/all_table_semantics/travel_review/teleport-ui-joins.json:11937; work/local_original_session/game-core-prep/TALK_SCROLL_EVIDENCE.md:156",
+        "status": "LOCAL_MAPPING_NOT_DIRECT_ITEM_DESTINATION_EVIDENCE",
+        "note": "15396 remembered-book group11 ordinal1 confirms map111 (32669,32814). Applying it to15410/15430 is an explicit LOCAL mapping."
+      },
+      "implementation_note": "Identity cross-check: work/official_data_refresh_20261028/raw/item/15410.json (scroll). Existing owned inventory/CAS, served-map and standable destination checks remain."
+    },
+    {
+      "template_id": 15430,
+      "name_ko": "오만의 탑 11층 이동 부적",
+      "kind": "tower_teleport",
+      "l1j_item_id": 40289,
+      "dispatch_owner": "items",
+      "consume_count": 0,
+      "destination": [111, 32669, 32814],
+      "entry_bounds": [101, 32816, 32778, 32821, 32783],
+      "identity_source": {
+        "source": "official",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:2185; work/official_data_refresh_20261028/raw/item/15430.json"
+      },
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1553-1554,4779-4789,4806-4812",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_RULE",
+        "rule": "Reusable; map101 only, x32816..32821/y32778..32783 inclusive. USE_TOI_CHARM_ANYWHERE disabled. No inferred level requirement."
+      },
+      "destination_source": {
+        "source": "local_policy",
+        "ref": "work/all_table_semantics/travel_review/teleport-ui-joins.json:11937; work/local_original_session/game-core-prep/TALK_SCROLL_EVIDENCE.md:156",
+        "status": "LOCAL_MAPPING_NOT_DIRECT_ITEM_DESTINATION_EVIDENCE",
+        "note": "15396 remembered-book group11 ordinal1 destination reused by explicit LOCAL mapping; direct15430 destination remains unverified."
+      }
+    },
+    {
+      "template_id": 15457,
+      "name_ko": "봉인된 오만의 탑 11층 이동 부적",
+      "kind": "tower_sealed_charm",
+      "l1j_item_id": 0,
+      "dispatch_owner": "unsupported",
+      "identity_source": {
+        "source": "official",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:2202; work/official_data_refresh_20261028/raw/item/15457.json"
+      },
+      "unsupported_reason": "Seal-release result and requirements unsupplied. Native catalog f51=3007 is not evidence for an output item template; refuse without consumption."
+    },
+    {
+      "template_id": 9,
+      "name_ko": "괴물 눈 고기",
+      "kind": "food",
+      "l1j_item_id": 0,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=9; work/official_data/raw/item/9.json; work/source_game_data/native-dump-v1.jsonl:960"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=9; work/official_data/raw/item/9.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 5,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 10,
+      "name_ko": "고기",
+      "kind": "food",
+      "l1j_item_id": 40056,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=10; work/official_data/raw/item/10.json; work/source_game_data/native-dump-v1.jsonl:961"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=10; work/official_data/raw/item/10.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 10,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 37,
+      "name_ko": "당근",
+      "kind": "food",
+      "l1j_item_id": 40060,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=37; work/official_data/raw/item/37.json; work/source_game_data/native-dump-v1.jsonl:986"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=37; work/official_data/raw/item/37.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 5,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 43,
+      "name_ko": "달걀",
+      "kind": "food",
+      "l1j_item_id": 40059,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=43; work/official_data/raw/item/43.json; work/source_game_data/native-dump-v1.jsonl:992"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=43; work/official_data/raw/item/43.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 8,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 55,
+      "name_ko": "레몬",
+      "kind": "food",
+      "l1j_item_id": 40061,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=55; work/official_data/raw/item/55.json; work/source_game_data/native-dump-v1.jsonl:1001"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=55; work/official_data/raw/item/55.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 5,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 59,
+      "name_ko": "오렌지",
+      "kind": "food",
+      "l1j_item_id": 40069,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=59; work/official_data/raw/item/59.json; work/source_game_data/native-dump-v1.jsonl:1005"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=59; work/official_data/raw/item/59.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 8,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 60,
+      "name_ko": "팬케익",
+      "kind": "food",
+      "l1j_item_id": 40072,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=60; work/official_data/raw/item/60.json; work/source_game_data/native-dump-v1.jsonl:1006"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=60; work/official_data/raw/item/60.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 20,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 82,
+      "name_ko": "사과",
+      "kind": "food",
+      "l1j_item_id": 40064,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=82; work/official_data/raw/item/82.json; work/source_game_data/native-dump-v1.jsonl:1022"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=82; work/official_data/raw/item/82.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 5,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 83,
+      "name_ko": "바나나",
+      "kind": "food",
+      "l1j_item_id": 40062,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=83; work/official_data/raw/item/83.json; work/source_game_data/native-dump-v1.jsonl:1023"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=83; work/official_data/raw/item/83.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 8,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    },
+    {
+      "template_id": 362,
+      "name_ko": "사탕",
+      "kind": "food",
+      "l1j_item_id": 40065,
+      "identity_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=362; work/official_data/raw/item/362.json; work/source_game_data/native-dump-v1.jsonl:1232"
+      },
+      "dispatch_owner": "consumables",
+      "effect_source": {
+        "source": "official",
+        "ref": "data/official/items.json official_id=362; work/official_data/raw/item/362.json options[].origin/originMax"
+      },
+      "implementation_note": "LOCAL nutrition food_volume/10 (min fallback5), fullness cap225. +1HP at existing natural HP threshold when fullness>=3; one fullness depletion per300 live seconds. Native food meter UNKNOWN. ID9 fallback5 is LOCAL without exact L1J correspondence.",
+      "nutrition": 3,
+      "policy_source": {
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16510-16526; src/l1j/server/server/clientpackets/C_ItemUSe.java:1570-1585",
+        "status": "LOCAL_POLICY_NOT_CLASSIC_SERVER_FORMULA"
+      }
+    }
+  ]
+}

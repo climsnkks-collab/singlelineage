@@ -1,0 +1,2149 @@
+{
+  "table": "m6_forgotten_island",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "name_ko": {
+        "value": "잊혀진 섬",
+        "source": "client",
+        "ref": "region.jsonc map70"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32640,
+        33023,
+        33087
+      ],
+      "chunks": 49
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_754",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 754,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:400"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32881,
+          "y1": 32986,
+          "x2": 32883,
+          "y2": 32988
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43991; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/754.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43991",
+        "raw": [
+          "15987",
+          "Ramia",
+          "1",
+          "45387",
+          "0",
+          "32881",
+          "32985",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32878,
+          32982,
+          32884,
+          32988
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_755",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 755,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:401"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32876,
+          "y1": 32984,
+          "x2": 32878,
+          "y2": 32986
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43984; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/755.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43984",
+        "raw": [
+          "15980",
+          "Ramia",
+          "1",
+          "45387",
+          "0",
+          "32875",
+          "32987",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32872,
+          32984,
+          32878,
+          32990
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_757",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 757,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:403"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32669,
+          "y1": 32774,
+          "x2": 32671,
+          "y2": 32776
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44321; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/757.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44321",
+        "raw": [
+          "18079",
+          "Griffon",
+          "1",
+          "45445",
+          "0",
+          "32668",
+          "32777",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32665,
+          32774,
+          32671,
+          32780
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_758",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 758,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:404"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32870,
+          "y1": 32975,
+          "x2": 32872,
+          "y2": 32977
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:41454; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/758.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:41454",
+        "raw": [
+          "9695",
+          "Alligator",
+          "1",
+          "45196",
+          "0",
+          "32869",
+          "32975",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32866,
+          32972,
+          32872,
+          32978
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_759",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 759,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:405"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32890,
+          "y1": 32914,
+          "x2": 32892,
+          "y2": 32916
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44535; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/759.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44535",
+        "raw": [
+          "18822",
+          "Crocodile",
+          "1",
+          "45469",
+          "0",
+          "32893",
+          "32913",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "300",
+          "900",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32890,
+          32910,
+          32896,
+          32916
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_760",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 760,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:406"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32874,
+          "y1": 32947,
+          "x2": 32876,
+          "y2": 32949
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44696; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/760.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44696",
+        "raw": [
+          "20504",
+          "Ettin",
+          "1",
+          "45505",
+          "0",
+          "32877",
+          "32946",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32874,
+          32943,
+          32880,
+          32949
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_761",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 761,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:407"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32945,
+          "y1": 32852,
+          "x2": 32947,
+          "y2": 32854
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44068; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/761.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44068",
+        "raw": [
+          "16087",
+          "Bugbear",
+          "1",
+          "45392",
+          "0",
+          "32948",
+          "32851",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32945,
+          32848,
+          32951,
+          32854
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_762",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 762,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:408"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32901,
+          "y1": 32786,
+          "x2": 32903,
+          "y2": 32788
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44723; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/762.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44723",
+        "raw": [
+          "20734",
+          "King Bugbear",
+          "1",
+          "45509",
+          "0",
+          "32904",
+          "32785",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32901,
+          32782,
+          32907,
+          32788
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_763",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 763,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:409"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32717,
+          "y1": 32866,
+          "x2": 32719,
+          "y2": 32868
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44773; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/763.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44773",
+        "raw": [
+          "23201",
+          "Basilisk",
+          "1",
+          "45531",
+          "0",
+          "32716",
+          "32869",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32713,
+          32866,
+          32719,
+          32872
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_764",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 764,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:410"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32655,
+          "y1": 32776,
+          "x2": 32657,
+          "y2": 32778
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43642; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/764.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43642",
+        "raw": [
+          "15105",
+          "Cockatrice",
+          "1",
+          "45362",
+          "0",
+          "32654",
+          "32779",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32651,
+          32776,
+          32657,
+          32782
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_765",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 765,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:411"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32851,
+          "y1": 32954,
+          "x2": 32853,
+          "y2": 32956
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44811; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/765.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44811",
+        "raw": [
+          "23427",
+          "Cyclops",
+          "1",
+          "45538",
+          "0",
+          "32854",
+          "32953",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32851,
+          32950,
+          32857,
+          32956
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_767",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 767,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:413"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32861,
+          "y1": 32789,
+          "x2": 32863,
+          "y2": 32791
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44415; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/767.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44415",
+        "raw": [
+          "18201",
+          "Harpy",
+          "1",
+          "45452",
+          "0",
+          "32864",
+          "32788",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32861,
+          32785,
+          32867,
+          32791
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_768",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 768,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:414"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32676,
+          "y1": 32770,
+          "x2": 32678,
+          "y2": 32772
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44012; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/768.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44012",
+        "raw": [
+          "16008",
+          "Minotaur",
+          "1",
+          "45390",
+          "0",
+          "32679",
+          "32769",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32676,
+          32766,
+          32682,
+          32772
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_769",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 769,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:415"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32664,
+          "y1": 32770,
+          "x2": 32666,
+          "y2": 32772
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44405; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/769.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44405",
+        "raw": [
+          "18163",
+          "Minotaur",
+          "1",
+          "45449",
+          "0",
+          "32663",
+          "32773",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32660,
+          32770,
+          32666,
+          32776
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_770",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 770,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:416"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32780,
+          "y1": 32955,
+          "x2": 32782,
+          "y2": 32957
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44006; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/770.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44006",
+        "raw": [
+          "16002",
+          "Lycanthrope",
+          "1",
+          "45389",
+          "0",
+          "32779",
+          "32958",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32776,
+          32955,
+          32782,
+          32961
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_771",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 771,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:417"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32828,
+          "y1": 33002,
+          "x2": 32830,
+          "y2": 33004
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43518; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/771.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43518",
+        "raw": [
+          "14832",
+          "Werewolf",
+          "1",
+          "45355",
+          "0",
+          "32827",
+          "33005",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32824,
+          33002,
+          32830,
+          33008
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_772",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 772,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:418"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32824,
+          "y1": 32952,
+          "x2": 32826,
+          "y2": 32954
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43861; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/772.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43861",
+        "raw": [
+          "15335",
+          "Owlbear",
+          "1",
+          "45371",
+          "0",
+          "32823",
+          "32955",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32820,
+          32952,
+          32826,
+          32958
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_773",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 773,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:419"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32846,
+          "y1": 32951,
+          "x2": 32848,
+          "y2": 32953
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43607; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/773.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43607",
+        "raw": [
+          "14921",
+          "Arachnevil",
+          "1",
+          "45358",
+          "0",
+          "32848",
+          "32953",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32845,
+          32950,
+          32851,
+          32956
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_774",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 774,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:420"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32790,
+          "y1": 32904,
+          "x2": 32792,
+          "y2": 32906
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44087; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/774.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44087",
+        "raw": [
+          "16553",
+          "Arachnevil Elder",
+          "1",
+          "45401",
+          "0",
+          "32789",
+          "32907",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32786,
+          32904,
+          32792,
+          32910
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_775",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 775,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:421"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32946,
+          "y1": 32833,
+          "x2": 32948,
+          "y2": 32835
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44589; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/775.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44589",
+        "raw": [
+          "19031",
+          "Troll",
+          "1",
+          "45477",
+          "0",
+          "32949",
+          "32832",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32946,
+          32829,
+          32952,
+          32835
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_776",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 776,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:422"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32838,
+          "y1": 32964,
+          "x2": 32840,
+          "y2": 32966
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43919; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/776.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43919",
+        "raw": [
+          "15539",
+          "Ghast",
+          "1",
+          "45378",
+          "0",
+          "32837",
+          "32967",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32834,
+          32964,
+          32840,
+          32970
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_777",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 777,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:423"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32823,
+          "y1": 32944,
+          "x2": 32825,
+          "y2": 32946
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44551; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/777.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:44551",
+        "raw": [
+          "18838",
+          "Ghast Lord",
+          "1",
+          "45470",
+          "0",
+          "32822",
+          "32947",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32819,
+          32944,
+          32825,
+          32950
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_forgotten_island_827",
+        "source": "local_policy",
+        "ref": "Forgotten Island sourced subset"
+      },
+      "template_id": {
+        "value": 827,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:434"
+      },
+      "map_id": {
+        "value": 70,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc map70"
+      },
+      "rect": {
+        "value": {
+          "x1": 32885,
+          "y1": 32967,
+          "x2": 32887,
+          "y2": 32969
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43695; current map70 S32",
+        "note": "Standable3x3 within exact selected-NPC source rectangle; reachable from ShipInfo key4 arrival via current S32 links. Not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "잊혀진 섬"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/827.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:43695",
+        "raw": [
+          "15158",
+          "Dark Elf",
+          "1",
+          "45364",
+          "0",
+          "32888",
+          "32966",
+          "3",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "70",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "rect": [
+          32885,
+          32963,
+          32891,
+          32969
+        ],
+        "scope": "same map and selected NPC only; selected3x3/count/respawn LOCAL"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        70,
+        32945,
+        33013
+      ],
+      "destination": [
+        70,
+        32829,
+        32856,
+        5
+      ],
+      "name": "tm1",
+      "payload_offset": 67575,
+      "raw_hex": "623546007a005800",
+      "ref": "work/local_resource_provider/assets/map/70/80028003.s32:byte67575",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        70,
+        32945,
+        33013
+      ],
+      "reference_destination": [
+        70,
+        32829,
+        32856,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Existing map-expansion5 survey; exact current S32 named-link coordinates, heading5 LOCAL."
+    },
+    {
+      "origin": [
+        70,
+        32944,
+        33013
+      ],
+      "destination": [
+        70,
+        32828,
+        32857,
+        5
+      ],
+      "name": "tm2",
+      "payload_offset": 67587,
+      "raw_hex": "6035460078005900",
+      "ref": "work/local_resource_provider/assets/map/70/80028003.s32:byte67587",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        70,
+        32944,
+        33013
+      ],
+      "reference_destination": [
+        70,
+        32828,
+        32857,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Existing map-expansion5 survey; exact current S32 named-link coordinates, heading5 LOCAL."
+    },
+    {
+      "origin": [
+        70,
+        32944,
+        33012
+      ],
+      "destination": [
+        70,
+        32829,
+        32858,
+        5
+      ],
+      "name": "tm3",
+      "payload_offset": 67599,
+      "raw_hex": "603446007a005a00",
+      "ref": "work/local_resource_provider/assets/map/70/80028003.s32:byte67599",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        70,
+        32944,
+        33012
+      ],
+      "reference_destination": [
+        70,
+        32829,
+        32858,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Existing map-expansion5 survey; exact current S32 named-link coordinates, heading5 LOCAL."
+    },
+    {
+      "origin": [
+        70,
+        32945,
+        33012
+      ],
+      "destination": [
+        70,
+        32828,
+        32858,
+        5
+      ],
+      "name": "tm4",
+      "payload_offset": 67611,
+      "raw_hex": "6234460078005a00",
+      "ref": "work/local_resource_provider/assets/map/70/80028003.s32:byte67611",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        70,
+        32945,
+        33012
+      ],
+      "reference_destination": [
+        70,
+        32828,
+        32858,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Existing map-expansion5 survey; exact current S32 named-link coordinates, heading5 LOCAL."
+    }
+  ],
+  "returns": [],
+  "arrival": {
+    "map_id": 70,
+    "x": 32937,
+    "y": 33042,
+    "radius": 7,
+    "ref": "work/all_table_semantics/inputs/imported/bin/shipinfo.bin:key4@0x17E f9",
+    "scope": "Static center; random arrival selected by ship owner"
+  },
+  "pending": [
+    {
+      "template_id": 753,
+      "name_ko": "리자드맨",
+      "l1j_npcid": 45805,
+      "reason": "No same-map selected-NPC spawnlist row"
+    },
+    {
+      "template_id": 756,
+      "name_ko": "도펠갱어",
+      "l1j_npcid": 81069,
+      "reason": "No same-map selected-NPC spawnlist row"
+    },
+    {
+      "template_id": 766,
+      "name_ko": "드레이크",
+      "l1j_npcid": 45529,
+      "reason": "No same-map selected-NPC spawnlist row"
+    }
+  ],
+  "placement_policy": "Official exact region + same selected L1J NPC/map spawn row + current S32 connected3x3. One target per species,60-120sec LOCAL policy. Existing monster/drop/combat unchanged.",
+  "source_survey": "_work/ship-island/survey.json",
+  "service_status": "PENDING_TERRAIN_ADMISSION_70_83_AND_MAP83_ASSETS"
+}

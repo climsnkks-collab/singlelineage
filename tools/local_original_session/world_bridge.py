@@ -1,0 +1,752 @@
+"""Broker/world adapter and Context. No packet loop, file pin or input automation.
+
+The underscore API is a compatibility facade for existing equipment consumers and
+loopback fixtures. Feature implementations and registrations live outside broker.
+"""
+from __future__ import annotations
+
+import asyncio
+from functools import wraps
+import inspect
+import os
+from types import MappingProxyType
+
+from tools.local_native_login_local_ack_hook import ack_enter_world as ack
+from tools.local_original_session import movement, npc_motion
+
+RESTART_REQUEST, DEAD_RESTART_REQUEST, ALIVE_REQUEST = 0x4e33, 0x4eec, 0x4e2a
+ATTACK_REQUEST, ATTACK_FEEDBACK, ITEM_USE_REQUEST = 0x4e30, 0x4e31, 0x0960
+WORLD_SEND_CHUNK = ack.realm.MAX_CHARACTERS + 2
+WORLD_OPCODES = (0x4e28, 0x4e2b, ALIVE_REQUEST)
+WORLD_SEND_OPCODES = (0x4e96, 0x4e40, npc_motion.OPCODE, ATTACK_FEEDBACK, 0x4e39, 0x4e38, 0x0965, 0x0978,
+                      0x4e5b, 0x0964, 0x4e44, 0x4e48, 0x4ee7, 0x4ee0, 0x4f1a, 0x4ec8, 0x4e95, 0x4e5c,
+                      0x4ed2, 0x0971, 0x0967)
+
+
+def need(value, code):
+    if not value:
+        raise ValueError(code)
+
+
+class Context:
+    """Access the existing send, saves and selected session without owning sockets.
+
+    Legacy names delegate dynamically to the owner, preserving method overrides,
+    writer/lock identity and existing inventory-generation property semantics.
+    State uses the existing in-memory attributes; save formats are untouched.
+    """
+    __slots__ = ('broker',)
+
+    def __init__(self, broker):
+        object.__setattr__(self, 'broker', broker)
+
+    def __getattr__(self, name):
+        return getattr(self.broker, name)
+
+    def __setattr__(self, name, value):
+        if name == 'inventory_frame':
+            name = '_inventory_current_frame'
+        setattr(self.broker, name, value)
+
+    @property
+    def world(self):
+        return self.broker._world
+
+    @property
+    def realm(self):
+        return self.broker.realm
+
+    @property
+    def inventory_store(self):
+        return self.broker._inventory_store
+
+    @property
+    def inventory_frame(self):
+        return self.broker._inventory_current_frame
+
+    @property
+    def starter_fields(self):
+        return self.broker.INVENTORY_STARTER_FIELDS
+
+    def selected_session(self, writer):
+        return self.realm.registry.resolve(writer)
+
+    def owner_current(self, writer, row, position):
+        return self.broker._selected_owner_current(writer, row, position)
+
+    async def send(self, writer, row, frames, **options):
+        return await self.broker._send(writer, row, frames, **options)
+
+    @property
+    def world_options(self):
+        return self.broker._world_options
+
+    @property
+    def inventory_transactions(self):
+        return self.broker._world_inventory_transactions
+
+    @property
+    def progress_store(self):
+        return self.broker._world_progress
+
+    @property
+    def item_policies(self):
+        return self.broker._world_handler_bindings.item_policies
+
+    def add_item_policies(self, policies, *, replace_existing=False):
+        """Startup owner API: retain existing entries unless replacement is explicit."""
+        from dataclasses import replace
+        bindings = self.broker._world_handler_bindings
+        merged = dict(bindings.item_policies)
+        for policy in policies:
+            if replace_existing or policy.template_id not in merged:
+                merged[policy.template_id] = policy
+        self.broker._world_handler_bindings = replace(bindings,
+            item_policies=MappingProxyType(merged))
+
+    def configure_town(self, town, sources, *, refresh_policies=True):
+        """Startup owner API for optional town/menu catalog contributions."""
+        from tools.local_original_session import world_handlers
+        bindings = self.broker._world_handler_bindings
+        policies = ({policy.template_id: policy
+                     for policy in world_handlers._default_item_policies(town)}
+                    if refresh_policies else {})
+        policies.update(bindings.item_policies)
+        mapped = dict(bindings.sources)
+        mapped.update((source.placement_key, source) for source in sources)
+        self.broker._world_handler_bindings = world_handlers.prepare_host_bindings(town,
+            sources=tuple(mapped.values()), item_policies=tuple(policies.values()),
+            interaction_distance=bindings.interaction_distance,
+            allocate_uid=bindings.allocate_uid, sale_item=bindings.sale_item, wire=bindings.wire)
+        self.world.town = town
+
+    def prepare_dialogue(self):
+        """Prepare optional dialogue codecs once during feature initialization."""
+        from tools.local_original_session import world_handlers
+        bindings = self.broker._world_handler_bindings
+        if bindings.wire is None:
+            self.broker._world_handler_bindings = world_handlers.prepare_host_bindings(
+                bindings.town, sources=tuple(bindings.sources.values()),
+                item_policies=tuple(bindings.item_policies.values()),
+                interaction_distance=bindings.interaction_distance,
+                allocate_uid=bindings.allocate_uid, sale_item=bindings.sale_item)
+
+    async def run_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.run_hooks(name, self, *args, **kwargs)
+
+    def run_sync_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.run_sync_hooks(name, self, *args, **kwargs)
+
+    async def chain_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.chain_hooks(name, self, *args, **kwargs)
+
+    def chain_sync_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.chain_sync_hooks(name, self, *args, **kwargs)
+
+    async def fold_hooks(self, name, value, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.fold_hooks(name, self, value, *args, **kwargs)
+
+    def fold_sync_hooks(self, name, value, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.fold_sync_hooks(name, self, value, *args, **kwargs)
+
+    async def collect_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return await world_registry.collect_hooks(name, self, *args, **kwargs)
+
+    def collect_sync_hooks(self, name, *args, **kwargs):
+        from tools.local_original_session import world_registry
+        return world_registry.collect_sync_hooks(name, self, *args, **kwargs)
+
+    def has_hooks(self, name):
+        from tools.local_original_session import world_registry
+        return world_registry.has_hooks(name, self)
+
+
+def _adapter(function):
+    if inspect.iscoroutinefunction(function):
+        @wraps(function)
+        async def call(owner, *args, **kwargs):
+            boundary = _save_boundary(owner, function.__name__, args)
+            flush = _cleanup_persist if function.__name__ == '_world_leave' else _flush_persist
+            if boundary:
+                flush(owner)
+                _immediate_inventory(owner, 1)
+            try:
+                result = await function(Context(owner), *args, **kwargs)
+                if boundary:
+                    flush(owner)
+                elif function.__name__ == '_world_send':
+                    _capture_persist(owner)
+                return result
+            finally:
+                if boundary:
+                    _immediate_inventory(owner, -1)
+    else:
+        @wraps(function)
+        def call(owner, *args, **kwargs):
+            if function.__name__ == '_world_save_progress' and getattr(owner, '_world_persist', None):
+                _capture_persist(owner)
+                return
+            boundary = _save_boundary(owner, function.__name__, args)
+            if boundary:
+                _flush_persist(owner)
+                _immediate_inventory(owner, 1)
+            try:
+                result = function(Context(owner), *args, **kwargs)
+                if boundary:
+                    _flush_persist(owner)
+                return result
+            finally:
+                if boundary:
+                    _immediate_inventory(owner, -1)
+    return call
+
+
+def _save_boundary(owner, name, args):
+    if getattr(owner, '_world_persist', None) is None:
+        return False
+    from tools.local_original_session.world_registry import registry_for
+    boundary = registry_for(owner).save_boundaries.get(name, False)
+    return boundary(owner, args) if callable(boundary) else boundary
+
+
+def _connect_inventory(broker):
+    from tools.local_original_session import inventory
+    store = getattr(broker, '_inventory_store', None)
+    if (store is not None and getattr(store, '_kit_policy', None) == inventory.KIT_POLICY
+            and getattr(store, '_world_persist', None) is None):
+        store.enable_world_persist(broker._world_persist)
+    return store
+
+
+def _immediate_inventory(broker, delta):
+    store = _connect_inventory(broker)
+    if getattr(store, '_world_persist', None) is not None:
+        store._world_immediate += delta
+
+
+def _capture_persist(broker):
+    persist = getattr(broker, '_world_persist', None)
+    if persist is None or persist.closed:
+        return
+    _connect_inventory(broker)
+    world = broker._world
+    for uid, snapshot in world.progress.pending_items():
+        broker._world_progress.stage(uid, snapshot)
+        persist.enqueue(('progress', uid), snapshot, kind='character')
+        world.progress.ack(uid, snapshot)
+    uids = set(world.combat.pcs) | set(world.combat.vitals)
+    for uid in uids:
+        hp, mp = world.combat.hp_of(uid), world.combat.mp_of(uid)
+        if hp is None or mp is None:
+            continue
+        value = (hp, mp)
+        if broker._world_vital_snapshots.get(uid) != value:
+            persist.enqueue(('vitals', uid), value, kind='character')
+            broker._world_vital_snapshots[uid] = value
+
+
+def _flush_persist(broker):
+    persist = getattr(broker, '_world_persist', None)
+    if persist is None:
+        return
+    _capture_persist(broker)
+    result = persist.flush_all()
+    broker._world_persist_result = result
+    if result.failures:
+        raise result.failures[0].error
+    need(result.ok, 'WORLD_PERSIST_PENDING')
+
+
+def _cleanup_persist(broker):
+    """Save failure remains fatal, while writer/socket cleanup must continue."""
+    try:
+        _flush_persist(broker)
+    except Exception as error:
+        broker._world_progress_errors = (getattr(broker, '_world_progress_errors', [])
+                                        + [str(error)[:96]])[-4:]
+        broker._fail('WORLD_PERSIST_FAILED')
+
+
+class _WorldPositions(movement.PositionStore):
+    """Selected world memory CAS; disk preimage is compared once per flush.
+
+    Original PositionStore still owns schema/path checks and atomic replacement.
+    Expected positions must match the current memory value on every movement.
+    External disk changes are rejected at flush, preserving the latest pending
+    snapshot for inspection rather than replacing another authority's value.
+    """
+    def __init__(self, store, persist):
+        self.store, self.persist = store, persist
+        self._current, self._durable = {}, {}
+        self._attempted = {}
+        self._transition = set()
+        self.path = store.path
+
+    def restore(self, selected):
+        need(type(selected) is movement.Position, 'SELECTED_POSITION_REQUIRED')
+        if selected.uid not in self._current:
+            value = self.store.restore(selected)
+            self._current[selected.uid] = self._durable[selected.uid] = value
+        value = self._current[selected.uid]
+        from dataclasses import replace
+        return replace(value, name=selected.name)
+
+    def commit(self, expected, updated, *, transition=False):
+        need(type(expected) is movement.Position and type(updated) is movement.Position
+             and (updated.uid, updated.name) == (expected.uid, expected.name)
+             and (updated.map_id == expected.map_id or transition is True
+                  and expected.map_id in movement.SUPPORTED_MAP_IDS
+                  and updated.map_id in movement.SUPPORTED_MAP_IDS),
+             'SAME_SELECTED_POSITION_REQUIRED')
+        need(self.restore(expected) == expected, 'POSITION_STORE_AUTHORITY_CHANGED')
+        self.persist.enqueue(('position', updated.uid), updated, kind='character')
+        self._current[updated.uid] = updated
+        if transition:
+            self._transition.add(updated.uid)
+            result = self.persist.flush_all()
+            if result.failures:
+                raise result.failures[0].error
+            need(result.ok, 'WORLD_PERSIST_PENDING')
+
+    def flush_snapshot(self, uid, snapshot):
+        expected = self._durable[uid]
+        # An already completed absolute snapshot is an idempotent acknowledgement,
+        # including a previous replace-then-raise outcome, never another move.
+        current = self.store.restore(expected)
+        if current != snapshot:
+            need(current in (expected, self._attempted.get(uid)), 'POSITION_STORE_AUTHORITY_CHANGED')
+            self._attempted[uid] = snapshot
+            self.store.commit(current, snapshot, transition=uid in self._transition)
+        self._durable[uid] = snapshot
+        self._attempted.pop(uid, None)
+        self._transition.discard(uid)
+
+
+def _setup_persist(broker):
+    from tools.local_original_session.world_persist import WorldPersist
+    def save(key, snapshot):
+        kind, uid = key
+        if kind == 'position':
+            broker.realm.positions.flush_snapshot(uid, snapshot)
+        elif kind == 'inventory':
+            broker._inventory_store.flush_world_snapshot(uid, snapshot)
+        elif kind == 'progress':
+            broker._world_progress.commit(uid, snapshot)
+        elif kind == 'vitals':
+            broker._world_progress.save_vitals(uid, snapshot)
+        else:
+            raise ValueError('WORLD_PERSIST_UNKNOWN_KEY')
+    broker._world_persist = WorldPersist(broker._world.runtime.scheduler, save)
+    broker._world_vital_snapshots = {}
+    broker.realm.positions = _WorldPositions(broker.realm.positions, broker._world_persist)
+    broker._world_progress.get(1)  # Sidecars are prepared before request handling.
+    broker._world_progress.vitals(1)
+    for name, getter in (('_world_hp', broker._world.combat.hp_of),
+                         ('_world_mp', broker._world.combat.mp_of)):
+        index = 0 if name == '_world_hp' else 1
+        def value(uid, getter=getter, index=index):
+            current = getter(uid)
+            saved = broker._world_progress.vitals(uid)
+            return current if current is not None else (None if saved is None else saved[index])
+        setattr(broker.realm, name, value)
+    _connect_inventory(broker)
+    broker._world.runtime.add_tick_hook(lambda now: _capture_persist(broker))
+
+
+def install_feature_api(broker_type, realm_type, starter_fields):
+    """Compatibility aliases only; a new feature needs no broker file changes."""
+    from tools.local_original_session.world_handlers import feature_registry
+    registry = feature_registry()
+    for name, function in registry.methods.items():
+        setattr(broker_type, name, _adapter(function))
+    for name, function in registry.realm_methods.items():
+        setattr(realm_type, name, function)
+    broker_type._world_registry = registry
+    realm_type._world_registry = registry
+    broker_type.INVENTORY_STARTER_FIELDS = starter_fields
+    broker_type.WORLD_SEND_CHUNK = WORLD_SEND_CHUNK
+    broker_type.WORLD_OPCODES = WORLD_OPCODES
+    broker_type.WORLD_SEND_OPCODES = WORLD_SEND_OPCODES + registry.outgoing_opcodes
+
+
+def kit_policy(world_policy, missing, collection, transfer, store_policy):
+    if world_policy is None or missing is None or collection is not None or transfer is not None:
+        return None
+    from tools.local_original_session import inventory, inventory_store
+    if store_policy == inventory_store.POLICY:
+        return inventory.KIT_POLICY
+    return None
+
+
+def prepare_inventory(broker, world_policy):
+    broker._world_inventory_transactions = None
+    if world_policy is not None and broker._inventory_kit_policy is not None:
+        from tools.local_original_session.world_state_services import InventoryTransactions
+        broker._world_inventory_transactions = InventoryTransactions(broker._inventory_store)
+
+
+def initialize(broker, world_policy, world_handler_sources, world_starter_kit, restart_policy, store_path):
+    from tools.local_original_session import world_handlers, world_registry
+    from tools.local_original_session.world_core_kit import setup_starter
+    self = Context(broker)
+    self._world_registry = world_handlers.feature_registry()
+    self.realm._world_registry = self._world_registry
+    self.realm._world_context = self
+    self._world_options = MappingProxyType(dict(world_policy=world_policy,
+        world_handler_sources=tuple(world_handler_sources), world_starter_kit=world_starter_kit,
+        restart_policy=restart_policy, store_path=store_path))
+    self._world = None
+    self._world_pcs = {}
+    self._world_events = {}
+    self._world_names = {}
+    self._world_respawn = {}
+    self._world_respawn_errors = []
+    self._world_progress_errors = []
+    self._world_pickups = 0
+    self._world_pickup_errors = []
+    self._world_handler_errors = []
+    self._world_hook_errors = []
+    self._world_item_use_log = []  # 0960 instrumentation (report world.item_uses)
+    self._world_item_use_pending = None
+    self._world_relocations = {}
+    self._world_map_exp = int(os.environ.get('SL_EXPERIMENT_MAP', '0'))
+    need(self._world_map_exp in (0, 1, 2, 3), 'WORLD_MAP_EXPERIMENT_REQUIRED')
+    self._world_map_transitions = 0
+    self.realm._world_map_exp = self._world_map_exp if world_policy is not None else 0
+    setup_starter(self, world_policy, world_starter_kit)
+    if world_policy is None:
+        return
+    from tools.local_original_session import world_visibility, world_interest_spawn
+    from tools.local_original_session.game_data import load_m1
+    need(type(world_policy) is str and world_policy == world_visibility.POLICY,
+         'WORLD_EXPLICIT_POLICY_REQUIRED')
+    self._world = world_visibility.WorldView.create(
+        data=world_interest_spawn.with_dungeon_data(load_m1()))
+    # Optional UI features prepare their own codecs/catalogs during initialize.
+    # Core movement, combat and inventory do not require dialogue resources.
+    self._world_handler_bindings = world_handlers.empty_host_bindings()
+    self._world.prepare_pc_attack = (lambda *args: world_registry.prepare_attack(self, *args)
+        ) if self.has_hooks('prepare_attack') else None
+    self._world.combat.on_kill = lambda event: self.run_sync_hooks('after_kill', event)
+    self._world.on_pc_death = lambda uid: self.run_sync_hooks('after_death', uid)
+    self._world.on_npc_hit = lambda uid: self.run_sync_hooks('npc_hit', uid)
+    self._world.notify = self._world_wake
+    self.realm.edge_fallback = self._world_edge_fallback
+    self.realm._world_hp = self._world.combat.hp_of
+    self.realm._world_mp = self._world.combat.mp_of
+    self.realm._world_stats_fields = self._world_fields_for
+    self._world.on_stats_changed = lambda uid: self.run_sync_hooks('stats_changed', uid)
+    self.realm._world_respawn_commit = self._world_commit_respawn
+    self.realm._world_unserved_return = self._world_unserved_return
+    self.realm._world_dead_restart = restart_policy is not None
+    self.realm._world_is_dead = self._world.combat.is_dead
+    self.run_sync_hooks('initialize')
+    _setup_persist(broker)
+
+
+def start(broker, loop):
+    if broker._world is not None:
+        broker._world.runtime.start(loop)
+        Context(broker).run_sync_hooks('runtime_started')
+
+
+def close(broker):
+    world = getattr(broker, '_world', None)
+    if world is not None:
+        world.close()
+
+
+async def stop(broker):
+    world = getattr(broker, '_world', None)
+    if world is not None:
+        await world.runtime.stop()
+        await Context(broker).run_hooks('runtime_stopped')
+        _cleanup_persist(broker)  # Leave still follows; keep producers open.
+
+
+def event_for(broker, writer):
+    bound = broker._world_pcs.get(id(writer)) if broker._world is not None else None
+    return None if bound is None else broker._world_events.get(bound[1])
+
+
+async def receive(broker, writer, row, game, frame, operation_lock):
+    from tools.local_original_session.world_registry import registry_for
+    if frame.opcode in (RESTART_REQUEST, DEAD_RESTART_REQUEST, 0x4e3c):
+        # Settle the current life before the existing route can acknowledge exit.
+        _flush_persist(broker)
+    record = _item_use_probe(broker, frame) if frame.opcode == ITEM_USE_REQUEST else None
+    errors_before = len(getattr(broker, '_world_handler_errors', ()))
+    name = None
+    try:
+        for name in registry_for(broker).frames.get(frame.opcode, ()):
+            if await getattr(broker, name)(writer, row, game, frame, operation_lock):
+                if record is not None:
+                    _item_use_finish(broker, record, name, 'handled', errors_before)
+                return True
+    except BaseException as error:
+        if record is not None:
+            _item_use_finish(broker, record, name, 'raised:' + (str(error) or type(error).__name__)[:64],
+                             errors_before)
+        raise
+    if record is not None:
+        # Falls through to the legacy route (ItemUseSession or no route at all);
+        # after_request settles it with the session's own last outcome.
+        _item_use_finish(broker, record, 'legacy', 'pending', errors_before)
+        session = getattr(broker, '_item_use_session', None)
+        broker._world_item_use_pending = (id(writer), record,
+            None if session is None else getattr(session, 'last_outcome', None))
+    return False
+
+
+def _item_use_probe(broker, frame):
+    """Read-only 0960 record: never refuses, alters or delays the request.
+
+    Logs field numbers/wire types and owned templates only, not packet values.
+    """
+    _item_use_settle(broker, None)  # an earlier legacy request that raised
+    pb = ack.realm.pb
+    record = dict(item_uid_owned=False, template=None, outer=None, params=None,
+                  target_template=None, handler=None, result=None)
+    item_uid = target_uid = None
+    try:
+        with pb.parse_message(frame.payload, limits=pb.WireLimits(
+                max_body=4096, max_fields=8, max_field_bytes=2048)) as parsed:
+            record['outer'] = sorted({(f.number, f.wire_type) for f in parsed.fields})
+            first, second = parsed.occurrences(1), parsed.occurrences(2)
+            if len(first) == 1 and first[0].wire_type == 0:
+                item_uid = first[0].value
+            raw = bytes(second[0].value) if len(second) == 1 and second[0].wire_type == 2 else None
+        if raw is not None:
+            with pb.parse_message(raw, limits=pb.WireLimits(
+                    max_body=2048, max_fields=16, max_field_bytes=256)) as parsed:
+                record['params'] = sorted({(f.number, f.wire_type) for f in parsed.fields})
+                target = parsed.occurrences(2)
+                if len(target) == 1 and target[0].wire_type == 0:
+                    target_uid = target[0].value
+    except (ValueError, pb.WireError) as error:
+        record['parse_error'] = str(error)[:64]
+    try:
+        items = inventory_items(broker, broker._inventory_current_frame) or ()
+    except (ValueError, TypeError, AttributeError):
+        items = ()
+    templates = {item.identifier: item.template_bits for item in items}
+    if item_uid in templates:
+        record.update(item_uid_owned=True, template=templates[item_uid])
+    if target_uid in templates:
+        record['target_template'] = templates[target_uid]
+    return record
+
+
+def _item_use_finish(broker, record, handler, result, errors_before):
+    errors = list(getattr(broker, '_world_handler_errors', ()))
+    record.update(handler=handler, result=result,
+                  handler_errors=errors[errors_before:] if len(errors) > errors_before else [])
+    log = getattr(broker, '_world_item_use_log', None)
+    if log is not None and (not log or log[-1] is not record):
+        broker._world_item_use_log = (log + [record])[-16:]
+
+
+def _item_use_settle(broker, writer_id, *, completed=False):
+    pending = getattr(broker, '_world_item_use_pending', None)
+    if pending is None or writer_id is not None and pending[0] != writer_id:
+        return
+    broker._world_item_use_pending = None
+    _, record, previous = pending
+    session = getattr(broker, '_item_use_session', None)
+    outcome = None if session is None else getattr(session, 'last_outcome', None)
+    if outcome is None or outcome is previous:
+        record['result'] = 'legacy_no_session_outcome' if completed else 'legacy_raised_or_unrouted'
+    else:
+        # ItemUseSession REJECTED is the silent refusal: no reply, no effect.
+        record['result'] = 'legacy_%s:%s' % (getattr(outcome.kind, 'value', outcome.kind), outcome.reason)
+    errors = list(getattr(broker, '_world_handler_errors', ()))
+    if not completed and errors:
+        record['handler_errors'] = errors[-2:]
+
+
+async def after_request(broker, writer, row, game, opcode, operation_lock):
+    if opcode == ITEM_USE_REQUEST:
+        _item_use_settle(broker, id(writer), completed=True)
+    await Context(broker).run_hooks('after_request', writer, row, game, opcode, operation_lock)
+
+
+async def leave(broker, writer):
+    if getattr(broker, '_world', None) is None:
+        return
+    try:
+        await broker._world_leave(writer)
+    except Exception:
+        broker._fail('WORLD_PERSIST_FAILED')
+    bound_uids = {uid for _, uid in broker._world_pcs.values()}
+    for uid in tuple(broker._world_respawn):
+        if uid not in bound_uids:
+            try:
+                broker._world_commit_respawn(uid)
+            except Exception:
+                broker._fail('WORLD_PERSIST_FAILED')
+    _cleanup_persist(broker)
+
+
+def validate_send(broker, row, replies, game, operation_lock, world_operation):
+    need(world_operation is None or (broker._world is not None and game is True
+         and world_operation is replies and operation_lock is row['operation_lock']
+         and operation_lock.locked()), 'WORLD_LOCKED_SEND_REQUIRED')
+
+
+def validate_frame(broker, wire, world_operation):
+    need(int.from_bytes(wire[2:4], 'little') in broker.WORLD_SEND_OPCODES,
+         'WORLD_EXACT_PREPARED_FRAME_REQUIRED')
+
+
+def received_extensions(policy, extension):
+    from tools.local_original_session.world_handlers import HANDLERS, feature_registry
+    if getattr(policy, 'world', False) is True:
+        if getattr(policy, 'restart_enabled', False) is True and DEAD_RESTART_REQUEST not in extension:
+            extension += (DEAD_RESTART_REQUEST,)
+        extension += tuple(HANDLERS) + (ITEM_USE_REQUEST,)
+        extension += tuple(feature_registry().frames)
+        if not policy.item_transfer:
+            extension += (0x4e3e,)
+    return extension
+
+
+def outgoing_extensions(policy, extension, opcode, size, phase):
+    if getattr(policy, 'world', False) is not True:
+        return extension
+    if phase == 'menu':
+        if opcode in (0x4e44, 0x4e48, 0x4ee7, 0x4e5c):
+            extension += (opcode,)
+        if opcode in (0x4ed2, 0x0971) and os.environ.get('SL_EXPERIMENT_WAREHOUSE', '') not in ('', '0'):
+            extension += (opcode,)
+        if opcode == 0x0967 and os.environ.get('SL_EXPERIMENT_ENCHANT', '') not in ('', '0'):
+            extension += (opcode,)
+        if opcode in (0x4f1a, 0x4ec8) and os.environ.get('SL_EXPERIMENT_HPBAR') in ('1', '2', '3'):
+            extension += (opcode,)
+        from tools.local_original_session.world_handlers import feature_registry
+        if opcode in feature_registry().outgoing_opcodes:
+            extension += (opcode,)
+    elif phase == 'combat':
+        if opcode == 0x4e40 and opcode not in extension:
+            extension += (opcode,)
+            need(type(size) is int and 8 <= size <= 17, 'WORLD_REMOVE_FRAME_BOUND')
+        if opcode in (0x4e39, ATTACK_FEEDBACK) and opcode not in extension:
+            extension += (opcode,)
+            need(type(size) is int and (10 <= size <= 19 if opcode == 0x4e39 else 6 <= size <= 45),
+                 'WORLD_COMBAT_FRAME_BOUND')
+    return extension
+
+
+def kit_outgoing_extensions(policy, extension, opcode, size):
+    if getattr(policy, 'item_kit', False) is True and opcode in (0x0965, 0x0978) and opcode not in extension:
+        extension += (opcode,)
+        need(type(size) is int and 6 <= size <= 1024, 'ITEM_KIT_FRAME_BOUND')
+    if getattr(policy, 'item_kit', False) is True and opcode == 0x4e5b:
+        extension += (opcode,)
+        need(type(size) is int and 6 <= size <= 64, 'ITEM_KIT_SPEED_FRAME_BOUND')
+    return extension
+
+
+def actor_fields(realm, position, actor):
+    from tools.local_original_session.world_core_stats import realm_actor
+    return realm_actor(realm, position, actor)
+
+
+def status_fields(realm, position, fields, initial):
+    from tools.local_original_session.world_core_stats import realm_status
+    return realm_status(realm, position, fields, initial)
+
+
+def serves_map(realm, map_id):
+    from tools.local_original_session.world_core_maps import realm_serves_map
+    return realm_serves_map(realm, map_id)
+
+
+def map_frame(realm, position, encode):
+    from tools.local_original_session.world_core_maps import realm_map_frame
+    return realm_map_frame(realm, position, encode)
+
+
+def dead_move(realm, service):
+    from tools.local_original_session.world_core_maps import realm_dead_move
+    return realm_dead_move(realm, service)
+
+
+async def move(service, payload):
+    from tools.local_original_session.world_core_maps import realm_move
+    return await realm_move(service, payload)
+
+
+def bind_restart(realm, game, life_broker, restart_game):
+    from tools.local_original_session.world_core_life import realm_bind_restart
+    realm_bind_restart(realm, game, life_broker, restart_game)
+
+
+def report(broker, result):
+    self = Context(broker)
+    world = getattr(self, '_world', None)
+    if world is not None:
+        persist = getattr(broker, '_world_persist', None)
+        if persist is not None:
+            if getattr(broker, 'cleanup_complete', False) and not persist.closed:
+                _capture_persist(broker)
+                broker._world_persist_result = persist.shutdown()
+                if not broker._world_persist_result.ok:
+                    broker._fail('WORLD_PERSIST_FAILED')
+                    result['failure_code'] = broker.failure_code
+            result['persistence'] = dict(pending=[list(key) for key in persist.pending_keys],
+                failures=[dict(key=list(f.key), error=type(f.error).__name__)
+                          for f in persist.last_failures], closed=persist.closed)
+        result['world'] = dict(kills=len(world.combat.kills), ground_items=len(world.ground),
+            pickups=self._world_pickups, pickup_errors=list(self._world_pickup_errors),
+            reward_errors=list(world.reward_errors), progress_errors=list(self._world_progress_errors),
+            respawn_errors=list(self._world_respawn_errors), pending_respawn=len(self._world_respawn),
+            handler_errors=list(self._world_handler_errors),
+            relocation_policy=('LOCAL_SAME_MAP_REMOVE_4EE0_SPAWN' if self._world_map_exp == 0
+                               else 'LOCAL_MAP_EXPERIMENT'),
+            map_transition='NATIVE_PUBLICATION_UNKNOWN',
+            map_experiment=self._world_map_exp, experimental_transitions=self._world_map_transitions)
+        _item_use_settle(broker, None)
+        result['world']['item_uses'] = [dict(record) for record in getattr(broker, '_world_item_use_log', ())]
+        self.run_sync_hooks('report', result['world'])
+        errors = list(getattr(self, '_world_hook_errors', ()))
+        # Isolated runtime observers (WorldEvents isolate=True) keep their own
+        # bounded log; surface it under the same report key.
+        for events in (getattr(world, 'events', None),
+                       getattr(getattr(world, 'combat', None), 'events', None)):
+            errors.extend(dict(feature=owner, hook=event, method='world_event', error=error)
+                          for owner, event, error in getattr(events, 'errors', ()))
+        if errors:
+            result['world']['hook_errors'] = list(errors)
+
+
+
+def defer_equipment_prepare(broker, life):
+    from tools.local_original_session.world_core_kit import defer_equipment_prepare as defer
+    return defer(broker, life)
+
+
+def inventory_items(broker, frame):
+    from tools.local_original_session.world_core_kit import inventory_items as items
+    return items(Context(broker), frame)
+
+
+def starter_frame(broker, name, fallback):
+    from tools.local_original_session.world_core_kit import starter_frame as starter
+    return starter(Context(broker), name, fallback)
+
+
+def first_grant_valid(broker, frame):
+    from tools.local_original_session.world_core_kit import first_grant_valid as valid
+    return valid(Context(broker), frame)
+
+
+def inventory_payload(broker, wire, inventory_wire):
+    from tools.local_original_session.world_core_kit import inventory_payload as payload
+    return payload(Context(broker), wire, inventory_wire)

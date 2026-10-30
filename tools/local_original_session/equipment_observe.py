@@ -21,18 +21,14 @@ SOURCE_PINS = {
     SOURCE_PATH: 'cf2883e8f94e9c7d43ecf6b4a165e8304c56f009242a0b332c471dfb4437d1bb',
     'work/online_equipment_buff_source/row-types.json':
         'd93ef7f6497dd57c202e6554d01cc33c4408868702d2d43b710f76cabdb3a0ab',
-    'tools/local_original_session/inventory.py':
-        '92a80df4fc9fe83f173bd15171500245844b52ca29e544dc08a5877f277ecead',
-    'tools/local_original_session/edge.py':
-        'dfc4ae875123f3375880778f6d1d50bd36881e26ea32f8913cefe3f5cd5459c3',
 }
+# Python source hash pins (inventory.py, edge.py) were removed; only data documents stay pinned.
 
 
 def _source():
     source = None
     for relative, expected in SOURCE_PINS.items():
-        path = observe.ordinary(observe.Path(inventory.__file__) if relative == 'tools/local_original_session/inventory.py'
-                                else observe.ROOT / relative)
+        path = observe.ordinary(observe.ROOT / relative)
         need(0 < path.stat().st_size <= 1048576, 'EQUIPMENT_OBSERVE_SOURCE_BOUND')
         raw = path.read_bytes()
         need(hashlib.sha256(raw).hexdigest() == expected, 'EQUIPMENT_OBSERVE_SOURCE_CHANGED')

@@ -1,0 +1,6623 @@
+{
+  "table": "m6_map_expansion6",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 65,
+        "source": "client",
+        "ref": "region.jsonc:81 _map"
+      },
+      "region_id": {
+        "value": 65,
+        "source": "client",
+        "ref": "region.jsonc:81 _id"
+      },
+      "name_ko": {
+        "value": "파푸리온 둥지",
+        "source": "client",
+        "ref": "region.jsonc:80 comment"
+      },
+      "hunting": true,
+      "representative_template": 499,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32895
+      ],
+      "chunks": 4,
+      "bytes": 367937
+    },
+    {
+      "map_id": {
+        "value": 74,
+        "source": "client",
+        "ref": "region.jsonc:275 _map"
+      },
+      "region_id": {
+        "value": 201,
+        "source": "client",
+        "ref": "region.jsonc:275 _id"
+      },
+      "name_ko": {
+        "value": "얼음 수정 동굴 3층",
+        "source": "client",
+        "ref": "region.jsonc:274 comment"
+      },
+      "hunting": true,
+      "representative_template": 972,
+      "terrain_bounds": [
+        32640,
+        32768,
+        32895,
+        33023
+      ],
+      "chunks": 12,
+      "bytes": 1191317
+    },
+    {
+      "map_id": {
+        "value": 106,
+        "source": "client",
+        "ref": "region.jsonc:436 _map"
+      },
+      "region_id": {
+        "value": 387,
+        "source": "client",
+        "ref": "region.jsonc:436 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 6층",
+        "source": "client",
+        "ref": "region.jsonc:435 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32959
+      ],
+      "chunks": 6,
+      "bytes": 517521
+    },
+    {
+      "map_id": {
+        "value": 107,
+        "source": "client",
+        "ref": "region.jsonc:438 _map"
+      },
+      "region_id": {
+        "value": 388,
+        "source": "client",
+        "ref": "region.jsonc:438 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 7층",
+        "source": "client",
+        "ref": "region.jsonc:437 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1119845
+    },
+    {
+      "map_id": {
+        "value": 108,
+        "source": "client",
+        "ref": "region.jsonc:440 _map"
+      },
+      "region_id": {
+        "value": 389,
+        "source": "client",
+        "ref": "region.jsonc:440 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 8층",
+        "source": "client",
+        "ref": "region.jsonc:439 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1200360
+    },
+    {
+      "map_id": {
+        "value": 109,
+        "source": "client",
+        "ref": "region.jsonc:442 _map"
+      },
+      "region_id": {
+        "value": 390,
+        "source": "client",
+        "ref": "region.jsonc:442 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 9층",
+        "source": "client",
+        "ref": "region.jsonc:441 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1215400
+    },
+    {
+      "map_id": {
+        "value": 110,
+        "source": "client",
+        "ref": "region.jsonc:444 _map"
+      },
+      "region_id": {
+        "value": 391,
+        "source": "client",
+        "ref": "region.jsonc:444 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 10층",
+        "source": "client",
+        "ref": "region.jsonc:443 comment"
+      },
+      "hunting": true,
+      "representative_template": 1039,
+      "terrain_bounds": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "chunks": 9,
+      "bytes": 1331707
+    },
+    {
+      "map_id": {
+        "value": 111,
+        "source": "client",
+        "ref": "region.jsonc:447 _map"
+      },
+      "region_id": {
+        "value": 392,
+        "source": "client",
+        "ref": "region.jsonc:447 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 11층",
+        "source": "client",
+        "ref": "region.jsonc:446 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1259845
+    },
+    {
+      "map_id": {
+        "value": 112,
+        "source": "client",
+        "ref": "region.jsonc:449 _map"
+      },
+      "region_id": {
+        "value": 393,
+        "source": "client",
+        "ref": "region.jsonc:449 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 12층",
+        "source": "client",
+        "ref": "region.jsonc:448 comment"
+      },
+      "hunting": true,
+      "representative_template": 1028,
+      "terrain_bounds": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "chunks": 9,
+      "bytes": 1757938
+    },
+    {
+      "map_id": {
+        "value": 113,
+        "source": "client",
+        "ref": "region.jsonc:451 _map"
+      },
+      "region_id": {
+        "value": 394,
+        "source": "client",
+        "ref": "region.jsonc:451 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 13층",
+        "source": "client",
+        "ref": "region.jsonc:450 comment"
+      },
+      "hunting": true,
+      "representative_template": 1028,
+      "terrain_bounds": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "chunks": 9,
+      "bytes": 1583638
+    },
+    {
+      "map_id": {
+        "value": 114,
+        "source": "client",
+        "ref": "region.jsonc:453 _map"
+      },
+      "region_id": {
+        "value": 395,
+        "source": "client",
+        "ref": "region.jsonc:453 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 14층",
+        "source": "client",
+        "ref": "region.jsonc:452 comment"
+      },
+      "hunting": true,
+      "representative_template": 1028,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1233833
+    },
+    {
+      "map_id": {
+        "value": 115,
+        "source": "client",
+        "ref": "region.jsonc:455 _map"
+      },
+      "region_id": {
+        "value": 396,
+        "source": "client",
+        "ref": "region.jsonc:455 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 15층",
+        "source": "client",
+        "ref": "region.jsonc:454 comment"
+      },
+      "hunting": true,
+      "representative_template": 1027,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1389023
+    },
+    {
+      "map_id": {
+        "value": 116,
+        "source": "client",
+        "ref": "region.jsonc:457 _map"
+      },
+      "region_id": {
+        "value": 397,
+        "source": "client",
+        "ref": "region.jsonc:457 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 16층",
+        "source": "client",
+        "ref": "region.jsonc:456 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32704,
+        32832,
+        32831,
+        32895
+      ],
+      "chunks": 2,
+      "bytes": 320755
+    },
+    {
+      "map_id": {
+        "value": 117,
+        "source": "client",
+        "ref": "region.jsonc:459 _map"
+      },
+      "region_id": {
+        "value": 398,
+        "source": "client",
+        "ref": "region.jsonc:459 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 17층",
+        "source": "client",
+        "ref": "region.jsonc:458 comment"
+      },
+      "hunting": true,
+      "representative_template": 895,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1117920
+    },
+    {
+      "map_id": {
+        "value": 118,
+        "source": "client",
+        "ref": "region.jsonc:461 _map"
+      },
+      "region_id": {
+        "value": 399,
+        "source": "client",
+        "ref": "region.jsonc:461 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 18층",
+        "source": "client",
+        "ref": "region.jsonc:460 comment"
+      },
+      "hunting": true,
+      "representative_template": 895,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1199529
+    },
+    {
+      "map_id": {
+        "value": 119,
+        "source": "client",
+        "ref": "region.jsonc:463 _map"
+      },
+      "region_id": {
+        "value": 400,
+        "source": "client",
+        "ref": "region.jsonc:463 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 19층",
+        "source": "client",
+        "ref": "region.jsonc:462 comment"
+      },
+      "hunting": true,
+      "representative_template": 895,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1215412
+    },
+    {
+      "map_id": {
+        "value": 120,
+        "source": "client",
+        "ref": "region.jsonc:465 _map"
+      },
+      "region_id": {
+        "value": 401,
+        "source": "client",
+        "ref": "region.jsonc:465 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 20층",
+        "source": "client",
+        "ref": "region.jsonc:464 comment"
+      },
+      "hunting": true,
+      "representative_template": 895,
+      "terrain_bounds": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "chunks": 9,
+      "bytes": 1332400
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2381",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2381,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:577"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32984,
+          "y1": 32811,
+          "x2": 32986,
+          "y2": 32813
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46751",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2381.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46751",
+        "raw": [
+          "24400003",
+          "Polluted Deep Flower",
+          "40",
+          "45775",
+          "0",
+          "32886",
+          "32811",
+          "0",
+          "0",
+          "32886",
+          "32811",
+          "32986",
+          "32911",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2388",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2388,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:582"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32937,
+          "y1": 33016,
+          "x2": 32939,
+          "y2": 33018
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46755",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2388.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46755",
+        "raw": [
+          "24400007",
+          "Polluted Human",
+          "20",
+          "45778",
+          "0",
+          "32937",
+          "33016",
+          "0",
+          "0",
+          "32937",
+          "33016",
+          "32997",
+          "33055",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2389",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2389,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:583"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32944,
+          "y1": 33016,
+          "x2": 32946,
+          "y2": 33018
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46758",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2389.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46758",
+        "raw": [
+          "24400010",
+          "Polluted Human",
+          "20",
+          "45781",
+          "0",
+          "32937",
+          "33016",
+          "0",
+          "0",
+          "32937",
+          "33016",
+          "32997",
+          "33055",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2390",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2390,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:584"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32949,
+          "y1": 33016,
+          "x2": 32951,
+          "y2": 33018
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46757",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2390.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46757",
+        "raw": [
+          "24400009",
+          "Polluted Human",
+          "20",
+          "45780",
+          "0",
+          "32937",
+          "33016",
+          "0",
+          "0",
+          "32937",
+          "33016",
+          "32997",
+          "33055",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2391",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2391,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:585"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32958,
+          "y1": 33016,
+          "x2": 32960,
+          "y2": 33018
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46756",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2391.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46756",
+        "raw": [
+          "24400008",
+          "Polluted Human",
+          "20",
+          "45779",
+          "0",
+          "32937",
+          "33016",
+          "0",
+          "0",
+          "32937",
+          "33016",
+          "32997",
+          "33055",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2392",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2392,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:586"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32979,
+          "y1": 32811,
+          "x2": 32981,
+          "y2": 32813
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46749",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2392.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46749",
+        "raw": [
+          "24400001",
+          "Polluted Elf",
+          "40",
+          "45773",
+          "0",
+          "32886",
+          "32811",
+          "0",
+          "0",
+          "32886",
+          "32811",
+          "32986",
+          "32911",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2394",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2394,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:588"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32978,
+          "y1": 32817,
+          "x2": 32980,
+          "y2": 32819
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46752",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2394.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46752",
+        "raw": [
+          "24400004",
+          "Polluted Pan",
+          "40",
+          "45776",
+          "0",
+          "32886",
+          "32811",
+          "0",
+          "0",
+          "32886",
+          "32811",
+          "32986",
+          "32911",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2395",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2395,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:589"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32984,
+          "y1": 32818,
+          "x2": 32986,
+          "y2": 32820
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46753",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2395.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46753",
+        "raw": [
+          "24400005",
+          "Polluted Arachne",
+          "40",
+          "45777",
+          "0",
+          "32886",
+          "32811",
+          "0",
+          "0",
+          "32886",
+          "32811",
+          "32986",
+          "32911",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2397",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2397,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:591"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32807,
+          "y1": 32792,
+          "x2": 32809,
+          "y2": 32794
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46767",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2397.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46767",
+        "raw": [
+          "24400019",
+          "Polluted Orc Axe Fighter",
+          "40",
+          "45791",
+          "0",
+          "32729",
+          "32792",
+          "0",
+          "0",
+          "32729",
+          "32792",
+          "32809",
+          "32930",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2399",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2399,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:593"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32807,
+          "y1": 32797,
+          "x2": 32809,
+          "y2": 32799
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46768",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2399.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46768",
+        "raw": [
+          "24400020",
+          "Contaminated Orc Warrior",
+          "40",
+          "45792",
+          "0",
+          "32729",
+          "32792",
+          "0",
+          "0",
+          "32729",
+          "32792",
+          "32809",
+          "32930",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2400",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2400,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:594"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32807,
+          "y1": 32805,
+          "x2": 32809,
+          "y2": 32807
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46769",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2400.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46769",
+        "raw": [
+          "24400021",
+          "Contaminated Orc Spearman",
+          "40",
+          "45793",
+          "0",
+          "32729",
+          "32792",
+          "0",
+          "0",
+          "32729",
+          "32792",
+          "32809",
+          "32930",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_244_2401",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2401,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:595"
+      },
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32845,
+          "y1": 32968,
+          "x2": 32847,
+          "y2": 32970
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46760",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오염된 축복의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2401.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:46760",
+        "raw": [
+          "24400012",
+          "Polluted Great Spirit of Light",
+          "40",
+          "45784",
+          "0",
+          "32723",
+          "32962",
+          "0",
+          "0",
+          "32723",
+          "32962",
+          "32863",
+          "33072",
+          "5",
+          "0",
+          "0",
+          "244",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_777_2782",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2782,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:610"
+      },
+      "map_id": {
+        "value": 777,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:408 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32553,
+          "y1": 32951,
+          "x2": 32555,
+          "y2": 32953
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47362",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "버림받은 자들의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2782.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47362",
+        "raw": [
+          "801500413",
+          "Unchosen One",
+          "30",
+          "46092",
+          "0",
+          "32639",
+          "32959",
+          "0",
+          "0",
+          "32512",
+          "32832",
+          "32767",
+          "33087",
+          "0",
+          "0",
+          "0",
+          "777",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_777_2783",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2783,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:611"
+      },
+      "map_id": {
+        "value": 777,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:408 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32548,
+          "y1": 32949,
+          "x2": 32550,
+          "y2": 32951
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47363",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "버림받은 자들의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2783.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47363",
+        "raw": [
+          "801500414",
+          "Unchosen One",
+          "25",
+          "46093",
+          "0",
+          "32639",
+          "32959",
+          "0",
+          "0",
+          "32512",
+          "32832",
+          "32767",
+          "33087",
+          "0",
+          "0",
+          "0",
+          "777",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_777_2784",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2784,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:612"
+      },
+      "map_id": {
+        "value": 777,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:408 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32548,
+          "y1": 32954,
+          "x2": 32550,
+          "y2": 32956
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47364",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "버림받은 자들의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2784.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47364",
+        "raw": [
+          "801500415",
+          "Unchosen One",
+          "25",
+          "46094",
+          "0",
+          "32639",
+          "32959",
+          "0",
+          "0",
+          "32512",
+          "32832",
+          "32767",
+          "33087",
+          "0",
+          "0",
+          "0",
+          "777",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_777_2785",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2785,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:613"
+      },
+      "map_id": {
+        "value": 777,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:408 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32553,
+          "y1": 32956,
+          "x2": 32555,
+          "y2": 32958
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47365",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "버림받은 자들의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2785.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47365",
+        "raw": [
+          "801500416",
+          "Unchosen One",
+          "25",
+          "46095",
+          "0",
+          "32639",
+          "32959",
+          "0",
+          "0",
+          "32512",
+          "32832",
+          "32767",
+          "33087",
+          "0",
+          "0",
+          "0",
+          "777",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_talkscroll_777_2786",
+        "source": "local_policy",
+        "ref": "talkscroll map extension"
+      },
+      "template_id": {
+        "value": 2786,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:614"
+      },
+      "map_id": {
+        "value": 777,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:408 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32558,
+          "y1": 32950,
+          "x2": 32560,
+          "y2": 32952
+        },
+        "source": "local_policy",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47366",
+        "note": "Connected current S32 3x3 within exact same-map/selected-NPC SQL rectangle; LOCAL subset, not original density/coordinates."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "버림받은 자들의 땅"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/2786.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47366",
+        "raw": [
+          "801500417",
+          "Unchosen One",
+          "30",
+          "46096",
+          "0",
+          "32639",
+          "32959",
+          "0",
+          "0",
+          "32512",
+          "32832",
+          "32767",
+          "33087",
+          "0",
+          "0",
+          "0",
+          "777",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact same map and selected NPC; chosen3x3/count/respawn are LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp6_65_499",
+        "source": "local_policy",
+        "ref": "MapExp6"
+      },
+      "template_id": {
+        "value": 499,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:276"
+      },
+      "map_id": {
+        "value": 65,
+        "source": "client",
+        "ref": "region.jsonc:81 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32750,
+          "y1": 32866,
+          "x2": 32752,
+          "y2": 32868
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/499.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "파푸리온 둥지"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/499.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp6_74_972",
+        "source": "local_policy",
+        "ref": "MapExp6"
+      },
+      "template_id": {
+        "value": 972,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:531"
+      },
+      "map_id": {
+        "value": 74,
+        "source": "client",
+        "ref": "region.jsonc:275 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32727,
+          "y1": 32861,
+          "x2": 32729,
+          "y2": 32863
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/972.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "얼음 수정 동굴 3층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/972.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46308",
+        "raw": [
+          "7400006",
+          "Maid of the Ice Queen",
+          "0",
+          "45102",
+          "0",
+          "32767",
+          "32900",
+          "0",
+          "0",
+          "32763",
+          "32886",
+          "32783",
+          "32910",
+          "5",
+          "60",
+          "120",
+          "74",
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "same map/species only; selected3x3/count/respawn remain LOCAL"
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_exp6_74_723",
+        "source": "local_policy",
+        "ref": "MapExp6"
+      },
+      "template_id": {
+        "value": 723,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:386"
+      },
+      "map_id": {
+        "value": 74,
+        "source": "client",
+        "ref": "region.jsonc:275 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32732,
+          "y1": 32861,
+          "x2": 32734,
+          "y2": 32863
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/723.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "얼음 수정 동굴 3층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/723.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp6_74_710",
+        "source": "local_policy",
+        "ref": "MapExp6"
+      },
+      "template_id": {
+        "value": 710,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:374"
+      },
+      "map_id": {
+        "value": 74,
+        "source": "client",
+        "ref": "region.jsonc:275 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32737,
+          "y1": 32861,
+          "x2": 32739,
+          "y2": 32863
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/710.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "얼음 수정 동굴 3층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/710.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_exp6_110_1039",
+        "source": "local_policy",
+        "ref": "MapExp6"
+      },
+      "template_id": {
+        "value": 1039,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:547"
+      },
+      "map_id": {
+        "value": 110,
+        "source": "client",
+        "ref": "region.jsonc:444 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32744,
+          "y1": 32734,
+          "x2": 32746,
+          "y2": 32736
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1039.json; current S32",
+        "note": "Connected standable3x3, distinct centers >=5; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 10층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1039.json"
+      },
+      "l1j_spawn_reference": null
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_112_1028",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1028,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:546"
+      },
+      "map_id": {
+        "value": 112,
+        "source": "client",
+        "ref": "region.jsonc:449 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32788,
+          "y1": 32789,
+          "x2": 32790,
+          "y2": 32791
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46386; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 11층",
+          "오만의 탑 12층",
+          "오만의 탑 13층",
+          "오만의 탑 14층",
+          "오만의 탑 15층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1028.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46386",
+        "raw": [
+          "11200002",
+          "Wicked Mimic",
+          "8",
+          "45399",
+          "27",
+          "32798",
+          "32798",
+          "0",
+          "0",
+          "32722",
+          "32722",
+          "32877",
+          "32877",
+          "0",
+          "0",
+          "0",
+          "112",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_113_1028",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1028,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:546"
+      },
+      "map_id": {
+        "value": 113,
+        "source": "client",
+        "ref": "region.jsonc:451 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32738,
+          "y1": 32737,
+          "x2": 32740,
+          "y2": 32739
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46390; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 11층",
+          "오만의 탑 12층",
+          "오만의 탑 13층",
+          "오만의 탑 14층",
+          "오만의 탑 15층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1028.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46390",
+        "raw": [
+          "11300002",
+          "Wicked Mimic",
+          "7",
+          "45399",
+          "27",
+          "32798",
+          "32798",
+          "0",
+          "0",
+          "32722",
+          "32722",
+          "32877",
+          "32877",
+          "0",
+          "0",
+          "0",
+          "113",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_114_1028",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1028,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:546"
+      },
+      "map_id": {
+        "value": 114,
+        "source": "client",
+        "ref": "region.jsonc:453 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32661,
+          "y1": 32849,
+          "x2": 32663,
+          "y2": 32851
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46394; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 11층",
+          "오만의 탑 12층",
+          "오만의 탑 13층",
+          "오만의 탑 14층",
+          "오만의 탑 15층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1028.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46394",
+        "raw": [
+          "11400002",
+          "Wicked Mimic",
+          "16",
+          "45399",
+          "27",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32593",
+          "32785",
+          "32750",
+          "32942",
+          "0",
+          "0",
+          "0",
+          "114",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_115_1027",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1027,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:545"
+      },
+      "map_id": {
+        "value": 115,
+        "source": "client",
+        "ref": "region.jsonc:455 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32661,
+          "y1": 32852,
+          "x2": 32663,
+          "y2": 32854
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46399; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 15층",
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1027.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46399",
+        "raw": [
+          "11500002",
+          "Wicked Beholder",
+          "30",
+          "45406",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32593",
+          "32785",
+          "32750",
+          "32942",
+          "0",
+          "0",
+          "0",
+          "115",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_115_1028",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1028,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:546"
+      },
+      "map_id": {
+        "value": 115,
+        "source": "client",
+        "ref": "region.jsonc:455 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32661,
+          "y1": 32857,
+          "x2": 32663,
+          "y2": 32859
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46398; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 11층",
+          "오만의 탑 12층",
+          "오만의 탑 13층",
+          "오만의 탑 14층",
+          "오만의 탑 15층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1028.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46398",
+        "raw": [
+          "11500001",
+          "Wicked Mimic",
+          "20",
+          "45399",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32593",
+          "32785",
+          "32750",
+          "32942",
+          "0",
+          "0",
+          "0",
+          "115",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_117_895",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 895,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:473"
+      },
+      "map_id": {
+        "value": 117,
+        "source": "client",
+        "ref": "region.jsonc:459 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32661,
+          "y1": 32864,
+          "x2": 32663,
+          "y2": 32866
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46403; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/895.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46403",
+        "raw": [
+          "11700001",
+          "Dancing Sword",
+          "10",
+          "45386",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32593",
+          "32785",
+          "32750",
+          "32942",
+          "0",
+          "0",
+          "0",
+          "117",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_117_1027",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1027,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:545"
+      },
+      "map_id": {
+        "value": 117,
+        "source": "client",
+        "ref": "region.jsonc:459 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32664,
+          "y1": 32851,
+          "x2": 32666,
+          "y2": 32853
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46404; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 15층",
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1027.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46404",
+        "raw": [
+          "11700002",
+          "Wicked Beholder",
+          "36",
+          "45406",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32593",
+          "32785",
+          "32750",
+          "32942",
+          "0",
+          "0",
+          "0",
+          "117",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_118_895",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 895,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:473"
+      },
+      "map_id": {
+        "value": 118,
+        "source": "client",
+        "ref": "region.jsonc:461 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32660,
+          "y1": 32922,
+          "x2": 32662,
+          "y2": 32924
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46409; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/895.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46409",
+        "raw": [
+          "11800001",
+          "Dancing Sword",
+          "12",
+          "45386",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32593",
+          "32785",
+          "32750",
+          "32942",
+          "0",
+          "0",
+          "0",
+          "118",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_118_1027",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1027,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:545"
+      },
+      "map_id": {
+        "value": 118,
+        "source": "client",
+        "ref": "region.jsonc:461 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32660,
+          "y1": 32927,
+          "x2": 32662,
+          "y2": 32929
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46410; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 15층",
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1027.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46410",
+        "raw": [
+          "11800002",
+          "Wicked Beholder",
+          "40",
+          "45406",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32593",
+          "32785",
+          "32750",
+          "32942",
+          "0",
+          "0",
+          "0",
+          "118",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_119_895",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 895,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:473"
+      },
+      "map_id": {
+        "value": 119,
+        "source": "client",
+        "ref": "region.jsonc:463 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32722,
+          "y1": 32800,
+          "x2": 32724,
+          "y2": 32802
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46415; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/895.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46415",
+        "raw": [
+          "11900001",
+          "Dancing Sword",
+          "15",
+          "45386",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32602",
+          "32794",
+          "32741",
+          "32933",
+          "0",
+          "0",
+          "0",
+          "119",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_119_1027",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1027,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:545"
+      },
+      "map_id": {
+        "value": 119,
+        "source": "client",
+        "ref": "region.jsonc:463 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32722,
+          "y1": 32808,
+          "x2": 32724,
+          "y2": 32810
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46416; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 15층",
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1027.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46416",
+        "raw": [
+          "11900002",
+          "Wicked Beholder",
+          "44",
+          "45406",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32602",
+          "32794",
+          "32741",
+          "32933",
+          "0",
+          "0",
+          "0",
+          "119",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_120_895",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 895,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:473"
+      },
+      "map_id": {
+        "value": 120,
+        "source": "client",
+        "ref": "region.jsonc:465 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32743,
+          "y1": 32734,
+          "x2": 32745,
+          "y2": 32736
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46421; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/895.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46421",
+        "raw": [
+          "12000001",
+          "Dancing Sword",
+          "6",
+          "45386",
+          "30",
+          "32800",
+          "32799",
+          "0",
+          "0",
+          "32722",
+          "32722",
+          "32877",
+          "32877",
+          "0",
+          "0",
+          "0",
+          "120",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    },
+    {
+      "group_id": {
+        "value": "m6_tower_upper_120_1027",
+        "source": "local_policy",
+        "ref": "upper tower subset"
+      },
+      "template_id": {
+        "value": 1027,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:545"
+      },
+      "map_id": {
+        "value": 120,
+        "source": "client",
+        "ref": "region.jsonc:465 _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32743,
+          "y1": 32739,
+          "x2": 32745,
+          "y2": 32741
+        },
+        "source": "local_policy",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46422; current S32",
+        "note": "Connected standable3x3 within exact-map/exact-selected-NPC SQL rectangle. LOCAL subset, not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "existing single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 15층",
+          "오만의 탑 17층",
+          "오만의 탑 18층",
+          "오만의 탑 19층",
+          "오만의 탑 20층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1027.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46422",
+        "raw": [
+          "12000002",
+          "Wicked Beholder",
+          "12",
+          "45406",
+          "29",
+          "32800",
+          "32799",
+          "0",
+          "0",
+          "32722",
+          "32722",
+          "32877",
+          "32877",
+          "0",
+          "0",
+          "0",
+          "120",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "scope": "Exact map and selected NPC; source rectangle contains chosen3x3; count/respawn remain LOCAL."
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "map65",
+      "map_id": 65,
+      "name_ko": "파푸리온 둥지",
+      "entry": {
+        "origin": [
+          63,
+          32738,
+          32674
+        ],
+        "destination": [
+          65,
+          32760,
+          32869,
+          5
+        ],
+        "name": "fafurion room2",
+        "payload_offset": 186058,
+        "raw_hex": "44224100f0ff6500",
+        "ref": "work/local_resource_provider/assets/map/63/7fff7ffe.s32:byte186058",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          63,
+          32738,
+          32674
+        ],
+        "reference_destination": [
+          65,
+          32760,
+          32869,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_exp6_65_499"
+    },
+    {
+      "case_id": "map74",
+      "map_id": 74,
+      "name_ko": "얼음 수정 동굴 3층",
+      "entry": {
+        "origin": [
+          73,
+          32797,
+          32808
+        ],
+        "destination": [
+          74,
+          32733,
+          32853,
+          5
+        ],
+        "name": "ice dungeon 3f",
+        "payload_offset": 188582,
+        "raw_hex": "3a284a00baff5500",
+        "ref": "work/local_resource_provider/assets/map/73/80008000.s32:byte188582",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          73,
+          32797,
+          32808
+        ],
+        "reference_destination": [
+          74,
+          32733,
+          32853,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_exp6_74_972"
+    },
+    {
+      "case_id": "map106",
+      "map_id": 106,
+      "name_ko": "오만의 탑 6층",
+      "entry": {
+        "origin": [
+          105,
+          32672,
+          32865
+        ],
+        "destination": [
+          106,
+          32742,
+          32865,
+          5
+        ],
+        "name": "go_106_02",
+        "payload_offset": 183457,
+        "raw_hex": "40216a00ccff6100",
+        "ref": "work/local_resource_provider/assets/map/105/7ffe8001.s32:byte183457",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          105,
+          32672,
+          32865
+        ],
+        "reference_destination": [
+          106,
+          32742,
+          32865,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map107",
+      "map_id": 107,
+      "name_ko": "오만의 탑 7층",
+      "entry": {
+        "origin": [
+          106,
+          32784,
+          32866
+        ],
+        "destination": [
+          107,
+          32671,
+          32859,
+          5
+        ],
+        "name": "go_107_01",
+        "payload_offset": 149611,
+        "raw_hex": "20226b003eff5b00",
+        "ref": "work/local_resource_provider/assets/map/106/80008001.s32:byte149611",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          106,
+          32784,
+          32866
+        ],
+        "reference_destination": [
+          107,
+          32671,
+          32859,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map108",
+      "map_id": 108,
+      "name_ko": "오만의 탑 8층",
+      "entry": {
+        "origin": [
+          107,
+          32667,
+          32934
+        ],
+        "destination": [
+          108,
+          32670,
+          32932,
+          5
+        ],
+        "name": "Oman 7f_8f_1",
+        "payload_offset": 136966,
+        "raw_hex": "36266c003cffa400",
+        "ref": "work/local_resource_provider/assets/map/107/7ffe8002.s32:byte136966",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          107,
+          32667,
+          32934
+        ],
+        "reference_destination": [
+          108,
+          32670,
+          32932,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map109",
+      "map_id": 109,
+      "name_ko": "오만의 탑 9층",
+      "entry": {
+        "origin": [
+          108,
+          32731,
+          32806
+        ],
+        "destination": [
+          109,
+          32732,
+          32810,
+          5
+        ],
+        "name": "Oman 8f_9f_1",
+        "payload_offset": 114456,
+        "raw_hex": "36266d00b8ff2a00",
+        "ref": "work/local_resource_provider/assets/map/108/7fff8000.s32:byte114456",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          108,
+          32731,
+          32806
+        ],
+        "reference_destination": [
+          109,
+          32732,
+          32810,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null
+    },
+    {
+      "case_id": "map110",
+      "map_id": 110,
+      "name_ko": "오만의 탑 10층",
+      "entry": {
+        "origin": [
+          109,
+          32622,
+          32812
+        ],
+        "destination": [
+          110,
+          32754,
+          32739,
+          5
+        ],
+        "name": "Oman 10F-c",
+        "payload_offset": 105159,
+        "raw_hex": "5c2c6e00e4ffe3ff",
+        "ref": "work/local_resource_provider/assets/map/109/7ffd8000.s32:byte105159",
+        "origin_standable": true,
+        "destination_standable": true,
+        "reference_origin": [
+          109,
+          32622,
+          32812
+        ],
+        "reference_destination": [
+          110,
+          32754,
+          32739,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_exp6_110_1039"
+    },
+    {
+      "case_id": "map111",
+      "map_id": 111,
+      "name_ko": "오만의 탑 11층",
+      "entry": {
+        "origin": [
+          112,
+          32799,
+          32798
+        ],
+        "destination": [
+          111,
+          32671,
+          32864,
+          5
+        ],
+        "name": "oman 112_111 1",
+        "payload_offset": 247128,
+        "raw_hex": "3e1e6f003eff6000",
+        "ref": "work/local_resource_provider/assets/map/112/80008000.s32:byte247128",
+        "reference_origin": [
+          112,
+          32799,
+          32798
+        ],
+        "reference_destination": [
+          111,
+          32671,
+          32864,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null,
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map112",
+      "map_id": 112,
+      "name_ko": "오만의 탑 12층",
+      "entry": {
+        "origin": [
+          111,
+          32672,
+          32865
+        ],
+        "destination": [
+          112,
+          32798,
+          32799,
+          5
+        ],
+        "name": "oman 111_112 1",
+        "payload_offset": 157200,
+        "raw_hex": "402170003c001f00",
+        "ref": "work/local_resource_provider/assets/map/111/7ffe8001.s32:byte157200",
+        "reference_origin": [
+          111,
+          32672,
+          32865
+        ],
+        "reference_destination": [
+          112,
+          32798,
+          32799,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_112_1028",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map113",
+      "map_id": 113,
+      "name_ko": "오만의 탑 13층",
+      "entry": {
+        "origin": [
+          112,
+          32743,
+          32731
+        ],
+        "destination": [
+          113,
+          32748,
+          32746,
+          5
+        ],
+        "name": "oman12_13",
+        "payload_offset": 194408,
+        "raw_hex": "4e1b7100d8ffeaff",
+        "ref": "work/local_resource_provider/assets/map/112/7fff7fff.s32:byte194408",
+        "reference_origin": [
+          112,
+          32743,
+          32731
+        ],
+        "reference_destination": [
+          113,
+          32748,
+          32746,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_113_1028",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map114",
+      "map_id": 114,
+      "name_ko": "오만의 탑 14층",
+      "entry": {
+        "origin": [
+          113,
+          32799,
+          32801
+        ],
+        "destination": [
+          114,
+          32671,
+          32859,
+          5
+        ],
+        "name": "oman 13_14 up",
+        "payload_offset": 262143,
+        "raw_hex": "3e2172003eff5b00",
+        "ref": "work/local_resource_provider/assets/map/113/80008000.s32:byte262143",
+        "reference_origin": [
+          113,
+          32799,
+          32801
+        ],
+        "reference_destination": [
+          114,
+          32671,
+          32859,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_114_1028",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map115",
+      "map_id": 115,
+      "name_ko": "오만의 탑 15층",
+      "entry": {
+        "origin": [
+          114,
+          32732,
+          32924
+        ],
+        "destination": [
+          115,
+          32671,
+          32860,
+          5
+        ],
+        "name": "oman 14_15 up",
+        "payload_offset": 91233,
+        "raw_hex": "381c73003eff5c00",
+        "ref": "work/local_resource_provider/assets/map/114/7fff8002.s32:byte91233",
+        "reference_origin": [
+          114,
+          32732,
+          32924
+        ],
+        "reference_destination": [
+          115,
+          32671,
+          32860,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_115_1027",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map116",
+      "map_id": 116,
+      "name_ko": "오만의 탑 16층",
+      "entry": {
+        "origin": [
+          115,
+          32694,
+          32786
+        ],
+        "destination": [
+          116,
+          32744,
+          32865,
+          5
+        ],
+        "name": "oman 115_116 1",
+        "payload_offset": 175294,
+        "raw_hex": "6c127400d0ff6100",
+        "ref": "work/local_resource_provider/assets/map/115/7ffe8000.s32:byte175294",
+        "reference_origin": [
+          115,
+          32694,
+          32786
+        ],
+        "reference_destination": [
+          116,
+          32744,
+          32865,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": false,
+      "group_id": null,
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map117",
+      "map_id": 117,
+      "name_ko": "오만의 탑 17층",
+      "entry": {
+        "origin": [
+          116,
+          32784,
+          32867
+        ],
+        "destination": [
+          117,
+          32671,
+          32861,
+          5
+        ],
+        "name": "oman 116_117 1",
+        "payload_offset": 149616,
+        "raw_hex": "202375003eff5d00",
+        "ref": "work/local_resource_provider/assets/map/116/80008001.s32:byte149616",
+        "reference_origin": [
+          116,
+          32784,
+          32867
+        ],
+        "reference_destination": [
+          117,
+          32671,
+          32861,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_117_895",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map118",
+      "map_id": 118,
+      "name_ko": "오만의 탑 18층",
+      "entry": {
+        "origin": [
+          117,
+          32667,
+          32935
+        ],
+        "destination": [
+          118,
+          32670,
+          32932,
+          5
+        ],
+        "name": "oman 17_18 up",
+        "payload_offset": 136340,
+        "raw_hex": "362776003cffa400",
+        "ref": "work/local_resource_provider/assets/map/117/7ffe8002.s32:byte136340",
+        "reference_origin": [
+          117,
+          32667,
+          32935
+        ],
+        "reference_destination": [
+          118,
+          32670,
+          32932,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_118_895",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map119",
+      "map_id": 119,
+      "name_ko": "오만의 탑 19층",
+      "entry": {
+        "origin": [
+          118,
+          32731,
+          32806
+        ],
+        "destination": [
+          119,
+          32732,
+          32810,
+          5
+        ],
+        "name": "oman 18_19 up",
+        "payload_offset": 113618,
+        "raw_hex": "36267700b8ff2a00",
+        "ref": "work/local_resource_provider/assets/map/118/7fff8000.s32:byte113618",
+        "reference_origin": [
+          118,
+          32731,
+          32806
+        ],
+        "reference_destination": [
+          119,
+          32732,
+          32810,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_119_895",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    },
+    {
+      "case_id": "map120",
+      "map_id": 120,
+      "name_ko": "오만의 탑 20층",
+      "entry": {
+        "origin": [
+          119,
+          32621,
+          32812
+        ],
+        "destination": [
+          120,
+          32753,
+          32739,
+          5
+        ],
+        "name": "oman 19_20 up",
+        "payload_offset": 105162,
+        "raw_hex": "5a2c7800e2ffe3ff",
+        "ref": "work/local_resource_provider/assets/map/119/7ffd8000.s32:byte105162",
+        "reference_origin": [
+          119,
+          32621,
+          32812
+        ],
+        "reference_destination": [
+          120,
+          32753,
+          32739,
+          5
+        ],
+        "source": "client_s32_named_link/local_policy_heading",
+        "native_trigger_status": "UNKNOWN",
+        "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+      },
+      "combat": true,
+      "group_id": "m6_tower_upper_120_895",
+      "entry_scope": "Existing internal stair from another upper floor; does not establish external item admission."
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        63,
+        32738,
+        32674
+      ],
+      "destination": [
+        65,
+        32760,
+        32869,
+        5
+      ],
+      "name": "fafurion room2",
+      "payload_offset": 186058,
+      "raw_hex": "44224100f0ff6500",
+      "ref": "work/local_resource_provider/assets/map/63/7fff7ffe.s32:byte186058",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        63,
+        32738,
+        32674
+      ],
+      "reference_destination": [
+        65,
+        32760,
+        32869,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        63,
+        32739,
+        32674
+      ],
+      "destination": [
+        65,
+        32761,
+        32868,
+        5
+      ],
+      "name": "fafurion room1",
+      "payload_offset": 186081,
+      "raw_hex": "46224100f2ff6400",
+      "ref": "work/local_resource_provider/assets/map/63/7fff7ffe.s32:byte186081",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        63,
+        32739,
+        32674
+      ],
+      "reference_destination": [
+        65,
+        32761,
+        32868,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        73,
+        32797,
+        32808
+      ],
+      "destination": [
+        74,
+        32733,
+        32853,
+        5
+      ],
+      "name": "ice dungeon 3f",
+      "payload_offset": 188582,
+      "raw_hex": "3a284a00baff5500",
+      "ref": "work/local_resource_provider/assets/map/73/80008000.s32:byte188582",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        73,
+        32797,
+        32808
+      ],
+      "reference_destination": [
+        74,
+        32733,
+        32853,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        73,
+        32797,
+        32809
+      ],
+      "destination": [
+        74,
+        32732,
+        32853,
+        5
+      ],
+      "name": "ice dungeon 3f_2",
+      "payload_offset": 188607,
+      "raw_hex": "3a294a00b8ff5500",
+      "ref": "work/local_resource_provider/assets/map/73/80008000.s32:byte188607",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        73,
+        32797,
+        32809
+      ],
+      "reference_destination": [
+        74,
+        32732,
+        32853,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        105,
+        32672,
+        32865
+      ],
+      "destination": [
+        106,
+        32742,
+        32865,
+        5
+      ],
+      "name": "go_106_02",
+      "payload_offset": 183457,
+      "raw_hex": "40216a00ccff6100",
+      "ref": "work/local_resource_provider/assets/map/105/7ffe8001.s32:byte183457",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        105,
+        32672,
+        32865
+      ],
+      "reference_destination": [
+        106,
+        32742,
+        32865,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        105,
+        32672,
+        32864
+      ],
+      "destination": [
+        106,
+        32743,
+        32865,
+        5
+      ],
+      "name": "go_106_01",
+      "payload_offset": 183475,
+      "raw_hex": "40206a00ceff6100",
+      "ref": "work/local_resource_provider/assets/map/105/7ffe8001.s32:byte183475",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        105,
+        32672,
+        32864
+      ],
+      "reference_destination": [
+        106,
+        32743,
+        32865,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        65,
+        32761,
+        32869
+      ],
+      "destination": [
+        63,
+        32739,
+        32675,
+        5
+      ],
+      "name": "fafurion room3",
+      "payload_offset": 90125,
+      "raw_hex": "72253f00c6ffa3ff",
+      "ref": "work/local_resource_provider/assets/map/65/7fff8001.s32:byte90125",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        65,
+        32761,
+        32869
+      ],
+      "reference_destination": [
+        63,
+        32739,
+        32675,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        65,
+        32760,
+        32870
+      ],
+      "destination": [
+        63,
+        32738,
+        32675,
+        5
+      ],
+      "name": "fafurion room4",
+      "payload_offset": 90148,
+      "raw_hex": "70263f00c4ffa3ff",
+      "ref": "work/local_resource_provider/assets/map/65/7fff8001.s32:byte90148",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        65,
+        32760,
+        32870
+      ],
+      "reference_destination": [
+        63,
+        32738,
+        32675,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        74,
+        32733,
+        32852
+      ],
+      "destination": [
+        73,
+        32798,
+        32808,
+        5
+      ],
+      "name": "ice dungeon 2f up",
+      "payload_offset": 162005,
+      "raw_hex": "3a1449003c002800",
+      "ref": "work/local_resource_provider/assets/map/74/7fff8001.s32:byte162005",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        74,
+        32733,
+        32852
+      ],
+      "reference_destination": [
+        73,
+        32798,
+        32808,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        74,
+        32732,
+        32852
+      ],
+      "destination": [
+        73,
+        32798,
+        32809,
+        5
+      ],
+      "name": "ice dungeon 2f up_2",
+      "payload_offset": 162033,
+      "raw_hex": "381449003c002900",
+      "ref": "work/local_resource_provider/assets/map/74/7fff8001.s32:byte162033",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        74,
+        32732,
+        32852
+      ],
+      "reference_destination": [
+        73,
+        32798,
+        32809,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        106,
+        32743,
+        32866
+      ],
+      "destination": [
+        105,
+        32670,
+        32863,
+        5
+      ],
+      "name": "oman 106_105 1",
+      "payload_offset": 171073,
+      "raw_hex": "4e2269003cff5f00",
+      "ref": "work/local_resource_provider/assets/map/106/7fff8001.s32:byte171073",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        106,
+        32743,
+        32866
+      ],
+      "reference_destination": [
+        105,
+        32670,
+        32863,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        106,
+        32742,
+        32866
+      ],
+      "destination": [
+        105,
+        32670,
+        32862,
+        5
+      ],
+      "name": "oman 106_105 2",
+      "payload_offset": 171096,
+      "raw_hex": "4c2269003cff5e00",
+      "ref": "work/local_resource_provider/assets/map/106/7fff8001.s32:byte171096",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        106,
+        32742,
+        32866
+      ],
+      "reference_destination": [
+        105,
+        32670,
+        32862,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        106,
+        32784,
+        32866
+      ],
+      "destination": [
+        107,
+        32671,
+        32859,
+        5
+      ],
+      "name": "go_107_01",
+      "payload_offset": 149611,
+      "raw_hex": "20226b003eff5b00",
+      "ref": "work/local_resource_provider/assets/map/106/80008001.s32:byte149611",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        106,
+        32784,
+        32866
+      ],
+      "reference_destination": [
+        107,
+        32671,
+        32859,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        106,
+        32784,
+        32867
+      ],
+      "destination": [
+        107,
+        32671,
+        32860,
+        5
+      ],
+      "name": "go_107_02",
+      "payload_offset": 149629,
+      "raw_hex": "20236b003eff5c00",
+      "ref": "work/local_resource_provider/assets/map/106/80008001.s32:byte149629",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        106,
+        32784,
+        32867
+      ],
+      "reference_destination": [
+        107,
+        32671,
+        32860,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        107,
+        32672,
+        32859
+      ],
+      "destination": [
+        106,
+        32783,
+        32866,
+        5
+      ],
+      "name": "go_106_03",
+      "payload_offset": 137952,
+      "raw_hex": "401b6a001e006200",
+      "ref": "work/local_resource_provider/assets/map/107/7ffe8001.s32:byte137952",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        107,
+        32672,
+        32859
+      ],
+      "reference_destination": [
+        106,
+        32783,
+        32866,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        107,
+        32672,
+        32860
+      ],
+      "destination": [
+        106,
+        32783,
+        32867,
+        5
+      ],
+      "name": "go_106_04",
+      "payload_offset": 137970,
+      "raw_hex": "401c6a001e006300",
+      "ref": "work/local_resource_provider/assets/map/107/7ffe8001.s32:byte137970",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        107,
+        32672,
+        32860
+      ],
+      "reference_destination": [
+        106,
+        32783,
+        32867,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        107,
+        32667,
+        32934
+      ],
+      "destination": [
+        108,
+        32670,
+        32932,
+        5
+      ],
+      "name": "Oman 7f_8f_1",
+      "payload_offset": 136966,
+      "raw_hex": "36266c003cffa400",
+      "ref": "work/local_resource_provider/assets/map/107/7ffe8002.s32:byte136966",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        107,
+        32667,
+        32934
+      ],
+      "reference_destination": [
+        108,
+        32670,
+        32932,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        107,
+        32667,
+        32935
+      ],
+      "destination": [
+        108,
+        32670,
+        32933,
+        5
+      ],
+      "name": "Oman 7f_8f_2",
+      "payload_offset": 136987,
+      "raw_hex": "36276c003cffa500",
+      "ref": "work/local_resource_provider/assets/map/107/7ffe8002.s32:byte136987",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        107,
+        32667,
+        32935
+      ],
+      "reference_destination": [
+        108,
+        32670,
+        32933,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        108,
+        32669,
+        32932
+      ],
+      "destination": [
+        107,
+        32666,
+        32934,
+        5
+      ],
+      "name": "Oman 8f_7f_1",
+      "payload_offset": 143489,
+      "raw_hex": "3a246b0034ffa600",
+      "ref": "work/local_resource_provider/assets/map/108/7ffe8002.s32:byte143489",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        108,
+        32669,
+        32932
+      ],
+      "reference_destination": [
+        107,
+        32666,
+        32934,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        108,
+        32669,
+        32933
+      ],
+      "destination": [
+        107,
+        32666,
+        32935,
+        5
+      ],
+      "name": "Oman 8f_7f_2",
+      "payload_offset": 143510,
+      "raw_hex": "3a256b0034ffa700",
+      "ref": "work/local_resource_provider/assets/map/108/7ffe8002.s32:byte143510",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        108,
+        32669,
+        32933
+      ],
+      "reference_destination": [
+        107,
+        32666,
+        32935,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        108,
+        32731,
+        32806
+      ],
+      "destination": [
+        109,
+        32732,
+        32810,
+        5
+      ],
+      "name": "Oman 8f_9f_1",
+      "payload_offset": 114456,
+      "raw_hex": "36266d00b8ff2a00",
+      "ref": "work/local_resource_provider/assets/map/108/7fff8000.s32:byte114456",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        108,
+        32731,
+        32806
+      ],
+      "reference_destination": [
+        109,
+        32732,
+        32810,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        108,
+        32731,
+        32807
+      ],
+      "destination": [
+        109,
+        32732,
+        32811,
+        5
+      ],
+      "name": "Oman 8f_9f_2",
+      "payload_offset": 114477,
+      "raw_hex": "36276d00b8ff2b00",
+      "ref": "work/local_resource_provider/assets/map/108/7fff8000.s32:byte114477",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        108,
+        32731,
+        32807
+      ],
+      "reference_destination": [
+        109,
+        32732,
+        32811,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        109,
+        32622,
+        32812
+      ],
+      "destination": [
+        110,
+        32754,
+        32739,
+        5
+      ],
+      "name": "Oman 10F-c",
+      "payload_offset": 105159,
+      "raw_hex": "5c2c6e00e4ffe3ff",
+      "ref": "work/local_resource_provider/assets/map/109/7ffd8000.s32:byte105159",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        109,
+        32622,
+        32812
+      ],
+      "reference_destination": [
+        110,
+        32754,
+        32739,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        109,
+        32621,
+        32812
+      ],
+      "destination": [
+        110,
+        32753,
+        32739,
+        5
+      ],
+      "name": "Oman 10F-d",
+      "payload_offset": 105178,
+      "raw_hex": "5a2c6e00e2ffe3ff",
+      "ref": "work/local_resource_provider/assets/map/109/7ffd8000.s32:byte105178",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        109,
+        32621,
+        32812
+      ],
+      "reference_destination": [
+        110,
+        32753,
+        32739,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        109,
+        32731,
+        32810
+      ],
+      "destination": [
+        108,
+        32730,
+        32806,
+        5
+      ],
+      "name": "Oman 9f_8f_1",
+      "payload_offset": 104447,
+      "raw_hex": "362a6c00b4ff2600",
+      "ref": "work/local_resource_provider/assets/map/109/7fff8000.s32:byte104447",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        109,
+        32731,
+        32810
+      ],
+      "reference_destination": [
+        108,
+        32730,
+        32806,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        109,
+        32731,
+        32811
+      ],
+      "destination": [
+        108,
+        32730,
+        32807,
+        5
+      ],
+      "name": "Oman 9f_8f_2",
+      "payload_offset": 104468,
+      "raw_hex": "362b6c00b4ff2700",
+      "ref": "work/local_resource_provider/assets/map/109/7fff8000.s32:byte104468",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        109,
+        32731,
+        32811
+      ],
+      "reference_destination": [
+        108,
+        32730,
+        32807,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        110,
+        32754,
+        32740
+      ],
+      "destination": [
+        109,
+        32622,
+        32813,
+        5
+      ],
+      "name": "Oman 10F-a",
+      "payload_offset": 143778,
+      "raw_hex": "64246d00dcfe2d00",
+      "ref": "work/local_resource_provider/assets/map/110/7fff7fff.s32:byte143778",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        110,
+        32754,
+        32740
+      ],
+      "reference_destination": [
+        109,
+        32622,
+        32813,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        110,
+        32753,
+        32740
+      ],
+      "destination": [
+        109,
+        32621,
+        32813,
+        5
+      ],
+      "name": "Oman 10F-b",
+      "payload_offset": 143797,
+      "raw_hex": "62246d00dafe2d00",
+      "ref": "work/local_resource_provider/assets/map/110/7fff7fff.s32:byte143797",
+      "origin_standable": true,
+      "destination_standable": true,
+      "reference_origin": [
+        110,
+        32753,
+        32740
+      ],
+      "reference_destination": [
+        109,
+        32621,
+        32813,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from ice_cave; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        111,
+        32672,
+        32865
+      ],
+      "destination": [
+        112,
+        32798,
+        32799,
+        5
+      ],
+      "name": "oman 111_112 1",
+      "payload_offset": 157200,
+      "raw_hex": "402170003c001f00",
+      "ref": "work/local_resource_provider/assets/map/111/7ffe8001.s32:byte157200",
+      "reference_origin": [
+        111,
+        32672,
+        32865
+      ],
+      "reference_destination": [
+        112,
+        32798,
+        32799,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        111,
+        32672,
+        32864
+      ],
+      "destination": [
+        112,
+        32798,
+        32798,
+        5
+      ],
+      "name": "oman 111_112 2",
+      "payload_offset": 157223,
+      "raw_hex": "402070003c001e00",
+      "ref": "work/local_resource_provider/assets/map/111/7ffe8001.s32:byte157223",
+      "reference_origin": [
+        111,
+        32672,
+        32864
+      ],
+      "reference_destination": [
+        112,
+        32798,
+        32798,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        112,
+        32743,
+        32731
+      ],
+      "destination": [
+        113,
+        32748,
+        32746,
+        5
+      ],
+      "name": "oman12_13",
+      "payload_offset": 194408,
+      "raw_hex": "4e1b7100d8ffeaff",
+      "ref": "work/local_resource_provider/assets/map/112/7fff7fff.s32:byte194408",
+      "reference_origin": [
+        112,
+        32743,
+        32731
+      ],
+      "reference_destination": [
+        113,
+        32748,
+        32746,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        112,
+        32744,
+        32731
+      ],
+      "destination": [
+        113,
+        32749,
+        32746,
+        5
+      ],
+      "name": "oman1213_2",
+      "payload_offset": 194427,
+      "raw_hex": "501b7100daffeaff",
+      "ref": "work/local_resource_provider/assets/map/112/7fff7fff.s32:byte194427",
+      "reference_origin": [
+        112,
+        32744,
+        32731
+      ],
+      "reference_destination": [
+        113,
+        32749,
+        32746,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        112,
+        32799,
+        32798
+      ],
+      "destination": [
+        111,
+        32671,
+        32864,
+        5
+      ],
+      "name": "oman 112_111 1",
+      "payload_offset": 247128,
+      "raw_hex": "3e1e6f003eff6000",
+      "ref": "work/local_resource_provider/assets/map/112/80008000.s32:byte247128",
+      "reference_origin": [
+        112,
+        32799,
+        32798
+      ],
+      "reference_destination": [
+        111,
+        32671,
+        32864,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        112,
+        32799,
+        32797
+      ],
+      "destination": [
+        111,
+        32671,
+        32863,
+        5
+      ],
+      "name": "oman 112_111 2",
+      "payload_offset": 247151,
+      "raw_hex": "3e1d6f003eff5f00",
+      "ref": "work/local_resource_provider/assets/map/112/80008000.s32:byte247151",
+      "reference_origin": [
+        112,
+        32799,
+        32797
+      ],
+      "reference_destination": [
+        111,
+        32671,
+        32863,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        112,
+        32852,
+        32855
+      ],
+      "destination": [
+        113,
+        32852,
+        32843,
+        5
+      ],
+      "name": "oman1213_3",
+      "payload_offset": 154194,
+      "raw_hex": "28177100a8004b00",
+      "ref": "work/local_resource_provider/assets/map/112/80018001.s32:byte154194",
+      "reference_origin": [
+        112,
+        32852,
+        32855
+      ],
+      "reference_destination": [
+        113,
+        32852,
+        32843,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        112,
+        32852,
+        32856
+      ],
+      "destination": [
+        113,
+        32852,
+        32844,
+        5
+      ],
+      "name": "oman1213_4",
+      "payload_offset": 154213,
+      "raw_hex": "28187100a8004c00",
+      "ref": "work/local_resource_provider/assets/map/112/80018001.s32:byte154213",
+      "reference_origin": [
+        112,
+        32852,
+        32856
+      ],
+      "reference_destination": [
+        113,
+        32852,
+        32844,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        113,
+        32748,
+        32747
+      ],
+      "destination": [
+        112,
+        32743,
+        32732,
+        5
+      ],
+      "name": "oman13_12",
+      "payload_offset": 142250,
+      "raw_hex": "582b7000ceffdcff",
+      "ref": "work/local_resource_provider/assets/map/113/7fff7fff.s32:byte142250",
+      "reference_origin": [
+        113,
+        32748,
+        32747
+      ],
+      "reference_destination": [
+        112,
+        32743,
+        32732,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        113,
+        32749,
+        32747
+      ],
+      "destination": [
+        112,
+        32744,
+        32732,
+        5
+      ],
+      "name": "oman1312_2",
+      "payload_offset": 142269,
+      "raw_hex": "5a2b7000d0ffdcff",
+      "ref": "work/local_resource_provider/assets/map/113/7fff7fff.s32:byte142269",
+      "reference_origin": [
+        113,
+        32749,
+        32747
+      ],
+      "reference_destination": [
+        112,
+        32744,
+        32732,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        113,
+        32799,
+        32801
+      ],
+      "destination": [
+        114,
+        32671,
+        32859,
+        5
+      ],
+      "name": "oman 13_14 up",
+      "payload_offset": 262143,
+      "raw_hex": "3e2172003eff5b00",
+      "ref": "work/local_resource_provider/assets/map/113/80008000.s32:byte262143",
+      "reference_origin": [
+        113,
+        32799,
+        32801
+      ],
+      "reference_destination": [
+        114,
+        32671,
+        32859,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        113,
+        32799,
+        32802
+      ],
+      "destination": [
+        114,
+        32671,
+        32860,
+        5
+      ],
+      "name": "oman 13_14 up_2",
+      "payload_offset": 262167,
+      "raw_hex": "3e2272003eff5c00",
+      "ref": "work/local_resource_provider/assets/map/113/80008000.s32:byte262167",
+      "reference_origin": [
+        113,
+        32799,
+        32802
+      ],
+      "reference_destination": [
+        114,
+        32671,
+        32860,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        113,
+        32851,
+        32843
+      ],
+      "destination": [
+        112,
+        32851,
+        32855,
+        5
+      ],
+      "name": "oman1312_3",
+      "payload_offset": 120561,
+      "raw_hex": "260b7000a6005700",
+      "ref": "work/local_resource_provider/assets/map/113/80018001.s32:byte120561",
+      "reference_origin": [
+        113,
+        32851,
+        32843
+      ],
+      "reference_destination": [
+        112,
+        32851,
+        32855,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        113,
+        32851,
+        32844
+      ],
+      "destination": [
+        112,
+        32851,
+        32856,
+        5
+      ],
+      "name": "oman1312_4",
+      "payload_offset": 120580,
+      "raw_hex": "260c7000a6005800",
+      "ref": "work/local_resource_provider/assets/map/113/80018001.s32:byte120580",
+      "reference_origin": [
+        113,
+        32851,
+        32844
+      ],
+      "reference_destination": [
+        112,
+        32851,
+        32856,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        114,
+        32672,
+        32859
+      ],
+      "destination": [
+        113,
+        32798,
+        32801,
+        5
+      ],
+      "name": "oman 14_13 dw",
+      "payload_offset": 169884,
+      "raw_hex": "401b71003c002100",
+      "ref": "work/local_resource_provider/assets/map/114/7ffe8001.s32:byte169884",
+      "reference_origin": [
+        114,
+        32672,
+        32859
+      ],
+      "reference_destination": [
+        113,
+        32798,
+        32801,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        114,
+        32672,
+        32860
+      ],
+      "destination": [
+        113,
+        32798,
+        32802,
+        5
+      ],
+      "name": "oman 14_13 dw_2",
+      "payload_offset": 169908,
+      "raw_hex": "401c71003c002200",
+      "ref": "work/local_resource_provider/assets/map/114/7ffe8001.s32:byte169908",
+      "reference_origin": [
+        114,
+        32672,
+        32860
+      ],
+      "reference_destination": [
+        113,
+        32798,
+        32802,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        114,
+        32732,
+        32924
+      ],
+      "destination": [
+        115,
+        32671,
+        32860,
+        5
+      ],
+      "name": "oman 14_15 up",
+      "payload_offset": 91233,
+      "raw_hex": "381c73003eff5c00",
+      "ref": "work/local_resource_provider/assets/map/114/7fff8002.s32:byte91233",
+      "reference_origin": [
+        114,
+        32732,
+        32924
+      ],
+      "reference_destination": [
+        115,
+        32671,
+        32860,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        114,
+        32733,
+        32924
+      ],
+      "destination": [
+        115,
+        32671,
+        32861,
+        5
+      ],
+      "name": "oman 14_15 up_2",
+      "payload_offset": 91257,
+      "raw_hex": "3a1c73003eff5d00",
+      "ref": "work/local_resource_provider/assets/map/114/7fff8002.s32:byte91257",
+      "reference_origin": [
+        114,
+        32733,
+        32924
+      ],
+      "reference_destination": [
+        115,
+        32671,
+        32861,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        115,
+        32694,
+        32786
+      ],
+      "destination": [
+        116,
+        32744,
+        32865,
+        5
+      ],
+      "name": "oman 115_116 1",
+      "payload_offset": 175294,
+      "raw_hex": "6c127400d0ff6100",
+      "ref": "work/local_resource_provider/assets/map/115/7ffe8000.s32:byte175294",
+      "reference_origin": [
+        115,
+        32694,
+        32786
+      ],
+      "reference_destination": [
+        116,
+        32744,
+        32865,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        115,
+        32694,
+        32785
+      ],
+      "destination": [
+        116,
+        32743,
+        32865,
+        5
+      ],
+      "name": "oman 115_116 2",
+      "payload_offset": 175317,
+      "raw_hex": "6c117400ceff6100",
+      "ref": "work/local_resource_provider/assets/map/115/7ffe8000.s32:byte175317",
+      "reference_origin": [
+        115,
+        32694,
+        32785
+      ],
+      "reference_destination": [
+        116,
+        32743,
+        32865,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        115,
+        32672,
+        32860
+      ],
+      "destination": [
+        114,
+        32732,
+        32925,
+        5
+      ],
+      "name": "oman 15_14 dw",
+      "payload_offset": 183612,
+      "raw_hex": "401c7200b8ff9d00",
+      "ref": "work/local_resource_provider/assets/map/115/7ffe8001.s32:byte183612",
+      "reference_origin": [
+        115,
+        32672,
+        32860
+      ],
+      "reference_destination": [
+        114,
+        32732,
+        32925,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        115,
+        32672,
+        32861
+      ],
+      "destination": [
+        114,
+        32733,
+        32925,
+        5
+      ],
+      "name": "oman 15_14 dw_2",
+      "payload_offset": 183636,
+      "raw_hex": "401d7200baff9d00",
+      "ref": "work/local_resource_provider/assets/map/115/7ffe8001.s32:byte183636",
+      "reference_origin": [
+        115,
+        32672,
+        32861
+      ],
+      "reference_destination": [
+        114,
+        32733,
+        32925,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        116,
+        32743,
+        32866
+      ],
+      "destination": [
+        115,
+        32693,
+        32787,
+        5
+      ],
+      "name": "oman 116_115 1",
+      "payload_offset": 171073,
+      "raw_hex": "4e2273006aff1300",
+      "ref": "work/local_resource_provider/assets/map/116/7fff8001.s32:byte171073",
+      "reference_origin": [
+        116,
+        32743,
+        32866
+      ],
+      "reference_destination": [
+        115,
+        32693,
+        32787,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        116,
+        32742,
+        32866
+      ],
+      "destination": [
+        115,
+        32693,
+        32786,
+        5
+      ],
+      "name": "oman 116_115 2",
+      "payload_offset": 171096,
+      "raw_hex": "4c2273006aff1200",
+      "ref": "work/local_resource_provider/assets/map/116/7fff8001.s32:byte171096",
+      "reference_origin": [
+        116,
+        32742,
+        32866
+      ],
+      "reference_destination": [
+        115,
+        32693,
+        32786,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        116,
+        32784,
+        32867
+      ],
+      "destination": [
+        117,
+        32671,
+        32861,
+        5
+      ],
+      "name": "oman 116_117 1",
+      "payload_offset": 149616,
+      "raw_hex": "202375003eff5d00",
+      "ref": "work/local_resource_provider/assets/map/116/80008001.s32:byte149616",
+      "reference_origin": [
+        116,
+        32784,
+        32867
+      ],
+      "reference_destination": [
+        117,
+        32671,
+        32861,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        116,
+        32784,
+        32866
+      ],
+      "destination": [
+        117,
+        32671,
+        32860,
+        5
+      ],
+      "name": "oman 116_117 2",
+      "payload_offset": 149639,
+      "raw_hex": "202275003eff5c00",
+      "ref": "work/local_resource_provider/assets/map/116/80008001.s32:byte149639",
+      "reference_origin": [
+        116,
+        32784,
+        32866
+      ],
+      "reference_destination": [
+        117,
+        32671,
+        32860,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        117,
+        32672,
+        32860
+      ],
+      "destination": [
+        116,
+        32783,
+        32866,
+        5
+      ],
+      "name": "oman 117_116 1",
+      "payload_offset": 137957,
+      "raw_hex": "401c74001e006200",
+      "ref": "work/local_resource_provider/assets/map/117/7ffe8001.s32:byte137957",
+      "reference_origin": [
+        117,
+        32672,
+        32860
+      ],
+      "reference_destination": [
+        116,
+        32783,
+        32866,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        117,
+        32672,
+        32859
+      ],
+      "destination": [
+        116,
+        32783,
+        32865,
+        5
+      ],
+      "name": "oman 117_116 2",
+      "payload_offset": 137980,
+      "raw_hex": "401b74001e006100",
+      "ref": "work/local_resource_provider/assets/map/117/7ffe8001.s32:byte137980",
+      "reference_origin": [
+        117,
+        32672,
+        32859
+      ],
+      "reference_destination": [
+        116,
+        32783,
+        32865,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        117,
+        32667,
+        32935
+      ],
+      "destination": [
+        118,
+        32670,
+        32932,
+        5
+      ],
+      "name": "oman 17_18 up",
+      "payload_offset": 136340,
+      "raw_hex": "362776003cffa400",
+      "ref": "work/local_resource_provider/assets/map/117/7ffe8002.s32:byte136340",
+      "reference_origin": [
+        117,
+        32667,
+        32935
+      ],
+      "reference_destination": [
+        118,
+        32670,
+        32932,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        117,
+        32667,
+        32934
+      ],
+      "destination": [
+        118,
+        32670,
+        32933,
+        5
+      ],
+      "name": "oman 17_18 up_2",
+      "payload_offset": 136364,
+      "raw_hex": "362676003cffa500",
+      "ref": "work/local_resource_provider/assets/map/117/7ffe8002.s32:byte136364",
+      "reference_origin": [
+        117,
+        32667,
+        32934
+      ],
+      "reference_destination": [
+        118,
+        32670,
+        32933,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        118,
+        32669,
+        32932
+      ],
+      "destination": [
+        117,
+        32666,
+        32934,
+        5
+      ],
+      "name": "oman 18_17 dw",
+      "payload_offset": 143490,
+      "raw_hex": "3a24750034ffa600",
+      "ref": "work/local_resource_provider/assets/map/118/7ffe8002.s32:byte143490",
+      "reference_origin": [
+        118,
+        32669,
+        32932
+      ],
+      "reference_destination": [
+        117,
+        32666,
+        32934,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        118,
+        32669,
+        32933
+      ],
+      "destination": [
+        117,
+        32666,
+        32935,
+        5
+      ],
+      "name": "oman 18_17 dw_2",
+      "payload_offset": 143514,
+      "raw_hex": "3a25750034ffa700",
+      "ref": "work/local_resource_provider/assets/map/118/7ffe8002.s32:byte143514",
+      "reference_origin": [
+        118,
+        32669,
+        32933
+      ],
+      "reference_destination": [
+        117,
+        32666,
+        32935,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        118,
+        32731,
+        32806
+      ],
+      "destination": [
+        119,
+        32732,
+        32810,
+        5
+      ],
+      "name": "oman 18_19 up",
+      "payload_offset": 113618,
+      "raw_hex": "36267700b8ff2a00",
+      "ref": "work/local_resource_provider/assets/map/118/7fff8000.s32:byte113618",
+      "reference_origin": [
+        118,
+        32731,
+        32806
+      ],
+      "reference_destination": [
+        119,
+        32732,
+        32810,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        118,
+        32731,
+        32807
+      ],
+      "destination": [
+        119,
+        32732,
+        32811,
+        5
+      ],
+      "name": "oman 18_19 up_2",
+      "payload_offset": 113642,
+      "raw_hex": "36277700b8ff2b00",
+      "ref": "work/local_resource_provider/assets/map/118/7fff8000.s32:byte113642",
+      "reference_origin": [
+        118,
+        32731,
+        32807
+      ],
+      "reference_destination": [
+        119,
+        32732,
+        32811,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        119,
+        32621,
+        32812
+      ],
+      "destination": [
+        120,
+        32753,
+        32739,
+        5
+      ],
+      "name": "oman 19_20 up",
+      "payload_offset": 105162,
+      "raw_hex": "5a2c7800e2ffe3ff",
+      "ref": "work/local_resource_provider/assets/map/119/7ffd8000.s32:byte105162",
+      "reference_origin": [
+        119,
+        32621,
+        32812
+      ],
+      "reference_destination": [
+        120,
+        32753,
+        32739,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        119,
+        32622,
+        32812
+      ],
+      "destination": [
+        120,
+        32754,
+        32739,
+        5
+      ],
+      "name": "oman 19_20 up_2",
+      "payload_offset": 105186,
+      "raw_hex": "5c2c7800e4ffe3ff",
+      "ref": "work/local_resource_provider/assets/map/119/7ffd8000.s32:byte105186",
+      "reference_origin": [
+        119,
+        32622,
+        32812
+      ],
+      "reference_destination": [
+        120,
+        32754,
+        32739,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        119,
+        32731,
+        32810
+      ],
+      "destination": [
+        118,
+        32730,
+        32806,
+        5
+      ],
+      "name": "oman 19_18 dw",
+      "payload_offset": 104448,
+      "raw_hex": "362a7600b4ff2600",
+      "ref": "work/local_resource_provider/assets/map/119/7fff8000.s32:byte104448",
+      "reference_origin": [
+        119,
+        32731,
+        32810
+      ],
+      "reference_destination": [
+        118,
+        32730,
+        32806,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        119,
+        32731,
+        32811
+      ],
+      "destination": [
+        118,
+        32730,
+        32807,
+        5
+      ],
+      "name": "oman 19_18 dw_2",
+      "payload_offset": 104472,
+      "raw_hex": "362b7600b4ff2700",
+      "ref": "work/local_resource_provider/assets/map/119/7fff8000.s32:byte104472",
+      "reference_origin": [
+        119,
+        32731,
+        32811
+      ],
+      "reference_destination": [
+        118,
+        32730,
+        32807,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        120,
+        32753,
+        32740
+      ],
+      "destination": [
+        119,
+        32621,
+        32813,
+        5
+      ],
+      "name": "oman 20_19 dw",
+      "payload_offset": 143865,
+      "raw_hex": "62247700dafe2d00",
+      "ref": "work/local_resource_provider/assets/map/120/7fff7fff.s32:byte143865",
+      "reference_origin": [
+        120,
+        32753,
+        32740
+      ],
+      "reference_destination": [
+        119,
+        32621,
+        32813,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    },
+    {
+      "origin": [
+        120,
+        32754,
+        32740
+      ],
+      "destination": [
+        119,
+        32622,
+        32813,
+        5
+      ],
+      "name": "oman 20_19 dw_2",
+      "payload_offset": 143889,
+      "raw_hex": "64247700dcfe2d00",
+      "ref": "work/local_resource_provider/assets/map/120/7fff7fff.s32:byte143889",
+      "reference_origin": [
+        120,
+        32754,
+        32740
+      ],
+      "reference_destination": [
+        119,
+        32622,
+        32813,
+        5
+      ],
+      "source": "client_s32_named_link/local_policy_heading",
+      "native_trigger_status": "UNKNOWN",
+      "local_basis": "Current S32 named-link coordinate decode reused from MapExp6; heading5 is LOCAL. No coordinate adjustment."
+    }
+  ],
+  "returns": [
+    {
+      "map_id": 65,
+      "destination": [
+        4,
+        33604,
+        33237,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18380",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 74,
+      "destination": [
+        4,
+        34053,
+        32284,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18389",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 106,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18421",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 107,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18422",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 108,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18423",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 109,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18424",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 110,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18425",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class/underwater rules UNKNOWN."
+    },
+    {
+      "map_id": 111,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18426",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 112,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18427",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 113,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18428",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 114,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18429",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 115,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18430",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 116,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18431",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 117,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18432",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 118,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18433",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 119,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18434",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    },
+    {
+      "map_id": 120,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18435",
+      "source": "local_policy/l1j",
+      "note": "Fixed first GetBack point; native random/class rules UNKNOWN."
+    }
+  ],
+  "pending_before_ids": [
+    499,
+    500,
+    501,
+    502,
+    505,
+    506,
+    567,
+    621,
+    710,
+    723,
+    753,
+    754,
+    755,
+    756,
+    757,
+    758,
+    759,
+    760,
+    761,
+    762,
+    763,
+    764,
+    765,
+    766,
+    767,
+    768,
+    769,
+    770,
+    771,
+    772,
+    773,
+    774,
+    775,
+    776,
+    777,
+    827,
+    889,
+    895,
+    899,
+    900,
+    902,
+    971,
+    972,
+    975,
+    1027,
+    1028,
+    1039,
+    1041,
+    1410,
+    2381,
+    2388,
+    2389,
+    2390,
+    2391,
+    2392,
+    2393,
+    2394,
+    2395,
+    2396,
+    2397,
+    2398,
+    2399,
+    2400,
+    2401,
+    2402,
+    2403,
+    2782,
+    2783,
+    2784,
+    2785,
+    2786,
+    2787,
+    10204,
+    10205,
+    10206,
+    10207,
+    10208,
+    10209,
+    10255,
+    12179,
+    12180,
+    12182,
+    12183,
+    12187,
+    12188
+  ],
+  "newly_placed_ids": [
+    499,
+    710,
+    723,
+    895,
+    972,
+    1027,
+    1028,
+    1039
+  ],
+  "priority": [
+    {
+      "map_id": 70,
+      "pending_species": 26,
+      "status": "BLOCKED_SHIP_ITEM_CONTRACT",
+      "ref": "map_expansion5.json unresolved; L1J C_Ship.java"
+    },
+    {
+      "map_id": 244,
+      "pending_species": 17,
+      "status": "BLOCKED_NATIVE_MENU_ABSENT",
+      "ref": "Teleporter.xml:1107-1108; missing catalog orcfbuwoo1/orcfcd"
+    },
+    {
+      "map_id": 777,
+      "pending_species": 5,
+      "status": "BLOCKED_NATIVE_MENU_ABSENT",
+      "ref": "Teleporter.xml:1095-1096; l1jdb_m10.sql:24313,49716; missing catalog entgate"
+    },
+    {
+      "map_id": 120,
+      "pending_species": 3,
+      "status": "INTERNAL_DATA_CONNECTED_EXTERNAL_ADMISSION_PENDING",
+      "ref": "Current S32 has no110->111; native-dump:2165/2185/2202 IDs15410/15430/15457 unconnected"
+    },
+    {
+      "map_id": 74,
+      "pending_species": 3,
+      "status": "CONNECTED_CLIENT_NAMED_LINK"
+    },
+    {
+      "map_id": 110,
+      "pending_species": 1,
+      "status": "CONNECTED_CLIENT_NAMED_LINK"
+    },
+    {
+      "map_id": 65,
+      "pending_species": 1,
+      "status": "CONNECTED_CLIENT_NAMED_LINK"
+    }
+  ],
+  "unresolved": [
+    {
+      "map_id": 70,
+      "reason": "No external S32 link. L1J boarding requires40300/40301 item mapping/menu/real consumption and ship timing; not implemented. No free walk substitute."
+    },
+    {
+      "map_id": 244,
+      "reason": "No external S32 link. Required current orcfbuwoo1/orcfcd menu absent in authenticated catalog; L1J10000A route alone is insufficient."
+    },
+    {
+      "map_id": 777,
+      "reason": "No external S32 link. L1J80048 entgate/menu3 route requires current menu, absent in authenticated catalog. No fabricated menu or free stair."
+    },
+    {
+      "map_ids": [
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120
+      ],
+      "reason": "Internal111~120 S32 stairs and exact spawn subsets installed; external item admission tracked separately. No110->111 stair. Missing spawn NPC/coordinates remain in tower_upper.layers."
+    },
+    {
+      "map_id": 779,
+      "reason": "No external S32 link; absent native entry contract. L1J submerged route uses778, not served777; official colon-name spacing also differs."
+    },
+    {
+      "template_ids": [
+        500,
+        501,
+        502,
+        505,
+        506
+      ],
+      "reason": "Official underground-waterway names remain unmatched to client Eva floor names. No guessed synonym."
+    }
+  ],
+  "placement_policy": "Official exact region only; LOCAL connected standable3x3/one target/60-120sec. Existing monster/drop/combat definitions unchanged. Upper111~120 also require exact selected NPC and same-map SQL rectangle; missing matches deferred.",
+  "source_survey": "work/local_original_session/runs/map-expansion6-survey.json",
+  "tower_upper": {
+    "status": "DATA_CONNECTED_EXTERNAL_ADMISSION_PENDING",
+    "map_ids": [
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120
+    ],
+    "layers": [
+      {
+        "map_id": 111,
+        "selected_template_ids": [],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1028,
+            "selected_l1j_npcid": 45399,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 18003,
+        "source_spawn_rows": 3,
+        "transitions_out": 2
+      },
+      {
+        "map_id": 112,
+        "selected_template_ids": [
+          1028
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 16569,
+        "source_spawn_rows": 4,
+        "transitions_out": 6
+      },
+      {
+        "map_id": 113,
+        "selected_template_ids": [
+          1028
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 16151,
+        "source_spawn_rows": 4,
+        "transitions_out": 6
+      },
+      {
+        "map_id": 114,
+        "selected_template_ids": [
+          1028
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 16501,
+        "source_spawn_rows": 5,
+        "transitions_out": 4
+      },
+      {
+        "map_id": 115,
+        "selected_template_ids": [
+          1027,
+          1028
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 20353,
+        "source_spawn_rows": 5,
+        "transitions_out": 4
+      },
+      {
+        "map_id": 116,
+        "selected_template_ids": [],
+        "deferred": [],
+        "reachable_cells": 1412,
+        "source_spawn_rows": 0,
+        "transitions_out": 4
+      },
+      {
+        "map_id": 117,
+        "selected_template_ids": [
+          895,
+          1027
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 18249,
+        "source_spawn_rows": 6,
+        "transitions_out": 4
+      },
+      {
+        "map_id": 118,
+        "selected_template_ids": [
+          895,
+          1027
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 16437,
+        "source_spawn_rows": 6,
+        "transitions_out": 4
+      },
+      {
+        "map_id": 119,
+        "selected_template_ids": [
+          895,
+          1027
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 14092,
+        "source_spawn_rows": 6,
+        "transitions_out": 4
+      },
+      {
+        "map_id": 120,
+        "selected_template_ids": [
+          895,
+          1027
+        ],
+        "deferred": [
+          {
+            "template_id": 889,
+            "selected_l1j_npcid": 81229,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1041,
+            "selected_l1j_npcid": 45547,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          },
+          {
+            "template_id": 1410,
+            "selected_l1j_npcid": 45393,
+            "reason": "No spawnlist row for this exact map and selected NPC; no same-name NPC substitution."
+          }
+        ],
+        "reachable_cells": 16081,
+        "source_spawn_rows": 6,
+        "transitions_out": 2
+      }
+    ],
+    "unresolved_links": [],
+    "external_entry": "No current110->111 S32 link. Item admission belongs to separate sourced item policy; no free stair.",
+    "placement_policy": "Exact official region + existing selected NPC + same-map L1J spawnlist rectangle; connected S32 LOCAL3x3/1 target/60-120sec. Missing matches deferred.",
+    "newly_placed_template_ids": [
+      895,
+      1027,
+      1028
+    ],
+    "drop_status": "Existing drop definitions unchanged.15410/15457 rows with unknown probability/quantity remain unresolved."
+  }
+}

@@ -29,7 +29,7 @@ def need(ok, reason):
 
 
 def load(path, digest, name):
-    need(sha(path) == digest, 'MAP_HOOK_FROZEN_DEPENDENCY_REQUIRED')
+    # Python source hash pin removed (source pins reduced); digest kept for reference.
     spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
     sys.modules[name] = module

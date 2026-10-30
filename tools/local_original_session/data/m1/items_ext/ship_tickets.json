@@ -1,0 +1,23 @@
+{
+  "table": "m1_items_ship_tickets_ext",
+  "version": 1,
+  "note": "Fixed-client key4 ticket metadata. Native identity/graphics/raw f10 are confirmed; burden units, nonstacking and inert direct use remain LOCAL backend policy. No official item12017 detail is present in either official_data cache. L1J40300 is a separate reference ID, never the client ID. Registration does not establish shop availability or native inventory rendering.",
+  "items": [
+    {
+      "id": {"value": 12017, "source": "client", "ref": "work/source_game_data/native-dump-v1.jsonl:1618 f1"},
+      "name_token": {"value": "$1930", "source": "client", "ref": "native-dump:1618 name.reference"},
+      "name_ko": {"value": "잊혀진 섬행 배표", "source": "client", "ref": "native-dump:1618 name.KR"},
+      "icon": {"value": 138, "source": "client", "ref": "native-dump:1618 CommonItemInfo f5"},
+      "ground_graphic": {"value": 151, "source": "client", "ref": "native-dump:1618 CommonItemInfo f6 raw"},
+      "weight": {"value": 1000, "source": "client", "ref": "native-dump:1618 f10 raw", "note": "Confirmed raw integer; 1000 raw per burden unit is existing LOCAL backend interpretation, not proven native units. f15=1 retained in source."},
+      "kind": {"value": "misc", "source": "local_policy", "ref": "Non-equipment ticket storage; world_feature_ship.py owns key4 boarding/arrival consumption", "note": "Not a decoded native item-kind claim; raw0 use has no effect dispatcher."},
+      "slot": {"value": null, "source": "local_policy", "ref": "Non-equipment boat ticket"},
+      "stackable": {"value": false, "source": "l1j", "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16754 etcitem40300 stackable=0 (schema:716-)", "note": "Separate L1J namespace, token$1930/f5=138/f6=151/raw f10=1000 correspondence only. Adopted LOCAL nonstacking reference policy; native stacking unconfirmed."},
+      "use_type": {"value": "none", "source": "l1j", "ref": "l1jdb:16754 etcitem40300 use_type", "note": "LOCAL inert direct-use reference only. Ship ticket debit belongs to the existing key4 voyage, not item raw0 use."},
+      "weapon": {"value": null, "source": "local_policy", "ref": "Non-weapon"},
+      "ac": {"value": 0, "source": "local_policy", "ref": "Non-armor"},
+      "heal_hp": {"value": 0, "source": "local_policy", "ref": "No HP effect"},
+      "classes": {"value": [0, 1, 2, 3], "source": "local_policy", "ref": "Existing key4 voyage has no class restriction; native f13 absent is not unrestricted-class proof"}
+    }
+  ]
+}

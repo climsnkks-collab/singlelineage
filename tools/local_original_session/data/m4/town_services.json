@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "scope": "Gludin inn rental LOCAL backend; original resources unchanged",
+  "inns": [
+    {
+      "l1j_npc_id": 70019,
+      "name": "Lolia",
+      "price": 100,
+      "rental_policy": {
+        "price": 100,
+        "duration_s": 14400,
+        "refund": 10,
+        "room_key": 10104,
+        "hall_key": 10105,
+        "room_name": "여관 열쇠(글루딘 마을)",
+        "hall_name": "여관 홀 열쇠(글루딘 마을)",
+        "rest_radius": 3,
+        "hp_bonus": 5,
+        "mp_bonus": 3
+      },
+      "rental_sources": {
+        "duration_ref": "client dialogue.csv inn4_2: four hours",
+        "refund_ref": "client dialogue.csv inn4_2: 10 Adena for each timely returned key",
+        "key_ref": "client item.bin/current-names.json IDs10100-10115, icon59",
+        "recovery_ref": "L1J HpRegeneration.java inn HP+5; MpRegeneration.java inn MP+3; added only at existing resource thresholds",
+        "local_policy": "100A, direct one-person room/hall selection, one lease per character, nearby innkeeper Chebyshev<=3 rest instead of unsupported interior; town/NPC/key mapping is attributed L1J policy",
+        "interior_status": "UNSUPPORTED_RENTAL_AND_NEARBY_REST_ONLY"
+      }
+    }
+  ]
+}

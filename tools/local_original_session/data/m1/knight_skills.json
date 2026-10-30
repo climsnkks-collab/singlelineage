@@ -1,0 +1,1252 @@
+{
+  "policy": "LOCAL_L1J_KNIGHT_SKILLS",
+  "source": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql",
+  "source_catalogs": [
+    "tools/local_original_session/data/m1/monsters.json",
+    "tools/local_original_session/data/m3/monsters.json",
+    "tools/local_original_session/data/m4/monsters.json",
+    "tools/local_original_session/data/m5/monsters.json",
+    "tools/local_original_session/data/m6/monsters.json",
+    "tools/local_original_session/data/catalog/map0/monsters.json",
+    "tools/local_original_session/data/m6/field_population.json",
+    "tools/local_original_session/data/m6/map0_population.json",
+    "tools/local_original_session/data/m6/map_expansion2_population.json"
+  ],
+  "notes": [
+    "L1Attack.java699-706: ER only ranged>=10 and distance>=2.",
+    "L1Attack.java1494-1508: physical short distance unless distance>1 and bowActId>0.",
+    "Source NPC identity uses existing monsters.json l1j_npcid; no new spawn or stat policy."
+  ],
+  "npcs": {
+    "45009": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20631
+    },
+    "45008": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20630
+    },
+    "45019": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20640
+    },
+    "45024": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20645
+    },
+    "45016": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20637
+    },
+    "45041": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20661
+    },
+    "45082": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20702
+    },
+    "45065": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20685
+    },
+    "45107": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20725
+    },
+    "45126": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20744
+    },
+    "45136": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20753
+    },
+    "45215": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20816
+    },
+    "45043": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20663
+    },
+    "45068": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20688
+    },
+    "45165": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20781
+    },
+    "45600": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21165
+    },
+    "45042": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20662
+    },
+    "45034": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20654
+    },
+    "45058": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20678
+    },
+    "45047": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20667
+    },
+    "45054": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20674
+    },
+    "45583": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21148
+    },
+    "45259": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20855
+    },
+    "45381": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20971
+    },
+    "45361": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20951
+    },
+    "45529": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21099
+    },
+    "45545": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21115
+    },
+    "45349": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20939
+    },
+    "45104": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20723
+    },
+    "45079": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20699
+    },
+    "45182": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20794
+    },
+    "45048": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20668
+    },
+    "45338": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20928
+    },
+    "45101": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20720
+    },
+    "45683": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21239
+    },
+    "45116": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20734
+    },
+    "81075": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23125
+    },
+    "45222": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20822
+    },
+    "45812": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 21368
+    },
+    "45164": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20780
+    },
+    "45192": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20804
+    },
+    "45155": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20771
+    },
+    "45819": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21375
+    },
+    "45159": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20775
+    },
+    "45089": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20708
+    },
+    "45823": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21379
+    },
+    "45097": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20716
+    },
+    "81042": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23106
+    },
+    "45040": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20660
+    },
+    "45160": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20776
+    },
+    "45195": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20806
+    },
+    "45240": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20838
+    },
+    "46048": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 21604
+    },
+    "46049": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 21605
+    },
+    "46050": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 21606
+    },
+    "46051": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 21607
+    },
+    "46052": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 21608
+    },
+    "45006": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20628
+    },
+    "45189": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20801
+    },
+    "45262": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20857
+    },
+    "45684": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21240
+    },
+    "46129": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21685
+    },
+    "45267": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20862
+    },
+    "45294": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20888
+    },
+    "45053": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20673
+    },
+    "81221": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23246
+    },
+    "45609": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21174
+    },
+    "45805": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21361
+    },
+    "45387": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20977
+    },
+    "81069": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23119
+    },
+    "45445": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21016
+    },
+    "45196": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20807
+    },
+    "45469": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21040
+    },
+    "45505": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21076
+    },
+    "45392": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20981
+    },
+    "45509": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21080
+    },
+    "45531": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21101
+    },
+    "45362": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20952
+    },
+    "45538": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21108
+    },
+    "45452": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21023
+    },
+    "45390": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20979
+    },
+    "45449": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21020
+    },
+    "45389": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20978
+    },
+    "45355": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20945
+    },
+    "45371": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20961
+    },
+    "45358": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20948
+    },
+    "45401": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20990
+    },
+    "45477": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21048
+    },
+    "45378": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20968
+    },
+    "45470": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21041
+    },
+    "45364": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20954
+    },
+    "45828": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21384
+    },
+    "45826": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21382
+    },
+    "81229": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 23254
+    },
+    "45407": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20996
+    },
+    "45386": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20976
+    },
+    "81099": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23149
+    },
+    "45296": {
+      "ranged": 10,
+      "bow_action": 2559,
+      "sql_line": 20890
+    },
+    "45681": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21237
+    },
+    "45678": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21235
+    },
+    "45680": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21236
+    },
+    "45102": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20721
+    },
+    "81067": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 23118
+    },
+    "45348": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20938
+    },
+    "45332": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20924
+    },
+    "45406": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20995
+    },
+    "45399": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20988
+    },
+    "45513": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21084
+    },
+    "45547": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21117
+    },
+    "81102": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23152
+    },
+    "45049": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20669
+    },
+    "45039": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20659
+    },
+    "45393": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20982
+    },
+    "45044": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20664
+    },
+    "45775": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21331
+    },
+    "45778": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21334
+    },
+    "45781": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21337
+    },
+    "45780": {
+      "ranged": 8,
+      "bow_action": 66,
+      "sql_line": 21336
+    },
+    "45779": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21335
+    },
+    "45773": {
+      "ranged": 8,
+      "bow_action": 66,
+      "sql_line": 21329
+    },
+    "45152": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20768
+    },
+    "45776": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21332
+    },
+    "45777": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21333
+    },
+    "45117": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20735
+    },
+    "45791": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21347
+    },
+    "45118": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20736
+    },
+    "45792": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21348
+    },
+    "45793": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21349
+    },
+    "45784": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21340
+    },
+    "45794": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21350
+    },
+    "45795": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21351
+    },
+    "46092": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21648
+    },
+    "46093": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21649
+    },
+    "46094": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21650
+    },
+    "46095": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21651
+    },
+    "46096": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21652
+    },
+    "46106": {
+      "ranged": 6,
+      "bow_action": 4552,
+      "sql_line": 21662
+    },
+    "45278": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20872
+    },
+    "45622": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21187
+    },
+    "45206": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20812
+    },
+    "81225": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23250
+    },
+    "45620": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21185
+    },
+    "46133": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21689
+    },
+    "45621": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21186
+    },
+    "45554": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21124
+    },
+    "45549": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21119
+    },
+    "45619": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21184
+    },
+    "45562": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21132
+    },
+    "45410": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20999
+    },
+    "45640": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21198
+    },
+    "45551": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21121
+    },
+    "45558": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21128
+    },
+    "45337": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20927
+    },
+    "45295": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20889
+    },
+    "45318": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20912
+    },
+    "45610": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21175
+    },
+    "45264": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20859
+    },
+    "45797": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21353
+    },
+    "91206": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23322
+    },
+    "45122": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20740
+    },
+    "45161": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20777
+    },
+    "45130": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20748
+    },
+    "45131": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20749
+    },
+    "45573": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21138
+    },
+    "45030": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20651
+    },
+    "45098": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20717
+    },
+    "45127": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20745
+    },
+    "45143": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20760
+    },
+    "45149": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20765
+    },
+    "45171": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20787
+    },
+    "45121": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20739
+    },
+    "45265": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20860
+    },
+    "45157": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20773
+    },
+    "45223": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20823
+    },
+    "45213": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20814
+    },
+    "45138": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20755
+    },
+    "45346": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20936
+    },
+    "45046": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20666
+    },
+    "45173": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20789
+    },
+    "45140": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20757
+    },
+    "81066": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 23117
+    },
+    "45184": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20796
+    },
+    "45115": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20733
+    },
+    "45027": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20648
+    },
+    "45025": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20646
+    },
+    "45033": {
+      "ranged": 10,
+      "bow_action": 0,
+      "sql_line": 20653
+    },
+    "45064": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20684
+    },
+    "45147": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20763
+    },
+    "45092": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20711
+    },
+    "45420": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21009
+    },
+    "45144": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20761
+    },
+    "45321": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20913
+    },
+    "45317": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20911
+    },
+    "45324": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20916
+    },
+    "81080": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 23130
+    },
+    "45276": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20870
+    },
+    "45370": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20960
+    },
+    "45190": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20802
+    },
+    "45473": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21044
+    },
+    "45488": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21059
+    },
+    "45497": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21068
+    },
+    "45464": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21035
+    },
+    "45601": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21166
+    },
+    "45083": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20703
+    },
+    "45032": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20652
+    },
+    "45241": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20839
+    },
+    "45298": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20892
+    },
+    "45614": {
+      "ranged": 3,
+      "bow_action": 0,
+      "sql_line": 21179
+    },
+    "45456": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21027
+    },
+    "45270": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20864
+    },
+    "45286": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20880
+    },
+    "45269": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20863
+    },
+    "45203": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20811
+    },
+    "45365": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20955
+    },
+    "45284": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20878
+    },
+    "45341": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 20931
+    },
+    "45263": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 20858
+    },
+    "45291": {
+      "ranged": 10,
+      "bow_action": 66,
+      "sql_line": 20885
+    },
+    "45257": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20853
+    },
+    "45359": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20949
+    },
+    "45224": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20824
+    },
+    "45248": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20845
+    },
+    "45372": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20962
+    },
+    "45216": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20817
+    },
+    "45005": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20627
+    },
+    "45010": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20632
+    },
+    "45012": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20634
+    },
+    "45021": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20642
+    },
+    "45060": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20680
+    },
+    "70984": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 22626
+    },
+    "81159": {
+      "ranged": 0,
+      "bow_action": 0,
+      "sql_line": 23184
+    },
+    "45280": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20874
+    },
+    "45289": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20883
+    },
+    "45451": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21022
+    },
+    "45373": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 20963
+    },
+    "45682": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21238
+    },
+    "45649": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21207
+    },
+    "45141": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20758
+    },
+    "45088": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20707
+    },
+    "45162": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20778
+    },
+    "45322": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20914
+    },
+    "45221": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20821
+    },
+    "45198": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20809
+    },
+    "45174": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 20790
+    },
+    "45515": {
+      "ranged": 1,
+      "bow_action": 0,
+      "sql_line": 21086
+    },
+    "45617": {
+      "ranged": 2,
+      "bow_action": 0,
+      "sql_line": 21182
+    }
+  }
+}

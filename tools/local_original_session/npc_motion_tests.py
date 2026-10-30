@@ -112,6 +112,7 @@ class ConnectedMotionTests(unittest.IsolatedAsyncioTestCase):
         self.row = dict(writer=self.writer, policy_row=policy_row, peer=dict(connection_id=4, endpoint_port=14030),
                         joined=False, failed=False, operation_lock=asyncio.Lock())
         self.producer = object.__new__(b.PersistentBroker)
+        self.producer._npc_respawn = None
         self.producer.realm, self.producer.policy = self.realm, self.policy
         self.producer._claims = {12000: [], 14030: [self.row]}
         self.producer._closing = False

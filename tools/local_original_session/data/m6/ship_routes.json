@@ -1,0 +1,63 @@
+{
+  "status": "LOCAL_VOYAGE",
+  "route": {
+    "key": 4,
+    "harbor_map": 4,
+    "interior_map": 83,
+    "ticket_id": 12017,
+    "dock_box": [
+      33417,
+      33496,
+      33430,
+      33505
+    ],
+    "interior_point": [
+      32735,
+      32797
+    ],
+    "arrival_map": 70,
+    "arrival_random": [
+      32937,
+      33042,
+      7
+    ],
+    "return_point": [
+      33426,
+      33502
+    ],
+    "schedule": {
+      "days": "1111111",
+      "interval_minutes": 5,
+      "entries": 288,
+      "f3": 2,
+      "f4": 2
+    }
+  },
+  "native_sources": [
+    "work/all_table_semantics/inputs/imported/bin/shipinfo.bin:key4 body offset0x17E",
+    "work/all_table_semantics/remaining/shipinfo/report.json",
+    "work/source_game_data/native-dump-v1.jsonl:1618 template12017 token$1930",
+    "work/local_resource_provider/assets/data/ship_data.jsonc:41",
+    "work/local_original_session/game-core-prep/BOAT_EVIDENCE.md",
+    "work/local_server_rea_20261016/run397_boat_travel/client_ship_protocol.json:RVA534FD7..535030 4EF8 required signed-i32 f1"
+  ],
+  "local_backend_policy": {
+    "label": "LOCAL 운항 정책(사용자 위임, Claude 결정)",
+    "source_root": "D:/SingleLineageRef/l1j-en-classic",
+    "clock": "LOCAL wall-clock epoch seconds, strictly next multiple of300; UTC/KST five-minute boundaries align; not L1J sixfold clock; once reserved, convert wall departure/arrival to world.runtime.clock monotonic deadlines; reconnect within runtime preserves those deadlines; no NTP-induced leg duration drift",
+    "boarding_window": "LOCAL inclusive native dock Box; 4EF8 key4 reserves the next departure while player remains at dock; duplicate input preserves deadline; disconnect before departure cancels reservation",
+    "departure": "At next native key4 five-minute schedule time relocate to native map83 Point(32735,32797); f3/f4=2/2 are preserved raw and not interpreted as durations",
+    "arrival": "At subsequent schedule time relocate to map70; LOCAL uniform random choice among actual standable cells of native RandomPoint radius box x/y +/-7; missing terrain refuses before boarding",
+    "consumption": "Boarding and departure check native12017 possession; successful disembark debits one owned12017 with core CAS, following L1J C_Ship.java:63-64 map83 consume policy; native and L1J40300 namespaces remain separate",
+    "failure_order": "Existing position+inventory APIs are separate commits. Relocate first, then debit, then publish. Failed relocation never debits; ambiguous debit is terminal and never retried. Not a crash-atomic joint transaction; crash between relocation and debit can leave a free arrival",
+    "reconnect": "Cancel/join feature task at disconnect. In-process map83 reconnect retains absolute arrival deadline; overdue arrival runs after selection under row/world lock. Restart without feature memory uses saved map83 and next schedule boundary, rechecking ticket. Map70 never launches another debit",
+    "return_scroll": "LOCAL destination native key4 f12 map4(33426,33502), heading4; item owner validates terrain, consumes and saves; external relocation cancels voyage",
+    "notification": "4F0E not emitted; f1 business meaning/normal value unknown"
+  },
+  "unresolved": [
+    "4F0E.f1 business meaning and normal value UNKNOWN; no notification is sent",
+    "Native official clock binding, timer durations, RandomPoint sampling and official packet order remain UNKNOWN; implemented timing/sampling are user-authorized LOCAL policy",
+    "Position and fare have separate existing persistence owners; crash-atomic joint commit is not available; partial failure is reported, never claimed successful"
+  ],
+  "policy_label": "LOCAL 운항 정책(사용자 위임, Claude 결정)"
+}

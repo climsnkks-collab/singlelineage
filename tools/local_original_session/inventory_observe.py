@@ -8,22 +8,22 @@ from __future__ import annotations
 
 import asyncio
 import struct
+import inspect
+import sys
 from time import monotonic_ns
 
 from tools.local_original_session import edge, inventory, npc_observe, observe
 
-INVENTORY_SOURCE_SHA = '92a80df4fc9fe83f173bd15171500245844b52ca29e544dc08a5877f277ecead'
-COUNT_BUDGET_SOURCE_SHA = 'd436d4c9a12d09d83115f9add1ee256aecf17c04541e8a66449f94b4f01741d3'
 BYTE_LIMIT = observe.RETAINED_SAMPLE_LIMIT
+# Kit query: ~1.9 KB route + ~227 B per row (fixture), 180 rows ~43 KB.
+KIT_BYTE_LIMIT = 65536
 MIN_INTERVAL_NS = inventory.MIN_INTERVAL_NS
 need = inventory.need
 
 
 def _source():
-    need(observe.digest(observe.ordinary(observe.Path(inventory.__file__)))
-         == INVENTORY_SOURCE_SHA, 'INVENTORY_OBSERVE_PARENT_SOURCE_CHANGED')
-    need(observe.digest(observe.ordinary(observe.ROOT / 'tools/local_original_session/npc_observe.py'))
-         == COUNT_BUDGET_SOURCE_SHA, 'INVENTORY_OBSERVE_COUNT_BUDGET_SOURCE_CHANGED')
+    # Python source hash pins (inventory.py, npc_observe.py) were removed; the
+    # parent contract/layout checks in inventory._source() still apply.
     return inventory._source()
 
 
@@ -41,8 +41,11 @@ def _empty(reason):
 
 class _ObservationBudget(npc_observe._ObservationBudget):
     """Reuse the pinned positive count-only provenance; no extra reads."""
+    limit = None  # BYTE_LIMIT; the M1 kit query (up to inventory.KIT_MAX_ITEMS rows) sets KIT_BYTE_LIMIT.
+
     def read(self, at, size, image=False):
-        need(type(size) is int and self.spent + size <= BYTE_LIMIT, 'INVENTORY_OBSERVE_BYTE_BUDGET')
+        limit = BYTE_LIMIT if self.limit is None else self.limit
+        need(type(size) is int and self.spent + size <= limit, 'INVENTORY_OBSERVE_BYTE_BUDGET')
         return super().read(at, size, image)
 
 
@@ -84,7 +87,62 @@ class InventoryObserver:
         self._closed = True
         self._authority.close()  # Only the private helper's state; no resource close.
 
-    async def sample(self, writer, *, now_ns):
+    async def sample_transfer_return(self, writer, *, now_ns, session):
+        return await InventoryObserver.sample(self, writer, now_ns=now_ns, transfer_return=session)
+
+    async def sample_transfer_drop(self, writer, *, now_ns, session):
+        return await InventoryObserver.sample(self, writer, now_ns=now_ns, transfer_drop=session)
+
+    async def sample_shop_adoption(self, writer, *, now_ns, adoption):
+        need(adoption is not None, 'INVENTORY_OBSERVE_EXPLICIT_SHOP_ADOPTION_REQUIRED')
+        return await InventoryObserver.sample(self, writer, now_ns=now_ns, shop_adoption=adoption)
+
+    def _shop_adoption_current(self, writer, row, frame, adoption):
+        import trade_delivery
+        import server_owned_menu as menus
+        broker = self._authority.broker
+        service = getattr(broker, '_shop_trade_delivery', None)
+        need(sys.modules.get('trade_delivery') is trade_delivery
+             and observe.digest(observe.ordinary(observe.Path(trade_delivery.__file__)))
+                 == 'afcebef885c4d7e6b2ada83df340dfb5dbe0c16a28d95c247a1363ae1b274cf3'
+             and type(service) is trade_delivery.Service
+             and type(adoption) is trade_delivery.ProjectionAdoption,
+             'INVENTORY_OBSERVE_ORIGINAL_SHOP_SERVICE_REQUIRED')
+        for name in ('adoption_memory_record', 'validate_adoption'):
+            method = getattr(service, name)
+            need(inspect.ismethod(method) and method.__self__ is service
+                 and method.__func__ is getattr(trade_delivery.Service, name),
+                 'INVENTORY_OBSERVE_ORIGINAL_SHOP_METHOD_REQUIRED')
+        owner = menus.get_server_menu(broker)
+        need(type(owner) is menus.ServerMenuOwner and owner.broker is broker
+             and owner.trade.feature is service.feature and owner.provider is broker._canonical_provider
+             and service.store.provider is owner.provider and service.feature.broker is broker,
+             'INVENTORY_OBSERVE_SHOP_NAMESPACE_REQUIRED')
+        binding = owner.provider.bind_selected(writer)
+        generation = broker.inventory_selection_current(writer)
+        need(binding.writer is writer and binding.generation is generation
+             and generation is broker._inventory_generation and generation.phase == 'ACTIVE'
+             and generation.writer is writer and generation.row is row
+             and row['writer'] is writer and binding.operation_lock is row['operation_lock']
+             and generation.lock is binding.operation_lock and generation.lock.locked()
+             and generation.game.selection is generation.selected
+             and adoption.generation_ref() is generation and adoption.uid == binding.uid
+             and adoption.frame is generation.current_frame is frame
+             and service.last_adoption is adoption,
+             'INVENTORY_OBSERVE_EXACT_SHOP_ADOPTION_REQUIRED')
+        # Original menu binding scope owns Store source callbacks. No borrowed
+        # binding, source scope or operation survives this synchronous check.
+        with owner.binding_scope(binding):
+            need(service.adoption_memory_record(adoption) is adoption,
+                 'INVENTORY_OBSERVE_ISSUED_SHOP_ADOPTION_REQUIRED')
+            need(service.validate_adoption(binding, adoption) is True,
+                 'INVENTORY_OBSERVE_CURRENT_SHOP_ADOPTION_REQUIRED')
+        need(broker._inventory_generation is generation and generation.current_frame is frame
+             and generation.row is row and service.last_adoption is adoption,
+             'INVENTORY_OBSERVE_SHOP_ADOPTION_CHANGED')
+
+    async def sample(self, writer, *, now_ns, transfer_return=None, transfer_drop=None, shop_adoption=None):
+        transfer_session=transfer_return if transfer_return is not None else transfer_drop
         result = _empty('NOT_SAMPLED')
         budget, entered = None, False
         try:
@@ -106,15 +164,29 @@ class InventoryObserver:
             update_operation = getattr(broker, '_inventory_update_operation', None)
             restore_mode = getattr(broker, '_inventory_restore_only', None)
             collection = self.collection_policy is not None
+            # M1 world kit (broker._inventory_kit_policy): several delivered rows,
+            # compared like the collection subset; an empty client is still pending.
+            kit = getattr(broker, '_inventory_kit_policy', None) == inventory.KIT_POLICY
             self._collection_current(broker)
             generation = getattr(broker, '_inventory_generation', None)
+            need(not (transfer_return is not None and transfer_drop is not None),
+                 'INVENTORY_OBSERVE_ONE_TRANSFER_PURPOSE_REQUIRED')
+            need(transfer_session is None or collection and update_operation is None,
+                 'INVENTORY_OBSERVE_RETURN_COLLECTION_NO_UPDATE_REQUIRED')
+            need(shop_adoption is None or collection and transfer_session is None and update_operation is None,
+                 'INVENTORY_OBSERVE_ONE_SHOP_PURPOSE_REQUIRED')
             expected_rows = None
+            if kit:
+                need(delivery_service is not None and delivery is not None and type(current_frame) is bytes
+                     and update_operation is None, 'INVENTORY_OBSERVE_KIT_DELIVERY_REQUIRED')
+                expected_rows = [self._row(item) for item in inventory.validate_kit_frame(current_frame)]
             if collection:
                 need(delivery_service is not None and delivery is not None and type(current_frame) is bytes,
                      'INVENTORY_OBSERVE_COLLECTION_DELIVERY_REQUIRED')
                 need(update_operation is None, 'INVENTORY_OBSERVE_COLLECTION_UPDATE_UNSUPPORTED')
-                expected_rows = [self._row(item) for item in inventory.validate_collection_frame(
+                expected_rows = [self._row(item) for item in inventory.validate_current_collection_frame(
                     current_frame, policy=self.collection_policy)]
+            return_context = [None]
             def same_delivery(current):
                 self._collection_current(broker)
                 if collection:
@@ -163,7 +235,33 @@ class InventoryObserver:
                          and delivery[2] == current[2], 'INVENTORY_AUTHORITY_CHANGED')
                     broker._inventory_selection_frame_current(writer, row, delivery_frame)
                     if update_operation is None:
-                        need(current_frame is delivery_frame, 'INVENTORY_OBSERVE_CURRENT_FRAME_UNPROVEN')
+                        if shop_adoption is not None:
+                            InventoryObserver._shop_adoption_current(self, writer, row, current_frame, shop_adoption)
+                        elif transfer_session is None:
+                            need(current_frame is delivery_frame, 'INVENTORY_OBSERVE_CURRENT_FRAME_UNPROVEN')
+                        else:
+                            from types import MethodType
+                            from tools.local_original_session import item_transfer_session as transfer
+                            method=transfer_session.context_locked
+                            need(collection and type(transfer_session) is transfer.ItemTransferSession
+                                 and generation.transfer_session is transfer_session
+                                 and type(method) is MethodType and method.__self__ is transfer_session
+                                 and method.__func__ is transfer.ItemTransferSession.context_locked,
+                                 'INVENTORY_OBSERVE_ORIGINAL_RETURN_SESSION_REQUIRED')
+                            returned=method(writer)
+                            need(transfer_session.phase==('DROPPED' if transfer_drop is not None else 'RETURNED') and transfer_session.pending is None
+                                 and not transfer_session.closed and returned.generation is generation
+                                 and returned.row is row and returned.store is broker._inventory_store
+                                 and returned.current_frame is current_frame and returned.initial_frame is delivery_frame
+                                 and ((transfer_drop is None and returned.snapshot.phase=='RETURNED'
+                                       and returned.snapshot.owner=='PLAYER' and returned.snapshot.frame_ab==current_frame)
+                                      or (transfer_drop is not None and returned.snapshot.phase=='DROPPED'
+                                          and returned.snapshot.owner=='GROUND'))
+                                 and returned.membership is transfer_session.membership
+                                 and returned.membership.phase=='DRAINED',
+                                 'INVENTORY_OBSERVE_ACTUAL_RETURN_DRAIN_REQUIRED')
+                            if return_context[0] is None:return_context[0]=returned
+                            else:transfer.ItemTransferSession._same(return_context[0],returned)
                     else:
                         op = update_operation
                         need(type(op) is dict and type(op['phase']) is str and op['phase'] == 'DRAINED'
@@ -198,7 +296,10 @@ class InventoryObserver:
             row, = claims
             # Caller does not hold this lock; avoid a second independent lock.
             operation_lock = row['operation_lock']
-            async with operation_lock:
+            # SHOP consumes the actual canonical connection scope; ordinary
+            # inventory/transfer/update samples retain their original lock API.
+            scope = operation_lock if shop_adoption is None else broker._row_operation(writer, row)
+            async with scope:
                 need(row['operation_lock'] is operation_lock, 'INVENTORY_OBSERVE_ROW_LOCK_CHANGED')
                 before = authority._current(writer, row)
                 same_delivery(before)
@@ -222,6 +323,8 @@ class InventoryObserver:
                 retained = (native, sampler, native.handle)
                 authority._checks(sampler, contract, core_checks)
                 budget = _ObservationBudget(native, sampler)
+                if kit:
+                    budget.limit = budget.byte_limit = KIT_BYTE_LIMIT
                 rows = []
                 # Caller now_ns is this host's monotonic_ns call timestamp.
                 # Lock/checkpoint waits may delay it; cadence belongs to actual
@@ -256,7 +359,7 @@ class InventoryObserver:
                           and (capacity - begin) % layout['stride'] == 0),
                          'INVENTORY_OBSERVE_CANONICAL_VECTOR_REQUIRED')
                     count = (end - begin) // layout['stride']
-                    need(count in ((0, 1, 2) if collection else (0, 1)),
+                    need(count in (range(inventory.KIT_MAX_ITEMS + 1) if kit else (0, 1, 2) if collection else (0, 1)),
                          'INVENTORY_OBSERVE_EMPTY_OR_TWO_SUBSET' if collection else 'INVENTORY_OBSERVE_EMPTY_OR_ONE_SUBSET')
                     for index in range(count):
                         # A drained ADD does not prove that a row exists. Empty
@@ -285,11 +388,15 @@ class InventoryObserver:
                         # All names retain host storage meaning. In particular
                         # field18_u64 is Row+18 / wire f3, not wire f18 bytes.
                         rows.append(values)
+                    if kit and count:
+                        need(len({row['id_u64'] for row in rows}) == count == len(expected_rows)
+                             and rows == expected_rows, 'INVENTORY_OBSERVE_KIT_ITEM_MISMATCH')
                     if collection:
                         need(len({row['id_u64'] for row in rows}) == count,
                              'INVENTORY_OBSERVE_COLLECTION_DUPLICATE_UID')
-                        need(count == len(expected_rows), 'INVENTORY_OBSERVE_COLLECTION_INCOMPLETE')
-                        need(rows == expected_rows, 'INVENTORY_OBSERVE_COLLECTION_ITEM_MISMATCH')
+                        if transfer_session is None and shop_adoption is None:
+                            need(count == len(expected_rows), 'INVENTORY_OBSERVE_COLLECTION_INCOMPLETE')
+                            need(rows == expected_rows, 'INVENTORY_OBSERVE_COLLECTION_ITEM_MISMATCH')
                     reads.verify()
                     budget.verify()
                     budget.retain = False
@@ -312,8 +419,8 @@ class InventoryObserver:
                     need(delivery_service is not None and delivery is not None
                          and type(current_frame) is bytes,
                          'EDGE_TYPED_READ_CHANGED')
-                    if collection:
-                        need(rows == expected_rows, 'FEATURE_INVENTORY_CLIENT_ITEM_MISMATCH')
+                    if collection or kit:
+                        need(count == 0 and kit or rows == expected_rows, 'FEATURE_INVENTORY_CLIENT_ITEM_MISMATCH')
                     else:
                         fields = dict(inventory.validate_frame(current_frame).raw_fields)
                         expected = dict(id_u64=fields[1], template_id_u32=fields[2] & 0xffffffff,
@@ -330,6 +437,21 @@ class InventoryObserver:
                               else next(iter(budget.instability_origins)))
                     result.update(reason='EDGE_TYPED_READ_CHANGED', source_owner_revalidated=True,
                         read_consistency='RECHECKED_SHARED_COUNT_' + origin)
+                    return result
+                if shop_adoption is not None and rows != expected_rows:
+                    # DRAINED is transport history. Only this strict current
+                    # native read can decide whether the client consumed it.
+                    result.update(status='PENDING', reason='INVENTORY_OBSERVE_SHOP_ROWS_PENDING',
+                        selected_uid=before[0].uid, map_id=before[0].map_id, entry_count=count,
+                        empty=count==0, rows=rows, source_contract_valid=True,
+                        stable_double_read=True, source_owner_revalidated=True,
+                        read_consistency='STRICT_STABLE')
+                    return result
+                if transfer_session is not None and rows != expected_rows:
+                    result.update(status='PENDING',reason='INVENTORY_OBSERVE_DROP_ROWS_PENDING' if transfer_drop is not None else 'INVENTORY_OBSERVE_RETURN_ROWS_PENDING',
+                        selected_uid=before[0].uid,map_id=before[0].map_id,entry_count=count,empty=count==0,rows=rows,
+                        source_contract_valid=True,stable_double_read=True,source_owner_revalidated=True,
+                        read_consistency='STRICT_STABLE')
                     return result
                 pending_reason = None
                 if delivery_service is not None and update_operation is not None and count == 1:

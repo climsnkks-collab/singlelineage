@@ -788,6 +788,13 @@ class ManualMovementBudgetTests(unittest.IsolatedAsyncioTestCase):
         case = npc_edge_tests.NpcSelfEdgeTests(
             'test_same_query_actual_source_self_subset_and_real_send_once_commit')
         self.addCleanup(case.doCleanups)
+        # Its inherited synthetic fixture bypasses PersistentBroker.__init__.
+        # Supply only that constructor's optional respawn default, including the
+        # inherited setup's initial _send; keep the real constructor untouched.
+        from tools.local_original_session.broker import PersistentBroker
+        respawn_default = patch.object(PersistentBroker, '_npc_respawn', None, create=True)
+        respawn_default.start()
+        self.addCleanup(respawn_default.stop)
         await case.asyncSetUp()
         self.addCleanup(case.temp.cleanup)
         proof, f = case.adapter._proof, case.f

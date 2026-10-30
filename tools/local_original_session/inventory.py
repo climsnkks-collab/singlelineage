@@ -31,6 +31,9 @@ FIELD_TYPES = {1: 'u32', 2: 'i32', 3: 'u64', 4: 'u64', 5: 'i32', 7: 'i32',
 PROOF = 'work/online_inventory_skill_source/source-contract.json'
 EVIDENCE = 'work/local_server_rea_20261016/run30_inventory_first_wire/source-evidence.json'
 CATALOG_NAMES = 'work/all_table_semantics/item/current-names.json'
+# Official-only skull amulet: an explicitly supported LOCAL template, not a
+# recovered item.bin identity. Keep the fixed catalog and its source proof intact.
+LOCAL_TEMPLATE_IDS = frozenset({614})
 MAP_PROOF = 'work/online_world_public_source/map-contract.json'
 PUBLIC_PROOF = 'work/online_public_session-v4/source-contract.json'
 INTRO_PROOF = 'work/online_intro_capture_20261006/source-contract.json'
@@ -168,7 +171,33 @@ def _reader_intro(reader, documents):
     return observe.quit_scene_contract(intro)
 
 
+_SOURCE_CACHE = None
+
+
 def _source():
+    # The pinned documents are verified once per process (per SOURCE_PINS
+    # object); request paths reuse that result instead of re-hashing files.
+    global _SOURCE_CACHE
+    if _SOURCE_CACHE is None or _SOURCE_CACHE[0] is not SOURCE_PINS:
+        _SOURCE_CACHE = (SOURCE_PINS, _source_verified())
+    return _SOURCE_CACHE[1]
+
+
+_DOCUMENT_CACHE = None
+
+
+def _checked_documents():
+    # Read-only documents for the per-sample _checks comparison, read and
+    # hash-checked once per process (per SOURCE_PINS content) like _source().
+    # Callers that edit a document (_reader_intro) still get a fresh copy.
+    global _DOCUMENT_CACHE
+    pins = tuple(SOURCE_PINS.items())
+    if _DOCUMENT_CACHE is None or _DOCUMENT_CACHE[0] != pins:
+        _DOCUMENT_CACHE = (pins, _source_documents())
+    return _DOCUMENT_CACHE[1]
+
+
+def _source_verified():
     documents = _source_documents()
     proof, wire = documents[PROOF], documents[EVIDENCE]
     need(proof['CONTROL'] == wire['CONTROL_sha256'] and wire['wire_binding']['numeric_opcode'] == OPCODE,
@@ -243,6 +272,20 @@ class ItemInfo:
     def template_bits(self):
         return dict(self.raw_fields)[2] & 0xffffffff
 
+    @property
+    def bless(self):
+        """Explicit LOCAL instance grade; old unmarked saves are normal (1)."""
+        from tools.local_original_session.world_enchant_inventory import instance_grade
+        return instance_grade(self)
+
+    @property
+    def blessed(self):
+        return self.bless == 0
+
+    @property
+    def cursed(self):
+        return self.bless == 2
+
 
 def _values(fields, keys):
     need(type(fields) is dict and all(type(k) is int for k in fields)
@@ -258,7 +301,8 @@ def _values(fields, keys):
                          'i32': (-(1 << 31), 1 << 31)}[kind]
             need(type(value) is int and low <= value < high, 'INVENTORY_RAW_SCALAR_RANGE')
     need(fields[1] != 0, 'INVENTORY_EXPLICIT_NONZERO_IDENTIFIER_POLICY')
-    need((fields[2] & 0xffffffff) in keys, 'INVENTORY_TEMPLATE_NOT_IN_FIXED_CATALOG')
+    need((fields[2] & 0xffffffff) in keys or (fields[2] & 0xffffffff) in LOCAL_TEMPLATE_IDS,
+         'INVENTORY_TEMPLATE_NOT_IN_FIXED_CATALOG')
     return ItemInfo(tuple(sorted(fields.items())))
 
 
@@ -272,6 +316,111 @@ def _encode(item):
     child = b''.join(encoded)
     body = pb.encode_bytes(1, child) + pb.encode_bool(2, False)
     return struct.pack('<HH', len(body) + 6, OPCODE) + body + b'\0\0'
+
+
+# DescToken IDs from native-dump-v1 token rows; item_extra_desc.jsonc supplies
+# their item-tooltip labels/formatters. These are existing backend modifiers,
+# not values reconstructed from the original server. Class/set/temporary effects
+# need their own authority and are deliberately not flattened into an item.
+ITEM_MODIFIER_TOKENS = {
+    'str': 37, 'dex': 38, 'con': 39, 'int': 40, 'wis': 41, 'cha': 42,
+    'max_hp': 44, 'max_mp': 187, 'hp_regen': 140, 'mp_regen': 141,
+    'mr': 130, 'melee_hit': 1356, 'ranged_hit': 1358,
+    'melee_damage': 1366, 'ranged_damage': 1368,
+    'resist_fire': 495, 'resist_water': 496, 'resist_wind': 497, 'resist_earth': 498,
+}
+
+
+def backend_descriptions(item, definition):
+    """Pure display projection of known LOCAL backend values into Classic tags."""
+    if definition is None:
+        return ()
+    fields = {}
+    if definition.weight is not None:
+        fields[48] = definition.weight // 1000
+    if definition.kind in ('weapon', 'armor'):
+        from tools.local_original_session.world_enchant_inventory import enchant_level
+        try:
+            level = enchant_level(item, definition)
+        except ValueError:
+            level = None  # A foreign display name cannot authorize an enchant.
+        if level is not None:
+            if definition.kind == 'weapon':
+                fields.update({33: definition.dmg_small, 34: definition.dmg_large, 1321: level})
+            else:
+                fields.update({8: definition.ac, 1417: -level})
+        if definition.kind == 'weapon':
+            ranged = definition.weapon_type == 'bow'
+            if definition.hit:
+                fields[1358 if ranged else 1356] = definition.hit
+            if definition.dmg_bonus:
+                fields[1368 if ranged else 1366] = definition.dmg_bonus
+        for key, value in getattr(definition, 'modifiers', {}).items():
+            token = ITEM_MODIFIER_TOKENS.get(key)
+            if token is not None and type(value) is int and value:
+                fields[token] = fields.get(token, 0) + value
+    # hpMod is regeneration, never potion heal_hp. Unknown effects stay absent.
+    return tuple((token, str(value).encode('ascii')) for token, value in fields.items())
+
+
+def description_body(token, value):
+    """Native ItemDescription: required int32 DescTokenID/f1 and string/f2."""
+    need(type(token) is int and 0 < token < 1 << 31
+         and type(value) is bytes and len(value) <= 256,
+         'ITEMINFO_SOURCE_DESCRIPTION_REQUIRED')
+    return pb.encode_varint(8) + pb.encode_varint(token) + pb.encode_bytes(2, value)
+
+
+def display_fields(item, definition=None, names=None):
+    """Wire-only name/count/f19; the saved ItemInfo schema stays unchanged.
+
+    509390 consumes f19 at creation, before any view builds its metadata.
+    Later 0977 remains the normal refresh path; tooltip selection and mode
+    are separate native UI contracts. Values stay existing backend policy.
+    """
+    fields = dict(item.raw_fields)
+    name = fields[18] or (names or {}).get(item.template_bits, b'')
+    if name:
+        from tools.local_original_session.world_core_kit import display_name
+        fields[18] = display_name(name, fields[4])
+    descriptions = backend_descriptions(item, definition)
+    if descriptions:
+        fields[19] = descriptions
+    return fields
+
+
+def display_item_body(fields):
+    """Full wire ItemInfo plus repeated f19, never accepted as a save row.
+
+    Validate the same canonical scalar fields before adding display children;
+    UID, quantity, template and original raw fields retain their old contract.
+    """
+    fields = dict(fields)
+    descriptions = fields.pop(19, ())
+    _, keys, _ = _source()
+    item = _values(fields, keys)
+    encoded = []
+    for number, value in item.raw_fields:
+        encoded.append(pb.encode_bytes(number, value) if FIELD_TYPES[number] == 'bytes'
+                       else pb.encode_varint(number << 3) + pb.encode_varint(int(value) & U64_MAX))
+    encoded.extend(pb.encode_bytes(19, description_body(token, value))
+                   for token, value in descriptions)
+    return b''.join(encoded)
+
+
+def display_kit_frames(field_rows, *, limit=MAX_FRAME):
+    """0964 append frames of display-only rows, bounded by the wire limit."""
+    children = [pb.encode_bytes(1, display_item_body(fields)) for fields in field_rows]
+    frames, chunk, size = [], [], len(_collection_wire([], limit))
+    for child in children:
+        if chunk and size + len(child) > limit:
+            frames.append(_collection_wire(chunk, limit))
+            chunk, size = [], len(_collection_wire([], limit))
+        chunk.append(child)
+        size += len(child)
+    if chunk or not children:
+        frames.append(_collection_wire(chunk, limit))
+    return tuple(frames)
 
 
 def build_add(fields):
@@ -405,7 +554,7 @@ class _ReadBudget(edge._Budget):
 
     def _raise_change(self):
         at, size, image, _, _ = self._physical_change
-        self._changed(at, size, image)
+        self._record_changed_read(at, size, image)
         self._change_error = _PhysicalBufferChanged('EDGE_TYPED_READ_CHANGED')
         raise self._change_error
 
@@ -428,7 +577,7 @@ class _ReadBudget(edge._Budget):
             if self._physical_change is not None:
                 self._raise_change()
             if str(error) == 'EDGE_TYPED_READ_CHANGED':
-                self._changed(at, size, image)
+                self._record_changed_read(at, size, image)
             raise
         if self._physical_change is not None:
             # The inherited verify's exact comparison would reject this same
@@ -436,7 +585,7 @@ class _ReadBudget(edge._Budget):
             self._raise_change()
         return raw
 
-    def _changed(self, at, size, image):
+    def _record_changed_read(self, at, size, image):
         if self.changed_read is None:
             ordinal = next((n for n, (saved_at, saved, saved_image) in enumerate(self.records, 1)
                             if (saved_at, len(saved), saved_image) == (at, size, image)), None)
@@ -488,9 +637,14 @@ class InventoryService:
              and getattr(self.broker, '_inventory_collection_grant', None) is self._collection_grant,
              'INVENTORY_COLLECTION_CONFIGURATION_CHANGED')
         if self._collection_policy is None:
+            if getattr(self.broker, '_inventory_kit_policy', None) == KIT_POLICY:
+                return validate_kit_frame(frame)
             return (validate_frame(frame),)
         need(type(self._collection_policy) is str and self._collection_policy == COLLECTION_POLICY,
              'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+        store = self._persistence_store()
+        if store is not None and getattr(store, '_aggregate_capability', None) is not None:
+            return validate_current_collection_frame(frame, policy=self._collection_policy)
         return validate_collection_frame(frame, policy=self._collection_policy)
 
     def _persistence_store(self):
@@ -599,7 +753,7 @@ class InventoryService:
              and id(writer) not in realm._quit and selected is not None
              and registry.selected.get(position.name) is selected
              and selected.reference == position.name == realm.profile_name
-             and position.uid == realm.profile_uid and position.map_id == 0,
+             and position.uid == realm.profile_uid and realm.serves_map(position.map_id),
              'INVENTORY_CURRENT_SELECTED_AUTHORITY_REQUIRED')
         saved_uid, _ = realm.store.select(selected.reference)
         need(saved_uid == position.uid and realm.positions.restore(position) == position,
@@ -656,7 +810,8 @@ class InventoryService:
              and self._store_bound is store_bound and store_bound is not None
              and proof._binding() == retained[:2] and native.handle == handle,
              'INVENTORY_READONLY_REFUSAL_BINDING_CHANGED')
-        self._same(before, self._authority(writer, row, refusal=evidence))
+        self._same(before, self._authority(writer, row, refusal=evidence),
+                   allow_position_change=True)
         self._restore_mode(writer, row, frame, mode)
         _source()
         self._cancelled()
@@ -664,14 +819,22 @@ class InventoryService:
         return True
 
     @staticmethod
-    def _same(before, after):
-        need(len(before[1]) == len(after[1]) and all(a is b for a, b in zip(before[1], after[1]))
+    def _same(before, after, *, allow_position_change=False):
+        # A proved pre-write refusal may outlive a normal move before the next
+        # admission slot. All owner/store/frame identities still have to match;
+        # only the selected Position at identity index 14 can advance.
+        need(type(allow_position_change) is bool
+             and (not allow_position_change or before[0].uid == after[0].uid
+                  and before[0].name == after[0].name)
+             and len(before[1]) == len(after[1])
+             and all(a is b for index, (a, b) in enumerate(zip(before[1], after[1]))
+                     if not (allow_position_change and index == 14))
              and before[2] == after[2], 'INVENTORY_AUTHORITY_CHANGED')
 
     def _checks(self, sampler, contract, core_checks):
         # Native function bodies are source/layout provenance for this passive
         # query. Actual table/data reads below retain the original Native gate.
-        documents = _source_documents()
+        documents = _checked_documents()
         intro = documents[INTRO_PROOF]
         need(_same_static(contract, documents[PROOF])
              and _same_static(self.proof.public, documents[PUBLIC_PROOF])
@@ -716,7 +879,7 @@ class InventoryService:
                      and getattr(self.broker, '_inventory_collection_grant', None) is self._collection_grant,
                      'INVENTORY_COLLECTION_CONFIGURATION_CHANGED')
                 contract, collection_keys, core_checks = _source()
-                items = _validate_collection_frame(actualframe, self._collection_policy, collection_keys)
+                items = self._items_frame(actualframe)
             self.last_pre_write_stage = 'AUTHORITY_BEFORE'
             before = self._current(writer, row)
             proof, reader = self.proof, self.reader
@@ -771,7 +934,7 @@ class InventoryService:
                         need(getattr(self.broker, '_inventory_collection_policy', None) == self._collection_policy
                              and getattr(self.broker, '_inventory_collection_grant', None) is self._collection_grant,
                              'INVENTORY_COLLECTION_CONFIGURATION_CHANGED')
-                        items = _validate_collection_frame(actualframe, self._collection_policy, collection_keys)
+                        items = self._items_frame(actualframe)
                         self._restore_mode(writer, row, actualframe, restore_only)
                         need(restore_only is True and store.verify_existing_collection(before[0].uid,
                              actualframe, policy=COLLECTION_POLICY) is False,
@@ -815,7 +978,10 @@ class InventoryService:
             self.last_result.update(status='OBSERVED', reason=None,
                 selected_uid=before[0].uid, map_id=before[0].map_id,
                 inventory_empty=True, source_contract_valid=True, stable_double_read=True,
-                identifier=items[0].identifier if len(items) == 1 else None, catalog_static_key_verified=True)
+                identifier=items[0].identifier if len(items) == 1 else None,
+                catalog_static_key_verified=all(item.template_bits not in LOCAL_TEMPLATE_IDS for item in items))
+            self.last_result['local_template_ids'] = tuple(sorted({
+                item.template_bits for item in items if item.template_bits in LOCAL_TEMPLATE_IDS}))
             if self._collection_policy is not None:
                 self.last_result['identifiers'] = tuple(item.identifier for item in items)
                 return actualframe
@@ -900,15 +1066,20 @@ def _collection_items(items, policy, keys):
     return tuple(validated)
 
 
-def _encode_collection(items):
-    children = []
-    for item in items:
-        single = _encode(item)
-        with pb.parse_message(single[4:-2], schema={1: 2, 2: 0}) as message:
-            children.append(pb.encode_bytes(1, bytes(message.occurrences(1)[0].value)))
+def _collection_child(item):
+    single = _encode(item)
+    with pb.parse_message(single[4:-2], schema={1: 2, 2: 0}) as message:
+        return pb.encode_bytes(1, bytes(message.occurrences(1)[0].value))
+
+
+def _encode_collection(items, limit=MAX_FRAME):
+    return _collection_wire([_collection_child(item) for item in items], limit)
+
+
+def _collection_wire(children, limit=MAX_FRAME):
     body = b''.join(children) + pb.encode_bool(2, False)
     wire = struct.pack('<HH', len(body) + 6, OPCODE) + body + b'\0\0'
-    need(len(wire) <= MAX_FRAME, 'INVENTORY_COLLECTION_FRAME_SIZE')
+    need(len(wire) <= limit, 'INVENTORY_COLLECTION_FRAME_SIZE')
     return wire
 
 
@@ -923,6 +1094,38 @@ def validate_collection_frame(wire, *, policy):
     need(type(policy) is str and policy == COLLECTION_POLICY,
          'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
     _, keys, _ = _source()
+    return _validate_collection_frame(wire, policy, keys)
+
+
+def build_current_collection(items, *, policy):
+    """Current/storage 0..2 rows; empty state is not a clear/add grant.
+
+    Keep the original singleton and provisioning 1..2 builders unchanged.
+    Removal still uses the source-owned SC0978, never an empty ADD as erase.
+    """
+    need(type(policy) is str and policy == COLLECTION_POLICY,
+         'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+    need(type(items) is tuple, 'INVENTORY_COLLECTION_REAL_PARSED_ITEMS_REQUIRED')
+    if items:
+        return build_collection_add(items, policy=policy)
+    _source()  # Pinned optional repeated ItemInfo + explicit false envelope.
+    return _encode_collection(())
+
+
+def validate_current_collection_frame(wire, *, policy):
+    """Canonical current/storage state, distinct from the 1..2 ADD subset."""
+    need(type(policy) is str and policy == COLLECTION_POLICY,
+         'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+    _, keys, _ = _source()
+    return _validate_current_collection_frame(wire, policy, keys)
+
+
+def _validate_current_collection_frame(wire, policy, keys):
+    need(type(policy) is str and policy == COLLECTION_POLICY,
+         'INVENTORY_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+    need(type(wire) is bytes, 'INVENTORY_COLLECTION_FRAME_REQUIRED')
+    if wire == _encode_collection(()):
+        return ()
     return _validate_collection_frame(wire, policy, keys)
 
 
@@ -950,3 +1153,98 @@ def _validate_collection_frame(wire, policy, keys):
         return result
     except (KeyError, TypeError, ValueError, OverflowError):
         raise ValueError('MALFORMED_INVENTORY_COLLECTION_SUBSET') from None
+
+
+# Explicit local M1 class starter kit (world mode only, see broker). Same
+# repeated-ItemInfo 0964 envelope as the collection subset: outer f1 repeated,
+# outer f2 explicit false. A one-item kit frame equals the singleton frame, so
+# saved singleton rows stay readable. Each child reuses the singleton validator.
+# KIT_MAX_ITEMS = L1J L1PcInventory.MAX_SIZE (l1j-en/classic: 180 slots; a new
+# non-stackable item is refused at 180). The saved kit row is one canonical
+# frame of up to KIT_MAX_FRAME; on the wire it goes out as kit_wire_frames():
+# 0964 frames of <= MAX_FRAME, each with outer f2 explicit false = append
+# (run30 W22/W23: the false branch appends every repeated ItemInfo).
+KIT_POLICY = 'LOCAL_M1_CLASS_STARTER_KIT'
+KIT_MAX_ITEMS = 180
+KIT_MAX_FRAME = 32768
+
+
+def _kit_items(items, keys):
+    need(type(items) is tuple and 1 <= len(items) <= KIT_MAX_ITEMS, 'INVENTORY_KIT_ITEM_COUNT')
+    validated = []
+    for item in items:
+        need(type(item) is ItemInfo and type(item.raw_fields) is tuple, 'INVENTORY_KIT_REAL_ITEM_REQUIRED')
+        validated.append(_validate_single_frame(_encode(_values(dict(item.raw_fields), keys)), keys))
+    need(len({item.identifier for item in validated}) == len(validated), 'INVENTORY_KIT_DUPLICATE_ITEM_UID')
+    return tuple(validated)
+
+
+def build_kit_frame(field_rows):
+    """Explicit caller rows (17 raw fields each) -> one canonical repeated 0964."""
+    _, keys, _ = _source()
+    need(type(field_rows) in (tuple, list), 'INVENTORY_KIT_ROWS_REQUIRED')
+    items = tuple(_values(dict(fields), keys) for fields in field_rows)
+    return _encode_collection(_kit_items(items, keys), KIT_MAX_FRAME)
+
+
+def kit_wire_frames(frame):
+    """Canonical saved kit row -> 0964 wire frames of <= MAX_FRAME, item order kept.
+
+    A row that already fits is returned unchanged as its single frame.
+    """
+    items = validate_kit_frame(frame)
+    if len(frame) <= MAX_FRAME:
+        return (frame,)
+    # Each item's child bytes are encoded once; a frame's size is the fixed
+    # header/footer plus its children (linear, same bytes as re-encoding).
+    overhead = len(_collection_wire([], KIT_MAX_FRAME))
+    frames, chunk, size = [], [], overhead
+    for item in items:
+        child = _collection_child(item)
+        if chunk and size + len(child) > MAX_FRAME:
+            frames.append(_collection_wire(chunk))
+            chunk, size = [], overhead
+        chunk.append(child)
+        size += len(child)
+    frames.append(_collection_wire(chunk))
+    return tuple(frames)
+
+
+_KIT_FRAME_CACHE = {}
+
+
+def validate_kit_frame(wire):
+    _, keys, _ = _source()
+    # Same bytes + same catalog keys always validate to the same immutable
+    # items; reuse that result instead of re-parsing on every request check.
+    hit = _KIT_FRAME_CACHE.get(wire) if type(wire) is bytes else None
+    if hit is not None and hit[0] is keys:
+        return hit[1]
+    result = _validate_kit_frame(wire, keys)
+    if len(_KIT_FRAME_CACHE) >= 64:
+        _KIT_FRAME_CACHE.clear()
+    _KIT_FRAME_CACHE[wire] = (keys, result)
+    return result
+
+
+def _validate_kit_frame(wire, keys):
+    try:
+        need(type(wire) is bytes and 6 <= len(wire) <= KIT_MAX_FRAME
+             and int.from_bytes(wire[:2], 'little') == len(wire)
+             and int.from_bytes(wire[2:4], 'little') == OPCODE and wire[-2:] == b'\0\0',
+             'INVENTORY_KIT_FRAME_REQUIRED')
+        limits = pb.WireLimits(max_body=KIT_MAX_FRAME, max_fields=KIT_MAX_ITEMS + 1, max_field_bytes=512)
+        with pb.parse_message(wire[4:-2], schema={1: 2, 2: 0}, limits=limits) as outer:
+            children, flags = outer.occurrences(1), outer.occurrences(2)
+            need(1 <= len(children) <= KIT_MAX_ITEMS and len(flags) == 1 and flags[0].value == 0
+                 and len(outer.fields) == len(children) + 1, 'INVENTORY_KIT_EXPLICIT_FALSE_REQUIRED')
+            items = []
+            for child in children:
+                body = pb.encode_bytes(1, bytes(child.value)) + pb.encode_bool(2, False)
+                single = struct.pack('<HH', len(body) + 6, OPCODE) + body + b'\0\0'
+                items.append(_validate_single_frame(single, keys))
+        result = _kit_items(tuple(items), keys)
+        need(_encode_collection(result, KIT_MAX_FRAME) == wire, 'INVENTORY_KIT_CANONICAL_FRAME_REQUIRED')
+        return result
+    except (KeyError, TypeError, ValueError, OverflowError):
+        raise ValueError('MALFORMED_INVENTORY_KIT_FRAME') from None

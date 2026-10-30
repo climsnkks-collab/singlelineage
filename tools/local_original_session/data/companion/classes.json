@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "status": "LOCAL_POLICY_WITH_CLIENT_TIMING",
+  "provenance": {
+    "decision": "work/local_original_session/game-core-prep/COMPANION_DESIGN_DECISION.md (2~4차: 동료 = 일반 캐릭터, 여러 명·다른 직업 확장 구조)",
+    "timing": "work/local_resource_provider/assets/data/list.spr 명목 시간 round(C합/24*1000)ms, data/m1/action_speed.json 과 같은 규칙",
+    "local_policy": "max_active_per_owner, follow_distance, assist_scan_tiles, defend_heal_enter, return_scroll_templates, weapon_action 의 blunt/twohand 대응은 LOCAL 설계값"
+  },
+  "max_active_per_owner": 1,
+  "follow_distance": 1,
+  "assist_scan_tiles": 3,
+  "defend_heal_enter": 0.6,
+  "return_scroll_templates": [
+    162
+  ],
+  "weapon_action": {
+    "unarmed": "unarmed",
+    "sword": "sword",
+    "axe": "axe",
+    "blunt": "axe",
+    "spear": "spear",
+    "bow": "bow",
+    "staff": "staff",
+    "dagger": "dagger",
+    "twohand": "sword"
+  },
+  "classes": {
+    "3": {
+      "key": "mage",
+      "growth": "mage_growth.json",
+      "spells": "mage_spells.json",
+      "ai_policy": "ai_policy.json",
+      "sprites": {
+        "0": 734,
+        "1": 1186
+      },
+      "starter_weapon_template": 230,
+      "action_speed": {
+        "734": {
+          "unarmed": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:2157 0.walk C합16"
+            },
+            "attack_ms": {
+              "value": 917,
+              "source": "client",
+              "ref": "list.spr:2158 1.attack C합22"
+            }
+          },
+          "sword": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:2161 30.walk onehandsword C합16"
+            },
+            "attack_ms": {
+              "value": 1042,
+              "source": "client",
+              "ref": "list.spr:2162 31.attack onehandsword C합25"
+            }
+          },
+          "axe": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:2166 35.walk axe C합16"
+            },
+            "attack_ms": {
+              "value": 1167,
+              "source": "client",
+              "ref": "list.spr:2167 36.attack axe C합28"
+            }
+          },
+          "bow": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:2174 40.walk bow C합16"
+            },
+            "attack_ms": {
+              "value": 1750,
+              "source": "client",
+              "ref": "list.spr:2175 41.attack bow C합42"
+            }
+          },
+          "spear": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:2178 45.walk spear C합16"
+            },
+            "attack_ms": {
+              "value": 1167,
+              "source": "client",
+              "ref": "list.spr:2179 46.attack spear C합28"
+            }
+          },
+          "staff": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:2183 50.walk staff C합16"
+            },
+            "attack_ms": {
+              "value": 1167,
+              "source": "client",
+              "ref": "list.spr:2184 51.attack staff C합28"
+            }
+          },
+          "dagger": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:2187 55.walk dagger C합16"
+            },
+            "attack_ms": {
+              "value": 958,
+              "source": "client",
+              "ref": "list.spr:2188 56.attack dagger C합23"
+            }
+          }
+        },
+        "1186": {
+          "unarmed": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:4003 0.walk C합16"
+            },
+            "attack_ms": {
+              "value": 917,
+              "source": "client",
+              "ref": "list.spr:4004 1.attack C합22"
+            }
+          },
+          "sword": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:4007 30.walk onehandsword C합16"
+            },
+            "attack_ms": {
+              "value": 1042,
+              "source": "client",
+              "ref": "list.spr:4008 31.attack onehandsword C합25"
+            }
+          },
+          "axe": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:4012 35.walk axe C합16"
+            },
+            "attack_ms": {
+              "value": 1167,
+              "source": "client",
+              "ref": "list.spr:4013 36.attack axe C합28"
+            }
+          },
+          "bow": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:4020 40.walk bow C합16"
+            },
+            "attack_ms": {
+              "value": 1750,
+              "source": "client",
+              "ref": "list.spr:4021 41.attack bow C합42"
+            }
+          },
+          "spear": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:4024 45.walk spear C합16"
+            },
+            "attack_ms": {
+              "value": 1167,
+              "source": "client",
+              "ref": "list.spr:4025 46.attack spear C합28"
+            }
+          },
+          "staff": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:4029 50.walk staff C합16"
+            },
+            "attack_ms": {
+              "value": 1167,
+              "source": "client",
+              "ref": "list.spr:4030 51.attack staff C합28"
+            }
+          },
+          "dagger": {
+            "walk_ms": {
+              "value": 667,
+              "source": "client",
+              "ref": "list.spr:4033 55.walk dagger C합16"
+            },
+            "attack_ms": {
+              "value": 958,
+              "source": "client",
+              "ref": "list.spr:4034 56.attack dagger C합23"
+            }
+          }
+        }
+      }
+    }
+  }
+}

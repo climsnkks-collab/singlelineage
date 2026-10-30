@@ -1,0 +1,2945 @@
+{
+  "table": "m6_map_expansion3",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 23,
+        "source": "client",
+        "ref": "region.jsonc:263 _map"
+      },
+      "region_id": {
+        "value": 194,
+        "source": "client",
+        "ref": "region.jsonc:263 _id"
+      },
+      "name_ko": {
+        "value": "윈다우드 성 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:262 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1357518,
+      "representative_template": 27,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 24,
+        "source": "client",
+        "ref": "region.jsonc:265 _map"
+      },
+      "region_id": {
+        "value": 195,
+        "source": "client",
+        "ref": "region.jsonc:265 _id"
+      },
+      "name_ko": {
+        "value": "윈다우드 성 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:264 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1388800,
+      "representative_template": 64,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "region.jsonc:43 _map"
+      },
+      "region_id": {
+        "value": 46,
+        "source": "client",
+        "ref": "region.jsonc:43 _id"
+      },
+      "name_ko": {
+        "value": "윈다우드 내성",
+        "source": "client",
+        "ref": "region.jsonc:42 comment"
+      },
+      "hunting": false,
+      "terrain_bounds": [
+        32704,
+        32768,
+        32767,
+        32831
+      ],
+      "chunks": 1,
+      "bytes": 108197,
+      "representative_template": null,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 53,
+        "source": "client",
+        "ref": "region.jsonc:61 _map"
+      },
+      "region_id": {
+        "value": 55,
+        "source": "client",
+        "ref": "region.jsonc:61 _id"
+      },
+      "name_ko": {
+        "value": "기란 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:60 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1177416,
+      "representative_template": 28,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 54,
+        "source": "client",
+        "ref": "region.jsonc:63 _map"
+      },
+      "region_id": {
+        "value": 56,
+        "source": "client",
+        "ref": "region.jsonc:63 _id"
+      },
+      "name_ko": {
+        "value": "기란 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:62 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1154656,
+      "representative_template": 28,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 55,
+        "source": "client",
+        "ref": "region.jsonc:65 _map"
+      },
+      "region_id": {
+        "value": 57,
+        "source": "client",
+        "ref": "region.jsonc:65 _id"
+      },
+      "name_ko": {
+        "value": "기란 던전 3층",
+        "source": "client",
+        "ref": "region.jsonc:64 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32831,
+        32959
+      ],
+      "chunks": 11,
+      "bytes": 1062953,
+      "representative_template": 115,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 56,
+        "source": "client",
+        "ref": "region.jsonc:67 _map"
+      },
+      "region_id": {
+        "value": 58,
+        "source": "client",
+        "ref": "region.jsonc:67 _id"
+      },
+      "name_ko": {
+        "value": "기란 던전 4층",
+        "source": "client",
+        "ref": "region.jsonc:66 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ],
+      "chunks": 12,
+      "bytes": 1173363,
+      "representative_template": 115,
+      "combat_status": "ready"
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        4,
+        32677,
+        33392
+      ],
+      "destination": [
+        29,
+        32734,
+        32816,
+        0
+      ],
+      "reference_origin": [
+        4,
+        32677,
+        33392
+      ],
+      "reference_destination": [
+        29,
+        32734,
+        32816,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15182",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        4,
+        32678,
+        33392
+      ],
+      "destination": [
+        29,
+        32735,
+        32816,
+        0
+      ],
+      "reference_origin": [
+        4,
+        32678,
+        33392
+      ],
+      "reference_destination": [
+        29,
+        32735,
+        32816,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15187",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        23,
+        32727,
+        32814
+      ],
+      "destination": [
+        24,
+        32808,
+        32814,
+        4
+      ],
+      "reference_origin": [
+        23,
+        32727,
+        32814
+      ],
+      "reference_destination": [
+        24,
+        32808,
+        32814,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15338",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        54,
+        32728,
+        32811
+      ],
+      "destination": [
+        55,
+        32735,
+        32728,
+        4
+      ],
+      "reference_origin": [
+        54,
+        32728,
+        32811
+      ],
+      "reference_destination": [
+        55,
+        32735,
+        32728,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15348",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        53,
+        32732,
+        32787
+      ],
+      "destination": [
+        54,
+        32810,
+        32794,
+        6
+      ],
+      "reference_origin": [
+        53,
+        32732,
+        32787
+      ],
+      "reference_destination": [
+        54,
+        32810,
+        32794,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15417",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        29,
+        32734,
+        32816
+      ],
+      "destination": [
+        4,
+        32677,
+        33392,
+        4
+      ],
+      "reference_origin": [
+        29,
+        32734,
+        32816
+      ],
+      "reference_destination": [
+        4,
+        32677,
+        33392,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15473",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        54,
+        32735,
+        32726
+      ],
+      "destination": [
+        54,
+        32750,
+        32774,
+        0
+      ],
+      "reference_origin": [
+        54,
+        32735,
+        32726
+      ],
+      "reference_destination": [
+        54,
+        32750,
+        32774,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15491",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        55,
+        32735,
+        32727
+      ],
+      "destination": [
+        54,
+        32728,
+        32810,
+        0
+      ],
+      "reference_origin": [
+        55,
+        32735,
+        32727
+      ],
+      "reference_destination": [
+        54,
+        32728,
+        32810,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15492",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        29,
+        32735,
+        32816
+      ],
+      "destination": [
+        4,
+        32678,
+        33392,
+        4
+      ],
+      "reference_origin": [
+        29,
+        32735,
+        32816
+      ],
+      "reference_destination": [
+        4,
+        32678,
+        33392,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15505",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        55,
+        32736,
+        32727
+      ],
+      "destination": [
+        54,
+        32728,
+        32810,
+        0
+      ],
+      "reference_origin": [
+        55,
+        32736,
+        32727
+      ],
+      "reference_destination": [
+        54,
+        32728,
+        32810,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15509",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        55,
+        32736,
+        32855
+      ],
+      "destination": [
+        56,
+        32769,
+        32730,
+        4
+      ],
+      "reference_origin": [
+        55,
+        32736,
+        32855
+      ],
+      "reference_destination": [
+        56,
+        32769,
+        32730,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15519",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        29,
+        32742,
+        32790
+      ],
+      "destination": [
+        23,
+        32811,
+        32722,
+        4
+      ],
+      "reference_origin": [
+        29,
+        32742,
+        32790
+      ],
+      "reference_destination": [
+        23,
+        32811,
+        32722,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15588",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        54,
+        32750,
+        32775
+      ],
+      "destination": [
+        54,
+        32736,
+        32726,
+        2
+      ],
+      "reference_origin": [
+        54,
+        32750,
+        32775
+      ],
+      "reference_destination": [
+        54,
+        32736,
+        32726,
+        2
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15740",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        56,
+        32769,
+        32729
+      ],
+      "destination": [
+        55,
+        32736,
+        32854,
+        0
+      ],
+      "reference_origin": [
+        56,
+        32769,
+        32729
+      ],
+      "reference_destination": [
+        55,
+        32736,
+        32854,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15843",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        56,
+        32770,
+        32729
+      ],
+      "destination": [
+        55,
+        32736,
+        32854,
+        0
+      ],
+      "reference_origin": [
+        56,
+        32770,
+        32729
+      ],
+      "reference_destination": [
+        55,
+        32736,
+        32854,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15849",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        24,
+        32808,
+        32814
+      ],
+      "destination": [
+        23,
+        32727,
+        32814,
+        4
+      ],
+      "reference_origin": [
+        24,
+        32808,
+        32814
+      ],
+      "reference_destination": [
+        23,
+        32727,
+        32814,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16174",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        23,
+        32811,
+        32722
+      ],
+      "destination": [
+        29,
+        32742,
+        32790,
+        4
+      ],
+      "reference_origin": [
+        23,
+        32811,
+        32722
+      ],
+      "reference_destination": [
+        29,
+        32742,
+        32790,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16195",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        54,
+        32811,
+        32793
+      ],
+      "destination": [
+        53,
+        32732,
+        32786,
+        0
+      ],
+      "reference_origin": [
+        54,
+        32811,
+        32793
+      ],
+      "reference_destination": [
+        53,
+        32732,
+        32786,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16199",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        54,
+        32811,
+        32794
+      ],
+      "destination": [
+        53,
+        32732,
+        32786,
+        0
+      ],
+      "reference_origin": [
+        54,
+        32811,
+        32794
+      ],
+      "reference_destination": [
+        53,
+        32732,
+        32786,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16200",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        4,
+        33311,
+        33061
+      ],
+      "destination": [
+        53,
+        32810,
+        32731,
+        6
+      ],
+      "reference_origin": [
+        4,
+        33311,
+        33061
+      ],
+      "reference_destination": [
+        53,
+        32810,
+        32731,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16410",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    }
+  ],
+  "returns": [
+    {
+      "map_id": 23,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18338",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 24,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18339",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 29,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18344",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 53,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18368",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 54,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18369",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 55,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18370",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 56,
+      "destination": [
+        4,
+        33428,
+        32815,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33429,
+        32814,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18371",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m6_exp3_23_27",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "native-dump:22; all-rows:39"
+      },
+      "map_id": {
+        "value": 23,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32809,
+          "y1": 32730,
+          "x2": 32811,
+          "y2": 32732
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/27.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/27.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46090",
+        "raw": [
+          "2300002",
+          "Zombie",
+          "20",
+          "45065",
+          "0",
+          "32810",
+          "32723",
+          "0",
+          "0",
+          "32704",
+          "32704",
+          "32831",
+          "32831",
+          "5",
+          "0",
+          "0",
+          "23",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_24_64",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 64,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:41"
+      },
+      "map_id": {
+        "value": 24,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32808,
+          "y1": 32804,
+          "x2": 32810,
+          "y2": 32806
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/64.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/64.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46104",
+        "raw": [
+          "2400004",
+          "Crawling Claw",
+          "20",
+          "45083",
+          "0",
+          "32809",
+          "32812",
+          "0",
+          "0",
+          "32704",
+          "32704",
+          "32831",
+          "32831",
+          "5",
+          "0",
+          "0",
+          "24",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_53_28",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 28,
+        "source": "client",
+        "ref": "native-dump:23"
+      },
+      "map_id": {
+        "value": 53,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32799,
+          "y1": 32730,
+          "x2": 32801,
+          "y2": 32732
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/28.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "기란 던전 1층",
+          "기란 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/28.json"
+      },
+      "l1j_spawn_reference": null,
+      "l1j_spawn_reference_status": "no same-map/species spawn row; exact official region association only"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_54_28",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 28,
+        "source": "client",
+        "ref": "native-dump:23"
+      },
+      "map_id": {
+        "value": 54,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32800,
+          "y1": 32793,
+          "x2": 32802,
+          "y2": 32795
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/28.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 3층",
+          "사막 던전 2층",
+          "사막 던전 3층",
+          "기란 던전 1층",
+          "기란 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층",
+          "윈다우드 성 던전 2층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/28.json"
+      },
+      "l1j_spawn_reference": null,
+      "l1j_spawn_reference_status": "no same-map/species spawn row; exact official region association only"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_55_115",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 115,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:75"
+      },
+      "map_id": {
+        "value": 55,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32734,
+          "y1": 32736,
+          "x2": 32736,
+          "y2": 32738
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/115.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 3층",
+          "기란 던전 3층",
+          "기란 던전 4층",
+          "오크 숲",
+          "기란",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/115.json"
+      },
+      "l1j_spawn_reference": null,
+      "l1j_spawn_reference_status": "no same-map/species spawn row; exact official region association only"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_56_115",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 115,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:75"
+      },
+      "map_id": {
+        "value": 56,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32778,
+          "y1": 32729,
+          "x2": 32780,
+          "y2": 32731
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/115.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "요정숲 던전 3층",
+          "기란 던전 3층",
+          "기란 던전 4층",
+          "오크 숲",
+          "기란",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/115.json"
+      },
+      "l1j_spawn_reference": null,
+      "l1j_spawn_reference_status": "no same-map/species spawn row; exact official region association only"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_139_0",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "native-dump:1; all-rows:5"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32898,
+          "y1": 33095,
+          "x2": 32900,
+          "y2": 33097
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/0.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "사막 던전 1층",
+          "은기사 지역",
+          "글루디오",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/0.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:36284",
+        "raw": [
+          "283",
+          "Orc",
+          "1",
+          "45009",
+          "0",
+          "33006",
+          "33480",
+          "6",
+          "6",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "4",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_143_1",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "native-dump:2; all-rows:13"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32650,
+          "y1": 32525,
+          "x2": 32652,
+          "y2": 32527
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "은기사 지역",
+          "오크 숲",
+          "글루디오",
+          "윈다우드",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:36921",
+        "raw": [
+          "1078",
+          "Orc Archer",
+          "1",
+          "45019",
+          "0",
+          "33006",
+          "33480",
+          "6",
+          "6",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "4",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_151_0",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "native-dump:1; all-rows:5"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32962,
+          "y1": 32501,
+          "x2": 32964,
+          "y2": 32503
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/0.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "사막 던전 1층",
+          "은기사 지역",
+          "글루디오",
+          "요정 숲",
+          "켄트",
+          "아덴 대륙",
+          "글루디오 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/0.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:36284",
+        "raw": [
+          "283",
+          "Orc",
+          "1",
+          "45009",
+          "0",
+          "33006",
+          "33480",
+          "6",
+          "6",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "4",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_99_27",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 27,
+        "source": "client",
+        "ref": "native-dump:22; all-rows:39"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 33999,
+          "y1": 32395,
+          "x2": 34001,
+          "y2": 32397
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/27.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/27.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:38367",
+        "raw": [
+          "2837",
+          "Zombie",
+          "1",
+          "45065",
+          "0",
+          "32862",
+          "32674",
+          "10",
+          "10",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "4",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_97_708",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 708,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:372"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 34102,
+          "y1": 32361,
+          "x2": 34104,
+          "y2": 32363
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/708.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오렌 설벽",
+          "엘모어 격전지",
+          "국경 요새",
+          "화룡의 둥지",
+          "오렌",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/708.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:41637",
+        "raw": [
+          "9950",
+          "Undead Elmore Soldier",
+          "1",
+          "45216",
+          "0",
+          "34042",
+          "32372",
+          "10",
+          "10",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "4",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp3_96_708",
+        "source": "local_policy",
+        "ref": "MapExp3 single-player subset"
+      },
+      "template_id": {
+        "value": 708,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:372"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 34240,
+          "y1": 32276,
+          "x2": 34242,
+          "y2": 32278
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/708.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오렌 설벽",
+          "엘모어 격전지",
+          "국경 요새",
+          "화룡의 둥지",
+          "오렌",
+          "아덴 대륙"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/708.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:41637",
+        "raw": [
+          "9950",
+          "Undead Elmore Soldier",
+          "1",
+          "45216",
+          "0",
+          "34042",
+          "32372",
+          "10",
+          "10",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "60",
+          "120",
+          "4",
+          "0",
+          "100",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "map23",
+      "map_id": 23,
+      "name_ko": "윈다우드 성 던전 1층",
+      "entry": {
+        "origin": [
+          29,
+          32742,
+          32790
+        ],
+        "destination": [
+          23,
+          32811,
+          32722,
+          4
+        ],
+        "reference_origin": [
+          29,
+          32742,
+          32790
+        ],
+        "reference_destination": [
+          23,
+          32811,
+          32722,
+          4
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15588",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp3_23_27",
+      "combat": true
+    },
+    {
+      "case_id": "map24",
+      "map_id": 24,
+      "name_ko": "윈다우드 성 던전 2층",
+      "entry": {
+        "origin": [
+          23,
+          32727,
+          32814
+        ],
+        "destination": [
+          24,
+          32808,
+          32814,
+          4
+        ],
+        "reference_origin": [
+          23,
+          32727,
+          32814
+        ],
+        "reference_destination": [
+          24,
+          32808,
+          32814,
+          4
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15338",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp3_24_64",
+      "combat": true
+    },
+    {
+      "case_id": "map29",
+      "map_id": 29,
+      "name_ko": "윈다우드 내성",
+      "entry": {
+        "origin": [
+          4,
+          32677,
+          33392
+        ],
+        "destination": [
+          29,
+          32734,
+          32816,
+          0
+        ],
+        "reference_origin": [
+          4,
+          32677,
+          33392
+        ],
+        "reference_destination": [
+          29,
+          32734,
+          32816,
+          0
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15182",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "map53",
+      "map_id": 53,
+      "name_ko": "기란 던전 1층",
+      "entry": {
+        "origin": [
+          4,
+          33311,
+          33061
+        ],
+        "destination": [
+          53,
+          32810,
+          32731,
+          6
+        ],
+        "reference_origin": [
+          4,
+          33311,
+          33061
+        ],
+        "reference_destination": [
+          53,
+          32810,
+          32731,
+          6
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16410",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp3_53_28",
+      "combat": true
+    },
+    {
+      "case_id": "map54",
+      "map_id": 54,
+      "name_ko": "기란 던전 2층",
+      "entry": {
+        "origin": [
+          53,
+          32732,
+          32787
+        ],
+        "destination": [
+          54,
+          32810,
+          32794,
+          6
+        ],
+        "reference_origin": [
+          53,
+          32732,
+          32787
+        ],
+        "reference_destination": [
+          54,
+          32810,
+          32794,
+          6
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15417",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp3_54_28",
+      "combat": true
+    },
+    {
+      "case_id": "map55",
+      "map_id": 55,
+      "name_ko": "기란 던전 3층",
+      "entry": {
+        "origin": [
+          54,
+          32728,
+          32811
+        ],
+        "destination": [
+          55,
+          32735,
+          32728,
+          4
+        ],
+        "reference_origin": [
+          54,
+          32728,
+          32811
+        ],
+        "reference_destination": [
+          55,
+          32735,
+          32728,
+          4
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15348",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp3_55_115",
+      "combat": true
+    },
+    {
+      "case_id": "map56",
+      "map_id": 56,
+      "name_ko": "기란 던전 4층",
+      "entry": {
+        "origin": [
+          55,
+          32736,
+          32855
+        ],
+        "destination": [
+          56,
+          32769,
+          32730,
+          4
+        ],
+        "reference_origin": [
+          55,
+          32736,
+          32855
+        ],
+        "reference_destination": [
+          56,
+          32769,
+          32730,
+          4
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15519",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp3_56_115",
+      "combat": true
+    },
+    {
+      "case_id": "region139",
+      "map_id": 4,
+      "region_id": 139,
+      "name_ko": "은기사 지역",
+      "entry": {
+        "origin": [
+          4,
+          32899,
+          33087
+        ],
+        "destination": [
+          4,
+          32899,
+          33087,
+          4
+        ],
+        "ref": "region.jsonc:145; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        32899,
+        33086
+      ],
+      "group_id": "m6_exp3_139_0",
+      "combat": true,
+      "region_bounds": {
+        "_left": 32896,
+        "_top": 33087,
+        "_right": 33248,
+        "_bottom": 33535
+      }
+    },
+    {
+      "case_id": "region143",
+      "map_id": 4,
+      "region_id": 143,
+      "name_ko": "오크 숲",
+      "entry": {
+        "origin": [
+          4,
+          32654,
+          32537
+        ],
+        "destination": [
+          4,
+          32654,
+          32537,
+          0
+        ],
+        "ref": "region.jsonc:155; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        32654,
+        32538
+      ],
+      "group_id": "m6_exp3_143_1",
+      "combat": true,
+      "region_bounds": {
+        "_left": 32511,
+        "_top": 32191,
+        "_right": 32960,
+        "_bottom": 32537
+      }
+    },
+    {
+      "case_id": "region151",
+      "map_id": 4,
+      "region_id": 151,
+      "name_ko": "요정 숲",
+      "entry": {
+        "origin": [
+          4,
+          32963,
+          32511
+        ],
+        "destination": [
+          4,
+          32963,
+          32511,
+          0
+        ],
+        "ref": "region.jsonc:175; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        32963,
+        32512
+      ],
+      "group_id": "m6_exp3_151_0",
+      "combat": true,
+      "region_bounds": {
+        "_left": 32960,
+        "_top": 32191,
+        "_right": 33216,
+        "_bottom": 32511
+      }
+    },
+    {
+      "case_id": "region99",
+      "map_id": 4,
+      "region_id": 99,
+      "name_ko": "엘모어 격전지",
+      "entry": {
+        "origin": [
+          4,
+          34000,
+          32387
+        ],
+        "destination": [
+          4,
+          34000,
+          32387,
+          4
+        ],
+        "ref": "region.jsonc:114; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        34000,
+        32386
+      ],
+      "group_id": "m6_exp3_99_27",
+      "combat": true,
+      "region_bounds": {
+        "_left": 33997,
+        "_top": 32387,
+        "_right": 34109,
+        "_bottom": 32570
+      }
+    },
+    {
+      "case_id": "region97",
+      "map_id": 4,
+      "region_id": 97,
+      "name_ko": "오렌 설벽",
+      "entry": {
+        "origin": [
+          4,
+          34103,
+          32371
+        ],
+        "destination": [
+          4,
+          34103,
+          32371,
+          0
+        ],
+        "ref": "region.jsonc:110; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        34103,
+        32372
+      ],
+      "group_id": "m6_exp3_97_708",
+      "combat": true,
+      "region_bounds": {
+        "_left": 34100,
+        "_top": 32177,
+        "_right": 34303,
+        "_bottom": 32371
+      }
+    },
+    {
+      "case_id": "region96",
+      "map_id": 4,
+      "region_id": 96,
+      "name_ko": "국경 요새",
+      "entry": {
+        "origin": [
+          4,
+          34241,
+          32268
+        ],
+        "destination": [
+          4,
+          34241,
+          32268,
+          4
+        ],
+        "ref": "region.jsonc:108; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        34241,
+        32267
+      ],
+      "group_id": "m6_exp3_96_708",
+      "combat": true,
+      "region_bounds": {
+        "_left": 34238,
+        "_top": 32268,
+        "_right": 34272,
+        "_bottom": 32317
+      }
+    },
+    {
+      "case_id": "region136",
+      "map_id": 4,
+      "region_id": 136,
+      "name_ko": "은기사 마을",
+      "entry": {
+        "origin": [
+          4,
+          33039,
+          33442
+        ],
+        "destination": [
+          4,
+          33039,
+          33442,
+          0
+        ],
+        "ref": "region.jsonc:142; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        33039,
+        33443
+      ],
+      "group_id": null,
+      "combat": false,
+      "region_bounds": {
+        "_left": 33036,
+        "_top": 33304,
+        "_right": 33153,
+        "_bottom": 33442
+      }
+    },
+    {
+      "case_id": "region147",
+      "map_id": 4,
+      "region_id": 147,
+      "name_ko": "우드벡 마을",
+      "entry": {
+        "origin": [
+          4,
+          32581,
+          33152
+        ],
+        "destination": [
+          4,
+          32581,
+          33152,
+          4
+        ],
+        "ref": "region.jsonc:166; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        32581,
+        33151
+      ],
+      "group_id": null,
+      "combat": false,
+      "region_bounds": {
+        "_left": 32578,
+        "_top": 33152,
+        "_right": 32659,
+        "_bottom": 33218
+      }
+    },
+    {
+      "case_id": "region142",
+      "map_id": 4,
+      "region_id": 142,
+      "name_ko": "화전민 마을",
+      "entry": {
+        "origin": [
+          4,
+          32711,
+          32485
+        ],
+        "destination": [
+          4,
+          32711,
+          32485,
+          0
+        ],
+        "ref": "region.jsonc:153; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        32711,
+        32486
+      ],
+      "group_id": null,
+      "combat": false,
+      "region_bounds": {
+        "_left": 32708,
+        "_top": 32412,
+        "_right": 32773,
+        "_bottom": 32485
+      }
+    },
+    {
+      "case_id": "region150",
+      "map_id": 4,
+      "region_id": 150,
+      "name_ko": "요정 숲 마을",
+      "entry": {
+        "origin": [
+          4,
+          33031,
+          32304
+        ],
+        "destination": [
+          4,
+          33031,
+          32304,
+          4
+        ],
+        "ref": "region.jsonc:173; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        33031,
+        32303
+      ],
+      "group_id": null,
+      "combat": false,
+      "region_bounds": {
+        "_left": 33028,
+        "_top": 32304,
+        "_right": 33091,
+        "_bottom": 32376
+      }
+    },
+    {
+      "case_id": "region156",
+      "map_id": 4,
+      "region_id": 156,
+      "name_ko": "웰던 마을",
+      "entry": {
+        "origin": [
+          4,
+          33682,
+          32471
+        ],
+        "destination": [
+          4,
+          33682,
+          32471,
+          4
+        ],
+        "ref": "region.jsonc:187; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        33682,
+        32470
+      ],
+      "group_id": null,
+      "combat": false,
+      "region_bounds": {
+        "_left": 33679,
+        "_top": 32471,
+        "_right": 33755,
+        "_bottom": 32531
+      }
+    },
+    {
+      "case_id": "region171",
+      "map_id": 4,
+      "region_id": 171,
+      "name_ko": "아덴 마을",
+      "entry": {
+        "origin": [
+          4,
+          33862,
+          33273
+        ],
+        "destination": [
+          4,
+          33862,
+          33273,
+          0
+        ],
+        "ref": "region.jsonc:218; current S32 boundary",
+        "source": "client_bounds/local_policy",
+        "native_trigger_status": "not_a_map_transition"
+      },
+      "start": [
+        4,
+        33862,
+        33274
+      ],
+      "group_id": null,
+      "combat": false,
+      "region_bounds": {
+        "_left": 33856,
+        "_top": 33091,
+        "_right": 34229,
+        "_bottom": 33273
+      }
+    }
+  ],
+  "fields": [
+    {
+      "region_id": 139,
+      "map_id": 4,
+      "name_ko": "은기사 지역",
+      "bounds": {
+        "_left": 32896,
+        "_top": 33087,
+        "_right": 33248,
+        "_bottom": 33535
+      },
+      "ref": "region.jsonc:145",
+      "hunting": true,
+      "representative_template": 0,
+      "scope": "boundary walking and representative kill"
+    },
+    {
+      "region_id": 143,
+      "map_id": 4,
+      "name_ko": "오크 숲",
+      "bounds": {
+        "_left": 32511,
+        "_top": 32191,
+        "_right": 32960,
+        "_bottom": 32537
+      },
+      "ref": "region.jsonc:155",
+      "hunting": true,
+      "representative_template": 1,
+      "scope": "boundary walking and representative kill"
+    },
+    {
+      "region_id": 151,
+      "map_id": 4,
+      "name_ko": "요정 숲",
+      "bounds": {
+        "_left": 32960,
+        "_top": 32191,
+        "_right": 33216,
+        "_bottom": 32511
+      },
+      "ref": "region.jsonc:175",
+      "hunting": true,
+      "representative_template": 0,
+      "scope": "boundary walking and representative kill"
+    },
+    {
+      "region_id": 99,
+      "map_id": 4,
+      "name_ko": "엘모어 격전지",
+      "bounds": {
+        "_left": 33997,
+        "_top": 32387,
+        "_right": 34109,
+        "_bottom": 32570
+      },
+      "ref": "region.jsonc:114",
+      "hunting": true,
+      "representative_template": 27,
+      "scope": "boundary walking and representative kill"
+    },
+    {
+      "region_id": 97,
+      "map_id": 4,
+      "name_ko": "오렌 설벽",
+      "bounds": {
+        "_left": 34100,
+        "_top": 32177,
+        "_right": 34303,
+        "_bottom": 32371
+      },
+      "ref": "region.jsonc:110",
+      "hunting": true,
+      "representative_template": 708,
+      "scope": "boundary walking and representative kill"
+    },
+    {
+      "region_id": 96,
+      "map_id": 4,
+      "name_ko": "국경 요새",
+      "bounds": {
+        "_left": 34238,
+        "_top": 32268,
+        "_right": 34272,
+        "_bottom": 32317
+      },
+      "ref": "region.jsonc:108",
+      "hunting": true,
+      "representative_template": 708,
+      "scope": "boundary walking and representative kill"
+    }
+  ],
+  "towns": [
+    {
+      "region_id": 136,
+      "map_id": 4,
+      "name_ko": "은기사 마을",
+      "bounds": {
+        "_left": 33036,
+        "_top": 33304,
+        "_right": 33153,
+        "_bottom": 33442
+      },
+      "ref": "region.jsonc:142",
+      "hunting": false,
+      "representative_template": null,
+      "scope": "boundary walking only; no NPC/shop/service changes"
+    },
+    {
+      "region_id": 147,
+      "map_id": 4,
+      "name_ko": "우드벡 마을",
+      "bounds": {
+        "_left": 32578,
+        "_top": 33152,
+        "_right": 32659,
+        "_bottom": 33218
+      },
+      "ref": "region.jsonc:166",
+      "hunting": false,
+      "representative_template": null,
+      "scope": "boundary walking only; no NPC/shop/service changes"
+    },
+    {
+      "region_id": 142,
+      "map_id": 4,
+      "name_ko": "화전민 마을",
+      "bounds": {
+        "_left": 32708,
+        "_top": 32412,
+        "_right": 32773,
+        "_bottom": 32485
+      },
+      "ref": "region.jsonc:153",
+      "hunting": false,
+      "representative_template": null,
+      "scope": "boundary walking only; no NPC/shop/service changes"
+    },
+    {
+      "region_id": 150,
+      "map_id": 4,
+      "name_ko": "요정 숲 마을",
+      "bounds": {
+        "_left": 33028,
+        "_top": 32304,
+        "_right": 33091,
+        "_bottom": 32376
+      },
+      "ref": "region.jsonc:173",
+      "hunting": false,
+      "representative_template": null,
+      "scope": "boundary walking only; no NPC/shop/service changes"
+    },
+    {
+      "region_id": 156,
+      "map_id": 4,
+      "name_ko": "웰던 마을",
+      "bounds": {
+        "_left": 33679,
+        "_top": 32471,
+        "_right": 33755,
+        "_bottom": 32531
+      },
+      "ref": "region.jsonc:187",
+      "hunting": false,
+      "representative_template": null,
+      "scope": "boundary walking only; no NPC/shop/service changes"
+    },
+    {
+      "region_id": 171,
+      "map_id": 4,
+      "name_ko": "아덴 마을",
+      "bounds": {
+        "_left": 33856,
+        "_top": 33091,
+        "_right": 34229,
+        "_bottom": 33273
+      },
+      "ref": "region.jsonc:218",
+      "hunting": false,
+      "representative_template": null,
+      "scope": "boundary walking only; no NPC/shop/service changes"
+    }
+  ],
+  "skipped_transitions": [
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15349",
+      "raw": [
+        "32728",
+        "32816",
+        "74",
+        "Crystal Caverns 3F",
+        "32754",
+        "32740",
+        "73",
+        "Crystal Caverns 2F",
+        "0"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15350",
+      "raw": [
+        "32728",
+        "32817",
+        "74",
+        "Crystal Caverns 3F",
+        "32754",
+        "32740",
+        "73",
+        "Crystal Caverns 2F",
+        "4"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15767",
+      "raw": [
+        "32753",
+        "32739",
+        "73",
+        "Crystal Caverns 2F",
+        "32728",
+        "32816",
+        "74",
+        "Crystal Caverns 3F",
+        "0"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15777",
+      "raw": [
+        "32754",
+        "32739",
+        "73",
+        "Crystal Caverns 2F",
+        "32728",
+        "32816",
+        "74",
+        "Crystal Caverns 3F",
+        "0"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15925",
+      "raw": [
+        "32781",
+        "32735",
+        "73",
+        "Crystal Caverns 2F",
+        "32871",
+        "32834",
+        "72",
+        "Crystal Caverns 1F",
+        "6"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 73, 32781, 32735)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15926",
+      "raw": [
+        "32781",
+        "32736",
+        "73",
+        "Crystal Caverns 2F",
+        "32871",
+        "32834",
+        "72",
+        "Crystal Caverns 1F",
+        "6"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 73, 32781, 32736)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16328",
+      "raw": [
+        "32872",
+        "32834",
+        "72",
+        "Crystal Caverns 1F",
+        "32782",
+        "32735",
+        "73",
+        "Crystal Caverns 2F",
+        "2"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 72, 32872, 32834)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16329",
+      "raw": [
+        "32872",
+        "32835",
+        "72",
+        "Crystal Caverns 1F",
+        "32782",
+        "32735",
+        "73",
+        "Crystal Caverns 2F",
+        "2"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 72, 32872, 32835)"
+    }
+  ],
+  "unconnected_terrain": [
+    {
+      "map_id": 72,
+      "chunks": 12,
+      "terrain_bounds": [
+        32640,
+        32704,
+        32895,
+        32959
+      ],
+      "bytes": 1281322,
+      "source": "client",
+      "ref": "region.jsonc; current AssetProvider map S32",
+      "installed": false
+    },
+    {
+      "map_id": 73,
+      "chunks": 10,
+      "terrain_bounds": [
+        32640,
+        32704,
+        32895,
+        32959
+      ],
+      "bytes": 1207187,
+      "source": "client",
+      "ref": "region.jsonc; current AssetProvider map S32",
+      "installed": false
+    }
+  ],
+  "unresolved": [
+    {
+      "map_ids": [
+        72,
+        73
+      ],
+      "reason": "Existing L1J internal stair origins/arrivals have no current S32 standable cell within6. Raw failures in skipped_transitions. Assets preserved but not served/spawned. Mainland entrance/NPC teleport also OPEN; no fabricated transition."
+    },
+    {
+      "map_id": 74,
+      "reason": "No existing official-region monster definition for ice cave3; no unrelated substitution."
+    },
+    {
+      "map_ids": [
+        18,
+        59,
+        60,
+        61,
+        62,
+        63,
+        70,
+        301,
+        303
+      ],
+      "reason": "No existing exact official-region monster definition; terrain/transition/hunt not claimed."
+    }
+  ],
+  "monster_policy": "Reuse existing definitions without changing monster/drop/item/combat tables.",
+  "native_trigger_status": "UNKNOWN",
+  "placement_policy": "LOCAL single-player 1 NPC / connected standable3x3; official only establishes region species."
+}

@@ -4,6 +4,7 @@ import threading
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 from tools.local_original_session import desktop as d, launcher as l
 
@@ -59,6 +60,119 @@ class DesktopTests(unittest.TestCase):
             return True
         native.u.GetWindowThreadProcessId, native.u.PostMessageW = Fn(window_thread), Fn(post)
         return owner, dict(pid=7, birth=303, candidate_sha256='a' * 64)
+
+    def click_fixture(self):
+        native, state = self.fake_native()
+        desktop = d.PrivateDesktop(native)
+        self.addCleanup(desktop.close)
+        owner, identity = self.command_owner(desktop, native, state)
+        state.update(rect=(0, 0, 960, 640), dpi_contexts={})
+        state['threads'][44] = 55
+        def rect(hwnd, pointer):
+            value = pointer._obj
+            value.left, value.top, value.right, value.bottom = state['rect']
+            return True
+        def dpi_context(context):
+            tid = threading.get_ident()
+            previous = state['dpi_contexts'].get(tid, 1)
+            state['dpi_contexts'][tid] = context
+            return previous
+        native.u.GetClientRect = Fn(rect)
+        native.u.ClientToScreen = Fn(lambda *args: True)
+        native.u.GetWindowDpiAwarenessContext = Fn(lambda hwnd: 2)
+        native.u.GetThreadDpiAwarenessContext = Fn(
+            lambda: state['dpi_contexts'].get(threading.get_ident(), 1))
+        native.u.SetThreadDpiAwarenessContext = Fn(dpi_context)
+        native.u.AreDpiAwarenessContextsEqual = Fn(lambda a, b: a == b)
+        scene = dict(current='Login')
+        def check_scene():
+            d.need(scene['current'] == 'Login', 'INPUT_SCENE_MISMATCH')
+        def click(**options):
+            return desktop.post_client_input(owner, identity, 500, 44, 'left_click',
+                x=42, y=57, check_scene=check_scene, **options)
+        return desktop, owner, state, scene, click
+
+    def test_private_click_defaults_keep_move_down_up_without_sleep_or_focus_api(self):
+        desktop, owner, state, scene, click = self.click_fixture()
+        with patch.object(d.time, 'sleep') as sleep:
+            result = click()
+        self.assertEqual(result.queued, (0x200, 0x201, 0x202))
+        sleep.assert_not_called()
+        self.assertTrue(all(row[1] == 55 for row in state['posts']))
+        self.assertTrue(all(row[2][0] == 500 for row in state['posts']))
+        self.assertEqual(set(state['dpi_contexts'].values()), {1})
+        self.assertIsNone(desktop._client_click_inflight)
+
+    def test_private_click_opt_in_activation_and_timing_stay_in_joined_helper(self):
+        desktop, owner, state, scene, click = self.click_fixture()
+        waits = []
+        def sleep(seconds):
+            tid = threading.get_ident()
+            waits.append((seconds, state['posts'][-1][2][1],
+                          state['threads'][tid], state['dpi_contexts'][tid]))
+        with patch.object(d.time, 'sleep', side_effect=sleep):
+            result = click(click_options=dict(activate=True, move_settle_ms=100, down_hold_ms=120))
+        self.assertEqual(result.queued, (6, 7, 0x200, 0x201, 0x202))
+        self.assertEqual([row[2] for row in state['posts'][:2]], [(500, 6, 1, 0), (500, 7, 0, 0)])
+        self.assertEqual(waits, [(0.1, 0x200, 55, 2), (0.12, 0x201, 55, 2)])
+        self.assertEqual(set(state['dpi_contexts'].values()), {1})
+
+    def test_private_click_settle_scene_or_geometry_change_prevents_down(self):
+        for mode in ('scene', 'geometry'):
+            with self.subTest(mode=mode):
+                desktop, owner, state, scene, click = self.click_fixture()
+                def sleep(seconds):
+                    if mode == 'scene': scene['current'] = 'Land'
+                    else: state['rect'] = (0, 0, 10, 10)
+                with patch.object(d.time, 'sleep', side_effect=sleep):
+                    with self.assertRaises(ValueError) as caught:
+                        click(click_options=dict(move_settle_ms=100))
+                self.assertEqual(caught.exception.client_click_result.queued, (0x200,))
+                self.assertIsNone(desktop._client_click_inflight)
+
+    def test_private_double_click_holds_each_down_and_settles_initial_move_once(self):
+        desktop, owner, state, scene, click = self.click_fixture()
+        identity = dict(pid=7, birth=303, candidate_sha256='a' * 64)
+        with patch.object(d.time, 'sleep') as sleep:
+            result = desktop.post_client_input(owner, identity, 500, 44, 'left_double_click',
+                x=42, y=57, click_options=dict(move_settle_ms=100, down_hold_ms=120))
+        self.assertEqual(result.queued, (0x200, 0x201, 0x202, 0x201, 0x202))
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [0.1, 0.12, 0.12])
+
+    def test_private_click_down_hold_scene_change_still_posts_same_window_up(self):
+        desktop, owner, state, scene, click = self.click_fixture()
+        with patch.object(d.time, 'sleep', side_effect=lambda seconds: scene.update(current='Land')):
+            result = click(click_options=dict(down_hold_ms=100))
+        self.assertEqual(result.queued, (0x200, 0x201, 0x202))
+        self.assertTrue(all(row[2][0] == 500 for row in state['posts']))
+        self.assertFalse(result.cleanup_up)
+
+    def test_private_click_wait_failure_releases_down_but_owner_loss_cannot_redirect_up(self):
+        for mode in ('wait_failure', 'owner_loss'):
+            with self.subTest(mode=mode):
+                desktop, owner, state, scene, click = self.click_fixture()
+                def sleep(seconds):
+                    if mode == 'owner_loss': owner.closed = True
+                    else: raise RuntimeError('wait failed')
+                with patch.object(d.time, 'sleep', side_effect=sleep):
+                    with self.assertRaises((ValueError, RuntimeError)) as caught:
+                        click(click_options=dict(down_hold_ms=100))
+                result = caught.exception.client_click_result
+                self.assertEqual(result.queued, (0x200, 0x201, 0x202)
+                                 if mode == 'wait_failure' else (0x200, 0x201))
+                self.assertEqual(result.cleanup_up, mode == 'wait_failure')
+                self.assertEqual(bool(result.cleanup_errors), mode == 'owner_loss')
+                self.assertIsNone(desktop._client_click_inflight)
+                self.assertEqual(desktop._users, 0)
+
+    def test_private_click_invalid_options_refused_before_any_post(self):
+        desktop, owner, state, scene, click = self.click_fixture()
+        for options in (False, [], dict(activate=1), dict(move_settle_ms=True),
+                        dict(down_hold_ms=-1), dict(down_hold_ms=2001), dict(extra=0)):
+            with self.subTest(options=options):
+                with self.assertRaisesRegex(ValueError, 'INPUT_CLICK_OPTIONS_REQUIRED'):
+                    click(click_options=options)
+        self.assertFalse(state['posts'])
 
     def test_command_posts_only_from_joined_private_thread_then_restores(self):
         native, state = self.fake_native()

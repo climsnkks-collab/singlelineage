@@ -1,0 +1,191 @@
+{
+  "source": "work/source_game_data/native-dump-v1.jsonl",
+  "field": "CommonSpell.f7; tooltip reference, not chat policy",
+  "descriptions": [
+    {
+      "catalog": 2,
+      "description_ref": 853,
+      "source_line": 2220
+    },
+    {
+      "catalog": 7,
+      "description_ref": 685,
+      "source_line": 2225
+    },
+    {
+      "catalog": 11,
+      "description_ref": 3064,
+      "source_line": 2229
+    },
+    {
+      "catalog": 13,
+      "description_ref": 686,
+      "source_line": 2231
+    },
+    {
+      "catalog": 19,
+      "description_ref": 3067,
+      "source_line": 2237
+    },
+    {
+      "catalog": 20,
+      "description_ref": 3060,
+      "source_line": 2238
+    },
+    {
+      "catalog": 25,
+      "description_ref": 855,
+      "source_line": 2242
+    },
+    {
+      "catalog": 28,
+      "description_ref": 850,
+      "source_line": 2245
+    },
+    {
+      "catalog": 30,
+      "description_ref": 688,
+      "source_line": 2247
+    },
+    {
+      "catalog": 31,
+      "description_ref": 910,
+      "source_line": 2248
+    },
+    {
+      "catalog": 39,
+      "description_ref": 691,
+      "source_line": 2256
+    },
+    {
+      "catalog": 42,
+      "description_ref": 849,
+      "source_line": 2259
+    },
+    {
+      "catalog": 86,
+      "description_ref": 7982,
+      "source_line": 2287
+    },
+    {
+      "catalog": 87,
+      "description_ref": 1043,
+      "source_line": 2288
+    },
+    {
+      "catalog": 88,
+      "description_ref": 1044,
+      "source_line": 2289
+    },
+    {
+      "catalog": 89,
+      "description_ref": 1087,
+      "source_line": 2290
+    },
+    {
+      "catalog": 90,
+      "description_ref": 12625,
+      "source_line": 2291
+    },
+    {
+      "catalog": 128,
+      "description_ref": 701,
+      "source_line": 2297
+    },
+    {
+      "catalog": 136,
+      "description_ref": 703,
+      "source_line": 2301
+    },
+    {
+      "catalog": 137,
+      "description_ref": 704,
+      "source_line": 2302
+    },
+    {
+      "catalog": 147,
+      "description_ref": 707,
+      "source_line": 2306
+    },
+    {
+      "catalog": 148,
+      "description_ref": 708,
+      "source_line": 2307
+    },
+    {
+      "catalog": 150,
+      "description_ref": 972,
+      "source_line": 2309
+    },
+    {
+      "catalog": 151,
+      "description_ref": 711,
+      "source_line": 2310
+    },
+    {
+      "catalog": 152,
+      "description_ref": 712,
+      "source_line": 2311
+    },
+    {
+      "catalog": 162,
+      "description_ref": 981,
+      "source_line": 2320
+    },
+    {
+      "catalog": 165,
+      "description_ref": 963,
+      "source_line": 2322
+    },
+    {
+      "catalog": 167,
+      "description_ref": 974,
+      "source_line": 2323
+    },
+    {
+      "catalog": 169,
+      "description_ref": 12613,
+      "source_line": 2324
+    },
+    {
+      "catalog": 223,
+      "description_ref": 849,
+      "source_line": 2330
+    },
+    {
+      "catalog": 224,
+      "description_ref": 851,
+      "source_line": 2331
+    },
+    {
+      "catalog": 225,
+      "description_ref": 851,
+      "source_line": 2332
+    },
+    {
+      "catalog": 226,
+      "description_ref": 849,
+      "source_line": 2333
+    },
+    {
+      "catalog": 229,
+      "description_ref": 856,
+      "source_line": 2336
+    },
+    {
+      "catalog": 231,
+      "description_ref": 3154,
+      "source_line": 2338
+    },
+    {
+      "catalog": 232,
+      "description_ref": 3988,
+      "source_line": 2339
+    },
+    {
+      "catalog": 1062,
+      "description_ref": 851,
+      "source_line": 2448
+    }
+  ]
+}

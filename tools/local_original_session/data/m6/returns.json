@@ -1,0 +1,408 @@
+{
+  "table": "m6_returns",
+  "version": 1,
+  "returns": [
+    {
+      "map_id": 7,
+      "destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18322",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 8,
+      "destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18323",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 9,
+      "destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18324",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 10,
+      "destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18325",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 11,
+      "destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18326",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 12,
+      "destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18327",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 13,
+      "destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32624,
+        32813,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18328",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 19,
+      "destination": [
+        4,
+        32745,
+        32445,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32745,
+        32445,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18334",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 20,
+      "destination": [
+        4,
+        32745,
+        32445,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32745,
+        32445,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18335",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 21,
+      "destination": [
+        4,
+        32745,
+        32445,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32745,
+        32445,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18336",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 43,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18358",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 44,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18359",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 45,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18360",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 46,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18361",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 47,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18362",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 48,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18363",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 49,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18364",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 50,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18365",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 51,
+      "destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32612,
+        33188,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18366",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes; town-selection/random/class-specific original contract UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 5,
+      "destination": [
+        0,
+        32631,
+        32983,
+        5
+      ],
+      "reference_destination": [
+        0,
+        32631,
+        32983,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18714",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Ship departure-port restart point used as explicit local return/death policy; no voyage timer or arrival handshake invented."
+    },
+    {
+      "map_id": 6,
+      "destination": [
+        4,
+        32543,
+        32728,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32543,
+        32728,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18715",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Ship departure-port restart point used as explicit local return/death policy; no voyage timer or arrival handshake invented."
+    },
+    {
+      "map_id": 244,
+      "destination": [4, 32750, 32435, 5],
+      "reference_destination": [4, 32750, 32435, 5],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18559",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes, verified on current map4 S32. LOCAL backend policy, not native return evidence; random/town/class rules UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 777,
+      "destination": [4, 34043, 32184, 5],
+      "reference_destination": [4, 34043, 32184, 5],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18639",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point for all classes, verified on current map4 S32. LOCAL backend policy, not native return evidence; random/town/class rules UNKNOWN. Used by scroll162 and pending death return."
+    },
+    {
+      "map_id": 779,
+      "destination": [4, 32608, 33178, 5],
+      "reference_destination": [4, 32608, 33178, 5],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18641",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Explicit LOCAL backend return to the first external map4 GetBack point, verified on current map4 S32. L1J map779 internal geometry differs from current client; no internal coordinates or spawns are transferred. This is not evidence of native map779 return, town5 override, random or class rules. Used by scroll162 and pending death return."
+    }
+  ]
+}

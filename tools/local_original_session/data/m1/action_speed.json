@@ -1,0 +1,653 @@
+{
+  "table": "m1_action_speed",
+  "version": 1,
+  "note": "클라이언트 list.spr 명목 시간 = round(C합/24*1000)ms (기본 재생률 24, 2배 플래그 꺼짐, 외부 보정 0 가정; docs/CLIENT_SPEED_RESEARCH.md). 이 값을 서버의 이동·공격 허용 간격으로 쓰는 것은 로컬 정책이며, 헤이스트 등 보정은 M1 범위 밖. 참고용 L1J 값은 framecount*40*24/framerate (SprTable.java:150) 또는 npc passispeed/atkspeed.",
+  "ref_abbrev": {
+    "list.spr": "work/local_resource_provider/assets/data/list.spr",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl",
+    "all-rows": "work/monster_level_comparison/analysis/all-rows.csv",
+    "spr-parsed": "work/asset_link_audit_20261007/sprite/current-parsed.jsonl",
+    "drop-pairs": "work/npc_field_semantics/hypotheses/all-drop-pairs.json (배열 i 시작 줄=2+5i)",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jcfg": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "m1": "tools/local_original_session/data/m1/",
+    "mapping-scope": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md 3장",
+    "official": "tools/local_original_session/data/official/monsters.json (수집 2026-10-26)",
+    "map0-catalog": "tools/local_original_session/data/catalog/map0/",
+    "terrain": "tools/local_original_session/world_terrain.py; work/local_resource_provider/assets/map/0/*.s32"
+  },
+  "pc": [
+    {
+      "sprite_id": {
+        "value": 0,
+        "source": "client",
+        "ref": "list.spr:2 #0 prince"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:7 30.walk onehandsword C합16"
+      },
+      "attack_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:8 31.attack onehandsword C합24",
+        "note": "L1J SPR0 한손검 960ms (l1jdb:52207)"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 1,
+        "source": "client",
+        "ref": "list.spr:48 #1 princess"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:53 C합16"
+      },
+      "attack_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:54 C합24"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 61,
+        "source": "client",
+        "ref": "list.spr:419 #61 knight"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:424 C합16"
+      },
+      "attack_ms": {
+        "value": 917,
+        "source": "client",
+        "ref": "list.spr:425 C합22"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 48,
+        "source": "client",
+        "ref": "list.spr:278 #48 knight female"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:283 C합16"
+      },
+      "attack_ms": {
+        "value": 917,
+        "source": "client",
+        "ref": "list.spr:284 C합22"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 138,
+        "source": "client",
+        "ref": "list.spr:746 #138 elf male"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:751 C합16"
+      },
+      "attack_ms": {
+        "value": 875,
+        "source": "client",
+        "ref": "list.spr:752 C합21"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 37,
+        "source": "client",
+        "ref": "list.spr:208 #37 elf female"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:213 C합16"
+      },
+      "attack_ms": {
+        "value": 875,
+        "source": "client",
+        "ref": "list.spr:214 C합21"
+      }
+    }
+  ],
+  "monsters": [
+    {
+      "sprite_id": {
+        "value": 56,
+        "source": "client",
+        "ref": "list.spr:390 #56 orc"
+      },
+      "walk_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:391 0.walk C합20"
+      },
+      "attack_ms": {
+        "value": 1375,
+        "source": "client",
+        "ref": "list.spr:392 1.attack C합33"
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 800,
+          "attack_ms": 1320
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20631 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 1022,
+        "source": "client",
+        "ref": "list.spr:3245 #1022 goblin"
+      },
+      "walk_ms": {
+        "value": 792,
+        "source": "client",
+        "ref": "list.spr:3246 0.walk C합19"
+      },
+      "attack_ms": {
+        "value": 958,
+        "source": "client",
+        "ref": "list.spr:3248 1.attack C합23"
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 760,
+          "attack_ms": 920
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20630"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 57,
+        "source": "client",
+        "ref": "list.spr:401 #57 orc bow"
+      },
+      "walk_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:402 0.walk bow C합20"
+      },
+      "attack_ms": {
+        "value": 1958,
+        "source": "client",
+        "ref": "list.spr:403 1.attack bow C합47"
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 800,
+          "attack_ms": 1880
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20640 (gfx 3860 기준)"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 33,
+        "source": "client",
+        "ref": "list.spr:187 #33 werewolf"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:188 0.walk C합16"
+      },
+      "attack_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:189 1.attack axe C합24"
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 640,
+          "attack_ms": 840
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20645 (gfx 1110 기준)"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 1059,
+        "source": "client",
+        "ref": "native-dump:156 f2; list.spr:3401 Kobolds",
+        "note": "L1J gfxid=1059; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 1333,
+        "source": "client",
+        "ref": "list.spr:3402 walk C합32/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 1125,
+        "source": "client",
+        "ref": "list.spr:3403 attack C합27/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 1280,
+          "attack_ms": 1080
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20637 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 54,
+        "source": "client",
+        "ref": "native-dump:4 f2; list.spr:374 dwarf",
+        "note": "L1J gfxid=54; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 625,
+        "source": "client",
+        "ref": "list.spr:375 walk C합15/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 1542,
+        "source": "client",
+        "ref": "list.spr:376 attack C합37/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 600,
+          "attack_ms": 1480
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20661 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 94,
+        "source": "client",
+        "ref": "native-dump:3 f2; list.spr:562 sword orc",
+        "note": "L1J gfxid=3864; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:563 walk C합16/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 958,
+        "source": "client",
+        "ref": "list.spr:564 attack sword C합23/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 640,
+          "attack_ms": 880
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20702 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 52,
+        "source": "client",
+        "ref": "native-dump:22 f2; list.spr:352 #52 zombie; parsed-spr:49",
+        "note": "L1J gfxid=52 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "walk_ms": {
+        "value": 2083,
+        "source": "client",
+        "ref": "list.spr:353 walk C합50/24; parsed-spr:49",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=2000ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_ms": {
+        "value": 1083,
+        "source": "client",
+        "ref": "list.spr:354 attack C합26/24; parsed-spr:49",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=1040ms와 별개. 실제 게임 간격 미검증."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 2000,
+          "attack_ms": 1040
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20685 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 30,
+        "source": "client",
+        "ref": "native-dump:24 f2; list.spr:153 #30 skeleton; parsed-spr:27",
+        "note": "L1J gfxid=30 일치. SPR 이름/f2 대응이며 실제 world 외형 미검증."
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:160 walk C합16/24; parsed-spr:27",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J passispeed=640ms와 별개. 실제 게임 간격 미검증."
+      },
+      "attack_ms": {
+        "value": 958,
+        "source": "client",
+        "ref": "list.spr:154 attack C합23/24; parsed-spr:27",
+        "note": "SPR 명목 재생시간을 행동 간격으로 쓰는 것은 M1과 같은 로컬 정책. L1J atkspeed=920ms와 별개. 실제 게임 간격 미검증."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 640,
+          "attack_ms": 920
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20725 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 49,
+        "source": "client",
+        "ref": "native-dump:5 f2; list.spr:325 golem",
+        "note": "L1J gfxid=49; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 1333,
+        "source": "client",
+        "ref": "list.spr:326 walk C합32/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 2750,
+        "source": "client",
+        "ref": "list.spr:327 attack C합66/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 1280,
+          "attack_ms": 1840
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20744 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 95,
+        "source": "client",
+        "ref": "native-dump:16 f2; list.spr:574 shelob",
+        "note": "L1J gfxid=95; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 500,
+        "source": "client",
+        "ref": "list.spr:575 walk C합12/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 917,
+        "source": "client",
+        "ref": "list.spr:576 attack C합22/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 480,
+          "attack_ms": 880
+        },
+        "source": "l1j",
+        "ref": "l1jdb:20753 passispeed/atkspeed"
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 32,
+        "source": "client",
+        "ref": "native-dump:7 f2; list.spr:175 elder",
+        "note": "L1J gfxid=32; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:176 walk C합20/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 1875,
+        "source": "client",
+        "ref": "list.spr:177 attack C합45/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 800,
+          "attack_ms": 1800
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20816 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 96,
+        "source": "client",
+        "ref": "native-dump:9 f2; list.spr:585 wolf",
+        "note": "L1J gfxid=96; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 500,
+        "source": "client",
+        "ref": "list.spr:586 walk C합12/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 1042,
+        "source": "client",
+        "ref": "list.spr:587 attack C합25/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 480,
+          "attack_ms": 1000
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20663 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 29,
+        "source": "client",
+        "ref": "native-dump:11 f2; list.spr:143 floating eye",
+        "note": "L1J gfxid=29; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:144 walk C합24/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 1792,
+        "source": "client",
+        "ref": "list.spr:145 attack C합43/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 960,
+          "attack_ms": 1680
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20688 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 110,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:14"
+      },
+      "walk_ms": {
+        "value": 500,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/list.spr:651; work/asset_link_audit_20261007/sprite/current-parsed.jsonl sprite=110 cmd=0",
+        "note": "C-sum=12/24 nominal sprite duration; using it as action cadence is LOCAL policy, actual combat cadence unverified."
+      },
+      "attack_ms": {
+        "value": 1167,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/list.spr:652; work/asset_link_audit_20261007/sprite/current-parsed.jsonl sprite=110 cmd=1",
+        "note": "C-sum=28/24 nominal sprite duration; using it as action cadence is LOCAL policy, actual combat cadence unverified."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 480,
+          "attack_ms": 1120
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20781 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 111,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:15"
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/list.spr:661; work/asset_link_audit_20261007/sprite/current-parsed.jsonl sprite=111 cmd=0",
+        "note": "C-sum=16/24 nominal sprite duration; using it as action cadence is LOCAL policy, actual combat cadence unverified."
+      },
+      "attack_ms": {
+        "value": 1125,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/list.spr:662; work/asset_link_audit_20261007/sprite/current-parsed.jsonl sprite=111 cmd=1",
+        "note": "C-sum=27/24 nominal sprite duration; using it as action cadence is LOCAL policy, actual combat cadence unverified."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 640,
+          "attack_ms": 680
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21165 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 931,
+        "source": "client",
+        "ref": "native-dump:114 f2; list.spr:2868 Dog dobermann",
+        "note": "L1J gfxid=931; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 583,
+        "source": "client",
+        "ref": "list.spr:2869 walk C합14/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:2871 attack C합24/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 560,
+          "attack_ms": 960
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20662 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 936,
+        "source": "client",
+        "ref": "native-dump:116 f2; list.spr:2893 Dog shepherd",
+        "note": "L1J gfxid=936; 클래식 f2/SPR 외형 우선. 번호 존재만으로 L1J gfx를 이식하지 않음."
+      },
+      "walk_ms": {
+        "value": 583,
+        "source": "client",
+        "ref": "list.spr:2894 walk C합14/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "attack_ms": {
+        "value": 1000,
+        "source": "client",
+        "ref": "list.spr:2896 attack C합24/24",
+        "note": "기본 재생률24·외부 보정0의 명목 시간. 이를 서버 행동 간격으로 쓰는 것은 로컬 정책이며 실제 소비·공속 동등성 미확인."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 560,
+          "attack_ms": 960
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20654 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    },
+    {
+      "sprite_id": {
+        "value": 979,
+        "source": "client",
+        "ref": "native-dump:125 f2; list.spr:3017 wildboar; parsed-spr:584",
+        "note": "L1J gfxid=979; client f2/SPR takes precedence. Native render unverified."
+      },
+      "walk_ms": {
+        "value": 667,
+        "source": "client",
+        "ref": "list.spr:3018 walk Csum=16/24; parsed-spr:584",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "attack_ms": {
+        "value": 833,
+        "source": "client",
+        "ref": "list.spr:3020 attack Csum=20/24; parsed-spr:584",
+        "note": "SPR nominal duration used as LOCAL server interval; live timing and modifiers unverified."
+      },
+      "l1j_reference": {
+        "value": {
+          "walk_ms": 640,
+          "attack_ms": 800
+        },
+        "source": "l1j",
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20678 passispeed/atkspeed",
+        "note": "Separate L1J reference values, not the client sprite-derived action intervals or confirmed Classic server cadence."
+      }
+    }
+  ]
+}

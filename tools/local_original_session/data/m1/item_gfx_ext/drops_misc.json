@@ -1,0 +1,625 @@
+{
+  "table": "m1_item_gfx_drops_misc_ext",
+  "version": 1,
+  "note": "Fixed-client raw f5/f6 reused. Actual ground rendering remains unverified.",
+  "items": {
+    "5": {
+      "icon": 3,
+      "ground": 4,
+      "name_ko": "등잔",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:956; data/catalog/items_all.json id=5 item.bin f5/f6"
+    },
+    "19": {
+      "icon": 117,
+      "ground": 28,
+      "name_ko": "소나무 막대",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:969; data/catalog/items_all.json id=19 item.bin f5/f6"
+    },
+    "20": {
+      "icon": 116,
+      "ground": 28,
+      "name_ko": "단풍나무 막대",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:970; data/catalog/items_all.json id=20 item.bin f5/f6"
+    },
+    "21": {
+      "icon": 118,
+      "ground": 28,
+      "name_ko": "흑단 막대",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:971; data/catalog/items_all.json id=21 item.bin f5/f6"
+    },
+    "36": {
+      "icon": 24,
+      "ground": 6,
+      "name_ko": "양초",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:985; data/catalog/items_all.json id=36 item.bin f5/f6"
+    },
+    "52": {
+      "icon": 59,
+      "ground": 19,
+      "name_ko": "금빛 열쇠",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:998; data/catalog/items_all.json id=52 item.bin f5/f6"
+    },
+    "53": {
+      "icon": 59,
+      "ground": 19,
+      "name_ko": "은회색 열쇠",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:999; data/catalog/items_all.json id=53 item.bin f5/f6"
+    },
+    "121": {
+      "icon": 139,
+      "ground": 150,
+      "name_ko": "셸로브 발톱",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1056; data/catalog/items_all.json id=121 item.bin f5/f6"
+    },
+    "127": {
+      "icon": 140,
+      "ground": 181,
+      "name_ko": "랜턴",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1061; data/catalog/items_all.json id=127 item.bin f5/f6"
+    },
+    "131": {
+      "icon": 142,
+      "ground": 239,
+      "name_ko": "랜턴용 기름",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1065; data/catalog/items_all.json id=131 item.bin f5/f6"
+    },
+    "157": {
+      "icon": 258,
+      "ground": 729,
+      "name_ko": "아투바의 토템",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1074; data/catalog/items_all.json id=157 item.bin f5/f6"
+    },
+    "158": {
+      "icon": 259,
+      "ground": 730,
+      "name_ko": "네루가의 토템",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1075; data/catalog/items_all.json id=158 item.bin f5/f6"
+    },
+    "159": {
+      "icon": 260,
+      "ground": 731,
+      "name_ko": "두다-마라의 토템",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1076; data/catalog/items_all.json id=159 item.bin f5/f6"
+    },
+    "160": {
+      "icon": 261,
+      "ground": 732,
+      "name_ko": "간디의 토템",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1077; data/catalog/items_all.json id=160 item.bin f5/f6"
+    },
+    "161": {
+      "icon": 262,
+      "ground": 733,
+      "name_ko": "로바의 토템",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1078; data/catalog/items_all.json id=161 item.bin f5/f6"
+    },
+    "166": {
+      "icon": 235,
+      "ground": 773,
+      "name_ko": "마력의 돌",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1081; data/catalog/items_all.json id=166 item.bin f5/f6"
+    },
+    "168": {
+      "icon": 236,
+      "ground": 771,
+      "name_ko": "다이아몬드",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1083; data/catalog/items_all.json id=168 item.bin f5/f6"
+    },
+    "169": {
+      "icon": 237,
+      "ground": 771,
+      "name_ko": "고급 다이아몬드",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1084; data/catalog/items_all.json id=169 item.bin f5/f6"
+    },
+    "170": {
+      "icon": 238,
+      "ground": 771,
+      "name_ko": "최고급 다이아몬드",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1085; data/catalog/items_all.json id=170 item.bin f5/f6"
+    },
+    "171": {
+      "icon": 239,
+      "ground": 772,
+      "name_ko": "에메랄드",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1086; data/catalog/items_all.json id=171 item.bin f5/f6"
+    },
+    "172": {
+      "icon": 240,
+      "ground": 772,
+      "name_ko": "고급 에메랄드",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1087; data/catalog/items_all.json id=172 item.bin f5/f6"
+    },
+    "173": {
+      "icon": 241,
+      "ground": 772,
+      "name_ko": "최고급 에메랄드",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1088; data/catalog/items_all.json id=173 item.bin f5/f6"
+    },
+    "174": {
+      "icon": 242,
+      "ground": 774,
+      "name_ko": "루비",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1089; data/catalog/items_all.json id=174 item.bin f5/f6"
+    },
+    "175": {
+      "icon": 243,
+      "ground": 774,
+      "name_ko": "고급 루비",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1090; data/catalog/items_all.json id=175 item.bin f5/f6"
+    },
+    "176": {
+      "icon": 244,
+      "ground": 774,
+      "name_ko": "최고급 루비",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1091; data/catalog/items_all.json id=176 item.bin f5/f6"
+    },
+    "177": {
+      "icon": 245,
+      "ground": 775,
+      "name_ko": "사파이어",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1092; data/catalog/items_all.json id=177 item.bin f5/f6"
+    },
+    "178": {
+      "icon": 246,
+      "ground": 775,
+      "name_ko": "고급 사파이어",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1093; data/catalog/items_all.json id=178 item.bin f5/f6"
+    },
+    "179": {
+      "icon": 247,
+      "ground": 775,
+      "name_ko": "최고급 사파이어",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1094; data/catalog/items_all.json id=179 item.bin f5/f6"
+    },
+    "194": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (파이어볼)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1109; data/catalog/items_all.json id=194 item.bin f5/f6"
+    },
+    "195": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (인챈트 덱스터리티)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1110; data/catalog/items_all.json id=195 item.bin f5/f6"
+    },
+    "196": {
+      "icon": 254,
+      "ground": 777,
+      "name_ko": "마법서 (웨폰 브레이크)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1111; data/catalog/items_all.json id=196 item.bin f5/f6"
+    },
+    "197": {
+      "icon": 254,
+      "ground": 777,
+      "name_ko": "마법서 (뱀파이어릭 터치)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1112; data/catalog/items_all.json id=197 item.bin f5/f6"
+    },
+    "198": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (슬로우)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1113; data/catalog/items_all.json id=198 item.bin f5/f6"
+    },
+    "200": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (콜 라이트닝)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1115; data/catalog/items_all.json id=200 item.bin f5/f6"
+    },
+    "201": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (그레이터 힐)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1116; data/catalog/items_all.json id=201 item.bin f5/f6"
+    },
+    "202": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (테이밍 몬스터)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1117; data/catalog/items_all.json id=202 item.bin f5/f6"
+    },
+    "203": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (리무브 커스)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1118; data/catalog/items_all.json id=203 item.bin f5/f6"
+    },
+    "204": {
+      "icon": 255,
+      "ground": 777,
+      "name_ko": "마법서 (크리에이트 좀비)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1119; data/catalog/items_all.json id=204 item.bin f5/f6"
+    },
+    "205": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (인챈트 마이티)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1120; data/catalog/items_all.json id=205 item.bin f5/f6"
+    },
+    "206": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (헤이스트)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1121; data/catalog/items_all.json id=206 item.bin f5/f6"
+    },
+    "207": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (캔슬레이션)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1122; data/catalog/items_all.json id=207 item.bin f5/f6"
+    },
+    "208": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (이럽션)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1123; data/catalog/items_all.json id=208 item.bin f5/f6"
+    },
+    "209": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (힐 올)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1124; data/catalog/items_all.json id=209 item.bin f5/f6"
+    },
+    "211": {
+      "icon": 256,
+      "ground": 777,
+      "name_ko": "마법서 (서먼 몬스터)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1126; data/catalog/items_all.json id=211 item.bin f5/f6"
+    },
+    "212": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (홀리 워크)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1127; data/catalog/items_all.json id=212 item.bin f5/f6"
+    },
+    "213": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (토네이도)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1128; data/catalog/items_all.json id=213 item.bin f5/f6"
+    },
+    "217": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (인비지블리티)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1131; data/catalog/items_all.json id=217 item.bin f5/f6"
+    },
+    "218": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (리절렉션)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1132; data/catalog/items_all.json id=218 item.bin f5/f6"
+    },
+    "222": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (이뮨 투 함)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1135; data/catalog/items_all.json id=222 item.bin f5/f6"
+    },
+    "246": {
+      "icon": 320,
+      "ground": 888,
+      "name_ko": "미스릴 원석",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1149; data/catalog/items_all.json id=246 item.bin f5/f6"
+    },
+    "249": {
+      "icon": 82,
+      "ground": 47,
+      "name_ko": "버섯포자의 즙",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1152; data/catalog/items_all.json id=249 item.bin f5/f6"
+    },
+    "250": {
+      "icon": 324,
+      "ground": 905,
+      "name_ko": "오우거의 피",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1153; data/catalog/items_all.json id=250 item.bin f5/f6"
+    },
+    "252": {
+      "icon": 318,
+      "ground": 889,
+      "name_ko": "미스릴",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1155; data/catalog/items_all.json id=252 item.bin f5/f6"
+    },
+    "332": {
+      "icon": 446,
+      "ground": 1164,
+      "name_ko": "동물가죽",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1217; data/catalog/items_all.json id=332 item.bin f5/f6"
+    },
+    "333": {
+      "icon": 454,
+      "ground": 1167,
+      "name_ko": "철괴",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1218; data/catalog/items_all.json id=333 item.bin f5/f6"
+    },
+    "335": {
+      "icon": 455,
+      "ground": 1164,
+      "name_ko": "고급피혁",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1220; data/catalog/items_all.json id=335 item.bin f5/f6"
+    },
+    "336": {
+      "icon": 444,
+      "ground": 1166,
+      "name_ko": "뼈조각",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1221; data/catalog/items_all.json id=336 item.bin f5/f6"
+    },
+    "409": {
+      "icon": 549,
+      "ground": 1567,
+      "name_ko": "화룡 비늘",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1251; data/catalog/items_all.json id=409 item.bin f5/f6"
+    },
+    "520": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (어스 재일)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1323; data/catalog/items_all.json id=520 item.bin f5/f6"
+    },
+    "522": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (선 버스트)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1325; data/catalog/items_all.json id=522 item.bin f5/f6"
+    },
+    "523": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (그레이터 헤이스트)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1326; data/catalog/items_all.json id=523 item.bin f5/f6"
+    },
+    "524": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (어스 퀘이크)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1327; data/catalog/items_all.json id=524 item.bin f5/f6"
+    },
+    "569": {
+      "icon": 706,
+      "ground": 773,
+      "name_ko": "정령옥",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1340; data/catalog/items_all.json id=569 item.bin f5/f6"
+    },
+    "575": {
+      "icon": 677,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (리턴 투 네이처)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1346; data/catalog/items_all.json id=575 item.bin f5/f6"
+    },
+    "576": {
+      "icon": 677,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (블러드 투 소울)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1347; data/catalog/items_all.json id=576 item.bin f5/f6"
+    },
+    "580": {
+      "icon": 679,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (윈드 워크)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1351; data/catalog/items_all.json id=580 item.bin f5/f6"
+    },
+    "582": {
+      "icon": 676,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (인탱글)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1353; data/catalog/items_all.json id=582 item.bin f5/f6"
+    },
+    "583": {
+      "icon": 682,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (이레이즈 매직)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1354; data/catalog/items_all.json id=583 item.bin f5/f6"
+    },
+    "585": {
+      "icon": 680,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (브레스 오브 파이어)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1356; data/catalog/items_all.json id=585 item.bin f5/f6"
+    },
+    "586": {
+      "icon": 684,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (아이 오브 스톰)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1357; data/catalog/items_all.json id=586 item.bin f5/f6"
+    },
+    "587": {
+      "icon": 681,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (어스 바인드)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1358; data/catalog/items_all.json id=587 item.bin f5/f6"
+    },
+    "588": {
+      "icon": 683,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (네이쳐스 터치)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1359; data/catalog/items_all.json id=588 item.bin f5/f6"
+    },
+    "589": {
+      "icon": 681,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (블레스 오브 어스)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1360; data/catalog/items_all.json id=589 item.bin f5/f6"
+    },
+    "601": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (카운터 매직)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1370; data/catalog/items_all.json id=601 item.bin f5/f6"
+    },
+    "602": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (메디테이션)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1371; data/catalog/items_all.json id=602 item.bin f5/f6"
+    },
+    "604": {
+      "icon": 255,
+      "ground": 777,
+      "name_ko": "마법서 (다크니스)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1373; data/catalog/items_all.json id=604 item.bin f5/f6"
+    },
+    "605": {
+      "icon": 255,
+      "ground": 777,
+      "name_ko": "마법서 (위크니스)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1374; data/catalog/items_all.json id=605 item.bin f5/f6"
+    },
+    "606": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (블레스 웨폰)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1375; data/catalog/items_all.json id=606 item.bin f5/f6"
+    },
+    "607": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (버서커스)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1376; data/catalog/items_all.json id=607 item.bin f5/f6"
+    },
+    "608": {
+      "icon": 256,
+      "ground": 777,
+      "name_ko": "마법서 (디지즈)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1377; data/catalog/items_all.json id=608 item.bin f5/f6"
+    },
+    "610": {
+      "icon": 251,
+      "ground": 776,
+      "name_ko": "마법서 (사일런스)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1378; data/catalog/items_all.json id=610 item.bin f5/f6"
+    },
+    "633": {
+      "icon": 919,
+      "ground": 22,
+      "name_ko": "낡은 거래 문서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1386; data/catalog/items_all.json id=633 item.bin f5/f6"
+    },
+    "636": {
+      "icon": 914,
+      "ground": 22,
+      "name_ko": "수색문서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1387; data/catalog/items_all.json id=636 item.bin f5/f6"
+    },
+    "639": {
+      "icon": 927,
+      "ground": 22,
+      "name_ko": "흑기사의 서약서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1388; data/catalog/items_all.json id=639 item.bin f5/f6"
+    },
+    "640": {
+      "icon": 923,
+      "ground": 776,
+      "name_ko": "두다 마라 오크 마법서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1389; data/catalog/items_all.json id=640 item.bin f5/f6"
+    },
+    "641": {
+      "icon": 925,
+      "ground": 776,
+      "name_ko": "네루가 오크 마법서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1390; data/catalog/items_all.json id=641 item.bin f5/f6"
+    },
+    "642": {
+      "icon": 924,
+      "ground": 776,
+      "name_ko": "간디 오크 마법서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1391; data/catalog/items_all.json id=642 item.bin f5/f6"
+    },
+    "643": {
+      "icon": 922,
+      "ground": 776,
+      "name_ko": "아투바 오크 마법서",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1392; data/catalog/items_all.json id=643 item.bin f5/f6"
+    },
+    "647": {
+      "icon": 921,
+      "ground": 150,
+      "name_ko": "해골의 두개골",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1396; data/catalog/items_all.json id=647 item.bin f5/f6"
+    },
+    "648": {
+      "icon": 918,
+      "ground": 997,
+      "name_ko": "구울의 손톱",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1397; data/catalog/items_all.json id=648 item.bin f5/f6"
+    },
+    "649": {
+      "icon": 926,
+      "ground": 997,
+      "name_ko": "구울의 이빨",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1398; data/catalog/items_all.json id=649 item.bin f5/f6"
+    },
+    "677": {
+      "icon": 912,
+      "ground": 22,
+      "name_ko": "생명의 비밀",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1421; data/catalog/items_all.json id=677 item.bin f5/f6"
+    },
+    "694": {
+      "icon": 59,
+      "ground": 19,
+      "name_ko": "언데드의 열쇠",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1428; data/catalog/items_all.json id=694 item.bin f5/f6"
+    },
+    "707": {
+      "icon": 59,
+      "ground": 19,
+      "name_ko": "비밀방 열쇠",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1433; data/catalog/items_all.json id=707 item.bin f5/f6"
+    },
+    "1294": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "기술서 (쇼크 스턴)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1504; data/catalog/items_all.json id=1294 item.bin f5/f6"
+    },
+    "1490": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (디케이 포션)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1509; data/catalog/items_all.json id=1490 item.bin f5/f6"
+    },
+    "1491": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (어드밴스 스피릿)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1510; data/catalog/items_all.json id=1491 item.bin f5/f6"
+    },
+    "1861": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "기술서 (리덕션 아머)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1517; data/catalog/items_all.json id=1861 item.bin f5/f6"
+    },
+    "1862": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "기술서 (바운스 어택)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1518; data/catalog/items_all.json id=1862 item.bin f5/f6"
+    },
+    "1863": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "기술서 (솔리드 캐리지)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1519; data/catalog/items_all.json id=1863 item.bin f5/f6"
+    },
+    "12110": {
+      "icon": 637,
+      "ground": 3963,
+      "name_ko": "도난당한 목걸이",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1675; data/catalog/items_all.json id=12110 item.bin f5/f6"
+    },
+    "12112": {
+      "icon": 20029,
+      "ground": 3963,
+      "name_ko": "사이클롭스의 피",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1677; data/catalog/items_all.json id=12112 item.bin f5/f6"
+    },
+    "12120": {
+      "icon": 1529,
+      "ground": 3963,
+      "name_ko": "신비한 지혜의 물약",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1685; data/catalog/items_all.json id=12120 item.bin f5/f6"
+    }
+  }
+}

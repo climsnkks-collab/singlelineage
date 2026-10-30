@@ -124,6 +124,8 @@ class Features:
     npc_approach_hit_input: NpcApproachHitInput | None = None
     player_life_policy: object | None = None
     npc_player_lethal_recovery_input: object | None = None
+    world_policy: str | None = None
+    world_starter_kit: str | None = None
 
 
 def _npc_respawn(value, actor, combat):
@@ -299,7 +301,7 @@ def _player_death_recovery(value):
 
 
 def parse(value):
-    need(type(value) is dict and {'schema', 'npc'} <= set(value) <= {'schema', 'npc', 'attack', 'inventory', 'restart', 'item_use', 'inventory_update', 'item_equipment', 'npc_hp', 'npc_death', 'npc_remove', 'npc_respawn', 'hp_status', 'npc_player_hit', 'npc_player_hit_repeated', 'item_transfer', 'npc_approach_hit', 'player_death_recovery', 'npc_player_lethal_recovery'},
+    need(type(value) is dict and {'schema', 'npc'} <= set(value) <= {'schema', 'npc', 'attack', 'inventory', 'restart', 'item_use', 'inventory_update', 'item_equipment', 'npc_hp', 'npc_death', 'npc_remove', 'npc_respawn', 'hp_status', 'npc_player_hit', 'npc_player_hit_repeated', 'item_transfer', 'npc_approach_hit', 'player_death_recovery', 'npc_player_lethal_recovery', 'world'},
          'FEATURE_EXACT_SCHEMA_REQUIRED')
     need(value['schema'] == SCHEMA, 'FEATURE_SCHEMA_REQUIRED')
     need(value.get('npc_player_lethal_recovery') is None or value.get('player_death_recovery') is not None,
@@ -466,6 +468,7 @@ def parse(value):
         combat.update(_npc_player_hit_repeated(value, None, combat))
         combat.update(_npc_approach_hit(value, None, combat))
         combat.update(life)
+        combat.update(_world(value))
         return Features(inventory_policy=inventory_policy, inventory_frame=inventory_frame,
                         restart_policy=restart_policy, inventory_store_policy=inventory_store_policy,
                         inventory_delivery_policy=inventory_delivery_policy, item_use_policy=item_use_policy,
@@ -493,6 +496,7 @@ def parse(value):
     combat.update(_npc_player_hit_repeated(value, actor, combat))
     combat.update(_npc_approach_hit(value, actor, combat))
     combat.update(life)
+    combat.update(_world(value))
     goal = config['goal']
     need(goal is None or type(goal) is list and len(goal) == 2, 'FEATURE_EXPLICIT_NPC_GOAL_REQUIRED')
     if goal is not None:
@@ -528,6 +532,25 @@ def parse(value):
                     inventory_missing_row_policy, inventory_collection_policy=inventory_collection_policy,
                     inventory_collection_grant=inventory_collection_grant,
                         inventory_custody_policy=inventory_custody_policy, item_transfer_policy=item_transfer_policy, **combat)
+
+
+def _world(value):
+    """Opt-in M1 world (nearby spawn groups + visibility); absent keeps old behavior."""
+    if value.get('world') is None:
+        return {}
+    from tools.local_original_session.world_visibility import POLICY
+    world = value['world']
+    # Optional starter_kit: data/m1/starter.json kits name for a missing saved row (test play).
+    need(type(world) is dict and {'policy'} <= set(world) <= {'policy', 'starter_kit'},
+         'FEATURE_EXACT_SCHEMA_REQUIRED')
+    policy = world['policy']
+    need(type(policy) is str and policy == POLICY, 'FEATURE_EXPLICIT_WORLD_POLICY_REQUIRED')
+    if world.get('starter_kit') is None:
+        return dict(world_policy=policy)
+    from tools.local_original_session.game_data import load_m1
+    kit = world['starter_kit']
+    need(type(kit) is str and kit in load_m1().starter.kits, 'FEATURE_WORLD_STARTER_KIT_REQUIRED')
+    return dict(world_policy=policy, world_starter_kit=kit)
 
 
 def _finite_json(_):

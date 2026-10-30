@@ -1,0 +1,1008 @@
+{
+  "version": 1,
+  "status": "LOCAL_POLICY_SOURCE_STATIC_CHECKED_RUNTIME_UNRUN",
+  "reference_paths": {
+    "l1jdb": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql",
+    "native_dump": "work/source_game_data/native-dump-v1.jsonl",
+    "region": "work/local_resource_provider/assets/data/region.jsonc"
+  },
+  "scope": "five map4 village unions; count0/ambiguous/blocked rows preserved",
+  "teleporters": [
+    {
+      "l1j_npc_id": 50024,
+      "stem": "steve2",
+      "destinations": [
+        {
+          "action": "teleport gludin-island",
+          "name": "gludin-island",
+          "map_id": 0,
+          "x": 32583,
+          "y": 32924,
+          "heading": 5,
+          "price": 550,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-island,NpcId=50024]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport gludin-island",
+              "name": "gludin-island",
+              "map_id": 0,
+              "x": 32583,
+              "y": 32924,
+              "heading": 5,
+              "price": 550,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-island,NpcId=50024]"
+            }
+          ]
+        },
+        {
+          "action": "teleport gludin-kent",
+          "name": "gludin-kent",
+          "map_id": 4,
+          "x": 33050,
+          "y": 32782,
+          "heading": 5,
+          "price": 55,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-kent,NpcId=50024]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport gludin-kent",
+              "name": "gludin-kent",
+              "map_id": 4,
+              "x": 33050,
+              "y": 32782,
+              "heading": 5,
+              "price": 55,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-kent,NpcId=50024]"
+            }
+          ]
+        },
+        {
+          "action": "teleport gludin-willow",
+          "name": "gludin-willow",
+          "map_id": 4,
+          "x": 32715,
+          "y": 32448,
+          "heading": 5,
+          "price": 55,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-willow,NpcId=50024]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport gludin-willow",
+              "name": "gludin-willow",
+              "map_id": 4,
+              "x": 32715,
+              "y": 32448,
+              "heading": 5,
+              "price": 55,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-willow,NpcId=50024]"
+            }
+          ]
+        },
+        {
+          "action": "teleport gludin-woods",
+          "name": "gludin-woods",
+          "map_id": 4,
+          "x": 32640,
+          "y": 33203,
+          "heading": 5,
+          "price": 55,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-woods,NpcId=50024]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport gludin-woods",
+              "name": "gludin-woods",
+              "map_id": 4,
+              "x": 32640,
+              "y": 33203,
+              "heading": 5,
+              "price": 55,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-woods,NpcId=50024]"
+            }
+          ]
+        },
+        {
+          "action": "teleport gludin-aden",
+          "name": "gludin-aden",
+          "map_id": 4,
+          "x": 33965,
+          "y": 33253,
+          "heading": 5,
+          "price": 264,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-aden,NpcId=50024]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport gludin-aden",
+              "name": "gludin-aden",
+              "map_id": 4,
+              "x": 33965,
+              "y": 33253,
+              "heading": 5,
+              "price": 264,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport gludin-aden,NpcId=50024]"
+            }
+          ]
+        }
+      ],
+      "unavailable": [
+        {
+          "action": "gludin-dungeon",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        },
+        {
+          "action": "gludin-dock",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        },
+        {
+          "action": "gludin-grape",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        }
+      ]
+    },
+    {
+      "l1j_npc_id": 50020,
+      "stem": "stanley2",
+      "destinations": [
+        {
+          "action": "teleport kent-gludin",
+          "name": "kent-gludin",
+          "map_id": 4,
+          "x": 32608,
+          "y": 32734,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-gludin,NpcId=50020]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport kent-gludin",
+              "name": "kent-gludin",
+              "map_id": 4,
+              "x": 32608,
+              "y": 32734,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-gludin,NpcId=50020]"
+            }
+          ]
+        },
+        {
+          "action": "teleport kent-giran",
+          "name": "kent-giran",
+          "map_id": 4,
+          "x": 33438,
+          "y": 32796,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-giran,NpcId=50020]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport kent-giran",
+              "name": "kent-giran",
+              "map_id": 4,
+              "x": 33438,
+              "y": 32796,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-giran,NpcId=50020]"
+            }
+          ]
+        },
+        {
+          "action": "teleport kent-silver",
+          "name": "kent-silver",
+          "map_id": 4,
+          "x": 33080,
+          "y": 33386,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-silver,NpcId=50020]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport kent-silver",
+              "name": "kent-silver",
+              "map_id": 4,
+              "x": 33080,
+              "y": 33386,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-silver,NpcId=50020]"
+            }
+          ]
+        },
+        {
+          "action": "teleport kent-aden",
+          "name": "kent-aden",
+          "map_id": 4,
+          "x": 33965,
+          "y": 33253,
+          "heading": 5,
+          "price": 180,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-aden,NpcId=50020]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport kent-aden",
+              "name": "kent-aden",
+              "map_id": 4,
+              "x": 33965,
+              "y": 33253,
+              "heading": 5,
+              "price": 180,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-aden,NpcId=50020]"
+            }
+          ]
+        },
+        {
+          "action": "teleport kent-lowful",
+          "name": "kent-lowful",
+          "map_id": 4,
+          "x": 33118,
+          "y": 32933,
+          "heading": 5,
+          "price": 200,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-lowful,NpcId=50020]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport kent-lowful",
+              "name": "kent-lowful",
+              "map_id": 4,
+              "x": 33118,
+              "y": 32933,
+              "heading": 5,
+              "price": 200,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-lowful,NpcId=50020]"
+            }
+          ]
+        },
+        {
+          "action": "teleport kent-chaos",
+          "name": "kent-chaos",
+          "map_id": 4,
+          "x": 32885,
+          "y": 32652,
+          "heading": 5,
+          "price": 200,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-chaos,NpcId=50020]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport kent-chaos",
+              "name": "kent-chaos",
+              "map_id": 4,
+              "x": 32885,
+              "y": 32652,
+              "heading": 5,
+              "price": 200,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport kent-chaos,NpcId=50020]"
+            }
+          ]
+        }
+      ],
+      "unavailable": []
+    },
+    {
+      "l1j_npc_id": 50054,
+      "stem": "trey2",
+      "destinations": [
+        {
+          "action": "teleport woods-gludin",
+          "name": "woods-gludin",
+          "map_id": 4,
+          "x": 32608,
+          "y": 32734,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport woods-gludin,NpcId=50054]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport woods-gludin",
+              "name": "woods-gludin",
+              "map_id": 4,
+              "x": 32608,
+              "y": 32734,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport woods-gludin,NpcId=50054]"
+            },
+            {
+              "action": "teleport woods-gludin",
+              "name": "woods-gludin",
+              "map_id": 4,
+              "x": 32608,
+              "y": 32734,
+              "heading": 5,
+              "price": 180,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport woods-gludin,NpcId=50054]"
+            }
+          ]
+        },
+        {
+          "action": "teleport woods-silver",
+          "name": "woods-silver",
+          "map_id": 4,
+          "x": 33080,
+          "y": 33386,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport woods-silver,NpcId=50054]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport woods-silver",
+              "name": "woods-silver",
+              "map_id": 4,
+              "x": 33080,
+              "y": 33386,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport woods-silver,NpcId=50054]"
+            }
+          ]
+        },
+        {
+          "action": "teleport woods-aden",
+          "name": "woods-aden",
+          "map_id": 4,
+          "x": 33965,
+          "y": 33253,
+          "heading": 5,
+          "price": 180,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport woods-aden,NpcId=50054]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport woods-aden",
+              "name": "woods-aden",
+              "map_id": 4,
+              "x": 33965,
+              "y": 33253,
+              "heading": 5,
+              "price": 180,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport woods-aden,NpcId=50054]"
+            }
+          ]
+        }
+      ],
+      "unavailable": [
+        {
+          "action": "woods-ashur",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        }
+      ]
+    },
+    {
+      "l1j_npc_id": 50036,
+      "stem": "wilma2",
+      "destinations": [
+        {
+          "action": "teleport giran-kent",
+          "name": "giran-kent",
+          "map_id": 4,
+          "x": 33050,
+          "y": 32782,
+          "heading": 5,
+          "price": 52,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-kent,NpcId=50036]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport giran-kent",
+              "name": "giran-kent",
+              "map_id": 4,
+              "x": 33050,
+              "y": 32782,
+              "heading": 5,
+              "price": 52,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-kent,NpcId=50036]"
+            }
+          ]
+        },
+        {
+          "action": "teleport giran-heine",
+          "name": "giran-heine",
+          "map_id": 4,
+          "x": 33612,
+          "y": 33257,
+          "heading": 5,
+          "price": 52,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-heine,NpcId=50036]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport giran-heine",
+              "name": "giran-heine",
+              "map_id": 4,
+              "x": 33612,
+              "y": 33257,
+              "heading": 5,
+              "price": 52,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-heine,NpcId=50036]"
+            }
+          ]
+        },
+        {
+          "action": "teleport giran-werldern",
+          "name": "giran-werldern",
+          "map_id": 4,
+          "x": 33709,
+          "y": 32500,
+          "heading": 5,
+          "price": 52,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-werldern,NpcId=50036]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport giran-werldern",
+              "name": "giran-werldern",
+              "map_id": 4,
+              "x": 33709,
+              "y": 32500,
+              "heading": 5,
+              "price": 52,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-werldern,NpcId=50036]"
+            }
+          ]
+        },
+        {
+          "action": "teleport giran-oren",
+          "name": "giran-oren",
+          "map_id": 4,
+          "x": 34062,
+          "y": 32278,
+          "heading": 5,
+          "price": 126,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-oren,NpcId=50036]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport giran-oren",
+              "name": "giran-oren",
+              "map_id": 4,
+              "x": 34062,
+              "y": 32278,
+              "heading": 5,
+              "price": 126,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-oren,NpcId=50036]"
+            }
+          ]
+        },
+        {
+          "action": "teleport giran-aden",
+          "name": "giran-aden",
+          "map_id": 4,
+          "x": 33965,
+          "y": 33253,
+          "heading": 5,
+          "price": 126,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-aden,NpcId=50036]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport giran-aden",
+              "name": "giran-aden",
+              "map_id": 4,
+              "x": 33965,
+              "y": 33253,
+              "heading": 5,
+              "price": 126,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport giran-aden,NpcId=50036]"
+            }
+          ]
+        }
+      ],
+      "unavailable": [
+        {
+          "action": "giran-dragonvalley",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        },
+        {
+          "action": "giran-Gdungeon",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        }
+      ]
+    },
+    {
+      "l1j_npc_id": 50051,
+      "stem": "kirius2",
+      "destinations": [
+        {
+          "action": "teleport oren-werldern",
+          "name": "oren-werldern",
+          "map_id": 4,
+          "x": 33709,
+          "y": 32500,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport oren-werldern,NpcId=50051]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport oren-werldern",
+              "name": "oren-werldern",
+              "map_id": 4,
+              "x": 33709,
+              "y": 32500,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport oren-werldern,NpcId=50051]"
+            }
+          ]
+        },
+        {
+          "action": "teleport oren-giran",
+          "name": "oren-giran",
+          "map_id": 4,
+          "x": 33438,
+          "y": 32796,
+          "heading": 5,
+          "price": 120,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport oren-giran,NpcId=50051]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport oren-giran",
+              "name": "oren-giran",
+              "map_id": 4,
+              "x": 33438,
+              "y": 32796,
+              "heading": 5,
+              "price": 120,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport oren-giran,NpcId=50051]"
+            }
+          ]
+        },
+        {
+          "action": "teleport oren-aden",
+          "name": "oren-aden",
+          "map_id": 4,
+          "x": 33965,
+          "y": 33253,
+          "heading": 5,
+          "price": 240,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport oren-aden,NpcId=50051]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport oren-aden",
+              "name": "oren-aden",
+              "map_id": 4,
+              "x": 33965,
+              "y": 33253,
+              "heading": 5,
+              "price": 240,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport oren-aden,NpcId=50051]"
+            }
+          ]
+        }
+      ],
+      "unavailable": [
+        {
+          "action": "oren-outpost",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        },
+        {
+          "action": "oren-ivory",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        },
+        {
+          "action": "oren-forsakengate",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        }
+      ]
+    },
+    {
+      "l1j_npc_id": 50066,
+      "stem": "riol2",
+      "destinations": [
+        {
+          "action": "teleport heine-giran",
+          "name": "heine-giran",
+          "map_id": 4,
+          "x": 33438,
+          "y": 32796,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-giran,NpcId=50066]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport heine-giran",
+              "name": "heine-giran",
+              "map_id": 4,
+              "x": 33438,
+              "y": 32796,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-giran,NpcId=50066]"
+            }
+          ]
+        },
+        {
+          "action": "teleport heine-silver",
+          "name": "heine-silver",
+          "map_id": 4,
+          "x": 33080,
+          "y": 33386,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-silver,NpcId=50066]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport heine-silver",
+              "name": "heine-silver",
+              "map_id": 4,
+              "x": 33080,
+              "y": 33386,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-silver,NpcId=50066]"
+            }
+          ]
+        },
+        {
+          "action": "teleport heine-werldern",
+          "name": "heine-werldern",
+          "map_id": 4,
+          "x": 33709,
+          "y": 32500,
+          "heading": 5,
+          "price": 120,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-werldern,NpcId=50066]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport heine-werldern",
+              "name": "heine-werldern",
+              "map_id": 4,
+              "x": 33709,
+              "y": 32500,
+              "heading": 5,
+              "price": 120,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-werldern,NpcId=50066]"
+            }
+          ]
+        },
+        {
+          "action": "teleport heine-aden",
+          "name": "heine-aden",
+          "map_id": 4,
+          "x": 33965,
+          "y": 33253,
+          "heading": 5,
+          "price": 50,
+          "max_level_exclusive": null,
+          "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-aden,NpcId=50066]",
+          "price_policy": "LOCAL minimum listed XML raw price, x1/tax0; branch not original observation",
+          "reference_candidates": [
+            {
+              "action": "teleport heine-aden",
+              "name": "heine-aden",
+              "map_id": 4,
+              "x": 33965,
+              "y": 33253,
+              "heading": 5,
+              "price": 50,
+              "max_level_exclusive": null,
+              "source_ref": "D:\\SingleLineageRef\\l1j-en-classic\\data\\xml\\NpcActions\\Teleporter.xml:action[teleport heine-aden,NpcId=50066]"
+            }
+          ]
+        }
+      ],
+      "unavailable": [
+        {
+          "action": "heine-Hdungeon",
+          "reason": "NO_XML_DESTINATION_CANDIDATE",
+          "reference_candidates": []
+        }
+      ]
+    }
+  ],
+  "inns": [
+    {
+      "l1j_npc_id": 70070,
+      "name": "Velisa",
+      "price": 100,
+      "price_source": "local_policy",
+      "runtime_status": "LOCAL_RENTAL_KEY_THRESHOLD_RECOVERY_NO_INTERIOR",
+      "source_ref": "l1jdb:22125",
+      "reused_from": "m2/town_services.json LOCAL calculation only",
+      "rental_policy": {
+        "price": 100,
+        "duration_s": 14400,
+        "refund": 10,
+        "room_key": 10106,
+        "hall_key": 10107,
+        "room_name": "여관 열쇠(우드벡 마을)",
+        "hall_name": "여관 홀 열쇠(우드벡 마을)",
+        "rest_radius": 3,
+        "hp_bonus": 5,
+        "mp_bonus": 3
+      },
+      "rental_sources": {
+        "duration_ref": "client dialogue.csv inn4_2: four hours",
+        "refund_ref": "client dialogue.csv inn4_2: 10 Adena for each timely returned key",
+        "key_ref": "client item.bin/current-names.json IDs10100-10115, icon59",
+        "recovery_ref": "L1J HpRegeneration.java inn HP+5; MpRegeneration.java inn MP+3; added only at existing resource thresholds",
+        "local_policy": "100A, direct one-person room/hall selection, one lease per character, nearby innkeeper Chebyshev<=3 rest instead of unsupported interior; town/NPC/key mapping is attributed L1J policy",
+        "interior_status": "UNSUPPORTED_RENTAL_AND_NEARBY_REST_ONLY"
+      }
+    },
+    {
+      "l1j_npc_id": 70031,
+      "name": "Molly",
+      "price": 100,
+      "price_source": "local_policy",
+      "runtime_status": "LOCAL_RENTAL_KEY_THRESHOLD_RECOVERY_NO_INTERIOR",
+      "source_ref": "l1jdb:22086",
+      "reused_from": "m2/town_services.json LOCAL calculation only",
+      "rental_policy": {
+        "price": 100,
+        "duration_s": 14400,
+        "refund": 10,
+        "room_key": 10108,
+        "hall_key": 10109,
+        "room_name": "여관 열쇠(기란 마을)",
+        "hall_name": "여관 홀 열쇠(기란 마을)",
+        "rest_radius": 3,
+        "hp_bonus": 5,
+        "mp_bonus": 3
+      },
+      "rental_sources": {
+        "duration_ref": "client dialogue.csv inn4_2: four hours",
+        "refund_ref": "client dialogue.csv inn4_2: 10 Adena for each timely returned key",
+        "key_ref": "client item.bin/current-names.json IDs10100-10115, icon59",
+        "recovery_ref": "L1J HpRegeneration.java inn HP+5; MpRegeneration.java inn MP+3; added only at existing resource thresholds",
+        "local_policy": "100A, direct one-person room/hall selection, one lease per character, nearby innkeeper Chebyshev<=3 rest instead of unsupported interior; town/NPC/key mapping is attributed L1J policy",
+        "interior_status": "UNSUPPORTED_RENTAL_AND_NEARBY_REST_ONLY"
+      }
+    },
+    {
+      "l1j_npc_id": 70065,
+      "name": "Enke",
+      "price": 100,
+      "price_source": "local_policy",
+      "runtime_status": "LOCAL_RENTAL_KEY_THRESHOLD_RECOVERY_NO_INTERIOR",
+      "source_ref": "l1jdb:22120",
+      "reused_from": "m2/town_services.json LOCAL calculation only",
+      "rental_policy": {
+        "price": 100,
+        "duration_s": 14400,
+        "refund": 10,
+        "room_key": 10114,
+        "hall_key": 10115,
+        "room_name": "여관 열쇠(오렌 마을)",
+        "hall_name": "여관 홀 열쇠(오렌 마을)",
+        "rest_radius": 3,
+        "hp_bonus": 5,
+        "mp_bonus": 3
+      },
+      "rental_sources": {
+        "duration_ref": "client dialogue.csv inn4_2: four hours",
+        "refund_ref": "client dialogue.csv inn4_2: 10 Adena for each timely returned key",
+        "key_ref": "client item.bin/current-names.json IDs10100-10115, icon59",
+        "recovery_ref": "L1J HpRegeneration.java inn HP+5; MpRegeneration.java inn MP+3; added only at existing resource thresholds",
+        "local_policy": "100A, direct one-person room/hall selection, one lease per character, nearby innkeeper Chebyshev<=3 rest instead of unsupported interior; town/NPC/key mapping is attributed L1J policy",
+        "interior_status": "UNSUPPORTED_RENTAL_AND_NEARBY_REST_ONLY"
+      }
+    },
+    {
+      "l1j_npc_id": 70084,
+      "name": "Elly",
+      "price": 100,
+      "price_source": "local_policy",
+      "runtime_status": "LOCAL_RENTAL_KEY_THRESHOLD_RECOVERY_NO_INTERIOR",
+      "source_ref": "l1jdb:22139",
+      "reused_from": "m2/town_services.json LOCAL calculation only",
+      "rental_policy": {
+        "price": 100,
+        "duration_s": 14400,
+        "refund": 10,
+        "room_key": 10110,
+        "hall_key": 10111,
+        "room_name": "여관 열쇠(하이네 마을)",
+        "hall_name": "여관 홀 열쇠(하이네 마을)",
+        "rest_radius": 3,
+        "hp_bonus": 5,
+        "mp_bonus": 3
+      },
+      "rental_sources": {
+        "duration_ref": "client dialogue.csv inn4_2: four hours",
+        "refund_ref": "client dialogue.csv inn4_2: 10 Adena for each timely returned key",
+        "key_ref": "client item.bin/current-names.json IDs10100-10115, icon59",
+        "recovery_ref": "L1J HpRegeneration.java inn HP+5; MpRegeneration.java inn MP+3; added only at existing resource thresholds",
+        "local_policy": "100A, direct one-person room/hall selection, one lease per character, nearby innkeeper Chebyshev<=3 rest instead of unsupported interior; town/NPC/key mapping is attributed L1J policy",
+        "interior_status": "UNSUPPORTED_RENTAL_AND_NEARBY_REST_ONLY"
+      }
+    }
+  ],
+  "warehouse": {
+    "l1j_npc_id": 60001,
+    "name": "Dorin",
+    "name_token": "$309",
+    "selected_classic_npc_id": null,
+    "mapping_status": "unknown_no_matching_native_npc_token",
+    "npc_ref": "l1jdb:21952",
+    "npcaction": {
+      "normal_action": "dorin",
+      "caotic_action": "dorinl",
+      "source_ref": "l1jdb:23620"
+    },
+    "spawn_candidate": {
+      "map_id": 0,
+      "x": 32575,
+      "y": 32946,
+      "count": 1,
+      "source_ref": "l1jdb:48955"
+    },
+    "policy": {
+      "slots": 150,
+      "player_slots": 180,
+      "deposit_fee": 0,
+      "withdrawal_fee": 30,
+      "fee_unit": "distinct_selected_uid_not_quantity",
+      "minimum_level": 5,
+      "source_kind": "l1j",
+      "weight_limit_rate": 1
+    },
+    "source_refs": [
+      "l1jconfig:altsettings.properties:128-129",
+      "l1jsrc:model/L1Inventory.java:66-69",
+      "l1jsrc:model/Instance/L1ItemInstance.java:252-256",
+      "l1jsrc:model/L1Inventory.java:101-123",
+      "l1jsrc:model/L1PcInventory.java:53",
+      "l1jsrc:model/L1PcInventory.java:69-87",
+      "l1jsrc:model/L1PcInventory.java:94-137",
+      "l1jsrc:clientpackets/C_Result.java:150-213",
+      "l1jsrc:clientpackets/C_Result.java:214-253"
+    ],
+    "slot_limit_note": "실제 설정 personal150 사용. Config.java:1038-1039의 개인100 fallback 또는 혈맹200과 혼합하지 않음. 꽉 찼어도 호환 stack으로 합칠 수 있음.",
+    "local_batch_policy": "선택 중복 UID는 합산, fee는 UID당 한 번. 전체 성공 제안 또는 전체 거절, 선차감 없음. 모든 fee는 시작 시 가지고 있던 아데나로 지불. L1J 부분 성공/이전 반출 아데나로 뒤 fee 지불과 다른 명시 LOCAL 정책. before-fee 용량검사, 보호/착용/사용중 대상 거절, 2G overflow 거절.",
+    "item_eligibility_limit": "deposit_allowed/controlled/equipped/variant/weight는 실제 current 소유자가 공급. 등급·착용·거래가능 여부를 item_id나 이름으로 발명하지 않음.",
+    "storage_proposal": {
+      "status": "PROPOSAL_ONLY_NO_STORE_IMPLEMENTED",
+      "format": {
+        "version": 1,
+        "inventories": [
+          {
+            "uid": "saved_character_uid",
+            "frame": "canonical_kit_frame_lowercase_hex"
+          }
+        ]
+      },
+      "source_ref": "tools/local_original_session/inventory_store.py:InventoryStore._read/_write; tools/local_original_session/inventory.py:build_kit_frame/validate_kit_frame",
+      "limits": "별도 sidecar 후보. 현재 player inventory.json 및 v2 account custody를 덮지 않음. 이 per-character 형식은 L1J account-wide 권위가 아니며 계정 키/empty(kit>=1)/두 저장의 원자성·복구·UID 수명은 저장 담당자가 결정해야 함. 기존 canonical 원필드 보존, 수량/UID 변경은 실제 codec/owner 책임."
+    },
+    "reuse_refs": [
+      "work/local_original_session/implementation-4/shop-quest/warehouse-business-v1-final/API.md",
+      "work/local_server_rea_20261016/run295_personal_warehouse_contract/contract.md",
+      "work/local_server_rea_20261016/run298_warehouse_packet_join/contract.md"
+    ],
+    "reuse_limit": "기존 actual22 deposit10/actual24 withdrawal10 fee30/actual25 fresh는 별도 Source·계정/native 저장 계보의 제한 PASS. 새 모듈은 그 성공·3칸 range·wire0971/4ED1·실행 권한을 계승하지 않음. run295/298의 당시 미공급 경계는 final API의 최신 결속과 구별.",
+    "npcs": [
+      {
+        "l1j_npc_id": 60003,
+        "name": "Thram",
+        "source_ref": "l1jdb:21954"
+      },
+      {
+        "l1j_npc_id": 60023,
+        "name": "Tarkin",
+        "source_ref": "l1jdb:21974"
+      },
+      {
+        "l1j_npc_id": 60008,
+        "name": "Nodim",
+        "source_ref": "l1jdb:21959"
+      },
+      {
+        "l1j_npc_id": 60009,
+        "name": "Sauram",
+        "source_ref": "l1jdb:21960"
+      },
+      {
+        "l1j_npc_id": 60021,
+        "name": "Hirim",
+        "source_ref": "l1jdb:21972"
+      },
+      {
+        "l1j_npc_id": 60030,
+        "name": "Hakim",
+        "source_ref": "l1jdb:21981"
+      },
+      {
+        "l1j_npc_id": 60007,
+        "name": "Karim",
+        "source_ref": "l1jdb:21958; data/m4/town_npcs.json",
+        "note": "Existing Gludin placement and LOCAL role sprite143; shared storage menu/warehouse policy, native identity unknown"
+      },
+      {
+        "l1j_npc_id": 60024,
+        "name": "Gotham",
+        "source_ref": "l1jdb:21975",
+        "note": "Existing LOCAL personal warehouse policy and storage menu; native identity unknown"
+      },
+      {
+        "l1j_npc_id": 60027,
+        "name": "Kuhatin",
+        "source_ref": "l1jdb:21978",
+        "note": "Existing LOCAL personal warehouse policy and storage menu; native identity unknown"
+      }
+    ]
+  },
+  "inn_unavailable": [
+    {
+      "town_id": "kent",
+      "reason": "NO_INN_SOURCE_PLACEMENT_IN_CLIENT_REGION152_UNION"
+    }
+  ]
+}

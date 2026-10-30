@@ -7,7 +7,7 @@ from types import SimpleNamespace
 import tempfile
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 import uuid
 
 from tools.local_original_session import settings as s, broker as b
@@ -18,6 +18,74 @@ def payload(first=b'\xff\0\x80', second=None):
     fields = [s.pb.encode_bytes(1, first)]
     if second is not None: fields.append(s.pb.encode_bytes(2, second))
     return s.pb.encode_message(fields)
+
+
+class ShortcutNotificationTests(unittest.TestCase):
+    def test_captured_shortcut_identity_is_preserved_in_notification(self):
+        from tools.local_original_session import ats_config_codec as codec
+        from tools.local_original_session.ats_config_codec_tests import CAPTURED_OWNER_CONFIG
+        # Unlike ATS 4302F0, shortcut loader 59CF29..59CF39 restores f5/f6
+        # even when f6=0. No invented positive key is needed for these slots.
+        second = codec.wrap_blob(b'')
+        raw = payload(CAPTURED_OWNER_CONFIG, second)
+        frame = s.noti_frame(raw)
+        with s.pb.parse_message(frame[4:-2]) as parsed:
+            restored = codec.read_noti_field(bytes(parsed.occurrences(1)[0].value))
+        self.assertEqual(restored, CAPTURED_OWNER_CONFIG)
+        section = next(v for n, w, v in codec.fields(codec.unwrap_blob(restored)) if (n, w) == (2, 2))
+        slots = [codec._slot(v) for n, w, v in codec.fields(section) if (n, w) == (2, 2)]
+        self.assertEqual([slot[4] for slot in slots[:3]], [14, 17, 296])
+        self.assertTrue(all(slot[5] == slot[6] == 0 for slot in slots[:3]))
+
+
+class ShortcutInventoryStartTests(unittest.IsolatedAsyncioTestCase):
+    """Actual initial inventory send/policy, fake native owner; no game or ports."""
+    async def asyncSetUp(self):
+        from tools.local_original_session import broker_tests
+        await broker_tests.InventoryRestoreOnlyBrokerTests.asyncSetUp(self)
+        await broker_tests.InventoryRestoreOnlyBrokerTests.adopt_restored(self)
+        self.realm.settings = s.SettingsStore(self.realm.store.path.with_name('account-settings.bin'),
+            self.realm.expected_uuid, profile_path=self.realm.store.path)
+        # Exercise only initial publication, without running a world runtime or
+        # unrelated feature hooks. The fixture's real owner/store/send remain.
+        self.producer._world = object()
+        # A present world activates the real serves_map realm hooks. Match the
+        # disabled dungeon startup state without starting its world runtime.
+        self.producer._world_dungeon_policy = None
+        self.addCleanup(setattr, self.producer, '_world', None)
+        hooks = patch.object(b.world_bridge.Context, 'run_hooks', new_callable=AsyncMock)
+        hooks.start()
+        self.addCleanup(hooks.stop)
+
+    async def test_settings_then_inventory_drain_then_original_start_event(self):
+        from tools.local_original_session import ats_config_codec as codec
+        from tools.local_original_session.ats_config_codec_tests import CAPTURED_OWNER_CONFIG
+        raw = payload(CAPTURED_OWNER_CONFIG, codec.wrap_blob(b''))
+        self.realm.settings.save(s.parse(raw))
+        noti = self.realm.settings_noti_frame()
+        async with self.row['operation_lock']:
+            await self.producer._send(self.writer, self.row, (noti,), game=True,
+                                      operation_lock=self.row['operation_lock'])
+        drained = []
+        async def drain():
+            drained.append(bytes(self.writer.write.call_args.args[0]))
+        self.writer.drain.side_effect = drain
+        await self.producer.add_inventory(self.writer, restore_only=True)
+        self.assertEqual(drained, [self.producer._inventory_frame, b.USER_START_DONE_FRAME])
+        self.assertEqual([bytes(call.args[0]) for call in self.writer.write.call_args_list],
+                         [noti, self.producer._inventory_frame, b.USER_START_DONE_FRAME])
+        self.assertEqual(self.realm.settings.saved_raw(), raw)
+        self.assertNotIn(id(self.writer), self.realm._quit)
+        with self.assertRaisesRegex(ValueError, 'INVENTORY_EXPLICIT_ONCE_OPERATION_REQUIRED'):
+            await self.producer.add_inventory(self.writer, restore_only=True)
+        self.assertEqual(len(drained), 2)
+
+    async def test_failed_inventory_drain_never_sends_start_done(self):
+        self.writer.drain.side_effect = OSError('inventory drain failed')
+        with self.assertRaisesRegex(OSError, 'inventory drain failed'):
+            await self.producer.add_inventory(self.writer, restore_only=True)
+        self.assertEqual([bytes(call.args[0]) for call in self.writer.write.call_args_list],
+                         [self.producer._inventory_frame])
 
 
 class SettingsTests(unittest.TestCase):
@@ -93,6 +161,8 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
             conversation_factory=lambda *args: None, expected_uuid=str(uuid.uuid4()),
             store_path=self.profile, settings_path=self.profile.with_name('account-settings.bin'))
         self.realm = self.broker.realm
+        self.decoder = b.ClientPlaintextDecoder(cipher_pointer='present_disabled',
+                                                max_buffer=self.broker.policy.MAX_BUFFER)
         self.realm.store.create(b.ack.realm.Creation(self.realm.profile_name, 0, 0, (13,) * 6))
         self.writer = Writer(self)
         now = time.monotonic_ns()
@@ -238,7 +308,7 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
             await self.broker._complete_eof(self.writer, self.row, decoder_empty=True)
         pending = asyncio.get_running_loop().create_future()
         with self.assertRaisesRegex(ValueError, 'CURRENT_OWNER_REQUIRED'):
-            await self.broker._poll_checkpoint(self.writer, self.row, pending, decoder_empty=True)
+            await self.broker._poll_checkpoint(self.writer, self.row, pending, decoder=self.decoder, decoder_empty=True)
         self.assertFalse(pending.done())
         pending.cancel()
         self.alive = True
@@ -254,7 +324,7 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
         self.alive = False
         reader = asyncio.get_running_loop().create_future()
         poll = asyncio.create_task(self.broker._poll_checkpoint(
-            self.writer, self.row, reader, decoder_empty=True))
+            self.writer, self.row, reader, decoder=self.decoder, decoder_empty=True))
         await asyncio.sleep(0)
         self.assertFalse(poll.done()); self.assertFalse(self.row['eof'])
         reader.set_result(b'')
@@ -269,14 +339,14 @@ class SourceRouteTests(unittest.IsolatedAsyncioTestCase):
         self.alive = False
         reader = asyncio.get_running_loop().create_future()
         poll = asyncio.create_task(self.broker._poll_checkpoint(
-            self.writer, self.row, reader, decoder_empty=True))
+            self.writer, self.row, reader, decoder=self.decoder, decoder_empty=True))
         self.row['task'] = poll
         self.broker._claims[12000].append(self.row)
         joining = asyncio.create_task(self.broker.join_quit_exit())
         await asyncio.sleep(0); await asyncio.sleep(0)
         self.assertFalse(joining.done()); self.assertFalse(poll.cancelled())
         reader.set_result(b'not-eof')
-        with self.assertRaisesRegex(ValueError, 'QUIT_TERMINAL_EOF_REQUIRED'):
+        with self.assertRaisesRegex(ValueError, 'QUIT_TERMINAL_EXACT_FRAME_REQUIRED'):
             await poll
         self.assertEqual(await joining, dict(eligible=1, joined=1))
         self.assertFalse(self.row['eof'])
