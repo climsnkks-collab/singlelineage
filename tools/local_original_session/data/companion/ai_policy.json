@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "status": "SOURCE_ONLY",
+  "provenance": {
+    "local_policy": true,
+    "numeric_scope": "All AI thresholds, counts, durations and ordering here are LOCAL design defaults, not verified original game rules.",
+    "design_source": "work/local_original_session/game-core-prep/COMPANION_DESIGN_DECISION.md",
+    "existing_contracts": ["tools/local_original_session/companion_ai.py", "tools/local_original_session/world_companion.py"],
+    "spell_catalog": "tools/local_original_session/data/companion/mage_spells.json"
+  },
+  "integration": {
+    "runtime_enabled": false,
+    "consumer_connected": false,
+    "scope": "Stage 4 attack-one / stage 5 heal-one and buff-one policy data only; no runtime change or formal PASS.",
+    "future_consumer": "Existing CompanionAI and shared world scheduler; CompanionRecord remains sole companion HP/MP ledger.",
+    "existing_state_difference": "Existing ATTACK denotes basic attack intent; the seven design states below describe future spell policy and do not replace current code."
+  },
+  "defaults": {"movement_mode": "FOLLOW", "combat_mode": "ASSIST", "support_enabled": true},
+  "thresholds": {
+    "hp": {
+      "unit": "current_hp / max_hp fraction",
+      "owner_emergency_enter": 0.35,
+      "companion_emergency_enter": 0.35,
+      "emergency_exit": 0.55,
+      "comparison": "Enter at <= enter threshold; remain latched until >= exit threshold. Invalid or unknown HP/maxHP is UNKNOWN, not zero."
+    },
+    "mp": {
+      "unit": "integer MP points except recover_fraction",
+      "heal_reserve_casts": 2,
+      "configured_reserve_default": 0,
+      "heal_reserve_formula": "R = max(CompanionRecord.mp_reserve, heal_reserve_casts * C_heal)",
+      "actual_cost_definition": "C_heal and C_candidate are the authoritative caster-specific total MP debit for the selected learned spell after applicable modifiers, not a guessed catalog base cost.",
+      "reserve_eligibility": "C_heal must be known, nonnegative and coupled to learned status, caster/target eligibility, actual materials and cooldown. Cooldown or temporary range/LOS failure does not reduce R to zero. Unknown C_heal or heal contract makes R UNKNOWN and blocks non-emergency spells.",
+      "non_emergency_admission": "current_mp - C_candidate >= R, plus actual materials, cooldown, range, LOS and target eligibility. Buffs and attacks use the same admission rule.",
+      "emergency_admission": "May spend R; current_mp >= C_heal plus actual materials, cooldown, range, LOS and target eligibility are still required.",
+      "recover_fraction": 0.4,
+      "recover_resume_formula": "T = max(R + C_next_attack, ceil(recover_fraction * max_mp)); resume offense only when current_mp >= T and all current eligibility checks pass.",
+      "unreachable_threshold": "If R or T exceeds max_mp, retain reserve and keep offense disabled; do not clamp reserve away or refill MP. A valid emergency heal may still spend available MP.",
+      "recovery_authority": "Observe actual CompanionRecord MP changes from the shared recovery consumer; this table neither grants MP nor promises recovery cadence/amount."
+    },
+    "buff": {
+      "unit": "seconds of authoritative server effect time",
+      "refresh_lead_cap_seconds": 10,
+      "refresh_lead_duration_fraction": 0.1,
+      "refresh_formula": "lead = min(refresh_lead_cap_seconds, duration_seconds * refresh_lead_duration_fraction); refresh only when absent or remaining_seconds <= lead.",
+      "minimum_recheck_seconds": 3,
+      "refresh_hysteresis_seconds": 5,
+      "rearm_rule": "After confirmed successful refresh, suppress duplicate requests for that spell/target/effect instance until refreshed remaining time > lead + hysteresis, or authoritative expiry/removal. A short effect that cannot reach that band rearms only after confirmed expiry/removal. No stacking inferred.",
+      "unknown_duration_or_effect": "Disable refresh when duration, current expiry, effect identity or refresh/stacking semantics is UNKNOWN; absence alone cannot authorize an unverified effect."
+    },
+    "failure": {
+      "unit": "seconds and attempts",
+      "minimum_retry_seconds": 2,
+      "same_failure_attempt_limit": 1,
+      "position_budget_seconds": 3,
+      "position_step_attempt_limit": 6,
+      "rule": "One failed admission/cast per unchanged reason and eligibility snapshot; rearm only after a relevant authoritative change and minimum_retry_seconds. No per-tick failure loop."
+    },
+    "movement": {
+      "unit": "world tiles; LOCAL existing AI defaults",
+      "follow_distance": 2,
+      "owner_leash": 15,
+      "speed": "Use admitted companion movement/cast intervals; no invented animation, attack speed or spell range."
+    }
+  },
+  "priorities": [
+    {"rank": 1, "action": "death_dismiss_owner_departure", "meaning": "Cancel pending intent on companion death, dismissal, owner death/logout/map departure or stale actor generation before any support/combat."},
+    {"rank": 2, "action": "emergency_heal", "meaning": "Eligible owner first, then companion when both emergency latches are set. Skip a currently ineligible target after one failed evaluation so it cannot starve an eligible other target. Never heal dead targets."},
+    {"rank": 3, "action": "safe_position", "meaning": "Find a passable, unoccupied tile respecting owner leash and current map. A blocked emergency heal may request bounded POSITION here, not repeated CAST."},
+    {"rank": 4, "action": "buff", "meaning": "Only the selected, learned, eligible buff with verified effect/expiry and preserved heal reserve."},
+    {"rank": 5, "action": "attack", "meaning": "Current real ASSIST target only, eligible selected attack spell and preserved heal reserve."},
+    {"rank": 6, "action": "follow_recover", "meaning": "Follow owner or remain HOLD; wait for actual resource recovery. Unsupported/failed support must fall through instead of monopolizing ticks."}
+  ],
+  "state_transitions": {
+    "FOLLOW": {"meaning": "Follow current owner when outside follow distance.", "to": {"HOLD": "movement command HOLD", "POSITION": "eligible spell needs reachable range/LOS", "CAST": "admitted highest priority spell", "RECOVER": "insufficient MP", "RETURN": "leash exceeded or target abandoned", "DEAD": "companion hp=0"}},
+    "HOLD": {"meaning": "No movement, including spell positioning. In-range support and ASSIST remain candidates.", "to": {"FOLLOW": "movement command FOLLOW", "CAST": "admitted in-range/LOS spell", "RECOVER": "insufficient MP while preserving HOLD command", "DEAD": "companion hp=0"}},
+    "POSITION": {"meaning": "Bounded path toward a safe casting tile using actual spell range/LOS. HOLD forbids entry.", "to": {"CAST": "range/LOS and all admission checks now pass", "RETURN": "budget/step limit, blocked path, leash or obsolete attack target", "RECOVER": "MP insufficient", "DEAD": "companion hp=0"}},
+    "CAST": {"meaning": "One admitted action bound to caster, target generation, map and current command; revalidate at commit.", "to": {"FOLLOW": "confirmed resolution and FOLLOW command", "HOLD": "confirmed resolution and HOLD command", "POSITION": "range/LOS fails before commit with movement permitted", "RECOVER": "MP insufficient", "RETURN": "target invalidated or bounded positioning fails", "DEAD": "companion hp=0"}},
+    "RECOVER": {"meaning": "No offensive casting; eligible urgent heal may interrupt. FOLLOW may move safely; HOLD remains stationary.", "to": {"CAST": "eligible urgent heal or offense reaches T with all checks", "FOLLOW": "no target and FOLLOW command", "HOLD": "no target and HOLD command", "RETURN": "leash exceeded", "DEAD": "companion hp=0"}},
+    "RETURN": {"meaning": "Drop failed combat pursuit and return toward owner with existing movement limits; HOLD waits in place. Never teleport.", "to": {"FOLLOW": "within leash and FOLLOW command", "HOLD": "HOLD command", "CAST": "eligible emergency heal", "DEAD": "companion hp=0"}},
+    "DEAD": {"meaning": "All movement/cast/attack timers and target references cancelled; no automatic resurrection.", "to": {"FOLLOW": "separate authorized resurrection and fresh summon establishes a living actor"}},
+    "global_cancel": "Dismissal/owner departure invalidates all states and removes the runtime actor through existing lifecycle; DISMISSED is a lifecycle outcome, not an eighth AI state."
+  },
+  "spell_selection": {
+    "catalog_id_field": "id",
+    "stage_4_attack": {"spell_id": "energy_bolt", "selected_candidate": true, "runtime_enabled": false, "status": "SOURCE_ONLY"},
+    "stage_5_heal": {"spell_id": "heal", "selected_candidate": true, "runtime_enabled": false, "status": "SOURCE_ONLY", "target_order": ["owner", "self"], "eligibility": "Living same-map current owner/self only after catalog target/caster contract is confirmed; source selection does not grant spell learning."},
+    "stage_5_buff": {"spell_id": "shield", "selected_candidate": true, "runtime_enabled": false, "status": "SOURCE_ONLY", "targets": ["self"], "owner_eligible": false, "eligibility": "Official catalog target is caster only; never apply Shield to owner. Unknown runtime caster/effect contract still disables execution."},
+    "assist": {
+      "trigger": "Real owner attack event selects its living hostile NPC target immediately and wakes the shared scheduler; each real owner target change replaces the previous target.",
+      "cooldowns": "Keep earned movement/attack/cast deadlines across target or command changes; immediate selection does not bypass cooldown or preempt an already committed action.",
+      "retarget_cancel": "Cancel uncommitted old-target offense/position intent. A committed spell resolves once under its original target/lifetime contract, never duplicated onto the new target.",
+      "eligibility": "Same-map current-generation hostile monster only; reject allies, owner, companion, dead or stale targets. PASSIVE forbids offensive selection."
+    },
+    "other_spells": "Unselected; no automatic highest-level spell expansion, AoE, damage-over-time or effect substitution."
+  },
+  "cast_and_lifetime": {
+    "admission": "Requires catalog admission for spell key, learned/class/level, actual MP/material cost, caster UID treatment, effect and target notification; any unresolved required contract keeps that spell disabled.",
+    "once_only_cost": "AI produces intent only. Existing authoritative cast consumer alone applies actual MP/material debit, cooldown and effect at its admitted once-only commit point; AI never debits, refunds or replays cost. A committed or unknown result must be reconciled before another attempt.",
+    "cancel_on": ["companion death", "dismissal", "owner death/logout/map departure", "caster or target generation invalidation", "support disabled for pending support", "command change incompatible with pending action"],
+    "cancel_semantics": "Cancel uncommitted intent/timer without consuming resources; cancellation after commit cannot erase debit/effect. Resolve or preserve uncertain outcomes without resend/refund.",
+    "persistent": "Persist commands, configured absolute mp_reserve, learned spells and actual HP/MP in existing character/companion ownership. No parallel HP/MP store.",
+    "reconnect": "Do not persist actor UID/generation, target, pending cast, timer handle, emergency latch or positioning/retry deadline. Logout cancels old runtime; restore resources/settings and create fresh actor only by normal summon, then reevaluate actual effects and eligibility. No free MP, cooldown reset or resurrection; unresolved committed actions require reconciliation.",
+    "effect_lifetime": "Authoritative effect consumer owns expiry/removal/save/restore. Disconnect does not imply buff refund or perpetual duration."
+  },
+  "fallbacks": {
+    "heal_mp_or_material_failure": "RECOVER/follow-or-HOLD, suppress same failure until actual MP/material/learning/cooldown change and retry throttle; try another currently eligible emergency target once. Do not manufacture resources.",
+    "heal_range_or_los_failure": "Bounded safe POSITION if FOLLOW; otherwise HOLD and fall through. After exhausted positioning, wait for actual owner/actor/terrain change with throttle; no endless chasing or casting.",
+    "attack_range_or_los_failure": "POSITION within budget; then abandon pursuit/RETURN. Same ASSIST target requires new relevant geometry/owner-attack event plus throttle before another positioning attempt.",
+    "unknown_spell_or_growth": "No inferred learned spells, costs, range, effects, maxMP or recovery. Disable affected spell selection; preserve movement/basic attack behavior only when separately admitted by existing runtime.",
+    "unknown_cost_outcome": "Preserve partial state and reconcile once-only result before retries; never assume a failed response means no spend."
+  },
+  "unknown": [
+    "Runtime catalog consumer and spell-cast intent/effect wiring are not implemented by this table.",
+    "Original companion caster UID, per-target effect notification, native cost/consumption and visible original-client behavior remain independently unverified.",
+    "Current mage_spells catalog admission and growth/recovery consumers must supply actual costs, learned eligibility and resources; reference existence alone does not admit a spell."
+  ]
+}

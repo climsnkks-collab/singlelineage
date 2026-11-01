@@ -1,0 +1,22 @@
+{
+  "table": "m1_town",
+  "version": 1,
+  "note": "말하는 섬 마을(map0). 사망 복귀 좌표와 PC HP/MP 자연 회복 기본 정책. 회복은 L1J 구조(1초 틱, 행동 상태 점수 누적 후 회복)를 단순화한 로컬 정책.",
+  "ref_abbrev": {
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/"
+  },
+  "map_id": {"value": 0, "source": "client", "ref": "region.jsonc:3 _map=0 말하는 섬 마을"},
+  "bounds": {"value": {"x1": 32543, "y1": 32905, "x2": 32671, "y2": 32987}, "source": "client", "ref": "region.jsonc:3 _bounds"},
+  "respawn_point": {"value": {"x": 32578, "y": 32946}, "source": "local_policy", "ref": "work/local_original_session/implementation-2/npc-motion-goal/HANDOFF.md:1610 actual176 서버·클라이언트 일치 좌표", "note": "클라이언트가 실제로 받아들인 좌표를 우선. L1J getback은 32574,32941(l1jdb:18316)로 클래식 마을 경계 안이지만 통행 미확인"},
+  "regen": {
+    "tick_ms": {"value": 1000, "source": "l1j", "ref": "l1jsrc model/Instance/L1PcInstance.java:143,147 HP/MP_REGEN_INTERVAL=1000"},
+    "state_points": {"value": {"idle": 4, "move": 2, "attack": 1}, "source": "l1j", "ref": "l1jsrc model/Instance/L1PcInstance.java:137-139 REGENSTATE_*", "note": "틱마다 그 틱 동안 가장 낮은 상태 점수를 누적(HpRegeneration.java:55-69)"},
+    "hp_threshold_by_level": {"value": [120, 100, 80, 64, 56, 48, 44, 40, 36, 12], "source": "l1j", "ref": "l1jsrc model/HpRegeneration.java:82-90 lvlTable*4, Lv10 이상은 마지막 값", "note": "정지 상태면 Lv1 30초마다, Lv10 3초마다. Lv30 기사 보정은 M1 범위 밖"},
+    "hp_amount": {"value": {"base": 1, "con_offset": 10}, "source": "local_policy", "ref": "l1jsrc model/HpRegeneration.java:99-110,158-164", "note": "회복량 = base + max(CON-10, 0). L1J의 Lv12+ CON 랜덤 보너스·음식·무게·장소 보너스는 생략"},
+    "mp_threshold": {"value": 64, "source": "l1j", "ref": "l1jsrc model/MpRegeneration.java:135", "note": "정지 상태면 16초마다"},
+    "mp_amount_by_wis": {"value": [[0, 1], [15, 2], [17, 3]], "source": "local_policy", "ref": "l1jsrc model/MpRegeneration.java:52-58 baseMpr", "note": "[최소 WIS, 회복량]. L1J의 mpPluss(최소 12 가산, :113-117)는 저레벨에 과해 보여 제외"},
+    "dead_or_offline": {"value": "no_regen", "source": "local_policy", "ref": "work/local_original_session/game-core-prep/GAME_CORE_DESIGN.md 3쪽 시간 절", "note": "사망 중·오프라인 회복 없음"}
+  }
+}

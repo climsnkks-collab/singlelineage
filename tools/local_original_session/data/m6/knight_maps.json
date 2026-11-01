@@ -1,0 +1,249 @@
+{
+  "table": "m6_knight_maps",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 3,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:267 _map"
+      },
+      "region_id": {
+        "value": 196,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:267 _id"
+      },
+      "name_ko": {
+        "value": "군터의 집",
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:266 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32576,
+        32704,
+        32831,
+        32895
+      ],
+      "chunks": 7
+    },
+    {
+      "map_id": {
+        "value": 237,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:304 _map"
+      },
+      "region_id": {
+        "value": 214,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:304 _id"
+      },
+      "name_ko": {
+        "value": "비밀의 방 (기사 30 퀘스트)",
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:303 comment"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32640,
+        32704,
+        32831,
+        32895
+      ],
+      "chunks": 5
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        0,
+        32510,
+        32863
+      ],
+      "destination": [
+        3,
+        32675,
+        32814,
+        0
+      ],
+      "reference_origin": [
+        0,
+        32510,
+        32863
+      ],
+      "reference_destination": [
+        3,
+        32675,
+        32814,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:14932",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Exact L1J reference coordinates, standable in the fixed current client S32. Native trigger execution UNKNOWN."
+    },
+    {
+      "origin": [
+        3,
+        32675,
+        32815
+      ],
+      "destination": [
+        0,
+        32509,
+        32865,
+        4
+      ],
+      "reference_origin": [
+        3,
+        32675,
+        32815
+      ],
+      "reference_destination": [
+        0,
+        32509,
+        32865,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15179",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Exact L1J reference coordinates, standable in the fixed current client S32. Native trigger execution UNKNOWN."
+    },
+    {
+      "origin": [
+        13,
+        32813,
+        32810
+      ],
+      "destination": [
+        237,
+        32736,
+        32807,
+        5
+      ],
+      "reference_origin": [
+        13,
+        32813,
+        32810
+      ],
+      "reference_destination": [
+        237,
+        32736,
+        32807,
+        5
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:16220",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Exact L1J reference coordinates, standable in the fixed current client S32. Native trigger execution UNKNOWN. Map237 approach via map13 remains OPEN: current floor-entry component does not reach the L1J key-use rectangle or the isolated entrance chamber."
+    },
+    {
+      "origin": [
+        237,
+        32736,
+        32807
+      ],
+      "destination": [
+        13,
+        32813,
+        32810,
+        2
+      ],
+      "reference_origin": [
+        237,
+        32736,
+        32807
+      ],
+      "reference_destination": [
+        13,
+        32813,
+        32810,
+        2
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15516",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "Exact L1J reference coordinates, standable in the fixed current client S32. Native trigger execution UNKNOWN. Map237 approach via map13 remains OPEN: current floor-entry component does not reach the L1J key-use rectangle or the isolated entrance chamber."
+    }
+  ],
+  "returns": [
+    {
+      "map_id": 3,
+      "destination": [
+        0,
+        32574,
+        32941,
+        5
+      ],
+      "reference_destination": [
+        0,
+        32574,
+        32941,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18319",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; heading5 LOCAL. Reuses scroll162 and pending death-return owners; original class/random/town selection UNKNOWN."
+    },
+    {
+      "map_id": 237,
+      "destination": [
+        4,
+        32628,
+        32807,
+        5
+      ],
+      "reference_destination": [
+        4,
+        32628,
+        32807,
+        5
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18552",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; heading5 LOCAL. Reuses scroll162 and pending death-return owners; original class/random/town selection UNKNOWN."
+    }
+  ],
+  "groups": [],
+  "note": "Geometry, attributed LOCAL stairs and return policy only. No NPC or monster is fabricated. Whole knight30/45 completion and native gameplay are not claimed.",
+  "normal_access_status": {
+    "3": "LOCAL_STATIC_CONNECTED",
+    "237": "OPEN_MAP13_KEY_USE_APPROACH_UNREACHABLE"
+  },
+  "key_reference": {
+    "fixed_item_id": 707,
+    "l1j_item_id": 40555,
+    "shared_name_token": "$2022",
+    "identity_refs": [
+      "work/source_game_data/native-dump-v1.jsonl:1433",
+      "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:17009"
+    ],
+    "use_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_ItemUSe.java:1287-1295",
+    "reference_source_map": 13,
+    "reference_rectangle": [
+      32806,
+      32798,
+      32814,
+      32807
+    ],
+    "reference_destination": [
+      13,
+      32815,
+      32810,
+      5
+    ],
+    "reference_consumption": "No inventory removal in this branch",
+    "current_s32_observation": "Existing map13 floor entry (32727,32725) reaches 6826 cells; zero cells in the reference key rectangle, and neither destination nor transition origin is reachable. No substitute location is selected."
+  }
+}

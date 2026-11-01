@@ -1,0 +1,2726 @@
+{
+  "version": 1,
+  "policy": "LOCAL_L1J_REFERENCE_BOSS_WINDOWS",
+  "source_xml": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml",
+  "source_sql": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+  "supported_maps": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    19,
+    20,
+    21,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    53,
+    54,
+    55,
+    56,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65,
+    70,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    303
+  ],
+  "cycles": {
+    "Cronos": {
+      "period_s": 86400,
+      "start_s": 600,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Cronos"
+    },
+    "Kugas": {
+      "period_s": 86400,
+      "start_s": 900,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Kugas"
+    },
+    "Elazer": {
+      "period_s": 86400,
+      "start_s": 900,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Elazer"
+    },
+    "Zarlok": {
+      "period_s": 86400,
+      "start_s": 900,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Zarlok"
+    },
+    "BaellZaer": {
+      "period_s": 86400,
+      "start_s": 900,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=BaellZaer"
+    },
+    "DK": {
+      "period_s": 25200,
+      "start_s": 12600,
+      "end_s": 25200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=DK"
+    },
+    "Oren": {
+      "period_s": 18000,
+      "start_s": 9000,
+      "end_s": 18000,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Oren"
+    },
+    "Aden": {
+      "period_s": 14400,
+      "start_s": 5400,
+      "end_s": 14400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Aden"
+    },
+    "Caspa": {
+      "period_s": 3600,
+      "start_s": 1800,
+      "end_s": 3600,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Caspa"
+    },
+    "1Drake": {
+      "period_s": 7200,
+      "start_s": 3600,
+      "end_s": 7200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=1Drake"
+    },
+    "Tiger": {
+      "period_s": 14400,
+      "start_s": 3600,
+      "end_s": 14400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Tiger"
+    },
+    "Bandit": {
+      "period_s": 25200,
+      "start_s": 7200,
+      "end_s": 25200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Bandit"
+    },
+    "BanditLeader": {
+      "period_s": 28800,
+      "start_s": 600,
+      "end_s": 28800,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=BanditLeader"
+    },
+    "DarkElder": {
+      "period_s": 7200,
+      "start_s": 600,
+      "end_s": 7200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=DarkElder"
+    },
+    "DoppelGanger": {
+      "period_s": 86400,
+      "start_s": 28800,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=DoppelGanger"
+    },
+    "SeaDancer": {
+      "period_s": 3600,
+      "start_s": 1800,
+      "end_s": 3600,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=SeaDancer"
+    },
+    "Ifrit": {
+      "period_s": 7200,
+      "start_s": 3600,
+      "end_s": 7200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Ifrit"
+    },
+    "Crocodile": {
+      "period_s": 7200,
+      "start_s": 3600,
+      "end_s": 7200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Crocodile"
+    },
+    "ZenithQueen": {
+      "period_s": 28800,
+      "start_s": 14400,
+      "end_s": 28800,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=ZenithQueen"
+    },
+    "Seer": {
+      "period_s": 18000,
+      "start_s": 9000,
+      "end_s": 18000,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Seer"
+    },
+    "Baphomet": {
+      "period_s": 18000,
+      "start_s": 9000,
+      "end_s": 18000,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Baphomet"
+    },
+    "Beleth": {
+      "period_s": 18000,
+      "start_s": 9000,
+      "end_s": 18000,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Beleth"
+    },
+    "Unicorn": {
+      "period_s": 7200,
+      "start_s": 1200,
+      "end_s": 7200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Unicorn"
+    },
+    "2Drake": {
+      "period_s": 10800,
+      "start_s": 5400,
+      "end_s": 10800,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=2Drake"
+    },
+    "Night": {
+      "period_s": 14400,
+      "start_s": 7200,
+      "end_s": 14400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Night"
+    },
+    "Dragon": {
+      "period_s": 86400,
+      "start_s": 3600,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Dragon"
+    },
+    "etc1": {
+      "period_s": 86400,
+      "start_s": 600,
+      "end_s": 86400,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=etc1"
+    },
+    "Unknown": {
+      "period_s": 25200,
+      "start_s": 12600,
+      "end_s": 25200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/data/xml/Cycle/BossCycle.xml BossCycle Name=Unknown"
+    }
+  },
+  "bosses": [
+    {
+      "spawn_id": 4,
+      "name": "Crocodile",
+      "cycle": "Crocodile",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47835",
+      "l1j_npc_id": 45338,
+      "rect": [
+        33485,
+        33185,
+        33522,
+        33227
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 471,
+          "l1j_npc_id": 45338,
+          "monster_ref": "data/m1/monsters.json#/monsters/32",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20928",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        471
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 5,
+      "name": "Bandit Leader",
+      "cycle": "BanditLeader",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47836",
+      "l1j_npc_id": 45370,
+      "rect": [
+        33869,
+        32740,
+        33887,
+        32758
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 883,
+          "l1j_npc_id": 45370,
+          "monster_ref": "data/m5/monsters.json#/monsters/41",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20960",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        883
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 6,
+      "name": "Bandit Leader",
+      "cycle": "BanditLeader",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47837",
+      "l1j_npc_id": 45370,
+      "rect": [
+        33850,
+        32757,
+        33868,
+        32775
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 883,
+          "l1j_npc_id": 45370,
+          "monster_ref": "data/m5/monsters.json#/monsters/41",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20960",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        883
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 7,
+      "name": "Bandit Leader",
+      "cycle": "BanditLeader",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47838",
+      "l1j_npc_id": 45370,
+      "rect": [
+        33772,
+        32672,
+        33790,
+        32690
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 883,
+          "l1j_npc_id": 45370,
+          "monster_ref": "data/m5/monsters.json#/monsters/41",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20960",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        883
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 8,
+      "name": "Bandit Leader",
+      "cycle": "BanditLeader",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47839",
+      "l1j_npc_id": 45370,
+      "rect": [
+        33832,
+        32769,
+        33850,
+        32787
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 883,
+          "l1j_npc_id": 45370,
+          "monster_ref": "data/m5/monsters.json#/monsters/41",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20960",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        883
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 9,
+      "name": "Bandit Leader",
+      "cycle": "BanditLeader",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47840",
+      "l1j_npc_id": 45370,
+      "rect": [
+        33811,
+        32655,
+        33829,
+        32673
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 883,
+          "l1j_npc_id": 45370,
+          "monster_ref": "data/m5/monsters.json#/monsters/41",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20960",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        883
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 10,
+      "name": "Necromancer",
+      "cycle": "Caspa",
+      "map_id": 12,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47841",
+      "l1j_npc_id": 45456,
+      "rect": [
+        32704,
+        32704,
+        32831,
+        32831
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10129,
+          "l1j_npc_id": 45456,
+          "monster_ref": "data/m6/monsters.json#/monsters/40",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21027",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 28,
+          "l1j_npc_id": 45157,
+          "monster_ref": "data/m4/monsters.json#/monsters/24",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20773",
+          "mapping": "existing_selected_backend",
+          "count": 4
+        },
+        {
+          "template_id": 11,
+          "l1j_npc_id": 45068,
+          "monster_ref": "data/m1/monsters.json#/monsters/13",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20688",
+          "mapping": "existing_selected_backend",
+          "count": 2
+        }
+      ],
+      "group_id": 15,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19750",
+      "suppress_templates": [
+        10129
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 17,
+      "name": "Caspa",
+      "cycle": "Caspa",
+      "map_id": 9,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47847",
+      "l1j_npc_id": 45488,
+      "rect": [
+        32760,
+        32766,
+        32764,
+        32770
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 35,
+          "l1j_npc_id": 45488,
+          "monster_ref": "data/m6/monsters.json#/monsters/17",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21059",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 36,
+          "l1j_npc_id": 45497,
+          "monster_ref": "data/m6/monsters.json#/monsters/18",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21068",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 34,
+          "l1j_npc_id": 45473,
+          "monster_ref": "data/m6/monsters.json#/monsters/16",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21044",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 37,
+          "l1j_npc_id": 45464,
+          "monster_ref": "data/m6/monsters.json#/monsters/19",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21035",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 14,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19749",
+      "suppress_templates": [
+        34,
+        35,
+        36,
+        37
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 21,
+      "name": "Zenith Queen",
+      "cycle": "ZenithQueen",
+      "map_id": 110,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47851",
+      "l1j_npc_id": 45513,
+      "rect": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 1039,
+          "l1j_npc_id": 45513,
+          "monster_ref": "data/m1/monsters.json#/monsters/114",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21084",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        1039
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 22,
+      "name": "Ifrit",
+      "cycle": "Ifrit",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47852",
+      "l1j_npc_id": 45516,
+      "rect": [
+        33635,
+        32232,
+        33659,
+        32300
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 588,
+          "l1j_npc_id": 45516,
+          "monster_ref": "data/m6/map_expansion2_population.json#/monsters/20",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21087",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        588
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 23,
+      "name": "Ifrit",
+      "cycle": "Ifrit",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47853",
+      "l1j_npc_id": 45516,
+      "rect": [
+        33655,
+        32288,
+        33690,
+        32335
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 588,
+          "l1j_npc_id": 45516,
+          "monster_ref": "data/m6/map_expansion2_population.json#/monsters/20",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21087",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        588
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 24,
+      "name": "Ifrit",
+      "cycle": "Ifrit",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47854",
+      "l1j_npc_id": 45516,
+      "rect": [
+        33697,
+        32237,
+        33740,
+        32283
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 588,
+          "l1j_npc_id": 45516,
+          "monster_ref": "data/m6/map_expansion2_population.json#/monsters/20",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21087",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        588
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 25,
+      "name": "Ifrit",
+      "cycle": "Ifrit",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47855",
+      "l1j_npc_id": 45516,
+      "rect": [
+        33723,
+        32270,
+        33765,
+        32329
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 588,
+          "l1j_npc_id": 45516,
+          "monster_ref": "data/m6/map_expansion2_population.json#/monsters/20",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21087",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        588
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 26,
+      "name": "Drake",
+      "cycle": "2Drake",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47856",
+      "l1j_npc_id": 45529,
+      "rect": [
+        33398,
+        32403,
+        33410,
+        32415
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 250,
+          "l1j_npc_id": 45529,
+          "monster_ref": "data/m1/monsters.json#/monsters/25",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21099",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 250,
+          "l1j_npc_id": 45529,
+          "monster_ref": "data/m1/monsters.json#/monsters/25",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21099",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 17,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19752",
+      "suppress_templates": [
+        250,
+        766
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 27,
+      "name": "Drake",
+      "cycle": "1Drake",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47857",
+      "l1j_npc_id": 45529,
+      "rect": [
+        33339,
+        32348,
+        33354,
+        32363
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 250,
+          "l1j_npc_id": 45529,
+          "monster_ref": "data/m1/monsters.json#/monsters/25",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21099",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        250,
+        766
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 28,
+      "name": "Drake",
+      "cycle": "1Drake",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47858",
+      "l1j_npc_id": 45529,
+      "rect": [
+        33382,
+        32330,
+        33397,
+        32345
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 250,
+          "l1j_npc_id": 45529,
+          "monster_ref": "data/m1/monsters.json#/monsters/25",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21099",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        250,
+        766
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 29,
+      "name": "Drake",
+      "cycle": "2Drake",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47859",
+      "l1j_npc_id": 45529,
+      "rect": [
+        33356,
+        32375,
+        33371,
+        32390
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 250,
+          "l1j_npc_id": 45529,
+          "monster_ref": "data/m1/monsters.json#/monsters/25",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21099",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 250,
+          "l1j_npc_id": 45529,
+          "monster_ref": "data/m1/monsters.json#/monsters/25",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21099",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 17,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19752",
+      "suppress_templates": [
+        250,
+        766
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 31,
+      "name": "Dark Elder",
+      "cycle": "DarkElder",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47861",
+      "l1j_npc_id": 45545,
+      "rect": [
+        33385,
+        32349,
+        33385,
+        32349
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 282,
+          "l1j_npc_id": 45545,
+          "monster_ref": "data/m1/monsters.json#/monsters/26",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21115",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 30,
+          "l1j_npc_id": 45161,
+          "monster_ref": "data/m3/monsters.json#/monsters/5",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20777",
+          "mapping": "existing_selected_backend",
+          "count": 2
+        }
+      ],
+      "group_id": 16,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19751",
+      "suppress_templates": [
+        282
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 32,
+      "name": "Dark Elder",
+      "cycle": "DarkElder",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47862",
+      "l1j_npc_id": 45545,
+      "rect": [
+        33271,
+        32394,
+        33271,
+        32394
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 282,
+          "l1j_npc_id": 45545,
+          "monster_ref": "data/m1/monsters.json#/monsters/26",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21115",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 30,
+          "l1j_npc_id": 45161,
+          "monster_ref": "data/m3/monsters.json#/monsters/5",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20777",
+          "mapping": "existing_selected_backend",
+          "count": 2
+        }
+      ],
+      "group_id": 16,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19751",
+      "suppress_templates": [
+        282
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 34,
+      "name": "Seer",
+      "cycle": "Seer",
+      "map_id": 120,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47864",
+      "l1j_npc_id": 45547,
+      "rect": [
+        32722,
+        32722,
+        32877,
+        32877
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 1041,
+          "l1j_npc_id": 45547,
+          "monster_ref": "data/m1/monsters.json#/monsters/115",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21117",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        1041
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 35,
+      "name": "Baphomet",
+      "cycle": "Baphomet",
+      "map_id": 2,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47865",
+      "l1j_npc_id": 45573,
+      "rect": [
+        32704,
+        32842,
+        32711,
+        32849
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 24,
+          "l1j_npc_id": 45573,
+          "monster_ref": "data/m3/monsters.json#/monsters/13",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21138",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        24
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 36,
+      "name": "Beleth",
+      "cycle": "Beleth",
+      "map_id": 24,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47866",
+      "l1j_npc_id": 45583,
+      "rect": [
+        32758,
+        32758,
+        32777,
+        32777
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 216,
+          "l1j_npc_id": 45583,
+          "monster_ref": "data/m1/monsters.json#/monsters/21",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21148",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        216
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 38,
+      "name": "Kurtz",
+      "cycle": "Night",
+      "map_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47868",
+      "l1j_npc_id": 45600,
+      "rect": [
+        32621,
+        32951,
+        32640,
+        32971
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 16,
+          "l1j_npc_id": 45600,
+          "monster_ref": "data/m1/monsters.json#/monsters/15",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21165",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 15,
+          "l1j_npc_id": 45165,
+          "monster_ref": "data/m1/monsters.json#/monsters/14",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20781",
+          "mapping": "existing_selected_backend",
+          "count": 8
+        }
+      ],
+      "group_id": 13,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19748",
+      "suppress_templates": [
+        16
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 39,
+      "name": "Death Knight",
+      "cycle": "DK",
+      "map_id": 11,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47869",
+      "l1j_npc_id": 45601,
+      "rect": [
+        32704,
+        32704,
+        32831,
+        32831
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 63,
+          "l1j_npc_id": 45601,
+          "monster_ref": "data/m6/monsters.json#/monsters/20",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21166",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        63
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 44,
+      "name": "Ancient Giant",
+      "cycle": "Aden",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47873",
+      "l1j_npc_id": 45610,
+      "rect": [
+        34238,
+        33383,
+        34254,
+        33406
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 12180,
+          "l1j_npc_id": 45610,
+          "monster_ref": "data/m1/monsters.json#/monsters/171",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21175",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        12180
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 45,
+      "name": "Ant Queen",
+      "cycle": "DK",
+      "map_id": 51,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47874",
+      "l1j_npc_id": 45614,
+      "rect": [
+        32718,
+        32802,
+        32740,
+        32824
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 454,
+          "l1j_npc_id": 45614,
+          "monster_ref": "data/m6/monsters.json#/monsters/39",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21179",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        454
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 46,
+      "name": "Phoenix",
+      "cycle": "DK",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47875",
+      "l1j_npc_id": 45617,
+      "rect": [
+        33718,
+        32240,
+        33725,
+        32268
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 590,
+          "l1j_npc_id": 45617,
+          "monster_ref": "data/m6/map_expansion2_population.json#/monsters/22",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21182",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        590
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 49,
+      "name": "Unicorn",
+      "cycle": "Unicorn",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47878",
+      "l1j_npc_id": 45640,
+      "rect": [
+        32728,
+        32717,
+        32752,
+        32753
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10256,
+          "l1j_npc_id": 45640,
+          "monster_ref": "data/m1/monsters.json#/monsters/164",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21198",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10256
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 50,
+      "name": "Great Spirit of Earth",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47879",
+      "l1j_npc_id": 45642,
+      "rect": [
+        32685,
+        32701,
+        32770,
+        32798
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10252,
+          "l1j_npc_id": 45642,
+          "monster_ref": "data/m1/monsters.json#/monsters/160",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21200",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10252
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 51,
+      "name": "Great Spirit of Water",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47880",
+      "l1j_npc_id": 45643,
+      "rect": [
+        32717,
+        32593,
+        32808,
+        32640
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10246,
+          "l1j_npc_id": 45643,
+          "monster_ref": "data/m1/monsters.json#/monsters/154",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21201",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10246
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 52,
+      "name": "Great Spirit of Wind",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47881",
+      "l1j_npc_id": 45644,
+      "rect": [
+        32588,
+        32739,
+        32660,
+        32876
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10249,
+          "l1j_npc_id": 45644,
+          "monster_ref": "data/m1/monsters.json#/monsters/157",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21202",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10249
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 53,
+      "name": "Great Spirit of Fire",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47882",
+      "l1j_npc_id": 45645,
+      "rect": [
+        32798,
+        32738,
+        32869,
+        32818
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10243,
+          "l1j_npc_id": 45645,
+          "monster_ref": "data/m1/monsters.json#/monsters/151",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21203",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10243
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 55,
+      "name": "Demon",
+      "cycle": "Oren",
+      "map_id": 82,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47884",
+      "l1j_npc_id": 45649,
+      "rect": [
+        32640,
+        32768,
+        32767,
+        32895
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 332,
+          "l1j_npc_id": 45649,
+          "monster_ref": "data/m6/map_expansion2_population.json#/monsters/9",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21207",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        332
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 68,
+      "name": "Ken Rauhel",
+      "cycle": "Aden",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47897",
+      "l1j_npc_id": 45680,
+      "rect": [
+        34079,
+        33250,
+        34100,
+        33271
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 971,
+          "l1j_npc_id": 45680,
+          "monster_ref": "data/m1/monsters.json#/monsters/107",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21236",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        },
+        {
+          "template_id": 902,
+          "l1j_npc_id": 45678,
+          "monster_ref": "data/m1/monsters.json#/monsters/106",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21235",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 18,
+      "group_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19753",
+      "suppress_templates": [
+        971
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required",
+      "party_placement_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1MobGroupSpawn.java spawn(): leader + nextInt(5)-2; LOCAL reject blocked/occupied rather than overlap fallback"
+    },
+    {
+      "spawn_id": 69,
+      "name": "Lindvior",
+      "cycle": "Dragon",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47898",
+      "l1j_npc_id": 45681,
+      "rect": [
+        34039,
+        33005,
+        34043,
+        33009
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 900,
+          "l1j_npc_id": 45681,
+          "monster_ref": "data/m1/monsters.json#/monsters/105",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21237",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        900
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 70,
+      "name": "Antharas",
+      "cycle": "Dragon",
+      "map_id": 37,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47899",
+      "l1j_npc_id": 45682,
+      "rect": [
+        32695,
+        32821,
+        32699,
+        32825
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 327,
+          "l1j_npc_id": 45682,
+          "monster_ref": "data/m6/map_expansion2_population.json#/monsters/8",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21238",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        327
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 71,
+      "name": "Fafurion",
+      "cycle": "Dragon",
+      "map_id": 65,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47900",
+      "l1j_npc_id": 45683,
+      "rect": [
+        32769,
+        32829,
+        32773,
+        32833
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 499,
+          "l1j_npc_id": 45683,
+          "monster_ref": "data/m1/monsters.json#/monsters/34",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21239",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        499
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 200,
+      "name": "Great Spirit of Earth",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47954",
+      "l1j_npc_id": 45642,
+      "rect": [
+        32685,
+        32701,
+        32770,
+        32798
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10252,
+          "l1j_npc_id": 45642,
+          "monster_ref": "data/m1/monsters.json#/monsters/160",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21200",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10252
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 201,
+      "name": "Great Spirit of Earth",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47955",
+      "l1j_npc_id": 45642,
+      "rect": [
+        32685,
+        32701,
+        32770,
+        32798
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10252,
+          "l1j_npc_id": 45642,
+          "monster_ref": "data/m1/monsters.json#/monsters/160",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21200",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10252
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 202,
+      "name": "Great Spirit of Water",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47956",
+      "l1j_npc_id": 45643,
+      "rect": [
+        32717,
+        32593,
+        32808,
+        32640
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10246,
+          "l1j_npc_id": 45643,
+          "monster_ref": "data/m1/monsters.json#/monsters/154",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21201",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10246
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 203,
+      "name": "Great Spirit of Water",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47957",
+      "l1j_npc_id": 45643,
+      "rect": [
+        32717,
+        32593,
+        32808,
+        32640
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10246,
+          "l1j_npc_id": 45643,
+          "monster_ref": "data/m1/monsters.json#/monsters/154",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21201",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10246
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 204,
+      "name": "Great Spirit of Fire",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47958",
+      "l1j_npc_id": 45645,
+      "rect": [
+        32798,
+        32738,
+        32869,
+        32818
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10243,
+          "l1j_npc_id": 45645,
+          "monster_ref": "data/m1/monsters.json#/monsters/151",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21203",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10243
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 205,
+      "name": "Great Spirit of Fire",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47959",
+      "l1j_npc_id": 45645,
+      "rect": [
+        32798,
+        32738,
+        32869,
+        32818
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10243,
+          "l1j_npc_id": 45645,
+          "monster_ref": "data/m1/monsters.json#/monsters/151",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21203",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10243
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 211,
+      "name": "Unicorn",
+      "cycle": "Unicorn",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47965",
+      "l1j_npc_id": 45640,
+      "rect": [
+        32728,
+        32717,
+        32752,
+        32753
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10256,
+          "l1j_npc_id": 45640,
+          "monster_ref": "data/m1/monsters.json#/monsters/164",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21198",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10256
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 212,
+      "name": "Unicorn",
+      "cycle": "Unicorn",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47966",
+      "l1j_npc_id": 45640,
+      "rect": [
+        32728,
+        32717,
+        32752,
+        32753
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10256,
+          "l1j_npc_id": 45640,
+          "monster_ref": "data/m1/monsters.json#/monsters/164",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21198",
+          "mapping": "existing_selected_backend",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10256
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 213,
+      "name": "Great Spirit of Wind",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47967",
+      "l1j_npc_id": 45644,
+      "rect": [
+        32588,
+        32739,
+        32660,
+        32876
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10249,
+          "l1j_npc_id": 45644,
+          "monster_ref": "data/m1/monsters.json#/monsters/157",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21202",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10249
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    },
+    {
+      "spawn_id": 214,
+      "name": "Great Spirit of Wind",
+      "cycle": "Caspa",
+      "map_id": 303,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47968",
+      "l1j_npc_id": 45644,
+      "rect": [
+        32588,
+        32739,
+        32660,
+        32876
+      ],
+      "count": 1,
+      "percentage": 100,
+      "members": [
+        {
+          "template_id": 10249,
+          "l1j_npc_id": 45644,
+          "monster_ref": "data/m1/monsters.json#/monsters/157",
+          "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21202",
+          "mapping": "LOCAL_same_token_and_sprite; existing monster stats retained; exact original variant UNKNOWN",
+          "count": 1
+        }
+      ],
+      "group_id": 0,
+      "group_ref": null,
+      "suppress_templates": [
+        10249
+      ],
+      "placement_policy": "SQL inclusive rectangle, or L1Spawn triangular coordinate support; client passability required"
+    }
+  ],
+  "exclusions": [
+    {
+      "spawn_id": 1,
+      "name": "Sea Dancer",
+      "cycle": "SeaDancer",
+      "map_id": 63,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47833",
+      "l1j_npc_id": 45228,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$1429",
+      "npc_sprite": 4017
+    },
+    {
+      "spawn_id": 2,
+      "name": "Tiger",
+      "cycle": "Tiger",
+      "map_id": 480,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47834",
+      "l1j_npc_id": 45313,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 11,
+      "name": "Spirit of Drake",
+      "cycle": "Oren",
+      "map_id": 443,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47842",
+      "l1j_npc_id": 45458,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 12,
+      "name": "Evil Spirit of Heine",
+      "cycle": "1Drake",
+      "map_id": 59,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47843",
+      "l1j_npc_id": 45923,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4359",
+      "npc_sprite": 3364
+    },
+    {
+      "spawn_id": 13,
+      "name": "Evil Spirit of Heine",
+      "cycle": "1Drake",
+      "map_id": 60,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47844",
+      "l1j_npc_id": 45923,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4359",
+      "npc_sprite": 3364
+    },
+    {
+      "spawn_id": 14,
+      "name": "Evil Spirit of Heine",
+      "cycle": "1Drake",
+      "map_id": 61,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47845",
+      "l1j_npc_id": 45923,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4359",
+      "npc_sprite": 3364
+    },
+    {
+      "spawn_id": 15,
+      "name": "Count Taros",
+      "cycle": "Oren",
+      "map_id": 251,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47846",
+      "l1j_npc_id": 46025,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 18,
+      "name": "Kuman",
+      "cycle": "etc1",
+      "map_id": 480,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47848",
+      "l1j_npc_id": 45492,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 19,
+      "name": "Mambo Rabbit Pink Vest",
+      "cycle": "Caspa",
+      "map_id": 440,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47849",
+      "l1j_npc_id": 45534,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 20,
+      "name": "Mammon",
+      "cycle": "Oren",
+      "map_id": 251,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47850",
+      "l1j_npc_id": 46026,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 30,
+      "name": "Mambo Rabbit Orange Vest",
+      "cycle": "Caspa",
+      "map_id": 430,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47860",
+      "l1j_npc_id": 45535,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 33,
+      "name": "Doppelganger",
+      "cycle": "DoppelGanger",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47863",
+      "l1j_npc_id": 45546,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$1554",
+      "npc_sprite": 2389
+    },
+    {
+      "spawn_id": 37,
+      "name": "Greater Minotaur",
+      "cycle": "Aden",
+      "map_id": 70,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47867",
+      "l1j_npc_id": 45584,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$2106",
+      "npc_sprite": 2402
+    },
+    {
+      "spawn_id": 41,
+      "name": "Dread Queen Laia",
+      "cycle": "Aden",
+      "map_id": 320,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47870",
+      "l1j_npc_id": 45677,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 42,
+      "name": "Vampire",
+      "cycle": "Oren",
+      "map_id": 130,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47871",
+      "l1j_npc_id": 45606,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 43,
+      "name": "Ice Queen",
+      "cycle": "Oren",
+      "map_id": 74,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47872",
+      "l1j_npc_id": 45609,
+      "reason": "source_percentage_zero",
+      "candidate": {
+        "template_id": 710,
+        "l1j_npc_id": 45609,
+        "monster_ref": "data/m1/monsters.json#/monsters/70",
+        "identity_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21174",
+        "mapping": "existing_selected_backend"
+      }
+    },
+    {
+      "spawn_id": 47,
+      "name": "Knight Vald",
+      "cycle": "Oren",
+      "map_id": 180,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47876",
+      "l1j_npc_id": 45618,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 48,
+      "name": "Chaos",
+      "cycle": "DK",
+      "map_id": 522,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47877",
+      "l1j_npc_id": 45625,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 54,
+      "name": "Abyss Master",
+      "cycle": "Oren",
+      "map_id": 430,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47883",
+      "l1j_npc_id": 45646,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 56,
+      "name": "Zombie Lord",
+      "cycle": "Oren",
+      "map_id": 140,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47885",
+      "l1j_npc_id": 45650,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 57,
+      "name": "Dread King Baranka",
+      "cycle": "Aden",
+      "map_id": 320,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47886",
+      "l1j_npc_id": 45651,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 58,
+      "name": "Cougar",
+      "cycle": "Oren",
+      "map_id": 150,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47887",
+      "l1j_npc_id": 45652,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 59,
+      "name": "Mummy Lord",
+      "cycle": "Oren",
+      "map_id": 160,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47888",
+      "l1j_npc_id": 45653,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 60,
+      "name": "Iris",
+      "cycle": "Oren",
+      "map_id": 170,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47889",
+      "l1j_npc_id": 45654,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 61,
+      "name": "Aaarrrggg...",
+      "cycle": "Aden",
+      "map_id": 243,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47890",
+      "l1j_npc_id": 45671,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 62,
+      "name": "Lich",
+      "cycle": "Oren",
+      "map_id": 190,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47891",
+      "l1j_npc_id": 45672,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 63,
+      "name": "Grim Reaper",
+      "cycle": "Oren",
+      "map_id": 200,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47892",
+      "l1j_npc_id": 45673,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 64,
+      "name": "Death",
+      "cycle": "DK",
+      "map_id": 523,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47893",
+      "l1j_npc_id": 45674,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 65,
+      "name": "Yahee",
+      "cycle": "DK",
+      "map_id": 524,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47894",
+      "l1j_npc_id": 45675,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 66,
+      "name": "Teranus",
+      "cycle": "Aden",
+      "map_id": 450,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47895",
+      "l1j_npc_id": 45666,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 67,
+      "name": "Zyrus",
+      "cycle": "Aden",
+      "map_id": 450,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47896",
+      "l1j_npc_id": 45668,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 72,
+      "name": "Valakas",
+      "cycle": "Dragon",
+      "map_id": 67,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47901",
+      "l1j_npc_id": 45684,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 73,
+      "name": "Tarak",
+      "cycle": "DK",
+      "map_id": 410,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47902",
+      "l1j_npc_id": 45685,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 74,
+      "name": "Jindo Puppy",
+      "cycle": "Unknown",
+      "map_id": 440,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47903",
+      "l1j_npc_id": 45711,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 75,
+      "name": "Jindo Puppy",
+      "cycle": "Unknown",
+      "map_id": 480,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47904",
+      "l1j_npc_id": 45711,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 76,
+      "name": "Jindo Puppy",
+      "cycle": "Unknown",
+      "map_id": 70,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47905",
+      "l1j_npc_id": 45711,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4072",
+      "npc_sprite": 5065
+    },
+    {
+      "spawn_id": 77,
+      "name": "Jindo Puppy",
+      "cycle": "Unknown",
+      "map_id": 69,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47906",
+      "l1j_npc_id": 45711,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 78,
+      "name": "Jindo Puppy",
+      "cycle": "Unknown",
+      "map_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47907",
+      "l1j_npc_id": 45711,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4072",
+      "npc_sprite": 5065
+    },
+    {
+      "spawn_id": 79,
+      "name": "Jindo Puppy",
+      "cycle": "Unknown",
+      "map_id": 68,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47908",
+      "l1j_npc_id": 45711,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 80,
+      "name": "Jindo Puppy",
+      "cycle": "Unknown",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47909",
+      "l1j_npc_id": 45711,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4072",
+      "npc_sprite": 5065
+    },
+    {
+      "spawn_id": 81,
+      "name": "Great King Squid",
+      "cycle": "Unknown",
+      "map_id": 558,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47910",
+      "l1j_npc_id": 45734,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 82,
+      "name": "Chief Mermaid",
+      "cycle": "Unknown",
+      "map_id": 558,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47911",
+      "l1j_npc_id": 45735,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 83,
+      "name": "Varlok",
+      "cycle": "DK",
+      "map_id": 603,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47912",
+      "l1j_npc_id": 45752,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 84,
+      "name": "Polluted Orc Warrior",
+      "cycle": "Unknown",
+      "map_id": 244,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47913",
+      "l1j_npc_id": 45772,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 85,
+      "name": "Spirit",
+      "cycle": "Unknown",
+      "map_id": 244,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47914",
+      "l1j_npc_id": 45795,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 86,
+      "name": "Diamond Golem of Maino Shaman",
+      "cycle": "Unknown",
+      "map_id": 255,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47915",
+      "l1j_npc_id": 45801,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 87,
+      "name": "Maino Shaman",
+      "cycle": "Unknown",
+      "map_id": 256,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47916",
+      "l1j_npc_id": 45802,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 88,
+      "name": "Barbados",
+      "cycle": "Unknown",
+      "map_id": 254,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47917",
+      "l1j_npc_id": 45829,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 89,
+      "name": "Elindaire",
+      "cycle": "Caspa",
+      "map_id": 60,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47918",
+      "l1j_npc_id": 81081,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$2049",
+      "npc_sprite": 187
+    },
+    {
+      "spawn_id": 90,
+      "name": "Elindaire",
+      "cycle": "Caspa",
+      "map_id": 61,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47919",
+      "l1j_npc_id": 81081,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$2049",
+      "npc_sprite": 187
+    },
+    {
+      "spawn_id": 91,
+      "name": "Jose",
+      "cycle": "Oren",
+      "map_id": 484,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47920",
+      "l1j_npc_id": 45548,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 92,
+      "name": "Assassin Squad Leader Blaze",
+      "cycle": "Unknown",
+      "map_id": 495,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47921",
+      "l1j_npc_id": 45585,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 93,
+      "name": "Palace General Kyte",
+      "cycle": "Unknown",
+      "map_id": 494,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47922",
+      "l1j_npc_id": 45574,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 94,
+      "name": "Slave of Assassin King",
+      "cycle": "Unknown",
+      "map_id": 492,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47923",
+      "l1j_npc_id": 45648,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 95,
+      "name": "Brigade Commander Dark Fencer",
+      "cycle": "Unknown",
+      "map_id": 452,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47924",
+      "l1j_npc_id": 45577,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 96,
+      "name": "Dread King Baranka",
+      "cycle": "Unknown",
+      "map_id": 453,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47925",
+      "l1j_npc_id": 45844,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 97,
+      "name": "Division Commander Sinclair",
+      "cycle": "Unknown",
+      "map_id": 456,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47926",
+      "l1j_npc_id": 45588,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 98,
+      "name": "Evil Power Squad Leader Kybar",
+      "cycle": "Unknown",
+      "map_id": 455,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47927",
+      "l1j_npc_id": 45607,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 99,
+      "name": "Temple Head Bounty",
+      "cycle": "Unknown",
+      "map_id": 466,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47928",
+      "l1j_npc_id": 45612,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 100,
+      "name": "Evil Magic Squad Leader Carmiel",
+      "cycle": "Unknown",
+      "map_id": 461,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47929",
+      "l1j_npc_id": 45602,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 101,
+      "name": "Dread Queen Laia",
+      "cycle": "Unknown",
+      "map_id": 462,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47930",
+      "l1j_npc_id": 45863,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 102,
+      "name": "Mercenary Commander Mephaisto",
+      "cycle": "Unknown",
+      "map_id": 471,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47931",
+      "l1j_npc_id": 45608,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 103,
+      "name": "Arcane Troup Leader Crepus",
+      "cycle": "Unknown",
+      "map_id": 473,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47932",
+      "l1j_npc_id": 45615,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 104,
+      "name": "Arcane King Hellvine",
+      "cycle": "Unknown",
+      "map_id": 475,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47933",
+      "l1j_npc_id": 45676,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 105,
+      "name": "General Hamel Full of Resentment",
+      "cycle": "Caspa",
+      "map_id": 4,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47934",
+      "l1j_npc_id": 45916,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$5112",
+      "npc_sprite": 5979
+    },
+    {
+      "spawn_id": 109,
+      "name": "Cursed Medusa",
+      "cycle": "1Drake",
+      "map_id": 60,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47935",
+      "l1j_npc_id": 45935,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$228 $2113",
+      "npc_sprite": 2535
+    },
+    {
+      "spawn_id": 110,
+      "name": "Cursed Great Spirit of Water",
+      "cycle": "1Drake",
+      "map_id": 61,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47936",
+      "l1j_npc_id": 45942,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$228 $2482",
+      "npc_sprite": 4404
+    },
+    {
+      "spawn_id": 111,
+      "name": "Spirit of Water",
+      "cycle": "1Drake",
+      "map_id": 63,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47937",
+      "l1j_npc_id": 45941,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4347",
+      "npc_sprite": 5447
+    },
+    {
+      "spawn_id": 112,
+      "name": "Spirit of Water",
+      "cycle": "1Drake",
+      "map_id": 63,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47938",
+      "l1j_npc_id": 45931,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$2005",
+      "npc_sprite": 2268
+    },
+    {
+      "spawn_id": 113,
+      "name": "Kapu",
+      "cycle": "1Drake",
+      "map_id": 63,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47939",
+      "l1j_npc_id": 45943,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4360",
+      "npc_sprite": 5818
+    },
+    {
+      "spawn_id": 114,
+      "name": "Giant Worm",
+      "cycle": "1Drake",
+      "map_id": 63,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47940",
+      "l1j_npc_id": 45944,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$4361",
+      "npc_sprite": 5786
+    },
+    {
+      "spawn_id": 115,
+      "name": "Supreme Court Justice Keyna",
+      "cycle": "Unknown",
+      "map_id": 530,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47941",
+      "l1j_npc_id": 45955,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 116,
+      "name": "Supreme Court Justice Viatas",
+      "cycle": "Unknown",
+      "map_id": 531,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47942",
+      "l1j_npc_id": 45956,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 117,
+      "name": "Supreme Court Justice Baromes",
+      "cycle": "Unknown",
+      "map_id": 531,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47943",
+      "l1j_npc_id": 45957,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 118,
+      "name": "Supreme Court Justice Endias",
+      "cycle": "Unknown",
+      "map_id": 531,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47944",
+      "l1j_npc_id": 45958,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 119,
+      "name": "Supreme Court Justice Edea",
+      "cycle": "Unknown",
+      "map_id": 532,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47945",
+      "l1j_npc_id": 45959,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 120,
+      "name": "Supreme Court Justice Tiames",
+      "cycle": "Unknown",
+      "map_id": 533,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47946",
+      "l1j_npc_id": 45960,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 121,
+      "name": "Supreme Court Justice Ramias",
+      "cycle": "Unknown",
+      "map_id": 533,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47947",
+      "l1j_npc_id": 45961,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 122,
+      "name": "Supreme Court Justice Barode",
+      "cycle": "Unknown",
+      "map_id": 533,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47948",
+      "l1j_npc_id": 45962,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 123,
+      "name": "Priest Adjutant Cassandra",
+      "cycle": "Unknown",
+      "map_id": 534,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47949",
+      "l1j_npc_id": 45963,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 124,
+      "name": "Thebes Anubis",
+      "cycle": "etc1",
+      "map_id": 782,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47950",
+      "l1j_npc_id": 46124,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 125,
+      "name": "Thebes Horus",
+      "cycle": "etc1",
+      "map_id": 782,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47951",
+      "l1j_npc_id": 46123,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 126,
+      "name": "Ice Queen",
+      "cycle": "Oren",
+      "map_id": 74,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47952",
+      "l1j_npc_id": 46141,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$1771",
+      "npc_sprite": 6581
+    },
+    {
+      "spawn_id": 127,
+      "name": "Ice Demon",
+      "cycle": "Oren",
+      "map_id": 73,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47953",
+      "l1j_npc_id": 46142,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$5525",
+      "npc_sprite": 6566
+    },
+    {
+      "spawn_id": 206,
+      "name": "Cronos",
+      "cycle": "Cronos",
+      "map_id": 69,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47960",
+      "l1j_npc_id": 90004,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 207,
+      "name": "Kugas",
+      "cycle": "Kugas",
+      "map_id": 69,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47961",
+      "l1j_npc_id": 90010,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 208,
+      "name": "Elazer",
+      "cycle": "Elazer",
+      "map_id": 68,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47962",
+      "l1j_npc_id": 90005,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 209,
+      "name": "Zarlok",
+      "cycle": "Zarlok",
+      "map_id": 69,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47963",
+      "l1j_npc_id": 90009,
+      "reason": "unsupported_map"
+    },
+    {
+      "spawn_id": 210,
+      "name": "Baell Zaer",
+      "cycle": "BaellZaer",
+      "map_id": 1,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:47964",
+      "l1j_npc_id": 90003,
+      "reason": "no_verified_fixed_client_monster_correspondence",
+      "npc_token": "$6077",
+      "npc_sprite": 6992
+    }
+  ],
+  "notes": [
+    "SQL coordinates and party/count only; spawn scheduling and restart projection are LOCAL backend policy, not official Classic behavior.",
+    "Source percentage=0 is preserved as excluded, not silently enabled.",
+    "Unverified fixed client identities and unsupported maps are never created."
+  ]
+}

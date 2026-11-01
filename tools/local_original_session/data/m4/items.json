@@ -1,0 +1,159 @@
+{
+  "table": "m4_items",
+  "version": 1,
+  "note": "기존 m1 catalog에 없는 ID67 언월도1종만 추가. 기존 ID 재정의/코드 연결/기능 확대 없음. 마법서3종·재료·부활·MR 망토는 미지원 소비를 지어내지 않고 drops.unresolved에 남긴다.",
+  "ref_abbrev": {
+    "native-dump": "work/source_game_data/native-dump-v1.jsonl (item 행 줄 번호)",
+    "rea238": "work/local_server_rea_20261016/run238_equipment_window_and_item_contracts/MAIN_REVIEW.md 원 UI 슬롯 표(key→라벨)",
+    "rea74": "work/local_server_rea_20261016/run74_item_equipment_client_contract/WEAPON_KEY9_RESULT.md (key9 무기)",
+    "rea95": "work/local_server_rea_20261016/run95_item103_use_equipment_key2/findings.md (key2 갑옷, 097A f1/f2/f3)",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql (weapon 열 :2091-, armor 열 :63-, etcitem 열 :716-)",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/"
+  },
+  "buff_rate": {
+    "value": {
+      "haste": 0.745,
+      "brave": 0.745
+    },
+    "source": "l1j",
+    "ref": "l1jsrc model/AcceleratorChecker.java:49 HASTE_RATE 0.745; :169-180 isHaste()·isBrave()면 행동 간격(이동·공격)에 각각 곱한다(둘 다면 0.745*0.745)"
+  },
+  "slot_keys": {
+    "value": {
+      "helmet": 1,
+      "armor": 2,
+      "shirt": 3,
+      "cloak": 4,
+      "boots": 6,
+      "gloves": 7,
+      "shield": 8,
+      "weapon": 9
+    },
+    "source": "client",
+    "ref": "rea238 InitSlotComponent 12쌍(key1 투구, 2 갑옷, 3 셔츠, 4 망토, 6 부츠, 7 장갑, 8 방패, 9 무기); rea74 key9; rea95 key2"
+  },
+  "slot_by_f17": {
+    "value": {
+      "1": "helmet",
+      "2": "armor",
+      "4": "shirt",
+      "8": "cloak",
+      "32": "boots",
+      "64": "gloves",
+      "256": "shield"
+    },
+    "source": "local_policy",
+    "ref": "native-dump:1026-1166 f17 값과 한국어 이름(투구=1, 갑옷/재킷=2, 티셔츠=4, 망토=8, 부츠=32, 장갑=64, 방패=256)",
+    "note": "f17 의미 미확정(rea238 B42570 selector). 이름 대응만으로 정한 로컬 추정"
+  },
+  "items": [
+    {
+      "id": {
+        "value": 67,
+        "source": "client",
+        "ref": "native-dump:1010"
+      },
+      "icon": {
+        "value": 90,
+        "source": "client",
+        "ref": "native-dump:1010 f5"
+      },
+      "name_token": {
+        "value": "$92",
+        "source": "client",
+        "ref": "native-dump:1010"
+      },
+      "name_ko": {
+        "value": "언월도",
+        "source": "client",
+        "ref": "native-dump:1010"
+      },
+      "kind": {
+        "value": "weapon",
+        "source": "client",
+        "ref": "native-dump:1010 f45=1; data/official/items.json official_id=67; work/official_data/raw/item/67.json categoryName=한손검"
+      },
+      "slot": {
+        "value": "weapon",
+        "source": "client",
+        "ref": "m1/items.json slot_keys weapon9; rea74 key9"
+      },
+      "stackable": {
+        "value": false,
+        "source": "l1j",
+        "ref": "l1jdb:63728 weapon27 Scimitar weapon items do not stack"
+      },
+      "weapon": {
+        "value": {
+          "small": 8,
+          "large": 8
+        },
+        "source": "official",
+        "ref": "data/official/items.json official_id=67; work/official_data/raw/item/67.json sdam/ldam.origin"
+      },
+      "weapon_type": {
+        "value": "sword",
+        "source": "official",
+        "ref": "data/official/items.json official_id=67; work/official_data/raw/item/67.json categoryName=한손검; l1jdb:63728 weapon27 Scimitar type=sword"
+      },
+      "hit": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:63728 weapon27 Scimitar hitmodifier"
+      },
+      "dmg_bonus": {
+        "value": 0,
+        "source": "l1j",
+        "ref": "l1jdb:63728 weapon27 Scimitar dmgmodifier"
+      },
+      "ac": {
+        "value": 0,
+        "source": "local_policy",
+        "ref": "ItemDef non-armor neutral value; no official AC claim"
+      },
+      "safe_enchant": {
+        "value": 6,
+        "source": "official",
+        "ref": "data/official/items.json official_id=67; work/official_data/raw/item/67.json enchantDescription"
+      },
+      "heal_hp": {
+        "value": 0,
+        "source": "local_policy",
+        "ref": "ItemDef non-healing neutral value; no official healing claim"
+      },
+      "classes": {
+        "value": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "source": "client",
+        "ref": "native-dump:1010 f13 absent; m1/items.json existing all-class absence policy",
+        "note": "f13 부재는 기존 M1의4직업 기본 정책이며 공식 classNames 부재만으로 사용 권한 확정 아님."
+      },
+      "weight": {
+        "value": 40000,
+        "source": "client",
+        "ref": "native-dump:1010 f10; data/official/items.json official_id=67; work/official_data/raw/item/67.json weight40"
+      },
+      "mapping_evidence": {
+        "value": {
+          "classic_id": 67,
+          "l1j_id": 27,
+          "classic_token": "$92",
+          "l1j_token": "$92",
+          "classic_weight": 40000,
+          "l1j_weight": 40000,
+          "classic_icon": 90,
+          "l1j_invgfx": 90,
+          "classic_ground_sprite": 76,
+          "l1j_grdgfx": 76
+        },
+        "source": "local_policy",
+        "ref": "native-dump:1010; l1jdb:63728 weapon27 Scimitar",
+        "note": "서로 다른 ID의 대응은 이름토큰·종류·무게·두 아이콘 일치와 공식 이름 대조로 채택. 숫자 ID 동일성 주장은 하지 않는다."
+      }
+    }
+  ]
+}

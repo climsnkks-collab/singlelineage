@@ -1,0 +1,511 @@
+{
+  "table": "m6_maps",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 5,
+        "source": "client",
+        "ref": "region.jsonc:12 _map"
+      },
+      "region_id": {
+        "value": 32,
+        "source": "client",
+        "ref": "region.jsonc:12 _id"
+      },
+      "name_ko": {
+        "value": "글루딘행 배",
+        "source": "client",
+        "ref": "region.jsonc:11 comment"
+      },
+      "family": "ship",
+      "terrain_bounds": [
+        32640,
+        32768,
+        32767,
+        32831
+      ]
+    },
+    {
+      "map_id": {
+        "value": 6,
+        "source": "client",
+        "ref": "region.jsonc:14 _map"
+      },
+      "region_id": {
+        "value": 33,
+        "source": "client",
+        "ref": "region.jsonc:14 _id"
+      },
+      "name_ko": {
+        "value": "말하는 섬행 배",
+        "source": "client",
+        "ref": "region.jsonc:13 comment"
+      },
+      "family": "ship",
+      "terrain_bounds": [
+        32704,
+        32768,
+        32831,
+        32831
+      ]
+    },
+    {
+      "map_id": {
+        "value": 19,
+        "source": "client",
+        "ref": "region.jsonc:28 _map"
+      },
+      "region_id": {
+        "value": 39,
+        "source": "client",
+        "ref": "region.jsonc:28 _id"
+      },
+      "name_ko": {
+        "value": "요정숲 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:27 comment"
+      },
+      "family": "elven",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 20,
+        "source": "client",
+        "ref": "region.jsonc:30 _map"
+      },
+      "region_id": {
+        "value": 40,
+        "source": "client",
+        "ref": "region.jsonc:30 _id"
+      },
+      "name_ko": {
+        "value": "요정숲 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:29 comment"
+      },
+      "family": "elven",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 21,
+        "source": "client",
+        "ref": "region.jsonc:32 _map"
+      },
+      "region_id": {
+        "value": 41,
+        "source": "client",
+        "ref": "region.jsonc:32 _id"
+      },
+      "name_ko": {
+        "value": "요정숲 던전 3층",
+        "source": "client",
+        "ref": "region.jsonc:31 comment"
+      },
+      "family": "elven",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 7,
+        "source": "client",
+        "ref": "region.jsonc:229 _map"
+      },
+      "region_id": {
+        "value": 177,
+        "source": "client",
+        "ref": "region.jsonc:229 _id"
+      },
+      "name_ko": {
+        "value": "글루디오 던전 1층",
+        "source": "client",
+        "ref": "region.jsonc:228 comment"
+      },
+      "family": "gludio",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 8,
+        "source": "client",
+        "ref": "region.jsonc:231 _map"
+      },
+      "region_id": {
+        "value": 178,
+        "source": "client",
+        "ref": "region.jsonc:231 _id"
+      },
+      "name_ko": {
+        "value": "글루디오 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:230 comment"
+      },
+      "family": "gludio",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 9,
+        "source": "client",
+        "ref": "region.jsonc:233 _map"
+      },
+      "region_id": {
+        "value": 179,
+        "source": "client",
+        "ref": "region.jsonc:233 _id"
+      },
+      "name_ko": {
+        "value": "글루디오 던전 3층",
+        "source": "client",
+        "ref": "region.jsonc:232 comment"
+      },
+      "family": "gludio",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 10,
+        "source": "client",
+        "ref": "region.jsonc:235 _map"
+      },
+      "region_id": {
+        "value": 180,
+        "source": "client",
+        "ref": "region.jsonc:235 _id"
+      },
+      "name_ko": {
+        "value": "글루디오 던전 4층",
+        "source": "client",
+        "ref": "region.jsonc:234 comment"
+      },
+      "family": "gludio",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32831,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 11,
+        "source": "client",
+        "ref": "region.jsonc:237 _map"
+      },
+      "region_id": {
+        "value": 181,
+        "source": "client",
+        "ref": "region.jsonc:237 _id"
+      },
+      "name_ko": {
+        "value": "글루디오 던전 5층",
+        "source": "client",
+        "ref": "region.jsonc:236 comment"
+      },
+      "family": "gludio",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 12,
+        "source": "client",
+        "ref": "region.jsonc:239 _map"
+      },
+      "region_id": {
+        "value": 182,
+        "source": "client",
+        "ref": "region.jsonc:239 _id"
+      },
+      "name_ko": {
+        "value": "글루디오 던전 6층",
+        "source": "client",
+        "ref": "region.jsonc:238 comment"
+      },
+      "family": "gludio",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 13,
+        "source": "client",
+        "ref": "region.jsonc:241 _map"
+      },
+      "region_id": {
+        "value": 183,
+        "source": "client",
+        "ref": "region.jsonc:241 _id"
+      },
+      "name_ko": {
+        "value": "글루디오 던전 7층",
+        "source": "client",
+        "ref": "region.jsonc:240 comment"
+      },
+      "family": "gludio",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 43,
+        "source": "client",
+        "ref": "region.jsonc:244 _map"
+      },
+      "region_id": {
+        "value": 185,
+        "source": "client",
+        "ref": "region.jsonc:244 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-1",
+        "source": "client",
+        "ref": "region.jsonc:243 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 44,
+        "source": "client",
+        "ref": "region.jsonc:246 _map"
+      },
+      "region_id": {
+        "value": 186,
+        "source": "client",
+        "ref": "region.jsonc:246 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-2",
+        "source": "client",
+        "ref": "region.jsonc:245 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 45,
+        "source": "client",
+        "ref": "region.jsonc:248 _map"
+      },
+      "region_id": {
+        "value": 187,
+        "source": "client",
+        "ref": "region.jsonc:248 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-3",
+        "source": "client",
+        "ref": "region.jsonc:247 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 46,
+        "source": "client",
+        "ref": "region.jsonc:250 _map"
+      },
+      "region_id": {
+        "value": 188,
+        "source": "client",
+        "ref": "region.jsonc:250 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-4",
+        "source": "client",
+        "ref": "region.jsonc:249 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 47,
+        "source": "client",
+        "ref": "region.jsonc:252 _map"
+      },
+      "region_id": {
+        "value": 189,
+        "source": "client",
+        "ref": "region.jsonc:252 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-5",
+        "source": "client",
+        "ref": "region.jsonc:251 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 48,
+        "source": "client",
+        "ref": "region.jsonc:254 _map"
+      },
+      "region_id": {
+        "value": 190,
+        "source": "client",
+        "ref": "region.jsonc:254 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-6",
+        "source": "client",
+        "ref": "region.jsonc:253 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 49,
+        "source": "client",
+        "ref": "region.jsonc:256 _map"
+      },
+      "region_id": {
+        "value": 191,
+        "source": "client",
+        "ref": "region.jsonc:256 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-7",
+        "source": "client",
+        "ref": "region.jsonc:255 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 50,
+        "source": "client",
+        "ref": "region.jsonc:258 _map"
+      },
+      "region_id": {
+        "value": 192,
+        "source": "client",
+        "ref": "region.jsonc:258 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 1층-8",
+        "source": "client",
+        "ref": "region.jsonc:257 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32640,
+        32640,
+        32895,
+        32895
+      ]
+    },
+    {
+      "map_id": {
+        "value": 51,
+        "source": "client",
+        "ref": "region.jsonc:260 _map"
+      },
+      "region_id": {
+        "value": 193,
+        "source": "client",
+        "ref": "region.jsonc:260 _id"
+      },
+      "name_ko": {
+        "value": "개미굴 던전 2층",
+        "source": "client",
+        "ref": "region.jsonc:259 comment"
+      },
+      "family": "ant",
+      "terrain_bounds": [
+        32576,
+        32704,
+        32895,
+        32959
+      ]
+    }
+  ],
+  "note": "Client region names and map ids. Ant43..50 are branches 1-1..1-8, map51 is 2F. L1J area/mapids floor labels conflict; numeric map ids retained. Ship5/6 permit saved-map loading/disembark only; existing ticket-based direct-harbor experiment is retained."
+}

@@ -48,6 +48,12 @@ def _frame(uid, reported_grid, direction):
     return struct.pack('<HH', len(body) + 6, OPCODE) + body + b'\0\0'
 
 
+def frame(uid, reported_grid, direction):
+    """World AI reuse of the same SC4E2C encoding (caller ran source_ready once)."""
+    need(type(direction) is int and 0 <= direction <= 7, 'NPC_MOVE_DIRECTION_REQUIRED')
+    return _frame(uid, reported_grid, direction)
+
+
 @dataclass(frozen=True, slots=True)
 class State:
     uid: int

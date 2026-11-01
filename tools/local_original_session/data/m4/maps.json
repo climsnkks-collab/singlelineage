@@ -1,0 +1,195 @@
+{
+  "table": "m4_maps",
+  "version": 1,
+  "status": "SOURCE_PREPARATION_STATIC_TERRAIN_VERIFIED_RUNTIME_UNRUN",
+  "note": "M4 데이터 준비: 글루딘 마을과 동쪽 글루디오의 기존 본토 map4. 클래식 region ID, map ID, MapView ID, L1J map ID를 구분한다. 클래식의 region145/146/175는 모두 map4이고 L1J도 별도 원문에서 map4이다. 이름/번호 대응과 S32 정적 검사만 확인했으며 게임 로드·Native 맵 전환·30분 플레이는 미검증.",
+  "ref_abbrev": {
+    "region.jsonc": "work/local_resource_provider/assets/data/region.jsonc",
+    "map_view_data.jsonc": "work/local_resource_provider/assets/data/map_view_data.jsonc",
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "map-namespaces": "work/asset_link_audit_20261007/map/map_namespaces.tsv",
+    "terrain-validation": "tools/local_original_session/data/m4/terrain_validation.json"
+  },
+  "maps": [
+    {
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc:160,162,226 _map; signed current catalog map/4/*.s32"
+      },
+      "name_ko": {
+        "value": "아덴 대륙",
+        "source": "client",
+        "ref": "region.jsonc:225 comment; region175"
+      },
+      "classic_region_bounds": {
+        "value": {
+          "x1": 32512,
+          "y1": 32192,
+          "x2": 34303,
+          "y2": 33535
+        },
+        "source": "client",
+        "ref": "region.jsonc:226 _bounds of region175",
+        "note": "본토 지역 원문 경계. 전체 map4의 유효 navigation 경계로 확장하지 않는다."
+      },
+      "l1j_map_id": {
+        "value": 4,
+        "source": "l1j",
+        "ref": "l1jdb:19195 mapids Mainland Aden",
+        "note": "별도 L1J 데이터베이스 namespace. 숫자가 같아도 NPC/template/region namespace와 섞지 않는다."
+      },
+      "l1j_reference_bounds": {
+        "value": {
+          "x1": 32448,
+          "y1": 32064,
+          "x2": 34303,
+          "y2": 33535
+        },
+        "source": "l1j",
+        "ref": "l1jdb:19195 mapids startX,endX,startY,endY",
+        "note": "클래식 region175 및 실제 S32 청크 bbox와 다르므로 대체하지 않는다."
+      },
+      "classic_current_catalog_chunks": {
+        "value": 650,
+        "source": "client",
+        "ref": "AssetProvider signed current catalog map/4/*.s32; map-namespaces:6 current_catalog_s32=650",
+        "note": "동일 분석의 old_s32=558은 예전 묶음이며 현재 추출의 기준이 아니다."
+      },
+      "loaded_chunk_bounds": {
+        "value": {
+          "x1": 32448,
+          "y1": 32128,
+          "x2": 34367,
+          "y2": 33599
+        },
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/map/4/*.s32; world_terrain.py:WorldTerrain.bounds",
+        "note": "650개 현물 청크의 inclusive 포함 상자. 상자 내부 청크 공백·막힌 칸이 있으며 원문 지역 경계와 별개다."
+      },
+      "loaded_chunks": {
+        "value": 650,
+        "source": "client",
+        "ref": "WorldTerrain.load(map_ids=(4,)); terrain-validation extraction"
+      },
+      "map_view_id": {
+        "value": 25,
+        "source": "client",
+        "ref": "map_view_data.jsonc:278 _id25 _regionId[145]",
+        "note": "MapView UI ID 25이며 map_id=25(사막 던전)로 해석하지 않는다."
+      },
+      "map_view_base_location": {
+        "value": {
+          "x": 32608,
+          "y": 32736
+        },
+        "source": "client",
+        "ref": "map_view_data.jsonc:278 _baseLoc",
+        "note": "MapView 정렬 기준점이며 기본 도착·NPC·스폰 위치로 자동 채택하지 않는다."
+      }
+    }
+  ],
+  "regions": [
+    {
+      "region_id": {
+        "value": 145,
+        "source": "client",
+        "ref": "region.jsonc:160 _id"
+      },
+      "name_ko": {
+        "value": "글루딘 마을",
+        "source": "client",
+        "ref": "region.jsonc:159 comment"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc:160 _map"
+      },
+      "bounds": {
+        "value": {
+          "x1": 32581,
+          "y1": 32704,
+          "x2": 32655,
+          "y2": 32834
+        },
+        "source": "client",
+        "ref": "region.jsonc:160 _bounds",
+        "note": "원문 지역 표시 경계. 정적 청크 경계·모든 칸 통행·스폰 영역을 뜻하지 않는다."
+      }
+    },
+    {
+      "region_id": {
+        "value": 146,
+        "source": "client",
+        "ref": "region.jsonc:162 _id"
+      },
+      "name_ko": {
+        "value": "글루디오",
+        "source": "client",
+        "ref": "region.jsonc:161 comment"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc:162 _map"
+      },
+      "bounds": {
+        "value": {
+          "x1": 32512,
+          "y1": 32537,
+          "x2": 32960,
+          "y2": 33023
+        },
+        "source": "client",
+        "ref": "region.jsonc:162 _bounds",
+        "note": "원문 지역 표시 경계. 정적 청크 경계·모든 칸 통행·스폰 영역을 뜻하지 않는다."
+      }
+    },
+    {
+      "region_id": {
+        "value": 175,
+        "source": "client",
+        "ref": "region.jsonc:226 _id"
+      },
+      "name_ko": {
+        "value": "아덴 대륙",
+        "source": "client",
+        "ref": "region.jsonc:225 comment"
+      },
+      "map_id": {
+        "value": 4,
+        "source": "client",
+        "ref": "region.jsonc:226 _map"
+      },
+      "bounds": {
+        "value": {
+          "x1": 32512,
+          "y1": 32192,
+          "x2": 34303,
+          "y2": 33535
+        },
+        "source": "client",
+        "ref": "region.jsonc:226 _bounds",
+        "note": "원문 지역 표시 경계. 정적 청크 경계·모든 칸 통행·스폰 영역을 뜻하지 않는다."
+      }
+    }
+  ],
+  "terrain_policy": {
+    "value": {
+      "placement": "can_stand is True only",
+      "static_mask": 1,
+      "map_load": "WorldTerrain.load(map_ids=(4,))",
+      "default_map_ids": [
+        0
+      ],
+      "lazy_map_ids": [
+        1,
+        2
+      ]
+    },
+    "source": "local_policy",
+    "ref": "world_terrain.py DEFAULT_MAP_IDS/LAZY_MAP_IDS/can_stand; world_interest_spawn.py:InterestSpawner._place",
+    "note": "기존 can_stand는 적어도 한 방향으로 한 칸 이동 가능한 loaded cell의 LOCAL 해석. None/False는 배치 제외. 현 제품 default/lazy map4 지원은 없으며 이 표의 존재만으로 자동 로드되지 않는다."
+  }
+}

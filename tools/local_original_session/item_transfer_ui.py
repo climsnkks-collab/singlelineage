@@ -7,7 +7,7 @@ from types import MethodType
 import threading
 import time
 
-from tools.local_original_session import item_custody, item_transfer_session
+from tools.local_original_session import item_custody, item_transfer_session, inventory_observe, inventory, observe
 from tools.local_original_session.broker import PersistentBroker, _InventoryGeneration
 from tools.local_original_session.manual_move_commands import ManualMoveCommands, WAIT_NS
 from tools.local_original_session.item_quantity_popup import PopupHost, CAPABILITY as POPUP_CAPABILITY
@@ -20,6 +20,8 @@ _CLOCK = ManualMoveCommands._clock
 _GENERATION = PersistentBroker.inventory_selection_current
 _PREPARE = PersistentBroker.prepare_item_equipment
 _CONTEXT = item_transfer_session.ItemTransferSession.context_locked
+_RETURN_SAMPLE = inventory_observe.InventoryObserver.sample_transfer_return
+_DROP_SAMPLE = inventory_observe.InventoryObserver.sample_transfer_drop
 
 
 def need(value, code):
@@ -74,6 +76,7 @@ class ItemTransferUI:
         self.popup = PopupHost(self.consumer, capability=POPUP_CAPABILITY)
         self._thread = threading.get_ident()
         self._refs = None
+        self._post_ret_runtime = None
         self._claimed = self.started = self.closed = False
         self.phase = 'IDLE'
         self._phase_started = None
@@ -83,7 +86,15 @@ class ItemTransferUI:
         self._accepted = None
         self._anchor = self._other = self._quantity = None
         self._initial_snapshot = self._equipment = None
+        self._preparation_clock = self._preparation_backend_progress = None
         self._initial_prepare_attempted = False
+        self._return_observer = self._return_binding = self._return_observation = None
+        self._return_started_ns = self._return_nonce = self._return_sequence = None
+        self._drop_observer = self._drop_binding = self._drop_observation = None
+        self._drop_started_ns = self._drop_nonce = self._drop_sequence = None
+        self._diagnostic_site = "CONSTRUCTOR"
+        self._context_origin = None
+        self._stage_clock = self._backend_context = None
         self.initial_receipt = None
         self.last = dict(status='IDLE', phase=self.phase, backend_effect='UNKNOWN', automatic_retry=False)
 
@@ -115,10 +126,41 @@ class ItemTransferUI:
         clock = self.consumer._clock
         need(type(clock) is MethodType and clock.__self__ is self.consumer and clock.__func__ is _CLOCK
              and self.consumer.clock_ns is self._clock_provider, 'TRANSFER_UI_ORIGINAL_CLOCK_CHANGED')
-        need(0 <= self.consumer._clock() - self._phase_started < WAIT_NS,
-             'TRANSFER_UI_ORIGINAL_STAGE_DEADLINE')
+        # 10초는 Native 결과 대기 예산이며 완료 후 관측의 게임 규약이 아니다.
+        post_ret = self._quantity == 1 and self.phase in (
+            'DROP_BACKEND', 'DROP_CLIENT', 'RETURN_BACKEND', 'RETURN_CLIENT', 'DONE')
+        if post_ret:
+            from tools.local_original_session.item_transfer_runner import Runtime, POST_RET_CURRENT_METHOD
+            runtime = self._post_ret_runtime
+            method = getattr(runtime, 'require_post_ret_current', None)
+            need(type(runtime) is Runtime and type(method) is MethodType
+                 and method.__self__ is runtime and method.__func__ is POST_RET_CURRENT_METHOD
+                 and Runtime.require_post_ret_current is POST_RET_CURRENT_METHOD,
+                 'TRANSFER_UI_POST_RET_ORIGINAL_RUNTIME_REQUIRED')
+            method(self)
+        now = self.consumer._clock()  # 원 clock/단조 검사는 pending과 관측 모두 보존한다.
+        if post_ret:
+            current_method = runtime.require_post_ret_current
+            need(runtime is self._post_ret_runtime and type(current_method) is MethodType
+                 and current_method.__self__ is runtime and current_method.__func__ is POST_RET_CURRENT_METHOD
+                 and Runtime.require_post_ret_current is POST_RET_CURRENT_METHOD,
+                 'TRANSFER_UI_POST_RET_ORIGINAL_RUNTIME_REQUIRED')
+            current_method(self)  # clock 호출 사이 취소/수명/메서드 교체도 승인하지 않는다.
+        age = now - self._phase_started
+        allowed = 0 <= age < WAIT_NS
+        self._stage_clock = dict(caller=self._diagnostic_site, context_origin=self._context_origin, phase=self.phase,
+            original_started_ns=self._phase_started, checked_ns=now, elapsed_ns=age,
+            wait_ns=WAIT_NS, within_original_window=allowed,
+            scope='LAST_ORIGINAL_CLOCK_CHECK_ONLY',
+            budget_scope='POST_RET_LIFETIME_AND_FRESH_CONTEXT' if post_ret else 'NATIVE_OR_PREPARATION_TOOL_WAIT')
+        if self.phase in ('PREPARE_USE', 'PREPARE_USE_BACKEND'):
+            self._preparation_clock = dict(phase=self.phase, original_started_ns=self._phase_started,
+                checked_ns=now, elapsed_ns=age, wait_ns=WAIT_NS, within_original_window=allowed)
+        need(0 <= age and (post_ret or allowed), 'TRANSFER_UI_ORIGINAL_STAGE_DEADLINE')
 
     async def _context(self):
+        self._context_origin = self._diagnostic_site
+        self._diagnostic_site = "CONTEXT_BEFORE_ROW_LOCK"
         self._original()
         current = _CURRENT(self.consumer)
         writer, row = current[0].writer, current[1]
@@ -133,7 +175,9 @@ class ItemTransferUI:
         need(type(session) is item_transfer_session.ItemTransferSession and type(method) is MethodType
              and method.__self__ is session and method.__func__ is _CONTEXT,
              'TRANSFER_UI_ORIGINAL_TRANSFER_SESSION_REQUIRED')
+        self._diagnostic_site = 'CONTEXT_ROW_LOCK_WAIT'
         async with row['operation_lock']:
+            self._diagnostic_site = 'CONTEXT_ROW_LOCK_ACQUIRED'
             context = _CONTEXT(session, writer)
         refs = (self.broker, writer, row, generation, generation.selected,
                 context.selection_binding, context.initial_frame, context.delivery,
@@ -151,7 +195,21 @@ class ItemTransferUI:
             else:
                 need(type(count) is int and count == self._accepted,
                      'TRANSFER_UI_UNEXPECTED_RECEIVED_USE')
+        self._backend_context = dict(scope='LAST_VALIDATED_CONTEXT_ONLY_NOT_CURRENT_AT_FAILURE',
+            ui_phase=self.phase, snapshot_phase=context.snapshot.phase,
+            snapshot_owner=context.snapshot.owner, snapshot_revision=context.snapshot.revision,
+            session_phase=session.phase, membership_phase=context.membership.phase,
+            pending=session.pending is not None, send_index=session._send_index,
+            wire_phase=session._wire_phase)
+        self._diagnostic_site = 'CONTEXT_VALIDATED'
         return context
+
+    def _diagnostic_report(self):
+        return dict(last_clock=None if self._stage_clock is None else dict(self._stage_clock),
+                    last_context=None if self._backend_context is None else dict(self._backend_context),
+                    last_caller=self._diagnostic_site,
+                    context_origin=self._context_origin,
+                    scope='CACHED_DIAGNOSTIC_ONLY_NO_COMPLETION_AUTHORITY')
 
     async def _prepare_initial(self, context):
         """Backend sync only. No raw PC equipment observer/proof is minted."""
@@ -194,23 +252,51 @@ class ItemTransferUI:
         need(type(count) is int and self._use_before <= count <= target,
              'TRANSFER_UI_UNEXPECTED_PREPARATION_COUNTER')
         receipt = self.broker.item_equipment_observation(context.writer, accepted_ordinal=target)
+        # Output only: existing returned receipt and current Python identities.
+        # No Store/native query, clock call, replay or completion authority.
+        effect, generation = self.broker._item_equipment_effect, self.broker._inventory_generation
+        use, service = generation.item_use_session, generation.service
+        fields = ('status','reason','phase','accepted_ordinal','operation','item_uid',
+                  'before_weapon_uid','after_weapon_uid','writer_bound','generation_bound',
+                  'persisted','write_attempted','drain_returned','post_owner_verified')
+        progress = dict(target=target, count=count, before_count=self._use_before,
+            classification='RECEIPT_CHECK', receipt_type=type(receipt).__name__,
+            receipt={key: receipt.get(key) for key in fields} if type(receipt) is dict else None,
+            effect_writer_matches=effect._writer is context.writer,
+            effect_generation_matches=effect._generation is generation,
+            generation_phase=generation.phase, use_session_present=use is not None,
+            use_session_closed=None if use is None else use.closed,
+            use_session_matches_context=use is context.item_use_session,
+            service_present=service is not None, service_closed=None if service is None else service._closed,
+            effect_last_ordinal=effect._last.get('accepted_ordinal'),
+            clock_basis='LAST_EXISTING_ORIGINAL_CHECK_BEFORE_POSSIBLE_CONTEXT_LOCK_WAIT',
+            original_check=None if self._preparation_clock is None else dict(self._preparation_clock))
+        self._preparation_backend_progress = progress
         need(type(receipt) is dict and receipt.get('status') not in ('UNKNOWN', 'BLOCKED'),
              'TRANSFER_UI_PREPARATION_EFFECT_TERMINAL')
         if count == self._use_before or receipt.get('status') in ('NO_MATCH', 'NOT_PREPARED'):
+            progress['classification'] = ('COUNT_NOT_ACCEPTED' if count == self._use_before
+                                          else 'RECEIPT_' + receipt['status'])
             return False
+        progress['classification'] = 'EFFECT_IDENTITY_CHECK'
         need(type(receipt.get('accepted_ordinal')) is int and receipt['accepted_ordinal'] == target
              and receipt.get('operation') == 'ITEM_USE_EFFECT' and receipt.get('item_uid') == self._other,
              'TRANSFER_UI_PREPARATION_EFFECT_IDENTITY_CHANGED')
         if receipt.get('status') != 'COMMITTED':
+            progress['classification'] = 'EFFECT_IN_PROGRESS'
             return False
+        progress['classification'] = 'UNEQUIP_CHECK'
         need(receipt.get('before_weapon_uid') == self._other and receipt.get('after_weapon_uid') == 0,
              'TRANSFER_UI_ACTUAL_UNEQUIP_PREPARATION_REQUIRED')
         if not all(receipt.get(k) is True for k in
                    ('writer_bound','generation_bound','persisted','write_attempted','drain_returned','post_owner_verified')):
+            progress['classification'] = 'EFFECT_FLAGS_INCOMPLETE'
             return False
+        progress['classification'] = 'EFFECT_DRAIN_CHECK'
         need(receipt.get('phase') == 'DRAINED' and context.equipment.weapon_uid == 0,
              'TRANSFER_UI_PREPARATION_EFFECT_DRAIN_REQUIRED')
         self._accepted, self._equipment = target, context.equipment
+        progress['classification'] = 'COMMITTED_CONSUMED'
         return True
 
     def _capture_preparation_publication(self, value):
@@ -267,14 +353,233 @@ class ItemTransferUI:
              and value['reason'] == 0 and value.get('proof_scope') == scope
              and value.get('backend_effect') == 'UNKNOWN', 'TRANSFER_UI_NATIVE_ENTRY_UNKNOWN')
 
+    def _preparation_report(self):
+        clock, backend = self._preparation_clock, self._preparation_backend_progress
+        result = dict(latest_original=None if clock is None else dict(clock),
+                      last_backend=None if backend is None else dict(backend))
+        if backend is not None and type(backend.get('receipt')) is dict:
+            result['last_backend']['receipt'] = dict(backend['receipt'])
+        if backend is not None and type(backend.get('original_check')) is dict:
+            result['last_backend']['original_check'] = dict(backend['original_check'])
+        return result
+
+    async def _begin_drop_client(self, context):
+        self._diagnostic_site = "BEGIN_DROP_CLIENT"
+        need(self._drop_observer is None and self._drop_binding is None,
+             'TRANSFER_UI_RETURN_OBSERVATION_ONCE_REQUIRED')
+        after=await self._context()
+        item_transfer_session.ItemTransferSession._same(context,after)
+        need(after.snapshot.phase=='DROPPED' and after.snapshot.owner=='GROUND'
+             and after.session.phase=='DROPPED' and after.session.pending is None
+             and after.membership.phase=='DRAINED', 'TRANSFER_UI_ACTUAL_RETURN_DRAIN_REQUIRED')
+        self._drop_binding=after
+        self._drop_started_ns=time.monotonic_ns()
+        self._drop_nonce=object();self._drop_sequence=self.consumer.sequence
+        self._drop_observer=inventory_observe.InventoryObserver(self.broker,self.consumer.reader,
+            collection_policy=inventory.COLLECTION_POLICY)
+
+    async def _poll_drop_client(self, context, monitor):
+        self._original()
+        observer=self._drop_observer
+        manual=self.manual;cls=manual._inventory_observer_type;engine=manual._inventory_observer_sample
+        need(type(observer) is inventory_observe.InventoryObserver
+             and cls is inventory_observe.InventoryObserver and type(observer) is cls
+             and cls.sample is engine and observer.sample.__func__ is engine
+             and observer.sample.__self__ is observer
+             and engine.__globals__.get('InventoryObserver') is cls
+             and engine.__qualname__=='InventoryObserver.sample'
+             and observe.Path(engine.__code__.co_filename).resolve()==observe.Path(inventory_observe.__file__).resolve()
+             and observer._authority.reader is self.consumer.reader
+             and observer._authority.broker is self.broker
+             and observer.sample_transfer_drop.__func__ is _DROP_SAMPLE
+             and inventory_observe.InventoryObserver.sample_transfer_drop is _DROP_SAMPLE,
+             'TRANSFER_UI_ORIGINAL_RETURN_OBSERVER_REQUIRED')
+        need(self.consumer.sequence==self._drop_sequence and self._drop_nonce is not None,
+             'TRANSFER_UI_RETURN_REQUEST_CHANGED')
+        item_transfer_session.ItemTransferSession._same(self._drop_binding,context)
+        now=time.monotonic_ns()
+        sampled=[value for value in (observer.last_sample_monotonic_ns,self.manual.last_sample_monotonic_ns) if value is not None]
+        last=max(sampled) if sampled else None
+        if (monitor is not None and time.monotonic()<monitor.next_memory
+                or last is not None and now-last<inventory.MIN_INTERVAL_NS):return False
+        nonce=self._drop_nonce;sequence=self._drop_sequence;before=observer.last_result
+        try:
+            result=await _DROP_SAMPLE(observer,context.writer,now_ns=now,session=context.session)
+        finally:
+            queried=observer.last_sample_monotonic_ns
+            if type(queried) is int:
+                previous=manual._inventory_previous_sample_ns
+                manual._inventory_previous_sample_ns=max(n for n in (previous,queried) if n is not None)
+                if monitor is not None:monitor.next_memory=max(monitor.next_memory,queried/1e9+.5)
+        after=await self._context()
+        item_transfer_session.ItemTransferSession._same(self._drop_binding,after)
+        need(self._drop_observer is observer and self._drop_nonce is nonce
+             and self.consumer.sequence==sequence==self._drop_sequence
+             and self.manual is manual and manual._inventory_observer_type is cls
+             and manual._inventory_observer_sample is engine and cls.sample is engine
+             and observer.sample.__func__ is engine and observer.sample.__self__ is observer
+             and observer.sample_transfer_drop.__func__ is _DROP_SAMPLE
+             and inventory_observe.InventoryObserver.sample_transfer_drop is _DROP_SAMPLE
+             and result is observer.last_result and result is not before,
+             'TRANSFER_UI_RETURN_QUERY_REPLACED')
+        queried=observer.last_sample_monotonic_ns
+        if monitor is not None and queried is not None:
+            monitor.next_memory=max(monitor.next_memory,queried/1e9+.5)
+        need(type(queried) is int and self._drop_started_ns<=now<=queried
+             and result.get('query_started_monotonic_ns')==queried,
+             'TRANSFER_UI_FRESH_RETURN_QUERY_REQUIRED')
+        if (result.get('status')=='PENDING' and result.get('reason')=='INVENTORY_OBSERVE_DROP_ROWS_PENDING'
+                and result.get('source_contract_valid') is True and result.get('stable_double_read') is True
+                and result.get('source_owner_revalidated') is True and result.get('read_consistency')=='STRICT_STABLE'):
+            return False
+        if (result.get('status')=='UNKNOWN' and result.get('reason')=='EDGE_TYPED_READ_CHANGED'
+                and result.get('read_consistency') in ('RECHECKED_SHARED_COUNT_INITIAL_DUPLICATE','RECHECKED_SHARED_COUNT_FINAL_READBACK','RECHECKED_SHARED_COUNT_BOTH')
+                and result.get('source_owner_revalidated') is True
+                and result.get('source_contract_valid') is False and result.get('stable_double_read') is False
+                and result.get('rows')==[] and result.get('entry_count') is None
+                and type(result.get('typed_bytes_requested')) is int and 0<result['typed_bytes_requested']<=inventory_observe.BYTE_LIMIT):
+            return False
+        need(result.get('status')=='OBSERVED' and result.get('reason') is None
+             and result.get('source_contract_valid') is True and result.get('stable_double_read') is True
+             and result.get('source_owner_revalidated') is True and result.get('read_consistency')=='STRICT_STABLE'
+             and type(queried) is int and self._drop_started_ns<=now<=queried
+             and result.get('query_started_monotonic_ns')==queried
+             and result.get('selected_uid')==context.position.uid and result.get('map_id')==context.position.map_id,
+             'TRANSFER_UI_FRESH_RETURN_QUERY_REQUIRED')
+        expected=[inventory_observe.InventoryObserver._row(item) for item in
+            inventory.validate_collection_frame(context.current_frame,policy=inventory.COLLECTION_POLICY)]
+        _,other=item_custody._members(context.snapshot.frame_ab)
+        need(result.get('entry_count')==1 and result.get('rows')==expected
+             and all(row['id_u64']!=other.identifier for row in result['rows']),
+             'TRANSFER_UI_RETURN_CLIENT_B_SCALARS_REQUIRED')
+        self._drop_observation=dict(query_started_monotonic_ns=queried,
+            client_inventory='POST_DROP_A_ONLY_5_SCALARS_MATCHED',item_count=1,
+            proof_scope='FRESH_POST_DROP_CLIENT_ROW_SCALARS_ONLY',render='UNKNOWN',ack='UNKNOWN')
+        observer.close()
+        return True
+
+    async def _begin_return_client(self, context):
+        self._diagnostic_site = "BEGIN_RETURN_CLIENT"
+        need(self._return_observer is None and self._return_binding is None,
+             'TRANSFER_UI_RETURN_OBSERVATION_ONCE_REQUIRED')
+        after=await self._context()
+        item_transfer_session.ItemTransferSession._same(context,after)
+        need(after.snapshot.phase=='RETURNED' and after.snapshot.owner=='PLAYER'
+             and after.session.phase=='RETURNED' and after.session.pending is None
+             and after.membership.phase=='DRAINED', 'TRANSFER_UI_ACTUAL_RETURN_DRAIN_REQUIRED')
+        self._return_binding=after
+        self._return_started_ns=time.monotonic_ns()
+        self._return_nonce=object();self._return_sequence=self.consumer.sequence
+        self._return_observer=inventory_observe.InventoryObserver(self.broker,self.consumer.reader,
+            collection_policy=inventory.COLLECTION_POLICY)
+
+    async def _poll_return_client(self, context, monitor):
+        self._original()
+        observer=self._return_observer
+        manual=self.manual;cls=manual._inventory_observer_type;engine=manual._inventory_observer_sample
+        need(type(observer) is inventory_observe.InventoryObserver
+             and cls is inventory_observe.InventoryObserver and type(observer) is cls
+             and cls.sample is engine and observer.sample.__func__ is engine
+             and observer.sample.__self__ is observer
+             and engine.__globals__.get('InventoryObserver') is cls
+             and engine.__qualname__=='InventoryObserver.sample'
+             and observe.Path(engine.__code__.co_filename).resolve()==observe.Path(inventory_observe.__file__).resolve()
+             and observer._authority.reader is self.consumer.reader
+             and observer._authority.broker is self.broker
+             and observer.sample_transfer_return.__func__ is _RETURN_SAMPLE
+             and inventory_observe.InventoryObserver.sample_transfer_return is _RETURN_SAMPLE,
+             'TRANSFER_UI_ORIGINAL_RETURN_OBSERVER_REQUIRED')
+        need(self.consumer.sequence==self._return_sequence and self._return_nonce is not None,
+             'TRANSFER_UI_RETURN_REQUEST_CHANGED')
+        item_transfer_session.ItemTransferSession._same(self._return_binding,context)
+        now=time.monotonic_ns()
+        sampled=[value for value in (observer.last_sample_monotonic_ns,self.manual.last_sample_monotonic_ns) if value is not None]
+        last=max(sampled) if sampled else None
+        if (monitor is not None and time.monotonic()<monitor.next_memory
+                or last is not None and now-last<inventory.MIN_INTERVAL_NS):return False
+        nonce=self._return_nonce;sequence=self._return_sequence;before=observer.last_result
+        try:
+            result=await _RETURN_SAMPLE(observer,context.writer,now_ns=now,session=context.session)
+        finally:
+            queried=observer.last_sample_monotonic_ns
+            if type(queried) is int:
+                previous=manual._inventory_previous_sample_ns
+                manual._inventory_previous_sample_ns=max(n for n in (previous,queried) if n is not None)
+                if monitor is not None:monitor.next_memory=max(monitor.next_memory,queried/1e9+.5)
+        after=await self._context()
+        item_transfer_session.ItemTransferSession._same(self._return_binding,after)
+        need(self._return_observer is observer and self._return_nonce is nonce
+             and self.consumer.sequence==sequence==self._return_sequence
+             and self.manual is manual and manual._inventory_observer_type is cls
+             and manual._inventory_observer_sample is engine and cls.sample is engine
+             and observer.sample.__func__ is engine and observer.sample.__self__ is observer
+             and observer.sample_transfer_return.__func__ is _RETURN_SAMPLE
+             and inventory_observe.InventoryObserver.sample_transfer_return is _RETURN_SAMPLE
+             and result is observer.last_result and result is not before,
+             'TRANSFER_UI_RETURN_QUERY_REPLACED')
+        queried=observer.last_sample_monotonic_ns
+        if monitor is not None and queried is not None:
+            monitor.next_memory=max(monitor.next_memory,queried/1e9+.5)
+        need(type(queried) is int and self._return_started_ns<=now<=queried
+             and result.get('query_started_monotonic_ns')==queried,
+             'TRANSFER_UI_FRESH_RETURN_QUERY_REQUIRED')
+        if (result.get('status')=='PENDING' and result.get('reason')=='INVENTORY_OBSERVE_RETURN_ROWS_PENDING'
+                and result.get('source_contract_valid') is True and result.get('stable_double_read') is True
+                and result.get('source_owner_revalidated') is True and result.get('read_consistency')=='STRICT_STABLE'):
+            return False
+        if (result.get('status')=='UNKNOWN' and result.get('reason')=='EDGE_TYPED_READ_CHANGED'
+                and result.get('read_consistency') in ('RECHECKED_SHARED_COUNT_INITIAL_DUPLICATE','RECHECKED_SHARED_COUNT_FINAL_READBACK','RECHECKED_SHARED_COUNT_BOTH')
+                and result.get('source_owner_revalidated') is True
+                and result.get('source_contract_valid') is False and result.get('stable_double_read') is False
+                and result.get('rows')==[] and result.get('entry_count') is None
+                and type(result.get('typed_bytes_requested')) is int and 0<result['typed_bytes_requested']<=inventory_observe.BYTE_LIMIT):
+            return False
+        need(result.get('status')=='OBSERVED' and result.get('reason') is None
+             and result.get('source_contract_valid') is True and result.get('stable_double_read') is True
+             and result.get('source_owner_revalidated') is True and result.get('read_consistency')=='STRICT_STABLE'
+             and type(queried) is int and self._return_started_ns<=now<=queried
+             and result.get('query_started_monotonic_ns')==queried
+             and result.get('selected_uid')==context.position.uid and result.get('map_id')==context.position.map_id,
+             'TRANSFER_UI_FRESH_RETURN_QUERY_REQUIRED')
+        expected=[inventory_observe.InventoryObserver._row(item) for item in
+            inventory.validate_collection_frame(context.current_frame,policy=inventory.COLLECTION_POLICY)]
+        _,other=item_custody._members(context.snapshot.frame_ab)
+        need(result.get('entry_count')==2 and result.get('rows')==expected
+             and any(row['id_u64']==other.identifier and row['field28_i64']==dict(other.raw_fields)[4] for row in result['rows']),
+             'TRANSFER_UI_RETURN_CLIENT_B_SCALARS_REQUIRED')
+        self._return_observation=dict(query_started_monotonic_ns=queried,
+            client_inventory='POST_RETURN_ROWS_5_SCALARS_MATCHED',item_count=2,
+            proof_scope='FRESH_POST_RETURN_CLIENT_ROW_SCALARS_ONLY',render='UNKNOWN',ack='UNKNOWN')
+        observer.close()
+        return True
+
     def _report(self):
         self.last = dict(status='COMPLETE' if self.phase == 'DONE' else 'PENDING', phase=self.phase,
                          automatic_retry=False, backend_effect='ROUNDTRIP_DRAINED' if self.phase == 'DONE' else 'UNKNOWN',
                          proof_scope='SOURCE_BOUND_LOCAL_BACKEND_AND_NATIVE_RETURNS',
                          native_runtime='UNVERIFIED_BY_BACKEND', render='UNKNOWN')
+        self.last['backend_progress'] = self._diagnostic_report()
+        if self._return_observation is not None:self.last['client_return']=dict(self._return_observation)
+        if self._drop_observation is not None:self.last['client_drop']=dict(self._drop_observation)
+        if self._preparation_clock is not None or self._preparation_backend_progress is not None:
+            self.last['preparation_progress'] = self._preparation_report()
         return dict(self.last)
 
     async def poll(self, monitor=None):
+        # Q1의 이 두 전환만 외부 poll을 생략한다. 세 번째 pass는
+        # DROP_CLIENT를 한 번 소비하고 Get/WAITING/PENDING에서 끝낸다.
+        direct_edges = (('DROP_ENTRY_WAIT', 'DROP_BACKEND'),
+                        ('DROP_BACKEND', 'DROP_CLIENT'))
+        for direct_pass in range(3):
+            entered = self.phase
+            result = await self._poll_once(monitor)
+            if self._quantity != 1 or (entered, self.phase) not in direct_edges:
+                return result
+        return result
+
+    async def _poll_once(self, monitor=None):
+        self._diagnostic_site = "POLL_ENTRY"
+        self._context_origin = None
         if not self.started or self.phase == 'DONE':
             return dict(self.last)
         try:
@@ -304,6 +609,8 @@ class ItemTransferUI:
                 self._phase('INITIAL_SYNC')
                 return self._report()
             context = await self._context()
+            if self._quantity == 1 and self.phase in ('DROP_ENTRY_WAIT', 'DROP_BACKEND', 'DROP_CLIENT'):
+                self._original()  # row lock await 뒤 같은 원clock을 재검사한다.
             if self.phase == 'INITIAL_SYNC':
                 need(context.snapshot == self._initial_snapshot and context.equipment == self._equipment,
                      'TRANSFER_UI_INITIAL_STATE_CHANGED')
@@ -378,9 +685,14 @@ class ItemTransferUI:
                 if value.get('status') == 'WAITING':
                     return self._report()
                 self._returned(value, 'CURRENT_REGISTERED_DROP_CALLBACK_RETURN_ONLY')
-                self.popup.submit(anchor_inventory_uid=self._anchor, action=1, kind=1,
-                                  payload_uid=self._other, quantity=self._quantity)
-                self._phase('DROP_POPUP_WAIT')
+                if self._quantity == 1:
+                    # Original single-item Drop sends directly; keep the same
+                    # Entry stage deadline while actual backend delivery settles.
+                    self._phase('DROP_BACKEND', original_started=self._phase_started)
+                else:
+                    self.popup.submit(anchor_inventory_uid=self._anchor, action=1, kind=1,
+                                      payload_uid=self._other, quantity=self._quantity)
+                    self._phase('DROP_POPUP_WAIT')
             elif self.phase == 'DROP_POPUP_WAIT':
                 value = self.popup.collect()
                 if value.get('status') == 'WAITING':
@@ -393,6 +705,15 @@ class ItemTransferUI:
                 need(context.snapshot.owner == 'GROUND' and context.membership.phase == 'DRAINED'
                      and context.session.pending is None and context.equipment == self._equipment,
                      'TRANSFER_UI_ACTUAL_DROP_DRAIN_REQUIRED')
+                await self._begin_drop_client(context)
+                if self._quantity == 1:
+                    self._original()  # callee의 fresh current/_same 검사는 그대로 사용한다.
+                self._phase('DROP_CLIENT',original_started=self._phase_started)
+            elif self.phase == 'DROP_CLIENT':
+                observed = await self._poll_drop_client(context,monitor)
+                if self._quantity == 1:
+                    self._original()  # 새 Get 단계를 시작하기 전에 원 Drop clock을 보존한다.
+                if not observed:return self._report()
                 self.entry.submit_get(anchor_inventory_uid=self._anchor, ground_uid=self._other,
                                       whole_quantity=self._quantity)
                 self._phase('GET_ENTRY_WAIT')
@@ -401,9 +722,14 @@ class ItemTransferUI:
                 if value.get('status') == 'WAITING':
                     return self._report()
                 self._returned(value, 'CURRENT_TYPED_INTERACTION_CALLBACK_RETURN_ONLY')
-                self.popup.submit(anchor_inventory_uid=self._anchor, action=1, kind=2,
-                                  payload_uid=self._other, quantity=self._quantity)
-                self._phase('GET_POPUP_WAIT')
+                if self._quantity == 1:
+                    # The separate original Get quantity branch also sends
+                    # directly; keep its Entry deadline until real backend return.
+                    self._phase('RETURN_BACKEND', original_started=self._phase_started)
+                else:
+                    self.popup.submit(anchor_inventory_uid=self._anchor, action=1, kind=2,
+                                      payload_uid=self._other, quantity=self._quantity)
+                    self._phase('GET_POPUP_WAIT')
             elif self.phase == 'GET_POPUP_WAIT':
                 value = self.popup.collect()
                 if value.get('status') == 'WAITING':
@@ -418,7 +744,11 @@ class ItemTransferUI:
                      and context.current_frame == self._initial_snapshot.frame_ab
                      and context.snapshot.revision == self._initial_snapshot.revision + 2,
                      'TRANSFER_UI_ACTUAL_RETURN_DRAIN_REQUIRED')
-                self._phase('DONE')
+                await self._begin_return_client(context)
+                self._phase('RETURN_CLIENT',original_started=self._phase_started)
+            elif self.phase == 'RETURN_CLIENT':
+                if not await self._poll_return_client(context,monitor):return self._report()
+                self._phase('DONE',original_started=self._phase_started)
             else:
                 raise ValueError('TRANSFER_UI_PHASE_UNKNOWN')
             return self._report()
@@ -426,12 +756,27 @@ class ItemTransferUI:
             self.close()
             self.last = dict(status='UNKNOWN', phase=self.phase, automatic_retry=False,
                              backend_effect='UNKNOWN', cleanup_required=True)
+            self.last['backend_progress'] = self._diagnostic_report()
+            refusal = self.entry.native_refusal()
+            if refusal is not None:
+                self.last['native_entry_refusal'] = refusal  # Output only; UNKNOWN stays terminal.
+            refusal = self.popup.native_refusal()
+            if refusal is not None:
+                self.last['native_popup_refusal'] = refusal  # Earlier textbox effects are not rolled back.
+            if self._preparation_clock is not None or self._preparation_backend_progress is not None:
+                self.last['preparation_progress'] = self._preparation_report()
             raise
 
     def close(self):
         if self.closed:
             return
         self.closed = True
+        if self._return_observer is not None:self._return_observer.close()
+        self._return_nonce=None
+        if self._drop_observer is not None:self._drop_observer.close()
+        self._drop_nonce=None
+        self.entry.cancel()
+        self.popup.cancel()
         if self.started and self.phase != 'DONE':
             _TERMINAL(self.consumer, 'TRANSFER_UI_CLOSED_OR_UNKNOWN')
         # Never discard adapter.pending, clear busy, reset sequence, unlink

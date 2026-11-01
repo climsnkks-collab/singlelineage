@@ -1,0 +1,145 @@
+{
+  "table": "m6_talkscroll_maps",
+  "version": 1,
+  "maps": [
+    {
+      "map_id": {
+        "value": 244,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _map"
+      },
+      "region_id": {
+        "value": 346,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:341 _id"
+      },
+      "name_ko": {
+        "value": "오염된 축복의 땅",
+        "source": "client",
+        "ref": "data/m2/talkscroll.json native_destinations group8 ordinal102"
+      },
+      "hunting": true,
+      "representative_template": 2381,
+      "terrain_bounds": [
+        32640,
+        32768,
+        33023,
+        33151
+      ],
+      "chunks": 35,
+      "entry": [
+        244,
+        32987,
+        32811,
+        0
+      ],
+      "entry_ref": "data/m2/talkscroll.json native_destinations group8 ordinal102",
+      "population_status": "LOCAL_SOURCED_SUBSET",
+      "population_reference": "Official region has 21 species; selected12 exact runtime NPC matches use L1J map244 spawnlist:46749-46770. All selected3x3 are verified inside source rectangles and connected to the unchanged current S32 entry.",
+      "placed_template_ids": [
+        2381,
+        2388,
+        2389,
+        2390,
+        2391,
+        2392,
+        2394,
+        2395,
+        2397,
+        2399,
+        2400,
+        2401
+      ]
+    },
+    {
+      "map_id": {
+        "value": 777,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:408 _map"
+      },
+      "region_id": {
+        "value": 376,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:408 _id"
+      },
+      "name_ko": {
+        "value": "버림받은 자들의 땅",
+        "source": "client",
+        "ref": "data/m2/talkscroll.json native_destinations group8 ordinal133"
+      },
+      "hunting": true,
+      "representative_template": 2782,
+      "terrain_bounds": [
+        32512,
+        32832,
+        33023,
+        33343
+      ],
+      "chunks": 64,
+      "entry": [
+        777,
+        32554,
+        32952,
+        0
+      ],
+      "entry_ref": "data/m2/talkscroll.json native_destinations group8 ordinal133",
+      "population_status": "LOCAL_SOURCED_SUBSET",
+      "population_reference": "Official templates2782-2786 match runtime NPC46092-46096 and L1J map777 spawnlist:47362-47366. All selected3x3 are verified inside source rectangles and connected to the unchanged current S32 entry.",
+      "placed_template_ids": [
+        2782,
+        2783,
+        2784,
+        2785,
+        2786
+      ]
+    },
+    {
+      "map_id": {
+        "value": 779,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:412 _map"
+      },
+      "region_id": {
+        "value": 378,
+        "source": "client",
+        "ref": "work/local_resource_provider/assets/data/region.jsonc:412 _id"
+      },
+      "name_ko": {
+        "value": "버림받은 자들의 땅:심연",
+        "source": "client",
+        "ref": "data/m2/talkscroll.json native_destinations group8 ordinal134"
+      },
+      "hunting": false,
+      "representative_template": null,
+      "terrain_bounds": [
+        32512,
+        32832,
+        32767,
+        33087
+      ],
+      "chunks": 16,
+      "entry": [
+        779,
+        32554,
+        32952,
+        0
+      ],
+      "entry_ref": "data/m2/talkscroll.json native_destinations group8 ordinal134",
+      "population_status": "DEFERRED_L1J_MAP779_GEOMETRY_DIFFERS",
+      "reference_geometry": {
+        "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19544 mapids",
+        "bounds": [
+          32832,
+          32704,
+          32959,
+          32831
+        ],
+        "note": "Different coordinate region. No internal coordinates, links or spawns copied from this L1J map."
+      }
+    }
+  ],
+  "groups": [],
+  "transitions": [],
+  "note": "Current client S32 and unchanged native talking-scroll entries. Sourced LOCAL population subset is composed through existing map_expansion6 groups. No new entrance triggers or NPCs; returns remain separately attributed LOCAL backend policy in returns.json.",
+  "population_groups_ref": "map_expansion6.json groups with m6_talkscroll_ prefix; existing dungeon spawn loader"
+}

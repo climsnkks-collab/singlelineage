@@ -7,6 +7,7 @@ from dataclasses import dataclass,replace,asdict
 import json
 import os
 from pathlib import Path
+import re
 import stat
 import uuid
 from tools.local_original_session import inventory,inventory_store
@@ -17,6 +18,9 @@ FIRST_ENABLE_EMPTY='EXPLICIT_LOCAL_FIRST_ENABLE_EMPTY'
 COLLECTION_POLICY='EXPLICIT_LOCAL_OWNED_ATHAME_COLLECTION'
 need=inventory.need
 
+KIT_POLICY=inventory.KIT_POLICY
+BASE_ROW=frozenset({'character_uid','item_uid','template','weapon_uid','revision'})
+
 @dataclass(frozen=True,slots=True)
 class EquipmentState:
     character_uid:int
@@ -24,6 +28,110 @@ class EquipmentState:
     template:int
     weapon_uid:int
     revision:int
+    # Kit armour slots ((SC097A key, item uid), ...) sorted by key. Legacy rows
+    # have none; the row key 'slots' is written only when non-empty.
+    slots:tuple=()
+
+
+def _row(state):
+    value={key:getattr(state,key) for key in ('character_uid','item_uid','template','weapon_uid','revision')}
+    if state.slots:value['slots']={str(key):uid for key,uid in state.slots}
+    return value
+
+def kit_check(state,items,defs):
+    """Weapon/armour members of the current kit frame, one item per slot."""
+    by_uid={item.identifier:defs.get(item.template_bits) for item in items}
+    if state.weapon_uid:
+        item=by_uid.get(state.weapon_uid)
+        need(item is not None and item.kind=='weapon','EQUIPMENT_SUPPORTED_WEAPON_REQUIRED')
+    keys=[key for key,_ in state.slots]
+    need(keys==sorted(set(keys)),'EQUIPMENT_SLOT_ORDER_REQUIRED')
+    seen=set()
+    for key,uid in state.slots:
+        item=by_uid.get(uid)
+        need(item is not None and item.kind=='armor' and
+             key in (getattr(item,'slot_keys',()) or (item.slot_key,)) and
+             uid not in seen and uid!=state.weapon_uid,'EQUIPMENT_SUPPORTED_ARMOR_REQUIRED')
+        seen.add(uid)
+
+def two_handed(definition):
+    """Source-backed LOCAL policy; normalized animation types are not evidence.
+
+    Extended rows retain explicit handedness in weapon.note. Baseline rows
+    cite the raw L1J type in weapon_type.ref: ItemTable.java type mapping and
+    L1Weapon.java:97-105 isTwohandedWeapon (l1j-en-classic reference).
+    """
+    if definition is None or definition.kind != 'weapon':return None
+    sources=getattr(definition,'sources',{})
+    note=getattr(sources.get('weapon'),'note','')
+    if note:
+        try:metadata=json.loads(note)
+        except (ValueError,TypeError):metadata={}
+        if isinstance(metadata,dict) and 'two_handed' in metadata:
+            value=metadata['two_handed']
+            return value if type(value) is bool else None
+    source=sources.get('weapon_type')
+    if getattr(source,'kind',None)!='l1j':return None
+    match=re.search(r'\btype=([a-z]+)\b',source.ref)
+    if match is None:return None
+    kind=match.group(1)
+    if kind in {'tohandsword','bow','spear','claw','edoryu','tohandblunt','tohandstaff','chainsword'}:return True
+    if kind in {'sword','dagger','blunt','staff','throwingknife','arrow','gauntlet','singlespear','singlebow','kiringku'}:return False
+    return None
+
+
+def kit_equip_plan(state,items,defs,item_uid,character_class,*,class_error='EQUIPMENT_CLASS_NOT_ALLOWED'):
+    """Shared PC/member explicit toggle admission and slot selection; no IO.
+
+    Existing invalid pairs remain loadable and can be taken off. A conflicting
+    new equip request fails before CAS without removing either item.
+    """
+    by_uid={item.identifier:item for item in items}
+    item=by_uid.get(item_uid)
+    need(item is not None and dict(item.raw_fields)[4]>0,'EQUIPMENT_OWNED_ITEM_REQUIRED')
+    definition=defs.get(item.template_bits)
+    need(definition is not None and definition.equippable,'EQUIPMENT_EQUIPPABLE_ITEM_REQUIRED')
+    need(character_class in definition.classes,class_error)
+    weapon=state.weapon_uid;slots=dict(state.slots)
+    keys=getattr(definition,'slot_keys',()) or (definition.slot_key,)
+    key=(definition.slot_key if definition.kind=='weapon' else
+         next((key for key in keys if slots.get(key)==item_uid),
+              next((key for key in keys if key not in slots),keys[0])))
+    current=weapon if definition.kind=='weapon' else slots.get(key,0)
+    chosen=0 if current==item_uid else item_uid
+    if chosen:
+        other=(next((defs.get(by_uid[uid].template_bits) for _,uid in state.slots
+                     if uid in by_uid and getattr(defs.get(by_uid[uid].template_bits),'slot',None)=='shield'),None)
+               if definition.kind=='weapon' else
+               defs.get(by_uid[weapon].template_bits) if definition.slot=='shield' and weapon in by_uid else None)
+        if other is not None:
+            handed=two_handed(definition if definition.kind=='weapon' else other)
+            need(handed is not None,'EQUIPMENT_HANDEDNESS_UNKNOWN')
+            need(not handed,'EQUIPMENT_TWO_HANDED_SHIELD_CONFLICT')
+    if definition.kind=='weapon':weapon=chosen
+    elif chosen:slots[key]=chosen
+    else:slots.pop(key,None)
+    changes=(() if not current else ((current,key,False),))
+    if chosen:changes+=((item_uid,key,True),)
+    return key,current,weapon,tuple(sorted(slots.items())),changes
+
+
+def after_removal(state,before,after):
+    """Kit row after items leave the bag: worn members are taken off and a removed
+    anchor moves to the first remaining item. None when the row is unaffected."""
+    if state is None:return None
+    kept={item.identifier for item in inventory.validate_kit_frame(after)}
+    removed={item.identifier for item in inventory.validate_kit_frame(before)}-kept
+    worn={state.weapon_uid,*(uid for _,uid in state.slots)}-{0}
+    if not removed or (state.item_uid in kept and not worn&removed):return None
+    after_items=inventory.validate_kit_frame(after)
+    need(after_items,'EQUIPMENT_ITEM_BINDING_CHANGED')
+    anchor=after_items[0];moved=state.item_uid not in kept
+    return replace(state,item_uid=anchor.identifier if moved else state.item_uid,
+                   template=anchor.template_bits if moved else state.template,
+                   weapon_uid=0 if state.weapon_uid in removed else state.weapon_uid,
+                   slots=tuple((key,uid) for key,uid in state.slots if uid not in removed),
+                   revision=state.revision+1)
 
 
 def _frame_items(frame,collection_policy):
@@ -37,7 +145,7 @@ def _weapon_uids(items):
 
 class EquipmentStore:
     MAX_BYTES=4096
-    def __init__(self,store,*,policy,collection_policy=None):
+    def __init__(self,store,*,policy,collection_policy=None,kit_policy=None,item_defs=None):
         need(type(store) is inventory_store.InventoryStore,'EQUIPMENT_REAL_INVENTORY_STORE_REQUIRED')
         need(type(policy) is str and policy==POLICY,'EQUIPMENT_EXPLICIT_POLICY_REQUIRED')
         need(collection_policy is None or (type(collection_policy) is str and
@@ -45,6 +153,10 @@ class EquipmentStore:
         if collection_policy is not None:
             need(store._collection_policy==inventory_store.COLLECTION_STORE_POLICY,
                  'EQUIPMENT_COLLECTION_INVENTORY_POLICY_REQUIRED')
+        need(kit_policy is None or (kit_policy==KIT_POLICY and collection_policy is None and
+             getattr(store,'_kit_policy',None)==KIT_POLICY and item_defs is not None),
+             'EQUIPMENT_KIT_EXPLICIT_POLICY_REQUIRED')
+        self._kit=item_defs if kit_policy is not None else None
         self._collection_policy=collection_policy
         self.inventory_store=store
         self.profile=Path(store.profile);self.path=self.profile.with_name('equipment.json')
@@ -67,6 +179,31 @@ class EquipmentStore:
                  'EQUIPMENT_REPARSE_REFUSED')
             if part==self.path:
                 need(stat.S_ISREG(info.st_mode) and info.st_nlink==1,'EQUIPMENT_REGULAR_SINGLE_FILE_REQUIRED')
+
+    @staticmethod
+    def _kit_state(row,known,frames,defs):
+        """Kit row: legacy five keys, optional 'slots' {"key": uid}. No template1 limit."""
+        need(type(row) is dict and (set(row)==BASE_ROW or set(row)==BASE_ROW|{'slots'}),'EQUIPMENT_ROW_SCHEMA')
+        need(all(type(row[key]) is int for key in BASE_ROW),'EQUIPMENT_EXACT_INTEGER_REQUIRED')
+        slots=row.get('slots',{})
+        need(type(slots) is dict and slots and all(type(k) is str and k.isdigit() and k==str(int(k)) and
+             type(v) is int and 0<v<1<<32 for k,v in slots.items()) or 'slots' not in row,
+             'EQUIPMENT_SLOT_SCHEMA')
+        state=EquipmentState(**{key:row[key] for key in BASE_ROW},
+                             slots=tuple(sorted((int(k),v) for k,v in slots.items())))
+        need(0<state.character_uid<1<<32 and state.character_uid in known,'EQUIPMENT_CHARACTER_NOT_CURRENT')
+        need(0<state.item_uid<1<<32 and 0<=state.weapon_uid<1<<32 and 0<state.revision<1<<64,
+             'EQUIPMENT_ROW_RANGE')
+        frame=frames.get(state.character_uid)
+        need(type(frame) is bytes,'EQUIPMENT_EXISTING_INVENTORY_ROW_REQUIRED')
+        items=inventory.validate_kit_frame(frame)
+        if not any(item.identifier==state.item_uid and item.template_bits==state.template for item in items):
+            # The anchor row left the bag (older saves): read it on the first current
+            # item instead of failing every later equipment read. Saved on next change.
+            need(items,'EQUIPMENT_ITEM_BINDING_CHANGED')
+            state=replace(state,item_uid=items[0].identifier,template=items[0].template_bits)
+        kit_check(state,items,defs)
+        return state
 
     @staticmethod
     def _state(row,known,frames,*,collection_policy=None):
@@ -103,7 +240,8 @@ class EquipmentStore:
              'EQUIPMENT_STORE_SCHEMA')
         restored={}
         for row in data['equipment']:
-            state=self._state(row,known,frames,collection_policy=self._collection_policy)
+            state=(self._kit_state(row,known,frames,self._kit) if self._kit is not None else
+                   self._state(row,known,frames,collection_policy=self._collection_policy))
             need(state.character_uid not in restored,'EQUIPMENT_DUPLICATE_CHARACTER')
             restored[state.character_uid]=state
         return restored,frames,known
@@ -113,12 +251,14 @@ class EquipmentStore:
         need(character_uid in known,'EQUIPMENT_CHARACTER_NOT_CURRENT')
         need(type(expected_frame) is bytes and frames.get(character_uid)==expected_frame,
              'EQUIPMENT_EXPECTED_INVENTORY_CHANGED')
+        if self._kit is not None:
+            return inventory.validate_kit_frame(expected_frame)[0]
         item=_frame_items(expected_frame,self._collection_policy)[0]
         need(item.template_bits==1,'EQUIPMENT_TEMPLATE1_MAPPING_REQUIRED')
         return item
 
     def _write(self,rows):
-        values=[asdict(rows[uid]) for uid in sorted(rows)]
+        values=[_row(rows[uid]) for uid in sorted(rows)]
         raw=(json.dumps(dict(version=1,policy=POLICY,equipment=values),separators=(',',':'))+'\n').encode('ascii')
         need(len(raw)<=self.MAX_BYTES,'EQUIPMENT_STORE_SIZE')
         temporary=self.path.with_name('.equipment-'+uuid.uuid4().hex+'.tmp');created=False
@@ -139,11 +279,44 @@ class EquipmentStore:
 
     def owned_items(self,character_uid,expected_frame):
         """Actual locked Store/frame members. No selected/live/transport authority."""
-        need(self._collection_policy==COLLECTION_POLICY,'EQUIPMENT_COLLECTION_EXPLICIT_POLICY_REQUIRED')
+        need(self._collection_policy==COLLECTION_POLICY or self._kit is not None,
+             'EQUIPMENT_COLLECTION_EXPLICIT_POLICY_REQUIRED')
         with inventory_store._lock,realm._lock:
             _,frames,known=self._read()
             self._current(character_uid,expected_frame,frames,known)
+            if self._kit is not None:return inventory.validate_kit_frame(expected_frame)
             return _frame_items(expected_frame,self._collection_policy)
+
+    def peek(self,character_uid):
+        """Saved row and its saved inventory frame (combat inputs); no live authority."""
+        with inventory_store._lock,realm._lock:
+            rows,frames,known=self._read()
+            return rows.get(character_uid),frames.get(character_uid)
+
+    def initialize_kit(self,character_uid,expected_frame,*,initialization,weapon_uid,slots):
+        """First kit row: starter weapon/armour on the first item anchor. Never resets."""
+        need(self._kit is not None and type(initialization) is str and initialization==FIRST_ENABLE_EMPTY,
+             'EQUIPMENT_EXPLICIT_FIRST_ENABLE_REQUIRED')
+        with inventory_store._lock,realm._lock:
+            rows,frames,known=self._read();item=self._current(character_uid,expected_frame,frames,known)
+            existing=rows.get(character_uid)
+            if existing is not None:return existing
+            state=EquipmentState(character_uid,item.identifier,item.template_bits,weapon_uid,1,
+                                 tuple(sorted(slots)))
+            kit_check(state,inventory.validate_kit_frame(expected_frame),self._kit)
+            rows[character_uid]=state;self._write(rows);return state
+
+    def compare_and_swap_kit(self,character_uid,expected_frame,expected,*,weapon_uid,slots):
+        need(self._kit is not None and type(expected) is EquipmentState,'EQUIPMENT_EXACT_EXPECTED_STATE_REQUIRED')
+        with inventory_store._lock,realm._lock:
+            rows,frames,known=self._read();self._current(character_uid,expected_frame,frames,known)
+            need(expected.character_uid==character_uid and rows.get(character_uid)==expected,
+                 'EQUIPMENT_EXPECTED_STATE_CHANGED')
+            new=replace(expected,weapon_uid=weapon_uid,slots=tuple(sorted(slots)),revision=expected.revision+1)
+            need((new.weapon_uid,new.slots)!=(expected.weapon_uid,expected.slots),'EQUIPMENT_ACTUAL_CHANGE_REQUIRED')
+            need(expected.revision<(1<<64)-1,'EQUIPMENT_REVISION_CAPACITY')
+            kit_check(new,inventory.validate_kit_frame(expected_frame),self._kit)
+            rows[character_uid]=new;self._write(rows);return new
 
     def initialize_empty(self,character_uid,expected_frame,*,initialization):
         need(type(initialization) is str and initialization==FIRST_ENABLE_EMPTY,'EQUIPMENT_EXPLICIT_FIRST_ENABLE_REQUIRED')

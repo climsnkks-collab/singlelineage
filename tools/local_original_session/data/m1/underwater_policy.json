@@ -1,0 +1,40 @@
+{
+  "table": "underwater_environment",
+  "policy": "LOCAL_REFERENCE_L1J_BACKEND_NOT_VERIFIED_NATIVE",
+  "maps": [
+    {
+      "map_id": 63,
+      "name_ko": "에바왕국",
+      "client_ref": "data/m6/map_expansion5.json maps[4]: region.jsonc:76-77, 25 S32 chunks",
+      "underwater_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19253 mapids underwater=1"
+    },
+    {
+      "map_id": 65,
+      "name_ko": "파푸리온 둥지",
+      "client_ref": "data/m6/map_expansion6.json maps[0]: region.jsonc:80-81, 4 S32 chunks",
+      "underwater_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19255 mapids underwater=1"
+    }
+  ],
+  "map_scope": "Only currently served client map correspondences. Eva floors59-62 have underwater=0 in SQL19249-19252. Other L1J maps are not imported.",
+  "damage_per_hp_recovery": 20,
+  "damage_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/HpRegeneration.java:170-207",
+  "timing": "Reuse data/m1/town.json regen: 1-second ticks, existing activity points and HP threshold. No extra timer, catch-up damage, offline damage or saved environment state. Existing level10+ threshold12 and omitted level30 knight correction remain inherited local simplifications; RATE_HP_REGEN is not imported.",
+  "composition": "LOCAL: existing recovery/equipment/inn contributions clamp first, then subtract20, including at fullHP. L1J adds recovery then subtracts20 before final maximum clamp. This implementation does not claim equal net HP near fullHP or exact native rules.",
+  "breathing_equipment": [
+    {
+      "template_id": 551,
+      "name_ko": "수중 부츠",
+      "client_ref": "data/m1/items_ext/armor.json id551: native-dump:1331, token$1804, icon704; work/source_game_data/native-dump-v1.jsonl:1331",
+      "effect_ref": "data/official/items.json official_id551; work/official_data/raw/item/551.json options name 수중 호흡 가능",
+      "reference_ref": "l1jdb_m10.sql:3051 armor20207 token$1804/icon704; HpRegeneration.java:195-197",
+      "scope": "Must be actually equipped, owned and positive quantity; bag possession alone gives no exemption."
+    }
+  ],
+  "unmapped_reference_exemptions": [
+    "Repaired Ring/Earrings/Necklace21048/21049/21050: SQL3326-3328 tokens$5266/$5267/$5268. No evidenced current-client ItemDef set mapping; no invented exemptions.",
+    "L1J GM immunity: no equivalent production GM authority in the current runtime. Optional environment_damage_exempt hook is false when no owner supplies it."
+  ],
+  "breathing_items": [417, 418],
+  "breathing_ref": "data/m1/item_effects.json: official duration417=1800s,418=600s; existing consumable save/offline-expiry policy and death clearing retained. environment_breathing hook queries the actual saved/live deadline each recovery.",
+  "companion_boundary": "Same damage_for rule and registered environment_companion_hp_recovery event adapter; no companion source files changed. Companion owner must emit at hp_due before normal HP/MP save, supply its own worn templates and actual breathing deadline. Its present inventory/ATS lane has no evidenced breathing-item consumer, so companion breathing consumption remains OPEN."
+}

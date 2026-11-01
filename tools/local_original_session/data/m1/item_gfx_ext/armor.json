@@ -1,0 +1,704 @@
+{
+  "table": "m1_item_gfx_ext_armor",
+  "version": 1,
+  "source": "work/source_game_data/native-dump-v1.jsonl item f5/f6 via data/catalog/items_all.json",
+  "note": "기존 item_gfx 정책 재사용: f5 인벤 아이콘, f6 바닥 appearance 로컬 후보. 아탐 외 바닥 그래픽 실제 렌더링 미검증. 이 확장 116종의 실제 렌더링 UNKNOWN.",
+  "items": {
+    "87": {
+      "icon": 53,
+      "ground": 18,
+      "name_ko": "요정족 가죽 투구",
+      "ref": "native-dump:1025 item.bin f5/f6"
+    },
+    "91": {
+      "icon": 73,
+      "ground": 3768,
+      "name_ko": "판금 갑옷",
+      "ref": "native-dump:1029 item.bin f5/f6"
+    },
+    "92": {
+      "icon": 32,
+      "ground": 3769,
+      "name_ko": "수정 갑옷",
+      "ref": "native-dump:1030 item.bin f5/f6"
+    },
+    "93": {
+      "icon": 22,
+      "ground": 3770,
+      "name_ko": "청동 판금 갑옷",
+      "ref": "native-dump:1031 item.bin f5/f6"
+    },
+    "94": {
+      "icon": 102,
+      "ground": 3771,
+      "name_ko": "미늘 갑옷",
+      "ref": "native-dump:1032 item.bin f5/f6"
+    },
+    "95": {
+      "icon": 10,
+      "ground": 3772,
+      "name_ko": "띠 갑옷",
+      "ref": "native-dump:1033 item.bin f5/f6"
+    },
+    "96": {
+      "icon": 26,
+      "ground": 3773,
+      "name_ko": "사슬 갑옷",
+      "ref": "native-dump:1034 item.bin f5/f6"
+    },
+    "97": {
+      "icon": 443,
+      "ground": 3774,
+      "name_ko": "오크족 사슬 갑옷",
+      "ref": "native-dump:1035 item.bin f5/f6"
+    },
+    "100": {
+      "icon": 86,
+      "ground": 3838,
+      "name_ko": "고리 갑옷",
+      "ref": "native-dump:1038 item.bin f5/f6"
+    },
+    "101": {
+      "icon": 442,
+      "ground": 3834,
+      "name_ko": "오크족 고리 갑옷",
+      "ref": "native-dump:1039 item.bin f5/f6"
+    },
+    "105": {
+      "icon": 28,
+      "ground": 3814,
+      "name_ko": "요정족 망토",
+      "ref": "native-dump:1043 item.bin f5/f6"
+    },
+    "107": {
+      "icon": 27,
+      "ground": 3812,
+      "name_ko": "난쟁이족 망토",
+      "ref": "native-dump:1045 item.bin f5/f6"
+    },
+    "110": {
+      "icon": 272,
+      "ground": 3806,
+      "name_ko": "투명 망토",
+      "ref": "native-dump:1047 item.bin f5/f6"
+    },
+    "111": {
+      "icon": 265,
+      "ground": 3808,
+      "name_ko": "마법 망토",
+      "ref": "native-dump:1048 item.bin f5/f6"
+    },
+    "114": {
+      "icon": 92,
+      "ground": 30009,
+      "name_ko": "요정족 방패",
+      "ref": "native-dump:1050 item.bin f5/f6"
+    },
+    "115": {
+      "icon": 114,
+      "ground": 23,
+      "name_ko": "우럭하이 방패",
+      "ref": "native-dump:1051 item.bin f5/f6"
+    },
+    "118": {
+      "icon": 95,
+      "ground": 50,
+      "name_ko": "난쟁이족 둥근 방패",
+      "ref": "native-dump:1053 item.bin f5/f6"
+    },
+    "119": {
+      "icon": 137,
+      "ground": 23,
+      "name_ko": "반사 방패",
+      "ref": "native-dump:1054 item.bin f5/f6"
+    },
+    "140": {
+      "icon": 166,
+      "ground": 357,
+      "name_ko": "기사의 면갑",
+      "ref": "native-dump:1067 item.bin f5/f6"
+    },
+    "145": {
+      "icon": 1203,
+      "ground": 3174,
+      "name_ko": "에바의 방패",
+      "ref": "native-dump:1071 item.bin f5/f6"
+    },
+    "155": {
+      "icon": 177,
+      "ground": 359,
+      "name_ko": "사각 방패",
+      "ref": "native-dump:1072 item.bin f5/f6"
+    },
+    "167": {
+      "icon": 1201,
+      "ground": 30052,
+      "name_ko": "사슬 갑옷",
+      "ref": "native-dump:1082 item.bin f5/f6"
+    },
+    "229": {
+      "icon": 1204,
+      "ground": 30065,
+      "name_ko": "투구",
+      "ref": "native-dump:1138 item.bin f5/f6"
+    },
+    "234": {
+      "icon": 287,
+      "ground": 13,
+      "name_ko": "무명 로브",
+      "ref": "native-dump:1143 item.bin f5/f6"
+    },
+    "260": {
+      "icon": 327,
+      "ground": 70,
+      "name_ko": "활 골무",
+      "ref": "native-dump:1163 item.bin f5/f6"
+    },
+    "266": {
+      "icon": 109,
+      "ground": 3842,
+      "name_ko": "나무 갑옷",
+      "ref": "native-dump:1169 item.bin f5/f6"
+    },
+    "267": {
+      "icon": 302,
+      "ground": 9,
+      "name_ko": "요정족 흉갑",
+      "ref": "native-dump:1170 item.bin f5/f6"
+    },
+    "273": {
+      "icon": 275,
+      "ground": 9,
+      "name_ko": "요정족 판금 갑옷",
+      "ref": "native-dump:1176 item.bin f5/f6"
+    },
+    "275": {
+      "icon": 267,
+      "ground": 18,
+      "name_ko": "엘름의 축복",
+      "ref": "native-dump:1178 item.bin f5/f6"
+    },
+    "280": {
+      "icon": 328,
+      "ground": 30066,
+      "name_ko": "파워 글로브",
+      "ref": "native-dump:1183 item.bin f5/f6"
+    },
+    "281": {
+      "icon": 281,
+      "ground": 9,
+      "name_ko": "요정족 사슬 갑옷",
+      "ref": "native-dump:1184 item.bin f5/f6"
+    },
+    "283": {
+      "icon": 51,
+      "ground": 9,
+      "name_ko": "나무 줄기 옷",
+      "ref": "native-dump:1185 item.bin f5/f6"
+    },
+    "289": {
+      "icon": 332,
+      "ground": 996,
+      "name_ko": "은기사의 방패",
+      "ref": "native-dump:1188 item.bin f5/f6"
+    },
+    "291": {
+      "icon": 167,
+      "ground": 18,
+      "name_ko": "마법의 투구: 치유",
+      "ref": "native-dump:1189 item.bin f5/f6"
+    },
+    "292": {
+      "icon": 168,
+      "ground": 18,
+      "name_ko": "마법의 투구: 신속",
+      "ref": "native-dump:1190 item.bin f5/f6"
+    },
+    "293": {
+      "icon": 170,
+      "ground": 18,
+      "name_ko": "마법의 투구: 힘",
+      "ref": "native-dump:1191 item.bin f5/f6"
+    },
+    "317": {
+      "icon": 451,
+      "ground": 18,
+      "name_ko": "가죽모자",
+      "ref": "native-dump:1202 item.bin f5/f6"
+    },
+    "318": {
+      "icon": 445,
+      "ground": 18,
+      "name_ko": "징박은 가죽모자",
+      "ref": "native-dump:1203 item.bin f5/f6"
+    },
+    "319": {
+      "icon": 456,
+      "ground": 18,
+      "name_ko": "가죽투구",
+      "ref": "native-dump:1204 item.bin f5/f6"
+    },
+    "320": {
+      "icon": 453,
+      "ground": 18,
+      "name_ko": "해골투구",
+      "ref": "native-dump:1205 item.bin f5/f6"
+    },
+    "321": {
+      "icon": 452,
+      "ground": 25,
+      "name_ko": "가죽샌달",
+      "ref": "native-dump:1206 item.bin f5/f6"
+    },
+    "322": {
+      "icon": 447,
+      "ground": 25,
+      "name_ko": "징박은 가죽샌달",
+      "ref": "native-dump:1207 item.bin f5/f6"
+    },
+    "323": {
+      "icon": 461,
+      "ground": 25,
+      "name_ko": "가죽부츠",
+      "ref": "native-dump:1208 item.bin f5/f6"
+    },
+    "324": {
+      "icon": 449,
+      "ground": 23,
+      "name_ko": "가죽방패",
+      "ref": "native-dump:1209 item.bin f5/f6"
+    },
+    "325": {
+      "icon": 450,
+      "ground": 23,
+      "name_ko": "징박은 가죽방패",
+      "ref": "native-dump:1210 item.bin f5/f6"
+    },
+    "326": {
+      "icon": 457,
+      "ground": 23,
+      "name_ko": "골각방패",
+      "ref": "native-dump:1211 item.bin f5/f6"
+    },
+    "327": {
+      "icon": 459,
+      "ground": 9,
+      "name_ko": "가죽조끼",
+      "ref": "native-dump:1212 item.bin f5/f6"
+    },
+    "328": {
+      "icon": 460,
+      "ground": 9,
+      "name_ko": "벨트달린 가죽조끼",
+      "ref": "native-dump:1213 item.bin f5/f6"
+    },
+    "329": {
+      "icon": 458,
+      "ground": 9,
+      "name_ko": "징박은 가죽조끼",
+      "ref": "native-dump:1214 item.bin f5/f6"
+    },
+    "330": {
+      "icon": 462,
+      "ground": 9,
+      "name_ko": "중갑가죽조끼",
+      "ref": "native-dump:1215 item.bin f5/f6"
+    },
+    "331": {
+      "icon": 448,
+      "ground": 9,
+      "name_ko": "뼈갑옷",
+      "ref": "native-dump:1216 item.bin f5/f6"
+    },
+    "365": {
+      "icon": 506,
+      "ground": 30028,
+      "name_ko": "강철 장갑",
+      "ref": "native-dump:1233 item.bin f5/f6"
+    },
+    "366": {
+      "icon": 507,
+      "ground": 30029,
+      "name_ko": "강철 면갑",
+      "ref": "native-dump:1234 item.bin f5/f6"
+    },
+    "367": {
+      "icon": 508,
+      "ground": 30010,
+      "name_ko": "강철 방패",
+      "ref": "native-dump:1235 item.bin f5/f6"
+    },
+    "368": {
+      "icon": 509,
+      "ground": 30030,
+      "name_ko": "강철 부츠",
+      "ref": "native-dump:1236 item.bin f5/f6"
+    },
+    "369": {
+      "icon": 510,
+      "ground": 30031,
+      "name_ko": "강철 판금 갑옷",
+      "ref": "native-dump:1237 item.bin f5/f6"
+    },
+    "385": {
+      "icon": 526,
+      "ground": 1503,
+      "name_ko": "마법사 모자",
+      "ref": "native-dump:1242 item.bin f5/f6"
+    },
+    "386": {
+      "icon": 527,
+      "ground": 1504,
+      "name_ko": "마법사 옷",
+      "ref": "native-dump:1243 item.bin f5/f6"
+    },
+    "403": {
+      "icon": 539,
+      "ground": 3168,
+      "name_ko": "수룡 비늘 갑옷",
+      "ref": "native-dump:1245 item.bin f5/f6"
+    },
+    "404": {
+      "icon": 540,
+      "ground": 3169,
+      "name_ko": "지룡 비늘 갑옷",
+      "ref": "native-dump:1246 item.bin f5/f6"
+    },
+    "405": {
+      "icon": 541,
+      "ground": 3170,
+      "name_ko": "화룡 비늘 갑옷",
+      "ref": "native-dump:1247 item.bin f5/f6"
+    },
+    "406": {
+      "icon": 542,
+      "ground": 3171,
+      "name_ko": "풍룡 비늘 갑옷",
+      "ref": "native-dump:1248 item.bin f5/f6"
+    },
+    "545": {
+      "icon": 712,
+      "ground": 30061,
+      "name_ko": "돌 장갑",
+      "ref": "native-dump:1329 item.bin f5/f6"
+    },
+    "547": {
+      "icon": 707,
+      "ground": 30057,
+      "name_ko": "수정 장갑",
+      "ref": "native-dump:1330 item.bin f5/f6"
+    },
+    "551": {
+      "icon": 704,
+      "ground": 30051,
+      "name_ko": "수중 부츠",
+      "ref": "native-dump:1331 item.bin f5/f6"
+    },
+    "556": {
+      "icon": 708,
+      "ground": 30058,
+      "name_ko": "데스나이트의 장갑",
+      "ref": "native-dump:1332 item.bin f5/f6"
+    },
+    "557": {
+      "icon": 695,
+      "ground": 30047,
+      "name_ko": "데스나이트의 갑옷",
+      "ref": "native-dump:1333 item.bin f5/f6"
+    },
+    "558": {
+      "icon": 701,
+      "ground": 30049,
+      "name_ko": "데스나이트의 부츠",
+      "ref": "native-dump:1334 item.bin f5/f6"
+    },
+    "559": {
+      "icon": 713,
+      "ground": 30063,
+      "name_ko": "데스나이트의 투구",
+      "ref": "native-dump:1335 item.bin f5/f6"
+    },
+    "631": {
+      "icon": 913,
+      "ground": 18,
+      "name_ko": "민첩함의 투구",
+      "ref": "native-dump:1384 item.bin f5/f6"
+    },
+    "632": {
+      "icon": 908,
+      "ground": 18,
+      "name_ko": "체력의 투구",
+      "ref": "native-dump:1385 item.bin f5/f6"
+    },
+    "644": {
+      "icon": 909,
+      "ground": 777,
+      "name_ko": "저주받은 마법서",
+      "ref": "native-dump:1393 item.bin f5/f6"
+    },
+    "645": {
+      "icon": 906,
+      "ground": 776,
+      "name_ko": "마력서",
+      "ref": "native-dump:1394 item.bin f5/f6"
+    },
+    "646": {
+      "icon": 907,
+      "ground": 3824,
+      "name_ko": "붉은 망토",
+      "ref": "native-dump:1395 item.bin f5/f6"
+    },
+    "651": {
+      "icon": 915,
+      "ground": 18,
+      "name_ko": "기사의 두건",
+      "ref": "native-dump:1400 item.bin f5/f6"
+    },
+    "652": {
+      "icon": 916,
+      "ground": 18,
+      "name_ko": "붉은 기사의 두건",
+      "ref": "native-dump:1401 item.bin f5/f6"
+    },
+    "654": {
+      "icon": 443,
+      "ground": 9,
+      "name_ko": "잊혀진 판금 갑옷",
+      "ref": "native-dump:1402 item.bin f5/f6"
+    },
+    "655": {
+      "icon": 442,
+      "ground": 9,
+      "name_ko": "잊혀진 가죽 갑옷",
+      "ref": "native-dump:1403 item.bin f5/f6"
+    },
+    "656": {
+      "icon": 51,
+      "ground": 9,
+      "name_ko": "잊혀진 로브",
+      "ref": "native-dump:1404 item.bin f5/f6"
+    },
+    "657": {
+      "icon": 89,
+      "ground": 9,
+      "name_ko": "잊혀진 비늘 갑옷",
+      "ref": "native-dump:1405 item.bin f5/f6"
+    },
+    "666": {
+      "icon": 954,
+      "ground": 30067,
+      "name_ko": "붉은 기사의 방패",
+      "ref": "native-dump:1410 item.bin f5/f6"
+    },
+    "667": {
+      "icon": 899,
+      "ground": 30043,
+      "name_ko": "고대의 판금 갑옷",
+      "ref": "native-dump:1411 item.bin f5/f6"
+    },
+    "668": {
+      "icon": 898,
+      "ground": 30042,
+      "name_ko": "고대의 가죽 갑옷",
+      "ref": "native-dump:1412 item.bin f5/f6"
+    },
+    "669": {
+      "icon": 900,
+      "ground": 30044,
+      "name_ko": "고대의 로브",
+      "ref": "native-dump:1413 item.bin f5/f6"
+    },
+    "670": {
+      "icon": 901,
+      "ground": 30045,
+      "name_ko": "고대의 비늘 갑옷",
+      "ref": "native-dump:1414 item.bin f5/f6"
+    },
+    "705": {
+      "icon": 956,
+      "ground": 24,
+      "name_ko": "요정족 티셔츠",
+      "ref": "native-dump:1431 item.bin f5/f6"
+    },
+    "706": {
+      "icon": 941,
+      "ground": 3824,
+      "name_ko": "군주의 위엄",
+      "ref": "native-dump:1432 item.bin f5/f6"
+    },
+    "722": {
+      "icon": 960,
+      "ground": 9,
+      "name_ko": "반왕의 갑옷",
+      "ref": "native-dump:1439 item.bin f5/f6"
+    },
+    "723": {
+      "icon": 961,
+      "ground": 25,
+      "name_ko": "반왕의 부츠",
+      "ref": "native-dump:1440 item.bin f5/f6"
+    },
+    "724": {
+      "icon": 962,
+      "ground": 182,
+      "name_ko": "반왕의 건틀릿",
+      "ref": "native-dump:1441 item.bin f5/f6"
+    },
+    "725": {
+      "icon": 959,
+      "ground": 357,
+      "name_ko": "반왕의 투구",
+      "ref": "native-dump:1442 item.bin f5/f6"
+    },
+    "727": {
+      "icon": 964,
+      "ground": 25,
+      "name_ko": "케레니스의 부츠",
+      "ref": "native-dump:1443 item.bin f5/f6"
+    },
+    "732": {
+      "icon": 969,
+      "ground": 357,
+      "name_ko": "케레니스의 서클릿",
+      "ref": "native-dump:1444 item.bin f5/f6"
+    },
+    "734": {
+      "icon": 971,
+      "ground": 182,
+      "name_ko": "케레니스의 장갑",
+      "ref": "native-dump:1445 item.bin f5/f6"
+    },
+    "735": {
+      "icon": 972,
+      "ground": 9,
+      "name_ko": "케레니스의 로브",
+      "ref": "native-dump:1446 item.bin f5/f6"
+    },
+    "742": {
+      "icon": 979,
+      "ground": 23,
+      "name_ko": "메두사 방패",
+      "ref": "native-dump:1447 item.bin f5/f6"
+    },
+    "768": {
+      "icon": 1011,
+      "ground": 182,
+      "name_ko": "보호 장갑",
+      "ref": "native-dump:1463 item.bin f5/f6"
+    },
+    "769": {
+      "icon": 1007,
+      "ground": 13,
+      "name_ko": "마나 망토",
+      "ref": "native-dump:1464 item.bin f5/f6"
+    },
+    "788": {
+      "icon": 1017,
+      "ground": 30466,
+      "name_ko": "마나 수정구",
+      "ref": "native-dump:1471 item.bin f5/f6"
+    },
+    "978": {
+      "icon": 1229,
+      "ground": 3263,
+      "name_ko": "흑장로의 로브",
+      "ref": "native-dump:1488 item.bin f5/f6"
+    },
+    "979": {
+      "icon": 1230,
+      "ground": 3298,
+      "name_ko": "흑장로의 샌달",
+      "ref": "native-dump:1489 item.bin f5/f6"
+    },
+    "980": {
+      "icon": 1231,
+      "ground": 3255,
+      "name_ko": "발터자르의 모자",
+      "ref": "native-dump:1490 item.bin f5/f6"
+    },
+    "981": {
+      "icon": 1232,
+      "ground": 3256,
+      "name_ko": "카스파의 모자",
+      "ref": "native-dump:1491 item.bin f5/f6"
+    },
+    "982": {
+      "icon": 1233,
+      "ground": 3257,
+      "name_ko": "메르키오르의 모자",
+      "ref": "native-dump:1492 item.bin f5/f6"
+    },
+    "983": {
+      "icon": 1234,
+      "ground": 3258,
+      "name_ko": "세마의 모자",
+      "ref": "native-dump:1493 item.bin f5/f6"
+    },
+    "1007": {
+      "icon": 1244,
+      "ground": 3315,
+      "name_ko": "커츠의 장갑",
+      "ref": "native-dump:1494 item.bin f5/f6"
+    },
+    "1008": {
+      "icon": 1246,
+      "ground": 3316,
+      "name_ko": "커츠의 갑옷",
+      "ref": "native-dump:1495 item.bin f5/f6"
+    },
+    "1009": {
+      "icon": 1247,
+      "ground": 3317,
+      "name_ko": "커츠의 부츠",
+      "ref": "native-dump:1496 item.bin f5/f6"
+    },
+    "1010": {
+      "icon": 1245,
+      "ground": 3261,
+      "name_ko": "커츠의 투구",
+      "ref": "native-dump:1497 item.bin f5/f6"
+    },
+    "1489": {
+      "icon": 1767,
+      "ground": 4345,
+      "name_ko": "바다의 망토",
+      "ref": "native-dump:1508 item.bin f5/f6"
+    },
+    "12118": {
+      "icon": 184,
+      "ground": 3963,
+      "name_ko": "정화의 머리띠",
+      "ref": "native-dump:1683 item.bin f5/f6"
+    },
+    "12349": {
+      "icon": 20327,
+      "ground": 25,
+      "name_ko": "신의의 부츠",
+      "ref": "native-dump:1892 item.bin f5/f6"
+    },
+    "12350": {
+      "icon": 20328,
+      "ground": 25,
+      "name_ko": "용기의 부츠",
+      "ref": "native-dump:1893 item.bin f5/f6"
+    },
+    "12351": {
+      "icon": 20329,
+      "ground": 25,
+      "name_ko": "세피아의 부츠",
+      "ref": "native-dump:1894 item.bin f5/f6"
+    },
+    "12352": {
+      "icon": 20330,
+      "ground": 25,
+      "name_ko": "마나의 부츠",
+      "ref": "native-dump:1895 item.bin f5/f6"
+    },
+    "15399": {
+      "icon": 4996,
+      "ground": 30522,
+      "name_ko": "시어의 심안",
+      "ref": "native-dump:2154 item.bin f5/f6"
+    }
+  }
+}

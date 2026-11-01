@@ -1,0 +1,2010 @@
+{
+  "schema_version": 1,
+  "status": "SOURCE_ONLY",
+  "class": "mage",
+  "client_baseline": "client26.09.29.2001",
+  "scope": "Companion mage reference data only. No game_data/world consumer is connected or changed; game/server/L1J execution and runtime verification are UNRUN.",
+  "source_precedence": [
+    "fixed_client_verified_data_when_available",
+    "official_classic_guide",
+    "explicit_LOCAL_policy_using_L1J_reference"
+  ],
+  "provenance": [
+    {
+      "id": "official_stat_guide",
+      "type": "official_classic_guide",
+      "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EC%8A%A4%ED%83%AF?gwLocale=ko_KR",
+      "queried_at_utc": "2026-10-26T17:03:12.590642+00:00",
+      "http_status": 200,
+      "response_sha256": "73c35ad2689c991f5cc283cf20809cc00c23782fdb7222c71a3ac368374398fe",
+      "response_evidence": "tools/local_original_session/data/companion/mage_spells.json#/provenance[id=official_stat_guide_corrected]/json_snapshot",
+      "source_locator": "JSON paragraphList[1], name=class starting stats; paragraphList[2] stat effects; paragraphList[3] reset/level points",
+      "raw_table_header_html_excerpt": "<tr><td style=\"vertical-align: middle; text-align: center; background-color: rgb(238, 238, 238);\" width=\"77\"><p align=\"center\"><strong>Str</strong></p></td><td style=\"vertical-align: middle; text-align: center; background-color: rgb(238, 238, 238);\" width=\"77\"><p align=\"center\"><strong>Dex</strong></p></td><td style=\"vertical-align: middle; text-align: center; background-color: rgb(238, 238, 238);\" width=\"77\"><p align=\"center\"><strong>Con</strong></p></td><td style=\"vertical-align: middle; text-align: center; background-color: rgb(238, 238, 238);\" width=\"77\"><p align=\"center\"><strong>Int</strong></p></td><td style=\"vertical-align: middle; text-align: center; background-color: rgb(238, 238, 238);\" width=\"77\"><p align=\"center\"><strong>Wis</strong></p></td><td style=\"vertical-align: middle; text-align: center; background-color: rgb(238, 238, 238);\" width=\"77\"><p align=\"center\"><strong>Cha</strong></p></td></tr>",
+      "raw_mage_table_row_html_excerpt": "<tr><td style=\"vertical-align: middle; text-align: center;\" width=\"77\"><p align=\"center\"><strong>마법사</strong></p></td><td style=\"vertical-align: middle; text-align: center;\" width=\"77\"><p align=\"center\">8</p></td><td style=\"vertical-align: middle; text-align: center;\" width=\"77\"><p align=\"center\">7</p></td><td style=\"vertical-align: middle; text-align: center;\" width=\"77\"><p align=\"center\">12</p></td><td style=\"vertical-align: middle; text-align: center;\" width=\"77\"><p align=\"center\">12</p></td><td style=\"vertical-align: middle; text-align: center;\" width=\"77\"><p align=\"center\">12</p></td><td style=\"vertical-align: middle; text-align: center;\" width=\"77\"><p align=\"center\">8</p></td><td style=\"vertical-align: middle; text-align: center;\" width=\"65\"><p align=\"center\">16</p></td></tr>",
+      "raw_creation_cap_html_excerpt": "<p>캐릭터 생성 시 각 클래스는 정해진 기본 스탯이 있으며, 배분할 수 있는 보너스 포인트가 주어진다. 모든 클래스는 각 스탯의 값을 18까지 설정할 수 있다.&nbsp;</p><p>예외로 기사 클래스의 Str 스탯은 20까지 설정 가능하다.</p>",
+      "raw_level_point_html_excerpt": "<p>&nbsp; &nbsp; - 회상의 촛불 사용 시, 50레벨 이상부터 레벨 업마다 제공되는 레벨 업 포인트는 모두 초기화 되어 재분배 가능 포인트로 제공된다.</p>",
+      "raw_stat_effect_html_excerpt": [
+        "<tr><td style=\"vertical-align: middle; text-align: center;\" width=\"79\"><p align=\"center\">INT</p></td><td style=\"vertical-align: middle;\" width=\"482\"><p>INT 능력치는 마법 대미지와 힐량에 영향을 준다. 수치에 따라 마법 보너스가 달라진다.</p></td></tr>",
+        "<tr><td style=\"vertical-align: middle; text-align: center;\" width=\"79\"><p align=\"center\">WIS</p></td><td style=\"vertical-align: middle;\" width=\"482\"><p>WIS 능력치는 MP 최대치와 MP 자동 회복 속도에 영향을 주며, 마법 저항력에도 영향을 준다.</p></td></tr>"
+      ],
+      "scope": "Creation base stats, 16-point pool, creation stat cap18, qualitative INT/WIS effects. No numeric HP/MP growth/regen/cap formula is supplied."
+    },
+    {
+      "id": "wizard_feature",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/classes/L1WizardClassFeature.java",
+      "line_ranges": [
+        [
+          48,
+          98
+        ],
+        [
+          183,
+          184
+        ]
+      ],
+      "sha256": "e07c65f453504f8b74907172b1ea23a0fa91308c461371a8d02103d9a76b722d",
+      "scope": "Starting/base stats, initial resources, original HP/MP growth and MP-regeneration bonuses."
+    },
+    {
+      "id": "create_char",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_CreateChar.java",
+      "line_ranges": [
+        [
+          117,
+          163
+        ],
+        [
+          181,
+          186
+        ],
+        [
+          212,
+          217
+        ]
+      ],
+      "sha256": "da2006ab87cb1d9d21ec103ccbf92350b17da9c02632b6a015322d0d2a1d4b31",
+      "scope": "Validate total75, initialize full HP/MP, persist original creation stats."
+    },
+    {
+      "id": "calc_hp",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java",
+      "line_ranges": [
+        [
+          102,
+          106
+        ],
+        [
+          126,
+          131
+        ],
+        [
+          151,
+          156
+        ]
+      ],
+      "sha256": "b8a85ef3928a8c70d5b34b4b187244703ffa3059b488287e1464b1070185cd2d",
+      "scope": "Wizard HP random draw; base CON; pre-original clamp."
+    },
+    {
+      "id": "calc_mp",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/utils/CalcStat.java",
+      "line_ranges": [
+        [
+          168,
+          202
+        ],
+        [
+          219,
+          224
+        ],
+        [
+          245,
+          250
+        ]
+      ],
+      "sha256": "b8a85ef3928a8c70d5b34b4b187244703ffa3059b488287e1464b1070185cd2d",
+      "scope": "WIS die lookup, wizard x2, pre-original clamp."
+    },
+    {
+      "id": "pc_growth",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/Instance/L1PcInstance.java",
+      "line_ranges": [
+        [
+          2445,
+          2471
+        ],
+        [
+          3528,
+          3567
+        ]
+      ],
+      "sha256": "f476a0026f96dc53367a2309e5af27acf3a99cb16b8fc2bfba459abebdb09a05",
+      "scope": "Bind original bonuses; one growth draw per level; base stats separate from original/equipment; level-up refill."
+    },
+    {
+      "id": "resource_config",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/config/charsettings.properties",
+      "line_ranges": [
+        [
+          12,
+          13
+        ]
+      ],
+      "sha256": "a95ba2cae4e193d1ebe1ac9ed0c975bb3632ff6cecdd1423266a96bb42c03258",
+      "scope": "Configured wizard pre-original growth caps1000/1200; not proof of retail caps."
+    },
+    {
+      "id": "max_level",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/datatables/ExpTable.java",
+      "line_ranges": [
+        [
+          30,
+          31
+        ],
+        [
+          69,
+          69
+        ]
+      ],
+      "sha256": "fde1e83ee59887778cf2a6cbd705619094b3e354e5ead3507da234836b825697",
+      "scope": "L1J level ceiling99 and EXP clamp; not verified fixed-client official level cap."
+    },
+    {
+      "id": "mp_amount",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/MpRegeneration.java",
+      "line_ranges": [
+        [
+          52,
+          122
+        ]
+      ],
+      "sha256": "fe6bfad4206d9614cdc11485ac032cb7379ac92262909073c4a5a6930f8d7b47",
+      "scope": "Current WIS tiers, original bonus, item MPR, hunger/weight gates, extra max(WIS-12,12)."
+    },
+    {
+      "id": "mp_timing",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/MpRegeneration.java",
+      "line_ranges": [
+        [
+          125,
+          156
+        ]
+      ],
+      "sha256": "fe6bfad4206d9614cdc11485ac032cb7379ac92262909073c4a5a6930f8d7b47",
+      "scope": "Dead skip, 64-point threshold, minimum state per one-second tick, overweight exception effects."
+    },
+    {
+      "id": "pc_regen",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/Instance/L1PcInstance.java",
+      "line_ranges": [
+        [
+          137,
+          147
+        ],
+        [
+          3253,
+          3259
+        ]
+      ],
+      "sha256": "f476a0026f96dc53367a2309e5af27acf3a99cb16b8fc2bfba459abebdb09a05",
+      "scope": "State points1/2/4 and one-second scheduler."
+    },
+    {
+      "id": "pc_mp_clamp",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/Instance/L1PcInstance.java",
+      "line_ranges": [
+        [
+          2803,
+          2812
+        ]
+      ],
+      "sha256": "f476a0026f96dc53367a2309e5af27acf3a99cb16b8fc2bfba459abebdb09a05",
+      "scope": "Current MP upper bound equals current maxMP."
+    },
+    {
+      "id": "inventory_mpr",
+      "type": "local_reference_not_official",
+      "file": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1PcInventory.java",
+      "line_ranges": [
+        [
+          634,
+          642
+        ]
+      ],
+      "sha256": "623e8c869b85a6cabd8bb6685608381fde4030141cf410ddf201f96fbec6ad46",
+      "scope": "Only equipped item static addmpr and per-item addMpRegen are summed."
+    },
+    {
+      "id": "existing_m1_growth",
+      "type": "existing_project_local_policy",
+      "file": "tools/local_original_session/data/m1/level_growth.json",
+      "line_ranges": [
+        [
+          1,
+          4
+        ],
+        [
+          27,
+          35
+        ]
+      ],
+      "sha256": "02d236f29add48d9ad60c2a48c18c79cdbe45c7de9bfeeae02a2ac023caa6553",
+      "scope": "Existing M1 LOCAL growth policy; read only, no modification."
+    },
+    {
+      "id": "existing_m1_regen",
+      "type": "existing_project_local_policy",
+      "file": "tools/local_original_session/data/m1/town.json",
+      "line_ranges": [
+        [
+          14,
+          20
+        ]
+      ],
+      "sha256": "363a2047620e73b933e3a328d3839eab8aa9637aad3f9d18638b65fda1aeaae0",
+      "scope": "Existing M1 excludes +12, but also omits original MPR and hunger/weight gates."
+    }
+  ],
+  "version_boundary": {
+    "client": "Fixed project baseline client26.09.29.2001; official guide response was obtained later and is separately dated. No automatic official-update tracking.",
+    "l1j_reference": {
+      "path": "D:/SingleLineageRef/l1j-en-classic",
+      "git_commit": "103e6f6c9dd83545959d8e87d3f59f8de1f40ef0",
+      "commit_time": "2026-05-04T17:37:15+08:00",
+      "role": "Historical fork source as local backend policy reference; not the NC Classic server or engine."
+    },
+    "conflicts": [
+      {
+        "field": "wizard_creation_STR_cap",
+        "l1j_value": 20,
+        "official_value": 18,
+        "selected": 18,
+        "refs": [
+          "wizard_feature:60-68",
+          "official_stat_guide:paragraphList[1]"
+        ]
+      },
+      {
+        "field": "level_point_first_award",
+        "l1j_value": "first at level51, one per level above50 (L1PcInstance:3560-3563)",
+        "official_wording": "guide reset paragraph says points from level50 and above; exact first award/cap not resolved",
+        "selected": "No automatic point spending in this projection."
+      }
+    ]
+  },
+  "official_base_stats": {
+    "source": "official",
+    "provenance_id": "official_stat_guide",
+    "units": "stat_points",
+    "stats": {
+      "STR": 8,
+      "DEX": 7,
+      "CON": 12,
+      "INT": 12,
+      "WIS": 12,
+      "CHA": 8
+    },
+    "base_sum": 59,
+    "creation_bonus_points": 16,
+    "final_creation_sum": 75,
+    "creation_each_stat_cap": 18,
+    "not_final_build": true,
+    "official_hp_mp_formulas": "UNKNOWN",
+    "official_max_level": "UNKNOWN",
+    "official_post_creation_stat_cap": "UNKNOWN"
+  },
+  "local_build": {
+    "source": "LOCAL",
+    "name": "INT-first / WIS18 / CON16",
+    "units": "stat_points",
+    "bonus_allocation_order": [
+      "INT +6 to18",
+      "WIS +6 to18",
+      "CON +4 to16"
+    ],
+    "bonus_allocation": {
+      "STR": 0,
+      "DEX": 0,
+      "CON": 4,
+      "INT": 6,
+      "WIS": 6,
+      "CHA": 0
+    },
+    "creation_original_stats": {
+      "STR": 8,
+      "DEX": 7,
+      "CON": 16,
+      "INT": 18,
+      "WIS": 18,
+      "CHA": 8
+    },
+    "final_creation_sum": 75,
+    "rationale": "Maximize INT within the official creation cap for damage/healing; maximize WIS for MP growth/regeneration; spend the remaining4 on CON. This allocation is a local companion choice, not an official recommended build.",
+    "stat_roles": {
+      "original": "Immutable creation-final stats used by original class bonuses. CON16/WIS18 remain original even after level points or gear.",
+      "base": "Creation stats plus legitimately allocated permanent growth points; CON/WIS here drive level HP/MP rolls.",
+      "current": "Effective base plus equipped items/effects; current WIS drives MP-regeneration tier. Equipment/effects do not retroactively change original bonuses or prior growth rolls."
+    },
+    "post_creation_allocation": "UNSELECTED: level1..60 projection holds base CON16/WIS18/INT18 constant and does not consume future level/elixir points. Creation cap18 is not asserted as a post-creation cap. Later INT allocation needs a selected post-creation rule before consumption."
+  },
+  "initial_resources": {
+    "source": "LOCAL_from_L1J",
+    "refs": [
+      "wizard_feature:82-98",
+      "create_char:181-186"
+    ],
+    "level": 1,
+    "units": "HP_or_MP_points",
+    "hp": {
+      "max": 12,
+      "current": 12
+    },
+    "mp": {
+      "max": 8,
+      "current": 8
+    },
+    "wizard_initial_mp_lookup": [
+      {
+        "base_wis_max": 15,
+        "max_mp": 6
+      },
+      {
+        "base_wis_min": 16,
+        "max_mp": 8
+      }
+    ],
+    "note": "Starting HP12 does not add originalHpup2. Starting MP is selected by creation WIS18, not a level-up die. Initial resources assume no gear/effect bonuses."
+  },
+  "level_growth": {
+    "source": "LOCAL_from_L1J",
+    "units": "integer_HP_MP_per_level_transition",
+    "refs": [
+      "calc_hp",
+      "calc_mp",
+      "wizard_feature:92-98",
+      "pc_growth:3546-3551"
+    ],
+    "level_limits": {
+      "local_selected_max_level": 99,
+      "reference": "max_level",
+      "official_fixed_client_max_level": "UNKNOWN",
+      "level_up_gain_stops_after_level": 99,
+      "note": "99 is the local reference ceiling, not an official Classic assertion. No special level50 or60 HP/MP growth stop exists in the cited loop;60 below is only the exported projection boundary."
+    },
+    "hp": {
+      "formula": "raw = 7 + U_integer(0,1) + max(base_CON-15,0); delta = max(0,min(raw,1000-previous_base_max_HP)+original_hpup)",
+      "operator_order": "Clamp class/base part first, then add original creation bonus, then floor delta at0. Store previous_base_max_HP+delta.",
+      "original_bonus_lookup": [
+        {
+          "original_con_max": 13,
+          "hpup": 0
+        },
+        {
+          "original_con_min": 14,
+          "original_con_max": 15,
+          "hpup": 1
+        },
+        {
+          "original_con_min": 16,
+          "hpup": 2
+        }
+      ],
+      "selected_original_hpup": 2,
+      "selected_uncapped_distribution": {
+        "values": [
+          10,
+          11
+        ],
+        "probabilities": [
+          {
+            "numerator": 1,
+            "denominator": 2
+          },
+          {
+            "numerator": 1,
+            "denominator": 2
+          }
+        ],
+        "mean": 10.5
+      },
+      "base_CON_examples": [
+        {
+          "base_con": 12,
+          "raw_values": [
+            7,
+            8
+          ]
+        },
+        {
+          "base_con": 15,
+          "raw_values": [
+            7,
+            8
+          ]
+        },
+        {
+          "base_con": 16,
+          "raw_values": [
+            8,
+            9
+          ]
+        },
+        {
+          "base_con": 18,
+          "raw_values": [
+            10,
+            11
+          ]
+        }
+      ],
+      "CON_note": "Examples exclude original bonus. If later base CON changes, only subsequent rolls change; original bonus still uses creation CON."
+    },
+    "mp": {
+      "formula": "raw=2*(U_integer(1,seed_y(base_WIS))+seed_z(base_WIS)); delta=max(0,min(raw,1200-previous_base_max_MP)+original_mpup)",
+      "wis_lookup": [
+        {
+          "base_wis": 7,
+          "seed_y": 2,
+          "seed_z": 0,
+          "wizard_pre_original_increments": [
+            2,
+            4
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 2
+          }
+        },
+        {
+          "base_wis": 8,
+          "seed_y": 2,
+          "seed_z": 0,
+          "wizard_pre_original_increments": [
+            2,
+            4
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 2
+          }
+        },
+        {
+          "base_wis": 9,
+          "seed_y": 3,
+          "seed_z": 0,
+          "wizard_pre_original_increments": [
+            2,
+            4,
+            6
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "base_wis": 10,
+          "seed_y": 2,
+          "seed_z": 1,
+          "wizard_pre_original_increments": [
+            4,
+            6
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 2
+          }
+        },
+        {
+          "base_wis": 11,
+          "seed_y": 2,
+          "seed_z": 1,
+          "wizard_pre_original_increments": [
+            4,
+            6
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 2
+          }
+        },
+        {
+          "base_wis": 12,
+          "seed_y": 3,
+          "seed_z": 1,
+          "wizard_pre_original_increments": [
+            4,
+            6,
+            8
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "base_wis": 13,
+          "seed_y": 3,
+          "seed_z": 1,
+          "wizard_pre_original_increments": [
+            4,
+            6,
+            8
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "base_wis": 14,
+          "seed_y": 3,
+          "seed_z": 1,
+          "wizard_pre_original_increments": [
+            4,
+            6,
+            8
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "base_wis": 15,
+          "seed_y": 3,
+          "seed_z": 2,
+          "wizard_pre_original_increments": [
+            6,
+            8,
+            10
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "base_wis": 16,
+          "seed_y": 3,
+          "seed_z": 2,
+          "wizard_pre_original_increments": [
+            6,
+            8,
+            10
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "base_wis": 17,
+          "seed_y": 3,
+          "seed_z": 2,
+          "wizard_pre_original_increments": [
+            6,
+            8,
+            10
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 3
+          }
+        },
+        {
+          "base_wis": 18,
+          "seed_y": 4,
+          "seed_z": 2,
+          "wizard_pre_original_increments": [
+            6,
+            8,
+            10,
+            12
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 19,
+          "seed_y": 4,
+          "seed_z": 2,
+          "wizard_pre_original_increments": [
+            6,
+            8,
+            10,
+            12
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 20,
+          "seed_y": 4,
+          "seed_z": 2,
+          "wizard_pre_original_increments": [
+            6,
+            8,
+            10,
+            12
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 21,
+          "seed_y": 4,
+          "seed_z": 3,
+          "wizard_pre_original_increments": [
+            8,
+            10,
+            12,
+            14
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 22,
+          "seed_y": 4,
+          "seed_z": 3,
+          "wizard_pre_original_increments": [
+            8,
+            10,
+            12,
+            14
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 23,
+          "seed_y": 4,
+          "seed_z": 3,
+          "wizard_pre_original_increments": [
+            8,
+            10,
+            12,
+            14
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 24,
+          "seed_y": 5,
+          "seed_z": 3,
+          "wizard_pre_original_increments": [
+            8,
+            10,
+            12,
+            14,
+            16
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 5
+          }
+        },
+        {
+          "base_wis": 25,
+          "seed_y": 4,
+          "seed_z": 4,
+          "wizard_pre_original_increments": [
+            10,
+            12,
+            14,
+            16
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 26,
+          "seed_y": 4,
+          "seed_z": 4,
+          "wizard_pre_original_increments": [
+            10,
+            12,
+            14,
+            16
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 27,
+          "seed_y": 5,
+          "seed_z": 4,
+          "wizard_pre_original_increments": [
+            10,
+            12,
+            14,
+            16,
+            18
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 5
+          }
+        },
+        {
+          "base_wis": 28,
+          "seed_y": 5,
+          "seed_z": 4,
+          "wizard_pre_original_increments": [
+            10,
+            12,
+            14,
+            16,
+            18
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 5
+          }
+        },
+        {
+          "base_wis": 29,
+          "seed_y": 4,
+          "seed_z": 5,
+          "wizard_pre_original_increments": [
+            12,
+            14,
+            16,
+            18
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 30,
+          "seed_y": 4,
+          "seed_z": 5,
+          "wizard_pre_original_increments": [
+            12,
+            14,
+            16,
+            18
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 31,
+          "seed_y": 5,
+          "seed_z": 5,
+          "wizard_pre_original_increments": [
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 5
+          }
+        },
+        {
+          "base_wis": 32,
+          "seed_y": 5,
+          "seed_z": 5,
+          "wizard_pre_original_increments": [
+            12,
+            14,
+            16,
+            18,
+            20
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 5
+          }
+        },
+        {
+          "base_wis": 33,
+          "seed_y": 4,
+          "seed_z": 6,
+          "wizard_pre_original_increments": [
+            14,
+            16,
+            18,
+            20
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 34,
+          "seed_y": 4,
+          "seed_z": 6,
+          "wizard_pre_original_increments": [
+            14,
+            16,
+            18,
+            20
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 4
+          }
+        },
+        {
+          "base_wis": 35,
+          "seed_y": 5,
+          "seed_z": 6,
+          "wizard_pre_original_increments": [
+            14,
+            16,
+            18,
+            20,
+            22
+          ],
+          "each_probability": {
+            "numerator": 1,
+            "denominator": 5
+          }
+        }
+      ],
+      "wis_below7": "Outside normal wizard base range; not selected.",
+      "wis35_and_above": {
+        "seed_y": 5,
+        "seed_z": 6,
+        "wizard_pre_original_increments": [
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      },
+      "original_bonus_lookup": [
+        {
+          "original_wis_max": 12,
+          "mpup": 0
+        },
+        {
+          "original_wis_min": 13,
+          "original_wis_max": 16,
+          "mpup": 1
+        },
+        {
+          "original_wis_min": 17,
+          "mpup": 2
+        }
+      ],
+      "selected_base_wis": 18,
+      "selected_original_mpup": 2,
+      "selected_uncapped_distribution": {
+        "values": [
+          8,
+          10,
+          12,
+          14
+        ],
+        "each_probability": {
+          "numerator": 1,
+          "denominator": 4
+        },
+        "mean": 11
+      },
+      "WIS_note": "WIS18 is one selected build. WIS7..35 lookup explicitly preserves nonmonotonic L1J seedY boundaries; changing base WIS changes future draws. A current/equipment WIS change alone changes regen, not base growth."
+    },
+    "caps": {
+      "source": "LOCAL_from_L1J",
+      "official_caps": "UNKNOWN",
+      "configured_pre_original": {
+        "HP": 1000,
+        "MP": 1200
+      },
+      "selected_build_reachable_growth_plateau": {
+        "base_max_HP": 1002,
+        "base_max_MP": 1202
+      },
+      "meaning": "These are growth saturation values for this originalHpup2/originalMpup2 build with the preserved clamp order. They are not absolute effective max HP/MP including gear, not a cap on current resource independent of effective max, and not official Classic caps. Above saturation, preserved delta floors at0 and never forcibly lowers existing values.",
+      "storage_reference_safety_bound": {
+        "HP": 32767,
+        "MP": 32767,
+        "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/Instance/L1PcInstance.java:937-956",
+        "note": "L1J storage/add routine numeric limit; distinct from gameplay growth caps."
+      }
+    },
+    "level_table": {
+      "level_min": 1,
+      "level_max": 60,
+      "reason": "Shows creation, the full1..50 early range, and51..60 around the level-point boundary and existing project Mage60 reference. This is a local projection span, not a product level cap.",
+      "assumptions": "Original and base CON16/WIS18 fixed; gear/effects/elixirs absent; no level-down/rebirth; independent uniform RNG draws per resource per gained level; no caps reached through60 even on maximal rolls.",
+      "columns": [
+        "level",
+        "hp_gain_min",
+        "hp_gain_max",
+        "hp_gain_expected",
+        "mp_gain_min",
+        "mp_gain_max",
+        "mp_gain_expected",
+        "cumulative_max_hp_min",
+        "cumulative_max_hp_expected",
+        "cumulative_max_hp_max",
+        "cumulative_max_mp_min",
+        "cumulative_max_mp_expected",
+        "cumulative_max_mp_max"
+      ],
+      "rows": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          12,
+          12.0,
+          12,
+          8,
+          8,
+          8
+        ],
+        [
+          2,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          22,
+          22.5,
+          23,
+          16,
+          19,
+          22
+        ],
+        [
+          3,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          32,
+          33.0,
+          34,
+          24,
+          30,
+          36
+        ],
+        [
+          4,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          42,
+          43.5,
+          45,
+          32,
+          41,
+          50
+        ],
+        [
+          5,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          52,
+          54.0,
+          56,
+          40,
+          52,
+          64
+        ],
+        [
+          6,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          62,
+          64.5,
+          67,
+          48,
+          63,
+          78
+        ],
+        [
+          7,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          72,
+          75.0,
+          78,
+          56,
+          74,
+          92
+        ],
+        [
+          8,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          82,
+          85.5,
+          89,
+          64,
+          85,
+          106
+        ],
+        [
+          9,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          92,
+          96.0,
+          100,
+          72,
+          96,
+          120
+        ],
+        [
+          10,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          102,
+          106.5,
+          111,
+          80,
+          107,
+          134
+        ],
+        [
+          11,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          112,
+          117.0,
+          122,
+          88,
+          118,
+          148
+        ],
+        [
+          12,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          122,
+          127.5,
+          133,
+          96,
+          129,
+          162
+        ],
+        [
+          13,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          132,
+          138.0,
+          144,
+          104,
+          140,
+          176
+        ],
+        [
+          14,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          142,
+          148.5,
+          155,
+          112,
+          151,
+          190
+        ],
+        [
+          15,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          152,
+          159.0,
+          166,
+          120,
+          162,
+          204
+        ],
+        [
+          16,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          162,
+          169.5,
+          177,
+          128,
+          173,
+          218
+        ],
+        [
+          17,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          172,
+          180.0,
+          188,
+          136,
+          184,
+          232
+        ],
+        [
+          18,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          182,
+          190.5,
+          199,
+          144,
+          195,
+          246
+        ],
+        [
+          19,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          192,
+          201.0,
+          210,
+          152,
+          206,
+          260
+        ],
+        [
+          20,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          202,
+          211.5,
+          221,
+          160,
+          217,
+          274
+        ],
+        [
+          21,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          212,
+          222.0,
+          232,
+          168,
+          228,
+          288
+        ],
+        [
+          22,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          222,
+          232.5,
+          243,
+          176,
+          239,
+          302
+        ],
+        [
+          23,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          232,
+          243.0,
+          254,
+          184,
+          250,
+          316
+        ],
+        [
+          24,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          242,
+          253.5,
+          265,
+          192,
+          261,
+          330
+        ],
+        [
+          25,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          252,
+          264.0,
+          276,
+          200,
+          272,
+          344
+        ],
+        [
+          26,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          262,
+          274.5,
+          287,
+          208,
+          283,
+          358
+        ],
+        [
+          27,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          272,
+          285.0,
+          298,
+          216,
+          294,
+          372
+        ],
+        [
+          28,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          282,
+          295.5,
+          309,
+          224,
+          305,
+          386
+        ],
+        [
+          29,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          292,
+          306.0,
+          320,
+          232,
+          316,
+          400
+        ],
+        [
+          30,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          302,
+          316.5,
+          331,
+          240,
+          327,
+          414
+        ],
+        [
+          31,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          312,
+          327.0,
+          342,
+          248,
+          338,
+          428
+        ],
+        [
+          32,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          322,
+          337.5,
+          353,
+          256,
+          349,
+          442
+        ],
+        [
+          33,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          332,
+          348.0,
+          364,
+          264,
+          360,
+          456
+        ],
+        [
+          34,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          342,
+          358.5,
+          375,
+          272,
+          371,
+          470
+        ],
+        [
+          35,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          352,
+          369.0,
+          386,
+          280,
+          382,
+          484
+        ],
+        [
+          36,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          362,
+          379.5,
+          397,
+          288,
+          393,
+          498
+        ],
+        [
+          37,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          372,
+          390.0,
+          408,
+          296,
+          404,
+          512
+        ],
+        [
+          38,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          382,
+          400.5,
+          419,
+          304,
+          415,
+          526
+        ],
+        [
+          39,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          392,
+          411.0,
+          430,
+          312,
+          426,
+          540
+        ],
+        [
+          40,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          402,
+          421.5,
+          441,
+          320,
+          437,
+          554
+        ],
+        [
+          41,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          412,
+          432.0,
+          452,
+          328,
+          448,
+          568
+        ],
+        [
+          42,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          422,
+          442.5,
+          463,
+          336,
+          459,
+          582
+        ],
+        [
+          43,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          432,
+          453.0,
+          474,
+          344,
+          470,
+          596
+        ],
+        [
+          44,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          442,
+          463.5,
+          485,
+          352,
+          481,
+          610
+        ],
+        [
+          45,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          452,
+          474.0,
+          496,
+          360,
+          492,
+          624
+        ],
+        [
+          46,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          462,
+          484.5,
+          507,
+          368,
+          503,
+          638
+        ],
+        [
+          47,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          472,
+          495.0,
+          518,
+          376,
+          514,
+          652
+        ],
+        [
+          48,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          482,
+          505.5,
+          529,
+          384,
+          525,
+          666
+        ],
+        [
+          49,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          492,
+          516.0,
+          540,
+          392,
+          536,
+          680
+        ],
+        [
+          50,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          502,
+          526.5,
+          551,
+          400,
+          547,
+          694
+        ],
+        [
+          51,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          512,
+          537.0,
+          562,
+          408,
+          558,
+          708
+        ],
+        [
+          52,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          522,
+          547.5,
+          573,
+          416,
+          569,
+          722
+        ],
+        [
+          53,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          532,
+          558.0,
+          584,
+          424,
+          580,
+          736
+        ],
+        [
+          54,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          542,
+          568.5,
+          595,
+          432,
+          591,
+          750
+        ],
+        [
+          55,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          552,
+          579.0,
+          606,
+          440,
+          602,
+          764
+        ],
+        [
+          56,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          562,
+          589.5,
+          617,
+          448,
+          613,
+          778
+        ],
+        [
+          57,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          572,
+          600.0,
+          628,
+          456,
+          624,
+          792
+        ],
+        [
+          58,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          582,
+          610.5,
+          639,
+          464,
+          635,
+          806
+        ],
+        [
+          59,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          592,
+          621.0,
+          650,
+          472,
+          646,
+          820
+        ],
+        [
+          60,
+          10,
+          11,
+          10.5,
+          8,
+          14,
+          11,
+          602,
+          631.5,
+          661,
+          480,
+          657,
+          834
+        ]
+      ],
+      "interpretation": "Row1 gains0 and starts12/8. Each later row describes the single transition to that level. Cumulative min/max are reachable envelopes over rolls, and expected values are statistical means, never mandatory character HP/MP.",
+      "uncapped_cumulative_formulas": {
+        "min_hp": "12+10*(level-1)",
+        "expected_hp": "12+10.5*(level-1)",
+        "max_hp": "12+11*(level-1)",
+        "min_mp": "8+8*(level-1)",
+        "expected_mp": "8+11*(level-1)",
+        "max_mp": "8+14*(level-1)"
+      },
+      "outside_table": "For61..99 use recurrence and caps, not the uncapped closed-form envelope."
+    },
+    "realization_and_restore": "Future consumer must roll each legitimately gained level once and persist realized base maxima; loading/summoning must restore them instead of rerolling or replacing them by this expected-value table. Current-resource refill on level-up is not selected by this growth-only data (L1J:3565-3567 refills; existing consumer behavior remains unchanged)."
+  },
+  "mp_regeneration": {
+    "source": "LOCAL_modified_from_L1J",
+    "units": "integer_MP_per_regeneration_event",
+    "refs": [
+      "mp_amount",
+      "mp_timing",
+      "pc_regen",
+      "inventory_mpr",
+      "wizard_feature:183-184"
+    ],
+    "current_wis_base_tiers": [
+      {
+        "current_wis_max": 14,
+        "base_mpr": 1
+      },
+      {
+        "current_wis_min": 15,
+        "current_wis_max": 16,
+        "base_mpr": 2
+      },
+      {
+        "current_wis_min": 17,
+        "base_mpr": 3
+      }
+    ],
+    "original_wis_class_bonus": {
+      "formula": "3 if original_WIS==18 else 2 if original_WIS>=16 else 1 if original_WIS>=14 else0",
+      "selected_original_wis": 18,
+      "selected_original_mpr": 3,
+      "note": "Exact wizard source expression; an original value above18 would yield2, but official creation max18 makes that unselected. Current gear/effect WIS must not recalculate this bonus."
+    },
+    "timing": {
+      "tick_ms": 1000,
+      "rate_mp_regen": 1,
+      "rate_ref": "D:/SingleLineageRef/l1j-en-classic/config/rates.properties:27-28",
+      "threshold_points": 64,
+      "points_per_tick": {
+        "idle_or_standing": 4,
+        "moving": 2,
+        "basic_attack": 1,
+        "casting": 1
+      },
+      "cast_mapping_source": "LOCAL: a spell action uses attack activity points; cited L1J C_UseSkill/L1SkillUse inspection did not establish this mapping.",
+      "accumulator_rule": "At each one-second tick add the minimum points of actions since the previous tick; reset activity to4; if accumulated*rate>=64, reset accumulated to0 and apply one event. No proportional carry-over in the referenced L1J rule.",
+      "continuous_state_interval_ms": {
+        "idle_or_standing": 16000,
+        "moving": 32000,
+        "basic_attack_or_LOCAL_casting": 64000
+      },
+      "pose_note": "These are activity states, not a verified sit/kneel animation or official posture bonus. A single attack/cast only lowers its own one-second bucket; mixed activity timing uses the accumulator, not a fixed64-second lockout."
+    },
+    "equipped_item_formula": "sum(item.static_addmpr+item.instance_addMpRegen for equipped items)+actor_effect_mpr",
+    "requires_equipment": false,
+    "starting_equipment_mpr": 0,
+    "unimplemented_or_unselected_effects": {
+      "blue_potion": "L1J adds max(current_WIS,11)-5 before hunger/weight gate; NOT SELECTED here.",
+      "meditation": "L1J +5; NOT SELECTED here.",
+      "concentration": "L1J +2; NOT SELECTED here.",
+      "cooking_and_location": "L1J additive bonuses exist at MpRegeneration:75-98; NOT SELECTED here.",
+      "weight_bypass": "L1J EXOTIC_VITALIZE or ADDITIONAL_FIRE bypass weight at151-156; NOT SELECTED here."
+    },
+    "gates": {
+      "dead": "no accumulation or recovery",
+      "offline_or_despawned": "LOCAL: no offline/saved-only tick or catch-up",
+      "hunger": {
+        "blocked_if": "food<3",
+        "units": "L1J food points, not percent",
+        "default_food_assumption": 40,
+        "default_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/clientpackets/C_CreateChar.java:191"
+      },
+      "weight": {
+        "blocked_if": "weight240>=120",
+        "units": "L1J scaled weight gauge0..240, not120 percent",
+        "boundary_meaning": "120 is50 percent of gauge240; future consumer must use its actual weight contract, not assume raw item weight units."
+      },
+      "when_hungry_or_overweight": "base_mpr=0; item_effect_mpr=min(item_effect_mpr,0); positive regen blocked, negative modifiers preserved.",
+      "map_reduction": "L1PcInstance:3384-3390 has special MP-reduction maps; selected default is ordinary map. Special maps are UNKNOWN/unselected, not blanket recovery."
+    },
+    "selected_local_formula": "base=current_WIS_tier+max(original_mpr,0); items=equipped_item_mpr+actor_effect_mpr; if food<3 or weight240>=120: base=0; items=min(items,0); delta=base+items; new_current_MP=clamp(current_MP+delta,0,effective_max_MP)",
+    "selected_build_example": {
+      "conditions": "CurrentWIS18, originalWIS18, ordinary map, alive/online, food>=3, weight240<120, no gear/effect MPR.",
+      "base_tier": 3,
+      "original_bonus": 3,
+      "mp_per_event": 6,
+      "idle_mp_per_second_expected": 0.375,
+      "moving_mp_per_second_expected": 0.1875,
+      "continuous_attack_or_cast_mp_per_second_expected": 0.09375,
+      "hungry_or_overweight_mp_per_event": 0
+    },
+    "l1j_historical_extra": {
+      "retained_as_evidence_only": true,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/MpRegeneration.java:113-117",
+      "formula": "mpPluss=max(current_WIS-12,12); mpr=base_after_gate+items_after_gate+mpPluss",
+      "WIS18_normal_mp_per_event": 18,
+      "WIS18_hungry_or_overweight_mp_per_event_without_negative_items": 12,
+      "selected_local_mpPluss": 0,
+      "decision": "Coordinator explicitly chose exclusion of the extra minimum12 for companion baseline. This is a documented LOCAL modification, not a repaired/proven official formula."
+    },
+    "existing_m1_comparison": {
+      "ref": "tools/local_original_session/data/m1/town.json:14-20",
+      "same": "One-second activity points/threshold64 and omission of mpPluss.",
+      "different": "M1 only uses current-WIS base tiers: WIS18=>3/event. Selected companion additionally preserves original mage MPR3=>6/event and hunger/weight gates; M1 current code/data are not changed.",
+      "integration": "Consumer connection and any shared-policy reconciliation remain UNRUN."
+    }
+  },
+  "verification": {
+    "kind": "STATIC_DATA_ONLY",
+    "completed": [
+      "JSON parse",
+      "Official response SHA matched retained response text",
+      "Creation base59 + allocation16 = final75 and each creation stat<=18",
+      "Selected HP/MP distributions and means match cited source arithmetic",
+      "All60 rows match initial values plus per-level expected/envelope arithmetic",
+      "WIS18 LOCAL regen6 vs historical L1J18 and M1 base-only3 reconciled"
+    ],
+    "not_performed": [
+      "game/server/L1J execution",
+      "runtime consumer wiring",
+      "screen/input equivalence",
+      "save/load integration"
+    ]
+  },
+  "unknowns": [
+    "Official Classic initial HP/MP numeric formulas and caps for fixed baseline",
+    "Official Classic numeric level-growth/random distributions and numeric MP-regeneration timing/amount",
+    "Official fixed-baseline maximum level and post-creation stat cap/first level-point award",
+    "Post-creation INT/CON/WIS allocation policy",
+    "Future consumer wiring, actual realized growth storage, hunger/weight contract, equipped-MPR application and runtime behavior"
+  ]
+}

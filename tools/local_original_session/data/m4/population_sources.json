@@ -1,0 +1,1521 @@
+{
+  "table": "population_sources",
+  "status": "DATA_ONLY_WRITTEN_STATIC_LOADER_OK_GAME_TERRAIN_UNRUN",
+  "scope": {
+    "글루디오": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      7,
+      8,
+      9,
+      17,
+      27,
+      28,
+      29,
+      30,
+      33,
+      177,
+      179,
+      180,
+      190,
+      223,
+      245,
+      249,
+      274,
+      276,
+      280,
+      323,
+      750
+    ],
+    "요정 숲": [
+      0,
+      144,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      162,
+      163,
+      164,
+      190
+    ],
+    "오크 숲": [
+      1,
+      2,
+      8,
+      9,
+      28,
+      30,
+      91,
+      92,
+      93,
+      94,
+      95,
+      115,
+      116,
+      129,
+      190,
+      223,
+      274,
+      280,
+      297
+    ]
+  },
+  "selected_monsters": [
+    {
+      "template_id": 0,
+      "name_ko": "오크",
+      "l1j_npcid": 45009,
+      "l1j_source_line": 20631,
+      "l1j_candidates": [
+        45009,
+        45017,
+        45018,
+        45756
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 1,
+      "official_raw_path": "work/official_data/raw/monster/0.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "말하는 섬 던전 1층",
+        "사막 던전 1층",
+        "은기사 지역",
+        "글루디오",
+        "요정 숲",
+        "켄트",
+        "아덴 대륙",
+        "글루디오 던전 1층"
+      ],
+      "fixed_sprite": 56,
+      "l1j_sprite": 56,
+      "official_level": 2,
+      "l1j_level": 2
+    },
+    {
+      "template_id": 1,
+      "name_ko": "오크 궁수",
+      "l1j_npcid": 45019,
+      "l1j_source_line": 20640,
+      "l1j_candidates": [
+        45019,
+        45050,
+        45758
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 2,
+      "official_raw_path": "work/official_data/raw/monster/1.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "아덴 대륙",
+        "글루디오 던전 1층"
+      ],
+      "fixed_sprite": 57,
+      "l1j_sprite": 3860,
+      "official_level": 3,
+      "l1j_level": 3
+    },
+    {
+      "template_id": 2,
+      "name_ko": "오크 전사",
+      "l1j_npcid": 45082,
+      "l1j_source_line": 20702,
+      "l1j_candidates": [
+        45082,
+        45120,
+        45759
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 3,
+      "official_raw_path": "work/official_data/raw/monster/2.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "말하는 섬 던전 1층",
+        "사막 던전 1층",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "아덴 대륙",
+        "글루디오 던전 1층"
+      ],
+      "fixed_sprite": 94,
+      "l1j_sprite": 3864,
+      "official_level": 8,
+      "l1j_level": 8
+    },
+    {
+      "template_id": 4,
+      "name_ko": "난쟁이",
+      "l1j_npcid": 45041,
+      "l1j_source_line": 20661,
+      "l1j_candidates": [
+        45041,
+        45761
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 4,
+      "official_raw_path": "work/official_data/raw/monster/4.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "은기사 지역",
+        "글루디오",
+        "켄트",
+        "용의 계곡",
+        "기란",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 54,
+      "l1j_sprite": 54,
+      "official_level": 5,
+      "l1j_level": 5
+    },
+    {
+      "template_id": 5,
+      "name_ko": "돌 골렘",
+      "l1j_npcid": 45126,
+      "l1j_source_line": 20744,
+      "l1j_candidates": [
+        45126,
+        45134,
+        45768
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 5,
+      "official_raw_path": "work/official_data/raw/monster/5.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "은기사 지역",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 49,
+      "l1j_sprite": 49,
+      "official_level": 13,
+      "l1j_level": 13
+    },
+    {
+      "template_id": 7,
+      "name_ko": "장로",
+      "l1j_npcid": 45215,
+      "l1j_source_line": 20816,
+      "l1j_candidates": [
+        45215
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 7,
+      "official_raw_path": "work/official_data/raw/monster/7.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "말하는 섬 던전 1층",
+        "글루디오",
+        "켄트",
+        "아덴 대륙",
+        "글루디오 던전 6층"
+      ],
+      "fixed_sprite": 32,
+      "l1j_sprite": 32,
+      "official_level": 21,
+      "l1j_level": 21
+    },
+    {
+      "template_id": 8,
+      "name_ko": "늑대인간",
+      "l1j_npcid": 45024,
+      "l1j_source_line": 20645,
+      "l1j_candidates": [
+        45024,
+        45093,
+        45094,
+        45355,
+        45763,
+        45803
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 8,
+      "official_raw_path": "work/official_data/raw/monster/8.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "말하는 섬 던전 1층",
+        "말하는 섬 던전 2층",
+        "사막 던전 1층",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "용의 계곡",
+        "기란",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 33,
+      "l1j_sprite": 1110,
+      "official_level": 9,
+      "l1j_level": 9
+    },
+    {
+      "template_id": 9,
+      "name_ko": "늑대",
+      "l1j_npcid": 45043,
+      "l1j_source_line": 20663,
+      "l1j_candidates": [
+        45043
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 9,
+      "official_raw_path": "work/official_data/raw/monster/9.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "용의 계곡",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 96,
+      "l1j_sprite": 96,
+      "official_level": 6,
+      "l1j_level": 5
+    },
+    {
+      "template_id": 17,
+      "name_ko": "셸로브",
+      "l1j_npcid": 45136,
+      "l1j_source_line": 20753,
+      "l1j_candidates": [
+        45136,
+        45358
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 16,
+      "official_raw_path": "work/official_data/raw/monster/17.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "말하는 섬 던전 2층",
+        "사막 던전 1층",
+        "글루디오",
+        "켄트",
+        "기란",
+        "하이네",
+        "아덴 대륙",
+        "글루디오 던전 2층",
+        "글루디오 던전 4층"
+      ],
+      "fixed_sprite": 95,
+      "l1j_sprite": 95,
+      "official_level": 14,
+      "l1j_level": 14
+    },
+    {
+      "template_id": 27,
+      "name_ko": "좀비",
+      "l1j_npcid": 45065,
+      "l1j_source_line": 20685,
+      "l1j_candidates": [
+        45065,
+        45066,
+        45105,
+        45757,
+        81108,
+        81183,
+        81184,
+        81185,
+        81186,
+        81187,
+        81188
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 22,
+      "official_raw_path": "work/official_data/raw/monster/27.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "말하는 섬 던전 1층",
+        "말하는 섬 던전 2층",
+        "사막 던전 1층",
+        "사막 던전 2층",
+        "엘모어 격전지",
+        "은기사 지역",
+        "글루디오",
+        "오렌",
+        "아덴 대륙",
+        "글루디오 던전 1층",
+        "글루디오 던전 2층",
+        "글루디오 던전 3층",
+        "글루디오 던전 4층",
+        "윈다우드 성 던전 1층"
+      ],
+      "fixed_sprite": 52,
+      "l1j_sprite": 52,
+      "official_level": 6,
+      "l1j_level": 6
+    },
+    {
+      "template_id": 28,
+      "name_ko": "구울",
+      "l1j_npcid": 45157,
+      "l1j_source_line": 20773,
+      "l1j_candidates": [
+        45157
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 23,
+      "official_raw_path": "work/official_data/raw/monster/28.json",
+      "official_regions": [
+        "요정숲 던전 3층",
+        "사막 던전 2층",
+        "사막 던전 3층",
+        "기란 던전 1층",
+        "기란 던전 2층",
+        "엘모어 격전지",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "오렌",
+        "아덴 대륙",
+        "글루디오 던전 1층",
+        "글루디오 던전 2층",
+        "글루디오 던전 3층",
+        "글루디오 던전 4층",
+        "글루디오 던전 5층",
+        "글루디오 던전 6층",
+        "글루디오 던전 7층",
+        "윈다우드 성 던전 1층",
+        "윈다우드 성 던전 2층"
+      ],
+      "fixed_sprite": 144,
+      "l1j_sprite": 144,
+      "official_level": 16,
+      "l1j_level": 16
+    },
+    {
+      "template_id": 29,
+      "name_ko": "해골",
+      "l1j_npcid": 45107,
+      "l1j_source_line": 20725,
+      "l1j_candidates": [
+        45107,
+        45108,
+        45114,
+        45764,
+        81109
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 24,
+      "official_raw_path": "work/official_data/raw/monster/29.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "말하는 섬 던전 1층",
+        "말하는 섬 던전 2층",
+        "사막 던전 1층",
+        "사막 던전 3층",
+        "은기사 지역",
+        "글루디오",
+        "아덴 대륙",
+        "글루디오 던전 1층",
+        "글루디오 던전 2층",
+        "글루디오 던전 3층",
+        "글루디오 던전 4층",
+        "글루디오 던전 5층",
+        "윈다우드 성 던전 1층"
+      ],
+      "fixed_sprite": 30,
+      "l1j_sprite": 30,
+      "official_level": 10,
+      "l1j_level": 10
+    },
+    {
+      "template_id": 30,
+      "name_ko": "스파토이",
+      "l1j_npcid": 45161,
+      "l1j_source_line": 20777,
+      "l1j_candidates": [
+        45161,
+        45181
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 25,
+      "official_raw_path": "work/official_data/raw/monster/30.json",
+      "official_regions": [
+        "말하는 섬 던전 2층",
+        "요정숲 던전 3층",
+        "사막 던전 2층",
+        "사막 던전 3층",
+        "용의 계곡 던전 1층",
+        "기란 던전 1층",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "용의 계곡",
+        "아덴 대륙",
+        "글루디오 던전 1층",
+        "글루디오 던전 2층",
+        "글루디오 던전 3층",
+        "글루디오 던전 4층",
+        "글루디오 던전 5층",
+        "글루디오 던전 6층",
+        "글루디오 던전 7층",
+        "윈다우드 성 던전 1층",
+        "윈다우드 성 던전 2층"
+      ],
+      "fixed_sprite": 145,
+      "l1j_sprite": 145,
+      "official_level": 16,
+      "l1j_level": 16
+    },
+    {
+      "template_id": 33,
+      "name_ko": "버그베어",
+      "l1j_npcid": 45223,
+      "l1j_source_line": 20823,
+      "l1j_candidates": [
+        45223,
+        45392,
+        45738,
+        81086,
+        81219
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 27,
+      "official_raw_path": "work/official_data/raw/monster/33.json",
+      "official_regions": [
+        "사막 던전 2층",
+        "사막 던전 3층",
+        "사막 던전 4층",
+        "글루디오",
+        "아덴 대륙",
+        "글루디오 던전 2층",
+        "글루디오 던전 3층",
+        "글루디오 던전 4층",
+        "글루디오 던전 5층",
+        "글루디오 던전 6층",
+        "글루디오 던전 7층",
+        "윈다우드 성 던전 1층",
+        "윈다우드 성 던전 2층"
+      ],
+      "fixed_sprite": 152,
+      "l1j_sprite": 152,
+      "official_level": 22,
+      "l1j_level": 22
+    },
+    {
+      "template_id": 91,
+      "name_ko": "아투바 오크",
+      "l1j_npcid": 45149,
+      "l1j_source_line": 20765,
+      "l1j_candidates": [
+        45149
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 58,
+      "official_raw_path": "work/official_data/raw/monster/91.json",
+      "official_regions": [
+        "오크 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 786,
+      "l1j_sprite": 786,
+      "official_level": 15,
+      "l1j_level": 15
+    },
+    {
+      "template_id": 92,
+      "name_ko": "네루가 오크",
+      "l1j_npcid": 45171,
+      "l1j_source_line": 20787,
+      "l1j_candidates": [
+        45171
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 59,
+      "official_raw_path": "work/official_data/raw/monster/92.json",
+      "official_regions": [
+        "오크 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 788,
+      "l1j_sprite": 788,
+      "official_level": 17,
+      "l1j_level": 17
+    },
+    {
+      "template_id": 93,
+      "name_ko": "두다-마라 오크",
+      "l1j_npcid": 45143,
+      "l1j_source_line": 20760,
+      "l1j_candidates": [
+        45143,
+        81214
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 60,
+      "official_raw_path": "work/official_data/raw/monster/93.json",
+      "official_regions": [
+        "오크 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 788,
+      "l1j_sprite": 788,
+      "official_level": 15,
+      "l1j_level": 15
+    },
+    {
+      "template_id": 94,
+      "name_ko": "간디 오크",
+      "l1j_npcid": 45098,
+      "l1j_source_line": 20717,
+      "l1j_candidates": [
+        45098,
+        81213
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 61,
+      "official_raw_path": "work/official_data/raw/monster/94.json",
+      "official_regions": [
+        "오크 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 784,
+      "l1j_sprite": 784,
+      "official_level": 10,
+      "l1j_level": 10
+    },
+    {
+      "template_id": 95,
+      "name_ko": "로바 오크",
+      "l1j_npcid": 45127,
+      "l1j_source_line": 20745,
+      "l1j_candidates": [
+        45127
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 62,
+      "official_raw_path": "work/official_data/raw/monster/95.json",
+      "official_regions": [
+        "오크 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 786,
+      "l1j_sprite": 784,
+      "official_level": 13,
+      "l1j_level": 13
+    },
+    {
+      "template_id": 115,
+      "name_ko": "가스트",
+      "l1j_npcid": 45213,
+      "l1j_source_line": 20814,
+      "l1j_candidates": [
+        45213,
+        45378
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 75,
+      "official_raw_path": "work/official_data/raw/monster/115.json",
+      "official_regions": [
+        "요정숲 던전 3층",
+        "기란 던전 3층",
+        "기란 던전 4층",
+        "오크 숲",
+        "기란",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 255,
+      "l1j_sprite": 255,
+      "official_level": 21,
+      "l1j_level": 21
+    },
+    {
+      "template_id": 116,
+      "name_ko": "오크 스카우트",
+      "l1j_npcid": 45138,
+      "l1j_source_line": 20755,
+      "l1j_candidates": [
+        45138,
+        81215
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 76,
+      "official_raw_path": "work/official_data/raw/monster/116.json",
+      "official_regions": [
+        "오크 숲"
+      ],
+      "fixed_sprite": 790,
+      "l1j_sprite": 790,
+      "official_level": 14,
+      "l1j_level": 14
+    },
+    {
+      "template_id": 129,
+      "name_ko": "가스트 로드",
+      "l1j_npcid": 45346,
+      "l1j_source_line": 20936,
+      "l1j_candidates": [
+        45346,
+        45470
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 81,
+      "official_raw_path": "work/official_data/raw/monster/129.json",
+      "official_regions": [
+        "오크 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 257,
+      "l1j_sprite": 257,
+      "official_level": 33,
+      "l1j_level": 33
+    },
+    {
+      "template_id": 144,
+      "name_ko": "펑거스",
+      "l1j_npcid": 45030,
+      "l1j_source_line": 20651,
+      "l1j_candidates": [
+        45029,
+        45030,
+        45551
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 88,
+      "official_raw_path": "work/official_data/raw/monster/144.json",
+      "official_regions": [
+        "요정숲 던전 2층",
+        "요정숲 던전 3층",
+        "요정 숲",
+        "켄트",
+        "아덴 대륙",
+        "얼음 수정 동굴 1층",
+        "얼음 수정 동굴 2층"
+      ],
+      "fixed_sprite": 852,
+      "l1j_sprite": 852,
+      "official_level": 4,
+      "l1j_level": 4
+    },
+    {
+      "template_id": 147,
+      "name_ko": "오크 궁수",
+      "l1j_npcid": 45019,
+      "l1j_source_line": 20640,
+      "l1j_candidates": [
+        45019,
+        45050,
+        45758
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 91,
+      "official_raw_path": "work/official_data/raw/monster/147.json",
+      "official_regions": [
+        "요정숲 던전 1층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 57,
+      "l1j_sprite": 3860,
+      "official_level": 3,
+      "l1j_level": 3
+    },
+    {
+      "template_id": 148,
+      "name_ko": "오크 전사",
+      "l1j_npcid": 45082,
+      "l1j_source_line": 20702,
+      "l1j_candidates": [
+        45082,
+        45120,
+        45759
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 92,
+      "official_raw_path": "work/official_data/raw/monster/148.json",
+      "official_regions": [
+        "요정숲 던전 1층",
+        "요정숲 던전 2층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 94,
+      "l1j_sprite": 3864,
+      "official_level": 8,
+      "l1j_level": 8
+    },
+    {
+      "template_id": 149,
+      "name_ko": "아투바 오크",
+      "l1j_npcid": 45149,
+      "l1j_source_line": 20765,
+      "l1j_candidates": [
+        45149
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 93,
+      "official_raw_path": "work/official_data/raw/monster/149.json",
+      "official_regions": [
+        "요정숲 던전 3층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 786,
+      "l1j_sprite": 786,
+      "official_level": 15,
+      "l1j_level": 15
+    },
+    {
+      "template_id": 150,
+      "name_ko": "네루가 오크",
+      "l1j_npcid": 45171,
+      "l1j_source_line": 20787,
+      "l1j_candidates": [
+        45171
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 94,
+      "official_raw_path": "work/official_data/raw/monster/150.json",
+      "official_regions": [
+        "요정숲 던전 3층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 788,
+      "l1j_sprite": 788,
+      "official_level": 17,
+      "l1j_level": 17
+    },
+    {
+      "template_id": 151,
+      "name_ko": "두다-마라 오크",
+      "l1j_npcid": 45143,
+      "l1j_source_line": 20760,
+      "l1j_candidates": [
+        45143,
+        81214
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 95,
+      "official_raw_path": "work/official_data/raw/monster/151.json",
+      "official_regions": [
+        "요정숲 던전 2층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 788,
+      "l1j_sprite": 788,
+      "official_level": 15,
+      "l1j_level": 15
+    },
+    {
+      "template_id": 152,
+      "name_ko": "간디 오크",
+      "l1j_npcid": 45098,
+      "l1j_source_line": 20717,
+      "l1j_candidates": [
+        45098,
+        81213
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 96,
+      "official_raw_path": "work/official_data/raw/monster/152.json",
+      "official_regions": [
+        "요정숲 던전 2층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 784,
+      "l1j_sprite": 784,
+      "official_level": 10,
+      "l1j_level": 10
+    },
+    {
+      "template_id": 153,
+      "name_ko": "로바 오크",
+      "l1j_npcid": 45127,
+      "l1j_source_line": 20745,
+      "l1j_candidates": [
+        45127
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 97,
+      "official_raw_path": "work/official_data/raw/monster/153.json",
+      "official_regions": [
+        "요정숲 던전 2층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 786,
+      "l1j_sprite": 784,
+      "official_level": 13,
+      "l1j_level": 13
+    },
+    {
+      "template_id": 154,
+      "name_ko": "늑대인간",
+      "l1j_npcid": 45024,
+      "l1j_source_line": 20645,
+      "l1j_candidates": [
+        45024,
+        45093,
+        45094,
+        45355,
+        45763,
+        45803
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 98,
+      "official_raw_path": "work/official_data/raw/monster/154.json",
+      "official_regions": [
+        "요정숲 던전 2층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 33,
+      "l1j_sprite": 1110,
+      "official_level": 9,
+      "l1j_level": 9
+    },
+    {
+      "template_id": 155,
+      "name_ko": "늑대",
+      "l1j_npcid": 45043,
+      "l1j_source_line": 20663,
+      "l1j_candidates": [
+        45043
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 99,
+      "official_raw_path": "work/official_data/raw/monster/155.json",
+      "official_regions": [
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 96,
+      "l1j_sprite": 96,
+      "official_level": 4,
+      "l1j_level": 5
+    },
+    {
+      "template_id": 156,
+      "name_ko": "오크",
+      "l1j_npcid": 45009,
+      "l1j_source_line": 20631,
+      "l1j_candidates": [
+        45009,
+        45017,
+        45018,
+        45756
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 100,
+      "official_raw_path": "work/official_data/raw/monster/156.json",
+      "official_regions": [
+        "요정숲 던전 1층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 56,
+      "l1j_sprite": 56,
+      "official_level": 2,
+      "l1j_level": 2
+    },
+    {
+      "template_id": 162,
+      "name_ko": "돌 골렘",
+      "l1j_npcid": 45126,
+      "l1j_source_line": 20744,
+      "l1j_candidates": [
+        45126,
+        45134,
+        45768
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 105,
+      "official_raw_path": "work/official_data/raw/monster/162.json",
+      "official_regions": [
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 49,
+      "l1j_sprite": 49,
+      "official_level": 13,
+      "l1j_level": 13
+    },
+    {
+      "template_id": 163,
+      "name_ko": "난쟁이",
+      "l1j_npcid": 45041,
+      "l1j_source_line": 20661,
+      "l1j_candidates": [
+        45041,
+        45761
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 106,
+      "official_raw_path": "work/official_data/raw/monster/163.json",
+      "official_regions": [
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 54,
+      "l1j_sprite": 54,
+      "official_level": 5,
+      "l1j_level": 5
+    },
+    {
+      "template_id": 164,
+      "name_ko": "좀비",
+      "l1j_npcid": 45065,
+      "l1j_source_line": 20685,
+      "l1j_candidates": [
+        45065,
+        45066,
+        45105,
+        45757,
+        81108,
+        81183,
+        81184,
+        81185,
+        81186,
+        81187,
+        81188
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 107,
+      "official_raw_path": "work/official_data/raw/monster/164.json",
+      "official_regions": [
+        "요정숲 던전 1층",
+        "요정 숲",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 52,
+      "l1j_sprite": 52,
+      "official_level": 6,
+      "l1j_level": 6
+    },
+    {
+      "template_id": 177,
+      "name_ko": "도베르만",
+      "l1j_npcid": 45042,
+      "l1j_source_line": 20662,
+      "l1j_candidates": [
+        45042
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 114,
+      "official_raw_path": "work/official_data/raw/monster/177.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 931,
+      "l1j_sprite": 931,
+      "official_level": 6,
+      "l1j_level": 5
+    },
+    {
+      "template_id": 179,
+      "name_ko": "세퍼드",
+      "l1j_npcid": 45034,
+      "l1j_source_line": 20654,
+      "l1j_candidates": [
+        45034
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 116,
+      "official_raw_path": "work/official_data/raw/monster/179.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 936,
+      "l1j_sprite": 936,
+      "official_level": 5,
+      "l1j_level": 5
+    },
+    {
+      "template_id": 180,
+      "name_ko": "비글",
+      "l1j_npcid": 45046,
+      "l1j_source_line": 20666,
+      "l1j_candidates": [
+        45046
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 117,
+      "official_raw_path": "work/official_data/raw/monster/180.json",
+      "official_regions": [
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 938,
+      "l1j_sprite": 938,
+      "official_level": 5,
+      "l1j_level": 5
+    },
+    {
+      "template_id": 190,
+      "name_ko": "멧돼지",
+      "l1j_npcid": 45058,
+      "l1j_source_line": 20678,
+      "l1j_candidates": [
+        45023,
+        45058
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 125,
+      "official_raw_path": "work/official_data/raw/monster/190.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "윈다우드",
+        "요정 숲",
+        "켄트",
+        "아덴 대륙",
+        "해적섬 선착장"
+      ],
+      "fixed_sprite": 979,
+      "l1j_sprite": 979,
+      "official_level": 6,
+      "l1j_level": 6
+    },
+    {
+      "template_id": 223,
+      "name_ko": "오우거",
+      "l1j_npcid": 45278,
+      "l1j_source_line": 20872,
+      "l1j_candidates": [
+        45278
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 144,
+      "official_raw_path": "work/official_data/raw/monster/223.json",
+      "official_regions": [
+        "오크 숲",
+        "글루디오",
+        "켄트",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 1020,
+      "l1j_sprite": 1020,
+      "official_level": 28,
+      "l1j_level": 28
+    },
+    {
+      "template_id": 245,
+      "name_ko": "고블린",
+      "l1j_npcid": 45008,
+      "l1j_source_line": 20630,
+      "l1j_candidates": [
+        45008,
+        45737,
+        45755
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 152,
+      "official_raw_path": "work/official_data/raw/monster/245.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "은기사 지역",
+        "글루디오",
+        "켄트",
+        "기란",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 1022,
+      "l1j_sprite": 1022,
+      "official_level": 2,
+      "l1j_level": 2
+    },
+    {
+      "template_id": 249,
+      "name_ko": "코볼트",
+      "l1j_npcid": 45016,
+      "l1j_source_line": 20637,
+      "l1j_candidates": [
+        45016,
+        45754
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 156,
+      "official_raw_path": "work/official_data/raw/monster/249.json",
+      "official_regions": [
+        "말하는 섬",
+        "말하는 섬",
+        "은기사 지역",
+        "글루디오",
+        "켄트",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 1059,
+      "l1j_sprite": 1059,
+      "official_level": 3,
+      "l1j_level": 3
+    },
+    {
+      "template_id": 274,
+      "name_ko": "오크 마법사",
+      "l1j_npcid": 45121,
+      "l1j_source_line": 20739,
+      "l1j_candidates": [
+        45121
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 159,
+      "official_raw_path": "work/official_data/raw/monster/274.json",
+      "official_regions": [
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "윈다우드",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 1211,
+      "l1j_sprite": 1211,
+      "official_level": 12,
+      "l1j_level": 12
+    },
+    {
+      "template_id": 276,
+      "name_ko": "해골궁수",
+      "l1j_npcid": 45122,
+      "l1j_source_line": 20740,
+      "l1j_candidates": [
+        45122,
+        45123,
+        45124,
+        45129,
+        45765
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 160,
+      "official_raw_path": "work/official_data/raw/monster/276.json",
+      "official_regions": [
+        "말하는 섬 던전 1층",
+        "말하는 섬 던전 2층",
+        "사막 던전 1층",
+        "사막 던전 3층",
+        "글루디오",
+        "아덴 대륙",
+        "글루디오 던전 1층",
+        "글루디오 던전 2층",
+        "글루디오 던전 3층",
+        "글루디오 던전 4층",
+        "글루디오 던전 5층",
+        "글루디오 던전 6층",
+        "글루디오 던전 7층",
+        "윈다우드 성 던전 1층"
+      ],
+      "fixed_sprite": 1096,
+      "l1j_sprite": 1096,
+      "official_level": 12,
+      "l1j_level": 12
+    },
+    {
+      "template_id": 280,
+      "name_ko": "라이칸스로프",
+      "l1j_npcid": 45173,
+      "l1j_source_line": 20789,
+      "l1j_candidates": [
+        45173,
+        45389,
+        45769,
+        45808,
+        46126,
+        81091
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 164,
+      "official_raw_path": "work/official_data/raw/monster/280.json",
+      "official_regions": [
+        "기란 던전 2층",
+        "은기사 지역",
+        "오크 숲",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "용의 계곡",
+        "기란",
+        "하이네",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 1108,
+      "l1j_sprite": 1108,
+      "official_level": 17,
+      "l1j_level": 17
+    },
+    {
+      "template_id": 297,
+      "name_ko": "다크 엘프",
+      "l1j_npcid": 45265,
+      "l1j_source_line": 20860,
+      "l1j_candidates": [
+        45265,
+        45364
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 178,
+      "official_raw_path": "work/official_data/raw/monster/297.json",
+      "official_regions": [
+        "기란 던전 4층",
+        "오크 숲",
+        "용의 계곡",
+        "기란",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 1125,
+      "l1j_sprite": 1125,
+      "official_level": 27,
+      "l1j_level": 27
+    },
+    {
+      "template_id": 323,
+      "name_ko": "홉고블린",
+      "l1j_npcid": 45140,
+      "l1j_source_line": 20757,
+      "l1j_candidates": [
+        45140,
+        81210
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "REUSED_REVIEWED_MAPPING",
+      "native_line": 190,
+      "official_raw_path": "work/official_data/raw/monster/323.json",
+      "official_regions": [
+        "은기사 지역",
+        "글루디오",
+        "윈다우드",
+        "켄트",
+        "기란",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 1206,
+      "l1j_sprite": 1206,
+      "official_level": 14,
+      "l1j_level": 14
+    },
+    {
+      "template_id": 750,
+      "name_ko": "흑기사 수색대",
+      "l1j_npcid": 81066,
+      "l1j_source_line": 23117,
+      "l1j_candidates": [
+        81066
+      ],
+      "identity_status": "fixed_client_id_name_token_sprite",
+      "backend_mapping_status": "LOCAL_STATS_REFERENCE_NOT_CLASSIC_IDENTITY",
+      "native_line": 398,
+      "official_raw_path": "work/official_data/raw/monster/750.json",
+      "official_regions": [
+        "글루디오",
+        "아덴 대륙"
+      ],
+      "fixed_sprite": 110,
+      "l1j_sprite": 4003,
+      "official_level": 16,
+      "l1j_level": 16
+    }
+  ],
+  "local_policy_note": "Native template identity is fixed client. L1J IDs supply separate backend values; token/level or same-sprite candidates do not prove official variant equality. Spawn coordinates and density are LOCAL; no terrain or game execution.",
+  "summary": {
+    "before_monsters": 19,
+    "after_monsters": 49,
+    "added_template_ids": [
+      2,
+      5,
+      7,
+      9,
+      17,
+      28,
+      30,
+      33,
+      115,
+      116,
+      129,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      162,
+      163,
+      164,
+      177,
+      179,
+      180,
+      280,
+      323,
+      750
+    ],
+    "before_groups": 25,
+    "after_groups": 72,
+    "before_target_count": 45,
+    "after_target_count": 92,
+    "areas": [
+      {
+        "area": "글루디오",
+        "official_region_name": "글루디오",
+        "official_dictionary_count": 26,
+        "fixed_client_eligible": 26,
+        "client_absent": [],
+        "before_monsters": 3,
+        "after_monsters": 26,
+        "before_groups": 9,
+        "after_groups": 32,
+        "before_target_count": 21,
+        "after_target_count": 44,
+        "missing_regional_ids_after": []
+      },
+      {
+        "area": "요정 숲",
+        "official_region_name": "요정 숲",
+        "official_dictionary_count": 16,
+        "fixed_client_eligible": 16,
+        "client_absent": [],
+        "before_monsters": 8,
+        "after_monsters": 21,
+        "before_groups": 8,
+        "after_groups": 21,
+        "before_target_count": 16,
+        "after_target_count": 29,
+        "missing_regional_ids_after": []
+      },
+      {
+        "area": "오크 숲",
+        "official_region_name": "오크 숲",
+        "official_dictionary_count": 19,
+        "fixed_client_eligible": 19,
+        "client_absent": [],
+        "before_monsters": 8,
+        "after_monsters": 19,
+        "before_groups": 8,
+        "after_groups": 19,
+        "before_target_count": 8,
+        "after_target_count": 19,
+        "missing_regional_ids_after": []
+      }
+    ],
+    "source_cells_all_top_level": {
+      "client": 532,
+      "l1j": 443,
+      "official": 152,
+      "local_policy": 504
+    },
+    "new_groups_own_l1j_row_count": 18,
+    "new_groups_no_own_l1j_row_count": 29,
+    "runtime_consumed_source_cells": {
+      "monsters": {
+        "client": 294,
+        "l1j": 320,
+        "official": 49,
+        "local_policy": 219
+      },
+      "spawns": {
+        "local_policy": 263,
+        "client": 144,
+        "l1j": 25
+      }
+    },
+    "new_group_total": 47
+  },
+  "limitations": [
+    "Classical completeness unconfirmed beyond snapshot regionNames; current dictionary is not fixed client server-version proof.",
+    "Exact L1J variant equality unproven where shared policy reference is selected. Native client IDs are never merged.",
+    "Template25 and29 have independent identities/drops;25 uses generic45107 only as local numeric reference.",
+    "Existing unsupported regional placements remain as prior local_policy, not upgraded to official evidence.",
+    "No game/server/port/bot/terrain code executed. New mixed-species spawn density and collision are unverified."
+  ]
+}

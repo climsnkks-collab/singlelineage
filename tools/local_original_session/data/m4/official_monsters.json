@@ -1,0 +1,1513 @@
+{
+  "table": "m4_official_monsters",
+  "schema_version": 1,
+  "note": "저장 공식 정규화 자료의 선택3행을 변경 없이 보존. regionNames 중복·순서 및 rewards의 축복/저주 변형을 포함한 원문 목록29행 유지. 확률/수량 null을 실행값으로 바꾸지 않음. 공식 응답 수집은 기존 자료를 재사용하며 이번 작업의 새 HTTP 요청 없음.",
+  "reused_from": "tools/local_original_session/data/official/monsters.json",
+  "client_dump": {
+    "path": "work/source_game_data/native-dump-v1.jsonl",
+    "sha256": "a4a188ce02054beb0ab429dff32fe7affe00a930eb78bf7d9bd223b21eb721a9",
+    "provenance_path": "work/source_game_data/provenance.json",
+    "version": "26.09.29.2001"
+  },
+  "source_manifest": "work/official_data/manifest.json",
+  "collection_request_interval_requirement_met": false,
+  "monsters": [
+    {
+      "official_id": 27,
+      "name_ko": "좀비",
+      "client_id": 27,
+      "client_mapping": {
+        "client_id": 27,
+        "status": "exact_id_and_name",
+        "reason": null,
+        "evidence": {
+          "path": "work/source_game_data/native-dump-v1.jsonl",
+          "line": 22,
+          "lookup_id": 27,
+          "client_name_ko": "좀비",
+          "official_name_ko": "좀비",
+          "comparison_transform": null,
+          "name_token": "$57",
+          "row_body_sha256": "9aaf78039c24ecfaa818e09addaf82cf7c973362840fa3a64b6108c00db3e7af"
+        }
+      },
+      "source": {
+        "provider": "NC Lineage Classic official dictionary",
+        "url": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/27?locale=ko-KR",
+        "raw_path": "work/official_data/raw/monster/27.json",
+        "collected_at_utc": "2026-10-26T17:16:14.558+00:00",
+        "raw_sha256": "6256e4c9edd699ba46a4fa77dc344fc891a3dcf946348c469cdbbb32540e9d5a",
+        "list_raw_path": "work/official_data/raw/lists/monster/page-1.json",
+        "list_url": "https://api-goats.plaync.com/linclassic/v2.0/dict/search/monster?searchKeyword=&locale=ko-KR&page=1&size=50",
+        "list_collected_at_utc": "2026-10-26T17:04:07.714+00:00",
+        "list_raw_sha256": "953d215cf837123396a55d1729f183df5bcf0cd9600b110933a97bedd04d72f0"
+      },
+      "official": {
+        "id": 27,
+        "name": "좀비",
+        "image": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/27.png",
+        "favorite": false,
+        "level": 6,
+        "formName": "언데드",
+        "big": false,
+        "damageable": false,
+        "regionNames": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "rewards": [
+          {
+            "categoryName": "기타",
+            "rewards": [
+              {
+                "id": 7,
+                "name": "아데나"
+              },
+              {
+                "id": 23,
+                "name": "축복받은 순간이동 주문서"
+              },
+              {
+                "id": 28,
+                "name": "부활 주문서"
+              },
+              {
+                "id": 197,
+                "name": "마법서 (뱀파이어릭 터치)"
+              },
+              {
+                "id": 604,
+                "name": "마법서 (다크니스)"
+              }
+            ]
+          }
+        ]
+      },
+      "official_list": {
+        "id": 27,
+        "name": "좀비",
+        "image": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/27.png",
+        "favorite": false,
+        "formName": "언데드",
+        "level": 6,
+        "regionNames": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 2층",
+          "엘모어 격전지",
+          "은기사 지역",
+          "글루디오",
+          "오렌",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "윈다우드 성 던전 1층"
+        ],
+        "rewordNames": [
+          "부활 주문서",
+          "아데나",
+          "축복받은순간이동 주문서",
+          "마법서 (뱀파이어릭 터치)",
+          "마법서 (다크니스)"
+        ]
+      },
+      "drops": [
+        {
+          "official_item_id": 7,
+          "name_ko": "아데나",
+          "category_name": "기타",
+          "source_key": "rewards[0].rewards[0]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 7,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 23,
+          "name_ko": "축복받은 순간이동 주문서",
+          "category_name": "기타",
+          "source_key": "rewards[0].rewards[1]",
+          "grade_name": "blessed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 23,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 28,
+          "name_ko": "부활 주문서",
+          "category_name": "기타",
+          "source_key": "rewards[0].rewards[2]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 28,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 197,
+          "name_ko": "마법서 (뱀파이어릭 터치)",
+          "category_name": "기타",
+          "source_key": "rewards[0].rewards[3]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 197,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 604,
+          "name_ko": "마법서 (다크니스)",
+          "category_name": "기타",
+          "source_key": "rewards[0].rewards[4]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 604,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        }
+      ],
+      "not_provided": {
+        "hp": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "mp": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "ac": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "mr": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "experience": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "str": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "dex": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "aggressive": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "move_interval_ms": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "attack_interval_ms": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "drop_probability": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "drop_quantity": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "adena_quantity": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        }
+      },
+      "fields": {
+        "level": {
+          "value": 6,
+          "source_key": "level",
+          "status": "provided",
+          "reason": null
+        },
+        "big": {
+          "value": false,
+          "source_key": "big",
+          "status": "provided",
+          "reason": null
+        },
+        "damageable": {
+          "value": false,
+          "source_key": "damageable",
+          "status": "provided",
+          "reason": null
+        },
+        "formName": {
+          "value": "언데드",
+          "source_key": "formName",
+          "status": "provided",
+          "reason": null
+        },
+        "undead": {
+          "value": null,
+          "source_key": "undead",
+          "status": "absent_in_response",
+          "reason": "공식 상세 응답에 이 키가 없음. 0/false로 보충하지 않음."
+        },
+        "demon": {
+          "value": null,
+          "source_key": "demon",
+          "status": "absent_in_response",
+          "reason": "공식 상세 응답에 이 키가 없음. 0/false로 보충하지 않음."
+        },
+        "regionNames": {
+          "value": [
+            "말하는 섬",
+            "말하는 섬",
+            "말하는 섬 던전 1층",
+            "말하는 섬 던전 2층",
+            "사막 던전 1층",
+            "사막 던전 2층",
+            "엘모어 격전지",
+            "은기사 지역",
+            "글루디오",
+            "오렌",
+            "아덴 대륙",
+            "글루디오 던전 1층",
+            "글루디오 던전 2층",
+            "글루디오 던전 3층",
+            "글루디오 던전 4층",
+            "윈다우드 성 던전 1층"
+          ],
+          "source_key": "regionNames",
+          "status": "provided",
+          "reason": null
+        },
+        "rewards": {
+          "value": [
+            {
+              "categoryName": "기타",
+              "rewards": [
+                {
+                  "id": 7,
+                  "name": "아데나"
+                },
+                {
+                  "id": 23,
+                  "name": "축복받은 순간이동 주문서"
+                },
+                {
+                  "id": 28,
+                  "name": "부활 주문서"
+                },
+                {
+                  "id": 197,
+                  "name": "마법서 (뱀파이어릭 터치)"
+                },
+                {
+                  "id": 604,
+                  "name": "마법서 (다크니스)"
+                }
+              ]
+            }
+          ],
+          "source_key": "rewards",
+          "status": "provided",
+          "reason": null
+        },
+        "id": {
+          "value": 27,
+          "source_key": "id",
+          "status": "provided",
+          "reason": null
+        },
+        "name": {
+          "value": "좀비",
+          "source_key": "name",
+          "status": "provided",
+          "reason": null
+        },
+        "image": {
+          "value": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/27.png",
+          "source_key": "image",
+          "status": "provided",
+          "reason": null
+        },
+        "favorite": {
+          "value": false,
+          "source_key": "favorite",
+          "status": "provided",
+          "reason": null
+        }
+      }
+    },
+    {
+      "official_id": 29,
+      "name_ko": "해골",
+      "client_id": 29,
+      "client_mapping": {
+        "client_id": 29,
+        "status": "exact_id_and_name",
+        "reason": null,
+        "evidence": {
+          "path": "work/source_game_data/native-dump-v1.jsonl",
+          "line": 24,
+          "lookup_id": 29,
+          "client_name_ko": "해골",
+          "official_name_ko": "해골",
+          "comparison_transform": null,
+          "name_token": "$7",
+          "row_body_sha256": "8866a38953f6e9b73e3959ffdcb139563836f7db11d255739bf71cc752e01740"
+        }
+      },
+      "source": {
+        "provider": "NC Lineage Classic official dictionary",
+        "url": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/29?locale=ko-KR",
+        "raw_path": "work/official_data/raw/monster/29.json",
+        "collected_at_utc": "2026-10-26T17:16:37.833+00:00",
+        "raw_sha256": "46f43a6a6a54862a5ed7d065619df4c4434731207a6250b876bd06b0b4cc5dce",
+        "list_raw_path": "work/official_data/raw/lists/monster/page-2.json",
+        "list_url": "https://api-goats.plaync.com/linclassic/v2.0/dict/search/monster?searchKeyword=&locale=ko-KR&page=2&size=50",
+        "list_collected_at_utc": "2026-10-26T17:04:08.770+00:00",
+        "list_raw_sha256": "4544a00623fae673c07827353dc01565e98280c9f40d796d32544f6edcb6a346"
+      },
+      "official": {
+        "id": 29,
+        "name": "해골",
+        "image": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/29.png",
+        "favorite": false,
+        "level": 10,
+        "formName": "언데드",
+        "big": false,
+        "damageable": false,
+        "regionNames": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "은기사 지역",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "rewards": [
+          {
+            "categoryName": "무기",
+            "rewards": [
+              {
+                "id": 67,
+                "name": "저주받은 언월도"
+              },
+              {
+                "id": 67,
+                "name": "언월도"
+              }
+            ]
+          },
+          {
+            "categoryName": "방어구",
+            "rewards": [
+              {
+                "id": 90,
+                "name": "저주받은 투구"
+              },
+              {
+                "id": 90,
+                "name": "투구"
+              },
+              {
+                "id": 111,
+                "name": "마법 망토"
+              },
+              {
+                "id": 111,
+                "name": "저주받은 마법 망토"
+              },
+              {
+                "id": 117,
+                "name": "큰 방패"
+              }
+            ]
+          },
+          {
+            "categoryName": "기타",
+            "rewards": [
+              {
+                "id": 7,
+                "name": "아데나"
+              },
+              {
+                "id": 17,
+                "name": "초록 물약"
+              },
+              {
+                "id": 166,
+                "name": "마력의 돌"
+              },
+              {
+                "id": 195,
+                "name": "마법서 (인챈트 덱스터리티)"
+              },
+              {
+                "id": 336,
+                "name": "뼈조각"
+              },
+              {
+                "id": 495,
+                "name": "강화 초록 물약"
+              },
+              {
+                "id": 647,
+                "name": "해골의 두개골"
+              },
+              {
+                "id": 694,
+                "name": "언데드의 열쇠"
+              }
+            ]
+          }
+        ]
+      },
+      "official_list": {
+        "id": 29,
+        "name": "해골",
+        "image": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/29.png",
+        "favorite": false,
+        "formName": "언데드",
+        "level": 10,
+        "regionNames": [
+          "말하는 섬",
+          "말하는 섬",
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "은기사 지역",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "윈다우드 성 던전 1층"
+        ],
+        "rewordNames": [
+          "저주받은투구",
+          "초록 물약",
+          "마법서 (인챈트 덱스터리티)",
+          "마력의 돌",
+          "저주받은마법 망토",
+          "해골의 두개골",
+          "아데나",
+          "언월도",
+          "큰 방패",
+          "마법 망토",
+          "투구",
+          "저주받은언월도",
+          "언데드의 열쇠",
+          "강화 초록 물약",
+          "뼈조각"
+        ]
+      },
+      "drops": [
+        {
+          "official_item_id": 67,
+          "name_ko": "저주받은 언월도",
+          "category_name": "무기",
+          "source_key": "rewards[0].rewards[0]",
+          "grade_name": "cursed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 67,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 67,
+          "name_ko": "언월도",
+          "category_name": "무기",
+          "source_key": "rewards[0].rewards[1]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 67,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 90,
+          "name_ko": "저주받은 투구",
+          "category_name": "방어구",
+          "source_key": "rewards[1].rewards[0]",
+          "grade_name": "cursed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 90,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 90,
+          "name_ko": "투구",
+          "category_name": "방어구",
+          "source_key": "rewards[1].rewards[1]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 90,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 111,
+          "name_ko": "마법 망토",
+          "category_name": "방어구",
+          "source_key": "rewards[1].rewards[2]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 111,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 111,
+          "name_ko": "저주받은 마법 망토",
+          "category_name": "방어구",
+          "source_key": "rewards[1].rewards[3]",
+          "grade_name": "cursed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 111,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 117,
+          "name_ko": "큰 방패",
+          "category_name": "방어구",
+          "source_key": "rewards[1].rewards[4]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 117,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 7,
+          "name_ko": "아데나",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[0]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 7,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 17,
+          "name_ko": "초록 물약",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[1]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 17,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 166,
+          "name_ko": "마력의 돌",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[2]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 166,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 195,
+          "name_ko": "마법서 (인챈트 덱스터리티)",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[3]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 195,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 336,
+          "name_ko": "뼈조각",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[4]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 336,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 495,
+          "name_ko": "강화 초록 물약",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[5]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 495,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 647,
+          "name_ko": "해골의 두개골",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[6]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 647,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 694,
+          "name_ko": "언데드의 열쇠",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[7]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 694,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        }
+      ],
+      "not_provided": {
+        "hp": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "mp": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "ac": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "mr": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "experience": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "str": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "dex": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "aggressive": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "move_interval_ms": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "attack_interval_ms": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "drop_probability": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "drop_quantity": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "adena_quantity": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        }
+      },
+      "fields": {
+        "level": {
+          "value": 10,
+          "source_key": "level",
+          "status": "provided",
+          "reason": null
+        },
+        "big": {
+          "value": false,
+          "source_key": "big",
+          "status": "provided",
+          "reason": null
+        },
+        "damageable": {
+          "value": false,
+          "source_key": "damageable",
+          "status": "provided",
+          "reason": null
+        },
+        "formName": {
+          "value": "언데드",
+          "source_key": "formName",
+          "status": "provided",
+          "reason": null
+        },
+        "undead": {
+          "value": null,
+          "source_key": "undead",
+          "status": "absent_in_response",
+          "reason": "공식 상세 응답에 이 키가 없음. 0/false로 보충하지 않음."
+        },
+        "demon": {
+          "value": null,
+          "source_key": "demon",
+          "status": "absent_in_response",
+          "reason": "공식 상세 응답에 이 키가 없음. 0/false로 보충하지 않음."
+        },
+        "regionNames": {
+          "value": [
+            "말하는 섬",
+            "말하는 섬",
+            "말하는 섬 던전 1층",
+            "말하는 섬 던전 2층",
+            "사막 던전 1층",
+            "사막 던전 3층",
+            "은기사 지역",
+            "글루디오",
+            "아덴 대륙",
+            "글루디오 던전 1층",
+            "글루디오 던전 2층",
+            "글루디오 던전 3층",
+            "글루디오 던전 4층",
+            "글루디오 던전 5층",
+            "윈다우드 성 던전 1층"
+          ],
+          "source_key": "regionNames",
+          "status": "provided",
+          "reason": null
+        },
+        "rewards": {
+          "value": [
+            {
+              "categoryName": "무기",
+              "rewards": [
+                {
+                  "id": 67,
+                  "name": "저주받은 언월도"
+                },
+                {
+                  "id": 67,
+                  "name": "언월도"
+                }
+              ]
+            },
+            {
+              "categoryName": "방어구",
+              "rewards": [
+                {
+                  "id": 90,
+                  "name": "저주받은 투구"
+                },
+                {
+                  "id": 90,
+                  "name": "투구"
+                },
+                {
+                  "id": 111,
+                  "name": "마법 망토"
+                },
+                {
+                  "id": 111,
+                  "name": "저주받은 마법 망토"
+                },
+                {
+                  "id": 117,
+                  "name": "큰 방패"
+                }
+              ]
+            },
+            {
+              "categoryName": "기타",
+              "rewards": [
+                {
+                  "id": 7,
+                  "name": "아데나"
+                },
+                {
+                  "id": 17,
+                  "name": "초록 물약"
+                },
+                {
+                  "id": 166,
+                  "name": "마력의 돌"
+                },
+                {
+                  "id": 195,
+                  "name": "마법서 (인챈트 덱스터리티)"
+                },
+                {
+                  "id": 336,
+                  "name": "뼈조각"
+                },
+                {
+                  "id": 495,
+                  "name": "강화 초록 물약"
+                },
+                {
+                  "id": 647,
+                  "name": "해골의 두개골"
+                },
+                {
+                  "id": 694,
+                  "name": "언데드의 열쇠"
+                }
+              ]
+            }
+          ],
+          "source_key": "rewards",
+          "status": "provided",
+          "reason": null
+        },
+        "id": {
+          "value": 29,
+          "source_key": "id",
+          "status": "provided",
+          "reason": null
+        },
+        "name": {
+          "value": "해골",
+          "source_key": "name",
+          "status": "provided",
+          "reason": null
+        },
+        "image": {
+          "value": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/29.png",
+          "source_key": "image",
+          "status": "provided",
+          "reason": null
+        },
+        "favorite": {
+          "value": false,
+          "source_key": "favorite",
+          "status": "provided",
+          "reason": null
+        }
+      }
+    },
+    {
+      "official_id": 276,
+      "name_ko": "해골궁수",
+      "client_id": 276,
+      "client_mapping": {
+        "client_id": 276,
+        "status": "exact_id_and_name",
+        "reason": null,
+        "evidence": {
+          "path": "work/source_game_data/native-dump-v1.jsonl",
+          "line": 160,
+          "lookup_id": 276,
+          "client_name_ko": "해골궁수",
+          "official_name_ko": "해골궁수",
+          "comparison_transform": null,
+          "name_token": "$986",
+          "row_body_sha256": "972078b86197699ed399cf42f104c5d8400b0f6c3d20ec654a7b03e0d4ebda1b"
+        }
+      },
+      "source": {
+        "provider": "NC Lineage Classic official dictionary",
+        "url": "https://api-goats.plaync.com/linclassic/v2.0/game/monster/276?locale=ko-KR",
+        "raw_path": "work/official_data/raw/monster/276.json",
+        "collected_at_utc": "2026-10-26T17:16:51.132+00:00",
+        "raw_sha256": "b8925212af2df5964ec7728a2c858bf2bea106b5b612fcc8fcc90a49d16df7ca",
+        "list_raw_path": "work/official_data/raw/lists/monster/page-2.json",
+        "list_url": "https://api-goats.plaync.com/linclassic/v2.0/dict/search/monster?searchKeyword=&locale=ko-KR&page=2&size=50",
+        "list_collected_at_utc": "2026-10-26T17:04:08.770+00:00",
+        "list_raw_sha256": "4544a00623fae673c07827353dc01565e98280c9f40d796d32544f6edcb6a346"
+      },
+      "official": {
+        "id": 276,
+        "name": "해골궁수",
+        "image": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/276.png",
+        "favorite": false,
+        "level": 12,
+        "formName": "언데드",
+        "big": false,
+        "damageable": false,
+        "regionNames": [
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층"
+        ],
+        "rewards": [
+          {
+            "categoryName": "무기",
+            "rewards": [
+              {
+                "id": 11,
+                "name": "활"
+              }
+            ]
+          },
+          {
+            "categoryName": "방어구",
+            "rewards": [
+              {
+                "id": 90,
+                "name": "투구"
+              },
+              {
+                "id": 111,
+                "name": "마법 망토"
+              }
+            ]
+          },
+          {
+            "categoryName": "기타",
+            "rewards": [
+              {
+                "id": 7,
+                "name": "아데나"
+              },
+              {
+                "id": 17,
+                "name": "초록 물약"
+              },
+              {
+                "id": 166,
+                "name": "마력의 돌"
+              },
+              {
+                "id": 195,
+                "name": "마법서 (인챈트 덱스터리티)"
+              },
+              {
+                "id": 336,
+                "name": "뼈조각"
+              },
+              {
+                "id": 495,
+                "name": "강화 초록 물약"
+              }
+            ]
+          }
+        ]
+      },
+      "official_list": {
+        "id": 276,
+        "name": "해골궁수",
+        "image": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/276.png",
+        "favorite": false,
+        "formName": "언데드",
+        "level": 12,
+        "regionNames": [
+          "말하는 섬 던전 1층",
+          "말하는 섬 던전 2층",
+          "사막 던전 1층",
+          "사막 던전 3층",
+          "글루디오",
+          "아덴 대륙",
+          "글루디오 던전 1층",
+          "글루디오 던전 2층",
+          "글루디오 던전 3층",
+          "글루디오 던전 4층",
+          "글루디오 던전 5층",
+          "글루디오 던전 6층",
+          "글루디오 던전 7층",
+          "윈다우드 성 던전 1층"
+        ],
+        "rewordNames": [
+          "초록 물약",
+          "아데나",
+          "마법서 (인챈트 덱스터리티)",
+          "마력의 돌",
+          "마법 망토",
+          "투구",
+          "활",
+          "강화 초록 물약",
+          "뼈조각"
+        ]
+      },
+      "drops": [
+        {
+          "official_item_id": 11,
+          "name_ko": "활",
+          "category_name": "무기",
+          "source_key": "rewards[0].rewards[0]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 11,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 90,
+          "name_ko": "투구",
+          "category_name": "방어구",
+          "source_key": "rewards[1].rewards[0]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 90,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 111,
+          "name_ko": "마법 망토",
+          "category_name": "방어구",
+          "source_key": "rewards[1].rewards[1]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 111,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 7,
+          "name_ko": "아데나",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[0]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 7,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 17,
+          "name_ko": "초록 물약",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[1]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 17,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 166,
+          "name_ko": "마력의 돌",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[2]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 166,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 195,
+          "name_ko": "마법서 (인챈트 덱스터리티)",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[3]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 195,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 336,
+          "name_ko": "뼈조각",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[4]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 336,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        },
+        {
+          "official_item_id": 495,
+          "name_ko": "강화 초록 물약",
+          "category_name": "기타",
+          "source_key": "rewards[2].rewards[5]",
+          "grade_name": "unprefixed",
+          "item_dictionary_reference": {
+            "normalized_item_id": 495,
+            "status": "present_in_collected_dictionary",
+            "reason": null
+          },
+          "probability": null,
+          "quantity_min": null,
+          "quantity_max": null,
+          "missing_reason": "공식 응답은 드롭 구성만 제공. 확률·수량·아데나 양 미제공."
+        }
+      ],
+      "not_provided": {
+        "hp": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "mp": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "ac": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "mr": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "experience": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "str": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "dex": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "aggressive": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "move_interval_ms": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "attack_interval_ms": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "drop_probability": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "drop_quantity": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        },
+        "adena_quantity": {
+          "value": null,
+          "reason": "수집한 공식 몬스터 상세에 해당 능력치·정책 필드 없음"
+        }
+      },
+      "fields": {
+        "level": {
+          "value": 12,
+          "source_key": "level",
+          "status": "provided",
+          "reason": null
+        },
+        "big": {
+          "value": false,
+          "source_key": "big",
+          "status": "provided",
+          "reason": null
+        },
+        "damageable": {
+          "value": false,
+          "source_key": "damageable",
+          "status": "provided",
+          "reason": null
+        },
+        "formName": {
+          "value": "언데드",
+          "source_key": "formName",
+          "status": "provided",
+          "reason": null
+        },
+        "undead": {
+          "value": null,
+          "source_key": "undead",
+          "status": "absent_in_response",
+          "reason": "공식 상세 응답에 이 키가 없음. 0/false로 보충하지 않음."
+        },
+        "demon": {
+          "value": null,
+          "source_key": "demon",
+          "status": "absent_in_response",
+          "reason": "공식 상세 응답에 이 키가 없음. 0/false로 보충하지 않음."
+        },
+        "regionNames": {
+          "value": [
+            "말하는 섬 던전 1층",
+            "말하는 섬 던전 2층",
+            "사막 던전 1층",
+            "사막 던전 3층",
+            "글루디오",
+            "아덴 대륙",
+            "글루디오 던전 1층",
+            "글루디오 던전 2층",
+            "글루디오 던전 3층",
+            "글루디오 던전 4층",
+            "글루디오 던전 5층",
+            "글루디오 던전 6층",
+            "글루디오 던전 7층",
+            "윈다우드 성 던전 1층"
+          ],
+          "source_key": "regionNames",
+          "status": "provided",
+          "reason": null
+        },
+        "rewards": {
+          "value": [
+            {
+              "categoryName": "무기",
+              "rewards": [
+                {
+                  "id": 11,
+                  "name": "활"
+                }
+              ]
+            },
+            {
+              "categoryName": "방어구",
+              "rewards": [
+                {
+                  "id": 90,
+                  "name": "투구"
+                },
+                {
+                  "id": 111,
+                  "name": "마법 망토"
+                }
+              ]
+            },
+            {
+              "categoryName": "기타",
+              "rewards": [
+                {
+                  "id": 7,
+                  "name": "아데나"
+                },
+                {
+                  "id": 17,
+                  "name": "초록 물약"
+                },
+                {
+                  "id": 166,
+                  "name": "마력의 돌"
+                },
+                {
+                  "id": 195,
+                  "name": "마법서 (인챈트 덱스터리티)"
+                },
+                {
+                  "id": 336,
+                  "name": "뼈조각"
+                },
+                {
+                  "id": 495,
+                  "name": "강화 초록 물약"
+                }
+              ]
+            }
+          ],
+          "source_key": "rewards",
+          "status": "provided",
+          "reason": null
+        },
+        "id": {
+          "value": 276,
+          "source_key": "id",
+          "status": "provided",
+          "reason": null
+        },
+        "name": {
+          "value": "해골궁수",
+          "source_key": "name",
+          "status": "provided",
+          "reason": null
+        },
+        "image": {
+          "value": "https://assets.playnccdn.com/static-lineageclassic-gamedata/resources/NPCIcon/276.png",
+          "source_key": "image",
+          "status": "provided",
+          "reason": null
+        },
+        "favorite": {
+          "value": false,
+          "source_key": "favorite",
+          "status": "provided",
+          "reason": null
+        }
+      }
+    }
+  ]
+}

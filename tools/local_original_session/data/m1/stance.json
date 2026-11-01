@@ -1,0 +1,27 @@
+{
+  "table": "m1_weapon_stance",
+  "version": 1,
+  "note": "사람이 바로 수정하는 무기 종류 → ActorNotify 4E96 f4 자세값 표. 40만 사용자 화면 확인, 나머지 전부 추측이며 원본 동등성 미확인. 원문 확인·연결 시험·화면 확인은 별개다.",
+  "meanings": {
+    "bow": "활",
+    "sword": "한손검",
+    "axe": "도끼(종류 출처가 axe일 때만 사용; 현재 도끼4의 L1J 종류는 blunt)",
+    "blunt": "둔기(현재 L1J의 도끼·아탐 포함)",
+    "spear": "창(L1J singlespear도 이 키로 정규화)",
+    "staff": "지팡이",
+    "dagger": "단검",
+    "twohand": "양손검(L1J tohandsword를 이 키로 정규화)",
+    "unarmed": "맨손/무기 해제"
+  },
+  "stances": {
+    "bow":     {"value": 40, "source": "local_policy", "ref": "2026-10-26 사용자 화면 확인: 활 자세 40", "note": "사용자 확인값. 다른 자세의 확인 근거로 확대하지 않음"},
+    "sword":   {"value": 30, "source": "local_policy", "ref": "2026-10-26 사용자 화면 확인: 검 자세 30", "note": "사용자 확인값"},
+    "axe":     {"value": 35, "source": "local_policy", "ref": "2026-10-26 사용자 화면 확인: 무기 착용 자세 일치", "note": "사용자 확인값"},
+    "blunt":   {"value": 35, "source": "local_policy", "ref": "2026-10-26 사용자 화면 확인: 무기 착용 자세 일치", "note": "사용자 확인값"},
+    "spear":   {"value": 45, "source": "local_policy", "ref": "2026-10-26 사용자 화면 확인: 무기 착용 자세 일치", "note": "사용자 확인값"},
+    "staff":   {"value": 50, "source": "local_policy", "ref": "REA run385: 원본 50–53=staff (knight 외형은 도끼 프레임 재사용)", "note": "REA 확정값"},
+    "dagger":  {"value": 55, "source": "local_policy", "ref": "2026-10-26 사용자 화면 확인: 무기 착용 자세 일치", "note": "사용자 확인값"},
+    "twohand": {"value": 60, "source": "local_policy", "ref": "2026-10-26 사용자 화면 확인: 무기 착용 자세 일치", "note": "사용자 확인값"},
+    "unarmed": {"value": 0,  "source": "local_policy", "ref": "2026-10-26 사용자 무기 자세 2단계 지정", "note": "추측, 화면 미확인"}
+  }
+}

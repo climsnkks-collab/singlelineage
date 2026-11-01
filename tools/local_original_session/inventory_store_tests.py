@@ -241,9 +241,10 @@ class Tests(unittest.TestCase):
                       self.wire + b'\0', self.wire[:2] + b'\0\0' + self.wire[4:]):
             with self.assertRaises(ValueError): self.store.grant(2, frame)
             self.assertTrue(self.store.path.read_bytes() == before)
+        # The parent inventory.py source hash pin was removed: a changed pin value
+        # no longer refuses Store reads/grants.
         with patch.object(s, 'INVENTORY_SOURCE_SHA', '0' * 64):
-            for action in (lambda: self.store.restore(1), lambda: self.store.grant(2, self.wire)):
-                with self.assertRaisesRegex(ValueError, 'PARENT_SOURCE_CHANGED'): action()
+            self.assertEqual(self.store.restore(1), self.wire)
         self.assert_profile_preserved()
 
     def test_corrupt_existing_store_is_never_replaced_or_defaulted_empty(self):
@@ -399,7 +400,6 @@ class Tests(unittest.TestCase):
         pins = dict(inventory_update.SOURCE_PINS)
         pins[inventory_update.EVIDENCE_DIR + 'findings.md'] = '0' * 64
         for mutation, reason in (
-                (patch.object(s, 'INVENTORY_SOURCE_SHA', '0' * 64), 'PARENT_SOURCE_CHANGED'),
                 (patch.object(inventory_update, 'SOURCE_PINS', pins), 'UPDATE_SOURCE_CHANGED'),
                 (patch.object(inventory_update, 'ROOT', self.profile.parent), 'UPDATE_SOURCE_UNAVAILABLE')):
             with mutation, patch.object(s.InventoryStore, '_write', side_effect=AssertionError('source failure wrote')):

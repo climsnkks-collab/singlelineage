@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "status": "PURE_CALCULATION_PREPARATION_ONLY_RUNTIME_UNRUN",
+  "loaded_by_product": false,
+  "scope": "말하는 섬 map0 마을 후보 NPC의 순수 서비스 계산. 원본 클라이언트/서버/포트/저장은 실행하지 않음.",
+  "reference_paths": {
+    "l1jdb": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql",
+    "l1jsrc": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/",
+    "l1jconfig": "D:/SingleLineageRef/l1j-en-classic/config/",
+    "l1jxml": "D:/SingleLineageRef/l1j-en-classic/data/xml/NpcActions/Teleporter.xml",
+    "classic": "work/source_game_data/native-dump-v1.jsonl",
+    "mapping_method": "work/local_original_session/game-core-prep/MAPPING_SCOPE.md:39",
+    "town_npcs": "tools/local_original_session/data/m2/town_npcs.json"
+  },
+  "classic_correspondence": {
+    "confirmed": [
+      {
+        "kind": "currency_catalog_identity",
+        "classic_item_id": 7,
+        "l1j_item_id": 40308,
+        "name_token": "$4",
+        "name_ko": "아데나",
+        "source_refs": ["classic:958", "l1jdb:16762"],
+        "limit": "카탈로그 대응만 확정. 실제 UID/소유권/잔액/거래 권위는 발급하지 않음."
+      }
+    ],
+    "npc_mapping_status": "all_service_npc_identities_unresolved",
+    "method": "기존 town_npcs의 공통 이름 토큰→이름→f2/SPR 대응 결과 재사용. 아래 NPC는 동일 토큰의 클래식 npc 레코드가 없으므로 selected_classic_npc_id=null. 같은 SPR 숫자는 NPC 식별 근거가 아님.",
+    "map_limit": "map0 번호/정수 좌표계 대응만 기존 확인. map4/map68의 목적지 위치·통행·자원·전환 패킷은 L1J 후보이며 클래식 확인이 아님."
+  },
+  "inns": [
+    {
+      "l1j_npc_id": 70012,
+      "name": "Selena",
+      "name_token": "$955",
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "npc_ref": "l1jdb:22067",
+      "npcaction": {
+        "normal_action": "inn",
+        "caotic_action": "Inn1",
+        "source_ref": "l1jdb:23705"
+      },
+      "spawn_candidate": {
+        "map_id": 0,
+        "x": 32596,
+        "y": 32929,
+        "count": 1,
+        "source_ref": "l1jdb:49070"
+      },
+      "price": 100,
+      "price_status": "EXPLICIT_LOCAL_POLICY_100_ADENA_NOT_CLASSIC_OR_L1J_INN_FEE",
+      "recovery": "LOCAL_USER_REQUEST_FULL_HP_MP_IMMEDIATELY_AFTER_ATOMIC_PAYMENT",
+      "recovery_source_kind": "local_policy",
+      "living_player_only": true,
+      "l1j_rule_limit": "C_NPCAction room/hall/return/enter는 비어 있음. L1J의 여관 요금 또는 즉시 full회복 규칙이라고 할 수 없음. Inn 템플릿은 방/열쇠/숙박자/기한만 저장. 실제 여관은 자연 회복에 HP5/MP3 보너스를 더함.",
+      "source_refs": [
+        "l1jsrc:clientpackets/C_NPCAction.java:342-346",
+        "l1jsrc:templates/L1Inn.java:23-91",
+        "l1jsrc:model/HpRegeneration.java:128-129",
+        "l1jsrc:model/MpRegeneration.java:88-89",
+        "l1jconfig:rates.properties:12-13",
+        "l1jconfig:rates.properties:33-34"
+      ],
+      "excluded_rule": "l1jsrc:clientpackets/C_NPCAction.java:1632-1652 NPC71030 Healer/fullheal/5A는 별도 NPC 규칙이며 여관값으로 가져오지 않음. l1jdb:22672/24118.",
+      "rental_policy": {
+        "price": 100,
+        "duration_s": 14400,
+        "refund": 10,
+        "room_key": 10100,
+        "hall_key": 10101,
+        "room_name": "여관 열쇠(말하는 섬 마을)",
+        "hall_name": "여관 홀 열쇠(말하는 섬 마을)",
+        "rest_radius": 3,
+        "hp_bonus": 5,
+        "mp_bonus": 3
+      },
+      "rental_sources": {
+        "duration_ref": "client dialogue.csv inn4_2: four hours",
+        "refund_ref": "client dialogue.csv inn4_2: 10 Adena for each timely returned key",
+        "key_ref": "client item.bin/current-names.json IDs10100-10115, icon59",
+        "recovery_ref": "L1J HpRegeneration.java inn HP+5; MpRegeneration.java inn MP+3; added only at existing resource thresholds",
+        "local_policy": "100A, direct one-person room/hall selection, one lease per character, nearby innkeeper Chebyshev<=3 rest instead of unsupported interior; town/NPC/key mapping is attributed L1J policy",
+        "interior_status": "UNSUPPORTED_RENTAL_AND_NEARBY_REST_ONLY"
+      }
+    }
+  ],
+  "teleporters": [
+    {
+      "l1j_npc_id": 50015,
+      "name": "Lucas",
+      "name_token": "$829",
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "npc_ref": "l1jdb:21734",
+      "npcaction": {"normal_action": "teleisland1", "caotic_action": "teleisland1", "teleport_url": "teleisland2", "source_ref": "l1jdb:23402"},
+      "spawn_candidate": {"map_id": 0, "x": 32583, "y": 32922, "count": 1, "source_ref": "l1jdb:48732"},
+      "destinations": [
+        {"action": "teleport island-gludin", "name": "글루딘 (L1J Gludin)", "map_id": 4, "x": 32608, "y": 32734, "heading": 5, "price": 1500, "max_level_exclusive": null, "source_ref": "l1jxml:126-127", "menu_price_ref": "l1jsrc:model/Instance/L1TeleporterInstance.java:210-212", "mapping_status": "L1J_destination_candidate_classic_unverified"}
+      ],
+      "unavailable": []
+    },
+    {
+      "l1j_npc_id": 50016,
+      "name": "Zeno",
+      "name_token": "$1418",
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "npc_ref": "l1jdb:21735",
+      "npcaction": {"normal_action": "zeno", "caotic_action": "zeno", "teleport_url": "zeno2", "source_ref": "l1jdb:23403"},
+      "spawn_candidates": [
+        {"map_id": 0, "x": 32600, "y": 32914, "count": 0, "source_ref": "l1jdb:48758", "note": "비활성 행 보존; 활성화 금지"},
+        {"map_id": 0, "x": 32600, "y": 32914, "count": 1, "source_ref": "l1jdb:49913", "note": "location='Unknown 71035'이나 template=50016인 기존 대응 결과 보존"}
+      ],
+      "destinations": [
+        {"action": "teleport singing-island", "name": "노래하는 섬 (L1J Singing Island)", "map_id": 68, "x": 32816, "y": 32735, "heading": 5, "price": 0, "max_level_exclusive": 13, "source_ref": "l1jxml:16-17", "level_source_refs": ["l1jsrc:model/npc/action/L1NpcTeleportAction.java:60-64", "l1jconfig:altsettings.properties:23"], "level_limit_note": "실제 설정 Newbiemaplevel=13을 사용; Config.java:887-888 fallback15와 구분. Lv13 이상 거절.", "mapping_status": "L1J_destination_candidate_classic_unverified"}
+      ],
+      "unavailable": []
+    },
+    {
+      "l1j_npc_id": 50017,
+      "name": "Keith",
+      "name_token": "$1068",
+      "selected_classic_npc_id": null,
+      "mapping_status": "unknown_no_matching_native_npc_token",
+      "npc_ref": "l1jdb:21736",
+      "npcaction": {"normal_action": "telefire1", "caotic_action": "telefire2", "teleport_url": "telefire3", "source_ref": "l1jdb:23404"},
+      "spawn_candidate": {"map_id": 0, "x": 32577, "y": 32957, "count": 1, "source_ref": "l1jdb:48767"},
+      "destinations": [],
+      "unavailable": [{"reason": "DESTINATION_AND_PRICE_UNSUPPLIED", "note": "보존 Teleporter.xml에 NpcId50017 행 없음. npcaction stem만으로 목적지·요금을 추측하지 않음."}]
+    }
+  ],
+  "teleport_policy": {
+    "source_kind": "l1j",
+    "source_ref": "l1jsrc:model/npc/action/L1NpcTeleportAction.java:48-73",
+    "price_multiplier": 1,
+    "limit": "정확 NPC별 XML action만 목록/계산. NPC 메뉴 lawful 분기에서 가격 배수 추론 없음. 실제 지도 연결/준비 상태/화면 전환 책임은 world_handlers의 기존 소유자."
+  },
+  "warehouse": {
+    "l1j_npc_id": 60001,
+    "name": "Dorin",
+    "name_token": "$309",
+    "selected_classic_npc_id": null,
+    "mapping_status": "unknown_no_matching_native_npc_token",
+    "npc_ref": "l1jdb:21952",
+    "npcaction": {"normal_action": "dorin", "caotic_action": "dorinl", "source_ref": "l1jdb:23620"},
+    "spawn_candidate": {"map_id": 0, "x": 32575, "y": 32946, "count": 1, "source_ref": "l1jdb:48955"},
+    "policy": {"slots": 150, "player_slots": 180, "deposit_fee": 0, "withdrawal_fee": 30, "fee_unit": "distinct_selected_uid_not_quantity", "minimum_level": 5, "source_kind": "l1j", "weight_limit_rate": 1},
+    "source_refs": ["l1jconfig:altsettings.properties:128-129", "l1jsrc:model/L1Inventory.java:66-69", "l1jsrc:model/Instance/L1ItemInstance.java:252-256", "l1jsrc:model/L1Inventory.java:101-123", "l1jsrc:model/L1PcInventory.java:53", "l1jsrc:model/L1PcInventory.java:69-87", "l1jsrc:model/L1PcInventory.java:94-137", "l1jsrc:clientpackets/C_Result.java:150-213", "l1jsrc:clientpackets/C_Result.java:214-253"],
+    "slot_limit_note": "실제 설정 personal150 사용. Config.java:1038-1039의 개인100 fallback 또는 혈맹200과 혼합하지 않음. 꽉 찼어도 호환 stack으로 합칠 수 있음.",
+    "local_batch_policy": "선택 중복 UID는 합산, fee는 UID당 한 번. 전체 성공 제안 또는 전체 거절, 선차감 없음. 모든 fee는 시작 시 가지고 있던 아데나로 지불. L1J 부분 성공/이전 반출 아데나로 뒤 fee 지불과 다른 명시 LOCAL 정책. before-fee 용량검사, 보호/착용/사용중 대상 거절, 2G overflow 거절.",
+    "item_eligibility_limit": "deposit_allowed/controlled/equipped/variant/weight는 실제 current 소유자가 공급. 등급·착용·거래가능 여부를 item_id나 이름으로 발명하지 않음.",
+    "storage_proposal": {
+      "status": "PROPOSAL_ONLY_NO_STORE_IMPLEMENTED",
+      "format": {"version": 1, "inventories": [{"uid": "saved_character_uid", "frame": "canonical_kit_frame_lowercase_hex"}]},
+      "source_ref": "tools/local_original_session/inventory_store.py:InventoryStore._read/_write; tools/local_original_session/inventory.py:build_kit_frame/validate_kit_frame",
+      "limits": "별도 sidecar 후보. 현재 player inventory.json 및 v2 account custody를 덮지 않음. 이 per-character 형식은 L1J account-wide 권위가 아니며 계정 키/empty(kit>=1)/두 저장의 원자성·복구·UID 수명은 저장 담당자가 결정해야 함. 기존 canonical 원필드 보존, 수량/UID 변경은 실제 codec/owner 책임."
+    },
+    "reuse_refs": ["work/local_original_session/implementation-4/shop-quest/warehouse-business-v1-final/API.md", "work/local_server_rea_20261016/run295_personal_warehouse_contract/contract.md", "work/local_server_rea_20261016/run298_warehouse_packet_join/contract.md"],
+    "reuse_limit": "기존 actual22 deposit10/actual24 withdrawal10 fee30/actual25 fresh는 별도 Source·계정/native 저장 계보의 제한 PASS. 새 모듈은 그 성공·3칸 range·wire0971/4ED1·실행 권한을 계승하지 않음. run295/298의 당시 미공급 경계는 final API의 최신 결속과 구별."
+  },
+  "experimental_teleporters": [
+  {
+    "l1j_npc_id": 50015,
+    "destinations": [
+      {
+        "action": "teleport island-dungeon",
+        "name": "Talking Island dungeon entrance LOCAL candidate",
+        "map_id": 0,
+        "x": 32478,
+        "y": 32853,
+        "heading": 5,
+        "price": 0,
+        "max_level_exclusive": null,
+        "source_ref": "work/local_original_session/game-core-prep/M3_DUNGEON_DATA.md:51; enter-map candidate only; fee0 and heading5 LOCAL experiment",
+        "mapping_status": "MAPEXP_ONLY_NATIVE_DESTINATION_CONSUMER_UNKNOWN"
+      }
+    ]
+  }
+]
+}

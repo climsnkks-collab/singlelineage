@@ -1,0 +1,2971 @@
+{
+  "table": "m5_l1j_reference_getback",
+  "version": 1,
+  "source": "L1J reference backend policy; official fixed-client behavior UNKNOWN",
+  "supported_classes": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "heading_policy": "LOCAL retained heading5; L1J GetBack returns map/x/y only",
+  "algorithm_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/GetBack.java:64-147",
+  "town_random_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:173-179",
+  "unmatched_area_fallback": {
+    "destination": [
+      4,
+      33089,
+      33397,
+      5
+    ],
+    "source_ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/GetBack.java:150-155",
+    "note": "LOCAL applies missing-map fallback to unmatched map4 rectangles; Java matched-map/null-row case has no defined fallback"
+  },
+  "excluded": {
+    "maps": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      303
+    ],
+    "classes": [
+      4,
+      5,
+      6
+    ],
+    "note": "Talking Island and ships retain owners; map303 has no matching row; unsupported classes not activated"
+  },
+  "supply_bases": {
+    "silver_knight": {
+      "town_id": 2,
+      "decision": "actual random regional return/death destination"
+    },
+    "fire_farmer": {
+      "town_id": 4,
+      "decision": "actual random Orcish Forest regional return/death destination"
+    }
+  },
+  "rules": [
+    {
+      "map_id": 7,
+      "area": null,
+      "points": [
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18322",
+      "source_name": "Main Land Caves 1F"
+    },
+    {
+      "map_id": 8,
+      "area": null,
+      "points": [
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18323",
+      "source_name": "Main Land Caves 2F"
+    },
+    {
+      "map_id": 9,
+      "area": null,
+      "points": [
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18324",
+      "source_name": "Main Land Caves 3F"
+    },
+    {
+      "map_id": 10,
+      "area": null,
+      "points": [
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18325",
+      "source_name": "Main Land Caves 4F"
+    },
+    {
+      "map_id": 11,
+      "area": null,
+      "points": [
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18326",
+      "source_name": "Main Land Caves 5F"
+    },
+    {
+      "map_id": 12,
+      "area": null,
+      "points": [
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18327",
+      "source_name": "Main Land Caves 6F"
+    },
+    {
+      "map_id": 13,
+      "area": null,
+      "points": [
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ],
+        [
+          4,
+          32624,
+          32813,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18328",
+      "source_name": "Main Land Caves 7F"
+    },
+    {
+      "map_id": 19,
+      "area": null,
+      "points": [
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ]
+      ],
+      "town_id": 4,
+      "elf_town_id": 11,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18334",
+      "source_name": "Elven Dungeon 1F"
+    },
+    {
+      "map_id": 20,
+      "area": null,
+      "points": [
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ]
+      ],
+      "town_id": 4,
+      "elf_town_id": 11,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18335",
+      "source_name": "Elven Dungeon 2F"
+    },
+    {
+      "map_id": 21,
+      "area": null,
+      "points": [
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ]
+      ],
+      "town_id": 4,
+      "elf_town_id": 11,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18336",
+      "source_name": "Elven Dungeon 3F"
+    },
+    {
+      "map_id": 23,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 5,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18338",
+      "source_name": "Windawood Castle Dungeon 1F"
+    },
+    {
+      "map_id": 24,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 5,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18339",
+      "source_name": "Windawood Castle Dungeon 2F"
+    },
+    {
+      "map_id": 25,
+      "area": null,
+      "points": [
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18340",
+      "source_name": "Silver Knight Town Caves 1F"
+    },
+    {
+      "map_id": 26,
+      "area": null,
+      "points": [
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18341",
+      "source_name": "Silver Knight Town Caves 2F"
+    },
+    {
+      "map_id": 27,
+      "area": null,
+      "points": [
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18342",
+      "source_name": "Silver Knight Town Caves 3F"
+    },
+    {
+      "map_id": 28,
+      "area": null,
+      "points": [
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ],
+        [
+          4,
+          33089,
+          33397,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18343",
+      "source_name": "Silver Knight Town Caves 4F"
+    },
+    {
+      "map_id": 29,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 5,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18344",
+      "source_name": "Windawood Inner Castle"
+    },
+    {
+      "map_id": 30,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18345",
+      "source_name": "Dragon Valley Caves 1F"
+    },
+    {
+      "map_id": 31,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18346",
+      "source_name": "Dragon Valley Caves 2F"
+    },
+    {
+      "map_id": 32,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18347",
+      "source_name": "Dragon Valley Caves 3F"
+    },
+    {
+      "map_id": 33,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18348",
+      "source_name": "Dragon Valley Caves 4F"
+    },
+    {
+      "map_id": 35,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18350",
+      "source_name": "Dragon Valley Caves 5F"
+    },
+    {
+      "map_id": 36,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18351",
+      "source_name": "Dragon Valley Caves 6F"
+    },
+    {
+      "map_id": 37,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18352",
+      "source_name": "Dragon Valley Caves 7F"
+    },
+    {
+      "map_id": 43,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18358",
+      "source_name": "Ant Caves 1F"
+    },
+    {
+      "map_id": 44,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18359",
+      "source_name": "Ant Caves 2F"
+    },
+    {
+      "map_id": 45,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18360",
+      "source_name": "Ant Caves 3F"
+    },
+    {
+      "map_id": 46,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18361",
+      "source_name": "Ant Caves 4F"
+    },
+    {
+      "map_id": 47,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18362",
+      "source_name": "Ant Caves 5F"
+    },
+    {
+      "map_id": 48,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18363",
+      "source_name": "Ant Caves 6F"
+    },
+    {
+      "map_id": 49,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18364",
+      "source_name": "Ant Caves 7F"
+    },
+    {
+      "map_id": 50,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18365",
+      "source_name": "Ant Caves 8F"
+    },
+    {
+      "map_id": 51,
+      "area": null,
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18366",
+      "source_name": "Ant Caves 9F"
+    },
+    {
+      "map_id": 53,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18368",
+      "source_name": "Giran Dungeon 1F"
+    },
+    {
+      "map_id": 54,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18369",
+      "source_name": "Giran Dungeon 2F"
+    },
+    {
+      "map_id": 55,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18370",
+      "source_name": "Giran Dungeon 3F"
+    },
+    {
+      "map_id": 56,
+      "area": null,
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18371",
+      "source_name": "Giran Dungeon 4F"
+    },
+    {
+      "map_id": 59,
+      "area": null,
+      "points": [
+        [
+          4,
+          33614,
+          33243,
+          5
+        ],
+        [
+          4,
+          33614,
+          33243,
+          5
+        ],
+        [
+          4,
+          33614,
+          33243,
+          5
+        ]
+      ],
+      "town_id": 8,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18374",
+      "source_name": "Heine Dungeon 1F"
+    },
+    {
+      "map_id": 60,
+      "area": null,
+      "points": [
+        [
+          4,
+          33614,
+          33243,
+          5
+        ],
+        [
+          4,
+          33614,
+          33243,
+          5
+        ],
+        [
+          4,
+          33614,
+          33243,
+          5
+        ]
+      ],
+      "town_id": 8,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18375",
+      "source_name": "Heine Dungeon 2F"
+    },
+    {
+      "map_id": 61,
+      "area": null,
+      "points": [
+        [
+          4,
+          33614,
+          33243,
+          5
+        ],
+        [
+          4,
+          33614,
+          33243,
+          5
+        ],
+        [
+          4,
+          33614,
+          33243,
+          5
+        ]
+      ],
+      "town_id": 8,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18376",
+      "source_name": "Heine Dungeon 3F"
+    },
+    {
+      "map_id": 62,
+      "area": null,
+      "points": [
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ]
+      ],
+      "town_id": 8,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18377",
+      "source_name": "Sanctuary of Eva"
+    },
+    {
+      "map_id": 63,
+      "area": null,
+      "points": [
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ]
+      ],
+      "town_id": 8,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18378",
+      "source_name": "Kingdom of Eva"
+    },
+    {
+      "map_id": 65,
+      "area": null,
+      "points": [
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ]
+      ],
+      "town_id": 8,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18380",
+      "source_name": "Lair of Fafurion"
+    },
+    {
+      "map_id": 72,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18387",
+      "source_name": "Crystal Cavern 1F"
+    },
+    {
+      "map_id": 73,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18388",
+      "source_name": "Crystal Cavern 2F"
+    },
+    {
+      "map_id": 74,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18389",
+      "source_name": "Crystal Cavern 3F"
+    },
+    {
+      "map_id": 75,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18390",
+      "source_name": "Ivory Tower 1F"
+    },
+    {
+      "map_id": 76,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18391",
+      "source_name": "Ivory Tower 2F"
+    },
+    {
+      "map_id": 77,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18392",
+      "source_name": "Ivory Tower 3F"
+    },
+    {
+      "map_id": 78,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18393",
+      "source_name": "Ivory Tower 4F"
+    },
+    {
+      "map_id": 79,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18394",
+      "source_name": "Ivory Tower 5F"
+    },
+    {
+      "map_id": 80,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18395",
+      "source_name": "Ivory Tower 6F"
+    },
+    {
+      "map_id": 81,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18396",
+      "source_name": "Ivory Tower 7F"
+    },
+    {
+      "map_id": 82,
+      "area": null,
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18397",
+      "source_name": "Ivory Tower 8F"
+    },
+    {
+      "map_id": 101,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18416",
+      "source_name": "Tower of Insolence 1F"
+    },
+    {
+      "map_id": 102,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18417",
+      "source_name": "Tower of Insolence 2F"
+    },
+    {
+      "map_id": 103,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18418",
+      "source_name": "Tower of Insolence 3F"
+    },
+    {
+      "map_id": 104,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18419",
+      "source_name": "Tower of Insolence 4F"
+    },
+    {
+      "map_id": 105,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18420",
+      "source_name": "Tower of Insolence 5F"
+    },
+    {
+      "map_id": 106,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18421",
+      "source_name": "Tower of Insolence 6F"
+    },
+    {
+      "map_id": 107,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18422",
+      "source_name": "Tower of Insolence 7F"
+    },
+    {
+      "map_id": 108,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18423",
+      "source_name": "Tower of Insolence 8F"
+    },
+    {
+      "map_id": 109,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18424",
+      "source_name": "Tower of Insolence 9F"
+    },
+    {
+      "map_id": 110,
+      "area": null,
+      "points": [
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ],
+        [
+          4,
+          33966,
+          33253,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18425",
+      "source_name": "Tower of Insolence 10F"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        32515,
+        32192,
+        32959,
+        32536
+      ],
+      "points": [
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ],
+        [
+          4,
+          32745,
+          32445,
+          5
+        ]
+      ],
+      "town_id": 4,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18672",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        32515,
+        32537,
+        32959,
+        33022
+      ],
+      "points": [
+        [
+          4,
+          32628,
+          32807,
+          5
+        ],
+        [
+          4,
+          32628,
+          32807,
+          5
+        ],
+        [
+          4,
+          32628,
+          32807,
+          5
+        ]
+      ],
+      "town_id": 3,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18673",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        32515,
+        33023,
+        32959,
+        33532
+      ],
+      "points": [
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ],
+        [
+          4,
+          32612,
+          33188,
+          5
+        ]
+      ],
+      "town_id": 5,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18674",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        32960,
+        32192,
+        33215,
+        32510
+      ],
+      "points": [
+        [
+          4,
+          33051,
+          32343,
+          5
+        ],
+        [
+          4,
+          33051,
+          32343,
+          5
+        ],
+        [
+          4,
+          33051,
+          32343,
+          5
+        ]
+      ],
+      "town_id": 4,
+      "elf_town_id": 11,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18702",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        32960,
+        32511,
+        33280,
+        33022
+      ],
+      "points": [
+        [
+          4,
+          33049,
+          32780,
+          5
+        ],
+        [
+          4,
+          33049,
+          32780,
+          5
+        ],
+        [
+          4,
+          33049,
+          32780,
+          5
+        ]
+      ],
+      "town_id": 6,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18703",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        32960,
+        33023,
+        33279,
+        33532
+      ],
+      "points": [
+        [
+          4,
+          33082,
+          33389,
+          5
+        ],
+        [
+          4,
+          33082,
+          33389,
+          5
+        ],
+        [
+          4,
+          33082,
+          33389,
+          5
+        ]
+      ],
+      "town_id": 2,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18704",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33216,
+        32192,
+        33471,
+        32510
+      ],
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 11,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18705",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33280,
+        32511,
+        33535,
+        33022
+      ],
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18706",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33280,
+        33023,
+        33791,
+        33532
+      ],
+      "points": [
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ],
+        [
+          4,
+          33604,
+          33237,
+          5
+        ]
+      ],
+      "town_id": 8,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18707",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33472,
+        32192,
+        33855,
+        32574
+      ],
+      "points": [
+        [
+          4,
+          33722,
+          32496,
+          5
+        ],
+        [
+          4,
+          33722,
+          32496,
+          5
+        ],
+        [
+          4,
+          33722,
+          32496,
+          5
+        ]
+      ],
+      "town_id": 9,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18708",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33536,
+        32574,
+        33919,
+        33022
+      ],
+      "points": [
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ],
+        [
+          4,
+          33429,
+          32814,
+          5
+        ]
+      ],
+      "town_id": 7,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18709",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33792,
+        33023,
+        34303,
+        33532
+      ],
+      "points": [
+        [
+          4,
+          33962,
+          33254,
+          5
+        ],
+        [
+          4,
+          33962,
+          33254,
+          5
+        ],
+        [
+          4,
+          33962,
+          33254,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18710",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33856,
+        32192,
+        33920,
+        32738
+      ],
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18711",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33920,
+        32128,
+        34303,
+        32738
+      ],
+      "points": [
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ],
+        [
+          4,
+          34053,
+          32284,
+          5
+        ]
+      ],
+      "town_id": 10,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18712",
+      "source_name": "Mainland Aden"
+    },
+    {
+      "map_id": 4,
+      "area": [
+        33920,
+        32739,
+        34303,
+        33532
+      ],
+      "points": [
+        [
+          4,
+          33962,
+          33254,
+          5
+        ],
+        [
+          4,
+          33962,
+          33254,
+          5
+        ],
+        [
+          4,
+          33962,
+          33254,
+          5
+        ]
+      ],
+      "town_id": 12,
+      "elf_town_id": 0,
+      "darkelf_town_id": 0,
+      "ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:18713",
+      "source_name": "Mainland Aden"
+    }
+  ],
+  "towns": [
+    {
+      "town_id": 2,
+      "name": "silver_knight_town",
+      "points": [
+        [
+          4,
+          33071,
+          33402,
+          5
+        ],
+        [
+          4,
+          33091,
+          33396,
+          5
+        ],
+        [
+          4,
+          33085,
+          33402,
+          5
+        ],
+        [
+          4,
+          33097,
+          33366,
+          5
+        ],
+        [
+          4,
+          33110,
+          33365,
+          5
+        ],
+        [
+          4,
+          33072,
+          33392,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:39-42"
+    },
+    {
+      "town_id": 3,
+      "name": "gludio",
+      "points": [
+        [
+          4,
+          32601,
+          32757,
+          5
+        ],
+        [
+          4,
+          32625,
+          32809,
+          5
+        ],
+        [
+          4,
+          32611,
+          32726,
+          5
+        ],
+        [
+          4,
+          32612,
+          32781,
+          5
+        ],
+        [
+          4,
+          32605,
+          32761,
+          5
+        ],
+        [
+          4,
+          32614,
+          32739,
+          5
+        ],
+        [
+          4,
+          32612,
+          32775,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:44-48"
+    },
+    {
+      "town_id": 4,
+      "name": "orcish_forest",
+      "points": [
+        [
+          4,
+          32750,
+          32435,
+          5
+        ],
+        [
+          4,
+          32745,
+          32447,
+          5
+        ],
+        [
+          4,
+          32738,
+          32452,
+          5
+        ],
+        [
+          4,
+          32741,
+          32436,
+          5
+        ],
+        [
+          4,
+          32749,
+          32446,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:50-53"
+    },
+    {
+      "town_id": 5,
+      "name": "windawood",
+      "points": [
+        [
+          4,
+          32608,
+          33178,
+          5
+        ],
+        [
+          4,
+          32626,
+          33185,
+          5
+        ],
+        [
+          4,
+          32630,
+          33179,
+          5
+        ],
+        [
+          4,
+          32625,
+          33207,
+          5
+        ],
+        [
+          4,
+          32638,
+          33203,
+          5
+        ],
+        [
+          4,
+          32621,
+          33179,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:55-58"
+    },
+    {
+      "town_id": 6,
+      "name": "kent",
+      "points": [
+        [
+          4,
+          33048,
+          32750,
+          5
+        ],
+        [
+          4,
+          33059,
+          32768,
+          5
+        ],
+        [
+          4,
+          33047,
+          32761,
+          5
+        ],
+        [
+          4,
+          33059,
+          32759,
+          5
+        ],
+        [
+          4,
+          33051,
+          32775,
+          5
+        ],
+        [
+          4,
+          33048,
+          32778,
+          5
+        ],
+        [
+          4,
+          33064,
+          32773,
+          5
+        ],
+        [
+          4,
+          33057,
+          32748,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:60-64"
+    },
+    {
+      "town_id": 7,
+      "name": "giran",
+      "points": [
+        [
+          4,
+          33435,
+          32803,
+          5
+        ],
+        [
+          4,
+          33439,
+          32817,
+          5
+        ],
+        [
+          4,
+          33440,
+          32809,
+          5
+        ],
+        [
+          4,
+          33419,
+          32810,
+          5
+        ],
+        [
+          4,
+          33426,
+          32823,
+          5
+        ],
+        [
+          4,
+          33418,
+          32818,
+          5
+        ],
+        [
+          4,
+          33432,
+          32824,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:66-69"
+    },
+    {
+      "town_id": 8,
+      "name": "heine",
+      "points": [
+        [
+          4,
+          33593,
+          33242,
+          5
+        ],
+        [
+          4,
+          33593,
+          33248,
+          5
+        ],
+        [
+          4,
+          33604,
+          33236,
+          5
+        ],
+        [
+          4,
+          33599,
+          33236,
+          5
+        ],
+        [
+          4,
+          33610,
+          33247,
+          5
+        ],
+        [
+          4,
+          33610,
+          33241,
+          5
+        ],
+        [
+          4,
+          33599,
+          33252,
+          5
+        ],
+        [
+          4,
+          33605,
+          33252,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:71-75"
+    },
+    {
+      "town_id": 9,
+      "name": "werldan",
+      "points": [
+        [
+          4,
+          33702,
+          32492,
+          5
+        ],
+        [
+          4,
+          33747,
+          32508,
+          5
+        ],
+        [
+          4,
+          33696,
+          32498,
+          5
+        ],
+        [
+          4,
+          33723,
+          32512,
+          5
+        ],
+        [
+          4,
+          33710,
+          32521,
+          5
+        ],
+        [
+          4,
+          33724,
+          32488,
+          5
+        ],
+        [
+          4,
+          33693,
+          32513,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:77-81"
+    },
+    {
+      "town_id": 10,
+      "name": "oren",
+      "points": [
+        [
+          4,
+          34086,
+          32280,
+          5
+        ],
+        [
+          4,
+          34037,
+          32230,
+          5
+        ],
+        [
+          4,
+          34022,
+          32254,
+          5
+        ],
+        [
+          4,
+          34021,
+          32269,
+          5
+        ],
+        [
+          4,
+          34044,
+          32290,
+          5
+        ],
+        [
+          4,
+          34049,
+          32316,
+          5
+        ],
+        [
+          4,
+          34081,
+          32249,
+          5
+        ],
+        [
+          4,
+          34074,
+          32313,
+          5
+        ],
+        [
+          4,
+          34064,
+          32230,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:83-87"
+    },
+    {
+      "town_id": 11,
+      "name": "elven_forest",
+      "points": [
+        [
+          4,
+          33065,
+          32358,
+          5
+        ],
+        [
+          4,
+          33052,
+          32313,
+          5
+        ],
+        [
+          4,
+          33030,
+          32342,
+          5
+        ],
+        [
+          4,
+          33068,
+          32320,
+          5
+        ],
+        [
+          4,
+          33071,
+          32314,
+          5
+        ],
+        [
+          4,
+          33030,
+          32370,
+          5
+        ],
+        [
+          4,
+          33076,
+          32324,
+          5
+        ],
+        [
+          4,
+          33068,
+          32336,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:89-93"
+    },
+    {
+      "town_id": 12,
+      "name": "aden",
+      "points": [
+        [
+          4,
+          33915,
+          33114,
+          5
+        ],
+        [
+          4,
+          34061,
+          33115,
+          5
+        ],
+        [
+          4,
+          34090,
+          33168,
+          5
+        ],
+        [
+          4,
+          34011,
+          33136,
+          5
+        ],
+        [
+          4,
+          34093,
+          33117,
+          5
+        ],
+        [
+          4,
+          33959,
+          33156,
+          5
+        ],
+        [
+          4,
+          33992,
+          33120,
+          5
+        ],
+        [
+          4,
+          34047,
+          33156,
+          5
+        ]
+      ],
+      "ref": "D:/SingleLineageRef/l1j-en-classic/src/l1j/server/server/model/L1TownLocation.java:95-99"
+    }
+  ]
+}

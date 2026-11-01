@@ -17,13 +17,16 @@ from pathlib import Path
 import stat
 import struct
 import threading
+import time
 import uuid
 
 from tools.local_movement_session_route.route import parse_payload, authority, pb
 from tools.local_character_creation.realm import MAX_CHARACTERS, _valid_name
+from tools.local_original_session.world_terrain import DEFAULT_MAP_IDS, LAZY_MAP_IDS
 
 CORRECTION_OPCODE = 0x4ee0
 MAX_COUNTER = (1 << 64) - 1
+SUPPORTED_MAP_IDS = frozenset((*DEFAULT_MAP_IDS, *LAZY_MAP_IDS))
 _store_lock = threading.RLock()
 
 
@@ -170,7 +173,7 @@ class PositionStore:
             if temporary.exists():
                 temporary.unlink()
 
-    def commit(self, expected, updated):
+    def commit(self, expected, updated, *, transition=False):
         """Persist first. On any error the caller must not promote memory.
 
         Compare any existing UID row to expected to detect another authority
@@ -178,8 +181,10 @@ class PositionStore:
         subsequent retries fail the comparison rather than overwrite that state.
         """
         need(type(expected) is Position and type(updated) is Position
-             and (updated.uid, updated.name, updated.map_id)
-             == (expected.uid, expected.name, expected.map_id), 'SAME_SELECTED_POSITION_REQUIRED')
+             and (updated.uid, updated.name) == (expected.uid, expected.name)
+             and (updated.map_id == expected.map_id or transition is True
+                  and expected.map_id in SUPPORTED_MAP_IDS and updated.map_id in SUPPORTED_MAP_IDS),
+             'SAME_SELECTED_POSITION_REQUIRED')
         with _store_lock:
             data = self._read()
             previous = next((r for r in data['positions'] if r['uid'] == expected.uid), None)
@@ -229,23 +234,74 @@ class MovementService:
     counts completed correction-frame preparation, never transport or client
     consumption. These saturating diagnostics do not change movement policy.
     """
-    def __init__(self, selected, *, connection, owner_guard, edge_passability, store):
+    def __init__(self, selected, *, connection, owner_guard, edge_passability, store, edge_fallback=None):
         need(type(selected) is Position and connection is not None, 'SELECTED_OWNER_REQUIRED')
         need(callable(owner_guard) and callable(edge_passability), 'CURRENT_OWNER_EDGE_CALLBACKS_REQUIRED')
         need(isinstance(store, PositionStore), 'EXPLICIT_POSITION_STORE_REQUIRED')
+        need(edge_fallback is None or callable(edge_fallback), 'EDGE_FALLBACK_CALLBACK_REQUIRED')
         self._position = store.restore(selected)
         self._connection = connection
         self._owner_guard, self._edge_passability = owner_guard, edge_passability
+        # Optional: edge_fallback(map_id, x, y, direction) -> True/False/None is
+        # consulted only when edge_passability returned None (UNKNOWN).
+        self._edge_fallback = edge_fallback
         self._store = store
         self._lock = asyncio.Lock()
         self.committed = 0
         self.requests_received = 0
         self.corrections_prepared = 0
+        self.correction_reasons = {}  # reason[:detail] -> count; diagnostics only.
+        self.edge_fallback_accepted = 0
         self.last_result = None
         self.fatal = False
+        # Last self 4E96 resend: (map_id, packed cell, deadline, remaining requests).
+        self._published = None
+        self.published_adopted = 0
 
     def snapshot(self):
         return self._position
+
+    PUBLISHED_START_SECONDS = 3.0
+    PUBLISHED_START_REQUESTS = 4
+
+    def actor_published(self, position=None):
+        """Record a self 4E96 resend at the current (or given) committed cell.
+
+        The client rebuilds a same-UID actor at the published cell (REA272), so
+        a following move may start there although later steps had committed.
+        Only that exact cell, shortly after and within a few requests, is adopted.
+        """
+        position = self._position if position is None else position
+        self._published = (position.map_id, position.packed,
+                           time.monotonic() + self.PUBLISHED_START_SECONDS, self.PUBLISHED_START_REQUESTS)
+
+    def _published_start(self, start):
+        published, self._published = self._published, None
+        if published is None:
+            return False
+        map_id, packed, deadline, remaining = published
+        if remaining <= 0 or time.monotonic() > deadline or map_id != self._position.map_id:
+            return False
+        if start != packed:
+            if remaining > 1:
+                self._published = (map_id, packed, deadline, remaining - 1)
+            return False
+        return True
+
+    def relocate(self, updated):
+        """Owned world operation: existing CAS persists before promotion.
+
+        Caller holds the selected connection/world operation locks and has
+        checked current ownership. Same-map teleport and opt-in map experiments
+        both retain the existing PositionStore CAS.
+        """
+        try:
+            self._store.commit(self._position, updated, transition=True)
+        except BaseException:
+            self.fatal = True
+            raise
+        self._position = updated
+        self.committed = min(MAX_COUNTER, self.committed + 1)
 
     async def _owner(self):
         try:
@@ -256,15 +312,18 @@ class MovementService:
             return None
         return result if type(result) is bool else None
 
-    def _result(self, reason, *, accepted=False, correction=False, unknown=False, fatal=False):
+    def _result(self, reason, *, accepted=False, correction=False, unknown=False, fatal=False, detail=None):
         replies = (correction_frame(self._position),) if correction else ()
         if correction:
             self.corrections_prepared = min(MAX_COUNTER, self.corrections_prepared + 1)
+            key = reason if detail is None else reason + ':' + str(detail)[:96]
+            if key in self.correction_reasons or len(self.correction_reasons) < 16:
+                self.correction_reasons[key] = min(MAX_COUNTER, self.correction_reasons.get(key, 0) + 1)
         result = MoveResult(accepted, reason, self._position, replies, unknown, fatal)
         self.last_result = result.metadata()  # One bounded metadata snapshot.
         return result
 
-    async def handle_CS4E2B(self, payload):
+    async def handle_CS4E2B(self, payload, *, transition=None):
         async with self._lock:
             self.requests_received = min(MAX_COUNTER, self.requests_received + 1)
             if self.fatal:
@@ -278,13 +337,35 @@ class MovementService:
             except ValueError:
                 return self._result('MALFORMED_MOVE_PAYLOAD')
             if start != self._position.packed:
-                return self._result('STALE_START', correction=True)
+                if not self._published_start(start):
+                    return self._result('STALE_START', correction=True)
+                # Start is exactly the cell of the self 4E96 just resent: adopt
+                # it (saved like any move) instead of a backward correction.
+                adopted = replace(self._position, word0=authority.unpack_grid(start)[0],
+                                  word1=authority.unpack_grid(start)[1])
+                try:
+                    self._store.commit(self._position, adopted)
+                except Exception:
+                    self.fatal = True
+                    return self._result('POSITION_SAVE_FAILED', unknown=True, fatal=True)
+                self._position = adopted
+                self.published_adopted = min(MAX_COUNTER, self.published_adopted + 1)
+            elif self._published is not None:
+                map_id, packed, deadline, remaining = self._published
+                self._published = (map_id, packed, deadline, remaining - 1) if remaining > 1 else None
             if not 0 <= direction < len(authority.DELTAS):
                 return self._result('DIRECTION_0_TO_7_REQUIRED', correction=True)
             words = authority.unpack_grid(start)
             target = tuple(a + delta for a, delta in zip(words, authority.DELTAS[direction]))
             if any(not 0 <= word <= 65535 for word in target):
                 return self._result('GRID_BOUNDARY', correction=True)
+            if transition is not None:
+                # Explicit LOCAL stair policy (L1J C_MoveChar): an exact next
+                # cell can be a transfer trigger rather than a standable tile.
+                # Ordinary movement still uses the unchanged edge path below.
+                replies = transition(self._position, *target)
+                if replies is not None:
+                    return replace(self._result('LOCAL_MAP_TRANSITION', accepted=True), replies=tuple(replies))
             destination = authority.pack_grid(*target)
             try:
                 edge = self._edge_passability(self._position.uid, self._position.map_id,
@@ -293,6 +374,20 @@ class MovementService:
                     edge = await edge
             except Exception:
                 edge = None
+            detail = fallback_used = None
+            if edge is None:
+                last = getattr(self._edge_passability, 'last_result', None)
+                detail = last.get('reason') if type(last) is dict and type(last.get('reason')) is str else None
+                if self._edge_fallback is not None:
+                    try:
+                        fallback = self._edge_fallback(self._position.map_id, words[0], words[1], direction)
+                    except Exception:
+                        fallback = None
+                    if fallback is True:
+                        edge, fallback_used = True, True
+                    else:
+                        detail = (detail or 'NONE') + ('/FALLBACK_BLOCKED' if fallback is False
+                                                       else '/FALLBACK_UNKNOWN')
             # Nothing can commit or emit correction after owner/selection loss.
             allowed = await self._owner()
             if allowed is not True:
@@ -300,7 +395,7 @@ class MovementService:
                                     unknown=allowed is None)
             if edge is not True:
                 return self._result('EDGE_BLOCKED' if edge is False else 'EDGE_UNKNOWN',
-                                    correction=True, unknown=edge is not False)
+                                    correction=True, unknown=edge is not False, detail=detail)
             updated = replace(self._position, word0=target[0], word1=target[1])
             try:
                 self._store.commit(self._position, updated)
@@ -309,4 +404,6 @@ class MovementService:
                 return self._result('POSITION_SAVE_FAILED', unknown=True, fatal=True)
             self._position = updated
             self.committed = min(MAX_COUNTER, self.committed + 1)
+            if fallback_used:
+                self.edge_fallback_accepted = min(MAX_COUNTER, self.edge_fallback_accepted + 1)
             return self._result('COMMITTED', accepted=True)

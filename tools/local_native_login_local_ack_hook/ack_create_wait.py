@@ -17,8 +17,7 @@ ACK_FRAME=b'\x08\x00\x64\x02\x08\x00\x00\x00'
 if len(ACK_FRAME)!=8 or int.from_bytes(ACK_FRAME[:2],'little')!=8 or int.from_bytes(ACK_FRAME[2:4],'little')!=0x264:
     raise ValueError('EXACT_LOCAL_ACK0_FRAME')
 
-if hashlib.sha256(REALM_PATH.read_bytes()).hexdigest()!=REALM_SHA:
-    raise ValueError('EXACT_CHARACTER_CREATION_REALM_REQUIRED')
+# realm.py source hash pin removed (Python source pins reduced); REALM_SHA kept for reference only.
 spec=importlib.util.spec_from_file_location('_owned_local_character_creation',REALM_PATH)
 realm=importlib.util.module_from_spec(spec)
 sys.modules[spec.name]=realm

@@ -90,6 +90,8 @@ class _Budget:
     Duplicate initial values must agree. This is not an atomic/lifetime proof.
     Observer counters/methods are restored by installed().
     """
+    byte_limit = None  # LIMIT; the M1 kit inventory query (up to 180 rows) raises it per instance.
+
     def __init__(self, native, sampler, *, diagnostic=None):
         self.native, self.sampler = native, sampler
         self.spent, self.records, self.retain = 0, [], True
@@ -111,7 +113,7 @@ class _Budget:
     def read(self, at, size, image=False):
         need(type(at) is int and type(size) is int and 0 < size <= 4096 and
              0x10000 <= at <= 0x7fffffffffff - size, 'EDGE_TYPED_READ_BOUND')
-        need(self.spent + size <= LIMIT, 'EDGE_REQUEST_BYTE_BOUND')
+        need(self.spent + size <= (LIMIT if self.byte_limit is None else self.byte_limit), 'EDGE_REQUEST_BYTE_BOUND')
         self.spent += size
         raw = self.native.read(at, size, self.sampler.g['base'] if image else None)
         need(type(raw) is bytes and len(raw) == size, 'EDGE_PARTIAL_TYPED_READ')
@@ -457,6 +459,8 @@ class EdgeAdapter:
         budget.retain = False
         try:
             if checks is None:
+                # The same process handle does not prove unchanged code or
+                # readable image pages. Preserve both per-request source reads.
                 self.world.source_anchors(sampler, self.checks, self.world.empty_diagnostic())
             else:
                 # Lookup/getter must be readable current code. The historical

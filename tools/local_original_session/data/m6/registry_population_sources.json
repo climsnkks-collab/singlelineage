@@ -1,0 +1,5919 @@
+{
+  "table": "registry_population_sources",
+  "version": 1,
+  "scope": "Newly registered158 IDs; original existing-map placement records retained, latest map_expansion5 explicit sets update current unspawned status.",
+  "summary": {
+    "registered_new_species": 158,
+    "new_groups": 67,
+    "new_species": 39,
+    "new_target_count": 444,
+    "selected_l1j_groups": 31,
+    "local_anchor_groups": 36,
+    "already_existing_species": 2,
+    "pending_species": 85,
+    "served_maps": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      19,
+      20,
+      21,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      35,
+      36,
+      37,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      53,
+      54,
+      55,
+      56,
+      59,
+      60,
+      61,
+      62,
+      63,
+      72,
+      73,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      101,
+      102,
+      103,
+      104,
+      105,
+      303
+    ],
+    "total_species_with_spawns": 73,
+    "already_existing_only_ids": [
+      891
+    ],
+    "initial_population_new_groups": 67,
+    "latest_expansion5_new_groups": 33
+  },
+  "decisions": [
+    {
+      "group_id": "registry_population_m6_4_96_176",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 176,
+      "name_ko": "세인트버나드",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/176.json regionNames",
+      "l1j_npcid": 45047,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_169_176",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 176,
+      "name_ko": "세인트버나드",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 169,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:214",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/176.json regionNames",
+      "l1j_npcid": 45047,
+      "selected_sql_row": {
+        "id": 2553,
+        "location": "Saint Bernard",
+        "count": 1,
+        "npc_templateid": 45047,
+        "group_id": 0,
+        "locx": 33966,
+        "locy": 32353,
+        "randomx": 3,
+        "randomy": 3,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 38194
+      },
+      "raw_l1j_support": {
+        "x1": 33964,
+        "y1": 32351,
+        "x2": 33968,
+        "y2": 32355
+      },
+      "selected_rect": {
+        "x1": 33964,
+        "y1": 32351,
+        "x2": 33968,
+        "y2": 32355
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33964,
+          32351
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_96_178",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 178,
+      "name_ko": "콜리",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/178.json regionNames",
+      "l1j_npcid": 45054,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_169_178",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 178,
+      "name_ko": "콜리",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 169,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:214",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/178.json regionNames",
+      "l1j_npcid": 45054,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34102,
+        "y1": 32361,
+        "x2": 34104,
+        "y2": 32363
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34102,
+          32361
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_97_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_24_195_216",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 216,
+      "name_ko": "베레스",
+      "map_id": 24,
+      "official_area": "윈다우드 성 던전 2층",
+      "region_id": 195,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:265",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/216.json regionNames",
+      "l1j_npcid": 45583,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32808,
+        "y1": 32804,
+        "x2": 32810,
+        "y2": 32806
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32808,
+          32804
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_24_64"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_155_246",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 246,
+      "name_ko": "스콜피온",
+      "map_id": 4,
+      "official_area": "용의 계곡",
+      "region_id": 155,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:184",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/246.json regionNames",
+      "l1j_npcid": 45259,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33217,
+        "y1": 32501,
+        "x2": 33219,
+        "y2": 32503
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33217,
+          32501
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion2.json",
+        "group_id": "m6_exp2_155_4"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_175_247",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 247,
+      "name_ko": "바실리스크",
+      "map_id": 4,
+      "official_area": "아덴 대륙",
+      "region_id": 175,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:226",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/247.json regionNames",
+      "l1j_npcid": 45381,
+      "selected_sql_row": {
+        "id": 15701,
+        "location": "Basilisk",
+        "count": 1,
+        "npc_templateid": 45381,
+        "group_id": 0,
+        "locx": 32809,
+        "locy": 33204,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 43925
+      },
+      "raw_l1j_support": {
+        "x1": 32800,
+        "y1": 33195,
+        "x2": 32818,
+        "y2": 33213
+      },
+      "selected_rect": {
+        "x1": 32800,
+        "y1": 33195,
+        "x2": 32818,
+        "y2": 33213
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          32800,
+          33195
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_155_248",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 248,
+      "name_ko": "코카트리스",
+      "map_id": 4,
+      "official_area": "용의 계곡",
+      "region_id": 155,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:184",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/248.json regionNames",
+      "l1j_npcid": 45361,
+      "selected_sql_row": {
+        "id": 15090,
+        "location": "Cockatrice",
+        "count": 1,
+        "npc_templateid": 45361,
+        "group_id": 0,
+        "locx": 33307,
+        "locy": 32340,
+        "randomx": 5,
+        "randomy": 5,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 43627
+      },
+      "raw_l1j_support": {
+        "x1": 33303,
+        "y1": 32336,
+        "x2": 33311,
+        "y2": 32344
+      },
+      "selected_rect": {
+        "x1": 33303,
+        "y1": 32336,
+        "x2": 33311,
+        "y2": 32344
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33303,
+          32336
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_155_250",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 250,
+      "name_ko": "드레이크",
+      "map_id": 4,
+      "official_area": "용의 계곡",
+      "region_id": 155,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:184",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/250.json regionNames",
+      "l1j_npcid": 45529,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33217,
+        "y1": 32501,
+        "x2": 33219,
+        "y2": 32503
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33217,
+          32501
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion2.json",
+        "group_id": "m6_exp2_155_4"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_155_282",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 282,
+      "name_ko": "흑장로",
+      "map_id": 4,
+      "official_area": "용의 계곡",
+      "region_id": 155,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:184",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/282.json regionNames",
+      "l1j_npcid": 45545,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33217,
+        "y1": 32501,
+        "x2": 33219,
+        "y2": 32503
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33217,
+          32501
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion2.json",
+        "group_id": "m6_exp2_155_4"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_167_286",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 286,
+      "name_ko": "비홀더",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/286.json regionNames",
+      "l1j_npcid": 45349,
+      "selected_sql_row": {
+        "id": 14634,
+        "location": "Beholder",
+        "count": 1,
+        "npc_templateid": 45349,
+        "group_id": 0,
+        "locx": 33398,
+        "locy": 33140,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 43329
+      },
+      "raw_l1j_support": {
+        "x1": 33389,
+        "y1": 33131,
+        "x2": 33407,
+        "y2": 33149
+      },
+      "selected_rect": {
+        "x1": 33389,
+        "y1": 33131,
+        "x2": 33407,
+        "y2": 33149
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33389,
+          33131
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_53_55_299",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 299,
+      "name_ko": "오크 좀비",
+      "map_id": 53,
+      "official_area": "기란 던전 1층",
+      "region_id": 55,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:61",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/299.json regionNames",
+      "l1j_npcid": 45104,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32799,
+        "y1": 32730,
+        "x2": 32801,
+        "y2": 32732
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32799,
+          32730
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_53_28"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_54_56_299",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 299,
+      "name_ko": "오크 좀비",
+      "map_id": 54,
+      "official_area": "기란 던전 2층",
+      "region_id": 56,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:63",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/299.json regionNames",
+      "l1j_npcid": 45104,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32800,
+        "y1": 32793,
+        "x2": 32802,
+        "y2": 32795
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32800,
+          32793
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_54_28"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_55_57_299",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 299,
+      "name_ko": "오크 좀비",
+      "map_id": 55,
+      "official_area": "기란 던전 3층",
+      "region_id": 57,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:65",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/299.json regionNames",
+      "l1j_npcid": 45104,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32734,
+        "y1": 32736,
+        "x2": 32736,
+        "y2": 32738
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32734,
+          32736
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_55_115"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_139_459",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 459,
+      "name_ko": "놀",
+      "map_id": 4,
+      "official_area": "은기사 지역",
+      "region_id": 139,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:145",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/459.json regionNames",
+      "l1j_npcid": 45079,
+      "selected_sql_row": {
+        "id": 3417,
+        "location": "Gnoll",
+        "count": 1,
+        "npc_templateid": 45079,
+        "group_id": 0,
+        "locx": 32992,
+        "locy": 33478,
+        "randomx": 6,
+        "randomy": 6,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 38761
+      },
+      "raw_l1j_support": {
+        "x1": 32987,
+        "y1": 33473,
+        "x2": 32997,
+        "y2": 33483
+      },
+      "selected_rect": {
+        "x1": 32987,
+        "y1": 33473,
+        "x2": 32997,
+        "y2": 33483
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          32987,
+          33473
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_96_463",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 463,
+      "name_ko": "아이스 골렘",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/463.json regionNames",
+      "l1j_npcid": 45182,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_97_463",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 463,
+      "name_ko": "아이스 골렘",
+      "map_id": 4,
+      "official_area": "오렌 설벽",
+      "region_id": 97,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:110",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/463.json regionNames",
+      "l1j_npcid": 45182,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_72_199_463",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 463,
+      "name_ko": "아이스 골렘",
+      "map_id": 72,
+      "official_area": "얼음 수정 동굴 1층",
+      "region_id": 199,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:271",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/463.json regionNames",
+      "l1j_npcid": 45182,
+      "selected_sql_row": {
+        "id": 7200002,
+        "location": "Ice Golem",
+        "count": 30,
+        "npc_templateid": 45182,
+        "group_id": 0,
+        "locx": 32746,
+        "locy": 32787,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32768,
+        "locx2": 32831,
+        "locy2": 32895,
+        "heading": 5,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 72,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46279
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "target_count": 30,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32726,
+          32785
+        ],
+        [
+          32727,
+          32785
+        ],
+        [
+          32729,
+          32785
+        ],
+        [
+          32730,
+          32785
+        ]
+      ],
+      "standable_count_at_least": 30,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_73_200_463",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 463,
+      "name_ko": "아이스 골렘",
+      "map_id": 73,
+      "official_area": "얼음 수정 동굴 2층",
+      "region_id": 200,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:273",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/463.json regionNames",
+      "l1j_npcid": 45182,
+      "selected_sql_row": {
+        "id": 7300002,
+        "location": "Ice Golem",
+        "count": 30,
+        "npc_templateid": 45182,
+        "group_id": 0,
+        "locx": 32755,
+        "locy": 32871,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32768,
+        "locx2": 32831,
+        "locy2": 32895,
+        "heading": 5,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 73,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46291
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "target_count": 30,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32730,
+          32789
+        ],
+        [
+          32734,
+          32789
+        ],
+        [
+          32735,
+          32789
+        ],
+        [
+          32740,
+          32789
+        ]
+      ],
+      "standable_count_at_least": 30,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_170_465",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 465,
+      "name_ko": "여우",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 170,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:216",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/465.json regionNames",
+      "l1j_npcid": 45048,
+      "selected_sql_row": {
+        "id": 2564,
+        "location": "Fox",
+        "count": 1,
+        "npc_templateid": 45048,
+        "group_id": 0,
+        "locx": 33972,
+        "locy": 32671,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 38205
+      },
+      "raw_l1j_support": {
+        "x1": 33963,
+        "y1": 32662,
+        "x2": 33981,
+        "y2": 32680
+      },
+      "selected_rect": {
+        "x1": 33963,
+        "y1": 32662,
+        "x2": 33981,
+        "y2": 32680
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33963,
+          32662
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_167_471",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 471,
+      "name_ko": "크로코다일",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/471.json regionNames",
+      "l1j_npcid": 45338,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33264,
+        "y1": 33457,
+        "x2": 33270,
+        "y2": 33463
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33264,
+          33457
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m5/spawns.json",
+        "group_id": "m5_heine_0"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_167_472",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 472,
+      "name_ko": "악어",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/472.json regionNames",
+      "l1j_npcid": 45101,
+      "selected_sql_row": {
+        "id": 27465,
+        "location": "Alligator",
+        "count": 1,
+        "npc_templateid": 45101,
+        "group_id": 0,
+        "locx": 33475,
+        "locy": 33209,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 45434
+      },
+      "raw_l1j_support": {
+        "x1": 33466,
+        "y1": 33200,
+        "x2": 33484,
+        "y2": 33218
+      },
+      "selected_rect": {
+        "x1": 33466,
+        "y1": 33200,
+        "x2": 33484,
+        "y2": 33218
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33476,
+          33200
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_170_516",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 516,
+      "name_ko": "곰",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 170,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:216",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/516.json regionNames",
+      "l1j_npcid": 45040,
+      "selected_sql_row": {
+        "id": 2117,
+        "location": "Bear",
+        "count": 1,
+        "npc_templateid": 45040,
+        "group_id": 0,
+        "locx": 33940,
+        "locy": 32634,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 37802
+      },
+      "raw_l1j_support": {
+        "x1": 33931,
+        "y1": 32625,
+        "x2": 33949,
+        "y2": 32643
+      },
+      "selected_rect": {
+        "x1": 33931,
+        "y1": 32625,
+        "x2": 33949,
+        "y2": 32643
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33932,
+          32625
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_139_520",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 520,
+      "name_ko": "터틀 드래곤",
+      "map_id": 4,
+      "official_area": "은기사 지역",
+      "region_id": 139,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:145",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/520.json regionNames",
+      "l1j_npcid": 45240,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32898,
+        "y1": 33095,
+        "x2": 32900,
+        "y2": 33097
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32898,
+          33095
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_139_0"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_167_560",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 560,
+      "name_ko": "도펠겡어",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/560.json regionNames",
+      "l1j_npcid": 45189,
+      "selected_sql_row": {
+        "id": 9264,
+        "location": "Doppelganger",
+        "count": 1,
+        "npc_templateid": 45189,
+        "group_id": 0,
+        "locx": 33792,
+        "locy": 33272,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 41294
+      },
+      "raw_l1j_support": {
+        "x1": 33783,
+        "y1": 33263,
+        "x2": 33801,
+        "y2": 33281
+      },
+      "selected_rect": {
+        "x1": 33783,
+        "y1": 33263,
+        "x2": 33801,
+        "y2": 33281
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33783,
+          33263
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_167_562",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 562,
+      "name_ko": "라미아",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/562.json regionNames",
+      "l1j_npcid": 45222,
+      "selected_sql_row": {
+        "id": 10220,
+        "location": "Ramia",
+        "count": 1,
+        "npc_templateid": 45222,
+        "group_id": 0,
+        "locx": 33540,
+        "locy": 33319,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 41828
+      },
+      "raw_l1j_support": {
+        "x1": 33531,
+        "y1": 33310,
+        "x2": 33549,
+        "y2": 33328
+      },
+      "selected_rect": {
+        "x1": 33531,
+        "y1": 33310,
+        "x2": 33549,
+        "y2": 33328
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33531,
+          33310
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_167_563",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 563,
+      "name_ko": "라미아",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/563.json regionNames",
+      "l1j_npcid": 45222,
+      "selected_sql_row": {
+        "id": 10220,
+        "location": "Ramia",
+        "count": 1,
+        "npc_templateid": 45222,
+        "group_id": 0,
+        "locx": 33540,
+        "locy": 33319,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 41828
+      },
+      "raw_l1j_support": {
+        "x1": 33531,
+        "y1": 33310,
+        "x2": 33549,
+        "y2": 33328
+      },
+      "selected_rect": {
+        "x1": 33531,
+        "y1": 33310,
+        "x2": 33549,
+        "y2": 33328
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33531,
+          33310
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_167_568",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 568,
+      "name_ko": "혈거인간",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/568.json regionNames",
+      "l1j_npcid": 45155,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33675,
+        "y1": 33181,
+        "x2": 33681,
+        "y2": 33187
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33675,
+          33181
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m5/spawns.json",
+        "group_id": "m5_heine_17"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_96_701",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 701,
+      "name_ko": "눈사람",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/701.json regionNames",
+      "l1j_npcid": 46129,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_97_701",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 701,
+      "name_ko": "눈사람",
+      "map_id": 4,
+      "official_area": "오렌 설벽",
+      "region_id": 97,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:110",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/701.json regionNames",
+      "l1j_npcid": 46129,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_169_701",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 701,
+      "name_ko": "눈사람",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 169,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:214",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/701.json regionNames",
+      "l1j_npcid": 46129,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34030,
+        "y1": 32393,
+        "x2": 34036,
+        "y2": 32399
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34030,
+          32393
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m5/spawns.json",
+        "group_id": "m5_oren_27"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_72_199_701",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 701,
+      "name_ko": "눈사람",
+      "map_id": 72,
+      "official_area": "얼음 수정 동굴 1층",
+      "region_id": 199,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:271",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/701.json regionNames",
+      "l1j_npcid": 46129,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32746,
+        "y1": 32795,
+        "x2": 32748,
+        "y2": 32797
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32746,
+          32795
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_CURRENT_S32_CONNECTED_ANCHOR",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/ice_cave.json",
+        "group_id": "ice_cave.json#/local_spawn_anchors/0"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_73_200_701",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 701,
+      "name_ko": "눈사람",
+      "map_id": 73,
+      "official_area": "얼음 수정 동굴 2층",
+      "region_id": 200,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:273",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/701.json regionNames",
+      "l1j_npcid": 46129,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32745,
+        "y1": 32869,
+        "x2": 32747,
+        "y2": 32871
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32745,
+          32869
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_CURRENT_S32_CONNECTED_ANCHOR",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/ice_cave.json",
+        "group_id": "ice_cave.json#/local_spawn_anchors/1"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_96_702",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 702,
+      "name_ko": "샤벨 타이거",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/702.json regionNames",
+      "l1j_npcid": 45267,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_98_702",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 702,
+      "name_ko": "샤벨 타이거",
+      "map_id": 4,
+      "official_area": "오렌 설벽",
+      "region_id": 98,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:112",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/702.json regionNames",
+      "l1j_npcid": 45267,
+      "selected_sql_row": {
+        "id": 12430,
+        "location": "Snow Tiger",
+        "count": 1,
+        "npc_templateid": 45267,
+        "group_id": 0,
+        "locx": 34245,
+        "locy": 32420,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 42585
+      },
+      "raw_l1j_support": {
+        "x1": 34236,
+        "y1": 32411,
+        "x2": 34254,
+        "y2": 32429
+      },
+      "selected_rect": {
+        "x1": 34236,
+        "y1": 32411,
+        "x2": 34254,
+        "y2": 32429
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          34236,
+          32411
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_169_702",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 702,
+      "name_ko": "샤벨 타이거",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 169,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:214",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/702.json regionNames",
+      "l1j_npcid": 45267,
+      "selected_sql_row": {
+        "id": 12429,
+        "location": "Snow Tiger",
+        "count": 1,
+        "npc_templateid": 45267,
+        "group_id": 0,
+        "locx": 34225,
+        "locy": 32433,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 42584
+      },
+      "raw_l1j_support": {
+        "x1": 34216,
+        "y1": 32424,
+        "x2": 34234,
+        "y2": 32442
+      },
+      "selected_rect": {
+        "x1": 34216,
+        "y1": 32424,
+        "x2": 34234,
+        "y2": 32442
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          34220,
+          32424
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_72_199_702",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 702,
+      "name_ko": "샤벨 타이거",
+      "map_id": 72,
+      "official_area": "얼음 수정 동굴 1층",
+      "region_id": 199,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:271",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/702.json regionNames",
+      "l1j_npcid": 45267,
+      "selected_sql_row": {
+        "id": 7200005,
+        "location": "Snow Tiger",
+        "count": 20,
+        "npc_templateid": 45267,
+        "group_id": 0,
+        "locx": 32746,
+        "locy": 32787,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32768,
+        "locx2": 32831,
+        "locy2": 32895,
+        "heading": 5,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 72,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46282
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "target_count": 20,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32726,
+          32785
+        ],
+        [
+          32727,
+          32785
+        ],
+        [
+          32729,
+          32785
+        ],
+        [
+          32730,
+          32785
+        ]
+      ],
+      "standable_count_at_least": 20,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_73_200_702",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 702,
+      "name_ko": "샤벨 타이거",
+      "map_id": 73,
+      "official_area": "얼음 수정 동굴 2층",
+      "region_id": 200,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:273",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/702.json regionNames",
+      "l1j_npcid": 45267,
+      "selected_sql_row": {
+        "id": 7300004,
+        "location": "Snow Tiger",
+        "count": 20,
+        "npc_templateid": 45267,
+        "group_id": 0,
+        "locx": 32755,
+        "locy": 32871,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32768,
+        "locx2": 32831,
+        "locy2": 32895,
+        "heading": 5,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 73,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46293
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "target_count": 20,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32730,
+          32789
+        ],
+        [
+          32734,
+          32789
+        ],
+        [
+          32735,
+          32789
+        ],
+        [
+          32740,
+          32789
+        ]
+      ],
+      "standable_count_at_least": 20,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_96_704",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 704,
+      "name_ko": "에티",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/704.json regionNames",
+      "l1j_npcid": 45294,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_98_704",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 704,
+      "name_ko": "에티",
+      "map_id": 4,
+      "official_area": "오렌 설벽",
+      "region_id": 98,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:112",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/704.json regionNames",
+      "l1j_npcid": 45294,
+      "selected_sql_row": {
+        "id": 13677,
+        "location": "Yeti",
+        "count": 1,
+        "npc_templateid": 45294,
+        "group_id": 0,
+        "locx": 34271,
+        "locy": 32410,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 42949
+      },
+      "raw_l1j_support": {
+        "x1": 34262,
+        "y1": 32401,
+        "x2": 34280,
+        "y2": 32419
+      },
+      "selected_rect": {
+        "x1": 34262,
+        "y1": 32401,
+        "x2": 34280,
+        "y2": 32419
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          34262,
+          32401
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m5_4_169_704",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 704,
+      "name_ko": "에티",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 169,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:214",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/704.json regionNames",
+      "l1j_npcid": 45294,
+      "selected_sql_row": {
+        "id": 13676,
+        "location": "Yeti",
+        "count": 1,
+        "npc_templateid": 45294,
+        "group_id": 0,
+        "locx": 34239,
+        "locy": 32435,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 42948
+      },
+      "raw_l1j_support": {
+        "x1": 34230,
+        "y1": 32426,
+        "x2": 34248,
+        "y2": 32444
+      },
+      "selected_rect": {
+        "x1": 34230,
+        "y1": 32426,
+        "x2": 34248,
+        "y2": 32444
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          34237,
+          32426
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_72_199_704",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 704,
+      "name_ko": "에티",
+      "map_id": 72,
+      "official_area": "얼음 수정 동굴 1층",
+      "region_id": 199,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:271",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/704.json regionNames",
+      "l1j_npcid": 45294,
+      "selected_sql_row": {
+        "id": 7200006,
+        "location": "Yeti",
+        "count": 20,
+        "npc_templateid": 45294,
+        "group_id": 0,
+        "locx": 32746,
+        "locy": 32787,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32768,
+        "locx2": 32831,
+        "locy2": 32895,
+        "heading": 5,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 72,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46283
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "target_count": 20,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32726,
+          32785
+        ],
+        [
+          32727,
+          32785
+        ],
+        [
+          32729,
+          32785
+        ],
+        [
+          32730,
+          32785
+        ]
+      ],
+      "standable_count_at_least": 20,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_73_200_704",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 704,
+      "name_ko": "에티",
+      "map_id": 73,
+      "official_area": "얼음 수정 동굴 2층",
+      "region_id": 200,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:273",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/704.json regionNames",
+      "l1j_npcid": 45294,
+      "selected_sql_row": {
+        "id": 7300005,
+        "location": "Yeti",
+        "count": 20,
+        "npc_templateid": 45294,
+        "group_id": 0,
+        "locx": 32755,
+        "locy": 32871,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32768,
+        "locx2": 32831,
+        "locy2": 32895,
+        "heading": 5,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 73,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46294
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32768,
+        "x2": 32830,
+        "y2": 32894
+      },
+      "target_count": 20,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32730,
+          32789
+        ],
+        [
+          32734,
+          32789
+        ],
+        [
+          32735,
+          32789
+        ],
+        [
+          32740,
+          32789
+        ]
+      ],
+      "standable_count_at_least": 20,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_96_706",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 706,
+      "name_ko": "허스키",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/706.json regionNames",
+      "l1j_npcid": 45053,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_170_706",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 706,
+      "name_ko": "허스키",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 170,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:216",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/706.json regionNames",
+      "l1j_npcid": 45053,
+      "selected_sql_row": {
+        "id": 2591,
+        "location": "Husky",
+        "count": 1,
+        "npc_templateid": 45053,
+        "group_id": 0,
+        "locx": 33947,
+        "locy": 32642,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 38232
+      },
+      "raw_l1j_support": {
+        "x1": 33938,
+        "y1": 32633,
+        "x2": 33956,
+        "y2": 32651
+      },
+      "selected_rect": {
+        "x1": 33938,
+        "y1": 32633,
+        "x2": 33956,
+        "y2": 32651
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33938,
+          32633
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_96_709",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 709,
+      "name_ko": "아이스 맨",
+      "map_id": 4,
+      "official_area": "국경 요새",
+      "region_id": 96,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:108",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/709.json regionNames",
+      "l1j_npcid": 81221,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34240,
+        "y1": 32276,
+        "x2": 34242,
+        "y2": 32278
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34240,
+          32276
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_96_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_72_199_709",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 709,
+      "name_ko": "아이스 맨",
+      "map_id": 72,
+      "official_area": "얼음 수정 동굴 1층",
+      "region_id": 199,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:271",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/709.json regionNames",
+      "l1j_npcid": 81221,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32746,
+        "y1": 32795,
+        "x2": 32748,
+        "y2": 32797
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32746,
+          32795
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_CURRENT_S32_CONNECTED_ANCHOR",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/ice_cave.json",
+        "group_id": "ice_cave.json#/local_spawn_anchors/0"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_73_200_709",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 709,
+      "name_ko": "아이스 맨",
+      "map_id": 73,
+      "official_area": "얼음 수정 동굴 2층",
+      "region_id": 200,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:273",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/709.json regionNames",
+      "l1j_npcid": 81221,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32745,
+        "y1": 32869,
+        "x2": 32747,
+        "y2": 32871
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32745,
+          32869
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_CURRENT_S32_CONNECTED_ANCHOR",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/ice_cave.json",
+        "group_id": "ice_cave.json#/local_spawn_anchors/1"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_167_884",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 884,
+      "name_ko": "도펠갱어",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/884.json regionNames",
+      "l1j_npcid": 45828,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33675,
+        "y1": 33181,
+        "x2": 33681,
+        "y2": 33187
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33675,
+          33181
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m5/spawns.json",
+        "group_id": "m5_heine_17"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_167_885",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 885,
+      "name_ko": "도펠겡어 보스",
+      "map_id": 4,
+      "official_area": "하이네",
+      "region_id": 167,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:210",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/885.json regionNames",
+      "l1j_npcid": 45826,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33361,
+        "y1": 33093,
+        "x2": 33367,
+        "y2": 33099
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33361,
+          33093
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m5/spawns.json",
+        "group_id": "m5_heine_297"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_102_383_897",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 897,
+      "name_ko": "메두사",
+      "map_id": 102,
+      "official_area": "오만의 탑 2층",
+      "region_id": 383,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:428",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/897.json regionNames",
+      "l1j_npcid": 81099,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32788,
+        "y1": 32797,
+        "x2": 32790,
+        "y2": 32799
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32788,
+          32797
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion4.json",
+        "group_id": "m6_exp4_102_1025"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_103_384_897",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 897,
+      "name_ko": "메두사",
+      "map_id": 103,
+      "official_area": "오만의 탑 3층",
+      "region_id": 384,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:430",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/897.json regionNames",
+      "l1j_npcid": 81099,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32748,
+        "y1": 32736,
+        "x2": 32750,
+        "y2": 32738
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32748,
+          32736
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion4.json",
+        "group_id": "m6_exp4_103_891"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_104_385_897",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 897,
+      "name_ko": "메두사",
+      "map_id": 104,
+      "official_area": "오만의 탑 4층",
+      "region_id": 385,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:432",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/897.json regionNames",
+      "l1j_npcid": 81099,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32661,
+        "y1": 32859,
+        "x2": 32663,
+        "y2": 32861
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32661,
+          32859
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion4.json",
+        "group_id": "m6_exp4_104_891"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_105_386_897",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 897,
+      "name_ko": "메두사",
+      "map_id": 105,
+      "official_area": "오만의 탑 5층",
+      "region_id": 386,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:434",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/897.json regionNames",
+      "l1j_npcid": 81099,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32732,
+        "y1": 32927,
+        "x2": 32734,
+        "y2": 32929
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32732,
+          32927
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion4.json",
+        "group_id": "m6_exp4_105_891"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_103_384_1025",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 1025,
+      "name_ko": "변종 웅골리언트",
+      "map_id": 103,
+      "official_area": "오만의 탑 3층",
+      "region_id": 384,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:430",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1025.json regionNames",
+      "l1j_npcid": 45348,
+      "selected_sql_row": {
+        "id": 10300002,
+        "location": "Mutant Arachnevil Elder",
+        "count": 38,
+        "npc_templateid": 45348,
+        "group_id": 0,
+        "locx": 32798,
+        "locy": 32798,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32704,
+        "locx2": 32895,
+        "locy2": 32895,
+        "heading": 0,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 103,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46343
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32704,
+        "x2": 32894,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32704,
+        "x2": 32894,
+        "y2": 32894
+      },
+      "target_count": 38,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32749,
+          32722
+        ],
+        [
+          32750,
+          32722
+        ],
+        [
+          32751,
+          32722
+        ],
+        [
+          32752,
+          32722
+        ]
+      ],
+      "standable_count_at_least": 38,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_104_385_1025",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 1025,
+      "name_ko": "변종 웅골리언트",
+      "map_id": 104,
+      "official_area": "오만의 탑 4층",
+      "region_id": 385,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:432",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1025.json regionNames",
+      "l1j_npcid": 45348,
+      "selected_sql_row": {
+        "id": 10400002,
+        "location": "Mutant Arachnevil Elder",
+        "count": 25,
+        "npc_templateid": 45348,
+        "group_id": 0,
+        "locx": 32670,
+        "locy": 32861,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32576,
+        "locy1": 32768,
+        "locx2": 32767,
+        "locy2": 32959,
+        "heading": 0,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 104,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46348
+      },
+      "raw_l1j_support": {
+        "x1": 32576,
+        "y1": 32768,
+        "x2": 32766,
+        "y2": 32958
+      },
+      "selected_rect": {
+        "x1": 32576,
+        "y1": 32768,
+        "x2": 32766,
+        "y2": 32958
+      },
+      "target_count": 25,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32665,
+          32785
+        ],
+        [
+          32666,
+          32785
+        ],
+        [
+          32667,
+          32785
+        ],
+        [
+          32668,
+          32785
+        ]
+      ],
+      "standable_count_at_least": 25,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_102_383_1026",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 1026,
+      "name_ko": "변종 라미아",
+      "map_id": 102,
+      "official_area": "오만의 탑 2층",
+      "region_id": 383,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:428",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1026.json regionNames",
+      "l1j_npcid": 45332,
+      "selected_sql_row": {
+        "id": 10200001,
+        "location": "Mutant Ramia",
+        "count": 55,
+        "npc_templateid": 45332,
+        "group_id": 0,
+        "locx": 32798,
+        "locy": 32798,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32704,
+        "locx2": 32895,
+        "locy2": 32895,
+        "heading": 0,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 102,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46338
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32704,
+        "x2": 32894,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32704,
+        "x2": 32894,
+        "y2": 32894
+      },
+      "target_count": 55,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32722,
+          32722
+        ],
+        [
+          32723,
+          32722
+        ],
+        [
+          32724,
+          32722
+        ],
+        [
+          32725,
+          32722
+        ]
+      ],
+      "standable_count_at_least": 55,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_103_384_1026",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 1026,
+      "name_ko": "변종 라미아",
+      "map_id": 103,
+      "official_area": "오만의 탑 3층",
+      "region_id": 384,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:430",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1026.json regionNames",
+      "l1j_npcid": 45332,
+      "selected_sql_row": {
+        "id": 10300001,
+        "location": "Mutant Ramia",
+        "count": 75,
+        "npc_templateid": 45332,
+        "group_id": 0,
+        "locx": 32798,
+        "locy": 32798,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32704,
+        "locy1": 32704,
+        "locx2": 32895,
+        "locy2": 32895,
+        "heading": 0,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 103,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46342
+      },
+      "raw_l1j_support": {
+        "x1": 32704,
+        "y1": 32704,
+        "x2": 32894,
+        "y2": 32894
+      },
+      "selected_rect": {
+        "x1": 32704,
+        "y1": 32704,
+        "x2": 32894,
+        "y2": 32894
+      },
+      "target_count": 75,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32749,
+          32722
+        ],
+        [
+          32750,
+          32722
+        ],
+        [
+          32751,
+          32722
+        ],
+        [
+          32752,
+          32722
+        ]
+      ],
+      "standable_count_at_least": 75,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_104_385_1026",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 1026,
+      "name_ko": "변종 라미아",
+      "map_id": 104,
+      "official_area": "오만의 탑 4층",
+      "region_id": 385,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:432",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1026.json regionNames",
+      "l1j_npcid": 45332,
+      "selected_sql_row": {
+        "id": 10400001,
+        "location": "Mutant Ramia",
+        "count": 55,
+        "npc_templateid": 45332,
+        "group_id": 0,
+        "locx": 32670,
+        "locy": 32861,
+        "randomx": 0,
+        "randomy": 0,
+        "locx1": 32576,
+        "locy1": 32768,
+        "locx2": 32767,
+        "locy2": 32959,
+        "heading": 0,
+        "min_respawn_delay": 0,
+        "max_respawn_delay": 0,
+        "mapid": 104,
+        "respawn_screen": 0,
+        "movement_distance": 0,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 46347
+      },
+      "raw_l1j_support": {
+        "x1": 32576,
+        "y1": 32768,
+        "x2": 32766,
+        "y2": 32958
+      },
+      "selected_rect": {
+        "x1": 32576,
+        "y1": 32768,
+        "x2": 32766,
+        "y2": 32958
+      },
+      "target_count": 55,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32665,
+          32785
+        ],
+        [
+          32666,
+          32785
+        ],
+        [
+          32667,
+          32785
+        ],
+        [
+          32668,
+          32785
+        ]
+      ],
+      "standable_count_at_least": 55,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_105_386_1331",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 1331,
+      "name_ko": "코카트리스",
+      "map_id": 105,
+      "official_area": "오만의 탑 5층",
+      "region_id": 386,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:434",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1331.json regionNames",
+      "l1j_npcid": 81102,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 32732,
+        "y1": 32927,
+        "x2": 32734,
+        "y2": 32929
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          32732,
+          32927
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion4.json",
+        "group_id": "m6_exp4_105_891"
+      }
+    },
+    {
+      "group_id": "registry_population_m5_4_169_1387",
+      "destination": "tools/local_original_session/data/m5/spawns.json",
+      "template_id": 1387,
+      "name_ko": "열혈토끼",
+      "map_id": 4,
+      "official_area": "오렌",
+      "region_id": 169,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:214",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1387.json regionNames",
+      "l1j_npcid": 45049,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 33999,
+        "y1": 32395,
+        "x2": 34001,
+        "y2": 32397
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          33999,
+          32395
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_99_27"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_99_1388",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 1388,
+      "name_ko": "고양이",
+      "map_id": 4,
+      "official_area": "엘모어 격전지",
+      "region_id": 99,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:114",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/1388.json regionNames",
+      "l1j_npcid": 45039,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34030,
+        "y1": 32393,
+        "x2": 34036,
+        "y2": 32399
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34030,
+          32393
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m5/spawns.json",
+        "group_id": "m5_oren_27"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_97_2214",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 2214,
+      "name_ko": "라쿤",
+      "map_id": 4,
+      "official_area": "오렌 설벽",
+      "region_id": 97,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:110",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/2214.json regionNames",
+      "l1j_npcid": 45044,
+      "selected_sql_row": null,
+      "raw_l1j_support": null,
+      "selected_rect": {
+        "x1": 34102,
+        "y1": 32361,
+        "x2": 34104,
+        "y2": 32363
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "local_policy",
+      "standable_sample_cells": [
+        [
+          34102,
+          32361
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "LOCAL_EXISTING_SAME_OFFICIAL_AREA_RECT",
+      "anchor": {
+        "file": "tools/local_original_session/data/m6/map_expansion3.json",
+        "group_id": "m6_exp3_97_708"
+      }
+    },
+    {
+      "group_id": "registry_population_m6_4_155_10219",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 10219,
+      "name_ko": "오우거",
+      "map_id": 4,
+      "official_area": "용의 계곡",
+      "region_id": 155,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:184",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/10219.json regionNames",
+      "l1j_npcid": 45278,
+      "selected_sql_row": {
+        "id": 12998,
+        "location": "Ogre",
+        "count": 1,
+        "npc_templateid": 45278,
+        "group_id": 0,
+        "locx": 33303,
+        "locy": 32311,
+        "randomx": 5,
+        "randomy": 5,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 42710
+      },
+      "raw_l1j_support": {
+        "x1": 33299,
+        "y1": 32307,
+        "x2": 33307,
+        "y2": 32315
+      },
+      "selected_rect": {
+        "x1": 33299,
+        "y1": 32307,
+        "x2": 33307,
+        "y2": 32315
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          33299,
+          32307
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_107_12177",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 12177,
+      "name_ko": "자이언트",
+      "map_id": 4,
+      "official_area": "황혼의 산맥",
+      "region_id": 107,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:126",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/12177.json regionNames",
+      "l1j_npcid": 45337,
+      "selected_sql_row": {
+        "id": 14213,
+        "location": "Giant",
+        "count": 1,
+        "npc_templateid": 45337,
+        "group_id": 0,
+        "locx": 34265,
+        "locy": 33122,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 43167
+      },
+      "raw_l1j_support": {
+        "x1": 34256,
+        "y1": 33113,
+        "x2": 34274,
+        "y2": 33131
+      },
+      "selected_rect": {
+        "x1": 34256,
+        "y1": 33113,
+        "x2": 34274,
+        "y2": 33131
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          34262,
+          33113
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_107_12178",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 12178,
+      "name_ko": "자이언트",
+      "map_id": 4,
+      "official_area": "황혼의 산맥",
+      "region_id": 107,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:126",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/12178.json regionNames",
+      "l1j_npcid": 45295,
+      "selected_sql_row": {
+        "id": 13727,
+        "location": "Giant",
+        "count": 1,
+        "npc_templateid": 45295,
+        "group_id": 0,
+        "locx": 34277,
+        "locy": 33115,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 42973
+      },
+      "raw_l1j_support": {
+        "x1": 34268,
+        "y1": 33106,
+        "x2": 34286,
+        "y2": 33124
+      },
+      "selected_rect": {
+        "x1": 34268,
+        "y1": 33106,
+        "x2": 34286,
+        "y2": 33124
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          34268,
+          33106
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    },
+    {
+      "group_id": "registry_population_m6_4_104_12181",
+      "destination": "tools/local_original_session/data/m6/spawns.json",
+      "template_id": 12181,
+      "name_ko": "놀",
+      "map_id": 4,
+      "official_area": "풍룡의 둥지",
+      "region_id": 104,
+      "region_source": "work/local_resource_provider/assets/data/region.jsonc:122",
+      "official_region_source": "work/official_data_refresh_20261028/raw/monster/12181.json regionNames",
+      "l1j_npcid": 45079,
+      "selected_sql_row": {
+        "id": 3458,
+        "location": "Gnoll",
+        "count": 1,
+        "npc_templateid": 45079,
+        "group_id": 0,
+        "locx": 34132,
+        "locy": 32949,
+        "randomx": 10,
+        "randomy": 10,
+        "locx1": 0,
+        "locy1": 0,
+        "locx2": 0,
+        "locy2": 0,
+        "heading": 0,
+        "min_respawn_delay": 60,
+        "max_respawn_delay": 120,
+        "mapid": 4,
+        "respawn_screen": 0,
+        "movement_distance": 100,
+        "rest": 0,
+        "near_spawn": 0,
+        "spawn_home": 1,
+        "spawn_home_range": 8,
+        "spawn_home_count": 2,
+        "spawn_home_delay": 100,
+        "line": 38801
+      },
+      "raw_l1j_support": {
+        "x1": 34123,
+        "y1": 32940,
+        "x2": 34141,
+        "y2": 32958
+      },
+      "selected_rect": {
+        "x1": 34123,
+        "y1": 32940,
+        "x2": 34141,
+        "y2": 32958
+      },
+      "target_count": 1,
+      "respawn_delay_ms": {
+        "min": 60000,
+        "max": 120000
+      },
+      "delay_source": "l1j",
+      "standable_sample_cells": [
+        [
+          34134,
+          32940
+        ]
+      ],
+      "standable_count_at_least": 1,
+      "placement_status": "L1J_SUPPORT_CURRENT_STATIC_STANDABLE_CELLS",
+      "anchor": null
+    }
+  ],
+  "already_existing": [
+    {
+      "template_id": 891,
+      "map_id": 103,
+      "area": "오만의 탑 3층"
+    },
+    {
+      "template_id": 891,
+      "map_id": 104,
+      "area": "오만의 탑 4층"
+    },
+    {
+      "template_id": 891,
+      "map_id": 105,
+      "area": "오만의 탑 5층"
+    },
+    {
+      "template_id": 1025,
+      "map_id": 102,
+      "area": "오만의 탑 2층"
+    }
+  ],
+  "pending": [
+    {
+      "template_id": 499,
+      "name_ko": "파푸리온",
+      "official_regions": [
+        "파푸리온 둥지"
+      ],
+      "l1j_npcid": 45683,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 500,
+      "name_ko": "바쿡",
+      "official_regions": [
+        "지하 수로 1층",
+        "지하 수로 2층",
+        "지하 수로"
+      ],
+      "l1j_npcid": 45116,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 501,
+      "name_ko": "라미아",
+      "official_regions": [
+        "지하 수로"
+      ],
+      "l1j_npcid": 81075,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 502,
+      "name_ko": "라미아",
+      "official_regions": [
+        "지하 수로"
+      ],
+      "l1j_npcid": 45222,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 503,
+      "name_ko": "시댄서",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45812,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 504,
+      "name_ko": "크랩맨",
+      "official_regions": [
+        "지하 수로 2층",
+        "지하 수로 3층",
+        "에바왕국"
+      ],
+      "l1j_npcid": 45164,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 505,
+      "name_ko": "랫맨",
+      "official_regions": [
+        "지하 수로 1층",
+        "지하 수로 2층",
+        "지하 수로 3층"
+      ],
+      "l1j_npcid": 45192,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 506,
+      "name_ko": "혈거인간",
+      "official_regions": [
+        "지하 수로 1층"
+      ],
+      "l1j_npcid": 45155,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 507,
+      "name_ko": "일렉카둠",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45819,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 511,
+      "name_ko": "머맨",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45159,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 512,
+      "name_ko": "실라칸스",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45089,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 513,
+      "name_ko": "크러스트시안",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45823,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 514,
+      "name_ko": "해파리",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45097,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 515,
+      "name_ko": "해파리",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 81042,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 518,
+      "name_ko": "상어",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45160,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 519,
+      "name_ko": "아스테",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45195,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 521,
+      "name_ko": "물고기",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 46048,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 522,
+      "name_ko": "물고기",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 46049,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 523,
+      "name_ko": "물고기",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 46050,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 524,
+      "name_ko": "물고기",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 46051,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 525,
+      "name_ko": "물고기",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 46052,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 535,
+      "name_ko": "말미잘",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45006,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 536,
+      "name_ko": "말미잘",
+      "official_regions": [
+        "에바왕국"
+      ],
+      "l1j_npcid": 45006,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 567,
+      "name_ko": "터틀 드래곤",
+      "official_regions": [],
+      "l1j_npcid": 45262,
+      "reason": "OFFICIAL_REGION_NAMES_MISSING",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 621,
+      "name_ko": "발라카스",
+      "official_regions": [],
+      "l1j_npcid": 45684,
+      "reason": "OFFICIAL_REGION_NAMES_MISSING",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 710,
+      "name_ko": "얼음 여왕",
+      "official_regions": [
+        "얼음 수정 동굴 3층"
+      ],
+      "l1j_npcid": 45609,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 723,
+      "name_ko": "얼음 여왕",
+      "official_regions": [
+        "얼음 수정 동굴 3층"
+      ],
+      "l1j_npcid": 45609,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 753,
+      "name_ko": "리자드맨",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45805,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 754,
+      "name_ko": "라미아",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45387,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 755,
+      "name_ko": "라미아",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45387,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 756,
+      "name_ko": "도펠갱어",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 81069,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 757,
+      "name_ko": "그리폰",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45445,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 758,
+      "name_ko": "악어",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45196,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 759,
+      "name_ko": "크로코다일",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45469,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 760,
+      "name_ko": "에틴",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45505,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 761,
+      "name_ko": "버그베어",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45392,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 762,
+      "name_ko": "킹 버그베어",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45509,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 763,
+      "name_ko": "바실리스크",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45531,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 764,
+      "name_ko": "코카트리스",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45362,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 765,
+      "name_ko": "사이클롭스",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45538,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 766,
+      "name_ko": "드레이크",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45529,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 767,
+      "name_ko": "하피",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45452,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 768,
+      "name_ko": "미노타우르스",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45390,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 769,
+      "name_ko": "미노타우르스",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45449,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 770,
+      "name_ko": "라이칸스로프",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45389,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 771,
+      "name_ko": "늑대인간",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45355,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 772,
+      "name_ko": "아울베어",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45371,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 773,
+      "name_ko": "셸로브",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45358,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 774,
+      "name_ko": "웅골리언트",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45401,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 775,
+      "name_ko": "트롤",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45477,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 776,
+      "name_ko": "가스트",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45378,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 777,
+      "name_ko": "가스트 로드",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45470,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 827,
+      "name_ko": "다크 엘프",
+      "official_regions": [
+        "잊혀진 섬"
+      ],
+      "l1j_npcid": 45364,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 889,
+      "name_ko": "다이어울프",
+      "official_regions": [
+        "오만의 탑 11층",
+        "오만의 탑 12층",
+        "오만의 탑 13층",
+        "오만의 탑 14층",
+        "오만의 탑 15층",
+        "오만의 탑 17층",
+        "오만의 탑 18층",
+        "오만의 탑 19층",
+        "오만의 탑 20층"
+      ],
+      "l1j_npcid": 81229,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 895,
+      "name_ko": "댄싱 소드",
+      "official_regions": [
+        "오만의 탑 17층",
+        "오만의 탑 18층",
+        "오만의 탑 19층",
+        "오만의 탑 20층"
+      ],
+      "l1j_npcid": 45386,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 899,
+      "name_ko": "젤라틴 큐브",
+      "official_regions": [
+        "지하 수로"
+      ],
+      "l1j_npcid": 45296,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 900,
+      "name_ko": "린드비오르",
+      "official_regions": [
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45681,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "아덴 대륙",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 902,
+      "name_ko": "케레니스",
+      "official_regions": [
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45678,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "아덴 대륙",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 971,
+      "name_ko": "켄 라우헬",
+      "official_regions": [
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45680,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "아덴 대륙",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 972,
+      "name_ko": "얼음 여왕의 시녀",
+      "official_regions": [
+        "얼음 수정 동굴 3층"
+      ],
+      "l1j_npcid": 45102,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 975,
+      "name_ko": "흑기사",
+      "official_regions": [
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 81067,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "아덴 대륙",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 1027,
+      "name_ko": "사악한 비홀더",
+      "official_regions": [
+        "오만의 탑 15층",
+        "오만의 탑 17층",
+        "오만의 탑 18층",
+        "오만의 탑 19층",
+        "오만의 탑 20층"
+      ],
+      "l1j_npcid": 45406,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 1028,
+      "name_ko": "사악한 미믹",
+      "official_regions": [
+        "오만의 탑 11층",
+        "오만의 탑 12층",
+        "오만의 탑 13층",
+        "오만의 탑 14층",
+        "오만의 탑 15층"
+      ],
+      "l1j_npcid": 45399,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 1039,
+      "name_ko": "제니스 퀸",
+      "official_regions": [
+        "오만의 탑 10층"
+      ],
+      "l1j_npcid": 45513,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 1041,
+      "name_ko": "시어",
+      "official_regions": [
+        "오만의 탑 20층"
+      ],
+      "l1j_npcid": 45547,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 1388,
+      "name_ko": "고양이",
+      "official_regions": [
+        "엘모어 격전지",
+        "황혼의 산맥",
+        "아덴 대륙"
+      ],
+      "reason": "PARTIAL_AREA_PLACEMENT_PENDING",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "황혼의 산맥",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": [
+            37801,
+            47405,
+            47406,
+            47407
+          ]
+        }
+      ]
+    },
+    {
+      "template_id": 1410,
+      "name_ko": "서큐버스",
+      "official_regions": [
+        "오만의 탑 11층",
+        "오만의 탑 12층",
+        "오만의 탑 13층",
+        "오만의 탑 14층",
+        "오만의 탑 15층",
+        "오만의 탑 17층",
+        "오만의 탑 18층",
+        "오만의 탑 19층",
+        "오만의 탑 20층"
+      ],
+      "l1j_npcid": 45393,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2214,
+      "name_ko": "라쿤",
+      "official_regions": [
+        "오렌 설벽",
+        "황혼의 산맥",
+        "아덴 대륙"
+      ],
+      "reason": "PARTIAL_AREA_PLACEMENT_PENDING",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "황혼의 산맥",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ]
+    },
+    {
+      "template_id": 2381,
+      "name_ko": "오염된 딥플라워",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45775,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2388,
+      "name_ko": "오염된 인간 투사",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45778,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2389,
+      "name_ko": "오염된 인간 도끼병",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45781,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2390,
+      "name_ko": "오염된 인간 궁수",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45780,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2391,
+      "name_ko": "오염된 인간 검사",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45779,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2392,
+      "name_ko": "오염된 요정 궁수",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45773,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2393,
+      "name_ko": "오염된 엔트",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45152,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2394,
+      "name_ko": "오염된 판",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45776,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2395,
+      "name_ko": "오염된 아라크네",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45777,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2396,
+      "name_ko": "오염된 오크",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45117,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2397,
+      "name_ko": "오염된 오크 도끼병",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45791,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2398,
+      "name_ko": "오염된 오크 궁수",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45118,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2399,
+      "name_ko": "오염된 오크 전사",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45792,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2400,
+      "name_ko": "오염된 오크 창병",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45793,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2401,
+      "name_ko": "오염된 빛의 대정령",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45784,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2402,
+      "name_ko": "스피리드의 소환물",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45794,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2403,
+      "name_ko": "스피리드",
+      "official_regions": [
+        "오염된 축복의 땅"
+      ],
+      "l1j_npcid": 45795,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2782,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅"
+      ],
+      "l1j_npcid": 46092,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2783,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅"
+      ],
+      "l1j_npcid": 46093,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2784,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅"
+      ],
+      "l1j_npcid": 46094,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2785,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅"
+      ],
+      "l1j_npcid": 46095,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2786,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅"
+      ],
+      "l1j_npcid": 46096,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 2787,
+      "name_ko": "보초병",
+      "official_regions": [],
+      "l1j_npcid": 46106,
+      "reason": "OFFICIAL_REGION_NAMES_MISSING",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10204,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅:심연"
+      ],
+      "l1j_npcid": 46092,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10205,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅:심연"
+      ],
+      "l1j_npcid": 46093,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10206,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅:심연"
+      ],
+      "l1j_npcid": 46094,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10207,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅:심연"
+      ],
+      "l1j_npcid": 46095,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10208,
+      "name_ko": "선택받지 못한 자",
+      "official_regions": [
+        "버림받은 자들의 땅:심연"
+      ],
+      "l1j_npcid": 46096,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10209,
+      "name_ko": "보초병",
+      "official_regions": [],
+      "l1j_npcid": 46106,
+      "reason": "OFFICIAL_REGION_NAMES_MISSING",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10243,
+      "name_ko": "불의 대정령",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45622,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10244,
+      "name_ko": "파이어 에그",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45206,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10245,
+      "name_ko": "사라만다",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 81225,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10246,
+      "name_ko": "물의 대정령",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45620,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10247,
+      "name_ko": "아이스 맨",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 81221,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10248,
+      "name_ko": "아이스 골렘",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 46133,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10249,
+      "name_ko": "바람의 대정령",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45621,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10250,
+      "name_ko": "킬러비",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45554,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10251,
+      "name_ko": "볼 라이트닝",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45549,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10252,
+      "name_ko": "땅의 대정령",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45619,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10253,
+      "name_ko": "열혈토끼",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45049,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10254,
+      "name_ko": "가디언 아머",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45562,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10255,
+      "name_ko": "나이트메어",
+      "official_regions": [],
+      "l1j_npcid": 45410,
+      "reason": "OFFICIAL_REGION_NAMES_MISSING",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10256,
+      "name_ko": "유니콘",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45640,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10257,
+      "name_ko": "펑거스",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45551,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10258,
+      "name_ko": "꿈의 혼령",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45558,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 10259,
+      "name_ko": "꿈의 혼령",
+      "official_regions": [
+        "몽환의 섬"
+      ],
+      "l1j_npcid": 45558,
+      "reason": "OFFICIAL_AREA_NOT_ON_CURRENTLY_SERVED_MAPS",
+      "placement_failures": [],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 12179,
+      "name_ko": "자이언트",
+      "official_regions": [
+        "황혼의 산맥",
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45318,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "황혼의 산맥",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 12180,
+      "name_ko": "에이션트 자이언트",
+      "official_regions": [
+        "황혼의 산맥",
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45610,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "황혼의 산맥",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 12182,
+      "name_ko": "독침 킬러비",
+      "official_regions": [
+        "풍룡의 둥지",
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45554,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "풍룡의 둥지",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 12183,
+      "name_ko": "하피",
+      "official_regions": [
+        "풍룡의 둥지",
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45264,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "풍룡의 둥지",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": [
+            42161,
+            42162,
+            42163,
+            42164,
+            42165,
+            42166,
+            42167,
+            42168,
+            42169,
+            42170,
+            42171,
+            42172,
+            42173,
+            42174,
+            42175,
+            42176,
+            42177,
+            42178,
+            42179,
+            42180,
+            42181,
+            42182,
+            42183,
+            42184,
+            42185,
+            42186,
+            42187,
+            42188,
+            42189,
+            42190
+          ]
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 12187,
+      "name_ko": "마이노",
+      "official_regions": [
+        "풍룡의 둥지",
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 45797,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "풍룡의 둥지",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    },
+    {
+      "template_id": 12188,
+      "name_ko": "와이번",
+      "official_regions": [
+        "풍룡의 둥지",
+        "아덴 대륙"
+      ],
+      "l1j_npcid": 91206,
+      "reason": "NO_SOURCED_PLACEMENT",
+      "placement_failures": [
+        {
+          "map_id": 4,
+          "area": "풍룡의 둥지",
+          "reason": "NO_VALID_OWN_SQL_SUPPORT_OR_EXISTING_SAME_AREA_ANCHOR",
+          "same_map_l1j_rows": []
+        }
+      ],
+      "minimum_input": "Official region and current map service/entry, then same-species placement coordinates or existing same-area anchor."
+    }
+  ],
+  "limitations": [
+    "SOURCE plus loader/static-cell verification only; no runtime/packet/rendering PASS.",
+    "Official regions identify occurrence, not official spawn coordinates/count/respawn.",
+    "One selected own-NPC L1J row per species/official area; other raw SQL rows are not imported.",
+    "SQL raw counts preserved; positive ordered delays preserved. SQL zero/invalid delay uses existing LOCAL60-120s, with raw row retained. Group/home/screen/special scheduling remains UNKNOWN.",
+    "Absent own-NPC SQL support uses one LOCAL target in an existing same-area rectangle, or the new ice_cave.json verified connected 3x3 anchor. Target density/boss schedule is not official.",
+    "No monster/drop/map/transition/combat tables changed."
+  ],
+  "verification": {
+    "method": "Existing game_data._spawns + load_m5_data + load_dungeon_data, no-port stdin checks; current S32 can_stand samples",
+    "new_groups_loaded": 67,
+    "new_unique_templates": 39,
+    "new_target_count": 444,
+    "merged_group_count": 477,
+    "merged_monster_count": 277,
+    "duplicate_group_ids": 0,
+    "missing_monster_references": 0,
+    "invalid_or_unserved_maps": 0,
+    "invalid_positive_respawn_intervals": 0,
+    "static_possible_placements": "Each chosen rectangle has at least target_count distinct standable cells. This is not actual spawn/occupancy/reachability/rendering or formal packet PASS.",
+    "runtime": "NOT_RUN; designated test worker owns game/server/ports",
+    "existing_prefix": "m5 original75/m6 original110 groups and order preserved during append"
+  },
+  "map_expansion5": {
+    "source": "tools/local_original_session/data/m6/map_expansion5.json",
+    "baseline_summary": {
+      "registered_new_species": 158,
+      "new_groups": 67,
+      "new_species": 39,
+      "new_target_count": 444,
+      "selected_l1j_groups": 31,
+      "local_anchor_groups": 36,
+      "already_existing_species": 2,
+      "pending_species": 118,
+      "served_maps": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        37,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        53,
+        54,
+        55,
+        56,
+        72,
+        73,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        101,
+        102,
+        103,
+        104,
+        105
+      ],
+      "total_species_with_spawns": 40,
+      "already_existing_only_ids": [
+        891
+      ]
+    },
+    "baseline_unspawned_template_ids": [
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      511,
+      512,
+      513,
+      514,
+      515,
+      518,
+      519,
+      521,
+      522,
+      523,
+      524,
+      525,
+      535,
+      536,
+      567,
+      621,
+      710,
+      723,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      827,
+      889,
+      895,
+      899,
+      900,
+      902,
+      971,
+      972,
+      975,
+      1027,
+      1028,
+      1039,
+      1041,
+      1410,
+      2381,
+      2388,
+      2389,
+      2390,
+      2391,
+      2392,
+      2393,
+      2394,
+      2395,
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2782,
+      2783,
+      2784,
+      2785,
+      2786,
+      2787,
+      10204,
+      10205,
+      10206,
+      10207,
+      10208,
+      10209,
+      10243,
+      10244,
+      10245,
+      10246,
+      10247,
+      10248,
+      10249,
+      10250,
+      10251,
+      10252,
+      10253,
+      10254,
+      10255,
+      10256,
+      10257,
+      10258,
+      10259,
+      12179,
+      12180,
+      12182,
+      12183,
+      12187,
+      12188
+    ],
+    "newly_spawned_template_ids": [
+      503,
+      504,
+      507,
+      511,
+      512,
+      513,
+      514,
+      515,
+      518,
+      519,
+      521,
+      522,
+      523,
+      524,
+      525,
+      535,
+      536,
+      10243,
+      10244,
+      10245,
+      10246,
+      10247,
+      10248,
+      10249,
+      10250,
+      10251,
+      10252,
+      10253,
+      10254,
+      10256,
+      10257,
+      10258,
+      10259
+    ],
+    "current_unspawned_template_ids": [
+      499,
+      500,
+      501,
+      502,
+      505,
+      506,
+      567,
+      621,
+      710,
+      723,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      827,
+      889,
+      895,
+      899,
+      900,
+      902,
+      971,
+      972,
+      975,
+      1027,
+      1028,
+      1039,
+      1041,
+      1410,
+      2381,
+      2388,
+      2389,
+      2390,
+      2391,
+      2392,
+      2393,
+      2394,
+      2395,
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2782,
+      2783,
+      2784,
+      2785,
+      2786,
+      2787,
+      10204,
+      10205,
+      10206,
+      10207,
+      10208,
+      10209,
+      10255,
+      12179,
+      12180,
+      12182,
+      12183,
+      12187,
+      12188
+    ],
+    "new_groups": 33,
+    "new_target_count": 33,
+    "new_served_maps": [
+      59,
+      60,
+      61,
+      62,
+      63,
+      303
+    ],
+    "original_records_policy": "Original decisions/already_existing/pending120 remain historical evidence. The pending array includes118 originally unspawned and2 partially placed IDs. Current unspawned IDs are this explicit85-ID set; do not count all historical rows.",
+    "verification": "work/local_original_session/runs/hunt-map-expansion4-retnstbi/summary.json",
+    "ordinary_fixture_failure": "work/local_original_session/runs/hunt-map-expansion4-riee2lvv/summary.json",
+    "scope": "Production placement33 species. Final6case pass uses ordinary gear on59..63 and explicit strong gear on303 only. Not all-species combat/native screen PASS.",
+    "current_status": "Historical fifth-wave snapshot; latest current IDs are map_expansion6.current_unspawned_template_ids. Original85 preserved."
+  },
+  "map_expansion6": {
+    "source": "tools/local_original_session/data/m6/map_expansion6.json",
+    "baseline_unspawned_template_ids": [
+      499,
+      500,
+      501,
+      502,
+      505,
+      506,
+      567,
+      621,
+      710,
+      723,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      827,
+      889,
+      895,
+      899,
+      900,
+      902,
+      971,
+      972,
+      975,
+      1027,
+      1028,
+      1039,
+      1041,
+      1410,
+      2381,
+      2388,
+      2389,
+      2390,
+      2391,
+      2392,
+      2393,
+      2394,
+      2395,
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2782,
+      2783,
+      2784,
+      2785,
+      2786,
+      2787,
+      10204,
+      10205,
+      10206,
+      10207,
+      10208,
+      10209,
+      10255,
+      12179,
+      12180,
+      12182,
+      12183,
+      12187,
+      12188
+    ],
+    "newly_spawned_template_ids": [
+      499,
+      710,
+      723,
+      972,
+      1039
+    ],
+    "current_unspawned_template_ids": [
+      500,
+      501,
+      502,
+      505,
+      506,
+      567,
+      621,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      827,
+      889,
+      895,
+      899,
+      900,
+      902,
+      971,
+      975,
+      1027,
+      1028,
+      1041,
+      1410,
+      2381,
+      2388,
+      2389,
+      2390,
+      2391,
+      2392,
+      2393,
+      2394,
+      2395,
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2782,
+      2783,
+      2784,
+      2785,
+      2786,
+      2787,
+      10204,
+      10205,
+      10206,
+      10207,
+      10208,
+      10209,
+      10255,
+      12179,
+      12180,
+      12182,
+      12183,
+      12187,
+      12188
+    ],
+    "new_groups": 5,
+    "new_target_count": 5,
+    "new_served_maps": [
+      65,
+      74,
+      106,
+      107,
+      108,
+      109,
+      110
+    ],
+    "total_spawned_new158_species": 78,
+    "original_records_policy": "Original pending120/decisions/already_existing and fifth-wave85 remain historical evidence; current exact80 excludes5 newly placed IDs. Placement does not imply kill PASS.",
+    "verification": "work/local_original_session/runs/hunt-map-expansion4-cmzjo000/summary.json",
+    "boss_retry": "work/local_original_session/runs/hunt-map-expansion4-gq74mhb1/summary.json",
+    "travel_only": "work/local_original_session/runs/hunt-map-expansion4-0n9o2q_w/summary.json",
+    "scope": "Production5 species/5 groups. All-case5PASS2FAIL:106..109 travel and110 representative1039 kill/return PASS.65/74 actual deaths, representative kills OPEN. Separate2 travel-only PASS, not combined into all-case PASS. Native client UNKNOWN."
+  },
+  "field_population": {
+    "source": "tools/local_original_session/data/m6/field_population_sources.json",
+    "summary": {
+      "map_id": 4,
+      "source_rows": 5524,
+      "source_species": 180,
+      "source_count": 8431,
+      "selected_rows": 5179,
+      "selected_species": 95,
+      "selected_count": 5880,
+      "excluded_rows": 345,
+      "excluded_count": 2551,
+      "pre_groups": 213,
+      "pre_count": 251,
+      "post_groups": 5392,
+      "post_count": 6131
+    },
+    "map0_summary": {
+      "source_rows": 88,
+      "source_species": 30,
+      "source_count": 2729,
+      "selected_rows": 88,
+      "selected_species": 30,
+      "selected_count": 2729,
+      "excluded_rows": 0,
+      "excluded_species": 0,
+      "excluded_count": 0
+    },
+    "status": "SOURCE_STATIC_ONLY_RUNTIME_UNRUN",
+    "new_map0_template_ids": [
+      14,
+      206,
+      207,
+      189,
+      12,
+      188,
+      319
+    ],
+    "note": "Historical prior snapshots retained. L1J base density; original client template relation/AI parity not asserted.",
+    "previous_unspawned_template_ids": [
+      500,
+      501,
+      502,
+      505,
+      506,
+      567,
+      621,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      827,
+      889,
+      895,
+      899,
+      900,
+      902,
+      971,
+      975,
+      1027,
+      1028,
+      1041,
+      1410,
+      2381,
+      2388,
+      2389,
+      2390,
+      2391,
+      2392,
+      2393,
+      2394,
+      2395,
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2782,
+      2783,
+      2784,
+      2785,
+      2786,
+      2787,
+      10204,
+      10205,
+      10206,
+      10207,
+      10208,
+      10209,
+      10255,
+      12179,
+      12180,
+      12182,
+      12183,
+      12187,
+      12188
+    ],
+    "newly_spawned_template_ids": [
+      567
+    ],
+    "current_unspawned_template_ids": [
+      500,
+      501,
+      502,
+      505,
+      506,
+      621,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      827,
+      889,
+      895,
+      899,
+      900,
+      902,
+      971,
+      975,
+      1027,
+      1028,
+      1041,
+      1410,
+      2381,
+      2388,
+      2389,
+      2390,
+      2391,
+      2392,
+      2393,
+      2394,
+      2395,
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2782,
+      2783,
+      2784,
+      2785,
+      2786,
+      2787,
+      10204,
+      10205,
+      10206,
+      10207,
+      10208,
+      10209,
+      10255,
+      12179,
+      12180,
+      12182,
+      12183,
+      12187,
+      12188
+    ],
+    "original_records_policy": "Prior80-ID sixth-wave list retained as historical. Current overlay places567 on its own SQL map4 rows; no aliases counted as placed."
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "table": "m1_item_gfx_ext_accessories",
+  "version": 1,
+  "note": "55종 native f5/f6. 614 공식 icon20650/LOCAL ground22 fallback; 실제 렌더 모두 UNKNOWN.",
+  "items": {
+    "64": {
+      "icon": 87,
+      "ground": 21,
+      "name_ko": "순간이동 조종 반지",
+      "ref": "native-dump:1008 item.bin f5/f6",
+      "source": "client"
+    },
+    "65": {
+      "icon": 87,
+      "ground": 21,
+      "name_ko": "변신 조종 반지",
+      "ref": "native-dump:1009 item.bin f5/f6",
+      "source": "client"
+    },
+    "306": {
+      "icon": 304,
+      "ground": 3158,
+      "name_ko": "완력의 목걸이",
+      "ref": "native-dump:1195 item.bin f5/f6",
+      "source": "client"
+    },
+    "307": {
+      "icon": 304,
+      "ground": 3159,
+      "name_ko": "민첩의 목걸이",
+      "ref": "native-dump:1196 item.bin f5/f6",
+      "source": "client"
+    },
+    "308": {
+      "icon": 304,
+      "ground": 3160,
+      "name_ko": "체력의 목걸이",
+      "ref": "native-dump:1197 item.bin f5/f6",
+      "source": "client"
+    },
+    "309": {
+      "icon": 304,
+      "ground": 3161,
+      "name_ko": "지식의 목걸이",
+      "ref": "native-dump:1198 item.bin f5/f6",
+      "source": "client"
+    },
+    "310": {
+      "icon": 304,
+      "ground": 3162,
+      "name_ko": "지혜의 목걸이",
+      "ref": "native-dump:1199 item.bin f5/f6",
+      "source": "client"
+    },
+    "311": {
+      "icon": 304,
+      "ground": 3163,
+      "name_ko": "매력의 목걸이",
+      "ref": "native-dump:1200 item.bin f5/f6",
+      "source": "client"
+    },
+    "314": {
+      "icon": 436,
+      "ground": 3164,
+      "name_ko": "오크 투사의 목걸이",
+      "ref": "native-dump:1201 item.bin f5/f6",
+      "source": "client"
+    },
+    "496": {
+      "icon": 625,
+      "ground": 21,
+      "name_ko": "항마의 반지",
+      "ref": "native-dump:1300 item.bin f5/f6",
+      "source": "client"
+    },
+    "497": {
+      "icon": 626,
+      "ground": 21,
+      "name_ko": "멸마의 반지",
+      "ref": "native-dump:1301 item.bin f5/f6",
+      "source": "client"
+    },
+    "498": {
+      "icon": 628,
+      "ground": 21,
+      "name_ko": "화령의 반지",
+      "ref": "native-dump:1302 item.bin f5/f6",
+      "source": "client"
+    },
+    "499": {
+      "icon": 629,
+      "ground": 21,
+      "name_ko": "수령의 반지",
+      "ref": "native-dump:1303 item.bin f5/f6",
+      "source": "client"
+    },
+    "500": {
+      "icon": 627,
+      "ground": 21,
+      "name_ko": "지령의 반지",
+      "ref": "native-dump:1304 item.bin f5/f6",
+      "source": "client"
+    },
+    "501": {
+      "icon": 630,
+      "ground": 21,
+      "name_ko": "풍령의 반지",
+      "ref": "native-dump:1305 item.bin f5/f6",
+      "source": "client"
+    },
+    "502": {
+      "icon": 631,
+      "ground": 1165,
+      "name_ko": "낡은 신체의 벨트",
+      "ref": "native-dump:1306 item.bin f5/f6",
+      "source": "client"
+    },
+    "503": {
+      "icon": 632,
+      "ground": 1165,
+      "name_ko": "낡은 정신의 벨트",
+      "ref": "native-dump:1307 item.bin f5/f6",
+      "source": "client"
+    },
+    "504": {
+      "icon": 633,
+      "ground": 1165,
+      "name_ko": "낡은 영혼의 벨트",
+      "ref": "native-dump:1308 item.bin f5/f6",
+      "source": "client"
+    },
+    "505": {
+      "icon": 634,
+      "ground": 1165,
+      "name_ko": "신체의 벨트",
+      "ref": "native-dump:1309 item.bin f5/f6",
+      "source": "client"
+    },
+    "506": {
+      "icon": 635,
+      "ground": 1165,
+      "name_ko": "정신의 벨트",
+      "ref": "native-dump:1310 item.bin f5/f6",
+      "source": "client"
+    },
+    "507": {
+      "icon": 636,
+      "ground": 1165,
+      "name_ko": "영혼의 벨트",
+      "ref": "native-dump:1311 item.bin f5/f6",
+      "source": "client"
+    },
+    "508": {
+      "icon": 637,
+      "ground": 3158,
+      "name_ko": "낡은 완력의 목걸이",
+      "ref": "native-dump:1312 item.bin f5/f6",
+      "source": "client"
+    },
+    "509": {
+      "icon": 638,
+      "ground": 3159,
+      "name_ko": "낡은 민첩의 목걸이",
+      "ref": "native-dump:1313 item.bin f5/f6",
+      "source": "client"
+    },
+    "510": {
+      "icon": 639,
+      "ground": 3160,
+      "name_ko": "낡은 체력의 목걸이",
+      "ref": "native-dump:1314 item.bin f5/f6",
+      "source": "client"
+    },
+    "511": {
+      "icon": 640,
+      "ground": 3161,
+      "name_ko": "낡은 지식의 목걸이",
+      "ref": "native-dump:1315 item.bin f5/f6",
+      "source": "client"
+    },
+    "512": {
+      "icon": 641,
+      "ground": 3162,
+      "name_ko": "낡은 지혜의 목걸이",
+      "ref": "native-dump:1316 item.bin f5/f6",
+      "source": "client"
+    },
+    "513": {
+      "icon": 642,
+      "ground": 3163,
+      "name_ko": "낡은 매력의 목걸이",
+      "ref": "native-dump:1317 item.bin f5/f6",
+      "source": "client"
+    },
+    "565": {
+      "icon": 699,
+      "ground": 1165,
+      "name_ko": "트롤의 벨트",
+      "ref": "native-dump:1336 item.bin f5/f6",
+      "source": "client"
+    },
+    "566": {
+      "icon": 697,
+      "ground": 1165,
+      "name_ko": "오우거의 벨트",
+      "ref": "native-dump:1337 item.bin f5/f6",
+      "source": "client"
+    },
+    "567": {
+      "icon": 698,
+      "ground": 1165,
+      "name_ko": "타이탄의 벨트",
+      "ref": "native-dump:1338 item.bin f5/f6",
+      "source": "client"
+    },
+    "614": {
+      "icon": 20650,
+      "ground": 22,
+      "name_ko": "해골 목걸이",
+      "ref": "data/official/items.json official_id=614; work/official_data/raw/item/614.json image; world_visibility.ITEM_GFX_FALLBACK_GROUND=22",
+      "source": "local_policy"
+    },
+    "658": {
+      "icon": 905,
+      "ground": 21,
+      "name_ko": "소환 조종 반지",
+      "ref": "native-dump:1406 item.bin f5/f6",
+      "source": "client"
+    },
+    "744": {
+      "icon": 981,
+      "ground": 30541,
+      "name_ko": "에이션트 자이언트의 반지",
+      "ref": "native-dump:1448 item.bin f5/f6",
+      "source": "client"
+    },
+    "756": {
+      "icon": 905,
+      "ground": 21,
+      "name_ko": "수호자의 반지",
+      "ref": "native-dump:1458 item.bin f5/f6",
+      "source": "client"
+    },
+    "770": {
+      "icon": 1009,
+      "ground": 1165,
+      "name_ko": "용기의 벨트",
+      "ref": "native-dump:1465 item.bin f5/f6",
+      "source": "client"
+    },
+    "815": {
+      "icon": 1037,
+      "ground": 30523,
+      "name_ko": "제니스의 반지",
+      "ref": "native-dump:1476 item.bin f5/f6",
+      "source": "client"
+    },
+    "936": {
+      "icon": 1168,
+      "ground": 3119,
+      "name_ko": "빛나는 신체의 벨트",
+      "ref": "native-dump:1485 item.bin f5/f6",
+      "source": "client"
+    },
+    "937": {
+      "icon": 1169,
+      "ground": 3120,
+      "name_ko": "빛나는 정신의 벨트",
+      "ref": "native-dump:1486 item.bin f5/f6",
+      "source": "client"
+    },
+    "938": {
+      "icon": 1170,
+      "ground": 3121,
+      "name_ko": "빛나는 영혼의 벨트",
+      "ref": "native-dump:1487 item.bin f5/f6",
+      "source": "client"
+    },
+    "3934": {
+      "icon": 3806,
+      "ground": 1165,
+      "name_ko": "불 정령의 벨트",
+      "ref": "native-dump:1530 item.bin f5/f6",
+      "source": "client"
+    },
+    "3935": {
+      "icon": 3802,
+      "ground": 1165,
+      "name_ko": "물 정령의 벨트",
+      "ref": "native-dump:1531 item.bin f5/f6",
+      "source": "client"
+    },
+    "3936": {
+      "icon": 3800,
+      "ground": 1165,
+      "name_ko": "땅 정령의 벨트",
+      "ref": "native-dump:1532 item.bin f5/f6",
+      "source": "client"
+    },
+    "3937": {
+      "icon": 3804,
+      "ground": 1165,
+      "name_ko": "바람 정령의 벨트",
+      "ref": "native-dump:1533 item.bin f5/f6",
+      "source": "client"
+    },
+    "12149": {
+      "icon": 20025,
+      "ground": 21,
+      "name_ko": "수호의 반지",
+      "ref": "native-dump:1702 item.bin f5/f6",
+      "source": "client"
+    },
+    "12170": {
+      "icon": 20138,
+      "ground": 3164,
+      "name_ko": "수호의 목걸이",
+      "ref": "native-dump:1723 item.bin f5/f6",
+      "source": "client"
+    },
+    "12209": {
+      "icon": 20170,
+      "ground": 1165,
+      "name_ko": "수호의 벨트",
+      "ref": "native-dump:1756 item.bin f5/f6",
+      "source": "client"
+    },
+    "12242": {
+      "icon": 20212,
+      "ground": 3164,
+      "name_ko": "장로의 목걸이",
+      "ref": "native-dump:1789 item.bin f5/f6",
+      "source": "client"
+    },
+    "12243": {
+      "icon": 20214,
+      "ground": 21,
+      "name_ko": "장로의 반지",
+      "ref": "native-dump:1790 item.bin f5/f6",
+      "source": "client"
+    },
+    "12286": {
+      "icon": 20257,
+      "ground": 3164,
+      "name_ko": "항마의 목걸이",
+      "ref": "native-dump:1829 item.bin f5/f6",
+      "source": "client"
+    },
+    "12287": {
+      "icon": 20258,
+      "ground": 1165,
+      "name_ko": "항마의 벨트",
+      "ref": "native-dump:1830 item.bin f5/f6",
+      "source": "client"
+    },
+    "12405": {
+      "icon": 20348,
+      "ground": 21,
+      "name_ko": "마나의 반지",
+      "ref": "native-dump:1947 item.bin f5/f6",
+      "source": "client"
+    },
+    "12860": {
+      "icon": 5343,
+      "ground": 21,
+      "name_ko": "지식의 반지",
+      "ref": "native-dump:2122 item.bin f5/f6",
+      "source": "client"
+    },
+    "15090": {
+      "icon": 20408,
+      "ground": 3164,
+      "name_ko": "멸마의 목걸이",
+      "ref": "native-dump:2137 item.bin f5/f6",
+      "source": "client"
+    },
+    "15091": {
+      "icon": 20605,
+      "ground": 1165,
+      "name_ko": "멸마의 벨트",
+      "ref": "native-dump:2138 item.bin f5/f6",
+      "source": "client"
+    },
+    "15384": {
+      "icon": 6488,
+      "ground": 21,
+      "name_ko": "완력의 반지",
+      "ref": "native-dump:2139 item.bin f5/f6",
+      "source": "client"
+    },
+    "15385": {
+      "icon": 6486,
+      "ground": 21,
+      "name_ko": "민첩의 반지",
+      "ref": "native-dump:2140 item.bin f5/f6",
+      "source": "client"
+    }
+  }
+}

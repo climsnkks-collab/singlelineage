@@ -140,7 +140,15 @@ def _atomic_observation(path, row, limit):
         _ordinary(path, absent=True)
         info = _ordinary(temporary).lstat()
         need((info.st_dev, info.st_ino) == owned, 'COMMAND_OUTPUT_TEMP_CHANGED')
-        os.replace(temporary, path)
+        for attempt in range(5):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError as error:
+                # Windows: a reader/AV briefly holding the target (WinError 5/32/33).
+                if attempt == 4 or getattr(error, 'winerror', None) not in (5, 32, 33):
+                    raise
+                time.sleep(0.025)
     except BaseException as error:
         cleanup_failed = False
         if owned is not None:

@@ -12,6 +12,7 @@ import ctypes as C
 from ctypes import wintypes as W
 import importlib.util
 import json
+import os
 from pathlib import Path
 import struct
 import sys
@@ -25,7 +26,7 @@ from tools.local_original_session import launcher
 from tools.local_original_session.commands import _atomic, _closed_health_json
 
 ITEM_TRANSFER_PROFILE = 'sibling-background-item-drop-pickup-spawn'
-ITEM_TRANSFER_DLL_SHA = '3dca652e884a8a3daeec51e7213bb1fb1284edde2f113cd0beac3a5dd1ae9751'
+ITEM_TRANSFER_DLL_SHA = '3fb1c60520ed735ca72fb5e35b057715950f8a4e4d2a4bcf591051678bdf792c'
 PROFILE = 'sibling-manual-play-spawn'
 IMAGE_SHA = '8b9e2628286c295adf71bf3c0cb0882164aeaa7d63b97f50c46114b53650b684'
 DLL_SHA = '1d1f60a03144f0214bee56c4a875d4444d51811649135a1eaab82ec2e2899f75'
@@ -374,7 +375,10 @@ class Scenario:
 
     def saved_store(self, broker):
         _, refs = broker.realm.store.snapshot()
-        need(refs == frozenset((broker.realm.profile_name,))
+        # SL_COMPANION=1 adds the companion mage to the test profile; the owner still enters.
+        extra = refs - {broker.realm.profile_name}
+        need(broker.realm.profile_name in refs
+             and (not extra or os.environ.get('SL_COMPANION') == '1' and extra == {'SoloMage'})
              and broker.realm.store.select(broker.realm.profile_name)[0] == broker.realm.profile_uid,
              'ONE_FRESH_SAVED_UID_REQUIRED')
         return refs
@@ -813,7 +817,8 @@ class ContinuousMoveScenario(Scenario):
         self.stop.set()
 
 
-def attack_configuration(config, *, inventory=False, auto_inventory=False):
+def attack_configuration(config, *, inventory=False, auto_inventory=False, collection_restore_only=False):
+    need(type(collection_restore_only) is bool, 'SCENARIO_COLLECTION_RESTORE_BOOL_REQUIRED')
     from tools.local_original_session import feature_config, npc
     from tools.local_native_login_spawn_render_retry_runtime import spawn_hook
     need(type(config) is feature_config.Features and len(config.spawns) == 1
@@ -833,7 +838,17 @@ def attack_configuration(config, *, inventory=False, auto_inventory=False):
              if auto_inventory else None), 'SCENARIO_INVENTORY_DELIVERY_MODE_REQUIRED')
         if auto_inventory:
             from tools.local_original_session import inventory_store
-            need(config.inventory_store_policy == inventory_store.POLICY,
+            grant = config.inventory_collection_grant
+            collection = (collection_restore_only
+                and config.inventory_store_policy == inventory_store.COLLECTION_STORE_POLICY
+                and config.inventory_collection_policy == inv.COLLECTION_POLICY
+                and config.inventory_custody_policy is None and config.inventory_missing_row_policy is None
+                and config.inventory_reselection_policy == feature_config.LOCAL_SAVED_ROW_ON_RESELECTION
+                and config.inventory_delivery_policy == feature_config.LOCAL_WORLD_READY_ONCE
+                and type(grant) is tuple and len(grant) == 2
+                and grant[0] == inventory_store.SECOND_INSTANCE_POLICY and type(grant[1]) is frozenset
+                and all(type(uid) is int and 0 <= uid <= 0xffffffff for uid in grant[1]))
+            need(config.inventory_store_policy == inventory_store.POLICY or collection,
                  'SCENARIO_AUTO_INVENTORY_STORE_REQUIRED')
     else:
         need(not auto_inventory and config.inventory_policy is config.inventory_frame is None,
@@ -851,6 +866,7 @@ class AttackTargetScenario(ContinuousMoveScenario):
     inventory_required = False
     auto_inventory = False
     ATTACK_SEQUENCE = 1
+    OBSERVATION_SECONDS = 15  # Original attack result deadline, shared by focused completion.
     configuration = staticmethod(attack_configuration)
 
     def __init__(self, *args, features, **kwargs):
@@ -1024,7 +1040,9 @@ class AttackTargetScenario(ContinuousMoveScenario):
         spawn, = self.features.spawns
         actual = broker.realm._npc_spawns
         need(len(actual) == 1 and actual[0][0] == spawn and spawn.uid != position.uid
-             and spawn.map_id == position.map_id and id(self.move_bound[0]) not in broker.realm._npc_motion,
+             and spawn.map_id == position.map_id
+             and (id(self.move_bound[0]) not in broker.realm._npc_motion
+                  or type(self) is NpcDeadGoalScenario and self.npc_trial.require_attack_target(broker, spawn)),
              'SCENARIO_SAME_STATIONARY_NPC_TARGET_REQUIRED')
         session = broker._attack_session
         need(type(session) is attack_session.AttackSession and broker.realm._attack_session is session
@@ -1079,7 +1097,7 @@ class AttackTargetScenario(ContinuousMoveScenario):
         if result is not None:
             need(result['sequence'] <= self.ATTACK_SEQUENCE, 'SCENARIO_ATTACK_RESULT_SEQUENCE_REQUIRED')
             if result['sequence'] < self.ATTACK_SEQUENCE:
-                need(self.clock() - self.attack_started < 15, 'SCENARIO_ATTACK_OBSERVATION_EXPIRED')
+                need(self.clock() - self.attack_started < self.OBSERVATION_SECONDS, 'SCENARIO_ATTACK_OBSERVATION_EXPIRED')
                 return  # Prior inventory result while the shared 2 Hz ingress waits for its slot.
             need(result.get('status') in ('CLAIMED', 'PENDING', 'COMMITTED')
                  and result.get('cleanup_required') is not True, 'SCENARIO_ATTACK_CONSUMER_REFUSED')
@@ -1102,7 +1120,7 @@ class AttackTargetScenario(ContinuousMoveScenario):
                 self.attack.update(status='COMMITTED', proof_scope='VALIDATED_ATTACK_INTENT_ONLY')
                 self.stage = 'MOVE_READY'
                 return
-        need(self.clock() - self.attack_started < 15, 'SCENARIO_ATTACK_OBSERVATION_EXPIRED')
+        need(self.clock() - self.attack_started < self.OBSERVATION_SECONDS, 'SCENARIO_ATTACK_OBSERVATION_EXPIRED')
 
     def collect(self, row, broker):
         self._result()  # Preserve actual strict-consumer phase/reason even on refusal.
@@ -1418,6 +1436,137 @@ def hp_status_png_configuration(config, *, inventory=False, auto_inventory=False
     need(config.hp_status_input.current_hp == 19 and config.hp_status_input.maximum_hp == 20,
          'SCENARIO_HP_PNG_EXPLICIT_19_20_REQUIRED')
     return config
+
+
+
+def npc_hp_feedback_configuration(config, *, inventory=True, auto_inventory=True):
+    from tools.local_original_session import npc_hp, attack_session
+    attack_configuration(config, inventory=inventory, auto_inventory=auto_inventory, collection_restore_only=True)
+    need(inventory is auto_inventory is True
+         and type(config.attack_hp_provider) is npc_hp.ExplicitInputs
+         and type(config.attack_feedback) is attack_session.FeedbackConfig
+         and config.npc_death_policy is config.npc_remove_policy is None,
+         'SCENARIO_NPC_HP_FEEDBACK_EXPLICIT_NONLETHAL_CONFIG_REQUIRED')
+    inputs, = config.attack_hp_provider.rows
+    need(inputs.hit.landed is True and 0 < inputs.hit.damage < inputs.hp.current,
+         'SCENARIO_NPC_HP_FEEDBACK_NONLETHAL_INPUT_REQUIRED')
+    return config
+
+
+class NpcHpFeedbackOnlyScenario(InventoryAutoScenario):
+    """Original inventory/AttackTarget2, dated diagnostic, then existing Quit."""
+    configuration = staticmethod(npc_hp_feedback_configuration)
+
+    def __init__(self, *args, **kwargs):
+        self.npc_hp_feedback = dict(status='NOT_REQUESTED', local_hp=None,
+            passive_diagnostic=None, hp_ui='UNKNOWN', notification='NOT_IMPLEMENTED_SOURCE_CONTRACT_REQUIRED')
+        super().__init__(*args, **kwargs)
+        self.path = self.monitor.directory / 'npc-hp-feedback-only-scenario.json'
+        self.npc_inventory_runtime = None
+        from tools.local_original_session.hp4ec8_subscribers import Observation
+        observation = getattr(self.reader, '_hp4ec8_subscribers', None)
+        need(type(observation) is Observation and observation.stage == 'npc-hp-feedback-drained',
+             'SCENARIO_NPC_HP_FEEDBACK_EXISTING_STAGE_REQUEST_REQUIRED')
+
+    def bind_runtime(self, runtime):
+        from tools.local_original_session import inventory
+        need(type(runtime) is launcher.ProductFeatures
+             and type(runtime.manual) is launcher.ManualMoveRequests
+             and runtime.manual.consumer.reader is self.reader
+             and runtime.manual.inventory_collection_policy == inventory.COLLECTION_POLICY,
+             'SCENARIO_NPC_HP_COLLECTION_RUNTIME_REQUIRED')
+        self.npc_inventory_runtime = runtime
+
+    def collect_inventory(self, row, broker):
+        self.inventory_authority(row, broker)  # Original selected11/frame/generation checks.
+        result = self._result()
+        if result is None or result.get('status') != 'COMMITTED':
+            return super().collect_inventory(row, broker)
+        from tools.local_original_session import inventory
+        from tools.local_original_session.broker import PersistentBroker, _InventoryGeneration
+        runtime = self.npc_inventory_runtime
+        writer = self.move_bound[0]
+        need(type(runtime) is launcher.ProductFeatures and type(broker) is PersistentBroker
+             and type(runtime.manual) is launcher.ManualMoveRequests
+             and runtime.manual.inventory_broker is broker and runtime.manual.consumer.reader is self.reader,
+             'SCENARIO_NPC_HP_COLLECTION_SAME_RUNTIME_REQUIRED')
+        generation = PersistentBroker.inventory_selection_current(broker, writer)
+        need(type(generation) is _InventoryGeneration and generation.previous is None
+             and generation.writer is writer and generation.phase == 'ACTIVE'
+             and generation.selection_binding is self.auto_inventory_binding
+             and generation.current_frame is self.auto_inventory_frame
+             and result == runtime.manual.last_result
+             and result.get('sequence') == self.INVENTORY_SEQUENCE
+             and result.get('command') == 'AddInventory',
+             'SCENARIO_NPC_HP_COLLECTION_CURRENT_RESULT_REQUIRED')
+        need(type(result.get('item_count')) is int and result['item_count'] == 2
+             and all(result.get(key) == 'UNKNOWN' for key in ('render','equipped','save'))
+             and all(result.get(key) is False for key in ('all_17_wire_fields_proven',
+                 'wire_field18_bytes_observed','catalog_live_materialization_proven')),
+             'SCENARIO_NPC_HP_COLLECTION_OUTPUT_SCOPE_REQUIRED')
+        expected = inventory.validate_collection_frame(self.auto_inventory_frame,
+            policy=self.features.inventory_collection_policy)
+        need(len(expected) == 2
+             and launcher.ProductFeatures._equipment_delivery_complete(runtime, broker, generation)
+             and launcher.ProductFeatures._equipment_initial_client_ready(runtime, broker, writer, generation),
+             'SCENARIO_NPC_HP_COLLECTION_TYPED_COMPLETION_REQUIRED')
+        # Same original typed row UID/template/quantity proof and client binding;
+        # this is readiness for AttackTarget2, not custody/equipment authority.
+        self.inventory.update({key: result[key] for key in ('status','phase','proof_scope',
+            'client_inventory','item_count','transport_proof_scope') if key in result})
+        self.stage = 'ATTACK_READY'
+
+    def summary(self):
+        return dict(super().summary(), npc_hp_feedback_only=self.npc_hp_feedback)
+
+    def collect_attack(self, row, broker):
+        super().collect_attack(row, broker)  # Original current intent/drained feedback/action checks.
+        if self.attack['status'] != 'COMMITTED':
+            return
+        from tools.local_original_session import npc_hp
+        session, writer = self.attack_session, self.move_bound[0]
+        result = session.last_hp_result
+        intent = session.current_intent()
+        inputs, = self.features.attack_hp_provider.rows
+        need(type(result) is npc_hp.Result and result.target == inputs.target
+             and result.accepted_ordinal == session.accepted_count == self.attack_before + 1
+             and intent is not None and intent.accepted_ordinal == result.accepted_ordinal
+             and intent._bound._writer is writer and intent._bound.target_uid == result.target.uid
+             and session._feedback_intent is intent and session._feedback_state == 'DRAINED'
+             and result.before == inputs.hp and result.hit == inputs.hit
+             and result.after.current == inputs.hp.current - inputs.hit.damage,
+             'SCENARIO_NPC_HP_FEEDBACK_COMMITTED_RESULT_REQUIRED')
+        self.npc_hp_feedback.update(status='WAITING_DIAGNOSTIC', local_hp=result.metadata())
+        # The superclass chose MOVE_READY. Intercept within that same call;
+        # no tick can dispatch MoveGoal/return/hold in this explicit mode.
+        self.stage = 'NPC_HP_DIAGNOSTIC_WAIT'
+        self._finish_diagnostic()
+
+    def _finish_diagnostic(self):
+        observation = self.reader._hp4ec8_subscribers
+        result = observation.result
+        expired = self.clock() - self.attack_started >= self.OBSERVATION_SECONDS
+        if result is None and not expired:
+            return
+        snapshot = result if result is not None else observation.waiting
+        self.npc_hp_feedback['passive_diagnostic'] = {key: snapshot[key] for key in
+            ('status','bytes','attempted','query_complete','owner_validation','stage','trigger') if key in snapshot}
+        self.npc_hp_feedback.update(status='COMMITTED',
+            diagnostic_outcome='TERMINAL_DIAGNOSTIC' if result is not None else 'WAITING_AT_ORIGINAL_DEADLINE',
+            diagnostic_source='FINAL_STATUS_MEMORY_HP4EC8_SUBSCRIBERS',
+            completion_scope='LOCAL_HP_COMMIT_FEEDBACK_DRAIN_AND_BOUNDED_OBSERVATION_ONLY')
+        self.stage = 'NPC_HP_FEEDBACK_COMPLETE_STOP_REQUESTED'
+        self.stop.set()  # Existing SourceQuit request/cleanup; no new launcher path.
+
+    def tick(self, row, broker, state):
+        if state == 'CLOSING':
+            return super().tick(row, broker, state)
+        if self.stage != 'NPC_HP_DIAGNOSTIC_WAIT':
+            return super().tick(row, broker, state)
+        if state != 'RUNNING' or self.stop.is_set():
+            return
+        self._finish_diagnostic()  # Cached observation only; no sample/query/poll.
+        self.save()
 
 
 class HpStatusNotifyScenario(InventoryAutoScenario):
@@ -3333,6 +3482,47 @@ class NpcHpDeathScenario(InventoryAutoScenario):
         if self.stage == 'NPC_RUN' and state != 'CLOSING':
             return  # The existing asynchronous feature poll owns continuation.
         return super().tick(row, broker, state)
+
+
+def npc_dead_goal_configuration(config, *, inventory=False, auto_inventory=False):
+    from tools.local_original_session.npc_dead_goal_focused import configuration
+    return configuration(config, base_configuration=attack_configuration,
+                         inventory=inventory, auto_inventory=auto_inventory)
+
+
+class NpcDeadGoalScenario(NpcHpDeathScenario):
+    """One live arrival, original lethal Attack2, original DEAD/IDLE consumer."""
+    configuration = staticmethod(npc_dead_goal_configuration)
+
+    def collect_inventory(self, row, broker):
+        result = self._result() if self.features.inventory_collection_policy is not None else None
+        if result is not None and result.get('status') == 'COMMITTED':
+            # Reuse actual257's two-row readiness consumer only at its original
+            # COMMITTED branch; pending keeps this scenario's original super.
+            NpcHpFeedbackOnlyScenario.collect_inventory(self, row, broker)
+        else:
+            super().collect_inventory(row, broker)
+        if self.stage == 'ATTACK_READY':
+            need(self.npc_trial is not None, 'SCENARIO_DEAD_GOAL_RUNTIME_REQUIRED')
+            self.npc_trial.arm(broker)
+
+    def collect_attack(self, row, broker):
+        # Reuse real command result/once feedback/counter/intent checks, then
+        # run only arrival/death cleanup; no full Death/Remove trial repeats.
+        InventoryAutoScenario.collect_attack(self, row, broker)
+        if self.stage == 'MOVE_READY':
+            self.npc_trial.begin(broker)
+
+    def tick(self, row, broker, state):
+        if self.stage in ('NPC_DEAD_GOAL_LIVE_READY', 'NPC_DEAD_GOAL_RUN') and state != 'CLOSING':
+            return
+        return super().tick(row, broker, state)
+
+    def summary(self):
+        result = dict(super().summary(), npc_dead_goal_only=True)
+        result['npc_hp_death'] = dict(result['npc_hp_death'],
+            observation_scope='SERVER_DEAD_GOAL_RUNTIME_CLEANUP')
+        return result
 
 
 class UseItemScenario(InventoryAutoScenario):
@@ -5853,6 +6043,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--player-death-recovery-only', action='store_true')
     parser.add_argument('--observe-hp4ec8-subscribers-once', action='store_true')
+    parser.add_argument('--npc-hp-feedback-only', action='store_true')
+    parser.add_argument('--hp4ec8-observation-stage', choices=('first-land','npc-hp-feedback-drained'))
     parser.add_argument('--npc-player-lethal-recovery-only', action='store_true',
         help='One current NPC approach/contact HP1-to-zero hit and original recovery, then existing Quit.')
     parser.add_argument('run_name')
@@ -5890,6 +6082,8 @@ def main():
                         help='Required respawn preparation then one normal attack on its new local generation; requires explicit background profile.')
     parser.add_argument('--npc-respawn-only', action='store_true',
                         help='Required normal lethal preparation, one explicit same-recipe fresh NPC generation, canonical client registry/pose and source Quit cleanup.')
+    parser.add_argument('--npc-dead-goal-only', action='store_true',
+                        help='Opt-in current-tile live goal -> original lethal Attack2 -> same product DEAD/IDLE -> source Quit; requires --npc-hp-death-only.')
     parser.add_argument('--npc-hp-death-only', action='store_true',
                         help='Saved-row/world preparation, normal Attack2, lethal local HP, Death snapshot, explicit backend Remove and three-vector UID absence; existing source Quit cleanup only.')
     parser.add_argument('--npc-motion-goal-only', action='store_true',
@@ -5943,6 +6137,27 @@ def main():
     parser.add_argument('--item-equipment-zero-use-reselect-test', action='store_true',
         help='Explicit saved-B restore/Open/UI then Restart/reselect; zero Use; requires swap-reselect-test.')
     args = parser.parse_args()
+    need(args.hp4ec8_observation_stage is None or args.observe_hp4ec8_subscribers_once,
+         'HP4EC8_STAGE_ONCE_FLAG_REQUIRED')
+    need(not args.npc_hp_feedback_only or args.background and args.attack_target_test
+         and args.inventory_auto_test and args.source_quit_test and args.feature_config is not None
+         and args.observe_hp4ec8_subscribers_once
+         and args.hp4ec8_observation_stage == 'npc-hp-feedback-drained' and args.idle_seconds == 0
+         and not any((args.continuous_move_test,args.confirm_window_close,args.retain_move_goal,
+             args.inventory_add_test,args.source_restart_test,args.source_reselect_test,args.reselect_inventory_only,
+             args.item_transfer_ui_test,args.item_equipment_swap_reselect_test,
+             args.item_equipment_swap_saved_b_tail_test,args.item_equipment_zero_use_reselect_test,
+             args.reselect_equipment_ui_restore_test,args.use_item_test,args.use_item_only,
+             args.use_item_effect_test,args.use_item_ui_observe_test,args.inventory_ui_open_test,
+             args.original_screenshot_test,args.normal_open_use_current_ui_test,args.ui_current_frame_update_test,
+             args.inventory_update_test,args.selected_slot_lookup_role_test,args.mark_on_current_indicator_test,
+             args.hp_status_notify_only,args.hp_status_png_after_post,args.npc_player_hit_only,
+             args.npc_player_hit_repeated_only,args.npc_approach_player_hit_only,
+             args.player_death_recovery_only,args.npc_player_lethal_recovery_only,
+             args.npc_respawn_only,args.npc_respawn_next_hit_only,args.npc_respawn_next_hit_remove_only,
+             args.npc_second_respawn_only,args.npc_current_life_next_hit_only,args.npc_current_life_retire_only,
+             args.npc_respawn_motion_only,args.npc_hp_death_only,args.npc_motion_goal_only,args.npc_motion_goal is not None)),
+         'SCENARIO_NPC_HP_FEEDBACK_EXACT_CLI_REQUIRED')
     need(not (args.npc_player_lethal_recovery_only and args.player_death_recovery_only),
          'SCENARIO_NPC_LETHAL_EXCLUSIVE_LIFE_CLI_REQUIRED')
     if args.npc_player_lethal_recovery_only: args.player_death_recovery_only = True
@@ -6063,6 +6278,18 @@ def main():
     if args.npc_motion_goal is not None:
         from tools.local_original_session.npc_motion_focused import grid
         need(grid(args.npc_motion_goal) is not None, 'SCENARIO_NPC_MOTION_EXPLICIT_GOAL_REQUIRED')
+    need(not args.npc_dead_goal_only or args.npc_hp_death_only and args.background
+         and args.attack_target_test and args.inventory_auto_test and args.source_quit_test
+         and args.feature_config is not None and args.idle_seconds == 0
+         and not any((respawn_mode, args.npc_motion_goal_only, args.npc_motion_goal is not None,
+             args.npc_hp_feedback_only, args.hp_status_notify_only, args.player_death_recovery_only,
+             args.npc_approach_player_hit_only, args.continuous_move_test,
+             args.observe_hp4ec8_subscribers_once, args.use_item_test, args.inventory_update_test,
+             args.source_restart_test, args.source_reselect_test, args.retain_move_goal,
+             args.confirm_window_close, args.item_transfer_ui_test,
+             args.item_equipment_swap_reselect_test, args.normal_open_use_current_ui_test,
+             args.inventory_ui_open_test, args.original_screenshot_test)),
+         'SCENARIO_DEAD_GOAL_EXCLUSIVE_PREPARED_SOURCE_QUIT_REQUIRED')
     need(not args.npc_hp_death_only or args.background and args.attack_target_test
          and args.inventory_auto_test and args.source_quit_test and args.feature_config is not None
          and not any((args.use_item_test, args.inventory_update_test, args.source_restart_test,
@@ -6096,7 +6323,7 @@ def main():
     need(not inventory_test or (args.attack_target_test or args.ui_current_frame_update_test or (args.inventory_ui_open_test or args.original_screenshot_test) or args.normal_open_use_current_ui_test or args.hp_status_notify_only or args.reselect_equipment_ui_restore_test or args.item_equipment_swap_reselect_test or args.item_transfer_ui_test or args.player_death_recovery_only) and args.background
          and args.feature_config is not None, 'SCENARIO_INVENTORY_ATTACK_BACKGROUND_CONFIG_REQUIRED')
     need(args.run_name.replace('-', '').isalnum(), 'FRESH_BASELINE_RUN_NAME_REQUIRED')
-    focused = respawn_mode or args.reselect_inventory_only or args.use_item_only or args.npc_hp_death_only or args.npc_motion_goal_only or args.ui_current_frame_update_test or (args.inventory_ui_open_test or args.original_screenshot_test) or args.normal_open_use_current_ui_test or args.hp_status_notify_only or args.item_transfer_ui_test or args.player_death_recovery_only
+    focused = args.npc_hp_feedback_only or respawn_mode or args.reselect_inventory_only or args.use_item_only or args.npc_hp_death_only or args.npc_motion_goal_only or args.ui_current_frame_update_test or (args.inventory_ui_open_test or args.original_screenshot_test) or args.normal_open_use_current_ui_test or args.hp_status_notify_only or args.item_transfer_ui_test or args.player_death_recovery_only
     need((60 <= args.idle_seconds <= 120 or focused and args.idle_seconds == 0)
          and 120 <= args.tool_timeout_seconds <= 300,
          'BOUNDED_TOOL_OBSERVATION_REQUIRED')
@@ -6116,7 +6343,7 @@ def main():
         from tools.local_original_session.item_equipment_reselect_restore import configuration as restore_configuration
         from tools.local_original_session.item_equipment_swap import configuration as swap_configuration
         from tools.local_original_session.item_transfer_runner import configuration as transfer_configuration
-        validator = npc_player_lethal_recovery_configuration if args.npc_player_lethal_recovery_only else player_death_recovery_configuration if args.player_death_recovery_only else transfer_configuration if args.item_transfer_ui_test else npc_approach_hit_configuration if args.npc_approach_player_hit_only else npc_player_hit_repeated_configuration if args.npc_player_hit_repeated_only else npc_player_hit_configuration if args.npc_player_hit_only else swap_configuration if args.item_equipment_swap_reselect_test else restore_configuration if args.reselect_equipment_ui_restore_test else hp_status_png_configuration if args.hp_status_png_after_post else hp_status_configuration if args.hp_status_notify_only else OriginalScreenshotScenario.configuration if args.original_screenshot_test else NormalOpenUseCurrentUIScenario.configuration if args.normal_open_use_current_ui_test else InventoryUIOpenScenario.configuration if args.inventory_ui_open_test else npc_respawn_configuration if respawn_mode else InventoryUIFrameUpdateScenario.configuration if args.ui_current_frame_update_test else npc_motion_configuration if args.npc_motion_goal_only else attack_configuration
+        validator = npc_dead_goal_configuration if args.npc_dead_goal_only else npc_player_lethal_recovery_configuration if args.npc_player_lethal_recovery_only else player_death_recovery_configuration if args.player_death_recovery_only else transfer_configuration if args.item_transfer_ui_test else npc_approach_hit_configuration if args.npc_approach_player_hit_only else npc_player_hit_repeated_configuration if args.npc_player_hit_repeated_only else npc_player_hit_configuration if args.npc_player_hit_only else swap_configuration if args.item_equipment_swap_reselect_test else restore_configuration if args.reselect_equipment_ui_restore_test else hp_status_png_configuration if args.hp_status_png_after_post else hp_status_configuration if args.hp_status_notify_only else OriginalScreenshotScenario.configuration if args.original_screenshot_test else NormalOpenUseCurrentUIScenario.configuration if args.normal_open_use_current_ui_test else InventoryUIOpenScenario.configuration if args.inventory_ui_open_test else npc_respawn_configuration if respawn_mode else InventoryUIFrameUpdateScenario.configuration if args.ui_current_frame_update_test else npc_motion_configuration if args.npc_motion_goal_only else npc_hp_feedback_configuration if args.npc_hp_feedback_only else attack_configuration
         expected_features = validator(load(args.feature_config), inventory=inventory_test,
                                                  auto_inventory=args.inventory_auto_test)
         need(args.hp_status_notify_only or expected_features.hp_status_policy is None and expected_features.hp_status_input is None,
@@ -6149,7 +6376,7 @@ def main():
         need(kwargs.get('command_requests') is None and kwargs.get('input_requests') is None,
              'NO_NEW_INTERNAL_OR_MOUSE_FACADE_REQUIRED')
         monitor = kwargs['monitor']
-        scenario_type = NpcPlayerLethalRecoveryScenario if args.npc_player_lethal_recovery_only else PlayerDeathRecoveryScenario if args.player_death_recovery_only else ItemTransferScenario if args.item_transfer_ui_test else NpcApproachHitScenario if args.npc_approach_player_hit_only else NpcPlayerHitRepeatedScenario if args.npc_player_hit_repeated_only else NpcPlayerHitScenario if args.npc_player_hit_only else HpStatusPngScenario if args.hp_status_png_after_post else HpStatusNotifyScenario if args.hp_status_notify_only else OriginalScreenshotScenario if args.original_screenshot_test else NormalOpenUseMarkOnScenario if args.mark_on_current_indicator_test else NormalOpenUseCurrentUIScenario if args.normal_open_use_current_ui_test else InventoryUILookupRoleScenario if args.selected_slot_lookup_role_test else InventoryUIOpenScenario if args.inventory_ui_open_test else NpcRespawnMotionScenario if args.npc_respawn_motion_only else NpcCurrentLifeRetireScenario if args.npc_current_life_retire_only else NpcCurrentLifeNextHitScenario if args.npc_current_life_next_hit_only else NpcSecondRespawnScenario if args.npc_second_respawn_only else NpcRespawnNextHitRemoveScenario if args.npc_respawn_next_hit_remove_only else NpcRespawnNextHitScenario if args.npc_respawn_next_hit_only else NpcRespawnScenario if args.npc_respawn_only else InventoryUIFrameUpdateScenario if args.ui_current_frame_update_test else NpcMotionGoalScenario if args.npc_motion_goal_only else NpcHpDeathScenario if args.npc_hp_death_only else SourceReselectScenario if args.source_reselect_test else SourceRestartScenario if args.source_restart_test else InventoryUpdateScenario if args.inventory_update_test else UseItemScenario if args.use_item_test else InventoryAutoScenario if args.inventory_auto_test else InventoryAddScenario if args.inventory_add_test else AttackTargetScenario if args.attack_target_test else ContinuousMoveScenario if args.continuous_move_test else Scenario
+        scenario_type = NpcHpFeedbackOnlyScenario if args.npc_hp_feedback_only else NpcPlayerLethalRecoveryScenario if args.npc_player_lethal_recovery_only else PlayerDeathRecoveryScenario if args.player_death_recovery_only else ItemTransferScenario if args.item_transfer_ui_test else NpcApproachHitScenario if args.npc_approach_player_hit_only else NpcPlayerHitRepeatedScenario if args.npc_player_hit_repeated_only else NpcPlayerHitScenario if args.npc_player_hit_only else HpStatusPngScenario if args.hp_status_png_after_post else HpStatusNotifyScenario if args.hp_status_notify_only else OriginalScreenshotScenario if args.original_screenshot_test else NormalOpenUseMarkOnScenario if args.mark_on_current_indicator_test else NormalOpenUseCurrentUIScenario if args.normal_open_use_current_ui_test else InventoryUILookupRoleScenario if args.selected_slot_lookup_role_test else InventoryUIOpenScenario if args.inventory_ui_open_test else NpcRespawnMotionScenario if args.npc_respawn_motion_only else NpcCurrentLifeRetireScenario if args.npc_current_life_retire_only else NpcCurrentLifeNextHitScenario if args.npc_current_life_next_hit_only else NpcSecondRespawnScenario if args.npc_second_respawn_only else NpcRespawnNextHitRemoveScenario if args.npc_respawn_next_hit_remove_only else NpcRespawnNextHitScenario if args.npc_respawn_next_hit_only else NpcRespawnScenario if args.npc_respawn_only else InventoryUIFrameUpdateScenario if args.ui_current_frame_update_test else NpcMotionGoalScenario if args.npc_motion_goal_only else NpcDeadGoalScenario if args.npc_dead_goal_only else NpcHpDeathScenario if args.npc_hp_death_only else SourceReselectScenario if args.source_reselect_test else SourceRestartScenario if args.source_restart_test else InventoryUpdateScenario if args.inventory_update_test else UseItemScenario if args.use_item_test else InventoryAutoScenario if args.inventory_auto_test else InventoryAddScenario if args.inventory_add_test else AttackTargetScenario if args.attack_target_test else ContinuousMoveScenario if args.continuous_move_test else Scenario
         feature_options = {}
         if args.npc_motion_goal_only:
             feature_options['npc_motion_goal'] = tuple(args.npc_motion_goal)
@@ -6208,7 +6435,10 @@ def main():
         if args.npc_hp_death_only:
             source_factory = kwargs['feature_factory']
             def capture_npc_features(broker):
-                from tools.local_original_session.npc_combat_focused import Runtime
+                if args.npc_dead_goal_only:
+                    from tools.local_original_session.npc_dead_goal_focused import Runtime
+                else:
+                    from tools.local_original_session.npc_combat_focused import Runtime
                 return Runtime(source_factory(broker), scenario)
             kwargs['feature_factory'] = capture_npc_features
         if args.npc_motion_goal_only:
@@ -6217,7 +6447,7 @@ def main():
                 from tools.local_original_session.npc_motion_focused import Runtime
                 return Runtime(source_factory(broker), scenario, goal=scenario.npc_motion_goal)
             kwargs['feature_factory'] = capture_npc_motion_features
-        if args.source_restart_test or args.use_item_effect_test or args.ui_current_frame_update_test or (args.inventory_ui_open_test or args.original_screenshot_test) or args.normal_open_use_current_ui_test or args.reselect_equipment_ui_restore_test or args.item_equipment_swap_reselect_test:
+        if args.npc_hp_feedback_only or args.source_restart_test or args.use_item_effect_test or args.ui_current_frame_update_test or (args.inventory_ui_open_test or args.original_screenshot_test) or args.normal_open_use_current_ui_test or args.reselect_equipment_ui_restore_test or args.item_equipment_swap_reselect_test:
             source_factory = kwargs['feature_factory']
             def capture_features(broker):
                 runtime = source_factory(broker)
@@ -6258,13 +6488,17 @@ def main():
             scenario.save()
             summary = report['manual_baseline_scenario']
             scenario_failed = (summary.get('error') is not None
-                or focused and not args.npc_hp_death_only and not respawn_mode and (summary.get('attack_target', {}).get('status') != 'NOT_REQUESTED'
+                or focused and not args.npc_hp_feedback_only and not args.npc_hp_death_only and not respawn_mode and (summary.get('attack_target', {}).get('status') != 'NOT_REQUESTED'
                     or summary.get('continuous_moves') != [] or summary.get('idle_hold_complete') is not False)
                 or not focused and summary.get('idle_hold_complete') is not True
                 or not focused and (args.continuous_move_test or args.attack_target_test)
                     and summary.get('continuous_moves_complete') is not True
                 or not focused and args.attack_target_test and summary.get('attack_target', {}).get('status') != 'COMMITTED'
                 or inventory_test and summary.get('inventory_add', {}).get('status') != 'COMMITTED'
+                or args.npc_hp_feedback_only and (summary.get('npc_hp_feedback_only',{}).get('status') != 'COMMITTED'
+                    or summary.get('attack_target',{}).get('status') != 'COMMITTED'
+                    or summary.get('continuous_moves') != [] or summary.get('idle_hold_complete') is not False
+                    or report.get('normal_exit_verified') is not True)
                 or respawn_mode and (summary.get('attack_target', {}).get('status') != 'PREPARED'
                     or summary.get('attack_target', {}).get('phase') != 'LETHAL_PREPARATION_READY'
                     or summary.get('attack_target', {}).get('proof_scope') != 'CURRENT_LETHAL_NPC_DEATH_DRAIN_ONLY'
@@ -6328,6 +6562,12 @@ def main():
         '--image', str(profile['image']), '--expected-uuid', args.expected_uuid, '--store', str(args.store),
         '--run-directory', str(ROOT / 'work/local_original_session/runs' / args.run_name),
         '--test-duration', str(args.tool_timeout_seconds)]  # Explicit tool bound, not game lifetime.
+    if args.hp4ec8_observation_stage is not None:
+        sys.argv.extend(['--hp4ec8-observation-stage', args.hp4ec8_observation_stage])
+    if args.npc_dead_goal_only:
+        sys.argv.append('--npc-dead-goal-only')
+    if args.npc_hp_feedback_only:
+        sys.argv.append('--npc-hp-feedback-only')
     if args.observe_hp4ec8_subscribers_once:
         sys.argv.append('--observe-hp4ec8-subscribers-once')
     if args.item_transfer_ui_test:

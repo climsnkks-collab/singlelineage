@@ -10,13 +10,13 @@ from unittest.mock import patch
 import unittest
 
 from tools.local_original_session import broker, inventory, item_use, item_use_session as session
-from tools.local_original_session.broker_tests import InventoryRestoreOnlyBrokerTests
+from tools.local_original_session import broker_tests as broker_fixture
 from tools.local_original_session.item_use_tests import body, scalar, blob
 from tools.local_original_session.movement_tests import payload as move_payload
 
 
 class SessionTests(unittest.IsolatedAsyncioTestCase):
-    asyncSetUp = InventoryRestoreOnlyBrokerTests.asyncSetUp
+    asyncSetUp = broker_fixture.InventoryRestoreOnlyBrokerTests.asyncSetUp
 
     def bind(self, *, policy=session.POLICY):
         leaf = session.ItemUseSession(self.producer, policy=policy)
@@ -54,8 +54,10 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(disabled.last_outcome.kind, session.OutcomeKind.DISABLED)
         self.assertEqual(disabled.accepted_count, 0)
         leaf = self.bind()
-        with self.assertRaisesRegex(ValueError, 'CURRENT_CANONICAL_FRAME_REQUIRED'):
-            await self.routed(leaf)
+        # Before the inventory delivery completed, a use is refused alone (no raise).
+        self.assertEqual(await self.routed(leaf), ())
+        self.assertEqual(leaf.last_outcome.kind, session.OutcomeKind.REJECTED)
+        self.assertEqual(leaf.last_outcome.reason, 'ITEM_USE_CURRENT_CANONICAL_FRAME_REQUIRED')
         self.assertEqual(leaf.accepted_count, 0)
         self.writer.write.assert_not_called()
         self.assertFalse(self.service.store.path.exists())
@@ -144,8 +146,14 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
             previous = getattr(owner, name)
             try:
                 setattr(owner, name, replacement)
-                with self.subTest(name=name), self.assertRaises(ValueError):
-                    await self.routed(leaf)
+                if name in ('_inventory_frame', '_inventory_operation_frame', '_inventory_admission_expired'):
+                    # Not-yet-delivered/expired delivery state refuses this use only.
+                    with self.subTest(name=name):
+                        self.assertEqual(await self.routed(leaf), ())
+                        self.assertEqual(leaf.last_outcome.kind, session.OutcomeKind.REJECTED)
+                else:
+                    with self.subTest(name=name), self.assertRaises(ValueError):
+                        await self.routed(leaf)
                 self.assertEqual(leaf.accepted_count, 0)
             finally:
                 setattr(owner, name, previous)
@@ -570,7 +578,7 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
         self.no_effect()
 
     async def test_original_restored_delivery_seed_and_committed_move_keep_current_authority(self):
-        await InventoryRestoreOnlyBrokerTests.adopt_restored(self)
+        await broker_fixture.InventoryRestoreOnlyBrokerTests.adopt_restored(self)
         initial = self.producer._inventory_frame
         stored = self.service.store.path.read_bytes()
         result = await self.producer.add_inventory(self.writer, restore_only=True)

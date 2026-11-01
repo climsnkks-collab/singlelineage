@@ -8,6 +8,7 @@ import json
 import os
 import threading
 from types import MethodType
+from tools.local_original_session import item_transfer_frame as frame
 from tools.local_original_session import commands, manual_move_commands as original
 from tools.local_original_session.broker import PersistentBroker, _InventoryGeneration
 
@@ -55,9 +56,12 @@ class EntryHost:
     def __init__(self, manual, *, capability):
         need(type(manual) is _MANUAL_TYPE and type(capability) is str and capability==CAPABILITY,'ENTRY_EXPLICIT_ACTUAL_CONSUMER')
         self.manual=manual;self.pending=None;self.terminal=False;self.last=None
-        self._thread=threading.get_ident();self._claimed=set()
+        self._thread=threading.get_ident();self._claimed=set();self._frame=None
+        self._native_return=None  # Successful native settlement; exit-only recheck, never backend authority.
+        self._native_refusal=None  # Immutable output only; never shutdown/claim authority.
         self._context=(manual.reader,manual.current,manual.clock_ns,manual.reader.owner)
         self._original()
+        frame.supported_clock(manual.clock_ns)
 
     def _original(self):
         m=self.manual
@@ -120,7 +124,8 @@ class EntryHost:
             # Consume before disk publication or Post attempt. Never unlink or
             # rewind this claim/sequence after any uncertain side effect.
             self._claimed.add(sequence);m.sequence=sequence
-            original._create_once(claim,dict(schema='own-item-transfer-entry-v2-claim-v1',**identity,seq=sequence))
+            self._frame=frame.FrameClaim(row,started,original.WAIT_NS,m.clock_ns)
+            original._create_once(claim,dict(schema='own-item-transfer-entry-v2-frame-claim-v1',**identity,seq=sequence,token=self._frame.token))
             original._create_once(path,row)
             user=m.reader.owner.native.u
             message=int(user.RegisterWindowMessageW(MESSAGE))
@@ -134,6 +139,7 @@ class EntryHost:
             self._current(bound,after_command=True)
             return dict(status='POSTED',sequence=sequence,automatic_retry=False,backend_effect='UNKNOWN')
         except BaseException:
+            self.cancel()
             self.terminal=True
             if type(m) is _MANUAL_TYPE:_TERMINAL(m,'ENTRY_ADMISSION_OR_POST_UNKNOWN')
             raise
@@ -154,11 +160,83 @@ class EntryHost:
             value=json.loads(raw,object_pairs_hook=commands._unique_object)
             value=result(value,row)
             self._current(bound,after_command=True)
+            if value['status']=='REFUSED' and value['invoked'] is False:
+                # Preserve the already validated result before fatal cleanup.
+                # A refusal closes this operation; it never reopens the shared slot.
+                self._native_refusal=(self.pending,tuple(value.items()),commands._ordinary(path).stat())
+                raise ValueError('ENTRY_NATIVE_REFUSED')
             if value['status']!='RETURNED' or value['invoked'] is not True or value['reason']!=0:
                 raise ValueError('ENTRY_NATIVE_UNKNOWN')
+            settled=(self.pending,tuple(value.items()),commands._ordinary(path).stat())
             self.last=value;self.pending=None;m._busy=False
+            if self._frame is not None:self._frame.close();self._frame=None
+            self._native_return=settled  # Publish only after existing successful cleanup.
             return dict(value,proof_scope=('CURRENT_REGISTERED_DROP_CALLBACK_RETURN_ONLY' if row['kind']==1 else 'CURRENT_TYPED_INTERACTION_CALLBACK_RETURN_ONLY'),backend_effect='UNKNOWN')
         except BaseException:
+            self.cancel()
             self.terminal=True
             if type(m) is _MANUAL_TYPE:_TERMINAL(m,'ENTRY_RESULT_OR_CURRENT_UNKNOWN')
             raise
+
+    def native_refusal(self):
+        # A fresh output copy cannot mutate the captured Native result.
+        return None if self._native_refusal is None else dict(self._native_refusal[1])
+
+    def source_quit_return(self, source_quit):
+        """Recheck this issued, cleaned RETURNED output only for terminal Quit."""
+        from tools.local_original_session.manual_source_quit import SourceQuitRequests
+        m=self.manual
+        need(type(source_quit) is SourceQuitRequests and source_quit.consumer is m
+             and source_quit._busy is True and source_quit._failure_domain == 'BACKEND'
+             and type(m) is _MANUAL_TYPE and m.state['status'] == 'UNKNOWN'
+             and m._busy is False and m._readonly_pending is None
+             and (m._source_quit_owner is None or m._source_quit_owner is source_quit)
+             and threading.get_ident()==self._thread==m._thread,'ENTRY_EXIT_EXACT_SETTLED_OWNER')
+        need(all(a is b for a,b in zip((m.reader,m.current,m.clock_ns,m.reader.owner),self._context)),
+             'ENTRY_EXIT_ORIGINAL_CONTEXT_CHANGED')
+        need(not self.terminal and self.pending is None and self._frame is None
+             and self._native_refusal is None and self._native_return is not None,
+             'ENTRY_EXIT_CLEANED_RETURN_REQUIRED')
+        pending,items,old=self._native_return
+        row,bound,path,hwnd,started=pending
+        expected=dict(items)
+        before=commands._ordinary(path).stat()
+        need((before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'ENTRY_EXIT_RETURN_CHANGED')
+        value=commands._closed_health_json(path);after=commands._ordinary(path).stat()
+        need((after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'ENTRY_EXIT_RETURN_CHANGED')
+        need(result(value,row)==expected and expected['status']=='RETURNED'
+             and expected['invoked'] is True and expected['reason']==0,'ENTRY_EXIT_RETURN_CHANGED')
+        return pending
+
+    def source_quit_refusal(self):
+        """Recheck settled output, without reviving this terminal Entry owner."""
+        m=self.manual
+        need(type(m) is _MANUAL_TYPE and self.terminal and m._busy is True
+             and m._readonly_pending is None
+             and threading.get_ident()==self._thread==m._thread,'ENTRY_EXIT_EXACT_TERMINAL_OWNER')
+        need(all(a is b for a,b in zip((m.reader,m.current,m.clock_ns,m.reader.owner),self._context)),
+             'ENTRY_EXIT_ORIGINAL_CONTEXT_CHANGED')
+        need(self._frame is None and self._native_refusal is not None
+             and self.pending is self._native_refusal[0],'ENTRY_EXIT_SETTLED_REFUSAL_REQUIRED')
+        row,bound,path,hwnd,started=self.pending
+        expected=dict(self._native_refusal[1])
+        stat=commands._ordinary(path).stat();old=self._native_refusal[2]
+        need((stat.st_dev,stat.st_ino,stat.st_size,stat.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'ENTRY_EXIT_RESULT_CHANGED')
+        value=commands._closed_health_json(path)
+        after=commands._ordinary(path).stat()
+        need((after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns)==
+             (old.st_dev,old.st_ino,old.st_size,old.st_mtime_ns),'ENTRY_EXIT_RESULT_CHANGED')
+        need(result(value,row)==expected and expected['status']=='REFUSED' and expected['invoked'] is False,
+             'ENTRY_EXIT_RESULT_CHANGED')
+        return self.pending
+
+    def cancel(self):
+        # Unclaimed cancellation wins atomically; claimed execution is UNKNOWN,
+        # retained and never retried. Artifacts/sequence/busy are not rolled back.
+        if self._frame is not None:
+            try:self._frame.close()
+            except BaseException:pass
+            self._frame=None

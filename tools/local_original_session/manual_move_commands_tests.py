@@ -17,6 +17,7 @@ from unittest.mock import patch
 from tools.local_original_session import (commands_tests, edge_tests, manual_move_commands as m,
                                           movement, move_state, npc_motion_tests)
 from tools.local_original_session import attack, attack_session, npc_observe_tests
+from tools.local_original_session import broker_tests
 from tools.local_original_session import desktop_tests
 import threading
 import struct
@@ -26,7 +27,7 @@ class ManualMoveTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         import asyncio
         asyncio.get_running_loop().slow_callback_duration = 10
-        await npc_motion_tests.ConnectedMotionTests.asyncSetUp(self)
+        await broker_tests.connected_motion_setup(self)
         self.f = edge_tests.Fixture()
         self.reader = self.f.adapter.reader
         self.reader.backend.handle = 707  # Synthetic duplicated read handle only.
@@ -1218,8 +1219,8 @@ class ManualMoveTests(unittest.IsolatedAsyncioTestCase):
                         navigation_active=True, queue_count=0, busy_value=False)
         self.assertEqual({key: result['observation'][key] for key in expected}, expected)
         from tools.local_original_session.launcher import ManualMoveRequests
-        sink = ManualMoveRequests.__new__(ManualMoveRequests)
-        sink.directory, sink.sequence, sink._inventory_auto_selection = self.directory, (1 << 31) - 1, None
+        sink = ManualMoveRequests(self.directory, self.consumer)
+        sink.sequence = (1 << 31) - 1
         sink._record(self.consumer._terminal('X' * 110))
         size = (self.directory / 'command.result.json').stat().st_size
         self.assertLessEqual(size, 2048)
@@ -1230,7 +1231,11 @@ class ManualAttackTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         import asyncio
         asyncio.get_running_loop().slow_callback_duration = 10
-        await npc_observe_tests.NpcObservationTests.asyncSetUp(self)
+        # Keep the retained reader/NPC observation setup while constructing its
+        # broker through the shared fixture's complete constructor contract.
+        with patch.object(npc_motion_tests.ConnectedMotionTests, 'asyncSetUp',
+                          broker_tests.connected_motion_setup):
+            await npc_observe_tests.NpcObservationTests.asyncSetUp(self)
         self.directory = Path(self.temp.name) / 'combined'
         self.directory.mkdir()
         self.owner = self.reader.owner
@@ -2151,9 +2156,8 @@ class ManualAttackTests(unittest.IsolatedAsyncioTestCase):
         state = self.consumer._terminal('X' * 110)
         state.update(sequence=(1 << 64) - 1, command='AttackTarget')
         from tools.local_original_session.launcher import ManualMoveRequests
-        sink = ManualMoveRequests.__new__(ManualMoveRequests)
-        sink.directory, sink.sequence = self.directory, (1 << 64) - 1
-        sink._inventory_auto_selection = None  # Original Add-only metadata branch is disabled for this attack sink.
+        sink = ManualMoveRequests(self.directory, self.consumer)
+        sink.sequence = (1 << 64) - 1
         recorded = sink._record(state)
         self.assertEqual(recorded['last_sequence'], sink.sequence)
         self.assertLessEqual((self.directory / 'command.result.json').stat().st_size, 2048)
@@ -2432,8 +2436,8 @@ class ManualAttackTests(unittest.IsolatedAsyncioTestCase):
                                       {'class': 'GLFW30', 'hwnd': 500})
         bounded = self.consumer._terminal('X' * 110)
         from tools.local_original_session.launcher import ManualMoveRequests
-        sink = ManualMoveRequests.__new__(ManualMoveRequests)
-        sink.directory, sink.sequence, sink._inventory_auto_selection = self.directory, (1 << 31) - 1, None
+        sink = ManualMoveRequests(self.directory, self.consumer)
+        sink.sequence = (1 << 31) - 1
         sink._record(bounded)
         size = (self.directory / 'command.result.json').stat().st_size
         self.assertLessEqual(size, 2048)
@@ -3229,6 +3233,10 @@ class ManualSourceReselectTests(unittest.IsolatedAsyncioTestCase):
         # and named IPC mock; rebuild only through the real product constructor.
         await ManualSourceRestartTests.asyncSetUp(self)
         retained, profile_path, expected_uuid = self.owner, self.realm.store.path, self.realm.expected_uuid
+        # Match the prepared-image binding used by inventory_tests.GateTests;
+        # the real InventoryService constructor now requires this source image.
+        self.reader.image = inventory_tests.observe.IMAGE.with_name('LC.guard.exe')
+        self.reader.member.identity['image'] = str(self.reader.image)
         wire = inventory.build_add(inventory_tests.explicit_fields())
         config = fc.Features(inventory_policy=inventory.POLICY, inventory_frame=wire,
             inventory_store_policy=inventory_store.POLICY, inventory_delivery_policy=fc.LOCAL_WORLD_READY_ONCE,

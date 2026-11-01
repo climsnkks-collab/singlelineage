@@ -1,0 +1,286 @@
+{
+  "version": 1,
+  "status": "LOCAL_POLICY_SOURCE_STATIC_CHECKED_RUNTIME_UNRUN",
+  "reference_paths": {
+    "l1jdb": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql",
+    "native_dump": "work/source_game_data/native-dump-v1.jsonl",
+    "region": "work/local_resource_provider/assets/data/region.jsonc"
+  },
+  "scope": "five map4 village unions; count0/ambiguous/blocked rows preserved",
+  "towns": [
+    {
+      "town_id": "kent",
+      "name_ko": "켄트성 마을",
+      "map_id": 4,
+      "region_ids": [
+        152
+      ],
+      "regions": [
+        {
+          "region_id": 152,
+          "bounds": {
+            "_left": 33027,
+            "_top": 32718,
+            "_right": 33084,
+            "_bottom": 32816
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:178"
+        }
+      ],
+      "teleporter_id": 50020,
+      "menu_stem": "stanley2",
+      "return_point": {
+        "map_id": 4,
+        "x": 33050,
+        "y": 32782,
+        "heading": 5
+      },
+      "return_source": {
+        "kind": "local_policy",
+        "ref": "Teleporter.xml silver-kent",
+        "note": "Fixed L1J silver destination selected for recall/death; not original Classic GetBack rule"
+      }
+    },
+    {
+      "town_id": "windawood",
+      "name_ko": "우드벡 마을",
+      "map_id": 4,
+      "region_ids": [
+        147,
+        148
+      ],
+      "regions": [
+        {
+          "region_id": 147,
+          "bounds": {
+            "_left": 32578,
+            "_top": 33152,
+            "_right": 32659,
+            "_bottom": 33218
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:166"
+        },
+        {
+          "region_id": 148,
+          "bounds": {
+            "_left": 32601,
+            "_top": 33218,
+            "_right": 32646,
+            "_bottom": 33233
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:168"
+        }
+      ],
+      "teleporter_id": 50054,
+      "menu_stem": "trey2",
+      "return_point": {
+        "map_id": 4,
+        "x": 32640,
+        "y": 33203,
+        "heading": 5
+      },
+      "return_source": {
+        "kind": "local_policy",
+        "ref": "Teleporter.xml silver-woods",
+        "note": "Fixed L1J silver destination selected for recall/death; not original Classic GetBack rule"
+      }
+    },
+    {
+      "town_id": "giran",
+      "name_ko": "기란 마을",
+      "map_id": 4,
+      "region_ids": [
+        160,
+        161
+      ],
+      "regions": [
+        {
+          "region_id": 160,
+          "bounds": {
+            "_left": 33332,
+            "_top": 32632,
+            "_right": 33502,
+            "_bottom": 32895
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:196"
+        },
+        {
+          "region_id": 161,
+          "bounds": {
+            "_left": 33502,
+            "_top": 32692,
+            "_right": 33548,
+            "_bottom": 32895
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:198"
+        }
+      ],
+      "teleporter_id": 50036,
+      "menu_stem": "wilma2",
+      "return_point": {
+        "map_id": 4,
+        "x": 33438,
+        "y": 32796,
+        "heading": 5
+      },
+      "return_source": {
+        "kind": "local_policy",
+        "ref": "Teleporter.xml silver-giran",
+        "note": "Fixed L1J silver destination selected for recall/death; not original Classic GetBack rule"
+      }
+    },
+    {
+      "town_id": "oren",
+      "name_ko": "오렌 마을",
+      "map_id": 4,
+      "region_ids": [
+        168
+      ],
+      "regions": [
+        {
+          "region_id": 168,
+          "bounds": {
+            "_left": 34011,
+            "_top": 32218,
+            "_right": 34090,
+            "_bottom": 32326
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:212"
+        }
+      ],
+      "teleporter_id": 50051,
+      "menu_stem": "kirius2",
+      "return_point": {
+        "map_id": 4,
+        "x": 34062,
+        "y": 32278,
+        "heading": 5
+      },
+      "return_source": {
+        "kind": "local_policy",
+        "ref": "Teleporter.xml silver-oren",
+        "note": "Fixed L1J silver destination selected for recall/death; not original Classic GetBack rule"
+      }
+    },
+    {
+      "town_id": "heine",
+      "name_ko": "하이네 마을",
+      "map_id": 4,
+      "region_ids": [
+        164,
+        165,
+        166
+      ],
+      "regions": [
+        {
+          "region_id": 164,
+          "bounds": {
+            "_left": 33556,
+            "_top": 33197,
+            "_right": 33654,
+            "_bottom": 33312
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:204"
+        },
+        {
+          "region_id": 165,
+          "bounds": {
+            "_left": 33571,
+            "_top": 33312,
+            "_right": 33619,
+            "_bottom": 33367
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:206"
+        },
+        {
+          "region_id": 166,
+          "bounds": {
+            "_left": 33578,
+            "_top": 33367,
+            "_right": 33654,
+            "_bottom": 33457
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:208"
+        }
+      ],
+      "teleporter_id": 50066,
+      "menu_stem": "riol2",
+      "return_point": {
+        "map_id": 4,
+        "x": 33612,
+        "y": 33257,
+        "heading": 5
+      },
+      "return_source": {
+        "kind": "local_policy",
+        "ref": "Teleporter.xml silver-heine",
+        "note": "Fixed L1J silver destination selected for recall/death; not original Classic GetBack rule"
+      }
+    }
+  ],
+  "windawood_limit": "Windawood service village is Woodbec147/148. Castle111 and broad field149 are not the same town region.",
+  "supply_bases": [
+    {
+      "town_id": "silver_knight",
+      "name_ko": "은기사 마을",
+      "map_id": 4,
+      "region_ids": [
+        136
+      ],
+      "regions": [
+        {
+          "region_id": 136,
+          "bounds": {
+            "_left": 33036,
+            "_top": 33304,
+            "_right": 33153,
+            "_bottom": 33442
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:142"
+        }
+      ],
+      "npc_ids": [
+        70073,
+        70074,
+        60024
+      ],
+      "policy": "LOCAL source-backed supply placements only; existing recall/death destinations unchanged"
+    },
+    {
+      "town_id": "fire_farmer",
+      "name_ko": "화전민 마을",
+      "map_id": 4,
+      "region_ids": [
+        142
+      ],
+      "regions": [
+        {
+          "region_id": 142,
+          "bounds": {
+            "_left": 32708,
+            "_top": 32412,
+            "_right": 32773,
+            "_bottom": 32485
+          },
+          "source_kind": "client",
+          "source_ref": "region.jsonc:153"
+        }
+      ],
+      "npc_ids": [
+        70078,
+        60027
+      ],
+      "policy": "LOCAL source-backed supply placements only; existing recall/death destinations unchanged"
+    }
+  ]
+}

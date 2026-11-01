@@ -17,6 +17,16 @@ from tools.local_game_session import session
 
 ROOT = Path(__file__).resolve().parents[2]
 POLICY = 'EXPLICIT_LOCAL_MONSTER_SPAWN'
+# World interest spawn (world_visibility): same Actor format for the M1 table's
+# (sprite f3, template f39) pairs. Each SPR carries 1002.type(10) like SPR56
+# (SPR_PATH sprite_id 33/56/57/1022) and each native npc row id has f2=sprite
+# (NPC_PATH npc 0->56, 1->57, 8->33, 245->1022); run22 findings.md:17 admits
+# SPR selector 5/10 with f16=false, f21='' and f39>=0 as the Monster subset.
+WORLD_POLICY = 'LOCAL_M1_WORLD_MONSTER_SPAWN'
+WORLD_MONSTERS = frozenset({(56, 0), (57, 1), (1022, 245), (33, 8)})
+# Existing data/m3/monsters.json selected client f2/SPR pairs. Enabled maps
+# remain owned by the broker's explicit MapExp2 path; default spawn stays map0.
+DUNGEON_MONSTERS = frozenset({(52, 27), (29, 11), (30, 29), (1096, 276), (49, 6), (145, 30)})
 REQUIRED = frozenset(range(1, 25)) | {27, 28}
 FIELDS = REQUIRED | {39}
 MAX_SPAWNS = 1  # First NPC only; no inferred visibility/streaming policy.
@@ -64,8 +74,9 @@ class NpcSpawn:
     policy: str
 
     def __post_init__(self):
-        need(self.policy == POLICY, 'EXPLICIT_NPC_LOCAL_POLICY_REQUIRED')
-        need(type(self.map_id) is int and self.map_id == 0, 'NPC_MAP0_ONLY')
+        need(self.policy in (POLICY, WORLD_POLICY), 'EXPLICIT_NPC_LOCAL_POLICY_REQUIRED')
+        need(type(self.map_id) is int and (self.map_id == 0 or self.policy == WORLD_POLICY),
+             'NPC_MAP0_ONLY')
         need(isinstance(self.fields, Mapping) and set(self.fields) == FIELDS,
              'NPC_ALL_REQUIRED_AND_TEMPLATE39_EXPLICIT_ONLY')
         values = dict(self.fields)
@@ -74,7 +85,9 @@ class NpcSpawn:
         need(values[2] > 0, 'NPC_LOCAL_POSITIVE_UID_REQUIRED')
         need(0 <= values[5] <= 7, 'NPC_DIRECTION_0_7_REQUIRED')
         need(values[16] is False and values[21] == '', 'NPC_MONSTER_DISPATCH_REQUIRED')
-        need(values[3] == 56 and values[39] == 0, 'NPC_EXPLICIT_SPR56_TEMPLATE0_ONLY')
+        # World spawns come from the data tables (any sprite/template, any served map).
+        need(self.policy == WORLD_POLICY or values[3] == 56 and values[39] == 0,
+             'NPC_EXPLICIT_SPR56_TEMPLATE0_ONLY')
         object.__setattr__(self, 'fields', MappingProxyType(values))
 
     @property
@@ -84,6 +97,10 @@ class NpcSpawn:
     def frame(self):
         """Build only after the source contract and independent data pins pass."""
         source_ready()
+        return self.encode()
+
+    def encode(self):
+        """Same frame without re-reading sources; caller ran source_ready() once."""
         body = session.world.encode_payload(0x4e96, self.fields)
         return (len(body) + 6).to_bytes(2, 'little') + b'\x96\x4e' + body + b'\0\0'
 
@@ -93,6 +110,7 @@ def prepare(spawns, *, self_uid):
     if not spawns:
         return ()
     need(all(type(spawn) is NpcSpawn for spawn in spawns), 'NPC_TYPED_EXPLICIT_SPAWN_REQUIRED')
+    need(all(spawn.policy == POLICY for spawn in spawns), 'EXPLICIT_NPC_LOCAL_POLICY_REQUIRED')
     need(len({spawn.uid for spawn in spawns}) == len(spawns), 'NPC_DUPLICATE_UID')
     need(len(spawns) <= MAX_SPAWNS, 'NPC_BOUNDED_EXPLICIT_TUPLE_REQUIRED')
     need(all(spawn.uid != self_uid for spawn in spawns), 'NPC_SELF_UID_COLLISION')

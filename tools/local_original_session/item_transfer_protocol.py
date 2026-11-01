@@ -195,8 +195,9 @@ def _int32(value):
     return value - (1 << 64)
 
 
-def _parse_payload(payload, kind):
-    source_ready()
+def _parse_payload(payload, kind, *, prevalidated=False):
+    if not prevalidated:
+        source_ready()
     _need(type(payload) is bytes and len(payload) <= MAX_PAYLOAD, 'TRANSFER_IMMUTABLE_BOUNDED_PAYLOAD_REQUIRED')
     try:
         with pb.parse_message(payload, schema={1: 2},
@@ -222,6 +223,11 @@ def parse_drop_payload(payload):
 
 def parse_get_payload(payload):
     return _parse_payload(payload, GetRequest)
+
+
+def parse_get_payload_prevalidated(payload):
+    """Same strict GET parser; the caller ran source_ready() once at startup."""
+    return _parse_payload(payload, GetRequest, prevalidated=True)
 
 
 def _parse_frame(wire, cipher_pointer, opcode, parser):

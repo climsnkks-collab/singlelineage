@@ -1,0 +1,230 @@
+{
+  "table": "m1_item_gfx_spellbooks_ext",
+  "version": 1,
+  "note": "Fixed-client inventory icon f5 and ground graphic f6. SOURCE_ONLY; native render/use not executed.",
+  "source": "work/source_game_data/native-dump-v1.jsonl; data/catalog/items_all.json client_original",
+  "items": {
+    "189": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (라이트닝)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1104 item.bin f5/f6"
+    },
+    "190": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (턴 언데드)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1105 item.bin f5/f6"
+    },
+    "191": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (익스트라 힐)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1106 item.bin f5/f6"
+    },
+    "192": {
+      "icon": 254,
+      "ground": 777,
+      "name_ko": "마법서 (커스: 블라인드)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1107 item.bin f5/f6"
+    },
+    "193": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (블레스드 아머)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1108 item.bin f5/f6"
+    },
+    "199": {
+      "icon": 255,
+      "ground": 777,
+      "name_ko": "마법서 (커스: 패럴라이즈)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1114 item.bin f5/f6"
+    },
+    "519": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (프로즌 클라우드)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1322 item.bin f5/f6"
+    },
+    "521": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (콘 오브 콜드)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1324 item.bin f5/f6"
+    },
+    "570": {
+      "icon": 673,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (레지스트 매직)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1341 item.bin f5/f6"
+    },
+    "571": {
+      "icon": 673,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (바디 투 마인드)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1342 item.bin f5/f6"
+    },
+    "572": {
+      "icon": 673,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (텔레포트 투 마더)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1343 item.bin f5/f6"
+    },
+    "573": {
+      "icon": 674,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (클리어 마인드)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1344 item.bin f5/f6"
+    },
+    "574": {
+      "icon": 674,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (레지스트 엘리멘트)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1345 item.bin f5/f6"
+    },
+    "577": {
+      "icon": 677,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (프로텍션 프롬 엘리멘트)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1348 item.bin f5/f6"
+    },
+    "578": {
+      "icon": 675,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (파이어 웨폰)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1349 item.bin f5/f6"
+    },
+    "579": {
+      "icon": 679,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (윈드 샷)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1350 item.bin f5/f6"
+    },
+    "581": {
+      "icon": 676,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (어스 스킨)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1352 item.bin f5/f6"
+    },
+    "584": {
+      "icon": 682,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (서먼 레서 엘리멘탈)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1355 item.bin f5/f6"
+    },
+    "590": {
+      "icon": 687,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (에어리어 오브 사일런스)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1361 item.bin f5/f6"
+    },
+    "591": {
+      "icon": 687,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (서먼 그레이터 엘리멘탈)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1362 item.bin f5/f6"
+    },
+    "592": {
+      "icon": 685,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (버닝 웨폰)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1363 item.bin f5/f6"
+    },
+    "593": {
+      "icon": 688,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (네이쳐스 블레싱)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1364 item.bin f5/f6"
+    },
+    "595": {
+      "icon": 689,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (스톰 샷)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1365 item.bin f5/f6"
+    },
+    "597": {
+      "icon": 686,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (아이언 스킨)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1366 item.bin f5/f6"
+    },
+    "600": {
+      "icon": 249,
+      "ground": 776,
+      "name_ko": "마법서 (위크 엘리멘탈)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1369 item.bin f5/f6"
+    },
+    "603": {
+      "icon": 250,
+      "ground": 776,
+      "name_ko": "마법서 (마나 드레인)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1372 item.bin f5/f6"
+    },
+    "675": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (트루 타겟)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1419 item.bin f5/f6"
+    },
+    "676": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (글로잉 오라)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1420 item.bin f5/f6"
+    },
+    "713": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (콜 클랜)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1438 item.bin f5/f6"
+    },
+    "1221": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (브레이브 오라)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1502 item.bin f5/f6"
+    },
+    "1295": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "마법서 (런 클랜)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1505 item.bin f5/f6"
+    },
+    "1296": {
+      "icon": 677,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (트리플 애로우)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1506 item.bin f5/f6"
+    },
+    "1492": {
+      "icon": 252,
+      "ground": 776,
+      "name_ko": "기술서 (카운터 배리어)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1511 item.bin f5/f6"
+    },
+    "1493": {
+      "icon": 688,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (워터 라이프)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1512 item.bin f5/f6"
+    },
+    "1494": {
+      "icon": 688,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (폴루트 워터)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1513 item.bin f5/f6"
+    },
+    "1495": {
+      "icon": 689,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (스트라이커 게일)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1514 item.bin f5/f6"
+    },
+    "1496": {
+      "icon": 685,
+      "ground": 2225,
+      "name_ko": "정령의 수정 (소울 오브 프레임)",
+      "ref": "work/source_game_data/native-dump-v1.jsonl:1515 item.bin f5/f6"
+    }
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "table": "npc_elemental_magic_attacks",
+  "policy": "local_policy",
+  "note": "Fixed client/official identify monster; no typed attack spell producer found there. L1J mobskill/npc/skills fill backend gaps only. Normal NPC attack opportunity chooses one ordinary four-element dice spell for current PC target; existing core range/LOS/chase/cadence retained. Per-EntityRef mana/reuse; no NPC mana regeneration; drain restores actual removed HP. Area spells affect selected PC only; exact native spell animation and full AoE are unverified. Omitted special skills retain physical fallback.",
+  "attacks": [
+    {
+      "npc_id": 45046,
+      "template_id": 180,
+      "name_ko": "비글",
+      "skill_id": 16,
+      "spell_name": "Stalac",
+      "classic_key": 15,
+      "chance_percent": 50,
+      "max_distance": 6,
+      "leverage": 5,
+      "intelligence": 14,
+      "mp_cost": 6,
+      "reuse_seconds": 0.0,
+      "cast_interval_seconds": 0.96,
+      "drain": false,
+      "parameters": {
+        "damage_value": 10,
+        "damage_dice": 10,
+        "damage_dice_count": 2,
+        "skill_level": 2,
+        "element_attr_raw": 1
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19833",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20666",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35636"
+      ]
+    },
+    {
+      "npc_id": 45121,
+      "template_id": 274,
+      "name_ko": "오크 마법사",
+      "skill_id": 25,
+      "spell_name": "Fireball",
+      "classic_key": 24,
+      "chance_percent": 30,
+      "max_distance": 6,
+      "leverage": 10,
+      "intelligence": 10,
+      "mp_cost": 20,
+      "reuse_seconds": 1.0,
+      "cast_interval_seconds": 1.24,
+      "drain": false,
+      "parameters": {
+        "damage_value": 0,
+        "damage_dice": 9,
+        "damage_dice_count": 5,
+        "skill_level": 4,
+        "element_attr_raw": 2
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19838",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20739",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35645"
+      ]
+    },
+    {
+      "npc_id": 45215,
+      "template_id": 7,
+      "name_ko": "장로",
+      "skill_id": 34,
+      "spell_name": "CallLightning",
+      "classic_key": 33,
+      "chance_percent": 35,
+      "max_distance": 4,
+      "leverage": 5,
+      "intelligence": 16,
+      "mp_cost": 18,
+      "reuse_seconds": 1.0,
+      "cast_interval_seconds": 1.8,
+      "drain": false,
+      "parameters": {
+        "damage_value": 40,
+        "damage_dice": 8,
+        "damage_dice_count": 5,
+        "skill_level": 5,
+        "element_attr_raw": 8
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19849",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20816",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35654"
+      ]
+    },
+    {
+      "npc_id": 45265,
+      "template_id": 297,
+      "name_ko": "다크 엘프",
+      "skill_id": 53,
+      "spell_name": "Tornado",
+      "classic_key": null,
+      "chance_percent": 30,
+      "max_distance": 4,
+      "leverage": 10,
+      "intelligence": 16,
+      "mp_cost": 40,
+      "reuse_seconds": 1.0,
+      "cast_interval_seconds": 1.92,
+      "drain": false,
+      "parameters": {
+        "damage_value": 20,
+        "damage_dice": 10,
+        "damage_dice_count": 5,
+        "skill_level": 7,
+        "element_attr_raw": 8
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19863",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20860",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35673"
+      ]
+    },
+    {
+      "npc_id": 45456,
+      "template_id": 10129,
+      "name_ko": "네크로맨서",
+      "skill_id": 17,
+      "spell_name": "Lightning",
+      "classic_key": 16,
+      "chance_percent": 40,
+      "max_distance": 5,
+      "leverage": 40,
+      "intelligence": 17,
+      "mp_cost": 20,
+      "reuse_seconds": 1.0,
+      "cast_interval_seconds": 1.48,
+      "drain": false,
+      "parameters": {
+        "damage_value": 0,
+        "damage_dice": 10,
+        "damage_dice_count": 4,
+        "skill_level": 3,
+        "element_attr_raw": 8
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19962",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21027",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35637"
+      ]
+    },
+    {
+      "npc_id": 45464,
+      "template_id": 37,
+      "name_ko": "세마",
+      "skill_id": 17,
+      "spell_name": "Lightning",
+      "classic_key": 16,
+      "chance_percent": 40,
+      "max_distance": 5,
+      "leverage": 35,
+      "intelligence": 17,
+      "mp_cost": 20,
+      "reuse_seconds": 1.0,
+      "cast_interval_seconds": 0.8,
+      "drain": false,
+      "parameters": {
+        "damage_value": 0,
+        "damage_dice": 10,
+        "damage_dice_count": 4,
+        "skill_level": 3,
+        "element_attr_raw": 8
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19966",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21035",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35637"
+      ]
+    },
+    {
+      "npc_id": 45473,
+      "template_id": 34,
+      "name_ko": "발터자르",
+      "skill_id": 45,
+      "spell_name": "Eruption",
+      "classic_key": null,
+      "chance_percent": 20,
+      "max_distance": 6,
+      "leverage": 14,
+      "intelligence": 17,
+      "mp_cost": 20,
+      "reuse_seconds": 0.4,
+      "cast_interval_seconds": 0.8,
+      "drain": false,
+      "parameters": {
+        "damage_value": 50,
+        "damage_dice": 3,
+        "damage_dice_count": 5,
+        "skill_level": 6,
+        "element_attr_raw": 1
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19968",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21044",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35665"
+      ]
+    },
+    {
+      "npc_id": 45488,
+      "template_id": 35,
+      "name_ko": "카스파",
+      "skill_id": 25,
+      "spell_name": "Fireball",
+      "classic_key": 24,
+      "chance_percent": 40,
+      "max_distance": 6,
+      "leverage": 40,
+      "intelligence": 17,
+      "mp_cost": 20,
+      "reuse_seconds": 1.0,
+      "cast_interval_seconds": 0.8,
+      "drain": false,
+      "parameters": {
+        "damage_value": 0,
+        "damage_dice": 9,
+        "damage_dice_count": 5,
+        "skill_level": 4,
+        "element_attr_raw": 2
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19982",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21059",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35645"
+      ]
+    },
+    {
+      "npc_id": 45573,
+      "template_id": 24,
+      "name_ko": "바포메트",
+      "skill_id": 45,
+      "spell_name": "Eruption",
+      "classic_key": null,
+      "chance_percent": 20,
+      "max_distance": 6,
+      "leverage": 20,
+      "intelligence": 16,
+      "mp_cost": 20,
+      "reuse_seconds": 0.4,
+      "cast_interval_seconds": 0.8,
+      "drain": false,
+      "parameters": {
+        "damage_value": 50,
+        "damage_dice": 3,
+        "damage_dice_count": 5,
+        "skill_level": 6,
+        "element_attr_raw": 1
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20051",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21138",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35665"
+      ]
+    },
+    {
+      "npc_id": 45600,
+      "template_id": 16,
+      "name_ko": "커츠",
+      "skill_id": 62,
+      "spell_name": "Earthquake",
+      "classic_key": null,
+      "chance_percent": 20,
+      "max_distance": 3,
+      "leverage": 30,
+      "intelligence": 17,
+      "mp_cost": 40,
+      "reuse_seconds": 0.5,
+      "cast_interval_seconds": 0.96,
+      "drain": false,
+      "parameters": {
+        "damage_value": 40,
+        "damage_dice": 10,
+        "damage_dice_count": 6,
+        "skill_level": 8,
+        "element_attr_raw": 1
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20094",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21165",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35682"
+      ]
+    },
+    {
+      "npc_id": 45601,
+      "template_id": 63,
+      "name_ko": "데스나이트",
+      "skill_id": 28,
+      "spell_name": "VampiricTouch",
+      "classic_key": 27,
+      "chance_percent": 20,
+      "max_distance": 3,
+      "leverage": 35,
+      "intelligence": 17,
+      "mp_cost": 12,
+      "reuse_seconds": 0.1,
+      "cast_interval_seconds": 0.9,
+      "drain": true,
+      "parameters": {
+        "damage_value": 15,
+        "damage_dice": 10,
+        "damage_dice_count": 3,
+        "skill_level": 4,
+        "element_attr_raw": 4
+      },
+      "source_refs": [
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20097",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:21166",
+        "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:35648"
+      ]
+    }
+  ],
+  "omitted": [
+    {
+      "npc_id": 45497,
+      "skill_id": 4,
+      "source_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:19985",
+      "reason": "outside ordinary four-element dice spell subset"
+    },
+    {
+      "npc_id": 45601,
+      "skill_id": 10056,
+      "source_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20098",
+      "reason": "outside ordinary four-element dice spell subset"
+    },
+    {
+      "npc_id": 45614,
+      "skill_id": 10057,
+      "source_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20121",
+      "reason": "outside ordinary four-element dice spell subset"
+    },
+    {
+      "npc_id": 45614,
+      "skill_id": 10071,
+      "source_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20122",
+      "reason": "outside ordinary four-element dice spell subset"
+    },
+    {
+      "npc_id": 45614,
+      "skill_id": 10056,
+      "source_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20124",
+      "reason": "outside ordinary four-element dice spell subset"
+    },
+    {
+      "npc_id": 45614,
+      "skill_id": 10019,
+      "source_ref": "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:20125",
+      "reason": "outside ordinary four-element dice spell subset"
+    }
+  ]
+}

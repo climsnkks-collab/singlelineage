@@ -115,8 +115,8 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual({call.args[1] for call in probes.call_args_list}, {2})
         for at in addresses:
             self.f.put(at, '<H', 0)
-        # Reuse the real spatial helper's nonempty target shape: a raw pointer
-        # labelled this NPC is still UNKNOWN without typed Monster proof.
+        # This synthetic fixture lacks Monster source/typed proof. A nonempty
+        # target stays UNKNOWN; a raw NPC label cannot authorize movement.
         target = (self.x + 1, self.y)
         head, buckets, node, vector = 0x600000, self.buckets[0], 0x700000, 0x740000
         self.f.put(self.f.actor + 0x798 + 16, '<Q', 1)
@@ -127,7 +127,7 @@ class SessionTests(unittest.IsolatedAsyncioTestCase):
                    '<QQ', node, node)
         result = await self.controller.approach(goal=goal, now_ns=1000)
         self.assertEqual((result.status, result.reason),
-                         ('UNKNOWN', 'SPATIAL_TARGET_NONEMPTY_UNCLASSIFIED'))
+                         ('UNKNOWN', 'SYNTHETIC_CELL_UNREADABLE'))
         self.assertIs(self.mover.state, self.initial)
         self.writer.write.assert_not_called()
 

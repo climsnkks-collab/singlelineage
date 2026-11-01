@@ -6,6 +6,8 @@ cleanup. This adapter creates no process, thread, desktop, packet or observer.
 from __future__ import annotations
 
 import asyncio
+import copy
+import threading
 from dataclasses import dataclass
 import json
 from pathlib import Path
@@ -37,22 +39,28 @@ class _Completion:
 
 
 class SourceQuitRequests:
-    def __init__(self, owner, requests, broker, directory):
+    def __init__(self, owner, requests, broker, directory, *, features=None):
         # Factory construction can precede NativeOwner.prepare/bind.
         need(_actual_export(requests, 'ManualMoveRequests', _LAUNCHER)
              and type(requests.consumer) is manual.ManualMoveCommands
              and type(broker) is PersistentBroker, 'SOURCE_QUIT_REAL_REQUESTS_REQUIRED')
+        self._features = features
+        self._exit_only = False
+        self._exit_entry = self._failure_state = self._failure_data = self._failure_pending = None
+        self._exit_popup = self._failure_domain = None
+        self._failure_phase = self._failure_quantity = self._failure_refs = None
         self.owner, self.requests, self.broker = owner, requests, broker
         self.consumer, self.directory = requests.consumer, Path(directory).absolute()
         self._busy = self._started = self._closed = False
         self._pending = self._desktop = self._initial = self._hwnd = None
         self._claimed, self._returned, self._requests = set(), {}, {}
         self._drain_evidence = self._completion = None
+        self._observations, self._observation_errors = {}, {}
         self._state = dict(status='NOT_REQUESTED', reason=None, cleanup_required=False)
 
     def report(self):
         if type(self._completion) is _Completion:
-            return dict(self._completion.snapshot)
+            return copy.deepcopy(dict(self._completion.snapshot))
         state = self._state
         if state.get('status') == 'RETURNED':
             state = dict(status='UNKNOWN', reason='SOURCE_QUIT_COMPLETION_EVIDENCE_REQUIRED', cleanup_required=True)
@@ -60,11 +68,13 @@ class SourceQuitRequests:
                     first_claimed=_PHASES[0] in self._claimed, late_claimed=_PHASES[1] in self._claimed,
                     first_returned=_PHASES[0] in self._returned, late_returned=_PHASES[1] in self._returned,
                     sequence=self.consumer.sequence, normal_exit_verified=False,
-                    native_attempted=(self._pending is not None and self._pending['native_attempted']))
+                    native_attempted=(self._pending is not None and self._pending['native_attempted']),
+                    native_observation=self._observation_report())
 
     def _fail(self, reason):
         self._state = dict(status='UNKNOWN', reason=reason, cleanup_required=True)
-        terminal = self.consumer._terminal(reason)
+        terminal = (self.consumer.state if self._exit_only or self._failure_domain == 'BACKEND'
+                    and self.consumer.state['status'] == 'UNKNOWN' else self.consumer._terminal(reason))
         if 'window_observation' in terminal:
             self._state['window_observation'] = dict(terminal['window_observation'])
         return self.report()
@@ -82,6 +92,132 @@ class SourceQuitRequests:
         need(not self._closed and self._state['status'] != 'UNKNOWN', 'SOURCE_QUIT_TERMINAL')
         need(self._state['status'] in ('NOT_REQUESTED', 'PENDING'),
              'SOURCE_QUIT_COMPLETION_EVIDENCE_REQUIRED')
+
+    def _failure_current(self):
+        from tools.local_original_session.item_transfer_ui import ItemTransferUI
+        from tools.local_original_session.item_transfer_entry import EntryHost
+        from tools.local_original_session.item_quantity_popup import PopupHost
+        features = self._features
+        need(self._exit_only and self._busy and self.consumer.state is self._failure_state
+             and self.consumer.state == self._failure_data
+             and self.consumer.state['status'] == 'UNKNOWN', 'SOURCE_QUIT_FAILURE_STATE_CHANGED')
+        need(_actual_export(features, 'ProductFeatures', _LAUNCHER) and not features._closed
+             and features.manual is self.requests and type(features.item_transfer_ui) is ItemTransferUI,
+             'SOURCE_QUIT_ACTUAL_FAILED_FEATURE_REQUIRED')
+        ui = features.item_transfer_ui
+        need(ui.runtime is features and ui.manual is self.requests and ui.consumer is self.consumer
+             and ui.broker is self.broker and ui.closed,
+             'SOURCE_QUIT_FAILED_FEATURE_LIFETIME_CHANGED')
+        if self._failure_domain == 'ENTRY':
+            need(ui.phase in ('DROP_ENTRY_WAIT','GET_ENTRY_WAIT') and ui.entry is self._exit_entry
+                 and type(ui.entry) is EntryHost and ui.popup.pending is None and ui.popup._frame is None,
+                 'SOURCE_QUIT_FAILED_ENTRY_LIFETIME_CHANGED')
+            adapter = ui.entry
+        elif self._failure_domain == 'POPUP':
+            need(ui.phase in ('DROP_POPUP_WAIT','GET_POPUP_WAIT') and ui.popup is self._exit_popup
+                 and type(ui.popup) is PopupHost and type(ui.entry) is EntryHost
+                 and ui.entry.manual is self.consumer and ui.entry.pending is None and ui.entry._frame is None
+                 and ui.entry.terminal is False and ui.entry.native_refusal() is None,
+                 'SOURCE_QUIT_FAILED_POPUP_LIFETIME_CHANGED')
+            adapter = ui.popup
+        elif self._failure_domain == 'BACKEND':
+            need(ui.phase == self._failure_phase and ui.phase in ('DROP_BACKEND','RETURN_BACKEND')
+                 and type(ui._quantity) is int and ui._quantity == self._failure_quantity
+                 and type(ui.entry) is EntryHost and type(ui.popup) is PopupHost
+                 and ui.entry.manual is ui.popup.manual is self.consumer
+                 and ui.entry.pending is ui.popup.pending is None
+                 and ui.entry._frame is ui.popup._frame is None
+                 and not ui.entry.terminal and not ui.popup.terminal
+                 and ui.entry.native_refusal() is ui.popup.native_refusal() is None
+                 and ui._refs is self._failure_refs,
+                 'SOURCE_QUIT_FAILED_BACKEND_LIFETIME_CHANGED')
+            refs = ui._refs
+            need(type(refs) is tuple and len(refs) == 11 and refs[0] is self.broker,
+                 'SOURCE_QUIT_FAILED_BACKEND_SELECTION_CHANGED')
+            binding = self.consumer.current()
+            generation = PersistentBroker.inventory_selection_current(self.broker, binding.writer)
+            from tools.local_original_session.broker import _InventoryGeneration
+            from tools.local_original_session.item_transfer_session import ItemTransferSession
+            need(type(generation) is _InventoryGeneration and generation is refs[3]
+                 and generation.phase == 'ACTIVE' and generation.writer is binding.writer is refs[1]
+                 and generation.row is refs[2] and generation.selected is refs[4]
+                 and type(generation.transfer_session) is ItemTransferSession
+                 and generation.transfer_session is refs[9] and refs[9].broker is self.broker,
+                 'SOURCE_QUIT_FAILED_BACKEND_SELECTION_CHANGED')
+            adapter = self._exit_entry if self._failure_quantity == 1 else self._exit_popup
+            need(adapter is (ui.entry if self._failure_quantity == 1 else ui.popup)
+                 and adapter.source_quit_return(self) is self._failure_pending,
+                 'SOURCE_QUIT_FAILED_BACKEND_RETURN_CHANGED')
+            request = self._failure_pending[0]
+            need(request['kind'] == (1 if ui.phase == 'DROP_BACKEND' else 2)
+                 and request['quantity'] == self._failure_quantity
+                 and (self._failure_quantity == 1 or request['action'] == 1),
+                 'SOURCE_QUIT_FAILED_BACKEND_REQUEST_CHANGED')
+        else:
+            raise ValueError('SOURCE_QUIT_FAILURE_DOMAIN_CHANGED')
+        need(adapter.manual is self.consumer
+             and (self._failure_domain == 'BACKEND' or adapter.source_quit_refusal() is self._failure_pending)
+             and self.consumer._busy is (False if self._failure_domain == 'BACKEND' else True)
+             and self.consumer.reader.owner is self.owner
+             and self.consumer._readonly_pending is None
+             and threading.get_ident() == self.consumer._thread,
+             'SOURCE_QUIT_FAILURE_OWNER_OR_THREAD_CHANGED')
+        need(self.consumer.pending is None if self._pending is None else self.consumer.pending is self._pending,
+             'SOURCE_QUIT_PENDING_CHANGED')
+        if self._pending is None:
+            need(self.consumer.sequence == self._failure_pending[0]['seq'], 'SOURCE_QUIT_FAILURE_SEQUENCE_CHANGED')
+        return True
+
+    def _prepare_failure_exit(self):
+        features = self._features
+        if features is not None and not _actual_export(features, 'ProductFeatures', _LAUNCHER):
+            from tools.local_original_session.item_transfer_runner import Runtime
+            need(type(features) is Runtime and features.manual is self.requests
+                 and features.broker is self.broker, 'SOURCE_QUIT_ACTUAL_FAILED_FEATURE_REQUIRED')
+            features = features.original
+        self._features = features
+        need(_actual_export(features, 'ProductFeatures', _LAUNCHER),
+             'SOURCE_QUIT_ACTUAL_FAILED_FEATURE_REQUIRED')
+        ui = features.item_transfer_ui
+        if ui.phase in ('DROP_ENTRY_WAIT','GET_ENTRY_WAIT'):
+            self._failure_domain = 'ENTRY'
+            self._exit_entry = ui.entry
+            adapter = self._exit_entry
+        elif ui.phase in ('DROP_POPUP_WAIT','GET_POPUP_WAIT'):
+            self._failure_domain = 'POPUP'
+            self._exit_popup = ui.popup
+            adapter = self._exit_popup
+        elif ui.phase in ('DROP_BACKEND','RETURN_BACKEND'):
+            self._failure_domain = 'BACKEND'
+            need(type(ui._quantity) is int and ui._quantity > 0,
+                 'SOURCE_QUIT_FAILED_BACKEND_QUANTITY_REQUIRED')
+            self._failure_phase, self._failure_quantity, self._failure_refs = ui.phase, ui._quantity, ui._refs
+            if ui._quantity == 1:
+                self._exit_entry = ui.entry
+            else:
+                self._exit_popup = ui.popup
+            adapter = self._exit_entry if ui._quantity == 1 else self._exit_popup
+        else:
+            raise ValueError('SOURCE_QUIT_FAILED_FEATURE_PHASE_REQUIRED')
+        self._failure_pending = (adapter.source_quit_return(self) if self._failure_domain == 'BACKEND'
+                                 else adapter.source_quit_refusal())
+        self._failure_state, self._failure_data = self.consumer.state, copy.deepcopy(self.consumer.state)
+        self._exit_only = True
+        self._failure_current()
+        need(self.consumer._source_quit_owner is None, 'SOURCE_QUIT_ALREADY_OWNED')
+        self.consumer._source_quit_owner = self  # One-way EXIT ownership, no busy/state reset.
+
+    def _enter_consumer(self):
+        if self._exit_only:
+            self.consumer._source_quit_terminal_current(self)
+        else:
+            self.consumer._enter()
+
+    def _current(self):
+        return self.consumer._current(source_quit=self) if self._exit_only else self.consumer._current()
+
+    def _consumer_live(self):
+        return self._failure_current() if self._exit_only else self.consumer.state['status'] != 'UNKNOWN'
 
     def _fresh(self):
         self._wrapper(quiesced=True)
@@ -101,7 +237,7 @@ class SourceQuitRequests:
         current = self.consumer._admission_current()
         manual._source_quit_cancel_check()
         need(not self._closed and self._state['status'] != 'UNKNOWN'
-             and self.consumer.state['status'] != 'UNKNOWN', 'SOURCE_QUIT_TERMINAL')
+             and self._consumer_live(), 'SOURCE_QUIT_TERMINAL')
         return current
 
     def _publish(self, phase):
@@ -117,6 +253,8 @@ class SourceQuitRequests:
                            native_attempted=self._pending['native_attempted'])
 
     def _native_settled(self):
+        if self._exit_only:
+            return self._failure_current() and self.consumer.pending is None
         if self.consumer.pending is not None:
             return False
         if self.consumer.state['status'] in ('READY', 'COMMITTED'):
@@ -144,7 +282,9 @@ class SourceQuitRequests:
         try:
             need(not self._busy, 'SOURCE_QUIT_REENTRANT')
             self._busy = True
-            self.consumer._enter()
+            if self.consumer.state['status'] == 'UNKNOWN':
+                self._prepare_failure_exit()
+            self._enter_consumer()
             entered = True
             self._started = True
             need(type(windows_requested) is int and windows_requested > 0, 'SOURCE_QUIT_OWNED_CLOSE_REQUIRED')
@@ -152,7 +292,7 @@ class SourceQuitRequests:
             need(self._native_settled(),
                  'SOURCE_QUIT_NATIVE_OUTCOME_UNRESOLVED')
             # Obtain real binding before invoking the launcher's quiesce policy.
-            current = self.consumer._current()
+            current = self._current()
             need(current[0].broker is self.broker and self.consumer.reader.owner is self.owner,
                  'SOURCE_QUIT_OWNER_CHANGED')
             quiesce = self.requests.quiesce_for_source_quit
@@ -161,12 +301,13 @@ class SourceQuitRequests:
                  and quiesce.__func__.__globals__.get('ManualMoveRequests') is type(self.requests)
                  and Path(quiesce.__func__.__code__.co_filename).resolve() == _LAUNCHER,
                  'SOURCE_QUIT_REAL_QUIESCE_REQUIRED')
-            need(quiesce() is True, 'SOURCE_QUIT_QUIESCE_REFUSED')
+            need((quiesce(source_quit=self) if self._exit_only else quiesce()) is True,
+                 'SOURCE_QUIT_QUIESCE_REFUSED')
             self._wrapper(quiesced=True)
             need(self._native_settled(),
                  'SOURCE_QUIT_NATIVE_OUTCOME_UNRESOLVED')
             now = self.consumer._clock()
-            current = self.consumer._current()
+            current = self._current()
             owner = self.owner
             need(self.consumer.reader.owner is owner and owner.child is self.consumer.reader.member
                  and _actual_export(owner.private_desktop, 'PrivateDesktop', _DESKTOP),
@@ -184,10 +325,56 @@ class SourceQuitRequests:
         except BaseException as error:
             self._fail(self.consumer._reason(error))
         finally:
-            if entered:
+            if entered and not self._exit_only:
                 self.consumer._busy = False
             self._busy = False
         return self.report()
+
+    def _observation_report(self):
+        # Diagnostic evidence cannot authorize dispatch, drain, late Quit or exit.
+        rows = [value[0] for value in self._observations.values()]
+        return dict(status='UNKNOWN' if self._observation_errors else 'OBSERVED' if rows else 'NOT_OBSERVED',
+                    errors=list(self._observation_errors.values()), received=bool(rows),
+                    original_call_boundary_reached=any(row['call_boundary_reached'] for row in rows),
+                    original_call_returned=any(row['call_returned'] for row in rows),
+                    first_false=next((row['first_false'] for row in rows
+                                      if row['first_false'] != 'NONE'), None),
+                    scope='OBSERVED_ONLY_NOT_COMPLETION_OR_EXIT')
+
+    def _observe(self):
+        for phase, request in self._requests.items():
+            for boundary in ('received', 'before_call', 'complete'):
+                key = (phase, boundary)
+                path = self._boundary / ('source-quit-observation-' + str(request['seq'])
+                                         + '-' + boundary + '.json')
+                try:
+                    self._observe_one(phase, request, boundary, key, path)
+                except Exception as error:
+                    # A diagnostic sidecar cannot gate authoritative result,
+                    # drain, late approval or exit processing. Keep first error.
+                    self._observation_errors.setdefault(key, self.consumer._reason(error))
+
+    def _observe_one(self, phase, request, boundary, key, path):
+        old = self._observations.get(key)
+        try:
+            row = commands._closed_health_json(path)
+        except FileNotFoundError:
+            need(old is None, 'SOURCE_QUIT_OBSERVATION_DISAPPEARED')
+            return
+        expected = dict(request, schema='own-manual-source-quit-observation-v1', boundary=boundary)
+        need(set(row) == set(expected) | {'step', 'first_false', 'call_boundary_reached',
+                                         'call_returned', 'output_ok'}
+             and all(type(row.get(k)) is type(v) and row[k] == v for k, v in expected.items())
+             and type(row['step']) is str and 0 < len(row['step']) <= 64
+             and type(row['first_false']) is str and 0 < len(row['first_false']) <= 64
+             and all(type(row[k]) is bool for k in ('call_boundary_reached', 'call_returned', 'output_ok'))
+             and (not row['call_returned'] or row['call_boundary_reached']),
+             'SOURCE_QUIT_OBSERVATION_SCHEMA_OR_IDENTITY')
+        stat = commands._ordinary(path).stat()
+        identity = stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns
+        need(old is None or old == (row, identity), 'SOURCE_QUIT_OBSERVATION_CHANGED')
+        self._observations[key] = dict(row), identity
+
 
     def _result(self, phase, sequence):
         path = self._boundary / ('source-quit-result-' + str(sequence) + '.json')
@@ -238,8 +425,9 @@ class SourceQuitRequests:
         need(self.consumer._clock() - self._pending['started'] < manual.WAIT_NS,
              'SOURCE_QUIT_ORIGINAL_DEADLINE')
         manual._source_quit_cancel_check()
-        need(self._busy and self.consumer._busy and not self._closed
-             and self._state['status'] != 'UNKNOWN' and self.consumer.state['status'] != 'UNKNOWN'
+        need(self._busy and self.consumer._busy is (False if self._exit_only
+             and self._failure_domain == 'BACKEND' else True) and not self._closed
+             and self._state['status'] != 'UNKNOWN' and self._consumer_live()
              and self.consumer.pending is self._pending and self._pending['kind'] == 'SourceQuit'
              and self._pending['source_phase'] == _PHASES[1] and self._pending['native_attempted'] is True,
              'SOURCE_QUIT_TERMINAL')
@@ -256,7 +444,8 @@ class SourceQuitRequests:
         snapshot = dict(status='RETURNED', reason='SOURCE_QUIT_EXIT_UNVERIFIED', cleanup_required=False,
             phase=_PHASES[1], command='SourceQuit', automatic_retry=False,
             first_claimed=True, late_claimed=True, first_returned=True, late_returned=True,
-            sequence=self.consumer.sequence, normal_exit_verified=False, native_attempted=True)
+            sequence=self.consumer.sequence, normal_exit_verified=False, native_attempted=True,
+            native_observation=self._observation_report())
         self._completion = _Completion((tuple(first[0].items()), first[1]),
             (tuple(late[0].items()), late[1]), self._drain_evidence, tuple(snapshot.items()))
 
@@ -269,8 +458,9 @@ class SourceQuitRequests:
         try:
             need(not self._busy, 'SOURCE_QUIT_REENTRANT')
             self._busy = True
-            self.consumer._enter()
+            self._enter_consumer()
             entered = True
+            self._observe()
             current = self._fresh()
             phase = self._pending['source_phase']
             for previous in tuple(self._returned):
@@ -293,7 +483,7 @@ class SourceQuitRequests:
         except BaseException as error:
             self._fail(self.consumer._reason(error))
         finally:
-            if entered:
+            if entered and not self._exit_only:
                 self.consumer._busy = False
             self._busy = False
         return self.report()
@@ -302,6 +492,8 @@ class SourceQuitRequests:
         if type(self._completion) is _Completion:
             self._closed = True
             return self.report()
+        if self._started:
+            self._observe()
         self._closed = True
         if self._started and self._state['status'] != 'UNKNOWN':
             self._fail('SOURCE_QUIT_CLOSED')

@@ -1,0 +1,3437 @@
+{
+  "table": "m6_map_expansion4",
+  "version": 1,
+  "registered_monster_snapshot": {
+    "captured_at": "2026-10-28T14:30:10.651651",
+    "template_ids": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      11,
+      15,
+      16,
+      17,
+      27,
+      28,
+      29,
+      30,
+      31,
+      33,
+      34,
+      35,
+      36,
+      37,
+      63,
+      64,
+      91,
+      92,
+      93,
+      94,
+      95,
+      115,
+      116,
+      129,
+      144,
+      145,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      162,
+      163,
+      164,
+      176,
+      177,
+      178,
+      179,
+      180,
+      182,
+      190,
+      212,
+      216,
+      223,
+      235,
+      236,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      274,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      297,
+      299,
+      323,
+      327,
+      332,
+      454,
+      459,
+      460,
+      463,
+      464,
+      465,
+      469,
+      471,
+      472,
+      473,
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      534,
+      535,
+      536,
+      560,
+      562,
+      563,
+      567,
+      568,
+      579,
+      580,
+      581,
+      586,
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      595,
+      596,
+      621,
+      701,
+      702,
+      703,
+      704,
+      705,
+      706,
+      707,
+      708,
+      709,
+      710,
+      723,
+      735,
+      750,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      827,
+      884,
+      885,
+      889,
+      891,
+      895,
+      897,
+      899,
+      900,
+      902,
+      971,
+      972,
+      975,
+      1025,
+      1026,
+      1027,
+      1028,
+      1039,
+      1041,
+      1331,
+      1387,
+      1388,
+      1410,
+      2214,
+      2381,
+      2388,
+      2389,
+      2390,
+      2391,
+      2392,
+      2393,
+      2394,
+      2395,
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2782,
+      2783,
+      2784,
+      2785,
+      2786,
+      2787,
+      10129,
+      10204,
+      10205,
+      10206,
+      10207,
+      10208,
+      10209,
+      10219,
+      10243,
+      10244,
+      10245,
+      10246,
+      10247,
+      10248,
+      10249,
+      10250,
+      10251,
+      10252,
+      10253,
+      10254,
+      10255,
+      10256,
+      10257,
+      10258,
+      10259,
+      12177,
+      12178,
+      12179,
+      12180,
+      12181,
+      12182,
+      12183,
+      12187,
+      12188
+    ],
+    "species": {
+      "156": {
+        "name": "오크",
+        "level": 2,
+        "l1j_npcid": 45009
+      },
+      "235": {
+        "name": "거대 개미",
+        "level": 12,
+        "l1j_npcid": 45115
+      },
+      "236": {
+        "name": "거대 병정 개미",
+        "level": 20,
+        "l1j_npcid": 45190
+      },
+      "0": {
+        "name": "오크",
+        "level": 2,
+        "l1j_npcid": 45009
+      },
+      "1": {
+        "name": "오크 궁수",
+        "level": 3,
+        "l1j_npcid": 45019
+      },
+      "2": {
+        "name": "오크 전사",
+        "level": 8,
+        "l1j_npcid": 45082
+      },
+      "6": {
+        "name": "돌 골렘",
+        "level": 13,
+        "l1j_npcid": 45126
+      },
+      "7": {
+        "name": "장로",
+        "level": 21,
+        "l1j_npcid": 45215
+      },
+      "11": {
+        "name": "괴물 눈",
+        "level": 7,
+        "l1j_npcid": 45068
+      },
+      "17": {
+        "name": "셸로브",
+        "level": 14,
+        "l1j_npcid": 45136
+      },
+      "27": {
+        "name": "좀비",
+        "level": 6,
+        "l1j_npcid": 45065
+      },
+      "28": {
+        "name": "구울",
+        "level": 16,
+        "l1j_npcid": 45157
+      },
+      "29": {
+        "name": "해골",
+        "level": 10,
+        "l1j_npcid": 45107
+      },
+      "30": {
+        "name": "스파토이",
+        "level": 16,
+        "l1j_npcid": 45161
+      },
+      "31": {
+        "name": "웅골리언트",
+        "level": 18,
+        "l1j_npcid": 45184
+      },
+      "33": {
+        "name": "버그베어",
+        "level": 22,
+        "l1j_npcid": 45223
+      },
+      "34": {
+        "name": "발터자르",
+        "level": 43,
+        "l1j_npcid": 45473
+      },
+      "35": {
+        "name": "카스파",
+        "level": 44,
+        "l1j_npcid": 45488
+      },
+      "36": {
+        "name": "메르키오르",
+        "level": 45,
+        "l1j_npcid": 45497
+      },
+      "37": {
+        "name": "세마",
+        "level": 42,
+        "l1j_npcid": 45464
+      },
+      "63": {
+        "name": "데스나이트",
+        "level": 52,
+        "l1j_npcid": 45601
+      },
+      "64": {
+        "name": "크로울링 크로",
+        "level": 8,
+        "l1j_npcid": 45083
+      },
+      "115": {
+        "name": "가스트",
+        "level": 21,
+        "l1j_npcid": 45213
+      },
+      "144": {
+        "name": "펑거스",
+        "level": 4,
+        "l1j_npcid": 45030
+      },
+      "145": {
+        "name": "브롭",
+        "level": 5,
+        "l1j_npcid": 45032
+      },
+      "147": {
+        "name": "오크 궁수",
+        "level": 3,
+        "l1j_npcid": 45019
+      },
+      "148": {
+        "name": "오크 전사",
+        "level": 8,
+        "l1j_npcid": 45082
+      },
+      "149": {
+        "name": "아투바 오크",
+        "level": 15,
+        "l1j_npcid": 45149
+      },
+      "150": {
+        "name": "네루가 오크",
+        "level": 17,
+        "l1j_npcid": 45171
+      },
+      "151": {
+        "name": "두다-마라 오크",
+        "level": 15,
+        "l1j_npcid": 45143
+      },
+      "152": {
+        "name": "간디 오크",
+        "level": 10,
+        "l1j_npcid": 45098
+      },
+      "153": {
+        "name": "로바 오크",
+        "level": 13,
+        "l1j_npcid": 45127
+      },
+      "154": {
+        "name": "늑대인간",
+        "level": 9,
+        "l1j_npcid": 45024
+      },
+      "164": {
+        "name": "좀비",
+        "level": 6,
+        "l1j_npcid": 45065
+      },
+      "182": {
+        "name": "켈베로스",
+        "level": 24,
+        "l1j_npcid": 45241
+      },
+      "212": {
+        "name": "킹 버그베어",
+        "level": 30,
+        "l1j_npcid": 45298
+      },
+      "276": {
+        "name": "해골궁수",
+        "level": 12,
+        "l1j_npcid": 45122
+      },
+      "277": {
+        "name": "해골도끼병",
+        "level": 13,
+        "l1j_npcid": 45130
+      },
+      "278": {
+        "name": "해골창병",
+        "level": 13,
+        "l1j_npcid": 45131
+      },
+      "454": {
+        "name": "거대 여왕 개미",
+        "level": 57,
+        "l1j_npcid": 45614
+      },
+      "10129": {
+        "name": "네크로맨서",
+        "level": 42,
+        "l1j_npcid": 45456
+      },
+      "279": {
+        "name": "트롤",
+        "level": 28,
+        "l1j_npcid": 45280
+      },
+      "281": {
+        "name": "무리안",
+        "level": 30,
+        "l1j_npcid": 45289
+      },
+      "284": {
+        "name": "서큐버스",
+        "level": 37,
+        "l1j_npcid": 45393
+      },
+      "285": {
+        "name": "서큐버스 퀸",
+        "level": 41,
+        "l1j_npcid": 45451
+      },
+      "287": {
+        "name": "에틴",
+        "level": 35,
+        "l1j_npcid": 45373
+      },
+      "288": {
+        "name": "해골저격병",
+        "level": 27,
+        "l1j_npcid": 45270
+      },
+      "289": {
+        "name": "해골돌격병",
+        "level": 29,
+        "l1j_npcid": 45286
+      },
+      "290": {
+        "name": "해골근위병",
+        "level": 27,
+        "l1j_npcid": 45269
+      },
+      "327": {
+        "name": "안타라스",
+        "level": 93,
+        "l1j_npcid": 45682
+      },
+      "332": {
+        "name": "데몬",
+        "level": 61,
+        "l1j_npcid": 45649
+      },
+      "460": {
+        "name": "미믹",
+        "level": 31,
+        "l1j_npcid": 45141
+      },
+      "464": {
+        "name": "페이퍼 맨",
+        "level": 28,
+        "l1j_npcid": 45088
+      },
+      "469": {
+        "name": "실루엣",
+        "level": 41,
+        "l1j_npcid": 45162
+      },
+      "473": {
+        "name": "리빙아머",
+        "level": 33,
+        "l1j_npcid": 45322
+      },
+      "534": {
+        "name": "사라만다",
+        "level": 38,
+        "l1j_npcid": 45203
+      },
+      "579": {
+        "name": "데스",
+        "level": 45,
+        "l1j_npcid": 45221
+      },
+      "580": {
+        "name": "유령",
+        "level": 42,
+        "l1j_npcid": 45198
+      },
+      "581": {
+        "name": "유령",
+        "level": 43,
+        "l1j_npcid": 45174
+      },
+      "586": {
+        "name": "라바 골렘",
+        "level": 43,
+        "l1j_npcid": 45365
+      },
+      "587": {
+        "name": "불타는 전사",
+        "level": 35,
+        "l1j_npcid": 45284
+      },
+      "588": {
+        "name": "이프리트",
+        "level": 46,
+        "l1j_npcid": 45515
+      },
+      "589": {
+        "name": "혼 켈베로스",
+        "level": 47,
+        "l1j_npcid": 45341
+      },
+      "590": {
+        "name": "피닉스",
+        "level": 59,
+        "l1j_npcid": 45617
+      },
+      "591": {
+        "name": "파이어 에그",
+        "level": 39,
+        "l1j_npcid": 45206
+      },
+      "592": {
+        "name": "폭탄 꽃",
+        "level": 29,
+        "l1j_npcid": 45263
+      },
+      "593": {
+        "name": "불타는 궁수",
+        "level": 36,
+        "l1j_npcid": 45291
+      },
+      "595": {
+        "name": "드래곤 플라이",
+        "level": 33,
+        "l1j_npcid": 45257
+      },
+      "596": {
+        "name": "아시타지오",
+        "level": 45,
+        "l1j_npcid": 45359
+      },
+      "703": {
+        "name": "좀비 엘모어 마법사",
+        "level": 31,
+        "l1j_npcid": 45224
+      },
+      "705": {
+        "name": "좀비 엘모어 장군",
+        "level": 35,
+        "l1j_npcid": 45248
+      },
+      "707": {
+        "name": "아이언 골렘",
+        "level": 35,
+        "l1j_npcid": 45372
+      },
+      "708": {
+        "name": "좀비 엘모어 병사",
+        "level": 30,
+        "l1j_npcid": 45216
+      },
+      "735": {
+        "name": "페이퍼 맨",
+        "level": 28,
+        "l1j_npcid": 45088
+      },
+      "245": {
+        "name": "고블린",
+        "level": 2,
+        "l1j_npcid": 45008
+      },
+      "249": {
+        "name": "코볼트",
+        "level": 3,
+        "l1j_npcid": 45016
+      },
+      "4": {
+        "name": "난쟁이",
+        "level": 5,
+        "l1j_npcid": 45041
+      },
+      "8": {
+        "name": "늑대인간",
+        "level": 9,
+        "l1j_npcid": 45024
+      },
+      "190": {
+        "name": "멧돼지",
+        "level": 6,
+        "l1j_npcid": 45058
+      },
+      "94": {
+        "name": "간디 오크",
+        "level": 10,
+        "l1j_npcid": 45098
+      },
+      "95": {
+        "name": "로바 오크",
+        "level": 13,
+        "l1j_npcid": 45127
+      },
+      "93": {
+        "name": "두다-마라 오크",
+        "level": 15,
+        "l1j_npcid": 45143
+      },
+      "91": {
+        "name": "아투바 오크",
+        "level": 15,
+        "l1j_npcid": 45149
+      },
+      "92": {
+        "name": "네루가 오크",
+        "level": 17,
+        "l1j_npcid": 45171
+      },
+      "274": {
+        "name": "오크 마법사",
+        "level": 12,
+        "l1j_npcid": 45121
+      },
+      "223": {
+        "name": "오우거",
+        "level": 28,
+        "l1j_npcid": 45278
+      },
+      "297": {
+        "name": "다크 엘프",
+        "level": 27,
+        "l1j_npcid": 45265
+      },
+      "5": {
+        "name": "돌 골렘",
+        "level": 13,
+        "l1j_npcid": 45126
+      },
+      "9": {
+        "name": "늑대",
+        "level": 6,
+        "l1j_npcid": 45043
+      },
+      "116": {
+        "name": "오크 스카우트",
+        "level": 14,
+        "l1j_npcid": 45138
+      },
+      "129": {
+        "name": "가스트 로드",
+        "level": 33,
+        "l1j_npcid": 45346
+      },
+      "155": {
+        "name": "늑대",
+        "level": 4,
+        "l1j_npcid": 45043
+      },
+      "162": {
+        "name": "돌 골렘",
+        "level": 13,
+        "l1j_npcid": 45126
+      },
+      "163": {
+        "name": "난쟁이",
+        "level": 5,
+        "l1j_npcid": 45041
+      },
+      "177": {
+        "name": "도베르만",
+        "level": 6,
+        "l1j_npcid": 45042
+      },
+      "179": {
+        "name": "세퍼드",
+        "level": 5,
+        "l1j_npcid": 45034
+      },
+      "180": {
+        "name": "비글",
+        "level": 5,
+        "l1j_npcid": 45046
+      },
+      "280": {
+        "name": "라이칸스로프",
+        "level": 17,
+        "l1j_npcid": 45173
+      },
+      "323": {
+        "name": "홉고블린",
+        "level": 14,
+        "l1j_npcid": 45140
+      },
+      "750": {
+        "name": "흑기사 수색대",
+        "level": 16,
+        "l1j_npcid": 81066
+      },
+      "15": {
+        "name": "흑기사",
+        "level": 16,
+        "l1j_npcid": 45165
+      },
+      "16": {
+        "name": "커츠",
+        "level": 51,
+        "l1j_npcid": 45600
+      },
+      "176": {
+        "name": "세인트버나드",
+        "level": 5,
+        "l1j_npcid": 45047
+      },
+      "178": {
+        "name": "콜리",
+        "level": 5,
+        "l1j_npcid": 45054
+      },
+      "216": {
+        "name": "베레스",
+        "level": 50,
+        "l1j_npcid": 45583
+      },
+      "246": {
+        "name": "스콜피온",
+        "level": 26,
+        "l1j_npcid": 45259
+      },
+      "247": {
+        "name": "바실리스크",
+        "level": 36,
+        "l1j_npcid": 45381
+      },
+      "248": {
+        "name": "코카트리스",
+        "level": 34,
+        "l1j_npcid": 45361
+      },
+      "250": {
+        "name": "드레이크",
+        "level": 48,
+        "l1j_npcid": 45529
+      },
+      "282": {
+        "name": "흑장로",
+        "level": 50,
+        "l1j_npcid": 45545
+      },
+      "286": {
+        "name": "비홀더",
+        "level": 33,
+        "l1j_npcid": 45349
+      },
+      "299": {
+        "name": "오크 좀비",
+        "level": 10,
+        "l1j_npcid": 45104
+      },
+      "459": {
+        "name": "놀",
+        "level": 8,
+        "l1j_npcid": 45079
+      },
+      "463": {
+        "name": "아이스 골렘",
+        "level": 32,
+        "l1j_npcid": 45182
+      },
+      "465": {
+        "name": "여우",
+        "level": 5,
+        "l1j_npcid": 45048
+      },
+      "471": {
+        "name": "크로코다일",
+        "level": 32,
+        "l1j_npcid": 45338
+      },
+      "472": {
+        "name": "악어",
+        "level": 10,
+        "l1j_npcid": 45101
+      },
+      "499": {
+        "name": "파푸리온",
+        "level": 93,
+        "l1j_npcid": 45683
+      },
+      "500": {
+        "name": "바쿡",
+        "level": 12,
+        "l1j_npcid": 45116
+      },
+      "501": {
+        "name": "라미아",
+        "level": 22,
+        "l1j_npcid": 81075
+      },
+      "502": {
+        "name": "라미아",
+        "level": 22,
+        "l1j_npcid": 45222
+      },
+      "503": {
+        "name": "시댄서",
+        "level": 24,
+        "l1j_npcid": 45812
+      },
+      "504": {
+        "name": "크랩맨",
+        "level": 16,
+        "l1j_npcid": 45164
+      },
+      "505": {
+        "name": "랫맨",
+        "level": 20,
+        "l1j_npcid": 45192
+      },
+      "506": {
+        "name": "혈거인간",
+        "level": 15,
+        "l1j_npcid": 45155
+      },
+      "507": {
+        "name": "일렉카둠",
+        "level": 28,
+        "l1j_npcid": 45819
+      },
+      "511": {
+        "name": "머맨",
+        "level": 16,
+        "l1j_npcid": 45159
+      },
+      "512": {
+        "name": "실라칸스",
+        "level": 8,
+        "l1j_npcid": 45089
+      },
+      "513": {
+        "name": "크러스트시안",
+        "level": 29,
+        "l1j_npcid": 45823
+      },
+      "514": {
+        "name": "해파리",
+        "level": 9,
+        "l1j_npcid": 45097
+      },
+      "515": {
+        "name": "해파리",
+        "level": 9,
+        "l1j_npcid": 81042
+      },
+      "516": {
+        "name": "곰",
+        "level": 5,
+        "l1j_npcid": 45040
+      },
+      "518": {
+        "name": "상어",
+        "level": 16,
+        "l1j_npcid": 45160
+      },
+      "519": {
+        "name": "아스테",
+        "level": 20,
+        "l1j_npcid": 45195
+      },
+      "520": {
+        "name": "터틀 드래곤",
+        "level": 24,
+        "l1j_npcid": 45240
+      },
+      "521": {
+        "name": "물고기",
+        "level": 2,
+        "l1j_npcid": 46048
+      },
+      "522": {
+        "name": "물고기",
+        "level": 2,
+        "l1j_npcid": 46049
+      },
+      "523": {
+        "name": "물고기",
+        "level": 2,
+        "l1j_npcid": 46050
+      },
+      "524": {
+        "name": "물고기",
+        "level": 2,
+        "l1j_npcid": 46051
+      },
+      "525": {
+        "name": "물고기",
+        "level": 2,
+        "l1j_npcid": 46052
+      },
+      "535": {
+        "name": "말미잘",
+        "level": 1,
+        "l1j_npcid": 45006
+      },
+      "536": {
+        "name": "말미잘",
+        "level": 1,
+        "l1j_npcid": 45006
+      },
+      "560": {
+        "name": "도펠겡어",
+        "level": 19,
+        "l1j_npcid": 45189
+      },
+      "562": {
+        "name": "라미아",
+        "level": 22,
+        "l1j_npcid": 45222
+      },
+      "563": {
+        "name": "라미아",
+        "level": 22,
+        "l1j_npcid": 45222
+      },
+      "567": {
+        "name": "터틀 드래곤",
+        "level": 26,
+        "l1j_npcid": 45262
+      },
+      "568": {
+        "name": "혈거인간",
+        "level": 15,
+        "l1j_npcid": 45155
+      },
+      "621": {
+        "name": "발라카스",
+        "level": 95,
+        "l1j_npcid": 45684
+      },
+      "701": {
+        "name": "눈사람",
+        "level": 28,
+        "l1j_npcid": 46129
+      },
+      "702": {
+        "name": "샤벨 타이거",
+        "level": 33,
+        "l1j_npcid": 45267
+      },
+      "704": {
+        "name": "에티",
+        "level": 33,
+        "l1j_npcid": 45294
+      },
+      "706": {
+        "name": "허스키",
+        "level": 5,
+        "l1j_npcid": 45053
+      },
+      "709": {
+        "name": "아이스 맨",
+        "level": 30,
+        "l1j_npcid": 81221
+      },
+      "710": {
+        "name": "얼음 여왕",
+        "level": 56,
+        "l1j_npcid": 45609
+      },
+      "723": {
+        "name": "얼음 여왕",
+        "level": 1,
+        "l1j_npcid": 45609
+      },
+      "753": {
+        "name": "리자드맨",
+        "level": 40,
+        "l1j_npcid": 45805
+      },
+      "754": {
+        "name": "라미아",
+        "level": 43,
+        "l1j_npcid": 45387
+      },
+      "755": {
+        "name": "라미아",
+        "level": 43,
+        "l1j_npcid": 45387
+      },
+      "756": {
+        "name": "도펠갱어",
+        "level": 48,
+        "l1j_npcid": 81069
+      },
+      "757": {
+        "name": "그리폰",
+        "level": 44,
+        "l1j_npcid": 45445
+      },
+      "758": {
+        "name": "악어",
+        "level": 40,
+        "l1j_npcid": 45196
+      },
+      "759": {
+        "name": "크로코다일",
+        "level": 47,
+        "l1j_npcid": 45469
+      },
+      "760": {
+        "name": "에틴",
+        "level": 47,
+        "l1j_npcid": 45505
+      },
+      "761": {
+        "name": "버그베어",
+        "level": 41,
+        "l1j_npcid": 45392
+      },
+      "762": {
+        "name": "킹 버그베어",
+        "level": 44,
+        "l1j_npcid": 45509
+      },
+      "763": {
+        "name": "바실리스크",
+        "level": 48,
+        "l1j_npcid": 45531
+      },
+      "764": {
+        "name": "코카트리스",
+        "level": 42,
+        "l1j_npcid": 45362
+      },
+      "765": {
+        "name": "사이클롭스",
+        "level": 45,
+        "l1j_npcid": 45538
+      },
+      "766": {
+        "name": "드레이크",
+        "level": 49,
+        "l1j_npcid": 45529
+      },
+      "767": {
+        "name": "하피",
+        "level": 43,
+        "l1j_npcid": 45452
+      },
+      "768": {
+        "name": "미노타우르스",
+        "level": 48,
+        "l1j_npcid": 45390
+      },
+      "769": {
+        "name": "미노타우르스",
+        "level": 49,
+        "l1j_npcid": 45449
+      },
+      "770": {
+        "name": "라이칸스로프",
+        "level": 44,
+        "l1j_npcid": 45389
+      },
+      "771": {
+        "name": "늑대인간",
+        "level": 40,
+        "l1j_npcid": 45355
+      },
+      "772": {
+        "name": "아울베어",
+        "level": 40,
+        "l1j_npcid": 45371
+      },
+      "773": {
+        "name": "셸로브",
+        "level": 40,
+        "l1j_npcid": 45358
+      },
+      "774": {
+        "name": "웅골리언트",
+        "level": 41,
+        "l1j_npcid": 45401
+      },
+      "775": {
+        "name": "트롤",
+        "level": 44,
+        "l1j_npcid": 45477
+      },
+      "776": {
+        "name": "가스트",
+        "level": 41,
+        "l1j_npcid": 45378
+      },
+      "777": {
+        "name": "가스트 로드",
+        "level": 46,
+        "l1j_npcid": 45470
+      },
+      "827": {
+        "name": "다크 엘프",
+        "level": 47,
+        "l1j_npcid": 45364
+      },
+      "884": {
+        "name": "도펠갱어",
+        "level": 33,
+        "l1j_npcid": 45828
+      },
+      "885": {
+        "name": "도펠겡어 보스",
+        "level": 50,
+        "l1j_npcid": 45826
+      },
+      "889": {
+        "name": "다이어울프",
+        "level": 64,
+        "l1j_npcid": 81229
+      },
+      "891": {
+        "name": "키메라",
+        "level": 53,
+        "l1j_npcid": 45407
+      },
+      "895": {
+        "name": "댄싱 소드",
+        "level": 61,
+        "l1j_npcid": 45386
+      },
+      "897": {
+        "name": "메두사",
+        "level": 56,
+        "l1j_npcid": 81099
+      },
+      "899": {
+        "name": "젤라틴 큐브",
+        "level": 30,
+        "l1j_npcid": 45296
+      },
+      "900": {
+        "name": "린드비오르",
+        "level": 99,
+        "l1j_npcid": 45681
+      },
+      "902": {
+        "name": "케레니스",
+        "level": 72,
+        "l1j_npcid": 45678
+      },
+      "971": {
+        "name": "켄 라우헬",
+        "level": 75,
+        "l1j_npcid": 45680
+      },
+      "972": {
+        "name": "얼음 여왕의 시녀",
+        "level": 10,
+        "l1j_npcid": 45102
+      },
+      "975": {
+        "name": "흑기사",
+        "level": 36,
+        "l1j_npcid": 81067
+      },
+      "1025": {
+        "name": "변종 웅골리언트",
+        "level": 55,
+        "l1j_npcid": 45348
+      },
+      "1026": {
+        "name": "변종 라미아",
+        "level": 55,
+        "l1j_npcid": 45332
+      },
+      "1027": {
+        "name": "사악한 비홀더",
+        "level": 61,
+        "l1j_npcid": 45406
+      },
+      "1028": {
+        "name": "사악한 미믹",
+        "level": 59,
+        "l1j_npcid": 45399
+      },
+      "1039": {
+        "name": "제니스 퀸",
+        "level": 60,
+        "l1j_npcid": 45513
+      },
+      "1041": {
+        "name": "시어",
+        "level": 62,
+        "l1j_npcid": 45547
+      },
+      "1331": {
+        "name": "코카트리스",
+        "level": 58,
+        "l1j_npcid": 81102
+      },
+      "1387": {
+        "name": "열혈토끼",
+        "level": 5,
+        "l1j_npcid": 45049
+      },
+      "1388": {
+        "name": "고양이",
+        "level": 5,
+        "l1j_npcid": 45039
+      },
+      "1410": {
+        "name": "서큐버스",
+        "level": 59,
+        "l1j_npcid": 45393
+      },
+      "2214": {
+        "name": "라쿤",
+        "level": 5,
+        "l1j_npcid": 45044
+      },
+      "2381": {
+        "name": "오염된 딥플라워",
+        "level": 3,
+        "l1j_npcid": 45775
+      },
+      "2388": {
+        "name": "오염된 인간 투사",
+        "level": 3,
+        "l1j_npcid": 45778
+      },
+      "2389": {
+        "name": "오염된 인간 도끼병",
+        "level": 6,
+        "l1j_npcid": 45781
+      },
+      "2390": {
+        "name": "오염된 인간 궁수",
+        "level": 13,
+        "l1j_npcid": 45780
+      },
+      "2391": {
+        "name": "오염된 인간 검사",
+        "level": 10,
+        "l1j_npcid": 45779
+      },
+      "2392": {
+        "name": "오염된 요정 궁수",
+        "level": 16,
+        "l1j_npcid": 45773
+      },
+      "2393": {
+        "name": "오염된 엔트",
+        "level": 6,
+        "l1j_npcid": 45152
+      },
+      "2394": {
+        "name": "오염된 판",
+        "level": 10,
+        "l1j_npcid": 45776
+      },
+      "2395": {
+        "name": "오염된 아라크네",
+        "level": 13,
+        "l1j_npcid": 45777
+      },
+      "2396": {
+        "name": "오염된 오크",
+        "level": 3,
+        "l1j_npcid": 45117
+      },
+      "2397": {
+        "name": "오염된 오크 도끼병",
+        "level": 6,
+        "l1j_npcid": 45791
+      },
+      "2398": {
+        "name": "오염된 오크 궁수",
+        "level": 13,
+        "l1j_npcid": 45118
+      },
+      "2399": {
+        "name": "오염된 오크 전사",
+        "level": 10,
+        "l1j_npcid": 45792
+      },
+      "2400": {
+        "name": "오염된 오크 창병",
+        "level": 16,
+        "l1j_npcid": 45793
+      },
+      "2401": {
+        "name": "오염된 빛의 대정령",
+        "level": 16,
+        "l1j_npcid": 45784
+      },
+      "2402": {
+        "name": "스피리드의 소환물",
+        "level": 13,
+        "l1j_npcid": 45794
+      },
+      "2403": {
+        "name": "스피리드",
+        "level": 30,
+        "l1j_npcid": 45795
+      },
+      "2782": {
+        "name": "선택받지 못한 자",
+        "level": 36,
+        "l1j_npcid": 46092
+      },
+      "2783": {
+        "name": "선택받지 못한 자",
+        "level": 38,
+        "l1j_npcid": 46093
+      },
+      "2784": {
+        "name": "선택받지 못한 자",
+        "level": 36,
+        "l1j_npcid": 46094
+      },
+      "2785": {
+        "name": "선택받지 못한 자",
+        "level": 36,
+        "l1j_npcid": 46095
+      },
+      "2786": {
+        "name": "선택받지 못한 자",
+        "level": 36,
+        "l1j_npcid": 46096
+      },
+      "2787": {
+        "name": "보초병",
+        "level": 37,
+        "l1j_npcid": 46106
+      },
+      "10204": {
+        "name": "선택받지 못한 자",
+        "level": 39,
+        "l1j_npcid": 46092
+      },
+      "10205": {
+        "name": "선택받지 못한 자",
+        "level": 41,
+        "l1j_npcid": 46093
+      },
+      "10206": {
+        "name": "선택받지 못한 자",
+        "level": 39,
+        "l1j_npcid": 46094
+      },
+      "10207": {
+        "name": "선택받지 못한 자",
+        "level": 39,
+        "l1j_npcid": 46095
+      },
+      "10208": {
+        "name": "선택받지 못한 자",
+        "level": 39,
+        "l1j_npcid": 46096
+      },
+      "10209": {
+        "name": "보초병",
+        "level": 40,
+        "l1j_npcid": 46106
+      },
+      "10219": {
+        "name": "오우거",
+        "level": 28,
+        "l1j_npcid": 45278
+      },
+      "10243": {
+        "name": "불의 대정령",
+        "level": 43,
+        "l1j_npcid": 45622
+      },
+      "10244": {
+        "name": "파이어 에그",
+        "level": 39,
+        "l1j_npcid": 45206
+      },
+      "10245": {
+        "name": "사라만다",
+        "level": 38,
+        "l1j_npcid": 81225
+      },
+      "10246": {
+        "name": "물의 대정령",
+        "level": 43,
+        "l1j_npcid": 45620
+      },
+      "10247": {
+        "name": "아이스 맨",
+        "level": 38,
+        "l1j_npcid": 81221
+      },
+      "10248": {
+        "name": "아이스 골렘",
+        "level": 39,
+        "l1j_npcid": 46133
+      },
+      "10249": {
+        "name": "바람의 대정령",
+        "level": 43,
+        "l1j_npcid": 45621
+      },
+      "10250": {
+        "name": "킬러비",
+        "level": 38,
+        "l1j_npcid": 45554
+      },
+      "10251": {
+        "name": "볼 라이트닝",
+        "level": 39,
+        "l1j_npcid": 45549
+      },
+      "10252": {
+        "name": "땅의 대정령",
+        "level": 43,
+        "l1j_npcid": 45619
+      },
+      "10253": {
+        "name": "열혈토끼",
+        "level": 38,
+        "l1j_npcid": 45049
+      },
+      "10254": {
+        "name": "가디언 아머",
+        "level": 39,
+        "l1j_npcid": 45562
+      },
+      "10255": {
+        "name": "나이트메어",
+        "level": 40,
+        "l1j_npcid": 45410
+      },
+      "10256": {
+        "name": "유니콘",
+        "level": 43,
+        "l1j_npcid": 45640
+      },
+      "10257": {
+        "name": "펑거스",
+        "level": 30,
+        "l1j_npcid": 45551
+      },
+      "10258": {
+        "name": "꿈의 혼령",
+        "level": 30,
+        "l1j_npcid": 45558
+      },
+      "10259": {
+        "name": "꿈의 혼령",
+        "level": 40,
+        "l1j_npcid": 45558
+      },
+      "12177": {
+        "name": "자이언트",
+        "level": 44,
+        "l1j_npcid": 45337
+      },
+      "12178": {
+        "name": "자이언트",
+        "level": 48,
+        "l1j_npcid": 45295
+      },
+      "12179": {
+        "name": "자이언트",
+        "level": 46,
+        "l1j_npcid": 45318
+      },
+      "12180": {
+        "name": "에이션트 자이언트",
+        "level": 58,
+        "l1j_npcid": 45610
+      },
+      "12181": {
+        "name": "놀",
+        "level": 38,
+        "l1j_npcid": 45079
+      },
+      "12182": {
+        "name": "독침 킬러비 ",
+        "level": 42,
+        "l1j_npcid": 45554
+      },
+      "12183": {
+        "name": "하피",
+        "level": 42,
+        "l1j_npcid": 45264
+      },
+      "12187": {
+        "name": "마이노",
+        "level": 46,
+        "l1j_npcid": 45797
+      },
+      "12188": {
+        "name": "와이번 ",
+        "level": 47,
+        "l1j_npcid": 91206
+      }
+    }
+  },
+  "maps": [
+    {
+      "map_id": {
+        "value": 101,
+        "source": "client",
+        "ref": "region.jsonc:426 _map"
+      },
+      "region_id": {
+        "value": 382,
+        "source": "client",
+        "ref": "region.jsonc:426 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 1층",
+        "source": "client",
+        "ref": "region.jsonc:425 comment"
+      },
+      "hunting": false,
+      "terrain_bounds": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "chunks": 9,
+      "bytes": 1713853,
+      "representative_template": null,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 102,
+        "source": "client",
+        "ref": "region.jsonc:428 _map"
+      },
+      "region_id": {
+        "value": 383,
+        "source": "client",
+        "ref": "region.jsonc:428 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 2층",
+        "source": "client",
+        "ref": "region.jsonc:427 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "chunks": 9,
+      "bytes": 1759382,
+      "representative_template": 1025,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 103,
+        "source": "client",
+        "ref": "region.jsonc:430 _map"
+      },
+      "region_id": {
+        "value": 384,
+        "source": "client",
+        "ref": "region.jsonc:430 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 3층",
+        "source": "client",
+        "ref": "region.jsonc:429 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32704,
+        32704,
+        32895,
+        32895
+      ],
+      "chunks": 9,
+      "bytes": 1583835,
+      "representative_template": 891,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 104,
+        "source": "client",
+        "ref": "region.jsonc:432 _map"
+      },
+      "region_id": {
+        "value": 385,
+        "source": "client",
+        "ref": "region.jsonc:432 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 4층",
+        "source": "client",
+        "ref": "region.jsonc:431 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1233770,
+      "representative_template": 891,
+      "combat_status": "ready"
+    },
+    {
+      "map_id": {
+        "value": 105,
+        "source": "client",
+        "ref": "region.jsonc:434 _map"
+      },
+      "region_id": {
+        "value": 386,
+        "source": "client",
+        "ref": "region.jsonc:434 _id"
+      },
+      "name_ko": {
+        "value": "오만의 탑 5층",
+        "source": "client",
+        "ref": "region.jsonc:433 comment"
+      },
+      "hunting": true,
+      "terrain_bounds": [
+        32576,
+        32768,
+        32767,
+        32959
+      ],
+      "chunks": 9,
+      "bytes": 1389136,
+      "representative_template": 891,
+      "combat_status": "ready"
+    }
+  ],
+  "transitions": [
+    {
+      "origin": [
+        104,
+        32672,
+        32859
+      ],
+      "destination": [
+        103,
+        32798,
+        32802,
+        6
+      ],
+      "reference_origin": [
+        104,
+        32672,
+        32859
+      ],
+      "reference_destination": [
+        103,
+        32798,
+        32802,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15111",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        104,
+        32672,
+        32860
+      ],
+      "destination": [
+        103,
+        32798,
+        32802,
+        6
+      ],
+      "reference_origin": [
+        104,
+        32672,
+        32860
+      ],
+      "reference_destination": [
+        103,
+        32798,
+        32802,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15125",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        101,
+        32724,
+        32798
+      ],
+      "destination": [
+        4,
+        34255,
+        33452,
+        6
+      ],
+      "reference_origin": [
+        101,
+        32724,
+        32798
+      ],
+      "reference_destination": [
+        4,
+        34255,
+        33452,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15298",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        101,
+        32724,
+        32799
+      ],
+      "destination": [
+        4,
+        34255,
+        33452,
+        6
+      ],
+      "reference_origin": [
+        101,
+        32724,
+        32799
+      ],
+      "reference_destination": [
+        4,
+        34255,
+        33452,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15300",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        101,
+        32724,
+        32800
+      ],
+      "destination": [
+        4,
+        34255,
+        33452,
+        6
+      ],
+      "reference_origin": [
+        101,
+        32724,
+        32800
+      ],
+      "reference_destination": [
+        4,
+        34255,
+        33452,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15301",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        104,
+        32732,
+        32924
+      ],
+      "destination": [
+        105,
+        32742,
+        32928,
+        0
+      ],
+      "reference_origin": [
+        104,
+        32732,
+        32924
+      ],
+      "reference_destination": [
+        105,
+        32742,
+        32928,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15433",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        104,
+        32733,
+        32924
+      ],
+      "destination": [
+        105,
+        32742,
+        32928,
+        0
+      ],
+      "reference_origin": [
+        104,
+        32733,
+        32924
+      ],
+      "reference_destination": [
+        105,
+        32742,
+        32928,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15462",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        105,
+        32741,
+        32929
+      ],
+      "destination": [
+        104,
+        32732,
+        32926,
+        4
+      ],
+      "reference_origin": [
+        105,
+        32741,
+        32929
+      ],
+      "reference_destination": [
+        104,
+        32732,
+        32926,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15581",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        105,
+        32742,
+        32929
+      ],
+      "destination": [
+        104,
+        32732,
+        32926,
+        4
+      ],
+      "reference_origin": [
+        105,
+        32742,
+        32929
+      ],
+      "reference_destination": [
+        104,
+        32732,
+        32926,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15605",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        102,
+        32743,
+        32731
+      ],
+      "destination": [
+        103,
+        32749,
+        32747,
+        0
+      ],
+      "reference_origin": [
+        102,
+        32743,
+        32731
+      ],
+      "reference_destination": [
+        103,
+        32749,
+        32747,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15611",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        103,
+        32744,
+        32734
+      ],
+      "destination": [
+        103,
+        32749,
+        32747,
+        0
+      ],
+      "reference_origin": [
+        103,
+        32744,
+        32731
+      ],
+      "reference_destination": [
+        103,
+        32749,
+        32747,
+        0
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15622",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": true,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        103,
+        32748,
+        32748
+      ],
+      "destination": [
+        102,
+        32743,
+        32732,
+        4
+      ],
+      "reference_origin": [
+        103,
+        32748,
+        32748
+      ],
+      "reference_destination": [
+        102,
+        32743,
+        32732,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15720",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        103,
+        32749,
+        32748
+      ],
+      "destination": [
+        102,
+        32743,
+        32732,
+        4
+      ],
+      "reference_origin": [
+        103,
+        32749,
+        32748
+      ],
+      "reference_destination": [
+        102,
+        32743,
+        32732,
+        4
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15737",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        101,
+        32798,
+        32797
+      ],
+      "destination": [
+        101,
+        32798,
+        32802,
+        6
+      ],
+      "reference_origin": [
+        101,
+        32799,
+        32797
+      ],
+      "reference_destination": [
+        101,
+        32798,
+        32802,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16063",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": true,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        102,
+        32799,
+        32797
+      ],
+      "destination": [
+        101,
+        32798,
+        32802,
+        6
+      ],
+      "reference_origin": [
+        102,
+        32799,
+        32797
+      ],
+      "reference_destination": [
+        101,
+        32798,
+        32802,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16064",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        102,
+        32799,
+        32798
+      ],
+      "destination": [
+        101,
+        32798,
+        32802,
+        6
+      ],
+      "reference_origin": [
+        102,
+        32799,
+        32798
+      ],
+      "reference_destination": [
+        101,
+        32798,
+        32802,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16073",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        101,
+        32799,
+        32801
+      ],
+      "destination": [
+        102,
+        32798,
+        32798,
+        6
+      ],
+      "reference_origin": [
+        101,
+        32799,
+        32801
+      ],
+      "reference_destination": [
+        102,
+        32798,
+        32798,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16080",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        103,
+        32799,
+        32801
+      ],
+      "destination": [
+        104,
+        32671,
+        32860,
+        6
+      ],
+      "reference_origin": [
+        103,
+        32799,
+        32801
+      ],
+      "reference_destination": [
+        104,
+        32671,
+        32860,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16081",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        101,
+        32799,
+        32802
+      ],
+      "destination": [
+        102,
+        32798,
+        32798,
+        6
+      ],
+      "reference_origin": [
+        101,
+        32799,
+        32802
+      ],
+      "reference_destination": [
+        102,
+        32798,
+        32798,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16087",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        103,
+        32799,
+        32802
+      ],
+      "destination": [
+        104,
+        32671,
+        32860,
+        6
+      ],
+      "reference_origin": [
+        103,
+        32799,
+        32802
+      ],
+      "reference_destination": [
+        104,
+        32671,
+        32860,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16088",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        103,
+        32850,
+        32843
+      ],
+      "destination": [
+        102,
+        32852,
+        32855,
+        6
+      ],
+      "reference_origin": [
+        103,
+        32850,
+        32843
+      ],
+      "reference_destination": [
+        102,
+        32852,
+        32855,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16280",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        103,
+        32850,
+        32844
+      ],
+      "destination": [
+        102,
+        32852,
+        32855,
+        6
+      ],
+      "reference_origin": [
+        103,
+        32850,
+        32844
+      ],
+      "reference_destination": [
+        102,
+        32852,
+        32855,
+        6
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16282",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        102,
+        32853,
+        32855
+      ],
+      "destination": [
+        103,
+        32851,
+        32843,
+        2
+      ],
+      "reference_origin": [
+        102,
+        32853,
+        32855
+      ],
+      "reference_destination": [
+        103,
+        32851,
+        32843,
+        2
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16294",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        4,
+        34256,
+        33450
+      ],
+      "destination": [
+        101,
+        32725,
+        32799,
+        2
+      ],
+      "reference_origin": [
+        4,
+        34256,
+        33450
+      ],
+      "reference_destination": [
+        101,
+        32725,
+        32799,
+        2
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16442",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        4,
+        34256,
+        33451
+      ],
+      "destination": [
+        101,
+        32725,
+        32799,
+        2
+      ],
+      "reference_origin": [
+        4,
+        34256,
+        33451
+      ],
+      "reference_destination": [
+        101,
+        32725,
+        32799,
+        2
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16443",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    },
+    {
+      "origin": [
+        4,
+        34256,
+        33452
+      ],
+      "destination": [
+        101,
+        32725,
+        32799,
+        2
+      ],
+      "reference_origin": [
+        4,
+        34256,
+        33452
+      ],
+      "reference_destination": [
+        101,
+        32725,
+        32799,
+        2
+      ],
+      "source": "local_policy/client_s32+l1j",
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16444",
+      "native_trigger_status": "UNKNOWN",
+      "source_adjusted": false,
+      "destination_adjusted": false,
+      "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+    }
+  ],
+  "returns": [
+    {
+      "map_id": 101,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18416",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 102,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18417",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 103,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18418",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 104,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18419",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    },
+    {
+      "map_id": 105,
+      "destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "reference_destination": [
+        4,
+        33966,
+        33253,
+        5
+      ],
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:18420",
+      "source": "local_policy/client_s32+l1j",
+      "note": "Fixed first GetBack point; native random/class policy UNKNOWN."
+    }
+  ],
+  "groups": [
+    {
+      "group_id": {
+        "value": "m6_exp4_102_1025",
+        "source": "local_policy",
+        "ref": "MapExp4 single-player subset"
+      },
+      "template_id": {
+        "value": 1025,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:543"
+      },
+      "map_id": {
+        "value": 102,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32788,
+          "y1": 32797,
+          "x2": 32790,
+          "y2": 32799
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1025.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 2층",
+          "오만의 탑 3층",
+          "오만의 탑 4층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/1025.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46339",
+        "raw": [
+          "10200002",
+          "Mutant Arachnevil Elder",
+          "55",
+          "45348",
+          "0",
+          "32798",
+          "32798",
+          "0",
+          "0",
+          "32704",
+          "32704",
+          "32895",
+          "32895",
+          "0",
+          "0",
+          "0",
+          "102",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp4_103_891",
+        "source": "local_policy",
+        "ref": "MapExp4 single-player subset"
+      },
+      "template_id": {
+        "value": 891,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:471"
+      },
+      "map_id": {
+        "value": 103,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32748,
+          "y1": 32736,
+          "x2": 32750,
+          "y2": 32738
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/891.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 3층",
+          "오만의 탑 4층",
+          "오만의 탑 5층",
+          "오만의 탑 7층",
+          "오만의 탑 8층",
+          "오만의 탑 9층",
+          "오만의 탑 10층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/891.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46345",
+        "raw": [
+          "10300004",
+          "Cimaera",
+          "20",
+          "45407",
+          "0",
+          "32798",
+          "32798",
+          "0",
+          "0",
+          "32704",
+          "32704",
+          "32895",
+          "32895",
+          "0",
+          "0",
+          "0",
+          "103",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp4_104_891",
+        "source": "local_policy",
+        "ref": "MapExp4 single-player subset"
+      },
+      "template_id": {
+        "value": 891,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:471"
+      },
+      "map_id": {
+        "value": 104,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32661,
+          "y1": 32859,
+          "x2": 32663,
+          "y2": 32861
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/891.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 3층",
+          "오만의 탑 4층",
+          "오만의 탑 5층",
+          "오만의 탑 7층",
+          "오만의 탑 8층",
+          "오만의 탑 9층",
+          "오만의 탑 10층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/891.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46350",
+        "raw": [
+          "10400004",
+          "Cimaera",
+          "24",
+          "45407",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32576",
+          "32768",
+          "32767",
+          "32959",
+          "0",
+          "0",
+          "0",
+          "104",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    },
+    {
+      "group_id": {
+        "value": "m6_exp4_105_891",
+        "source": "local_policy",
+        "ref": "MapExp4 single-player subset"
+      },
+      "template_id": {
+        "value": 891,
+        "source": "client",
+        "ref": "work/source_game_data/native-dump-v1.jsonl:471"
+      },
+      "map_id": {
+        "value": 105,
+        "source": "client",
+        "ref": "region.jsonc _map"
+      },
+      "rect": {
+        "value": {
+          "x1": 32732,
+          "y1": 32927,
+          "x2": 32734,
+          "y2": 32929
+        },
+        "source": "local_policy",
+        "ref": "work/official_data_refresh_20261028/raw/monster/891.json; current S32 mask1",
+        "note": "3x3 in arrival connected component; not native spawn coordinates/density."
+      },
+      "target_count": {
+        "value": 1,
+        "source": "local_policy",
+        "ref": "single-player subset"
+      },
+      "respawn_delay_ms": {
+        "value": {
+          "min": 60000,
+          "max": 120000
+        },
+        "source": "local_policy",
+        "ref": "existing single-player respawn policy"
+      },
+      "official_region_names": {
+        "value": [
+          "오만의 탑 3층",
+          "오만의 탑 4층",
+          "오만의 탑 5층",
+          "오만의 탑 7층",
+          "오만의 탑 8층",
+          "오만의 탑 9층",
+          "오만의 탑 10층"
+        ],
+        "source": "official",
+        "ref": "work/official_data_refresh_20261028/raw/monster/891.json"
+      },
+      "l1j_spawn_reference": {
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:46354",
+        "raw": [
+          "10500003",
+          "Cimaera",
+          "88",
+          "45407",
+          "0",
+          "32670",
+          "32861",
+          "0",
+          "0",
+          "32576",
+          "32768",
+          "32767",
+          "32959",
+          "0",
+          "0",
+          "0",
+          "105",
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "8",
+          "2",
+          "100"
+        ],
+        "source": "local_policy/l1j",
+        "scope": "same map and L1J NPC species reference; chosen3x3/count/respawn are LOCAL, not this original row"
+      },
+      "l1j_spawn_reference_status": "same map/species reference; exact named-region overlap unconfirmed"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "map101",
+      "map_id": 101,
+      "name_ko": "오만의 탑 1층",
+      "entry": {
+        "origin": [
+          4,
+          34256,
+          33450
+        ],
+        "destination": [
+          101,
+          32725,
+          32799,
+          2
+        ],
+        "reference_origin": [
+          4,
+          34256,
+          33450
+        ],
+        "reference_destination": [
+          101,
+          32725,
+          32799,
+          2
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16442",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": null,
+      "combat": false
+    },
+    {
+      "case_id": "map102",
+      "map_id": 102,
+      "name_ko": "오만의 탑 2층",
+      "entry": {
+        "origin": [
+          101,
+          32799,
+          32801
+        ],
+        "destination": [
+          102,
+          32798,
+          32798,
+          6
+        ],
+        "reference_origin": [
+          101,
+          32799,
+          32801
+        ],
+        "reference_destination": [
+          102,
+          32798,
+          32798,
+          6
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16080",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp4_102_1025",
+      "combat": true
+    },
+    {
+      "case_id": "map103",
+      "map_id": 103,
+      "name_ko": "오만의 탑 3층",
+      "entry": {
+        "origin": [
+          102,
+          32743,
+          32731
+        ],
+        "destination": [
+          103,
+          32749,
+          32747,
+          0
+        ],
+        "reference_origin": [
+          102,
+          32743,
+          32731
+        ],
+        "reference_destination": [
+          103,
+          32749,
+          32747,
+          0
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15611",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp4_103_891",
+      "combat": true
+    },
+    {
+      "case_id": "map104",
+      "map_id": 104,
+      "name_ko": "오만의 탑 4층",
+      "entry": {
+        "origin": [
+          103,
+          32799,
+          32801
+        ],
+        "destination": [
+          104,
+          32671,
+          32860,
+          6
+        ],
+        "reference_origin": [
+          103,
+          32799,
+          32801
+        ],
+        "reference_destination": [
+          104,
+          32671,
+          32860,
+          6
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16081",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp4_104_891",
+      "combat": true
+    },
+    {
+      "case_id": "map105",
+      "map_id": 105,
+      "name_ko": "오만의 탑 5층",
+      "entry": {
+        "origin": [
+          104,
+          32732,
+          32924
+        ],
+        "destination": [
+          105,
+          32742,
+          32928,
+          0
+        ],
+        "reference_origin": [
+          104,
+          32732,
+          32924
+        ],
+        "reference_destination": [
+          105,
+          32742,
+          32928,
+          0
+        ],
+        "source": "local_policy/client_s32+l1j",
+        "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15433",
+        "native_trigger_status": "UNKNOWN",
+        "source_adjusted": false,
+        "destination_adjusted": false,
+        "local_basis": "L1J reference stair; current S32 nearest standable cell within6. Native trigger UNKNOWN."
+      },
+      "group_id": "m6_exp4_105_891",
+      "combat": true
+    }
+  ],
+  "fields": [],
+  "towns": [],
+  "skipped_transitions": [
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15062",
+      "raw": [
+        "32661",
+        "32933",
+        "301",
+        "Aden Sewers",
+        "32872",
+        "32870",
+        "101",
+        "Tower of Insolence 1F",
+        "2"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15147",
+      "raw": [
+        "32672",
+        "32864",
+        "105",
+        "Tower of Insolence 5F",
+        "33766",
+        "32865",
+        "106",
+        "Tower of Insolence 6F",
+        "6"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15158",
+      "raw": [
+        "32672",
+        "32865",
+        "105",
+        "Tower of Insolence 5F",
+        "33766",
+        "32865",
+        "106",
+        "Tower of Insolence 6F",
+        "6"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15349",
+      "raw": [
+        "32728",
+        "32816",
+        "74",
+        "Crystal Caverns 3F",
+        "32754",
+        "32740",
+        "73",
+        "Crystal Caverns 2F",
+        "0"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 74, 32728, 32816)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15350",
+      "raw": [
+        "32728",
+        "32817",
+        "74",
+        "Crystal Caverns 3F",
+        "32754",
+        "32740",
+        "73",
+        "Crystal Caverns 2F",
+        "4"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 74, 32728, 32817)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15767",
+      "raw": [
+        "32753",
+        "32739",
+        "73",
+        "Crystal Caverns 2F",
+        "32728",
+        "32816",
+        "74",
+        "Crystal Caverns 3F",
+        "0"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 73, 32753, 32739)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15777",
+      "raw": [
+        "32754",
+        "32739",
+        "73",
+        "Crystal Caverns 2F",
+        "32728",
+        "32816",
+        "74",
+        "Crystal Caverns 3F",
+        "0"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 73, 32754, 32739)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15925",
+      "raw": [
+        "32781",
+        "32735",
+        "73",
+        "Crystal Caverns 2F",
+        "32871",
+        "32834",
+        "72",
+        "Crystal Caverns 1F",
+        "6"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 73, 32781, 32735)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:15926",
+      "raw": [
+        "32781",
+        "32736",
+        "73",
+        "Crystal Caverns 2F",
+        "32871",
+        "32834",
+        "72",
+        "Crystal Caverns 1F",
+        "6"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 73, 32781, 32736)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16322",
+      "raw": [
+        "32871",
+        "32870",
+        "101",
+        "Tower of Insolence 1F",
+        "32660",
+        "32933",
+        "301",
+        "Aden Sewers",
+        "6"
+      ],
+      "reason": "outside selected supported maps"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16328",
+      "raw": [
+        "32872",
+        "32834",
+        "72",
+        "Crystal Caverns 1F",
+        "32782",
+        "32735",
+        "73",
+        "Crystal Caverns 2F",
+        "2"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 72, 32872, 32834)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16329",
+      "raw": [
+        "32872",
+        "32835",
+        "72",
+        "Crystal Caverns 1F",
+        "32782",
+        "32735",
+        "73",
+        "Crystal Caverns 2F",
+        "2"
+      ],
+      "reason": "('NO_NEARBY_STATIC_CELL', 72, 32872, 32835)"
+    },
+    {
+      "ref": "D:\\SingleLineageRef\\l1j-en-classic\\db\\l1jdb_m10.sql:16431",
+      "raw": [
+        "33766",
+        "32866",
+        "106",
+        "Tower of Insolence 6F",
+        "32671",
+        "32865",
+        "105",
+        "Tower of Insolence 5F",
+        "6"
+      ],
+      "reason": "outside selected supported maps"
+    }
+  ],
+  "unconnected_terrain": [
+    {
+      "map_id": 72,
+      "chunks": 12,
+      "terrain_bounds": [
+        32640,
+        32704,
+        32895,
+        32959
+      ],
+      "bytes": 1281322,
+      "source": "client",
+      "ref": "region.jsonc; current AssetProvider map S32",
+      "installed": false
+    },
+    {
+      "map_id": 73,
+      "chunks": 10,
+      "terrain_bounds": [
+        32640,
+        32704,
+        32895,
+        32959
+      ],
+      "bytes": 1207187,
+      "source": "client",
+      "ref": "region.jsonc; current AssetProvider map S32",
+      "installed": false
+    },
+    {
+      "map_id": 74,
+      "chunks": 12,
+      "terrain_bounds": [
+        32640,
+        32768,
+        32895,
+        33023
+      ],
+      "bytes": 1191317,
+      "source": "client",
+      "ref": "region.jsonc; current AssetProvider map S32",
+      "installed": false
+    }
+  ],
+  "unresolved": [
+    {
+      "map_ids": [
+        72,
+        73,
+        74
+      ],
+      "reason": "L1J m10/m9/m7 stairs disagree with current S32; no near cell within6. Native trigger/arrival and mainland entrance missing. No long-distance fabricated relocation. All raw rows preserved in skipped_transitions."
+    },
+    {
+      "map_id": 101,
+      "reason": "No exact official region species and no same-map spawnlist rows. Terrain/stairs only; no hunting claim."
+    },
+    {
+      "map_ids": [
+        18,
+        59,
+        60,
+        61,
+        62,
+        70,
+        301,
+        303
+      ],
+      "reason": "Not selected this pass; entrance/teleport and/or exact official-region association remains for separate work."
+    }
+  ],
+  "monster_policy": "Reuse existing definitions without changing monster/drop/item/combat tables.",
+  "native_trigger_status": "UNKNOWN",
+  "placement_policy": "LOCAL single-player 1 NPC / connected standable3x3; official only establishes region species.",
+  "unregistered_occurrence_evidence": [],
+  "ice_coordinate_discrepancy": {
+    "status": "UNRESOLVED",
+    "current_client_evidence": "world_terrain existing S32 parser; maps72/73 from 3rd pass and74 extracted4th pass",
+    "origins": [
+      {
+        "map_id": 72,
+        "reference": [
+          32872,
+          32834
+        ],
+        "nearest_standable": [
+          32815,
+          32805
+        ],
+        "chebyshev_distance": 57
+      },
+      {
+        "map_id": 73,
+        "reference": [
+          32781,
+          32735
+        ],
+        "nearest_standable": [
+          32781,
+          32789
+        ],
+        "chebyshev_distance": 54
+      }
+    ],
+    "reference_agreement": [
+      "D:/SingleLineageRef/l1j-en-classic/db/l1jdb_m10.sql:15925-15926,16328-16329",
+      "D:/SingleLineageRef/l1j-en-classic/db/archive/m9/l1jdb_m9.sql (same coordinates)",
+      "D:/SingleLineageRef/l1j-en-classic/db/archive/m7/update_064.sql:1045-1048 (same coordinates)"
+    ],
+    "client_enter_map_candidates": {
+      "file": "work/all_table_semantics/travel_review/entermap-data-candidates.json",
+      "rows": 135,
+      "map72_73_74_matches": 0
+    },
+    "inference": "layout/version mismatch is a possibility, not an established cause",
+    "required_input": "current-version map72/73/74 stair trigger and arrival plus mainland entrance/teleport contract",
+    "decision": "preserve assets/raw failures; do not serve or spawn these maps or manufacture long-distance relocation"
+  }
+}
