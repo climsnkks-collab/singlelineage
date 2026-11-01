@@ -30,7 +30,8 @@ class CompanionMonsterTests(unittest.TestCase):
         self.ailments.start()
         self.addCleanup(self.ailments.close)
         self.adapter = CompanionMonsterTarget(self.view, self.actor, self.ailments)
-        self.magic = world_magic.PlayerMagic(world_magic.load_catalog())
+        self.magic = world_magic.PlayerMagic(world_magic.load_catalog(),
+            before_cast=lambda uid, now: self.view.events.emit('player_magic_admit', uid, now))
         self.owner = skills.MonsterSkills(self.view, skills.load_attacks(),
             provider=(self.magic, lambda *_: None), magic_target=self.target)
         self.owner.start()

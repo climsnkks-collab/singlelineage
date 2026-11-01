@@ -63,7 +63,8 @@ class MonsterSkills:
         wrap(view.spawner, '_refill', self._refill_wrapper)
         wrap(view.ground, 'spawn_reward', self._spawn_reward_wrapper)
         if self.magic is not None:
-            wrap(self.magic, 'admit_cast', self._admit_wrapper)
+            entry = view.events.add('monster_skills', 'player_magic_admit', self._admit)
+            self.subscriptions.append(('player_magic_admit', entry))
         for event, fn in (('tick', self.tick), ('npc_died', self.forget),
                           ('npc_speed_factors', self.speed_factors), ('close', self.close)):
             entry = view.events.add('monster_skills', event, fn)
@@ -100,12 +101,9 @@ class MonsterSkills:
         return tuple(row for row in self.attacks.get(monster.l1j_npcid, ())
                      if row['template_id'] == monster.template_id)
 
-    def _admit_wrapper(self, base):
-        def call(uid, key, character_class, level, mp, alive, now):
-            if self.magic.status(uid, 'silence', now) is not None:
-                raise ValueError('MAGIC_CASTER_SILENCED')
-            return base(uid, key, character_class, level, mp, alive, now)
-        return call
+    def _admit(self, uid, now):
+        if self.magic.status(uid, 'silence', now) is not None:
+            raise ValueError('MAGIC_CASTER_SILENCED')
 
     def _record(self, entity, monster, target, row, now, **values):
         self.events.append(dict(npc_uid=entity.uid, npc_generation=entity.generation,
@@ -117,9 +115,7 @@ class MonsterSkills:
     def _support_target(self, entity, row, now):
         if row['kind'] == 'haste':
             if self.magic is not None:
-                stored = self.magic.npc_statuses.get(entity.uid)
-                if (stored is not None and stored['ref'] == entity.ref
-                        and status.active(stored['effects'], 'haste', now)):
+                if self.magic.npc_status(entity.ref, 'haste', now):
                     return None  # player Haste already owns this speed tier
             current = self.haste.get(entity.ref)
             return entity if current is None or current[0] <= now else None
@@ -211,7 +207,7 @@ class MonsterSkills:
                 if self.magic is None:
                     return False
                 effects = self.magic.effects(target.uid)
-                poisoned = self.magic.state(target.uid).poison
+                poisoned = self.magic.poison_of(target.uid)
             elif adapter is not None and hasattr(adapter, 'ailments'):
                 ailments = adapter.ailments(now)
                 effects, poisoned = ailments['effects'], ailments['poison']
@@ -477,9 +473,9 @@ class MonsterSkills:
                     next_tick=now + row['tick_seconds'], tick_seconds=row['tick_seconds'],
                     damage=row['tick_damage'], source_uid=entity.uid)
                 if state is not None:
-                    self.magic.state(target.uid).poison = poison
+                    self.magic.set_poison(target.uid, poison)
                 else:
-                    adapter.ailments(now)['poison'] = poison
+                    adapter.apply_poison(poison, now)
                 outcome = 'poison_applied'
             else:
                 effect_kind = {'paralysis': 'paralyze', 'silence': 'silence', 'slow': 'slow'}[kind]
@@ -525,10 +521,7 @@ class MonsterSkills:
             return
         if self.magic is None:
             return
-        effects = self.magic.effects(uid)
-        for kind in ('paralyze', 'silence'):
-            if kind in effects and effects[kind]['params'].get('monster_poison'):
-                del effects[kind]
+        self.magic.clear_monster_poison_effects(uid)
         self.save(uid, self.view.runtime.clock())
 
     def _summon(self, entity, monster, target, row, now):

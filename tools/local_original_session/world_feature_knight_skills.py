@@ -74,23 +74,17 @@ def _knight_cast_admit(ctx, uid, spell, target, now):
 
 
 def _remove_counter(ctx, uid, service):
-    state = service.engine.states.get(uid)
-    if state is not None and 90 in state.buffs:
-        del state.buffs[90]
-        state.weapon_uids.pop(90, None)
-        service.sync_icons(uid, ctx.world.runtime.clock())
-        service.save(uid)
+    service.remove_weapon_buff(uid, 90, ctx.world.runtime.clock)
 
 
 def _knight_equipment_changed(ctx, uid):
     service = _service(ctx)
     if service is None:
         return
-    state = service.engine.states.get(uid)
-    if state is None or 90 not in state.buffs:
+    if not service.has_buff(uid, 90):
         return
     equipped = _equipment(ctx, uid)
-    if equipped is None or state.weapon_uids.get(90) != equipped[0]:
+    if equipped is None or service.buff_weapon(uid, 90) != equipped[0]:
         # L1EquipmentSlot160: removing/replacing the weapon ends CB, even 2h->2h.
         _remove_counter(ctx, uid, service)
 

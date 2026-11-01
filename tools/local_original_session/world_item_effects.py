@@ -846,9 +846,8 @@ class WorldItemEffects:
         if kind == 'blind':
             if self.magic is None:
                 return ItemEffectResult(template_id, kind, 'refused', reason='MAGIC_STATUS_OWNER_UNSUPPLIED')
-            effects = self.magic.state(uid).effects
-            effects.pop('darkness', None)
-            self.magic.apply_status(uid, 'blind', now, definition.duration_s, source_uid=uid)
+            self.magic.replace_status(uid, 'darkness', 'blind', now, definition.duration_s,
+                                      source_uid=uid)
             if self.magic_save is not None:
                 self.magic_save(uid, now)
             return ItemEffectResult(template_id, kind, 'applied', 1,
@@ -859,16 +858,13 @@ class WorldItemEffects:
                 return ItemEffectResult(template_id, kind, 'refused', reason='POISON_STATE_UNSUPPLIED')
             cured = ailments.poison is not None
             ailments.poison = None
-            magic_state = None if self.magic is None else self.magic.states.get(uid)
-            previous_effects = None if magic_state is None else dict(magic_state.effects)
-            if magic_state is not None:
-                cured = cured or magic_state.poison is not None
-                magic_state.poison = None
-            if self.cure_poison is not None:
-                self.cure_poison(uid)
-            if magic_state is not None:
-                cured = cured or previous_effects != magic_state.effects
-                if self.magic_save is not None:
+            if self.magic is None:
+                if self.cure_poison is not None:
+                    self.cure_poison(uid)
+            else:
+                present, changed = self.magic.cure_poison(uid, self.cure_poison)
+                cured = cured or changed
+                if present and self.magic_save is not None:
                     self.magic_save(uid, now)
             return ItemEffectResult(template_id, kind, 'applied' if cured else 'no_effect', 1,
                 requirements=(FrameRequirement('poison_status', None,

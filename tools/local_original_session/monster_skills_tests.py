@@ -37,7 +37,8 @@ class MonsterSkillsTests(unittest.TestCase):
         self.group = self.view.spawner.groups[0]
         self.entity = self.view.entities.get(self.group.slots[0].uid)
         self.slot = self.group.slots[0]
-        self.magic = world_magic.PlayerMagic(world_magic.load_catalog())
+        self.magic = world_magic.PlayerMagic(world_magic.load_catalog(),
+            before_cast=lambda uid, now: self.view.events.emit('player_magic_admit', uid, now))
         self.saved = []
         self.owner = skills.MonsterSkills(self.view, skills.load_attacks(),
             provider=(self.magic, lambda uid, now: self.saved.append(self.magic.snapshot(uid, now))),
@@ -61,7 +62,7 @@ class MonsterSkillsTests(unittest.TestCase):
         self.view.entities.move(1, self.entity.map_id, self.entity.x + max(1, d), self.entity.y)
         self.view.pcs[1] = self.entity.map_id, target.x, target.y
         self.magic.state(1).effects.clear()
-        self.magic.state(1).poison = None
+        self.magic.set_poison(1, None)
         self.view.combat.pcs[1].hp = self.view.combat.pcs[1].max_hp
         self.view.combat.pcs[1].dead = False
         self.owner.forget(self.entity.uid)
