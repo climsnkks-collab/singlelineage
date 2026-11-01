@@ -333,8 +333,8 @@ def _world_quest_action(self, ctx, interaction, menu, fields, now):
         inventory_before=self.inventory_frame, inventory_after=updated,
         progress_before=progress_before, progress_after=progress_after, **equipment_change)
     self.inventory_frame = updated
-    if equipment_after is not None and effect._selection is not None:
-        effect._selection['state'] = equipment_after
+    if equipment_after is not None:
+        effect.project_state(equipment_after)
     self.world.progress.adopt(uid, progress_after, dirty=False)
     self.world.progress.clear(uid)
     if status is not None:

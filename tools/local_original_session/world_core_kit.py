@@ -92,8 +92,7 @@ def _world_replace_kit(self, uid, before, after, *, append=False, progress_chang
     changed = transactions.commit_inventory(uid, before, after, append=append,
         equipment_store=effect.store, equipment_before=equipment, equipment_after=equipment_after,
         **progress_options)
-    if effect._selection is not None:
-        effect._selection['state'] = equipment_after
+    effect.project_state(equipment_after)
     return changed
 
 

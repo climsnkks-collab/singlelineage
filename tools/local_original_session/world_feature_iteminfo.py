@@ -103,7 +103,7 @@ def _iteminfo_started(ctx):
     # Reuse the final startup catalog through the existing town owner API. A
     # BUY row describes the actual plain grant prototype, never a made-up UID
     # or an owned player's strengthened instance. This adds no request I/O.
-    bindings = getattr(getattr(ctx, 'broker', None), '_world_handler_bindings', None)
+    bindings = getattr(ctx, 'host_bindings', None)
     if bindings is not None and bindings.town is not None:
         from dataclasses import replace
         from types import MappingProxyType

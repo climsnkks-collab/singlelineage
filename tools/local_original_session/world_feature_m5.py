@@ -140,9 +140,6 @@ def _m5_initialize(ctx):
     world.spawner.groups.extend(extra_spawner.groups)
     world.replace_data(data)
     ctx._world_m5=policy
-    previous = getattr(ctx, '_world_item_effects', None)
-    if previous is not None:
-        ctx._world_item_effects = MainlandItemEffects(previous, policy)
 
 
 
@@ -258,10 +255,11 @@ def _m5_after_death(ctx,uid):
             ctx._world_set_relocation(uid, destination)
 
 
-def _m5_destination(ctx, result, position):
+def _m5_destination(ctx, result, position, *, uid=None):
     policy = ctx._world_m5
     if policy is not None and position is not None and result.kind == 'return_town' and result.destination is not None:
-        uid = getattr(result, 'return_uid', getattr(position, 'uid', None))
+        if uid is None:
+            uid = getattr(result, 'return_uid', getattr(position, 'uid', None))
         pc = ctx.world.combat.pcs.get(uid)
         character_class = None if pc is None else pc.profile.character_class
         x = position.x if hasattr(position, 'x') else position.word0

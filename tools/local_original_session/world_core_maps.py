@@ -262,7 +262,7 @@ async def realm_move(service, payload):
             await service.handle_CS4E2B(payload, transition=stair))
 
 
-def _world_maps_item_destination(self, result, position):
+def _world_maps_item_destination(self, result, position, *, uid=None):
     if (position is not None and position.map_id == 4 and self._world_gludin is not None
             and result.kind == 'return_town' and result.destination is not None):
         from dataclasses import replace

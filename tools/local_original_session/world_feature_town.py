@@ -203,8 +203,8 @@ def _world_warehouse_trade(self, ctx, payload, now):
     self.inventory_transactions.commit_warehouse(ctx.pc_uid, before, after, warehouse_before,
                                       warehouse_after, **equipment_change)
     self.inventory_frame = after
-    if equipment_after != equipment and self._item_equipment_effect._selection is not None:
-        self._item_equipment_effect._selection['state'] = equipment_after
+    if equipment_after != equipment:
+        self._item_equipment_effect.project_state(equipment_after)
     old_rows = {item.identifier: dict(item.raw_fields) for item in player_items}
     new_rows = {row[1]: row for row in player_rows}
     frames = list(older)
@@ -251,7 +251,7 @@ def setup_warehouse(self):
 
 def setup_town(self, world_handler_sources):
     import os
-    from tools.local_original_session import world_town, world_town_services, world_handlers
+    from tools.local_original_session import world_town, world_town_services
     candidates = os.environ.get('SL_WORLD_TOWN_CANDIDATES', '')
     town_data = world_town.load_town()
     gludin = os.environ.get('SL_EXPERIMENT_MAP', '0') == '2'
@@ -318,9 +318,7 @@ def setup_town(self, world_handler_sources):
     self._world_services = configured.services
     world_town.attach_view(self.world, configured.town)
     self.configure_town(configured.town, configured.sources, refresh_policies=False)
-    bindings = self._world_handler_bindings
-    if bindings.sale_item is world_handlers._default_sale_item:
-        self._world_handler_bindings = replace(bindings, sale_item=_shop_sale_item)
+    self.configure_sale_item(_shop_sale_item)
     for policies in self.collect_sync_hooks('item_policies'):
         self.add_item_policies(policies)
 
@@ -493,7 +491,7 @@ def _world_town_report(self, result):
     town = self.world.town
     result.update(town_npcs=sum(1 for entity in self.world.entities
                               if town.npc_for(entity.uid) is not None),
-        menu_sources=len(self._world_handler_bindings.sources),
+        menu_sources=len(self.host_bindings.sources),
         shop_experiment=self._world_shop_experiment is not None,
         warehouse_experiment=self._world_warehouse_exp,
         warehouse_results=list(self._world_warehouse_results),

@@ -1008,8 +1008,7 @@ class RealmInventoryCore:
             # The received request already owns the real row lock. Initial
             # sync may not have reached the feature poll yet; finish it here
             # before consuming this same accepted intent, without re-locking.
-            life = getattr(effect, '_selection', None)
-            if world_bridge.defer_equipment_prepare(service.broker, life):
+            if effect.prepare_deferred():
                 pass
             else:
                 initial = await effect.prepare_locked(writer)

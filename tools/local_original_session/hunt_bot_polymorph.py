@@ -61,7 +61,8 @@ class PolymorphScenario(hs.Scenario):
                       for i in inventory.validate_kit_frame(frame)}
             return by_uid.get(state.weapon_uid), sum(by_uid[u].ac for _, u in state.slots)
         self.broker._item_equipment_effect = SimpleNamespace(store=self.equipment,
-            combat_inputs=combat_inputs, _selection=None, _last={}, _defs=data.items)
+            combat_inputs=combat_inputs, project_state=lambda state: None,
+            prepare_deferred=lambda: True, _last={}, _defs=data.items)
         await self.broker.start()
         options = hb.parser().parse_args(['--expected-uuid', expected,
             '--timeout', str(self.args.timeout), '--minutes', str(self.args.minutes)])

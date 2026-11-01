@@ -306,7 +306,7 @@ async def _ship_stopped(ctx):
         await asyncio.gather(*tasks, return_exceptions=True)
 
 
-def _ship_return_destination(ctx, result, position):
+def _ship_return_destination(ctx, result, position, *, uid=None):
     route = ctx._ship_route
     if (route is not None and position is not None
             and position.map_id in (route.interior_map, route.arrival_map)

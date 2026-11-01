@@ -231,7 +231,7 @@ class ItemEffectsTests(unittest.TestCase):
         self.assertEqual(world_magic_status.ai_status(state.effects, 115)['sight'], 1)
         self.assertIsNone(world_magic_status.ai_status(state.effects, 116)['sight'])
         self.assertIn('blind', saved[-1]['statuses']['effects'])
-        state.poison = dict(until=150, next_tick=103, tick_seconds=3, damage=5, source_uid=123)
+        engine.set_poison(PC, dict(until=150, next_tick=103, tick_seconds=3, damage=5, source_uid=123))
         self.assertTrue(engine.is_poisoned(PC, 100))
         cured = self.use(248, ailments=PcAilments())
         self.assertTrue(cured.poison_cured)
@@ -919,7 +919,7 @@ class TowerItemUseTests(unittest.IsolatedAsyncioTestCase):
                 runtime=SimpleNamespace(clock=lambda: 100, dispatch_now=dispatch),
                 terrain=SimpleNamespace(can_stand=lambda *args: self.standable),
                 broadcast_pc_effects=lambda *args: None, drain=lambda uid: ()),
-            fold_sync_hooks=lambda name, result, position: result,
+            fold_sync_hooks=lambda name, result, position, **kwargs: result,
             _world_consume_kit=consume, _world_relocate_locked=relocate, _world_send=send)
         self.fields = _starter_fields()
         self.fields.update({1: 65590, 2: 15430, 4: 2, 7: 2879})

@@ -83,6 +83,20 @@ class ItemEquipmentEffect:
             missing.update(status='NO_MATCH',reason='EQUIPMENT_RECEIPT_LIFETIME_MISMATCH');return missing
         return copy.deepcopy(self._last)
 
+    def project_state(self,state):
+        """Adopt the caller's persisted equipment row in the active selection."""
+        if self._selection is not None:
+            self._selection['state']=state
+
+    def prepare_deferred(self):
+        """Use the core kit's existing native-inventory readiness rule."""
+        from tools.local_original_session.world_core_kit import defer_equipment_prepare
+        return defer_equipment_prepare(self.broker,self._selection)
+
+    async def notify_kit_changes(self,writer,state,changes):
+        """Publish persisted changes through the existing equipment sender."""
+        await self._notify_kit(self._context(writer),state,_receipt('INITIAL_SYNC'),changes)
+
     def _key(self):
         return equipment_change.weapon_key_from_source()
 

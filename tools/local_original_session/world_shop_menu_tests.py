@@ -126,8 +126,8 @@ class WorldShopMenuTests(unittest.TestCase):
             policies.update((p.template_id, p) for p in rows)
         ctx = NS(world=NS(data=load_m1()), item_policies=policies,
                  _iteminfo_names=item_names(), add_item_policies=add,
-                 broker=NS(_world_handler_bindings=NS(town=self.town,
-                            sources={self.source.placement_key: self.source})),
+                 host_bindings=NS(town=self.town,
+                            sources={self.source.placement_key: self.source}),
                  configure_town=lambda town, sources, **kw: prepared.extend(sources))
         feature._iteminfo_started(ctx)
         with patch.object(Path, 'read_text', side_effect=AssertionError('REQUEST_IO')):

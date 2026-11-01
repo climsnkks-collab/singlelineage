@@ -109,7 +109,7 @@ class NpcPlacementTests(unittest.TestCase):
         world = SimpleNamespace(entities=EntityRegistry(), terrain=self.terrain,
                                 extensions={}, events=events)
         context = SimpleNamespace(_world=world, world=world, _world_map_exp=2,
-            _world_warehouse_exp=True, _world_handler_bindings=SimpleNamespace(sale_item=object()))
+            _world_warehouse_exp=True, configure_sale_item=lambda *_: None)
         initial = {}
 
         def configure(owner, _sources, **_kwargs):

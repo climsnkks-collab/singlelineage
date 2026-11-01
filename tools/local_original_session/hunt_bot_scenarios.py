@@ -210,7 +210,8 @@ async def build_epoch(directory, expected_uuid, *, seed, combat=False):
             # Same saved equipment input adapter used by world integration
             # fixtures. Native memory equipment synchronization is absent.
             broker._item_equipment_effect = SimpleNamespace(store=equipment,
-                combat_inputs=combat_inputs, _selection=None, _last={})
+                combat_inputs=combat_inputs, project_state=lambda state: None,
+                prepare_deferred=lambda: True, _last={})
         original_after = broker._world_after_request
 
         async def after(writer, row, game, opcode, lock):

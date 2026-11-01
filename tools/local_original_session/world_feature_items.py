@@ -86,11 +86,8 @@ async def _world_enchant_use(self, ctx, payload, now):
     self.run_sync_hooks('inventory_changed', ctx.writer, ctx.row)
     if equipment_after != equipment:
         if changes:
-            from tools.local_original_session.item_equipment_effect import _receipt
-            receipt = _receipt('INITIAL_SYNC')
-            await effect._notify_kit(effect._context(ctx.writer), equipment_after, receipt, changes)
-        if effect._selection is not None:
-            effect._selection['state'] = equipment_after
+            await effect.notify_kit_changes(ctx.writer, equipment_after, changes)
+        effect.project_state(equipment_after)
     self._world_recalculate_uid(ctx.pc_uid)
     for frame in (*self._world.drain(ctx.pc_uid), *mutation.frames,
                   *((result_wire,) if result_wire is not None else ()),
@@ -208,11 +205,8 @@ async def _world_polymorph_use(self, ctx, payload, now):
         result.state.active.expires_at_ms / 1000, None, 'pc_polymorph',
         lambda at: self._world_expire_polymorph(uid, at))
     if changes:
-        from tools.local_original_session.item_equipment_effect import _receipt
-        await effect._notify_kit(effect._context(ctx.writer), equipment_after,
-                                  _receipt('INITIAL_SYNC'), changes)
-        if effect._selection is not None:
-            effect._selection['state'] = equipment_after
+        await effect.notify_kit_changes(ctx.writer, equipment_after, changes)
+        effect.project_state(equipment_after)
     wire = self._world_polymorph_frame(uid, result.state.current_sprite_id)
     self._world_recalculate_uid(uid)
     from tools.local_original_session.world_status_frames import full_status_frame
@@ -316,7 +310,7 @@ async def _world_use_item(self, writer, row, game, frame, operation_lock):
         if kind in ('return_town', 'random_teleport', 'tower_teleport'):
             result = self._world_item_effects.use(uid, item.template_bits, world.runtime.clock(),
                                                   position=destination)
-            result = self.fold_sync_hooks('item_destination_policy', result, destination)
+            result = self.fold_sync_hooks('item_destination_policy', result, destination, uid=uid)
             need(result.destination is not None, result.reason or 'WORLD_ITEM_DESTINATION_REQUIRED')
             need(self.realm.serves_map(result.destination.map_id)
                  and (result.destination.map_id == position.map_id or self._world_map_exp == 2)

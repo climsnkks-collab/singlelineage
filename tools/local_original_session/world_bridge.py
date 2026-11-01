@@ -93,6 +93,11 @@ class Context:
     def item_policies(self):
         return self.broker._world_handler_bindings.item_policies
 
+    @property
+    def host_bindings(self):
+        """Immutable binding view; publication stays with this owner."""
+        return self.broker._world_handler_bindings
+
     def add_item_policies(self, policies, *, replace_existing=False):
         """Startup owner API: retain existing entries unless replacement is explicit."""
         from dataclasses import replace
@@ -130,6 +135,14 @@ class Context:
                 item_policies=tuple(bindings.item_policies.values()),
                 interaction_distance=bindings.interaction_distance,
                 allocate_uid=bindings.allocate_uid, sale_item=bindings.sale_item)
+
+    def configure_sale_item(self, sale_item):
+        """Set the ordinary sale projection without replacing an explicit one."""
+        from dataclasses import replace
+        from tools.local_original_session import world_handlers
+        bindings = self.broker._world_handler_bindings
+        if bindings.sale_item is world_handlers._default_sale_item:
+            self.broker._world_handler_bindings = replace(bindings, sale_item=sale_item)
 
     async def run_hooks(self, name, *args, **kwargs):
         from tools.local_original_session import world_registry

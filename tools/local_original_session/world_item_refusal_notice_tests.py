@@ -18,7 +18,7 @@ class RefusalNoticeTests(unittest.IsolatedAsyncioTestCase):
             return ()
 
         service.handle = handle
-        effect = NS(_selection={'synced': True},
+        effect = NS(prepare_deferred=lambda: False,
                     prepare_locked=AsyncMock(return_value={'status': 'SYNCHRONIZED'}),
                     consume_locked=AsyncMock(return_value={'status': status, 'reason': reason}))
         broker = NS(_item_equipment_effect=effect, _item_use_session=service,

@@ -139,7 +139,7 @@ def _world_dungeons_death(self, uid):
         self._world_set_relocation(uid, destination)
 
 
-def _world_dungeons_destination(self, result, position):
+def _world_dungeons_destination(self, result, position, *, uid=None):
     policy = self._world_dungeon_policy
     destination = None if policy is None or position is None else policy.return_for(position.map_id)
     if destination is not None and result.kind == 'return_town' and result.destination is not None:

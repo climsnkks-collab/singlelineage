@@ -97,7 +97,7 @@ class TownStackTests(unittest.IsolatedAsyncioTestCase):
         case.broker._world_inventory_transactions = InventoryTransactions(case.store)
         equipment = equipment_store.EquipmentStore(case.store, policy=equipment_store.POLICY,
             kit_policy=inventory.KIT_POLICY, item_defs=case.broker._world.data.items)
-        case.broker._item_equipment_effect = SimpleNamespace(store=equipment, _selection=None)
+        case.broker._item_equipment_effect = SimpleNamespace(store=equipment, project_state=lambda state: None)
         copied = case.store.restore(1)
         # The copied manual profile is mutable. Seed this regression's two
         # legacy currency rows only in its owned temporary save.
@@ -191,7 +191,7 @@ class TownStackTests(unittest.IsolatedAsyncioTestCase):
             kit_policy=inventory.KIT_POLICY, item_defs=case.broker._world.data.items)
         equipment.initialize_kit(1, original, initialization=equipment_store.FIRST_ENABLE_EMPTY,
             weapon_uid=0, slots=())
-        case.broker._item_equipment_effect = SimpleNamespace(store=equipment, _selection=None)
+        case.broker._item_equipment_effect = SimpleNamespace(store=equipment, project_state=lambda state: None)
         repaired = case.store.repair_adena_kit(1, replace=case.broker._world_replace_kit)
         state = equipment.restore(1, repaired)
         self.assertNotEqual(state.item_uid, 101)
