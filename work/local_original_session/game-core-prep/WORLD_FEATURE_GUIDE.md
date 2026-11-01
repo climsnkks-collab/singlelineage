@@ -82,7 +82,7 @@ HOOKS = {'after_enter': ('_example_after_enter',)}
 | `item_weight` | `current_weight, template_id` / 동기 fold; 코어 카탈로그에 없는 행의 무게 기여 |
 | `weight_capacity` | `capacity, calculated, position` / 동기 fold; 최종 스탯 뒤 무게 계산 전 |
 | `selected_exp` | `exp, position` / 동기 fold; 선택한 캐릭터를 bind하기 전 |
-| `item_destination_policy` | `result, position` / 동기 fold; 효과 엔진을 교체하지 않고 목적지 제안만 변환 |
+| `item_destination_policy` | `result, position, *, uid=None` / 동기 fold; 효과 엔진을 교체하지 않고 목적지 제안만 변환 |
 | `pickup_item_fields` | `fields, ground_item` / 동기 fold; 줍기 저장 전 아이템 필드에 원드롭 등급 기여. 등록자 없으면 기본 필드 유지 |
 | `equipment_remove_blocked` | `uid, item_uid, owned_items` / 동기 참값 체인; 벗기·교체로 제거될 현재 장비의 정책 거절. 등록자 없으면 허용 |
 | `map_transition` | `destination_or_none, map_id, x, y` / 동기 fold |
@@ -140,3 +140,32 @@ Pet처럼 실제 적용을 지연해야 하면 초기화에서 `reserve(owner, t
 기존 `*_tests.py`와 `hunt_bot*.py`의 게임 기대값은 유지한다. 코어 승격에 따른 import·서비스 연결만 수정한다. 선택 기능을 하나씩 제외한 구성과 모두 제외한 구성, 중복 메서드 거부, 훅 기본값·순서·예외 격리, 진행도 lawful 보존, 창고 UI 없는 인벤토리 저장을 확인한다.
 
 실제 게임/포트 시험은 한 번에 하나만 실행한다. 기존 `$env:SL_TEST_PORT_BASE='22000'`은 물리 22000/24030, 미설정은 12000/14030이며 논리 endpoint는 바꾸지 않는다. 원본 codec·관측 자료·Windows 클라이언트가 없는 환경에서 실행하지 못한 시험은 실행하지 못했다고 보고한다.
+
+
+## 2026-11-01 소유 API와 선택 훅 추가
+
+기존 registry와 WorldEvents를 그대로 사용한다. 다른 기능의 provider를 받았어도 그 engine의 private dict를 직접 수정하지 않는다. 조회·변경은 아래 공개 소유 API로 요청한다. 기능 미등록 시 기존 collect/chain/event의 빈 결과·False·no-op을 사용한다.
+
+| 훅 | 계약 | 제공자 없을 때 |
+|---|---|---|
+| `companion_commands` | collect, 인자 없음 → `CompanionCommands` 또는 None | hotbar 후보·명령 비활성 |
+| `companion_spell_catalog` | collect, 인자 없음 → companion catalog 또는 None | ATS의 기존 정의 파일 fallback |
+| `companion_hotbar_suspended` | chain, `writer` → ATS 열린 편집 상태 bool | False |
+| `companion_bridge_directory` | collect, 인자 없음 → 기존 명시 attach/env directory | 기존 ATS directory refusal |
+| `companion_hotbar_publish` | chain, `uid, keys` → 기존 JSON 기록·publish hook 호출 후 준비된 host 존재 bool(전달 성공 확인 아님) | False; host 탐색·파일 발행 없음 |
+| WorldEvents `player_magic_admit` | emit, `uid, now` → monster silence의 기존 사전 판정 | no-op |
+
+`item_destination_policy`는 기존 fold에 `*, uid=None`를 추가했다. item-use 소유자는 이미 알고 있는 요청 UID를 전달한다. 제공자는 이 인자를 수용한다. core maps → dungeons → ship → M5의 기존 순서와 RNG 호출을 유지한다. UID 없는 기존 core return 호출은 기존 `position.uid` fallback을 사용한다. M5는 items의 효과 엔진을 교체하지 않는다.
+
+공개 API:
+
+- `MagicService.catalog`, `live_learned(uid)`, `spell_mp(key)`는 ATS/hotbar 조회를 소유한다. `live_learned`는 현재 메모리에 있는 학습 상태만 읽고 offline 저장을 복원하지 않는다.
+- `MagicService.has_buff`, `buff_weapon`, `remove_weapon_buff(uid,key,clock)`는 기사 기술의 buff/binding을 소유한다. 제거 → clock → icon sync → save의 기존 순서다.
+- `PlayerMagic.npc_status`, `poison_of`, `set_poison`, `clear_monster_poison_effects`, `replace_status`, `cure_poison`으로 효과 상태를 조회·변경한다. `cure_poison`은 `(live_state_present, changed)`를 반환하며 다른 owner callback과 기존 저장 순서를 보존한다.
+- `PlayerMagic.before_cast`는 기존 world 이벤트에 연결하는 선택 callback이다. monster의 silence 사전 거부는 unknown spell 검사보다 먼저 실행되어야 한다.
+- `CompanionCommands.ready/character_class/members/cast`는 companion 후보와 수동 시전을 소유한다. hotbar는 원래 wire·입력·로그만 소유한다. `CompanionMonsterTarget.apply_poison`은 자기 poison 상태를 변경한다.
+- `CompanionAI.hostile_target/select_target/move_toward/attack_position`은 기존 AI 정책의 공개 진입점이다.
+- `Context.host_bindings`, `configure_sale_item`으로 기존 frozen bindings를 조회·설정한다.
+- `ItemEquipmentEffect.project_state`, `prepare_deferred`, `notify_kit_changes`로 장비 projection·기존 준비 판정·송신을 요청한다. 외부에서 `_selection`, `_context`, `_notify_kit`을 직접 조합하지 않는다.
+
+실행·미실행의 근거와 1차 28항목 대조는 같은 디렉터리 `REFACTOR_REPORT_20261101.md`에 있다. 선언 검사 58구성 성공과 실제 서버 시작 성공은 구분한다.
