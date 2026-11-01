@@ -95,10 +95,16 @@ def _ats_initialize(ctx):
         ctx._ats_store = payload
 
 
+def _ats_magic_service(ctx):
+    return next((value for value in ctx.collect_sync_hooks('magic_service')
+                 if value is not None), None)
+
+
 def _ats_spell_entries(ctx):
-    magic = getattr(ctx, '_world_magic', None)
-    catalog = getattr(magic, 'catalog', None)
-    spells = catalog if isinstance(catalog, dict) else getattr(ctx, '_companion_spells', None)
+    magic = _ats_magic_service(ctx)
+    catalog = None if magic is None else magic.catalog
+    spells = catalog if isinstance(catalog, dict) else next((value for value in
+        ctx.collect_sync_hooks('companion_spell_catalog') if value is not None), None)
     if not spells:
         from tools.local_original_session.world_companion_classes import load_definitions
         spells = next(d.spells for d in load_definitions().classes.values() if d.spells.get('spells'))
@@ -312,8 +318,8 @@ def _ats_owner_saved(ctx, uid):
 
 def _ats_learned(ctx, uid):
     """The owner's learned spell keys from the optional magic feature (empty without it)."""
-    state = getattr(getattr(ctx, '_world_magic', None), 'states', {}).get(uid)
-    return frozenset(getattr(state, 'learned', ()) or ())
+    magic = _ats_magic_service(ctx)
+    return frozenset() if magic is None else magic.live_learned(uid)
 
 
 def _ats_display_keys(ctx, uid):
@@ -415,8 +421,8 @@ def _ats_edit_close(ctx, writer, uid, meta):
 
 def _ats_window_directory(ctx):
     """Only the existing owned companion IPC directory can carry JSON data."""
-    host = getattr(ctx, '_companion_bridge_host', None)  # explicit shared attach, not transport internals
-    raw = getattr(host, 'directory', None) or os.environ.get('SL_COMPANION_BRIDGE_DIR')
+    raw = next((value for value in ctx.collect_sync_hooks('companion_bridge_directory')
+                if value is not None), None)
     need(raw is not None, 'ATS_WINDOW_BRIDGE_DIRECTORY_REQUIRED')
     directory = Path(raw).resolve(strict=True)
     need(directory.is_dir(), 'ATS_WINDOW_BRIDGE_DIRECTORY_REQUIRED')
@@ -831,15 +837,21 @@ async def _ats_start_frame(ctx, writer, row, game, frame, operation_lock):
     return True
 
 
+def _ats_hotbar_suspended(ctx, writer):
+    edit = ctx._ats_edit.get(id(writer))
+    return edit is not None and edit.get('phase') == 'open'
+
+
 def _ats_report(ctx, result):
     result['ats_companion_scope'] = dict(events=list(ctx._ats_events[-16:]),
                                          editing=len(ctx._ats_edit))
 
 
 METHODS = (_ats_initialize, _ats_frame, _ats_start_frame, _ats_ui_signal, _ats_ui_refused, _ats_policy,
-           _ats_after_enter, _ats_after_leave, _ats_report)
+           _ats_after_enter, _ats_after_leave, _ats_report, _ats_hotbar_suspended)
 HOOKS = {'initialize': ('_ats_initialize',), 'companion_ui_signal': ('_ats_ui_signal',),
          'companion_ui_refused': ('_ats_ui_refused',),
+         'companion_hotbar_suspended': ('_ats_hotbar_suspended',),
          'companion_ai_policy': ('_ats_policy',), 'after_enter': ('_ats_after_enter',),
          'after_leave': ('_ats_after_leave',), 'report': ('_ats_report',)}
 NONCRITICAL_HOOKS = ('report',)

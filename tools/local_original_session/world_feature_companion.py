@@ -418,7 +418,7 @@ class CompanionMagic:
         rt.action = 'POSITION'
         exhausted = (now - rt.position_started >= failure['position_budget_seconds']
                      or rt.position_attempts >= failure['position_step_attempt_limit'])
-        moved = False if exhausted else ai._move(rt, actor, reached, (target.x, target.y), now,
+        moved = False if exhausted else ai.move_toward(rt, actor, reached, (target.x, target.y), now,
             tile_allowed=lambda x, y: distance(x, y, owner.x, owner.y) <= ai.owner_leash)
         if moved is not None:
             rt.position_attempts += 1
@@ -560,7 +560,7 @@ class CompanionMagic:
                         and member.owner_ref == rt.owner_ref)
         if attack:
             if (not manual and (record.combat_mode == 'PASSIVE' or rt.target != target.ref)
-                    or view.companion_ai._hostile(rt, target.ref) is not target):
+                    or view.companion_ai.hostile_target(rt, target.ref) is not target):
                 return False
         elif (not manual and not record.support_enabled) or (target.ref not in (rt.ref, rt.owner_ref)
                 and not (party_member and spell.kind in ('heal', 'cure_poison', 'remove_curse'))
@@ -800,6 +800,86 @@ def _companion_learning_changed(ctx, uid):
         _companion_learned_spells(ctx, record)
 
 
+class CompanionCommands:
+    """Public owner of companion hotbar candidates and manual cast decisions."""
+    def __init__(self, view, characters, learned):
+        self.view, self.characters, self.learned = view, characters, learned
+
+    @property
+    def ready(self):
+        return getattr(getattr(self.view, 'companion_ai', None), 'magic', None) is not None
+
+    def character_class(self, uid):
+        return self.characters().get(uid, {}).get('class')
+
+    def members(self, uid, *, restoring=False):
+        manager = getattr(self.view, 'companions', None)
+        magic = getattr(getattr(self.view, 'companion_ai', None), 'magic', None)
+        if manager is None or magic is None:
+            return {}
+        own = set(self.learned(uid))
+        records = manager.records.values() if restoring else (rt.record for rt in manager.active.values()
+            if rt.owner_ref.uid == uid and manager.can_be_attacked(rt.ref.uid))
+        result = {}
+        for record in records:
+            if (record.owner_character_id != uid or record.class_id != 3 or not record.alive or record.hp <= 0
+                    or restoring and not record.summoned or record.character_id in self.view.pcs):
+                continue
+            known = set(self.learned(record.character_id)) - own
+            for spell in magic.rules.values():
+                if (spell.key in known and record.level >= spell.raw['learn_level_mage']['value']
+                        and spell.raw.get('target', {}).get('client_required_target') in ('self', 'other', 'self, other', 'self, pc', 'self, pledge')):
+                    result.setdefault(spell.key, []).append(record.character_id)
+        return {key: sorted(values) for key, values in result.items()}
+
+    def cast(self, uid, key, target_uid):
+        from tools.local_original_session.npc_ai import distance, local_line_clear
+        view = self.view
+        magic = getattr(getattr(view, 'companion_ai', None), 'magic', None)
+        knight_mp_before = view.combat.pcs[uid].mp
+        members = self.members(uid).get(key, ())
+        reason, label = '현재 소환된 동료가 사용할 수 없는 마법입니다.', '동료'
+        for member in members:
+            rt = view.companions.active[member]
+            actor = view.entities.resolve(rt.ref)
+            label = self.characters().get(member, {}).get('name', str(member))
+            spell = magic.engine.spells[key]
+            now = view.runtime.clock()
+            magic.restore(rt, now)
+            target = view.entities.get(rt.ref.uid if target_uid is None else target_uid)
+            status = view.events.fold('actor_action_status', {}, rt.ref, now)
+            if status.get('blocked'):
+                reason = '마비 상태라 시전할 수 없습니다.'
+            elif status.get('silenced'):
+                reason = '침묵 상태라 시전할 수 없습니다.'
+            elif rt.record.mp < spell.mp:
+                reason = 'MP가 부족합니다.'
+            elif now < max(rt.next_cast_at, magic.cooldowns.get(member, 0)):
+                reason = '마법을 재사용할 수 없습니다.'
+            elif target is None or not target.alive or target.map_id != actor.map_id:
+                reason = '대상을 사용할 수 없습니다.'
+            elif distance(actor.x, actor.y, target.x, target.y) > spell.range:
+                reason = '대상이 사거리 밖에 있습니다.'
+            elif not local_line_clear(view.terrain, actor.map_id, actor.x, actor.y, target.x, target.y):
+                reason = '대상이 보이지 않습니다.'
+            elif magic.cast(rt, actor, target, spell.name, now, manual=True):
+                return dict(uid=uid, key=key, target=target.uid, member=member,
+                    mp=view.combat.pcs[uid].mp, knight_mp_before=knight_mp_before,
+                    cast=True, companion_mp=rt.record.mp)
+            else:
+                reason = '이 대상에게 마법을 사용할 수 없습니다.'
+        return dict(uid=uid, key=key, target=target_uid,
+                    message=f'[LOCAL] {label}: {reason}', cast=False)
+
+
+def _companion_commands(ctx):
+    return ctx._companion_command_service if ctx._companion_enabled else None
+
+
+def _companion_spell_catalog(ctx):
+    return getattr(ctx, '_companion_spells', None)
+
+
 def _companion_initialize(ctx):
     from tools.local_original_session.world_companion_runtime import install_companion_runtime
     install_companion_runtime(ctx.world)
@@ -812,6 +892,9 @@ def _companion_initialize(ctx):
     ctx._companion_supplies = []
     ctx._companion_roster = {}
     ctx._companion_rows = {}
+    ctx._companion_command_service = CompanionCommands(ctx.world, lambda: ctx._companion_rows,
+        lambda uid: next((value for value in ctx.collect_sync_hooks(
+            'character_learned_spells', uid) if value is not None), ()))
     ctx._companion_windows = {}
     ctx._companion_pet_modes = {}
     ctx._companion_errors = []
@@ -884,14 +967,15 @@ def _companion_started(ctx):
         # The existing wrapper preserves death cleanup if the store fails.
         view._save_companion(record.owner_character_id)
     view.companions.on_death = on_death
-    removed = view.companions.on_remove
-    def on_remove(actor):
-        if view.companion_ai.magic is not None:
-            view.companion_ai.magic.reset_sequence(actor)
-        if removed is not None:
-            removed(actor)
-        _companion_unmapped(ctx, actor)
-    view.companions.on_remove = on_remove
+    def removed(previous):
+        def on_remove(actor):
+            if view.companion_ai.magic is not None:
+                view.companion_ai.magic.reset_sequence(actor)
+            if previous is not None:
+                previous(actor)
+            _companion_unmapped(ctx, actor)
+        return on_remove
+    view.runtime_extensions.wrap('companion', view.companions, 'on_remove', removed)
     if not any(r['class'] == 3 for r in rows):
         stats = ctx._companion_growth['local_build']['creation_original_stats']
         ctx.realm.store.create(ack.realm.Creation('SoloMage', 3, 0,
@@ -1225,8 +1309,7 @@ async def _companion_kit(ctx, writer, row, game, opcode, operation_lock):
         return
     effect = getattr(ctx, '_item_equipment_effect', None)
     if effect is not None:
-        from tools.local_original_session.world_core_kit import defer_equipment_prepare
-        if defer_equipment_prepare(ctx.broker, getattr(effect, '_selection', None)):
+        if effect.prepare_deferred():
             return
     uid = ctx._world_pcs[id(writer)][1]
     if not any(r.owner_character_id == uid for r in ctx.world.companions.records.values()):
@@ -1275,8 +1358,7 @@ async def _companion_kit(ctx, writer, row, game, opcode, operation_lock):
             changed = ctx.inventory_transactions.commit_inventory(uid, current, after,
                 append=True, equipment_store=effect.store, equipment_before=equipment,
                 equipment_after=changed_equipment)
-            if effect._selection is not None:
-                effect._selection['state'] = changed_equipment
+            effect.project_state(changed_equipment)
         need(changed is True, 'COMPANION_KIT_PERSISTED_CHANGE_REQUIRED')
         ctx.inventory_frame = after
         wires = [item_transfer_protocol.build_remove(uid=r.identifier) for r in legacy]
@@ -1464,7 +1546,7 @@ async def _companion_frame(ctx, writer, row, game, frame, operation_lock):
                             need(text.isdecimal() and str(int(text)) == text, 'COMPANION_PET_DECIMAL_TARGET_REQUIRED')
                             target = ctx.world.entities.get(int(text))
                             need(target is not None and target.uid in ctx.world.visibility.known.get(uid, ())
-                                 and ctx.world.companion_ai._hostile(actor, target.ref) is target,
+                                 and ctx.world.companion_ai.hostile_target(actor, target.ref) is target,
                                  'COMPANION_PET_CURRENT_HOSTILE_TARGET_REQUIRED')
                         ctx.world.companions.set_commands(actor.character_id,
                             movement_mode='HOLD' if mode == 4 else 'FOLLOW',
@@ -1624,11 +1706,13 @@ def _companion_joint_progress_adopt(ctx, uid, saved):
         store.payload['owners'][str(uid)] = dict(saved)
 
 
-METHODS += (_companion_give_provider, _companion_selected_exp,
+METHODS += (_companion_give_provider, _companion_commands, _companion_spell_catalog, _companion_selected_exp,
             _companion_relocate_keeps_self, _companion_before_relocate,
             _companion_after_relocate, _companion_joint_progress_sources,
             _companion_joint_progress_adopt)
 HOOKS.update(give_provider=('_companion_give_provider',),
+    companion_commands=('_companion_commands',),
+    companion_spell_catalog=('_companion_spell_catalog',),
     selected_exp=('_companion_selected_exp',),
     relocate_keeps_self=('_companion_relocate_keeps_self',),
     before_relocate=('_companion_before_relocate',),
@@ -2208,6 +2292,9 @@ class CompanionMonsterTarget(CompanionMagicTarget):
         elif swing.landed and swing.damage > 0:
             self.view.companion_ai.on_hit(self.actor.ref, source_ref, now)
         self.save(now)
+
+    def apply_poison(self, poison, now):
+        self.ailments(now)['poison'] = poison
 
     def apply_status(self, kind, now, duration, **kwargs):
         from tools.local_original_session import world_magic_status as status

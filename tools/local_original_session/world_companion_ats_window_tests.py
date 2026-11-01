@@ -31,6 +31,8 @@ class CompanionATSWindowTests(unittest.TestCase):
         self.sidecar.write_bytes(b'owner-account-sidecar-test-fixture')
         owner = dict(self_config=samples.CAPTURED_OWNER_CONFIG.hex(),
                      self_ats=codec.wrap_blob(codec.build_ats(hp_percent=7)).hex(), untouched='owner')
+        self.magic_service = None
+        self.spell_catalog = {'spells': []}
         self.ctx = NS(_ats_enabled=True, _ats_scope={}, _ats_edit={}, _ats_events=[],
             _ats_window_edits={}, _ats_window_epoch=1000, _ats_policies={},
             _ats_path=self.directory / 'ats-scopes.json',
@@ -40,8 +42,7 @@ class CompanionATSWindowTests(unittest.TestCase):
             _world_bound=lambda writer: writer is self.writer,
             _world_ready=lambda writer, game: True,
             _world_pcs={id(self.writer): (self.writer, 5)},
-            _companion_bridge_host=NS(directory=self.directory),
-            _companion_spells={'spells': []},
+            collect_sync_hooks=self.collect_hooks,
             realm=NS(registry=NS(resolve=lambda writer: self.game),
                      settings=NS(save=lambda value: self.fail('sidecar write'))),
             world=NS(companions=NS(active={9: self.actor}), pcs={},
@@ -51,6 +52,15 @@ class CompanionATSWindowTests(unittest.TestCase):
             run_sync_hooks=lambda name, *args: self.published.append((name, args)))
         ats._ats_save_store(self.ctx)
         self.original_owner = copy.deepcopy(owner)
+
+    def collect_hooks(self, name, *args):
+        if name == 'magic_service':
+            return () if self.magic_service is None else (self.magic_service,)
+        if name == 'companion_spell_catalog':
+            return (self.spell_catalog,)
+        if name == 'companion_bridge_directory':
+            return (self.directory,)
+        return ()
 
     def signal(self, operation, args, actor=900):
         body = signals.encode_signal(operation, actor, tuple(str(v) for v in args))

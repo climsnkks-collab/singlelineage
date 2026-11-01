@@ -10,6 +10,7 @@ from tools.local_original_session import world_companion_ats_spell_tests as spel
 from tools.local_original_session import world_companion_ats_window_tests as window
 from tools.local_original_session import world_companion_magic_tests as magic
 from tools.local_original_session.world_feature_companion import CompanionAilments
+from tools.local_original_session.world_magic import MagicService
 
 
 def slots(hp=None, status=None, percent=50):
@@ -58,10 +59,11 @@ class HealWindowTests(unittest.TestCase):
         self.spells = spells.CompanionATSSpellTests()
         self.spells.setUp()
         self.ctx = self.window.ctx
-        self.ctx._world_magic = self.spells.ctx._world_magic
+        self.window.magic_service = self.spells.magic_service
         self.ctx._ats_window_ui = self.spells.ctx._ats_window_ui
         self.learned = frozenset((0, 2, 8, 18, 34, 36))
-        self.ctx.collect_sync_hooks = lambda *args: (self.learned,)
+        self.ctx.collect_sync_hooks = lambda name, *args: (self.learned,) if name == \
+            'character_learned_spells' else self.window.collect_hooks(name, *args)
 
     def test_metadata_defaults_save_reopen_and_policy_use_same_rows(self):
         view = self.window.open()
@@ -140,7 +142,8 @@ class HealAITests(unittest.TestCase):
 
     def configure(self, hp=0, status=None, percent=50):
         row = dict(companion_heal=slots(hp, status, percent))
-        ctx = NS(_world_magic=self.magic.engine)
+        service = MagicService(self.magic.engine, None, None)
+        ctx = NS(collect_sync_hooks=lambda name, *args: (service,) if name == 'magic_service' else ())
         self.fixture.policy['heal_slots'] = ats._ats_heal_policy(ctx, row)
 
     def decision(self, now=10):

@@ -7,6 +7,7 @@ import unittest
 from tools.local_original_session import ats_config_codec as codec
 from tools.local_original_session.ats_config_codec_tests import CAPTURED_COMPANION_ATS
 from tools.local_original_session import world_feature_companion_ats as ats
+from tools.local_original_session.world_magic import MagicService
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,12 +24,14 @@ class CompanionATSSpellTests(unittest.TestCase):
               for row in ui_rows if type(row.get('spell_id')) is int and row['spell_id'] >= 0
               and row.get('named_UI_configuration', {}).get('id') == row['spell_id']}
         self.learned = frozenset((0, 2, 3, 999, 86))
-        self.ctx = NS(_world_magic=NS(catalog=catalog), _ats_window_ui=ui,
+        self.magic_service = MagicService(NS(catalog=catalog, states={}), None, None)
+        self.ctx = NS(_ats_window_ui=ui,
             _ats_enabled=True, _ats_events=[], _ats_policies={},
             _ats_store={'characters': {'9': {'companion_ats': CAPTURED_COMPANION_ATS.hex()}}},
             world=NS(companion_looks={9: {'name': 'SoloMage'}}, data=NS(items={})),
-            collect_sync_hooks=lambda name, uid: (self.learned,)
-                if (name, uid) == ('character_learned_spells', 9) else ())
+            collect_sync_hooks=lambda name, *args: (self.learned,)
+                if (name, args) == ('character_learned_spells', (9,)) else
+                (self.magic_service,) if name == 'magic_service' else ())
 
     def test_learned_view_joins_all_player_magic_keys_and_reports_unknown(self):
         known = ats._ats_window_spell_catalog(self.ctx)

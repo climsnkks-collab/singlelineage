@@ -362,7 +362,7 @@ class CompanionFailureReportTests(unittest.IsolatedAsyncioTestCase):
         writer = object()
         ctx = SimpleNamespace(_companion_enabled=True, _world_bound=lambda _: True,
             _inventory_kit_policy=inventory.KIT_POLICY, inventory_frame=b'initial-kit',
-            _item_equipment_effect=SimpleNamespace(_selection={'synced': False}))
+            _item_equipment_effect=SimpleNamespace(prepare_deferred=lambda: True))
         ctx.broker = ctx
         with patch.object(inventory, 'validate_kit_frame') as parse:
             await _companion_kit(ctx, writer, {}, None, 0x4e2a, None)
@@ -459,8 +459,9 @@ class CompanionSummonKitTests(unittest.IsolatedAsyncioTestCase):
         old = equipment.initialize_kit(1, self.before,
             initialization=equipment_store.FIRST_ENABLE_EMPTY, weapon_uid=10, slots=())
         self.assertEqual(old.item_uid, 10)
+        selection = {'state': old}
         self.ctx._item_equipment_effect = SimpleNamespace(store=equipment,
-            _selection={'synced': True, 'state': old})
+            prepare_deferred=lambda: False, project_state=lambda value: selection.update(state=value))
         self.ctx.broker = self.ctx
         self.ctx._world_warehouse_store = WarehouseStore(self.store)
         with patch('tools.local_original_session.world_feature_companion._companion_refresh_owner_equipment',
@@ -473,7 +474,7 @@ class CompanionSummonKitTests(unittest.IsolatedAsyncioTestCase):
         after = equipment.restore(1, self.store.restore(1))
         self.assertEqual((after.weapon_uid, after.item_uid), (0, 11))
         self.assertEqual(after.revision, old.revision + 1)
-        self.assertEqual(self.ctx._item_equipment_effect._selection['state'], after)
+        self.assertEqual(selection['state'], after)
         self.assertIsNone(self.ctx._world_warehouse_store.restore(1))
 
 

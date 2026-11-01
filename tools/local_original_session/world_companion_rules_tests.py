@@ -933,7 +933,8 @@ class AtsCodecTests(unittest.TestCase):
     def test_invalid_saved_policy_is_recorded_once_and_missing_has_no_fallback(self):
         from tools.local_original_session import world_feature_companion_ats as ats
         ctx = SimpleNamespace(_ats_enabled=True, _ats_policies={}, _ats_events=[],
-            _ats_store={'characters': {'2': {'companion_ats': 'broken'}}})
+            _ats_store={'characters': {'2': {'companion_ats': 'broken'}}},
+            collect_sync_hooks=lambda *args: ())
         self.assertEqual(ats._ats_policy(ctx, None, 3)['status'], 'missing')
         self.assertEqual(ats._ats_policy(ctx, None, 2)['status'], 'invalid')
         ats._ats_policy(ctx, None, 2)
@@ -955,8 +956,10 @@ class AtsCodecTests(unittest.TestCase):
                 realm=SimpleNamespace(settings=SimpleNamespace(save=saved.append),
                                       bound_account=lambda w, g: None),
                 run_sync_hooks=lambda name, *args: published.append((name, args)),
-                _companion_spells={'spells': [dict(id='energy_bolt', classic_key=dict(value=3)),
-                                              dict(id='shield', classic_key=dict(value=4))]})
+                collect_sync_hooks=lambda name, *args: ({'spells': [
+                    dict(id='energy_bolt', classic_key=dict(value=3)),
+                    dict(id='shield', classic_key=dict(value=4))]},)
+                    if name == 'companion_spell_catalog' else ())
             frame = lambda f2: SimpleNamespace(payload=pb.encode_bytes(1, self_cfg) + pb.encode_bytes(2, f2))
             self.assertFalse(ats._ats_settings_frame(ctx, writer, None, None, frame(self_ats), None))
             signal = SimpleNamespace(operation='ats-select', args=('companion',))
@@ -1010,11 +1013,14 @@ class AtsCodecTests(unittest.TestCase):
             writer = object()
             actor = SimpleNamespace(owner_ref=SimpleNamespace(uid=5), ref=SimpleNamespace(uid=(7 << 32) | 900),
                                     character_id=9, record=SimpleNamespace(learned_spells=(0, 3, 4)))
+            from tools.local_original_session.world_magic import MagicService
+            magic_service = MagicService(SimpleNamespace(catalog=None,
+                states={5: SimpleNamespace(learned={1})}), None, None)
             ctx = SimpleNamespace(_ats_enabled=True, _ats_scope={}, _ats_edit={}, _ats_events=[], _ats_policies={},
                 _ats_path=Path(directory) / 'ats-scopes.json', _ats_store={'schema': 1, 'characters': {
                     '9': {'self_config': owner_cfg.hex(), 'self_ats': member_self.hex()}}},
                 _world_bound=lambda w: True, _world_pcs={id(writer): (writer, 5)},
-                _world_magic=SimpleNamespace(states={5: SimpleNamespace(learned={1})}),
+                collect_sync_hooks=lambda name, *args: (magic_service,) if name == 'magic_service' else (),
                 world=SimpleNamespace(_queue=lambda uid, f: queued.append((uid, f)), _announce=lambda: None,
                                       companions=SimpleNamespace(active={9: actor}),
                                       companion_looks={9: dict(name='SoloMage')}),
@@ -1118,7 +1124,8 @@ class AtsCodecTests(unittest.TestCase):
                         world=SimpleNamespace(_queue=lambda uid, f: queued.append((uid, f)),
                             _announce=lambda: None, companions=SimpleNamespace(active={9: actor})),
                         realm=SimpleNamespace(settings=sidecar, store=SimpleNamespace(path=path / 'characters.json'),
-                            bound_account=lambda w, g: None), run_sync_hooks=lambda *args: None)
+                            bound_account=lambda w, g: None), run_sync_hooks=lambda *args: None,
+                        collect_sync_hooks=lambda *args: ())
                     ats._ats_save_store(ctx)
                     self.assertEqual(ats._ats_ui_signal(ctx, writer, 5, load, {})['status'], 'EDIT_STARTED')
                     self.assertEqual(noti_config(queued),

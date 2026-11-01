@@ -272,6 +272,22 @@ class CompanionAI:
                 if handle is None or handle.cancelled or handle.done or handle.at > runtime.next_move_at:
                     self._schedule(runtime, runtime.next_move_at)
 
+    def hostile_target(self, runtime, ref):
+        """Resolve a feature's candidate using this AI owner's target policy."""
+        return self._hostile(runtime, ref)
+
+    def select_target(self, runtime, target_ref, now):
+        """Select and schedule a target through the existing AI decision owner."""
+        return self._select(runtime, target_ref, now)
+
+    def move_toward(self, runtime, actor, reached, goal, now, tile_allowed=None):
+        """Perform one feature-requested step with the AI's cadence/occupancy policy."""
+        return self._move(runtime, actor, reached, goal, now, tile_allowed)
+
+    def attack_position(self, actor, x, y, target):
+        """Use the shared attack range and line-of-sight policy for a candidate tile."""
+        return self._attack_position(actor, x, y, target)
+
     def _hostile(self, runtime, ref):
         if not isinstance(ref, EntityRef):
             return None

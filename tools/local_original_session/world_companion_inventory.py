@@ -138,7 +138,7 @@ class CompanionInventory:
             if ((entity.x, entity.y) != (item.x, item.y) and not occupied
                     and actor.record.movement_mode != 'HOLD'):
                 actor.action = 'PICKUP'
-                view.companion_ai._move(actor, entity, lambda x, y: (x, y) == (item.x, item.y),
+                view.companion_ai.move_toward(actor, entity, lambda x, y: (x, y) == (item.x, item.y),
                                        (item.x, item.y), now)
                 return True
             try:

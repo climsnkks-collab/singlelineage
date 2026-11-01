@@ -5,6 +5,8 @@ from types import SimpleNamespace as NS
 from tools.local_entry_server import protobuf as pb
 from tools.local_original_session import world_feature_companion_hotbar_probe as command
 from tools.local_original_session import world_companion_magic_tests as fixtures
+from tools.local_original_session.world_feature_companion import CompanionCommands
+from tools.local_original_session.world_magic import MagicService
 
 class CommandTests(unittest.TestCase):
     def setUp(self):
@@ -15,14 +17,22 @@ class CommandTests(unittest.TestCase):
         self.record.level=60
         self.magic.policy_for=lambda r:None
         self.writer=object();self.learned={1:set(),2:set(self.record.learned_spells)}
-        self.ctx=NS(world=self.view,_companion_enabled=True,_world_pcs={id(self.writer):(self.writer,1)},
+        self.characters={2:{'name':'SoloMage'}}
+        self.command_enabled=True
+        self.commands=CompanionCommands(self.view,lambda:self.characters,lambda uid:self.learned.get(uid,set()))
+        self.magic_service=MagicService(self.magic.engine,None,None)
+        self.ctx=NS(world=self.view,_world_pcs={id(self.writer):(self.writer,1)},
             _world_bound=lambda w:w is self.writer,_world_ready=lambda *a:True,
-            collect_sync_hooks=lambda n,uid:(self.learned.get(uid,set()),),sent=[],
-            _world_magic=self.magic.engine,_companion_rows={2:{'name':'SoloMage'}})
+            collect_sync_hooks=self.collect,chain_sync_hooks=lambda *args:False,sent=[])
         async def send(w,row,frames,lock):self.ctx.sent.extend(frames)
         self.ctx._world_send=send
         command._hotbar_probe_initialize(self.ctx)
         self.enter()
+    def collect(self,name,*args):
+        if name=='character_learned_spells':return (self.learned.get(args[0],set()),)
+        if name=='companion_commands':return (self.commands,) if self.command_enabled else ()
+        if name=='magic_service':return (self.magic_service,)
+        return ()
     def enter(self):
         asyncio.run(command._hotbar_probe_enter(self.ctx,self.writer,{},None,None))
     def cast(self,key=0,target=1,payload=None):
@@ -85,7 +95,7 @@ class CommandTests(unittest.TestCase):
         self.view.companions.dismiss(2)
         command._hotbar_probe_initialize(self.ctx);self.ctx.sent.clear();self.enter()
         self.assertEqual(self.ctx.sent,[]);self.assertFalse(self.cast())
-        self.ctx._companion_enabled=False;self.enter();self.assertFalse(self.cast())
+        self.command_enabled=False;self.enter();self.assertFalse(self.cast())
     def test_rejection_mp_range_silence_paralysis_cooldown(self):
         for mode,text in [('mp','MP가 부족'),('range','사거리'),('silence','침묵'),('paralyze','마비'),('reuse','재사용')]:
             with self.subTest(mode=mode):
@@ -139,7 +149,7 @@ class CommandTests(unittest.TestCase):
         async def base(w,row,replies,**kw):seen.extend(int.from_bytes(x[2:4],'little') for x in replies)
         self.ctx.broker=NS(_send=base)
         self.ctx.realm=NS(service=lambda w:NS(snapshot=lambda:NS(uid=1)))
-        self.ctx._companion_rows[1]={'class':1}
+        self.characters[1]={'class':1}
         async def send(w,row,frames,lock):seen.extend(int.from_bytes(x[2:4],'little') for x in frames)
         self.ctx._world_send=send
         command._hotbar_command_started(self.ctx)

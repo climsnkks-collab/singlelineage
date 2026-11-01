@@ -537,7 +537,7 @@ class RegenerationTests(unittest.TestCase):
         from tools.local_original_session.companion_ai import AttackIntent
         self.start()
         ai = self.view.companion_ai
-        self.assertTrue(ai._move(self.actor, self.entity,
+        self.assertTrue(ai.move_toward(self.actor, self.entity,
             lambda x, y: x == 105, (105, self.entity.y), 10))
         self.assertEqual(self.actor.regen_activity, 2)
         self.tick(11)

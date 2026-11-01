@@ -21,6 +21,7 @@ import os
 from pathlib import Path
 import re
 import struct
+import time
 
 from tools.local_entry_server import protobuf as pb
 from tools.local_original_session import companion_signals
@@ -73,6 +74,27 @@ def _bridge_host(ctx):
             ctx._bridge_host_error = f'{type(error).__name__}: {error}'[:120]
             return None
     return ctx._bridge_host
+
+
+def _bridge_data_directory(ctx):
+    """Shared attachment/configuration directory for optional JSON views."""
+    host = getattr(ctx, '_companion_bridge_host', None)
+    return getattr(host, 'directory', None) or os.environ.get(DIRECTORY_ENV)
+
+
+def _bridge_hotbar_publish(ctx, uid, keys):
+    # Preserve the hotbar's existing already-attached-host publication timing.
+    host = ctx._bridge_host
+    if host is None:
+        return False
+    seq = time.time_ns()
+    name = f'companion-ats-view-{seq}-{seq}.json'
+    payload = dict(schema='companion-hotbar-keys-v1', owner_uid=uid, keys=sorted(keys))
+    with open(host.directory / name, 'x', encoding='utf-8') as stream:
+        json.dump(payload, stream, separators=(',', ':'))
+    ctx.run_sync_hooks('companion_bridge_publish', uid, 'hotbar-keys', dict(command='hotbar-keys',
+        owner_uid=uid, view_file=name))
+    return ctx._bridge_host is not None
 
 
 def _bridge_publish(ctx, uid, kind, payload):
@@ -420,10 +442,13 @@ def _bridge_report(ctx, result):
 
 
 METHODS = (_bridge_initialize, _bridge_publish, _bridge_frame, _bridge_after_enter,
-           _bridge_stopped, _bridge_report, _bridge_started)
+           _bridge_stopped, _bridge_report, _bridge_started, _bridge_data_directory,
+           _bridge_hotbar_publish)
 HOOKS = {'initialize': ('_bridge_initialize',),
          'runtime_started': ('_bridge_started',),
          'companion_bridge_publish': ('_bridge_publish',),
+         'companion_bridge_directory': ('_bridge_data_directory',),
+         'companion_hotbar_publish': ('_bridge_hotbar_publish',),
          'after_enter': ('_bridge_after_enter',),
          'runtime_stopped': ('_bridge_stopped',),
          'report': ('_bridge_report',)}

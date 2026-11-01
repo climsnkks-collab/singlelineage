@@ -4,7 +4,6 @@ Display-only SpellInfo never grants player learning. The companion consumer
 owns costs, cooldowns, effects and persistence. No experimental environment flags.
 """
 from __future__ import annotations
-import json
 import struct
 import time
 from tools.local_entry_server import protobuf as pb
@@ -26,40 +25,16 @@ def _list_frame(add, remove=()):
         +(pb.encode_uint32(6,1) if flag else b''))
         for flag,keys in ((True,add),(False,remove)) for key in sorted(keys)))
 
-def _magic(ctx):
-    return getattr(getattr(ctx.world, 'companion_ai', None), 'magic', None)
+def _commands(ctx):
+    return next((value for value in ctx.collect_sync_hooks('companion_commands')
+                 if value is not None), None)
 
 def _members(ctx, uid, *, restoring=False):
-    manager, magic = getattr(ctx.world,'companions',None), _magic(ctx)
-    if not getattr(ctx,'_companion_enabled',False) or manager is None or magic is None:
-        return {}
-    own = _learned(ctx,uid)
-    records = manager.records.values() if restoring else (rt.record for rt in manager.active.values()
-        if rt.owner_ref.uid == uid and manager.can_be_attacked(rt.ref.uid))
-    result = {}
-    for record in records:
-        if (record.owner_character_id != uid or record.class_id != 3 or not record.alive or record.hp <= 0
-                or restoring and not record.summoned or record.character_id in ctx.world.pcs):
-            continue
-        known = _learned(ctx,record.character_id)-own
-        # Expose only existing entity-target consumers, never unsupported ground spells.
-        for spell in magic.rules.values():
-            if (spell.key in known and record.level >= spell.raw['learn_level_mage']['value']
-                    and spell.raw.get('target',{}).get('client_required_target') in ('self','other','self, other','self, pc','self, pledge')):
-                result.setdefault(spell.key,[]).append(record.character_id)
-    return {key:sorted(values) for key,values in result.items()}
+    commands = _commands(ctx)
+    return {} if commands is None else commands.members(uid, restoring=restoring)
 
 def _publish(ctx, uid, keys):
-    host = getattr(ctx,'_bridge_host',None)
-    if host is None:
-        return
-    seq = time.time_ns()
-    name = f'companion-ats-view-{seq}-{seq}.json'
-    payload = dict(schema='companion-hotbar-keys-v1',owner_uid=uid,keys=sorted(keys))
-    with open(host.directory/name,'x',encoding='utf-8') as stream:
-        json.dump(payload,stream,separators=(',',':'))
-    ctx.run_sync_hooks('companion_bridge_publish',uid,'hotbar-keys',dict(command='hotbar-keys',
-        owner_uid=uid,view_file=name))
+    return ctx.chain_sync_hooks('companion_hotbar_publish', uid, keys)
 
 def _sync(ctx, writer, uid, *, restoring=False):
     session = ctx._hotbar_probe_sessions.get(id(writer))
@@ -75,12 +50,11 @@ def _sync(ctx, writer, uid, *, restoring=False):
         frames.append(_list_frame(add,remove))
         _note(ctx,'list-changed',uid=uid,added=sorted(add),removed=sorted(remove),members=members)
     if adopted:
-        engine = ctx._world_magic
+        magic = next(value for value in ctx.collect_sync_hooks('magic_service') if value is not None)
         frames.append(_wire(AVAILABLE,b''.join(pb.encode_bytes(1,pb.encode_uint32(1,key)
-            +pb.encode_bool(2,True)+pb.encode_uint32(6,engine.spells[key].mp)) for key in sorted(adopted))))
+            +pb.encode_bool(2,True)+pb.encode_uint32(6,magic.spell_mp(key))) for key in sorted(adopted))))
     if keys != session['keys'] or keys and not session['published']:
-        _publish(ctx,uid,keys)
-        session['published'] = getattr(ctx,'_bridge_host',None) is not None
+        session['published'] = _publish(ctx,uid,keys)
     session['keys'], session['members'] = keys, members
     session['known'].update(keys)
     return tuple(frames)
@@ -91,7 +65,8 @@ def _hotbar_probe_initialize(ctx):
     ctx._hotbar_command_wrappers = []
 
 def _hotbar_command_started(ctx):
-    if not getattr(ctx,'_companion_enabled',False) or _magic(ctx) is None:
+    commands = _commands(ctx)
+    if commands is None or not commands.ready:
         return
     def ordered_send(base):
         async def send(writer,row,replies,**options):
@@ -99,8 +74,7 @@ def _hotbar_command_started(ctx):
                 or w == b'\x08\0\xef\x4e\x08\x09\0\0'),None)
             if marker is not None and id(writer) not in ctx._hotbar_probe_sessions:
                 position = ctx.realm.service(writer).snapshot()
-                info = ctx._companion_rows.get(position.uid,{})
-                if info.get('class') == 1:
+                if commands.character_class(position.uid) == 1:
                     frames = _sync(ctx,writer,position.uid,restoring=True)
                     if frames:
                         if marker:
@@ -118,8 +92,7 @@ def _hotbar_command_changed(ctx,*args):
     for writer,uid in tuple(ctx._world_pcs.values()):
         if ctx.world.combat.pcs[uid].profile.character_class != 1:
             continue
-        edit = getattr(ctx,'_ats_edit',{}).get(id(writer))
-        if edit is not None and edit.get('phase') == 'open':
+        if ctx.chain_sync_hooks('companion_hotbar_suspended', writer):
             continue
         frames = _sync(ctx,writer,uid)
         for wire in frames:
@@ -128,7 +101,7 @@ def _hotbar_command_changed(ctx,*args):
             ctx.world._announce()
 
 async def _hotbar_probe_enter(ctx,writer,row,game,operation_lock):
-    if not ctx._world_bound(writer) or not getattr(ctx,'_companion_enabled',False):
+    if not ctx._world_bound(writer) or _commands(ctx) is None:
         return
     uid = ctx._world_pcs[id(writer)][1]
     if ctx.world.combat.pcs[uid].profile.character_class == 1:
@@ -158,48 +131,17 @@ def _decode(payload):
         return key,target,coords
 
 def _command(ctx,uid,key,target_uid,coords):
-    from tools.local_original_session.npc_ai import distance,local_line_clear
-    view,magic = ctx.world,_magic(ctx)
-    knight_mp_before = view.combat.pcs[uid].mp
-    members = _members(ctx,uid).get(key,())
-    reason,label = '현재 소환된 동료가 사용할 수 없는 마법입니다.','동료'
-    for member in members:
-        rt=view.companions.active[member]
-        actor=view.entities.resolve(rt.ref)
-        label=getattr(ctx,'_companion_rows',{}).get(member,{}).get('name',str(member))
-        spell=magic.engine.spells[key]
-        now=view.runtime.clock()
-        magic.restore(rt,now)
-        target=view.entities.get(rt.ref.uid if target_uid is None else target_uid)
-        status=view.events.fold('actor_action_status',{},rt.ref,now)
-        if status.get('blocked'):
-            reason='마비 상태라 시전할 수 없습니다.'
-        elif status.get('silenced'):
-            reason='침묵 상태라 시전할 수 없습니다.'
-        elif rt.record.mp<spell.mp:
-            reason='MP가 부족합니다.'
-        elif now<max(rt.next_cast_at,magic.cooldowns.get(member,0)):
-            reason='마법을 재사용할 수 없습니다.'
-        elif target is None or not target.alive or target.map_id!=actor.map_id:
-            reason='대상을 사용할 수 없습니다.'
-        elif distance(actor.x,actor.y,target.x,target.y)>spell.range:
-            reason='대상이 사거리 밖에 있습니다.'
-        elif not local_line_clear(view.terrain,actor.map_id,actor.x,actor.y,target.x,target.y):
-            reason='대상이 보이지 않습니다.'
-        elif magic.cast(rt,actor,target,spell.name,now,manual=True):
-            _note(ctx,'cast-command',uid=uid,key=key,target=target.uid,member=member,
-                mp=view.combat.pcs[uid].mp,knight_mp_before=knight_mp_before,
-                cast=True,companion_mp=rt.record.mp,coordinates=coords)
-            return
-        else:
-            reason='이 대상에게 마법을 사용할 수 없습니다.'
-    text=f'[LOCAL] {label}: {reason}'
-    view._queue(uid,_wire(0x4EEA,pb.encode_uint32(1,12066)+pb.encode_bytes(2,text.encode('utf-8'))))
-    _note(ctx,'command-refused',uid=uid,key=key,target=target_uid,message=text,cast=False)
+    result = _commands(ctx).cast(uid, key, target_uid)
+    if result['cast']:
+        _note(ctx, 'cast-command', **result, coordinates=coords)
+        return
+    ctx.world._queue(uid,_wire(0x4EEA,pb.encode_uint32(1,12066)
+        +pb.encode_bytes(2,result['message'].encode('utf-8'))))
+    _note(ctx, 'command-refused', **result)
 
 async def _hotbar_probe_frame(ctx,writer,row,game,frame,operation_lock):
     if (frame.opcode!=CAST or not ctx._world_bound(writer) or ctx._world_ready(writer,game) is None
-            or not getattr(ctx,'_companion_enabled',False)):
+            or _commands(ctx) is None):
         return False
     uid=ctx._world_pcs[id(writer)][1]
     session=ctx._hotbar_probe_sessions.get(id(writer))

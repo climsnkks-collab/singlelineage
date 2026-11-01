@@ -427,16 +427,16 @@ class PetSystem:
 
     def decision(self, rt, actor, owner, target, now, returning):
         ai, mode = self.view.companion_ai, rt.record.equipment['_pet']['mode']
-        if mode == 5 and (target is None or not ai._attack_position(actor, actor.x, actor.y, target)):
+        if mode == 5 and (target is None or not ai.attack_position(actor, actor.x, actor.y, target)):
             candidates = self.view.entities.near(actor.map_id, actor.x, actor.y, 8, kind=Kind.NPC)
             # HOLD cannot approach a selected enemy. Prefer an actual attack
             # tile, then nearest distance, rather than pinning the oldest UID
             # at range while an attackable enemy is beside the guarding pet.
-            enemy = min((e for e in candidates if ai._hostile(rt, e.ref) is not None),
-                key=lambda e: (not ai._attack_position(actor, actor.x, actor.y, e),
+            enemy = min((e for e in candidates if ai.hostile_target(rt, e.ref) is not None),
+                key=lambda e: (not ai.attack_position(actor, actor.x, actor.y, e),
                                distance(actor.x, actor.y, e.x, e.y), e.uid), default=None)
             if enemy is not None and (target is None or enemy.ref != target.ref):
-                ai._select(rt, enemy.ref, now)
+                ai.select_target(rt, enemy.ref, now)
         if mode == 6:
             # Shared ground ownership/admission/retirement, actual owner bag CAS.
             candidates = sorted((e for e in self.view.entities.near(actor.map_id,
@@ -447,7 +447,7 @@ class PetSystem:
                 if item is None or (item.owner_uid != owner.uid and now < item.owner_until):
                     continue
                 if distance(actor.x, actor.y, entity.x, entity.y) > 1:
-                    ai._move(rt, actor, lambda x, y: distance(x, y, entity.x, entity.y) <= 1,
+                    ai.move_toward(rt, actor, lambda x, y: distance(x, y, entity.x, entity.y) <= 1,
                              (entity.x, entity.y), now)
                 else:
                     self.gather(owner.uid, actor, item, now)
@@ -459,7 +459,7 @@ class PetSystem:
                 index = rt.record.character_id % 8
                 dx, dy = DELTAS[index]
                 gx, gy = owner.x + dx * 4, owner.y + dy * 4
-                ai._move(rt, actor, lambda x, y: distance(x, y, owner.x, owner.y) >= 4,
+                ai.move_toward(rt, actor, lambda x, y: distance(x, y, owner.x, owner.y) >= 4,
                          (gx, gy), now)
             rt.action = 'SCATTER'
             return True
@@ -584,7 +584,7 @@ class PetSystem:
             need(text.isdecimal() and str(int(text)) == text, 'PET_DECIMAL_TARGET_REQUIRED')
             target = self.view.entities.get(int(text))
             need(target is not None and target.uid in self.view.visibility.known.get(actor.owner_ref.uid, ())
-                 and self.view.companion_ai._hostile(actor, target.ref) is target, 'PET_HOSTILE_TARGET_REQUIRED')
+                 and self.view.companion_ai.hostile_target(actor, target.ref) is target, 'PET_HOSTILE_TARGET_REQUIRED')
         meta = actor.record.equipment['_pet']
         now = self.view.runtime.clock()
         self.view.companions.set_commands(actor.character_id,
@@ -594,7 +594,7 @@ class PetSystem:
         meta['mode'] = mode
         self.view.companion_ai.command_changed(actor.ref, now)
         if target is not None:
-            self.view.companion_ai._select(actor, target.ref, now)
+            self.view.companion_ai.select_target(actor, target.ref, now)
 
     def tame(self, uid, target_uid, item):
         v = self.view
@@ -762,7 +762,7 @@ async def _pet_trainer_frame(ctx, writer, row, game, request, operation_lock):
     if system is None or not ctx._world_bound(writer) or ctx._world_ready(writer, game) is None:
         return False
     system.install()
-    bindings = ctx._world_handler_bindings
+    bindings = ctx.host_bindings
     wire = bindings.wire
     uid = ctx._world_pcs[id(writer)][1]
     system.commit_started = False
