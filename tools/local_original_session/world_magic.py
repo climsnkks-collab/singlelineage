@@ -166,6 +166,33 @@ class MagicService:
     sync_icons: object
     buff_target: object = None
 
+    @property
+    def catalog(self):
+        return self.engine.catalog
+
+    def live_learned(self, uid):
+        """Current in-process learning only; never restore an offline row."""
+        state = self.engine.states.get(uid)
+        return frozenset(() if state is None else state.learned)
+
+    def spell_mp(self, key):
+        return self.engine.spells[key].mp
+
+    def has_buff(self, uid, key):
+        state = self.engine.states.get(uid)
+        return state is not None and key in state.buffs
+
+    def buff_weapon(self, uid, key):
+        return self.engine.states[uid].weapon_uids.get(key)
+
+    def remove_weapon_buff(self, uid, key, clock):
+        state = self.engine.states.get(uid)
+        if state is not None and key in state.buffs:
+            del state.buffs[key]
+            state.weapon_uids.pop(key, None)
+            self.sync_icons(uid, clock())
+            self.save(uid)
+
 
 @dataclass(frozen=True)
 class MagicBuffTarget:
@@ -184,8 +211,10 @@ def allows_received_buff(spell):
 
 
 class PlayerMagic:
-    def __init__(self, catalog, *, buff_seconds=None, runtime_policies=None):
+    def __init__(self, catalog, *, buff_seconds=None, runtime_policies=None,
+                 before_cast=lambda uid, now: None):
         self.catalog = catalog
+        self.before_cast = before_cast
         self.spells = {}
         self.books = {}
         self.states: dict[int, MagicState] = {}
@@ -244,6 +273,7 @@ class PlayerMagic:
         return self.state(uid).learned | {spell.key}
 
     def admit_cast(self, uid, key, character_class, level, mp, alive, now):
+        self.before_cast(uid, now)
         spell = self.spells.get(key)
         need(spell is not None, 'MAGIC_UNKNOWN_SPELL')
         need(alive, 'MAGIC_LIVING_CASTER_REQUIRED')
@@ -366,6 +396,47 @@ class PlayerMagic:
         state = self.states.get(uid)
         effects = state.effects if state is not None else self.npc_statuses.get(uid, {}).get('effects', {})
         return magic_status.active(effects, kind, now)
+
+    def npc_status(self, ref, kind, now):
+        """Query the existing NPC life without creating or replacing its row."""
+        row = self.npc_statuses.get(ref.uid)
+        if row is not None and row['ref'] == ref:
+            return magic_status.active(row['effects'], kind, now)
+        return None
+
+    def poison_of(self, uid):
+        return self.state(uid).poison
+
+    def set_poison(self, uid, poison):
+        self.state(uid).poison = poison
+
+    def clear_monster_poison_effects(self, uid):
+        effects = self.effects(uid)
+        for kind in ('paralyze', 'silence'):
+            if kind in effects and effects[kind]['params'].get('monster_poison'):
+                del effects[kind]
+
+    def replace_status(self, uid, replaced, kind, now, duration, **kwargs):
+        self.state(uid).effects.pop(replaced, None)
+        return self.apply_status(uid, kind, now, duration, **kwargs)
+
+    def cure_poison(self, uid, notify=None):
+        """Clear this owner's poison around the existing other-owner callback.
+
+        Return (live state present, changed); persistence remains with the caller
+        after all current effect owners have applied their existing cure.
+        """
+        state = self.states.get(uid)
+        previous = None if state is None else dict(state.effects)
+        changed = False
+        if state is not None:
+            changed = state.poison is not None
+            state.poison = None
+        if notify is not None:
+            notify(uid)
+        if state is not None:
+            changed = changed or previous != state.effects
+        return state is not None, changed
 
     def consume_counter(self, uid, now):
         if self.status(uid, 'counter_magic', now) is None:

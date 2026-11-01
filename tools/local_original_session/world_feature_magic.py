@@ -365,6 +365,7 @@ def _world_magic_consumers(ctx):
     if getattr(ctx, '_world_magic_adapters', None):
         return
     view, engine = ctx.world, ctx._world_magic
+    engine.before_cast = lambda uid, now: view.events.emit('player_magic_admit', uid, now)
     ctx._world_magic_npc_resources = world_npc_resources.install(view)
     installed = ctx._world_magic_adapters = []
     # Other producers own status mutation/save; this feature owns its HUD rows.
